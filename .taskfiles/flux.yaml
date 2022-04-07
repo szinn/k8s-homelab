@@ -1,0 +1,84 @@
+---
+version: "3"
+
+tasks:
+  reboot_authentik:
+    desc: Reboot Authentik install
+    cmds:
+      - kubectl delete deployment -n security authentik-server
+      - kubectl delete deployment -n security authentik-worker
+      - flux suspend helmrelease -n security authentik
+      - flux resume helmrelease -n security authentik
+
+  sync:
+    desc: Sync flux-system with the Git Repository
+    cmds:
+      - flux reconcile source git flux-system
+      - flux reconcile kustomization flux-system
+    silent: false
+
+  score_only:
+    desc: Sync core kustomization with the Git Repository
+    cmds:
+      - flux reconcile kustomization crds
+      - flux reconcile kustomization config
+      - flux reconcile kustomization core
+    silent: false
+
+  score:
+    desc: Sync core kustomization with the Git Repository
+    cmds:
+      - task flux:sync
+      - task flux:score_only
+    silent: false
+
+  sapps_only:
+    desc: Sync apps kustomization with the Git Repository and display kustomization list
+    cmds:
+      - flux reconcile kustomization apps
+    silent: false
+
+  sapps:
+    desc: Sync apps kustomization with the Git Repository and display kustomization list
+    cmds:
+      - task flux:sync
+      - task flux:sapps_only
+    silent: false
+
+  sall:
+    desc: Sync apps kustomizations with the Git Repository
+    cmds:
+      - task flux:sync  --verbose
+      - task flux:score_only --verbose
+      - task flux:sapps_only --verbose
+    silent: false
+
+  hr:
+    desc: List all Helm Releases
+    cmds:
+      - flux get hr -A  | grep --colour -e "^" -e False
+    silent: true
+
+  hs:
+    desc: List all Helm sources
+    cmds:
+      - flux get sources helm -A
+    silent: true
+
+  hc:
+    desc: List all Helm charts
+    cmds:
+      - flux get sources chart -A
+    silent: true
+
+  k:
+    desc: List all Kustomizations
+    cmds:
+      - flux get kustomizations -A
+    silent: true
+
+  hr-restart:
+    desc: Restart all failed Helm Releases
+    cmds:
+      - kubectl get hr --all-namespaces | grep False | awk '{print $2, $1}' | xargs -l bash -c 'flux suspend hr $0 -n $1'
+      - kubectl get hr --all-namespaces | grep False | awk '{print $2, $1}' | xargs -l bash -c 'flux resume hr $0 -n $1'

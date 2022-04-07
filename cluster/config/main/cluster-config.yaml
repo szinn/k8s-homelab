@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cluster-config
+  namespace: flux-system
+data:
+  CONFIG_CERTIFICATE_ISSUER: letsencrypt-staging
+  CONFIG_METALLB_IP_RANGE: 10.0.40.64-10.0.40.127
+  CONFIG_SVC_TRAEFIK_ADDR: 10.0.40.64

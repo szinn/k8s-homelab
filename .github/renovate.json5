@@ -1,0 +1,211 @@
+{
+    "extends": [
+        "config:base",
+        ":enableRenovate",
+        ":disableRateLimiting",
+        ":dependencyDashboard",
+        ":semanticCommits",
+        ":separatePatchReleases",
+        "docker:enableMajor",
+        ":enablePreCommit",
+        "github>szinn/k8s-homelab//.github/renovate/commitMessage",
+        "github>szinn/k8s-homelab//.github/renovate/labels",
+        "github>szinn/k8s-homelab//.github/renovate/semanticCommits",
+        "github>szinn/k8s-homelab//.github/renovate/allowedVersions",
+        "github>szinn/k8s-homelab//.github/renovate/autoMerge"
+    ],
+
+    "platform": "github",
+    "repositories": ["szinn/k8s-homelab"],
+    "onboarding": false,
+    "requireConfig": false,
+    "timezone": "America/Toronto",
+    "dependencyDashboard": true,
+    "dependencyDashboardTitle": "Renovate Dashboard",
+
+    // set up ignored deps
+    "ignoreDeps": [
+        "ghcr.io/fluxcd/helm-controller",
+        "ghcr.io/fluxcd/image-automation-controller",
+        "ghcr.io/fluxcd/image-reflector-controller",
+        "ghcr.io/fluxcd/kustomize-controller",
+        "ghcr.io/fluxcd/notification-controller",
+        "ghcr.io/fluxcd/source-controller"
+    ],
+    // Setup renovate managers
+    "helm-values": {
+        "fileMatch": [
+            "cluster/.+/helm-release\\.yaml$"
+        ]
+  },
+  "kubernetes": {
+    "fileMatch": [
+            "cluster/.+\\.yaml$"
+        ]
+  },
+    "flux": {
+        "fileMatch": [
+            "cluster/.+\\.ya?ml$"
+        ]
+    },
+    "helmv3": {
+        "fileMatch": [
+            "charts/.+/Chart\\.ya?ml$"
+        ]
+    },
+
+    "regexManagers": [
+    // regexManager to read and process GitHub release artifacts
+    {
+      "fileMatch": [
+                "cluster/.+\\.yaml$"
+            ],
+      "matchStrings": [
+        "https://github.com/(?<org>.*=?)/(?<repo>.*=?)/releases/download/(?<currentValue>.*=?)/.*"
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "{{org}}/{{repo}}"
+    },
+
+        // Generic Regex Manager
+    {
+      "fileMatch": [
+        "cluster/.+\\.yaml$"
+      ],
+      "matchStrings": [
+        "datasource=(?<datasource>.*?) depName=(?<depName>.*?)\n .*: (?<currentValue>.*=?)"
+      ],
+      "datasourceTemplate": "docker"
+    },
+
+        // Generic charge Regex manager
+        {
+            "fileMatch": [
+                "cluster/^.*\\.yaml$"
+            ],
+            "matchStrings": [
+                "registryUrl=(?<registryUrl>.*?)\n *chart: (?<depName>.*?)\n *version: (?<currentValue>.*)\n"
+            ],
+            "datasourceTemplate": "helm"
+        }
+    ],
+
+    "packageRules": [
+        // Setup datasources
+        {
+            "matchDatasources": [
+                "helm"
+            ],
+            //"commitMessageTopic": "Helm chart {{depName}}",
+            //"semanticCommitScope": "charts",
+            "separateMinorPatch": true,
+            "ignoreDeprecated": true
+        },
+
+        {
+            "enabled": true,
+            "matchDatasources": [
+                "docker"
+            ],
+            //"commitMessageTopic": "Docker image {{depName}}",
+            "commitMessageExtra": "to {{#if isSingleVersion}}{{{newVersion}}}{{else}}{{{newValue}}}{{/if}}",
+            "matchUpdateTypes": [
+                "major",
+                "minor",
+                "patch"
+            ]
+        },
+
+        {
+            "matchDatasources": [
+                "docker"
+            ],
+            //"semanticCommitScope": "images",
+            "separateMinorPatch": true
+        },
+
+        // Custom version schemes
+    {
+      "matchDatasources": [
+                "docker"
+            ],
+      "matchPackageNames": [
+                "blakeblackshear/frigate"
+            ],
+      "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-(?<compatibility>.*)$"
+    },
+        {
+            "matchDatasources": [
+                "docker"
+            ],
+            "versioning": "regex:^RELEASE\\.(?<major>\\d+)-(?<minor>\\d+)-(?<patch>\\d+)T.*Z(-(?<compatibility>.*))?$",
+            "matchPackageNames": [
+                "quay.io/minio/minio"
+            ]
+        },
+
+    // Group packages
+    {
+      "matchDatasources": ["helm", "docker"],
+      "matchPackagePatterns": ["^rook.ceph"],
+      "groupName": "rook-ceph-suite",
+      "additionalBranchPrefix": "",
+      "separateMinorPatch": true
+    },
+
+        // pin package versions
+        {
+            "matchDatasources": [
+                "docker"
+            ],
+            "allowedVersions": "<15",
+            "matchPackageNames": [
+                "postgresql",
+                "bitnami/postgresql"
+            ]
+        },
+        {
+            "matchDatasources": [
+                "docker"
+            ],
+            "allowedVersions": "<14",
+            "matchPackageNames": [
+                "postgres"
+            ]
+        },
+        //{
+        //    "matchDatasources": ["docker"],
+        //    "allowedVersions": "<2",
+        //    "matchPackageNames": [
+        //    "influxdb"
+        //    ]
+        //},
+        //{
+        //    "matchDatasources": ["helm"],
+        //    "allowedVersions": "<2",
+        //    "matchPackageNames": ["metallb"]
+        //},
+        {
+            "matchDatasources": ["github-releases", "docker"],
+            "matchPackagePatterns": [
+              "external-snapshotter",
+              "snapshot-controller"
+            ],
+            "groupName": "external-snapshotter-suite",
+            "additionalBranchPrefix": "",
+            "separateMinorPatch": true
+        },
+        {
+            "matchDatasources": [
+                "github-tags",
+                "docker"
+            ],
+            "matchPackagePatterns": [
+                "rancher/system-upgrade-controller"
+            ],
+            "groupName": "system-upgrade-controller-suite",
+            "additionalBranchPrefix": "",
+            "separateMinorPatch": true
+        }
+    ]
+}

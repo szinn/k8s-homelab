@@ -1,0 +1,30 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  # - actions-runner-controller-charts.yaml
+  # - authelia-charts.yaml
+  # - authentik-charts.yaml
+  # - bitnami-charts.yaml
+  # - cetic-charts.yaml
+  # - deliveryhero-charts.yaml
+  # - external-dns-charts.yaml
+  # - fluent-bit-charts.yaml
+  # - grafana-charts.yaml
+  # - hajimari-charts.yaml
+  # - hashicorp-charts.yaml
+  # - infracloudio-charts.yaml
+  - jetstack-charts.yaml
+  # - k8s-at-home-charts.yaml
+  # - kasten-charts.yaml
+  # - longhorn-charts.yaml
+  - metallb-charts.yaml
+  # - nfs-subdir-external-provisioner-charts.yaml
+  # - prometheus-community-charts.yaml
+  # - rancher-charts.yaml
+  # - ricoberger-charts.yaml
+  # - runix-charts.yaml
+  # - stakater-charts.yaml
+  - traefik-charts.yaml
+  # - vmware-tanzu-charts.yaml
+  # - weaveworks-kured-charts.yaml

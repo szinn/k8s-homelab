@@ -1,0 +1,10 @@
+# See https://toolkit.fluxcd.io/components/source/gitrepositories/#excluding-files
+.github/
+.taskfiles/
+.vscode/
+ansible/
+setup/
+utils/
+.pre-commit-config.yaml
+.sops.yaml
+Taskfile.yaml
