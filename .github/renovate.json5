@@ -1,0 +1,178 @@
+{
+  // General RenovateBot configuration
+  "extends": [
+    ":enableRenovate",
+    "config:base",
+    ":disableRateLimiting",
+    ":dependencyDashboard",
+    ":semanticCommits",
+    ":separatePatchReleases",
+    "docker:enableMajor",
+    ":enablePreCommit",
+    "github>szinn/k8s-homelab//.github/renovate/commitMessage",
+    "github>szinn/k8s-homelab//.github/renovate/labels",
+    "github>szinn/k8s-homelab//.github/renovate/semanticCommits",
+    "github>szinn/k8s-homelab//.github/renovate/allowedVersions",
+    "github>szinn/k8s-homelab//.github/renovate/autoMerge",
+    "github>szinn/k8s-homelab//.github/renovate/updateSchedule"
+  ],
+  "platform": "github",
+  "username": "szinn-bot[bot]",
+  "repositories": ["szinn/k8s-homelab"],
+  "onboarding": false,
+  "requireConfig": false,
+  "gitAuthor": "szinn-bot <noreply@users.noreply.github.com>",
+  "timezone": "America/Toronto",
+  "dependencyDashboardTitle": "Renovate Dashboard",
+  "suppressNotifications": ["prIgnoreNotification"],
+  "rebaseWhen": "conflicted",
+  // Set up Renovate Managers
+  "helmv3": {
+    "fileMatch": ["k8s/charts/.+/Chart\\.yaml$"]
+  },
+  "helm-values": {
+    "fileMatch": [
+      "k8s/clusters/.+/helmrelease\\.yaml$",
+      "k8s/global/.+/helmrelease\\.yaml$"
+    ]
+  },
+  "kubernetes": {
+    "fileMatch": [
+      "k8s/clusters/.+\\.yaml$",
+      "k8s/global/.+\\.yaml$"
+    ]
+  },
+  "flux": {
+   "fileMatch": [
+     "k8s/clusters/.+\\.yaml$",
+     "k8s/global/.+\\.yaml$"
+   ]
+  },
+  "regexManagers": [
+    // regexManager to read and process GitHub release artifacts
+    {
+      "fileMatch": [
+        "k8s/clusters/.+\\.yaml$",
+        "k8s/global/.+\\.yaml$"
+      ],
+      "matchStrings": [
+        "https:\/\/github.com\/(?<org>.*=?)\/(?<repo>.*=?)\/releases\/download\/(?<currentValue>.*=?)\/.*"
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "{{org}}/{{repo}}"
+    },
+    // Generic Regex Manager
+    {
+      "fileMatch": [
+        "k8s/clusters/.+\\.yaml$",
+        "k8s/global/.+\\.yaml$"
+      ],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( registryUrl=(?<registryUrl>.*?))?( versioning=(?<versioning>.*=?))?\n .*: (?<currentValue>.*=?)"
+      ],
+      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}",
+      "registryUrlTemplate": "{{#if registryUrl}}{{{registryUrl}}}{{else}}{{/if}}"
+    },
+    // Generic Docker image Regex manager
+    {
+      "fileMatch": [
+        "k8s/clusters/.+\\.yaml$",
+        "k8s/global/.+\\.yaml$"
+      ],
+      "matchStrings": [
+        "# renovate: docker-image( registryUrl=(?<registryUrl>.*?))?( versioning=(?<versioning>.*=?))?\n .*: (?<depName>.*?):(?<currentValue>.*=?)"
+      ],
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}docker{{/if}}",
+      "registryUrlTemplate": "{{#if registryUrl}}{{{registryUrl}}}{{else}}{{/if}}"
+    }
+  ],
+  "packageRules": [
+    // Setup datasources
+    {
+      "matchDatasources": ["helm"],
+      "ignoreDeprecated": true
+    },
+    {
+      "matchDatasources": ["docker"],
+      "commitMessageExtra": "to {{newVersion}}"
+    },
+    // Custom version schemes
+    {
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["blakeblackshear/frigate"],
+      "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-(?<compatibility>.*)$"
+    },
+    {
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["xirixiz/dsmr-reader-docker"],
+      "versioning": "regex:^(?<compatibility>.*)-(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$"
+    },
+    {
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["quay.io/minio/minio"],
+      "versioning": "regex:^RELEASE\\.(?<major>\\d{4})-(?<minor>\\d{2})-(?<patch>\\d{2})"
+    },
+    {
+      "matchDatasources": ["docker"],
+      "matchPackageNames": [
+        "ghcr.io/linuxserver/calibre",
+        "ghcr.io/linuxserver/calibre-web"
+      ],
+      "versioning": "regex:^version-v?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$"
+    },
+    {
+      "matchDatasources": ["docker"],
+      "matchPackageNames": [
+        "ghcr.io/airsonic-advanced/airsonic-advanced"
+      ],
+      "versioning": "regex:^edge-(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-SNAPSHOT\\.(?<build>\\d+)$"
+    },
+    // Version strategies
+    {
+      "matchDatasources": ["docker"],
+      "matchPackageNames": [
+        "ghcr.io/k8s-at-home/plex"
+      ],
+      "versioning": "loose"
+    },
+    {
+      "matchDatasources": ["docker"],
+      "matchPackageNames": [
+        "tomsquest/docker-radicale"
+      ],
+      "versioning": "pep440"
+    },
+    // Group packages
+    {
+      "matchDatasources": ["helm", "docker"],
+      "matchPackagePatterns": ["^rook.ceph"],
+      "groupName": "rook-ceph-suite",
+      "additionalBranchPrefix": "",
+      "separateMinorPatch": true
+    },
+    {
+      "matchDatasources": ["docker"],
+      "matchPackageNames": [
+        "k8s.gcr.io/kube-apiserver",
+        "k8s.gcr.io/kube-controller-manager",
+        "k8s.gcr.io/kube-scheduler",
+        "ghcr.io/siderolabs/kubelet"
+      ],
+      "groupName": "kubernetes",
+      "additionalBranchPrefix": "",
+      "separateMinorPatch": true
+    },
+    {
+      "matchDatasources": ["helm", "docker"],
+      "matchPackageNames": [
+        "quay.io/cilium/cilium",
+        "quay.io/cilium/operator-generic",
+        "cilium"
+      ],
+      "groupName": "cilium",
+      "additionalBranchPrefix": "",
+      "separateMinorPatch": true
+    }
+  ]
+}
