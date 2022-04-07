@@ -8,7 +8,7 @@ spec:
   interval: 5m
   chart:
     spec:
-      chart: /charts/kah-common-chart/
+      chart: /cluster/charts/kah-common-chart/
       sourceRef:
         kind: GitRepository
         name: flux-system
@@ -20,7 +20,7 @@ spec:
   values:
     image:
       repository: ghcr.io/tarampampam/error-pages
-      tag: 2.11.0
+      tag: 2.12.1
     controller:
       replicas: 1
     nameOverride: error-pages

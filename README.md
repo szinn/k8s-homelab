@@ -31,12 +31,12 @@ At the bottom of this page, is the bringup process that I follow for this cluste
 | Device                                    | Count | OS Disk Size | Data Disk Size | RAM   | Operating System |
 |----------------------------|-------|--------------|----------------|-------|--------------------|
 | Ryzen 3900 12c24t server | 1          | 1TB                 |  4x4TB SATA    | 64GB | [Proxmox](https://www.proxmox.com/en/)                   |
-| * K8s control plane nodes  | 3         | 40GB              |                            | 8GB    | Ubuntu 20.04         |
+| * K8s control plane nodes  | 3         | 40GB              |                            | 8GB    | Talos         |
 | * Router                                 | 1         | 20GB              |                            | 8GB    | Ubuntu 21.10          |
 | * TrueNAS Core                    | 1         |                         | (on 4x4TB)       | 16GB | TrueNAS Core 12    |
 | Raspberry Pi                         | 1         |                         |                            |             | PiHole                     |
 | Raspberry Pi                         | 1         |                         |                            |             | OctoPrint                |
-| Intel NUC11PAHi7 (worker nodes)                | 3          | 500GB SSD    | 1TB NVMe         | 64GB | Ubuntu 20.04          |
+| Intel NUC11PAHi7 (worker nodes)                | 3          | 500GB SSD    | 1TB NVMe         | 64GB | Talos          |
 | Synology 1019+               | 1           |                        | 5x8TB SATA      |            |                                    |
 | UDMPro                               | 1           |                        |                             |            |                                    |
 | USW-Pro-24-PoE              | 1            |                       |                              |            |                                   |
@@ -45,8 +45,8 @@ At the bottom of this page, is the bringup process that I follow for this cluste
 
 ## Kubernetes
 
-The cluster is [k3s](https://k3s.io) with 3 control-plane nodes running in Proxmox Ubuntu 20.04 VMs (these will likely get replaced with Raspberry Pi 4s when/if they become available) and
-3 worker nodes running on bare-metal Ubuntu 20.04 VMs.
+The cluster is based on [Talos](https://www.talos.dev/v0.14/introduction/getting-started/) with 3 control-plane nodes running in Proxmox VMs (these will likely get replaced with Raspberry Pi 4s when/if they become available) and
+3 worker nodes running on bare-metal Talos.
 
 ### Core Components
 
@@ -78,6 +78,7 @@ The 3 worker nodes and Ryzen server are connected to the 8-port switch with 2.5G
 Multiple wired access points are scattered around the house and backyard.
 
 The Kubernetes cluster and IPs are on the 10.0.40.x subnet with VLAN tagging. Pods and services are on the 10.40.x.x and 10.41.x.x subnets respectively.
+The Kubernetes API is via a VIP address at 10.0.40.128.
 External machines (PiHole, Synology, etc) are on the main household VLAN subnet. IoT devices are on an isolated 10.0.80.x VLAN. They cannot reach the other VLANs directly but will answer when spoken to.
 
 MetalLB is used to assign visible IP addresses to Kubernetes services(e.g., MySQL). Traefik is used to reverse-proxy other services within the cluster.
@@ -105,18 +106,18 @@ The repository directories are:
 - **.github**: GitHub support files and renovate configuration.
 - **.taskfiles**: Auxiliary files used for the task command-line tool.
 - **ansible**: Ansible configuration for managing the cluster machinery.
-- **charts**: Charts used for local customized helm charts.
 - **cluster**: The cluster itself.
   - **apps**: The applications to load.
+  - **charts**: Charts used for local customized helm charts.
   - **config**: Where cluster-config.yaml and cluster-secrets.sops.yaml will be created.
   - **core**: The core packages loaded prior to the applications.
   - **crds**: CRD resources that must be loaded prior to any helm package processing.
   - **helm-charts**: The locations for any of the helm charts required in the cluster.
-  - **production**: The production cluster.
+  - **main**: The main cluster.
 - **setup**: Scripts to configure and create the cluster.
 - **utils**: Miscellaneous utilities for managing the cluster.
 
-### Cluster Setup
+### Environment Setup
 
 Install pre-commit with
 
@@ -140,14 +141,14 @@ The cluster is configured through multiple levels:
 
 All values for the configurations are stored in a set of environment variables described below.
 
-There should be at least one cluster `production` that will be used from the `main` branch of the repo.
-Any other cluster types will be synced out of a branch with the same name as the cluster type (e.g., the staging cluster will be synced from the staging branch of the repo)
+There should be at least one cluster `main` that will be used from the `main` branch of the repo.
+Any other cluster types will be synced out of a configurable branch with the same name as the cluster type (e.g., the staging cluster will be synced from the staging branch of the repo)
 
 ### External Environment Configuration
 
 A base file [setup/env.base](./setup/env.base.template) is used to define any configuration about the external devices on the network (e.g., NAS drives) and config/secrets that are common to all of the cluster configurations.
 
-Each cluster configuration (e.g. production or staging) has a file [setup/env.<cluster_type>](./setup/env.production.template) that is used to define any configuration that is specific to that cluster.
+Each cluster configuration (e.g. production or staging) has a file [setup/env.<cluster_type>](./setup/env.main.template) that is used to define any configuration that is specific to that cluster.
 For example, the IP addresses that should be reserved through MetalLB for services such as Traefik for MySQL.
 
 All values are defined as shell environment variables.
@@ -164,7 +165,7 @@ Since the configuration values are stored in a ConfigMap resource, the resulting
 
 ### Cluster Secrets
 
-The file [setup/cluster-secrets.sops.cfg] defines a Secret resource that will be filled in with values from the `env.XXX` configuration files and then encrypted with Mozilla/sops.
+The file [setup/cluster-secrets.sops.cfg](./setup/cluster-secrets.sops.cfg) defines a Secret resource that will be filled in with values from the `env.XXX` configuration files and then encrypted with Mozilla/sops.
 The resulting Secret resource will be placed in the `/cluster/config/<cluster_type>` directory and will also be loaded prior to the resolve phase so that the secrets will be available through the Kustomization post-build step.
 
 ### Application Secrets
@@ -196,8 +197,9 @@ This is a work in progress, but I'm currently experimenting with [Kasten.io K10]
 
 ### Initial Machine Configuration
 
-The scripts in the `ansible/` directory can be used to update/install packages on Ubuntu 20.04 and install the base k3s components.
-You will need to review all of the files here for configuration examples. You are free to bring up your machines manually or however you want.
+The machines are configured using Talos (see [Getting Started](https://www.talos.dev/v0.14/introduction/getting-started/) for a walkthrough).
+
+The scripts I used for generating the Talos configuration are found in [setup/talos](./setup/talos).
 
 The expectation is that at the end of this step, your machines are up and running and the command line tool `kubectl` can be used to interact with the cluster.
 
@@ -213,7 +215,7 @@ Again, filling these in is typically a one-time operation, but as you add functi
 
 Pairing with the env.XXX files, you will need to expose your configuration in the `cluster-config.cfg` and `cluster-secrets.sops.cfg` files. You don't need to hard-code any values there, just follow the template.
 
-The file [setup/env-setup.sh](./setup/env-setup.sh) contains minimal information required for the setup scripts.
+The file [setup/setup-config.sh](./setup/setup-config.sh) contains minimal information required for the setup scripts.
 `SETUP_ENV_FILES_DIR` defines the location where the env.XXX files reside. I keep mine in `$HOME/.config/k8s-homelab`. `SETUP_CLUSTER_TYPES` defines the types of clusters that are supported.
 
 Once the environment and the cluster config/secret file templates are created, run the `build-config.sh` script file and fix any errors.
@@ -258,4 +260,5 @@ Through Wireguard and [Kubenav](https://kubenav.io), I can pretty much manage th
 
 Many thanks to the folks at [k8s-at-home](https://github.com/k8s-at-home) that maintain the many great Helm charts, have opened their own repos for the rest of us to learn, and answer many questions on the discord server.
 A special thanks to Devin (@onedr0p) who's cluster I modelled mine after.
-Another tongue-in-cheek thanks to Jeff (@billimek) who's dang YouTube video on Home Assistant and his cluster repo led me into this rabbit hole.
+Another special thanks to Nat (@Truxnell) who answered a bunch of my questions about Talos while I was on vacation reading github repos and docs on my iPhone.
+A tongue-in-cheek thanks to Jeff (@billimek) who's dang YouTube video on Home Assistant and his cluster repo led me into this rabbit hole.

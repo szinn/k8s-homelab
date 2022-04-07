@@ -2,7 +2,6 @@
 .github/
 .taskfiles/
 .vscode/
-ansible/
 setup/
 utils/
 .pre-commit-config.yaml
