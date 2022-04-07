@@ -1,0 +1,11 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: internal
+  namespace: traefik-system
+spec:
+  chain:
+    middlewares:
+      - name: rfc1918-ips
+      - name: error-pages

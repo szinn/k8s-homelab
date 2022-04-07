@@ -1,0 +1,34 @@
+{
+  "packageRules": [
+    {
+      "matchDatasources": ["docker"],
+      "automerge": true,
+      "automergeType": "branch",
+      "requiredStatusChecks": null,
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchPackageNames": [
+        "ghcr.io/k8s-at-home/jackett",
+        "ghcr.io/k8s-at-home/lidarr",
+        "ghcr.io/k8s-at-home/prowlarr",
+        "ghcr.io/k8s-at-home/radarr",
+        "ghcr.io/k8s-at-home/sonarr"
+      ]
+    },
+    {
+      "matchDatasources": ["helm"],
+      "automerge": true,
+      "automergeType": "branch",
+      "requiredStatusChecks": null,
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchPackageNames": ["kube-prometheus-stack"]
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "automerge": true,
+      "automergeType": "branch",
+      "requiredStatusChecks": null,
+      "matchUpdateTypes": ["minor", "patch"],
+      "excludePackageNames": ["lycheeverse/lychee-action"]
+    }
+  ]
+}
