@@ -5,6 +5,6 @@ metadata:
   name: cluster-config
   namespace: flux-system
 data:
-  CONFIG_CERTIFICATE_ISSUER: letsencrypt-staging
+  CONFIG_CERTIFICATE_ISSUER: letsencrypt-prod
   CONFIG_METALLB_IP_RANGE: 10.0.40.33-10.0.40.63
   CONFIG_SVC_TRAEFIK_ADDR: 10.0.40.33

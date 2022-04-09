@@ -2,6 +2,7 @@
 .github/
 .taskfiles/
 .vscode/
+hack/
 setup/
 utils/
 .pre-commit-config.yaml

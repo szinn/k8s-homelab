@@ -23,6 +23,7 @@ resources:
   # - prometheus-community-charts.yaml
   # - rancher-charts.yaml
   # - ricoberger-charts.yaml
+  - rook-ceph-charts.yaml
   # - runix-charts.yaml
   # - stakater-charts.yaml
   - traefik-charts.yaml

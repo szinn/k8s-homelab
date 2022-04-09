@@ -16,7 +16,7 @@
 This is my mono repo for my home infrastructure. It's based on the template at [k8s-at-home/template-cluster-k3](https://github.com/k8s-at-home/template-cluster-k3s) as well as many of the exemplar repos
 at [k8s-at-home/awesome-home-kubernetes](https://github.com/k8s-at-home/awesome-home-kubernetes).
 
-It follows the concept of Infrastructure as Code and by using tools such as [Ansible](https://www.ansible.com/), [Flux](https://github.com/fluxcd/flux2), [Renovate](https://github.com/renovatebot/renovate),
+It follows the concept of Infrastructure as Code and by using tools such [Flux](https://github.com/fluxcd/flux2), [Renovate](https://github.com/renovatebot/renovate),
 [go-task](https://github.com/go-task/task) and shell scripts, creates a reproducible, mostly self-managing implementation.
 
 My original implementation was running on the Ryzen using custom shell scripts and 35+ docker containers managed by hand. Any upgrades, system resets, etc, all had to be manually resolved.
@@ -50,7 +50,7 @@ The cluster is based on [Talos](https://www.talos.dev/v0.14/introduction/getting
 
 ### Core Components
 
-- [mozilla/sops](https://toolkit.fluxcd.io/guides/mozilla-sops/): Manages secrets for Kubernetes and Ansible.
+- [mozilla/sops](https://toolkit.fluxcd.io/guides/mozilla-sops/): Manages secrets for Kubernetes.
 - [traefik/traefik](https://traefik.io): Manages reverse-proxy access to Kubernetes services.
 - [metallb/metallb](https://metallb.universe.tf): Manages IP assignment for exposed Kubernetes services.
 - [rook/rook](https://github.com/rook/rook): Distributed block storage for persistent storage.
@@ -78,7 +78,7 @@ The 3 worker nodes and Ryzen server are connected to the 8-port switch with 2.5G
 Multiple wired access points are scattered around the house and backyard.
 
 The Kubernetes cluster and IPs are on the 10.0.40.x subnet with VLAN tagging. Pods and services are on the 10.40.x.x and 10.41.x.x subnets respectively.
-The Kubernetes API is via a VIP address at 10.0.40.128.
+The Kubernetes API is via a VIP address at 10.0.40.32.
 External machines (PiHole, Synology, etc) are on the main household VLAN subnet. IoT devices are on an isolated 10.0.80.x VLAN. They cannot reach the other VLANs directly but will answer when spoken to.
 
 MetalLB is used to assign visible IP addresses to Kubernetes services(e.g., MySQL). Traefik is used to reverse-proxy other services within the cluster.
@@ -95,17 +95,16 @@ Most/all internal services have a Traefik middleware to verify that the requesti
 
 ## Repository Structure
 
-The repository supports multiple clusters -- in particular, I have a "production" cluster which runs on the above hardware, and then I can also deploy to a "staging" cluster which can run on
-VMs/nodes that are created through [k3d](https://k3d.io/v5.3.0/) or Proxmox VMs. The staging cluster lets me try out new packages, figure out configuration etc, before committing to the main repo.
+The repository supports multiple clusters -- in particular, I have a "main" cluster which runs on the above hardware, and then I can also deploy to a "staging" cluster which can run on
+VMs/nodes that are created through [k3d](https://k3d.io/v5.3.0/) or Proxmox VMs. The staging cluster lets me try out new packages, figure out configuration etc, before committing to the main repo and cluster.
 
-Adding something new to the cluster usually requires a lot of trial and error initially. When I am trying something out, I will work in a staging environment as much as possible and then move to the production cluster.
+Adding something new to the cluster usually requires a lot of trial and error initially. When I am trying something out, I will work in a staging environment as much as possible and then move to the main cluster.
 If additional iterations are required, I will usually try and do amended commits rather than a chain of commits with comments such as "Trying again" or "Maybe this will work", etc.
 
 The repository directories are:
 
 - **.github**: GitHub support files and renovate configuration.
 - **.taskfiles**: Auxiliary files used for the task command-line tool.
-- **ansible**: Ansible configuration for managing the cluster machinery.
 - **cluster**: The cluster itself.
   - **apps**: The applications to load.
   - **charts**: Charts used for local customized helm charts.
@@ -115,6 +114,7 @@ The repository directories are:
   - **helm-charts**: The locations for any of the helm charts required in the cluster.
   - **main**: The main cluster.
 - **setup**: Scripts to configure and create the cluster.
+- **hack**: Miscellaneous stuff that really has nothing to do with managing the cluster.
 - **utils**: Miscellaneous utilities for managing the cluster.
 
 ### Environment Setup
@@ -148,7 +148,7 @@ Any other cluster types will be synced out of a configurable branch with the sam
 
 A base file [setup/env.base](./setup/env.base.template) is used to define any configuration about the external devices on the network (e.g., NAS drives) and config/secrets that are common to all of the cluster configurations.
 
-Each cluster configuration (e.g. production or staging) has a file [setup/env.<cluster_type>](./setup/env.main.template) that is used to define any configuration that is specific to that cluster.
+Each cluster configuration (e.g. main or staging) has a file [setup/env.<cluster_type>](./setup/env.main.template) that is used to define any configuration that is specific to that cluster.
 For example, the IP addresses that should be reserved through MetalLB for services such as Traefik for MySQL.
 
 All values are defined as shell environment variables.
@@ -229,8 +229,7 @@ At this point you should have your machines up and running with the base k3s ins
 The final step is to run the `bootstrap-cluster.sh` script as
 
 ```shell
-bootstrap-cluster.sh <cluster-type>
-
+bootstrap-cluster.sh <cluster-name>
 ```
 
 This will connect flux to your repo, put the Flux controllers onto your cluster which will then load up your cluster. Pick your favourite tool (e.g., Lens) to watch your cluster come alive.
@@ -254,7 +253,8 @@ Occasionally, the cluster doesn't come fully back when kured reboots it and some
 
 I manually keep the router VM and PiHole up to date through Anisble scripts.
 
-Through Wireguard and [Kubenav](https://kubenav.io), I can pretty much manage the cluster remotely from my phone. On my desktop/laptop, I use [Lens](https://k8slens.dev) to manage the cluster which works remotely through Wireguard as well.
+Through Wireguard and [Kubenav](https://kubenav.io), I can pretty much manage the cluster remotely from my phone.
+On my desktop/laptop, I use [Lens](https://k8slens.dev) to manage the cluster which works remotely through Wireguard as well.
 
 ## Gratitude and Thanks
 
