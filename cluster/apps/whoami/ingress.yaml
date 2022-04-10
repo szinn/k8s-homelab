@@ -1,0 +1,28 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: whoami
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    kubernetes.io/tls-acme: 'true'
+    cert-manager.io/cluster-issuer: ${CONFIG_CERTIFICATE_ISSUER}
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
+spec:
+  rules:
+    - host: &host "whoami.${SECRET_DOMAIN_NAME}"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: whoami
+                port:
+                  number: 80
+  tls:
+    - secretName: whoami-tls
+      hosts:
+        - *host

@@ -15,7 +15,7 @@ resources:
   # - hashicorp-charts.yaml
   # - infracloudio-charts.yaml
   - jetstack-charts.yaml
-  # - k8s-at-home-charts.yaml
+  - k8s-at-home-charts.yaml
   # - kasten-charts.yaml
   # - longhorn-charts.yaml
   - metallb-charts.yaml
