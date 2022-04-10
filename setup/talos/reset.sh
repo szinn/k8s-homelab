@@ -9,6 +9,6 @@ echo "Waiting for workers to reset... ^C to stop here"
 sleep 5
 
 # Reset the control plane nodes
-talosctl reset --graceful=false --reboot -n 10.0.40.22
-talosctl reset --graceful=false --reboot -n 10.0.40.23
-talosctl reset --graceful=false --reboot -n 10.0.40.24
+talosctl reset --graceful=false --reboot -n 10.0.40.16
+talosctl reset --graceful=false --reboot -n 10.0.40.17
+talosctl reset --graceful=false --reboot -n 10.0.40.18

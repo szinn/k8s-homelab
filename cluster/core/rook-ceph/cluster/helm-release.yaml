@@ -33,7 +33,7 @@ spec:
       mgr:
         count: 2
       mon:
-        count: 2 # TODO: 3
+        count: 3
       healthCheck:
         livenessProbe:
           mon:
@@ -66,9 +66,9 @@ spec:
         config:
           osdsPerDevice: "1"
         nodes:
-          # - name: "k8s-4"
-          #   devices:
-          #     - name: "nvme0n1"
+          - name: "k8s-4"
+            devices:
+              - name: "nvme0n1"
           - name: "k8s-5"
             devices:
               - name: "nvme0n1"
@@ -83,7 +83,7 @@ spec:
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: ${CONFIG_CERTIFICATE_ISSUER}
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
-          # traefik.ingress.kubernetes.io/router.middlewares: traefik-system-internal@kubernetescrd
+          traefik.ingress.kubernetes.io/router.middlewares: traefik-system-internal@kubernetescrd
         host:
           name: "rook.${SECRET_DOMAIN_NAME}"
           path: "/"
@@ -97,7 +97,7 @@ spec:
         spec:
           failureDomain: host
           replicated:
-            size: 2 # TODO 3
+            size: 3
         storageClass:
           enabled: true
           name: ceph-block
@@ -120,11 +120,11 @@ spec:
         spec:
           metadataPool:
             replicated:
-              size: 2 # TODO 3
+              size: 3
           dataPools:
             - failureDomain: host
               replicated:
-                size: 2 # TODO 3
+                size: 3
           metadataServer:
             activeCount: 1
             activeStandby: true
