@@ -1,0 +1,65 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: minio
+  namespace: dbms
+spec:
+  groups:
+    - name: minio
+      rules:
+        - alert: MinioAbsent
+          annotations:
+            description: MinIO component has dissapeared from Prometheus service discovery.
+            summary: MinIO component has disappeared.
+          expr: |
+            absent(up{job=~".*minio.*"} == 1)
+          for: 10m
+          labels:
+            severity: critical
+        - alert: MinioDiskOffline
+          annotations:
+            description: MinIO is reporting {{ $value }} disk(s) offline
+              on server {{ $labels.server }}
+            summary: MinIO disk(s) offline.
+          expr: |
+            minio_cluster_disk_offline_total != 0
+          for: 1m
+          labels:
+            severity: critical
+        - alert: MinioNodeOffline
+          annotations:
+            description: MinIO is reporting that node {{ $labels.server }} is offline.
+            summary: MinIO node is offline.
+          expr: |
+            minio_cluster_nodes_offline_total != 0
+          for: 1m
+          labels:
+            severity: critical
+        - alert: MinioClusterUsage
+          annotations:
+            description: MinIO cluster is reporting less than 10% storage free.
+              {{ $value | humanizePercentage }} of cluster storage is available.
+            summary: MinIO cluster is low on capacity.
+          expr: |
+            sum(minio_cluster_capacity_usable_free_bytes)
+              /
+            sum(minio_cluster_capacity_usable_total_bytes)
+              < .10
+          for: 15m
+          labels:
+            severity: warning
+        - alert: MinioNodeDiskUsage
+          annotations:
+            description:
+              MinIO node is reporting less than 10% disk space available.
+              {{ $value | humanizePercentage }} of disk space available on node {{ $labels.server }}
+            summary: MinIO node is low on disk space.
+          expr: |
+            sum(minio_node_disk_free_bytes) by (server)
+              /
+            sum(minio_node_disk_total_bytes) by (server)
+              < .10
+          for: 15m
+          labels:
+            severity: warning

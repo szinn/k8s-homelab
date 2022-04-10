@@ -1,0 +1,87 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: minio
+  namespace: dbms
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: /cluster/charts/kah-common-chart/
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+      interval: 5m
+  values:
+    image:
+      repository: quay.io/minio/minio
+      tag: RELEASE.2022-04-09T15-09-52Z
+    nameOverride: minio
+    env:
+      TZ: "${CONFIG_TIMEZONE}"
+      MINIO_PROMETHEUS_AUTH_TYPE: "public"
+      MINIO_UPDATE: "off"
+    envFrom:
+      - secretRef:
+          name: minio-secrets
+    args:
+      - server
+      - /data
+      - --address
+      - :9000
+      - --console-address
+      - :9001
+    service:
+      main:
+        type: LoadBalancer
+        loadBalancerIP: ${CONFIG_SVC_MINIO_ADDR}
+        enabled: true
+        ports:
+          http:
+            enabled: true
+            port: 9001
+          api:
+            enabled: true
+            port: 9000
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: traefik
+        annotations:
+          kubernetes.io/tls-acme: "true"
+          cert-manager.io/cluster-issuer: ${CONFIG_CERTIFICATE_ISSUER}
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
+        hosts:
+          - host: &host-minio "minio.${SECRET_DOMAIN_NAME}"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  port: 9001
+          - host: &host-s3 "s3.${SECRET_DOMAIN_NAME}"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  port: 9000
+        tls:
+          - secretName: minio-tls
+            hosts:
+              - *host-minio
+              - *host-s3
+    persistence:
+      data:
+        enabled: true
+        existingClaim: dbms-minio-nfs-pvc
+        mountPath: /data
+    podAnnotations:
+      secret.reloader.stakater.com/reload: "minio-secrets"
+    resources:
+      requests:
+        memory: 100Mi
+        cpu: 100m
+      limits:
+        memory: 750Mi

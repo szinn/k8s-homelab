@@ -1,0 +1,38 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: mysql
+  namespace: dbms
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://charts.bitnami.com/bitnami
+      chart: mysql
+      version: 8.9.0
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    architecture: standalone
+    primary:
+      service:
+        type: LoadBalancer
+        loadBalancerIP: ${CONFIG_SVC_MYSQL_ADDR}
+      persistence:
+        args:
+          - "--disable-log-bin"
+        existingClaim: dbms-mysql-pvc
+    auth:
+      existingSecret: mysql-secrets
+      database: ""
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+        namespace: dbms
+        interval: 3m
+        scrapeTimeout: 1m

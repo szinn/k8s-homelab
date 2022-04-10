@@ -1,0 +1,29 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: redis
+  namespace: dbms
+spec:
+  interval: 5m
+  timeout: 15m
+  chart:
+    spec:
+      # renovate: registryUrl=https://charts.bitnami.com/bitnami
+      chart: redis
+      version: 16.8.5
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    image:
+      repository: library/redis
+      tag: 6.2.6
+    auth:
+      enabled: false
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
