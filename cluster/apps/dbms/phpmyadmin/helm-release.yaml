@@ -22,7 +22,7 @@ spec:
     image:
       registry: docker.io
       repository: bitnami/phpmyadmin
-      tag: 5.1.3
+      tag: 5.1.2
     env:
       TZ: ${CONFIG_TIMEZONE}
     ingress:
