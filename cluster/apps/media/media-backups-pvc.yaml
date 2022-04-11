@@ -2,18 +2,18 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: minio-nfs-pv
-  namespace: dbms
+  name: media-backups-nfs-pv
+  namespace: media
 spec:
-  storageClassName: minio-nfs
+  storageClassName: media-backups-nfs
   capacity:
-    storage: 10Gi
+    storage: 1Mi
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: ${SECRET_NFS_SERVER}
-    path: "${SECRET_NFS_ROOTDIR}/S3"
+    path: "${SECRET_NFS_ROOTDIR}/backups/media"
   mountOptions:
     - nfsvers=4
     - tcp
@@ -22,17 +22,16 @@ spec:
     - noatime
     - nodiratime
     - nolock
-
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: dbms-minio-nfs-pvc
-  namespace: dbms
+  name: media-backups-pvc
+  namespace: media
 spec:
+  storageClassName: media-backups-nfs
   accessModes:
-    - ReadWriteOnce
-  storageClassName: minio-nfs
+    - ReadWriteMany
   resources:
     requests:
-      storage: 10Gi
+      storage: 1Mi

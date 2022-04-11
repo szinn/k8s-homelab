@@ -7,5 +7,6 @@ resources:
   - envoy-system
   - flux-system
   - home
+  - media
   - security
   - whoami

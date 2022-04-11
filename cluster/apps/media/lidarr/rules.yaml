@@ -1,0 +1,31 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  annotations:
+    prometheus-operator-validated: 'true'
+  name: lidarr
+  namespace: media
+spec:
+  groups:
+    - name: lidarr
+      rules:
+        - alert: LidarrExportarrAbsent
+          annotations:
+            description: >-
+              Lidarr Exportarr has disappeared from Prometheus service discovery.
+            summary: Lidarr exportarr is down.
+          expr: |
+            absent(up{job=~".*lidarr.*"} == 1)
+          for: 5m
+          labels:
+            severity: critical
+        - alert: LidarrDown
+          annotations:
+            description: Lidarr service is down.
+            summary: Lidarr is down.
+          expr: |
+            lidarr_system_status{job=~".*lidarr.*"} == 0
+          for: 5m
+          labels:
+            severity: critical

@@ -1,0 +1,31 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  annotations:
+    prometheus-operator-validated: 'true'
+  name: radarr-4k
+  namespace: media
+spec:
+  groups:
+    - name: radarr-4k
+      rules:
+        - alert: Radarr4KExportarrAbsent
+          annotations:
+            description: >-
+              Radarr-4K Exportarr has disappeared from Prometheus service discovery.
+            summary: Radarr-4K exportarr is down.
+          expr: |
+            absent(up{job=~".*radarr-4k.*"} == 1)
+          for: 5m
+          labels:
+            severity: critical
+        - alert: Radarr4KDown
+          annotations:
+            description: Radarr-4K service is down.
+            summary: Radarr-4K is down.
+          expr: |
+            radarr_system_status{job=~".*radarr-4k.*"} == 0
+          for: 5m
+          labels:
+            severity: critical

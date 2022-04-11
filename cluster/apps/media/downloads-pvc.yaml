@@ -2,18 +2,18 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: mediawiki-nfs-pv
-  namespace: home
+  name: downloads-nfs-pv
+  namespace: media
 spec:
-  storageClassName: mediawiki-nfs
+  storageClassName: downloads-nfs
   capacity:
-    storage: 10Gi
+    storage: 1Mi
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: ${SECRET_NFS_SERVER}
-    path: "${SECRET_NFS_ROOTDIR}/home/wiki"
+    path: "${SECRET_NFS_ROOTDIR}/media/downloads"
   mountOptions:
     - nfsvers=4
     - tcp
@@ -22,17 +22,16 @@ spec:
     - noatime
     - nodiratime
     - nolock
-
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: home-mediawiki-nfs-pvc
-  namespace: home
+  name: downloads-pvc
+  namespace: media
 spec:
+  storageClassName: downloads-nfs
   accessModes:
-    - ReadWriteOnce
-  storageClassName: mediawiki-nfs
+    - ReadWriteMany
   resources:
     requests:
-      storage: 10Gi
+      storage: 1Mi

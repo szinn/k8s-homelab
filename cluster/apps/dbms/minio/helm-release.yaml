@@ -75,7 +75,7 @@ spec:
     persistence:
       data:
         enabled: true
-        existingClaim: dbms-minio-nfs-pvc
+        existingClaim: dbms-minio-pvc
         mountPath: /data
     podAnnotations:
       secret.reloader.stakater.com/reload: "minio-secrets"
