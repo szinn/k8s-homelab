@@ -1,0 +1,52 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: pihole-ui
+  namespace: envoy-system
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    kubernetes.io/tls-acme: 'true'
+    cert-manager.io/cluster-issuer: ${CONFIG_CERTIFICATE_ISSUER}
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.middlewares: "envoy-system-add-pihole-admin-internal@kubernetescrd"
+spec:
+  rules:
+    - host: &host pihole-ui.${SECRET_DOMAIN_NAME}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: pihole
+                port:
+                  number: 80
+  tls:
+    - secretName: pihole-tls
+      hosts:
+        - *host
+
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: add-pihole-admin
+  namespace: envoy-system
+spec:
+  addPrefix:
+    prefix: "/admin"
+
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: add-pihole-admin-internal
+  namespace: envoy-system
+spec:
+  chain:
+    middlewares:
+      - name: traefik-system-internal@kubernetescrd
+      - name: envoy-system-add-pihole-admin@kubernetescrd

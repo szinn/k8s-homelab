@@ -8,7 +8,7 @@ resources:
   - bitnami-charts.yaml
   # - cetic-charts.yaml
   # - deliveryhero-charts.yaml
-  # - external-dns-charts.yaml
+  - external-dns-charts.yaml
   # - fluent-bit-charts.yaml
   # - grafana-charts.yaml
   # - hajimari-charts.yaml
@@ -25,7 +25,7 @@ resources:
   # - ricoberger-charts.yaml
   - rook-ceph-charts.yaml
   - runix-charts.yaml
-  # - stakater-charts.yaml
+  - stakater-charts.yaml
   - traefik-charts.yaml
   # - vmware-tanzu-charts.yaml
   # - weaveworks-kured-charts.yaml

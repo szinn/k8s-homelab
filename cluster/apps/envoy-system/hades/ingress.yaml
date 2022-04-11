@@ -1,0 +1,28 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hades-ui
+  namespace: envoy-system
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    kubernetes.io/tls-acme: 'true'
+    cert-manager.io/cluster-issuer: ${CONFIG_CERTIFICATE_ISSUER}
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
+spec:
+  rules:
+    - host: &host hades-ui.${SECRET_DOMAIN_NAME}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: hades
+                port:
+                  number: 5000
+  tls:
+    - secretName: hades-tls
+      hosts:
+        - *host
