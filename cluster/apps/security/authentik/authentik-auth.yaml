@@ -1,0 +1,10 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: security-auth
+  namespace: security
+spec:
+  chain:
+    middlewares:
+      - name: security-ak-outpost-traefik@kubernetescrd

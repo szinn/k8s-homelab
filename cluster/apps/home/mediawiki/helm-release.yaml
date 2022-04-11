@@ -37,7 +37,7 @@ spec:
         kubernetes.io/ingress.class: traefik
         cert-manager.io/cluster-issuer: ${CONFIG_CERTIFICATE_ISSUER}
         traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-        # traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-external-auth@kubernetescrd"
+        traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-external-auth@kubernetescrd"
         external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_NAME}"
         external-dns/is-public: "true"
       tls: true
