@@ -1,0 +1,38 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mediawiki-nfs-pv
+  namespace: home
+spec:
+  storageClassName: mediawiki-nfs
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    server: ${SECRET_NFS_SERVER}
+    path: "${SECRET_NFS_ROOTDIR}/home/wiki"
+  mountOptions:
+    - nfsvers=4
+    - tcp
+    - intr
+    - hard
+    - noatime
+    - nodiratime
+    - nolock
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: home-mediawiki-nfs-pvc
+  namespace: home
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: mediawiki-nfs
+  resources:
+    requests:
+      storage: 10Gi

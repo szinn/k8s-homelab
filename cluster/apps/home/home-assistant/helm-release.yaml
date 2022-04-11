@@ -1,0 +1,110 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: home-assistant
+  namespace: home
+spec:
+  releaseName: home-assistant
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://k8s-at-home.com/charts/
+      chart: home-assistant
+      version: 13.0.1
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+      interval: 5m
+  dependsOn:
+    - name: mysql
+      namespace: dbms
+  values:
+    image:
+      repository: ghcr.io/home-assistant/home-assistant
+      tag: 2022.4.1
+    persistence:
+      config:
+        enabled: true
+        existingClaim: home-home-assistant-pvc
+    extraEnv:
+      TZ: "${CONFIG_TIMEZONE}"
+    envFrom:
+      - secretRef:
+          name: home-assistant-secrets
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "traefik"
+        annotations:
+          kubernetes.io/tls-acme: "true"
+          cert-manager.io/cluster-issuer: ${CONFIG_CERTIFICATE_ISSUER}
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          # traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-external-auth@kubernetescrd"
+          external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_NAME}"
+          external-dns/is-public: "true"
+        hosts:
+          - host: &host-home "home.${SECRET_DOMAIN_NAME}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - secretName: home-assistant-tls
+            hosts:
+              - *host-home
+    securityContext:
+      privileged: true
+    metrics:
+      enabled: false
+    hostNetwork: true
+    dnsPolicy: ClusterFirstWithHostNet
+    probes:
+      liveness:
+        enabled: false
+      readiness:
+        enabled: false
+      startup:
+        enabled: false
+    mariadb:
+      enabled: false
+    postgresql:
+      enabled: false
+    podAnnotations:
+      secret.reloader.stakater.com/reload: home-assistant-secrets
+    addons:
+      codeserver:
+        enabled: true
+        image:
+          repository: codercom/code-server
+          tag: 4.2.0
+        workingDir: "/config"
+        git:
+          deployKeySecret: home-assistant-code-server-secret
+        args:
+          - --auth
+          - "none"
+          - --user-data-dir
+          - "/config/.vscode"
+          - --extensions-dir
+          - "/config/.vscode"
+        ingress:
+          enabled: true
+          ingressClassName: "traefik"
+          annotations:
+            kubernetes.io/tls-acme: "true"
+            cert-manager.io/cluster-issuer: ${CONFIG_CERTIFICATE_ISSUER}
+            traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+            traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
+          hosts:
+            - host: &host-code "ha-code.${SECRET_DOMAIN_NAME}"
+              paths:
+                - path: /
+                  pathType: Prefix
+          tls:
+            - secretName: home-assistant-code-server-tls
+              hosts:
+                - *host-code
+        volumeMounts:
+          - name: config
+            mountPath: /config
