@@ -54,6 +54,22 @@ spec:
         prometheusOperator: true
     kubeControllerManager:
       enabled: false
+    kubeEtcd:
+      enabled: false
+    kubelet:
+      enabled: true
+      serviceMonitor:
+        metricRelabelings:
+          - action: replace
+            sourceLabels:
+              - node
+            targetLabel: instance
+    kubeApiServer:
+      enabled: true
+    kubeProxy:
+      enabled: false
+    kubeScheduler:
+      enabled: false
     alertmanager:
       ingress:
         enabled: true
@@ -144,16 +160,6 @@ spec:
               sourceLabels:
                 - __meta_kubernetes_pod_node_name
               targetLabel: kubernetes_node
-    kubelet:
-      enabled: true
-      serviceMonitor:
-        metricRelabelings:
-          - action: replace
-            sourceLabels:
-              - node
-            targetLabel: instance
-    kubeApiServer:
-      enabled: true
     prometheusOperator:
       prometheusConfigReloader:
         resources:
