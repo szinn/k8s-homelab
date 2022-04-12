@@ -6,7 +6,7 @@ resources:
   - fluent-bit
   - loki-stack
   - grafana
-  # - botkube
-  # - teslamate
-  # - unifi-poller
-  # - node-problem-detector
+  - botkube
+  - teslamate
+  - unifi-poller
+  - node-problem-detector

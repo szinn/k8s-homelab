@@ -7,13 +7,13 @@ resources:
   - authentik-charts.yaml
   - bitnami-charts.yaml
   # - cetic-charts.yaml
-  # - deliveryhero-charts.yaml
+  - deliveryhero-charts.yaml
   - external-dns-charts.yaml
   - fluent-bit-charts.yaml
   - grafana-charts.yaml
   # - hajimari-charts.yaml
   # - hashicorp-charts.yaml
-  # - infracloudio-charts.yaml
+  - infracloudio-charts.yaml
   - jetstack-charts.yaml
   - k8s-at-home-charts.yaml
   # - kasten-charts.yaml
