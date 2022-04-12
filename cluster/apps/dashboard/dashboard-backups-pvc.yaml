@@ -1,0 +1,37 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: dashboard-backups-nfs-pv
+  namespace: dashboard
+spec:
+  storageClassName: dashboard-backups-nfs
+  capacity:
+    storage: 1Mi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    server: ${SECRET_NFS_SERVER}
+    path: "${SECRET_NFS_ROOTDIR}/backups/dashboard"
+  mountOptions:
+    - nfsvers=4
+    - tcp
+    - intr
+    - hard
+    - noatime
+    - nodiratime
+    - nolock
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: dashboard-backups-pvc
+  namespace: dashboard
+spec:
+  storageClassName: dashboard-backups-nfs
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Mi

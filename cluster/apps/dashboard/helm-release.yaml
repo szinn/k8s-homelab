@@ -45,6 +45,11 @@ spec:
         size: 1Gi
         mountPath: /config
         skipuninstall: true
+      backup:
+        enabled: true
+        existingClaim: dashboard-backups-pvc
+        mountPath: /backups
+        readOnly: false
     resources:
       requests:
         memory: 350Mi
