@@ -1,0 +1,204 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: kube-prometheus-stack
+  namespace: monitoring
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://prometheus-community.github.io/helm-charts
+      chart: kube-prometheus-stack
+      version: 34.9.0
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus-community-charts
+        namespace: flux-system
+      interval: 5m
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    fullnameOverride: prometheus
+    defaultRules:
+      create: true
+      rules:
+        alertmanager: true
+        etcd: true
+        configReloaders: true
+        general: true
+        k8s: true
+        kubeApiserver: true
+        kubeApiserverAvailability: true
+        kubeApiserverSlos: true
+        kubelet: true
+        kubeProxy: false
+        kubePrometheusGeneral: true
+        kubePrometheusNodeRecording: true
+        kubernetesApps: true
+        kubernetesResources: true
+        kubernetesStorage: true
+        kubernetesSystem: true
+        kubeScheduler: false
+        kubeStateMetrics: true
+        network: true
+        node: true
+        nodeExporterAlerting: true
+        nodeExporterRecording: true
+        prometheus: true
+        prometheusOperator: true
+    kubeControllerManager:
+      enabled: false
+    alertmanager:
+      ingress:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: traefik
+          kubernetes.io/tls-acme: "true"
+          cert-manager.io/cluster-issuer: ${CONFIG_CERTIFICATE_ISSUER}
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
+        hosts:
+          - "alerts.${SECRET_DOMAIN_NAME}"
+        path: /
+        pathType: Prefix
+        tls:
+          - secretName: alert-manager-tls
+            hosts:
+              - "alerts.${SECRET_DOMAIN_NAME}"
+      config:
+        global:
+          resolve_timeout: 5m
+        route:
+          group_by: ["alertname", "job"]
+          group_wait: 30s
+          group_interval: 5m
+          repeat_interval: 6h
+          receiver: "slack"
+          routes:
+            - match:
+                alertname: Watchdog
+              receiver: "null"
+              continue: false
+            - match:
+                alertname: CPUThrottlingHigh
+              receiver: "null"
+              continue: false
+            - match:
+                alertname: InfoInhibitor
+              receiver: "null"
+              continue: false
+            - receiver: "slack"
+        receivers:
+          - name: 'null'
+          - name: 'slack'
+            slack_configs:
+              - channel: '#k8s'
+                icon_url: https://avatars3.githubusercontent.com/u/3380462
+                username: 'AlertManager'
+                send_resolved: true
+                title: |-
+                  [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ if ne .CommonAnnotations.summary ""}}{{ .CommonAnnotations.summary }} {{ else if ne .CommonAnnotations.message ""}}{{ .CommonAnnotations.message }} {{ else if ne .CommonAnnotations.description ""}}{{ .CommonAnnotations.description }} {{ else }}{{ .CommonLabels.alertname }}{{ end }}
+                text: >-
+                  {{ range .Alerts -}}
+                    *Alert:* {{ .Annotations.title }}{{ if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}
+
+                  {{ if ne .Annotations.summary ""}}*Summary:* {{ .Annotations.summary }} {{ else if ne .Annotations.message ""}}*Message:* {{ .Annotations.message }} {{ else if ne .Annotations.description ""}}*Description:* {{ .Annotations.description }}{{ end }}
+
+                  *Details:*
+                    {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
+                    {{ end }}
+                  {{ end }}
+        inhibit_rules:
+          - source_match:
+              severity: 'critical'
+            target_match:
+              severity: 'warning'
+            equal: ['alertname', 'namespace']
+        templates:
+          - /etc/alertmanager/config/*.tmpl
+      alertmanagerSpec:
+        storage:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: ceph-block
+              resources:
+                requests:
+                  storage: 1Gi
+    kube-state-metrics:
+      fullnameOverride: kube-state-metrics
+    prometheus-node-exporter:
+      fullnameOverride: node-exporter
+      prometheus:
+        monitor:
+          enabled: true
+          relabelings:
+            - action: replace
+              regex: (.*)
+              replacement: $1
+              sourceLabels:
+                - __meta_kubernetes_pod_node_name
+              targetLabel: kubernetes_node
+    kubelet:
+      enabled: true
+      serviceMonitor:
+        metricRelabelings:
+          - action: replace
+            sourceLabels:
+              - node
+            targetLabel: instance
+    kubeApiServer:
+      enabled: true
+    prometheusOperator:
+      prometheusConfigReloader:
+        resources:
+          requests:
+            cpu: 100m
+            memory: 50Mi
+          limits:
+            cpu: 200m
+            memory: 100Mi
+    prometheus:
+      ingress:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: traefik
+          kubernetes.io/tls-acme: "true"
+          cert-manager.io/cluster-issuer: ${CONFIG_CERTIFICATE_ISSUER}
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
+        hosts:
+          - "prometheus.${SECRET_DOMAIN_NAME}"
+        path: /
+        pathType: Prefix
+        tls:
+          - secretName: prometheus-tls
+            hosts:
+              - "prometheus.${SECRET_DOMAIN_NAME}"
+      prometheusSpec:
+        ruleSelector: {}
+        ruleNamespaceSelector: {}
+        ruleSelectorNilUsesHelmValues: false
+        serviceMonitorSelector: {}
+        serviceMonitorNamespaceSelector: {}
+        serviceMonitorSelectorNilUsesHelmValues: false
+        podMonitorSelector: {}
+        podMonitorNamespaceSelector: {}
+        podMonitorSelectorNilUsesHelmValues: false
+        retention: 6h
+        enableAdminAPI: true
+    grafana:
+      enabled: false
+      forceDeployDashboards: true
+
+  valuesFrom:
+    - kind: Secret
+      name: kube-prometheus-stack-secrets
+      valuesKey: slack-webhook
+      targetPath: alertmanager.config.global.slack_api_url
+      optional: false
