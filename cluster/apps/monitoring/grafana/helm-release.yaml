@@ -1,0 +1,183 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: grafana
+  namespace: monitoring
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://grafana.github.io/helm-charts
+      chart: grafana
+      version: 6.26.0
+      sourceRef:
+        kind: HelmRepository
+        name: grafana-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    image:
+      repository: grafana/grafana
+      tag: 8.4.5
+    deploymentStrategy:
+      type: Recreate
+    persistence:
+      enabled: true
+      existingClaim: monitoring-grafana-pvc
+    env:
+      GF_EXPLORE_ENABLED: true
+      GF_SECURITY_ALLOW_EMBEDDING: true
+      GF_LOG_FILTERS: rendering:debug
+      GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: "natel-discrete-panel,pr0ps-trackmap-panel,panodata-map-panel"
+      GF_DATE_FORMATS_FULL_DATE: "MMM Do, YYYY hh:mm:ss a"
+      GF_PANELS_DISABLE_SANITIZE_HTML: true
+      GF_DATE_FORMATS_USE_BROWSER_LOCALE: true
+    admin:
+      existingSecret: grafana-secrets
+      userKey: adminUser
+      passwordKey: adminPassword
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: traefik
+        kubernetes.io/tls-acme: "true"
+        cert-manager.io/cluster-issuer: ${CONFIG_CERTIFICATE_ISSUER}
+        traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+        traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
+      hosts:
+        - "grafana.${SECRET_DOMAIN_NAME}"
+      path: /
+      pathType: Prefix
+      tls:
+        - secretName: grafana-tls
+          hosts:
+            - "grafana.${SECRET_DOMAIN_NAME}"
+    plugins:
+      - pr0ps-trackmap-panel
+      - grafana-clock-panel
+      - grafana-piechart-panel
+      - grafana-worldmap-panel
+      - natel-discrete-panel
+      - vonage-status-panel
+      - https://github.com/panodata/panodata-map-panel/releases/download/0.16.0/panodata-map-panel-0.16.0.zip;grafana-worldmap-panel-ng
+      - redis-datasource
+    podAnnotations:
+      configmap.reloader.stakater.com/reload: "grafana"
+    serviceMonitor:
+      enabled: true
+    serviceAccount:
+      autoMount: true
+    dashboardProviders:
+      dashboardproviders.yaml:
+        apiVersion: 1
+        providers:
+          - name: 'default'
+            orgId: 1
+            folder: ''
+            type: file
+            disableDeletion: false
+            allowUiUpdates: true
+            options:
+              path: /var/lib/grafana/dashboards/default
+    dashboards:
+      default:
+        1-node-exporter:
+          url: https://grafana.com/api/dashboards/11074/revisions/9/download
+          datasource: Prometheus
+        node-exporter-full:
+          gnetId: 1860
+          revision: 23
+          datasource: Prometheus
+        prometheus-exporter-summary:
+          url: https://raw.githubusercontent.com/billimek/k8s-gitops/master/monitoring/grafana/dashboards/prometheus_exporter_summary.json
+          datasource: Prometheus
+        mysql-overview:
+          gnetId: 7362
+          revision: 5
+          datasource: Prometheus
+        postgres-overview:
+          gnetId: 9628
+          revision: 7
+          datasource: Prometheus
+        traefik:
+          gnetId: 11462
+          revision: 1
+          datasource: Prometheus
+        # Ref: https://grafana.com/grafana/dashboards/2842
+        ceph-cluster:
+          gnetId: 2842
+          revision: 14
+          datasource: Prometheus
+        # Ref: https://grafana.com/grafana/dashboards/5336
+        ceph-osd:
+          gnetId: 5336
+          revision: 5
+          datasource: Prometheus
+        # Ref: https://grafana.com/grafana/dashboards/5342
+        ceph-pools:
+          gnetId: 5342
+          revision: 5
+          datasource: Prometheus
+        # Ref: https://grafana.com/grafana/dashboards/11315
+        unifi-client-insights:
+          gnetId: 11315
+          revision: 8
+          datasource: Prometheus
+        # Ref: https://grafana.com/grafana/dashboards/11311
+        unifi-network-sites:
+          gnetId: 11311
+          revision: 4
+          datasource: Prometheus
+        # Ref: https://grafana.com/grafana/dashboards/11314
+        unifi-uap-insights:
+          gnetId: 11314
+          revision: 9
+          datasource: Prometheus
+        # Ref: https://grafana.com/grafana/dashboards/11312
+        unifi-usw-insights:
+          gnetId: 11312
+          revision: 8
+          datasource: Prometheus
+        minio:
+          gnetId: 13502
+          revision: 10
+          datasource: Prometheus
+        redis:
+          gnetId: 12776
+          revision: 2
+          datasource: Redis
+    sidecar:
+      datasources:
+        enabled: true
+        searchNamespace: ALL
+      dashboards:
+        enabled: true
+        searchNamespace: ALL
+    datasources:
+      datasources.yaml:
+        apiVersion: 1
+        # list of datasources that should be deleted from the database
+        deleteDatasources:
+          - name: Loki
+            orgId: 1
+        datasources:
+          - name: Prometheus
+            type: prometheus
+            access: proxy
+            url: http://prometheus-prometheus.monitoring:9090/
+            isDefault: false
+    grafana.ini:
+      server:
+        root_url: "https://grafana.${SECRET_DOMAIN_NAME}"
+      paths:
+        data: /var/lib/grafana/data
+        logs: /var/log/grafana
+        plugins: /var/lib/grafana/plugins
+        provisioning: /etc/grafana/provisioning
+      analytics:
+        check_for_updates: false
+      log:
+        mode: console
+      grafana_net:
+        url: https://grafana.net

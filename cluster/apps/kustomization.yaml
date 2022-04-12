@@ -8,5 +8,6 @@ resources:
   - flux-system
   - home
   - media
+  - monitoring
   - security
   - whoami
