@@ -60,6 +60,58 @@ spec:
         enabled: true
         urlPrefix: /
 
+      resources:
+        mgr:
+          limits:
+            cpu: "500m"
+            memory: "1Gi"
+          requests:
+            cpu: "500m"
+            memory: "512Mi"
+        mon:
+          limits:
+            cpu: "1"
+            memory: "2Gi"
+          requests:
+            cpu: "500m"
+            memory: "1Gi"
+        osd:
+          limits:
+            cpu: "1"
+            memory: "4Gi"
+          requests:
+            cpu: "1"
+            memory: "4Gi"
+        prepareosd:
+          limits:
+            memory: "200Mi"
+          requests:
+            memory: "50Mi"
+        mgr-sidecar:
+          limits:
+            memory: "100Mi"
+          requests:
+            memory: "40Mi"
+        crashcollector:
+          limits:
+            cpu: "500m"
+            memory: "60Mi"
+          requests:
+            cpu: "500m"
+            memory: "60Mi"
+        logcollector:
+          limits:
+            cpu: "500m"
+            memory: "1Gi"
+          requests:
+            cpu: "500m"
+            memory: "100Mi"
+        cleanup:
+          limits:
+            memory: "1Gi"
+          requests:
+            memory: "100Mi"
+
       storage:
         useAllNodes: false
         useAllDevices: false
