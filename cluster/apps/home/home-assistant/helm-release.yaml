@@ -28,7 +28,7 @@ spec:
       config:
         enabled: true
         existingClaim: home-home-assistant-pvc
-    extraEnv:
+    env:
       TZ: "${CONFIG_TIMEZONE}"
     envFrom:
       - secretRef:
