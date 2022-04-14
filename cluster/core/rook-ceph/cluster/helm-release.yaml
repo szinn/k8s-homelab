@@ -29,7 +29,7 @@ spec:
       enabled: false
     monitoring:
       enabled: true
-      createPrometheusRules: true
+      createPrometheusRules: false
     configOverride: |
       [global]
       bdev_enable_discard = true
@@ -113,13 +113,6 @@ spec:
           metadataServer:
             activeCount: 1
             activeStandby: true
-            resources:
-              limits:
-                cpu: "2000m"
-                memory: "4Gi"
-              requests:
-                cpu: "1000m"
-                memory: "4Gi"
         storageClass:
           enabled: true
           isDefault: false
