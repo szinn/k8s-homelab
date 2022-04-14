@@ -11,15 +11,23 @@ spec:
     spec:
       # renovate: registryUrl=https://charts.rook.io/release
       chart: rook-ceph
-      version: v1.8.8
+      version: v1.9.0
       sourceRef:
         kind: HelmRepository
         name: rook-ceph-charts
         namespace: flux-system
+  install:
+    createNamespace: true
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  upgrade:
+    crds: CreateReplace
+    remediation:
+      retries: 3
   values:
     crds:
       enabled: true
-
     csi:
       kubeletDirPath: /var/lib/kubelet
       enableCSIHostNetwork: true
@@ -28,13 +36,12 @@ spec:
           operator: "Exists"
         - effect: "NoSchedule"
           operator: "Exists"
-
     monitoring:
       enabled: true
-
     resources:
       requests:
         cpu: 100m
         memory: 128Mi
       limits:
+        cpu: 1000m
         memory: 256Mi

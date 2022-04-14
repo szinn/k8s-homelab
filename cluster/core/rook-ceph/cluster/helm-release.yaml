@@ -10,107 +10,40 @@ spec:
     spec:
       # renovate: registryUrl=https://charts.rook.io/release
       chart: rook-ceph-cluster
-      version: v1.8.8
+      version: v1.9.0
       sourceRef:
         kind: HelmRepository
         name: rook-ceph-charts
         namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
   dependsOn:
     - name: rook-ceph
   values:
     toolbox:
       enabled: false
-
     monitoring:
       enabled: true
-
+      createPrometheusRules: true
     configOverride: |
       [global]
       bdev_enable_discard = true
       bdev_async_discard = true
 
     cephClusterSpec:
-      mgr:
-        count: 2
+      crashCollector:
+        disable: false
       mon:
         count: 3
-      healthCheck:
-        livenessProbe:
-          mon:
-            probe:
-              timeoutSeconds: 5
-          mgr:
-            probe:
-              timeoutSeconds: 5
-          osd:
-            probe:
-              timeoutSeconds: 5
-        startupProbe:
-          mon:
-            probe:
-              timeoutSeconds: 5
-          mgr:
-            probe:
-              timeoutSeconds: 5
-          osd:
-            probe:
-              timeoutSeconds: 5
 
       dashboard:
         enabled: true
         urlPrefix: /
-
-      resources:
-        mgr:
-          limits:
-            cpu: "500m"
-            memory: "1Gi"
-          requests:
-            cpu: "500m"
-            memory: "512Mi"
-        mon:
-          limits:
-            cpu: "1"
-            memory: "2Gi"
-          requests:
-            cpu: "500m"
-            memory: "1Gi"
-        osd:
-          limits:
-            cpu: "1"
-            memory: "4Gi"
-          requests:
-            cpu: "1"
-            memory: "4Gi"
-        prepareosd:
-          limits:
-            memory: "200Mi"
-          requests:
-            memory: "50Mi"
-        mgr-sidecar:
-          limits:
-            memory: "100Mi"
-          requests:
-            memory: "40Mi"
-        crashcollector:
-          limits:
-            cpu: "500m"
-            memory: "60Mi"
-          requests:
-            cpu: "500m"
-            memory: "60Mi"
-        logcollector:
-          limits:
-            cpu: "500m"
-            memory: "1Gi"
-          requests:
-            cpu: "500m"
-            memory: "100Mi"
-        cleanup:
-          limits:
-            memory: "1Gi"
-          requests:
-            memory: "100Mi"
 
       storage:
         useAllNodes: false
@@ -143,6 +76,12 @@ spec:
           - secretName: rook-tls
             hosts:
               - "rook.${SECRET_DOMAIN_NAME}"
+
+    cephBlockPoolsVolumeSnapshotClass:
+      enabled: true
+      name: csi-rbdplugin-snapclass
+      annotations:
+        k10.kasten.io/is-snapshot-class: "true"
 
     cephBlockPools:
       - name: ceph-blockpool
@@ -180,6 +119,13 @@ spec:
           metadataServer:
             activeCount: 1
             activeStandby: true
+            resources:
+              limits:
+                cpu: "2000m"
+                memory: "4Gi"
+              requests:
+                cpu: "1000m"
+                memory: "4Gi"
         storageClass:
           enabled: true
           isDefault: false
