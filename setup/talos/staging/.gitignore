@@ -1,0 +1,4 @@
+stage-[1-9].yaml
+controlplane.yaml
+worker.yaml
+talosconfig
