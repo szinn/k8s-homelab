@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - dashboard
   - dbms
+  - dev
   - envoy-system
   - flux-system
   - home

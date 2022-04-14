@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: actions-runner-controller-webhook
+    namespace: dev
+stringData:
+    github_webhook_secret_token: ENC[AES256_GCM,data:23DIteU0ysrKTjKrac/8ZjCNlsyJ79tYWvSFBVrczHtgCM52,iv:FjPvAqMrAENHjtgh02KtJClavOBfXGOcNN3xxvUZMXY=,tag:9yCWSpmrsYAUr0ZTsSwhLw==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1p28u8xjm5sf7jdavc8xsqtw7lxgscefxs7a5dtqszr2885xeputsh9y64y
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBMQ3poRUtYM2RXekxDRXl4
+            VWJETElHbjMxYklJanFGRnZXYURoM3YzZ0IwCjdaYkV1bUo5MXVvbGhnRVM2S1lC
+            UjNKSTFIclE3aWs2a2dCcTRva2xlMTQKLS0tIGV0WlpYNFF0SU9SYVFsSitiendy
+            VHhITktUbzc3WVFXbmluM1pwc2dhMm8K5Idp5mXG7cKavNFiBNd42GQpJGMUJBXn
+            TlmhA3AOcSyrLfyvIPbsKy9fOlHem0egZHpbRL4hqvK5Ro1bpYMWfA==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-04-14T23:56:09Z"
+    mac: ENC[AES256_GCM,data:TnvTBEmXnjmI8dBj7be6HvUkQeentT9M8avDHbtgIcfakOqNzOtdED5E2q+kCdNDTTU9FOocPVuTikoKjQ2PgTjvvBxmJgD+dxcyPtsHgMViyqRJqR5StKrTd+K+j21690lmJljHpcIU3ZwStJN+1obz4YdzTvDvCVL/gNOREpY=,iv:Hwf/tki6ydLH4/wsCSOhQD7svfjSbFPKnJKcTDSYwhM=,tag:Py1LaAVkZPMegUHLZEcXeg==,type:str]
+    pgp: []
+    encrypted_regex: ((?i)(displayname|email|pass|secret($|[^N])|key|token|^data$|^stringData))
+    version: 3.7.2
