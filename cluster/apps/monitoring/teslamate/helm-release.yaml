@@ -27,7 +27,11 @@ spec:
     env:
       TZ: ${CONFIG_TIMEZONE}
       DISABLE_MQTT: "true"
-      DATABASE_PASS: ${TESLAMATE_POSTGRES_PASSWORD}
+    envValueFrom:
+      DATABASE_PASS:
+        secretKeyRef:
+          name: teslamate-secrets
+          key: postgress-password
 
     postgresql:
       enabled: true
@@ -37,7 +41,6 @@ spec:
       postgresqlUsername: teslamate
       postgresqlDatabase: teslamate
       postgresqlDataDir: "/data/pgdata"
-      postgresqlPassword: ${TESLAMATE_POSTGRES_PASSWORD}
       persistence:
         enabled: true
         existingClaim: monitoring-teslamate-pvc
@@ -61,3 +64,10 @@ spec:
           - secretName: teslamate-tls
             hosts:
               - *host
+
+  valuesFrom:
+    - kind: Secret
+      name: teslamate-secrets
+      valuesKey: postgress-password
+      targetPath: postgresql.postgresqlPassword
+      optional: false
