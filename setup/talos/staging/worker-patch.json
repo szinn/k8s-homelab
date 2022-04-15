@@ -12,6 +12,11 @@
       ]
     }
   },
+  {"op": "add", "path": "/machine/kubelet/extraArgs", "value":
+    {
+      "rotate-server-certificates": true
+    }
+  },
   {"op": "replace", "path": "/cluster/network/podSubnets/0", "value": "10.50.0.0/16"},
   {"op": "replace", "path": "/cluster/network/serviceSubnets/0", "value": "10.51.0.0/16"}
 ]
