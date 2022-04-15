@@ -25,7 +25,6 @@ spec:
       tag: 1.37.1-debian-10-r20
     mediawikiName: "WilZinn World"
     mediawikiHost: "wiki.${SECRET_DOMAIN_NAME}"
-    mediawikiPassword: ${MEDIAWIKI_UPGRADE_PASSWORD}
     extraEnvVarsSecret: wiki-secrets
     ingress:
       enabled: true
@@ -56,3 +55,9 @@ spec:
     mariadb:
       enabled: false
     allowEmptyPassword: false
+  valuesFrom:
+    - kind: Secret
+      name: wiki-secrets
+      valuesKey: mediawiki-upgrade-password
+      targetPath: mediawikiPassword
+      optional: false
