@@ -37,7 +37,7 @@ spec:
         kubeApiserverAvailability: true
         kubeApiserverSlos: true
         kubelet: true
-        kubeProxy: false
+        kubeProxy: true
         kubePrometheusGeneral: true
         kubePrometheusNodeRecording: true
         kubernetesApps: true
@@ -67,7 +67,7 @@ spec:
     kubeApiServer:
       enabled: true
     kubeProxy:
-      enabled: false
+      enabled: true
     kubeScheduler:
       enabled: false
     alertmanager:
