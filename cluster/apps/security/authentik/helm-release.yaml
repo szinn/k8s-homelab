@@ -44,7 +44,7 @@ spec:
             - *host
 
     geoip:
-      enabled: false
+      enabled: true
 
     envValueFrom:
       AUTHENTIK_EMAIL__HOST:
@@ -127,3 +127,15 @@ spec:
         create: true
       serviceMonitor:
         create: true
+
+  valuesFrom:
+    - kind: Secret
+      name: authentik-secrets
+      valuesKey: AUTHENTIK_GEOIP_ACCOUNT_ID
+      targetPath: geoip.accountId
+      optional: false
+    - kind: Secret
+      name: authentik-secrets
+      valuesKey: AUTHENTIK_GEOIP_LICENSE_KEY
+      targetPath: geoip.licenseKey
+      optional: false
