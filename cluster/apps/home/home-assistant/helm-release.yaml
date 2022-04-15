@@ -69,7 +69,23 @@ spec:
     mariadb:
       enabled: false
     postgresql:
-      enabled: false
+      enabled: true
+      image:
+        repository: postgres
+        tag: '14.1'
+      postgresqlUsername: home-assistant
+      postgresqlPassword: home-assistant
+      postgresqlDatabase: home-assistant
+      postgresqlDataDir: "/data/pgdata"
+      persistence:
+        enabled: true
+        storageClass: ceph-block
+        size: 8Gi
+        mountPath: "/data/"
+      shmVolume:
+        enabled: false
+      volumePermissions:
+        enabled: false
     podAnnotations:
       secret.reloader.stakater.com/reload: home-assistant-secrets
     addons:
