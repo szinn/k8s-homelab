@@ -55,11 +55,7 @@ The cluster is based on [Talos](https://www.talos.dev/v0.14/introduction/getting
 - [metallb/metallb](https://metallb.universe.tf): Manages IP assignment for exposed Kubernetes services.
 - [rook/rook](https://github.com/rook/rook): Distributed block storage for persistent storage.
 - [jetstack/cert-manager](https://cert-manager.io/docs/): Creates SSL certificates for services in my Kubernetes cluster.
-- [projectcalico/calico](https://github.com/projectcalico/calico): Internal Kubernetes networking plugin.
 - [kubernetes-sigs/external-dns](https://github.com/kubernetes-sigs/external-dns): Automatically manages DNS records from my cluster in a cloud DNS provider.
-- [kubernetes-sigs/nfs-subdir-external-provisioner](https://github.com/kubernetes-sigs/nfs-subdir-external-provisioner): Manages dynamic NFS persistent storage if Rook/NFS don't apply.
-- [rancher/system-upgrade-controller](https://github.com/rancher/system-upgrade-controller): Manages updating the k3s system.
-- [weaveworks/kured](https://github.com/weaveworks/kured): Manages rebooting the worker nodes when Ubuntu updates are applied that require a system reset.
 
 ### GitOps
 
@@ -159,7 +155,7 @@ This file is used as an optimization so that the YAML files will only be regener
 
 ### Setup Configuration
 
-The file [setup/cluster-config.cfg] defines a ConfigMap resource that will be filled in with values from the `env.XXX` configuration files and will be placed in the `/cluster/config/<cluster_type>` directory.
+The file [setup/cluster-config.cfg](./setup/cluster-config.cfg) defines a ConfigMap resource that will be filled in with values from the `env.XXX` configuration files and will be placed in the `/cluster/config/<cluster_type>` directory.
 Flux will load this file to the cluster at the beginning of the resolve phase so that the ConfigMap values are available through the Kustomization post-build step.
 Since the configuration values are stored in a ConfigMap resource, the resulting YAML file will make them visible in the repo. If you do not wish to have them visible, use the `cluster-secrets.sops.cfg` file described below.
 
@@ -244,8 +240,6 @@ Commit and push the change and Flux will take care of updating your cluster with
 
 Maintenance of the cluster is fairly minimal.
 
-- system-upgrade-controller keeps the k3s distribution up to date;
-- kured reboots worker nodes when an Ubuntu update requires a system reset;
 - renovate creates PRs to update helm charts, flux system files, or docker images in the cluster;
 - flux applies any merged PRs or changes to the repo to the cluster automatically.
 
