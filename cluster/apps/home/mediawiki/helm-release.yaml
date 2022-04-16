@@ -55,6 +55,16 @@ spec:
     mariadb:
       enabled: false
     allowEmptyPassword: false
+    initContainers:
+      - name: wait-for-mysql
+        image: busybox:latest
+        imagePullPolicy: IfNotPresent
+        command:
+          [
+            "sh",
+            "-c",
+            'until nc -vz mysql.dbms 3306; do echo "Waiting for mysql..."; sleep 2; done;'
+          ]
   valuesFrom:
     - kind: Secret
       name: wiki-secrets
