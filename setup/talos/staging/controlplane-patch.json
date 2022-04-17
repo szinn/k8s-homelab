@@ -15,6 +15,14 @@
       ]
     }
   },
+  {"op": "replace", "path": "/machine/time", "value":
+    {
+      "disabled": false,
+      "servers": [
+        "time.cloudflare.com"
+      ]
+    }
+  },
   {"op": "add", "path": "/machine/kubelet/extraArgs", "value":
     {
       "feature-gates": "MixedProtocolLBService=true",
