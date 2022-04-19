@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://charts.bitnami.com/bitnami
       chart: phpmyadmin
-      version: 9.0.18
+      version: 9.0.19
       sourceRef:
         kind: HelmRepository
         name: bitnami-charts
