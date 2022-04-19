@@ -53,7 +53,7 @@ spec:
         mountMath: "/downloads"
       backup:
         enabled: true
-        existingClaim: media-backups-pvc
+        existingClaim: media-backups-4k-pvc
         mountPath: /config/Backups
         readOnly: false
     podSecurityContext:
