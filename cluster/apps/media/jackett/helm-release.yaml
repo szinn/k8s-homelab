@@ -19,7 +19,7 @@ spec:
   values:
     image:
       repository: ghcr.io/k8s-at-home/jackett
-      tag: v0.20.912
+      tag: v0.20.915
     env:
       TZ: ${CONFIG_TIMEZONE}
     ingress:
