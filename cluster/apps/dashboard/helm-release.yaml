@@ -37,6 +37,22 @@ spec:
           - secretName: dashboard-tls
             hosts:
               - *host
+    initContainers:
+      new-install:
+        image: busybox:latest
+        imagePullPolicy: IfNotPresent
+        command:
+          [
+            "sh",
+            "/scripts/init-pvc.sh",
+          ]
+        volumeMounts:
+          - name: config
+            mountPath: /config
+          - name: backup
+            mountPath: /backups
+          - name: init-pvc
+            mountPath: /scripts
     persistence:
       config:
         enabled: true
@@ -50,6 +66,12 @@ spec:
         existingClaim: dashboard-backups-pvc
         mountPath: /backups
         readOnly: false
+      init-pvc:
+        enabled: true
+        type: configMap
+        name: init-pvc
+        mountPath: /scripts
+        readOnly: true
     resources:
       requests:
         memory: 350Mi
