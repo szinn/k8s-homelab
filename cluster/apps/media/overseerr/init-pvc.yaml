@@ -1,0 +1,18 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: overseerr-init-pvc
+  namespace: media
+data:
+  init-pvc.sh: |
+    #!/bin/bash
+    TARGET_DIR="/app/config"
+    SRC_FILE="/backups/init/overseerr.tar"
+    TEST_FILE="settings.json"
+
+    cd $TARGET_DIR
+    if ! test -f $TEST_FILE; then
+      echo "Installing $SRC_FILE"
+      tar xf $SRC_FILE
+    fi
