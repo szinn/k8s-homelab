@@ -24,9 +24,6 @@ spec:
   install:
     createNamespace: true
   values:
-    image:
-      name: ghcr.io/k8s-at-home/traefik
-      tag: 2.6.1
     deployment:
       enabled: true
       replicas: 1
