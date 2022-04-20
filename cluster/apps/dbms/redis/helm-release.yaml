@@ -19,11 +19,14 @@ spec:
       interval: 5m
   values:
     image:
-      repository: library/redis
-      tag: 6.2.6
+      registry: public.ecr.aws
+      repository: bitnami/redis
     auth:
       enabled: false
     metrics:
       enabled: true
+      image:
+        registry: public.ecr.aws
+        repository: bitnami/redis-exporter
       serviceMonitor:
         enabled: true

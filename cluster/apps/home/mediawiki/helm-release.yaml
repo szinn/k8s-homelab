@@ -21,8 +21,8 @@ spec:
       namespace: dbms
   values:
     image:
+      registry: public.ecr.aws
       repository: bitnami/mediawiki
-      tag: 1.37.1-debian-10-r20
     mediawikiName: "WilZinn World"
     mediawikiHost: "wiki.${SECRET_DOMAIN_NAME}"
     extraEnvVarsSecret: wiki-secrets

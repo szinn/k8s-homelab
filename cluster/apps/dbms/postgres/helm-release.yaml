@@ -18,8 +18,8 @@ spec:
       interval: 5m
   values:
     image:
+      registry: public.ecr.aws
       repository: bitnami/postgresql
-      tag: 14.1.0-debian-10-r80
     architecture: standalone
     auth:
       username: root
@@ -33,6 +33,9 @@ spec:
         existingClaim: dbms-postgres-pvc
     metrics:
       enabled: true
+      image:
+        registry: public.ecr.aws
+        repository: bitnami/postgres-exporter
       serviceMonitor:
         enabled: true
     commonAnnotations:

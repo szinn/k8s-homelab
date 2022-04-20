@@ -17,6 +17,9 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
+    image:
+      registry: public.ecr.aws
+      repository: bitnami/mysql
     architecture: standalone
     primary:
       service:
@@ -31,6 +34,9 @@ spec:
       database: ""
     metrics:
       enabled: true
+      image:
+        registry: public.ecr.aws
+        repository: bitnami/mysqld-exporter
       serviceMonitor:
         enabled: true
         namespace: dbms
