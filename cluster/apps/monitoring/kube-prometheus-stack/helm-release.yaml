@@ -186,7 +186,13 @@ spec:
           - secretName: prometheus-tls
             hosts:
               - "prometheus.${SECRET_DOMAIN_NAME}"
+      thanosService:
+        enabled: true
+      thanosServiceMonitor:
+        enabled: true
       prometheusSpec:
+        replicas: 3
+        replicaExternalLabelName: "replica"
         ruleSelector: {}
         ruleNamespaceSelector: {}
         ruleSelectorNilUsesHelmValues: false
@@ -198,6 +204,20 @@ spec:
         podMonitorSelectorNilUsesHelmValues: false
         retention: 6h
         enableAdminAPI: true
+        walCompression: true
+        storageSpec:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: "ceph-block"
+              resources:
+                requests:
+                  storage: 10Gi
+        thanos:
+          image: quay.io/thanos/thanos:v0.25.2
+          version: v0.25.2
+          objectStorageConfig:
+            name: thanos-objstore-secret
+            key: objstore.yml
     grafana:
       enabled: false
       forceDeployDashboards: true

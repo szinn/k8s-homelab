@@ -165,7 +165,7 @@ spec:
           - name: Prometheus
             type: prometheus
             access: proxy
-            url: http://prometheus-prometheus.monitoring:9090/
+            url: http://thanos-query:9090/
             isDefault: false
     grafana.ini:
       server:

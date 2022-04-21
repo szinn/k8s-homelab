@@ -8,5 +8,6 @@ resources:
   - grafana
   - botkube
   - teslamate
+  - thanos
   - unifi-poller
   - node-problem-detector
