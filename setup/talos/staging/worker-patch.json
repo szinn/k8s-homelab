@@ -2,7 +2,7 @@
   {"op": "remove", "path": "/machine/network"},
   {"op": "add", "path": "/machine/network", "value":
     {
-      "hostname": "!!HOSTNAME!!",
+      "hostname": "ZZ_HOSTNAME",
       "interfaces": [
         {
           "interface": "eth0",

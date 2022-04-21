@@ -16,11 +16,15 @@ build_config() {
 
   . $SETUP_CONFIG_ROOT/env.base
   if test -f  $SETUP_CONFIG_ROOT/env.$TARGET; then
+    echo "Loading configuration for $TARGET"
     . $SETUP_CONFIG_ROOT/env.$TARGET
   fi
 
-  if test -d $REPO_ROOT/cluster/$TARGET; then
+  if test -d $REPO_ROOT/cluster/config/$TARGET; then
     for i in cluster-config.cfg cluster-secrets.sops.cfg; do
+      if ! test -f $REPO_ROOT/cluster/config/$TARGET/$i; then
+        touch $REPO_ROOT/cluster/config/$TARGET/$i
+      fi
       if ! test -z "$(diff $i $REPO_ROOT/cluster/config/$TARGET/$i)"; then
         cp $i $REPO_ROOT/cluster/config/$TARGET
       fi
@@ -34,5 +38,9 @@ build_config() {
   done
 }
 
+for i in $SETUP_CLUSTERS; do
+  build_config yaml $i cluster/config/$i
+done
+
 build_config yaml common cluster/core
-build_config yaml main cluster/config/main cluster/apps
+build_config yaml main cluster/apps

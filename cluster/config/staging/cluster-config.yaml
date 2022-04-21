@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cluster-config
+  namespace: flux-system
+data:
+  CONFIG_TIMEZONE: America/Toronto
+  CONFIG_CERTIFICATE_ISSUER: letsencrypt-staging
+  CONFIG_METALLB_IP_RANGE: 10.0.40.81-10.0.40.95
+  CONFIG_SVC_TRAEFIK_ADDR: 10.0.40.81
+  CONFIG_SVC_MINIO_ADDR: 10.0.40.82
+  CONFIG_SVC_MYSQL_ADDR: 10.0.40.83
+  CONFIG_SVC_POSTGRES_ADDR: 10.0.40.84
+  CONFIG_SVC_QBITTORRENT_ADDR: 10.0.40.85
