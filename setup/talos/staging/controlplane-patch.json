@@ -2,7 +2,7 @@
   {"op": "remove", "path": "/machine/network"},
   {"op": "add", "path": "/machine/network", "value":
     {
-      "hostname": "!!HOSTNAME!!",
+      "hostname": "ZZ_HOSTNAME",
       "interfaces": [
         {
           "interface": "eth0",
@@ -29,9 +29,13 @@
       "rotate-server-certificates": true
     }
   },
-  {"op": "add", "path": "/cluster/proxy/extraArgs", "value":
+  {"op": "add", "path": "/cluster/proxy/disabled", "value": true },
+  {"op": "add", "path": "/cluster/network/cni", "value":
     {
-      "metrics-bind-address": "0.0.0.0:10249"
+      "name": "custom",
+      "urls": [
+        "https://raw.githubusercontent.com/szinn/k8s-homelab/main/setup/talos/staging/cilium-quick-install.yaml"
+      ]
     }
   },
   {"op": "add", "path": "/cluster/controllerManager/extraArgs", "value":
