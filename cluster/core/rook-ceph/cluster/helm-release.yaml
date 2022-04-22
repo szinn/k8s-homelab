@@ -39,10 +39,59 @@ spec:
       cephVersion:
         image: quay.io/ceph/ceph:v17.2.0
 
+      resources:
+        mgr:
+          requests:
+            cpu: "63m"
+            memory: "512M"
+          limits:
+            cpu: 2
+            memory: "1485M"
+        mon:
+          requests:
+            cpu: "49m"
+            memory: "1165M"
+          limits:
+            memory: "3390M"
+        osd:
+          requests:
+            cpu: "511m"
+            memory: "4067M"
+          limits:
+            memory: "4067M"
+        prepareosd:
+          requests:
+            cpu: "250m"
+            memory: "50Mi"
+          limits:
+            memory: "200Mi"
+        mgr-sidecar:
+          requests:
+            cpu: "49m"
+            memory: "79M"
+          limits:
+            memory: "227M"
+        crashcollector:
+          requests:
+            cpu: "15m"
+            memory: "64M"
+          limits:
+            memory: "64M"
+        logcollector:
+          requests:
+            cpu: "100m"
+            memory: "100M"
+          limits:
+            memory: "1G"
+        cleanup:
+          requests:
+            cpu: "250m"
+            memory: "100M"
+          limits:
+            memory: "1G"
+
       crashCollector:
         disable: false
-      mon:
-        count: 3
 
       dashboard:
         enabled: true
