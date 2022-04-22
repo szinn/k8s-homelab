@@ -1,0 +1,69 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: loki
+  namespace: monitoring
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://grafana.github.io/helm-charts
+      chart: loki
+      version: 2.11.0
+      sourceRef:
+        kind: HelmRepository
+        name: grafana-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    image:
+      repository: ghcr.io/k8s-at-home/loki
+    config:
+      storage_config:
+        aws:
+          bucketnames: loki
+          access_key_id: loki-data
+          endpoint: "minio.dbms:9000"
+          s3forcepathstyle: true
+          insecure: true
+        boltdb_shipper:
+          active_index_directory: /data/loki/index
+          cache_location: /data/loki/index_cache
+          resync_interval: 5s
+          shared_store: s3
+
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: traefik
+        kubernetes.io/tls-acme: "true"
+        cert-manager.io/cluster-issuer: ${CONFIG_CERTIFICATE_ISSUER}
+        traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+        traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
+      hosts:
+        - host: &host "loki-log.${SECRET_DOMAIN_NAME}"
+          paths:
+            - /
+      tls:
+        - secretName: loki-log-tls
+          hosts:
+            - *host
+
+    persistence:
+      enabled: false
+
+    serviceMonitor:
+      enabled: true
+
+  valuesFrom:
+    - kind: Secret
+      name: loki-secrets
+      valuesKey: secret-key
+      targetPath: config.storage_config.aws.secret_access_key
+      optional: false
+    - kind: Secret
+      name: loki-secrets
+      valuesKey: region
+      targetPath: config.storage_config.aws.region
+      optional: false

@@ -17,7 +17,7 @@ spec:
         namespace: flux-system
       interval: 5m
   dependsOn:
-    - name: loki-stack
+    - name: loki
       namespace: monitoring
   values:
     dashboards:
@@ -90,7 +90,7 @@ spec:
         [OUTPUT]
             Name loki
             Match *
-            Host loki-stack
+            Host loki
             Port 3100
             Auto_Kubernetes_labels on
             Labels cluster=local

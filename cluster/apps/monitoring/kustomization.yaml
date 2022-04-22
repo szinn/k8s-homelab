@@ -4,7 +4,7 @@ resources:
   - namespace.yaml
   - kube-prometheus-stack
   - fluent-bit
-  - loki-stack
+  - loki
   - grafana
   - botkube
   - teslamate
