@@ -19,8 +19,48 @@ spec:
   values:
     image:
       repository: ghcr.io/k8s-at-home/loki
+
+    # config:
+    #   auth_enabled: false
+    #   limits_config:
+    #     enforce_metric_name: false
+    #     reject_old_samples: true
+    #     reject_old_samples_max_age: 168h
+    #     ingestion_rate_mb: 16
+    #     ingestion_burst_size_mb: 24
+
+    #   schema_config:
+    #     configs:
+    #       - from: "2020-10-24"
+    #         store: boltdb-shipper
+    #         object_store: s3
+    #         schema: v11
+    #         index:
+    #           prefix: index_
+    #           period: 24h
+
+    #   storage_config:
+    #     boltdb_shipper:
+    #       active_index_directory: /data/loki/index
+    #       cache_location: /data/loki/index_cache
+    #       resync_interval: 5s
+    #       shared_store: s3
+
+    #     aws:
+    #       s3: s3://thanos:thanos-monitoring@minio.dbms.svc.cluster.local.:9000/loki
+    #       region: ca-wat-1
+    #       s3forcepathstyle: true
+    #       insecure: true
+
+    #   compactor:
+    #     # working_directory: /data/compactor
+    #     # shared_store: s3
+    #     # compaction_interval: 5m
+    #     retention_enabled: true
+
     persistence:
       enabled: true
       existingClaim: monitoring-loki-pvc
+
     serviceMonitor:
       enabled: true

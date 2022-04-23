@@ -41,7 +41,7 @@ spec:
             Parser docker
             DB /run/fluent-bit/flb_kube.db
             Refresh_Interval 30
-            Mem_Buf_Limit 5MB
+            Mem_Buf_Limit 10MB
       filters: |
         [FILTER]
             Name kubernetes
@@ -90,7 +90,7 @@ spec:
         [OUTPUT]
             Name loki
             Match *
-            Host loki
+            Host loki.monitoring
             Port 3100
             Auto_Kubernetes_labels on
             Labels cluster=local
