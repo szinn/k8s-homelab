@@ -58,9 +58,9 @@ spec:
     #     # compaction_interval: 5m
     #     retention_enabled: true
 
-    persistence:
-      enabled: true
-      existingClaim: monitoring-loki-pvc
+    # persistence:
+    #   enabled: true
+    #   existingClaim: monitoring-loki-pvc
 
     serviceMonitor:
       enabled: true

@@ -22,6 +22,7 @@ spec:
   values:
     dashboards:
       enabled: true
+    logLevel: info
     service:
       type: ClusterIP
       port: 2020
@@ -39,9 +40,13 @@ spec:
             Tag kube.*
             Path /var/log/containers/*.log
             Parser docker
+            Buffer_Chunk_Size 1024k
+            Buffer_Max_Size 1024k
             DB /run/fluent-bit/flb_kube.db
+            DB.locking true
             Refresh_Interval 30
-            Mem_Buf_Limit 10MB
+            Mem_Buf_Limit 1MB
+            Skip_Long_Lines On
       filters: |
         [FILTER]
             Name kubernetes
@@ -62,6 +67,7 @@ spec:
             Name grep
             Match kube.*
             Exclude kubernetes_container_name fluent-bit
+            Exclude kubernetes_container_name traefik
             Exclude kubernetes_container_name grafana-sc-dashboard
             Exclude kubernetes_container_name grafana-sc-datasource
             Exclude log "GET / HTTP/1.1"
@@ -94,9 +100,7 @@ spec:
             Port 3100
             Auto_Kubernetes_labels on
             Labels cluster=local
-            Label_keys $namespace, $container
-            #Labels job=fluent-bit, cluster=local
-            #Label_keys $log, $pod_name, $namespace, $host, $container, $image
+            Label_keys $namespace, $container, $host
     extraVolumes:
       - name: run
         hostPath:
