@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://fluent.github.io/helm-charts
       chart: fluent-bit
-      version: 0.19.23
+      version: 0.19.24
       sourceRef:
         kind: HelmRepository
         name: fluent-bit-charts
