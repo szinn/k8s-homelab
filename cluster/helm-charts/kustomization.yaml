@@ -7,6 +7,7 @@ resources:
   - bitnami-charts.yaml
   - deliveryhero-charts.yaml
   - external-dns-charts.yaml
+  - fairwinds-charts.yaml
   - fluent-bit-charts.yaml
   - grafana-charts.yaml
   - infracloudio-charts.yaml

@@ -12,3 +12,4 @@ resources:
   - unifi-poller
   - node-problem-detector
   - vector
+  - vpa
