@@ -1,0 +1,34 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: cf-ddns
+  namespace: cert-manager
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: kah-common-chart
+      version: 1.0.0
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    nameOverride: cf-ddns
+    image:
+      repository: docker.io/oznu/cloudflare-ddns
+      tag: latest
+      pullPolicy: IfNotPresent
+    env:
+      PROXIED: "true"
+      RRTYPE: "A"
+      DELETE_ON_STOP: "false"
+      DNS_SERVER: "1.1.1.1"
+    envFrom:
+      - secretRef:
+          name: cloudflare-secrets
+    service:
+      main:
+        enabled: false
