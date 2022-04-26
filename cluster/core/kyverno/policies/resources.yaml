@@ -11,6 +11,14 @@ spec:
           - resources:
               kinds:
                 - Pod
+      exclude:
+        any:
+          - resources:
+              annotations:
+                kyverno.io/ignore: "true"
+          - resources:
+              namespaces:
+                - "flux-system"
       mutate:
         patchStrategicMerge:
           spec:

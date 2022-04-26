@@ -6,6 +6,8 @@ metadata:
   namespace: rook-ceph
   labels:
     app: rook-direct-mount
+  annotations:
+    kyverno.io/ignore: "true"
 spec:
   replicas: 1
   selector:
@@ -15,6 +17,8 @@ spec:
     metadata:
       labels:
         app: rook-direct-mount
+      annotations:
+        kyverno.io/ignore: "true"
     spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
