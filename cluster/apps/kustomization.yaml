@@ -11,4 +11,4 @@ resources:
   - media
   - monitoring
   - security
-  - whoami
+  # - whoami
