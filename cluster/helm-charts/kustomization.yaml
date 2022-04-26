@@ -19,3 +19,4 @@ resources:
   - runix-charts.yaml
   - stakater-charts.yaml
   - traefik-charts.yaml
+  - vector-charts.yaml

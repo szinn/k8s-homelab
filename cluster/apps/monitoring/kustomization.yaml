@@ -1,9 +1,9 @@
+---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - namespace.yaml
   - kube-prometheus-stack
-  - fluent-bit
   - loki
   - grafana
   - botkube
@@ -11,3 +11,4 @@ resources:
   - thanos
   - unifi-poller
   - node-problem-detector
+  - vector
