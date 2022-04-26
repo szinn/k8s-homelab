@@ -13,3 +13,4 @@ resources:
   - node-problem-detector
   - vector
   - vpa
+  - goldilocks
