@@ -2,7 +2,7 @@
   {"op": "remove", "path": "/machine/network"},
   {"op": "add", "path": "/machine/network", "value":
     {
-      "hostname": "!!HOSTNAME!!",
+      "hostname": "ZZ_HOSTNAME",
       "interfaces": [
         {
           "interface": "eth0",
@@ -25,7 +25,7 @@
   },
   {"op": "add", "path": "/machine/kubelet/extraArgs", "value":
     {
-      "feature-gates": "MixedProtocolLBService=true",
+      "feature-gates": "GracefulNodeShutdown=true,MixedProtocolLBService=true",
       "rotate-server-certificates": true
     }
   },

@@ -8,7 +8,7 @@ resources:
   - envoy-system
   - flux-system
   - home
-  - media
-  - monitoring
+  # - media
+  # - monitoring
   - security
   # - whoami

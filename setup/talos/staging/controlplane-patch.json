@@ -29,18 +29,14 @@
       "rotate-server-certificates": true
     }
   },
-  {"op": "add", "path": "/cluster/proxy/disabled", "value": true },
-  {"op": "add", "path": "/cluster/network/cni", "value":
+  {"op": "add", "path": "/cluster/proxy/extraArgs", "value":
     {
-      "name": "custom",
-      "urls": [
-        "https://raw.githubusercontent.com/szinn/k8s-homelab/main/setup/talos/staging/cilium-quick-install.yaml"
-      ]
+      "metrics-bind-address": "0.0.0.0:10249"
     }
   },
   {"op": "add", "path": "/cluster/controllerManager/extraArgs", "value":
     {
-      "bind-address": "0.0.0.0"
+      "bind-address": "0.0.0.0:10249"
     }
   },
   {"op": "add", "path": "/cluster/scheduler/extraArgs", "value":
@@ -50,7 +46,7 @@
   },
   {"op": "replace", "path": "/cluster/extraManifests", "value":[
     "https://raw.githubusercontent.com/alex1989hu/kubelet-serving-cert-approver/v0.3.0/deploy/ha-install.yaml",
-    "https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml"
+     "https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml"
   ]},
   {"op": "replace", "path": "/cluster/network/podSubnets/0", "value": "10.50.0.0/16"},
   {"op": "replace", "path": "/cluster/network/serviceSubnets/0", "value": "10.51.0.0/16"}

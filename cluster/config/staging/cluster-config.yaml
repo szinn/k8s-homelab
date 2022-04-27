@@ -5,6 +5,7 @@ metadata:
   name: cluster-config
   namespace: flux-system
 data:
+  CONFIG_CLUSTER_NAME: staging
   CONFIG_TIMEZONE: America/Toronto
   CONFIG_CERTIFICATE_ISSUER: letsencrypt-staging
   CONFIG_METALLB_IP_RANGE: 10.0.40.81-10.0.40.95
