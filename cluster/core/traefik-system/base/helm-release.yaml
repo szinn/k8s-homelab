@@ -21,6 +21,8 @@ spec:
       namespace: cert-manager
     - name: metallb
       namespace: metallb-system
+    - name: kyverno
+      namespace: kyverno
   install:
     createNamespace: true
   values:
