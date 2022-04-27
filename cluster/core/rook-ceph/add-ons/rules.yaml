@@ -654,28 +654,28 @@ spec:
               Root volume (OSD and MON store) is dangerously full: {{ $value | humanize }}% free.
 
         # alert on nic packet errors and drops rates > 1% packets/s
-        - alert: CephNodeNetworkPacketDrops
-          expr: |
-            (
-              increase(node_network_receive_drop_total{device!="lo"}[1m]) +
-              increase(node_network_transmit_drop_total{device!="lo"}[1m])
-            ) / (
-              increase(node_network_receive_packets_total{device!="lo"}[1m]) +
-              increase(node_network_transmit_packets_total{device!="lo"}[1m])
-            ) >= 0.001 or (
-              increase(node_network_receive_drop_total{device!="lo"}[1m]) +
-              increase(node_network_transmit_drop_total{device!="lo"}[1m])
-            ) >= 50
-          for: 5m
-          labels:
-            severity: warning
-            type: ceph_default
-            oid: 1.3.6.1.4.1.50495.1.2.1.8.2
-          annotations:
-            summary: One or more Nics is seeing packet drops
-            description: >
-              Node {{ $labels.instance }} experiences packet drop > 0.01% or >
-              50 packets/s on interface {{ $labels.device }}.
+        # - alert: CephNodeNetworkPacketDrops
+        #   expr: |
+        #     (
+        #       increase(node_network_receive_drop_total{device!="lo"}[1m]) +
+        #       increase(node_network_transmit_drop_total{device!="lo"}[1m])
+        #     ) / (
+        #       increase(node_network_receive_packets_total{device!="lo"}[1m]) +
+        #       increase(node_network_transmit_packets_total{device!="lo"}[1m])
+        #     ) >= 0.001 or (
+        #       increase(node_network_receive_drop_total{device!="lo"}[1m]) +
+        #       increase(node_network_transmit_drop_total{device!="lo"}[1m])
+        #     ) >= 50
+        #   for: 5m
+        #   labels:
+        #     severity: warning
+        #     type: ceph_default
+        #     oid: 1.3.6.1.4.1.50495.1.2.1.8.2
+        #   annotations:
+        #     summary: One or more Nics is seeing packet drops
+        #     description: >
+        #       Node {{ $labels.instance }} experiences packet drop > 0.01% or >
+        #       50 packets/s on interface {{ $labels.device }}.
 
         - alert: CephNodeNetworkPacketErrors
           expr: |
