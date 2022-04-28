@@ -19,7 +19,7 @@ spec:
   values:
     image:
       repository: linuxserver/heimdall
-      tag: 2.2.2
+      tag: 2.4.12
     env:
       TZ: ${CONFIG_TIMEZONE}
     ingress:
