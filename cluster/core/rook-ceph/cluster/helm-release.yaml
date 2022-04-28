@@ -37,6 +37,7 @@ spec:
 
     cephClusterSpec:
       cephVersion:
+        # renovate: docker-image
         image: quay.io/ceph/ceph:v17.2.0
 
       resources:

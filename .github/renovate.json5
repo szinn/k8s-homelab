@@ -77,18 +77,30 @@
       ],
       "datasourceTemplate": "docker"
     },
+    // Generic Docker image Regex manager
+    {
+        "fileMatch": [
+          "cluster/.+\\.yaml$"
+        ],
+        "matchStrings": [
+          "# renovate: docker-image( registryUrl=(?<registryUrl>.*?))?( versioning=(?<versioning>.*=?))?\n .*: (?<depName>.*?):(?<currentValue>.*=?)"
+        ],
+        "datasourceTemplate": "docker",
+        "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}docker{{/if}}",
+        "registryUrlTemplate": "{{#if registryUrl}}{{{registryUrl}}}{{else}}{{/if}}"
+      },
 
-        // Generic charge Regex manager
-        {
-            "fileMatch": [
-                "cluster/^.*\\.yaml$"
-            ],
-            "matchStrings": [
-                "registryUrl=(?<registryUrl>.*?)\n *chart: (?<depName>.*?)\n *version: (?<currentValue>.*)\n"
-            ],
-            "datasourceTemplate": "helm"
-        }
-    ],
+      // Generic charge Regex manager
+      {
+          "fileMatch": [
+              "cluster/^.*\\.yaml$"
+          ],
+          "matchStrings": [
+              "registryUrl=(?<registryUrl>.*?)\n *chart: (?<depName>.*?)\n *version: (?<currentValue>.*)\n"
+          ],
+          "datasourceTemplate": "helm"
+      }
+  ],
 
     "packageRules": [
         // Setup datasources
