@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Uncomment to generate new node configurations
-# talosctl gen config "main" "https://10.0.40.32:6443" --config-patch-control-plane @controlplane-patch.json --config-patch-worker @worker-patch.json
+# talosctl gen config "main" "https://main.zinn.ca:6443" --config-patch-control-plane @controlplane-patch.json --config-patch-worker @worker-patch.json
 
 # Control plane configuration
 cat controlplane.yaml | sed -e "s/ZZ_HOSTNAME/k8s-1/" > k8s-1.yaml

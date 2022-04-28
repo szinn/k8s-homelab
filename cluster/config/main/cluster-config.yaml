@@ -6,6 +6,8 @@ metadata:
   namespace: flux-system
 data:
   CONFIG_CLUSTER_NAME: main
+  CONFIG_K8S_API_ADDR: 10.40.0.32
+  CONFIG_K8S_POD_CIDR: 10.40.0.0/16
   CONFIG_TIMEZONE: America/Toronto
   CONFIG_CERTIFICATE_ISSUER: letsencrypt-prod
   CONFIG_METALLB_IP_RANGE: 10.0.40.33-10.0.40.63

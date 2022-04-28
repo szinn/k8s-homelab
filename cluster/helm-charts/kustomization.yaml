@@ -5,6 +5,7 @@ resources:
   - actions-runner-controller-charts.yaml
   - authentik-charts.yaml
   - bitnami-charts.yaml
+  - cilium-charts.yaml
   - deliveryhero-charts.yaml
   - external-dns-charts.yaml
   - fairwinds-charts.yaml

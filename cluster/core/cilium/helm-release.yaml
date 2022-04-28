@@ -1,0 +1,106 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: cilium
+  namespace: kube-system
+  annotations:
+    meta.helm.sh/release-name: cilium
+    meta.helm.sh/release-namespace: kube-system
+  labels:
+    app.kubernetes.io/managed-by: Helm
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://helm.cilium.io
+      chart: cilium
+      version: 1.11.4
+      sourceRef:
+        kind: HelmRepository
+        name: cilium-charts
+        namespace: flux-system
+      interval: 5m
+  install:
+    remediation: # perform remediation when helm install fails
+      retries: 3
+  upgrade:
+    remediation: # perform remediation when helm upgrade fails
+      retries: 3
+      remediateLastFailure: true # remediate the last failure, when no retries remain
+    cleanupOnFail: true
+  values:
+    cluster:
+      name: "${CONFIG_CLUSTER_NAME}"
+      id: "1"
+
+    rollOutCiliumPods: true
+
+    localRedirectPolicy: true
+
+    kubeProxyReplacement: "strict"
+    kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
+
+    nativeRoutingCIDR: ${CONFIG_K8S_POD_CIDR}
+
+    k8sServiceHost: "${CONFIG_CLUSTER_NAME}.${SECRET_DOMAIN_NAME}"
+    k8sServicePort: 6443
+
+    loadBalancer:
+      algorithm: "maglev"
+      mode: "dsr"
+
+    tunnel: "disabled"
+
+    autoDirectNodeRoutes: true
+
+    endpointRoutes:
+      enabled: true
+
+    ipam:
+      mode: "kubernetes"
+
+    operator:
+      rollOutPods: true
+
+    containerRuntime:
+      integration: containerd
+
+    hubble:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+      metrics:
+        enabled:
+          - dns:query;ignoreAAAA
+          - drop
+          - tcp
+          - flow
+          - port-distribution
+          - icmp
+          - http
+      relay:
+        enabled: true
+        rollOutPods: true
+      ui:
+        enabled: true
+        rollOutPods: true
+        ingress:
+          enabled: true
+          annotations:
+            kubernetes.io/ingress.class: "traefik"
+            cert-manager.io/cluster-issuer: ${CONFIG_CERTIFICATE_ISSUER}
+          hosts:
+            - "hubble.${SECRET_DOMAIN_NAME}"
+          tls:
+            - secretName: hubble-tls
+              hosts:
+                - "hubble.${SECRET_DOMAIN_NAME}"
+
+    bgp:
+      enabled: false
+      announce:
+        loadbalancerIP: true
+
+    externalIPs:
+      enabled: false

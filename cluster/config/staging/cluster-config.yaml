@@ -6,6 +6,8 @@ metadata:
   namespace: flux-system
 data:
   CONFIG_CLUSTER_NAME: staging
+  CONFIG_K8S_API_ADDR: 10.40.0.80
+  CONFIG_K8S_POD_CIDR: 10.50.0.0/16
   CONFIG_TIMEZONE: America/Toronto
   CONFIG_CERTIFICATE_ISSUER: letsencrypt-staging
   CONFIG_METALLB_IP_RANGE: 10.0.40.81-10.0.40.95

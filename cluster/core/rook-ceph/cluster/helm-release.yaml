@@ -23,7 +23,7 @@ spec:
     remediation:
       retries: 5
   dependsOn:
-    - name: rook-ceph
+    - name: rook-ceph-operator
   values:
     toolbox:
       enabled: false
@@ -36,8 +36,8 @@ spec:
       bdev_async_discard = true
 
     cephClusterSpec:
-      cephVersion:
-        image: quay.io/ceph/ceph:v17.2.0
+      # cephVersion:
+      #   image: quay.io/ceph/ceph:v17.2.0
 
       resources:
         mgr:
