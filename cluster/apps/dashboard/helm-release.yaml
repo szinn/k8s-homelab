@@ -17,6 +17,9 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
+    image:
+      repository: linuxserver/heimdall
+      tag: 2.2.2
     env:
       TZ: ${CONFIG_TIMEZONE}
     ingress:
