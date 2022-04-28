@@ -168,6 +168,15 @@
             "matchDatasources": [
                 "docker"
             ],
+            "allowedVersions": "<10",
+            "matchPackageNames": [
+                "linuxserver/heimdall"
+            ]
+        },
+        {
+            "matchDatasources": [
+                "docker"
+            ],
             "allowedVersions": "<14",
             "matchPackageNames": [
                 "postgres"
