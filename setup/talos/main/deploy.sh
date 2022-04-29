@@ -1,19 +1,6 @@
 #!/bin/bash
 
-# Uncomment to generate new node configurations
-# talosctl gen config "main" "https://main.zinn.ca:6443" --config-patch-control-plane @controlplane-patch.json --config-patch-worker @worker-patch.json
-
-# Control plane configuration
-cat controlplane.yaml | sed -e "s/ZZ_HOSTNAME/k8s-1/" > k8s-1.yaml
-cat controlplane.yaml | sed -e "s/ZZ_HOSTNAME/k8s-2/" > k8s-2.yaml
-cat controlplane.yaml | sed -e "s/ZZ_HOSTNAME/k8s-3/" > k8s-3.yaml
-
-# Worker configuration
-cat worker.yaml | sed -e "s/ZZ_HOSTNAME/k8s-4/" > k8s-4.yaml
-cat worker.yaml | sed -e "s/ZZ_HOSTNAME/k8s-5/" > k8s-5.yaml
-cat worker.yaml | sed -e "s/ZZ_HOSTNAME/k8s-6/" > k8s-6.yaml
-
-# Cluster running using Proxmox VMs for control plane nodes
+# Deploy the nodes
 talosctl apply-config -i -n 10.0.40.16 -f k8s-1.yaml
 talosctl apply-config -i -n 10.0.40.17 -f k8s-2.yaml
 talosctl apply-config -i -n 10.0.40.18 -f k8s-3.yaml

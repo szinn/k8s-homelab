@@ -2,3 +2,5 @@ k8s-[1-6].yaml
 controlplane.yaml
 worker.yaml
 talosconfig
+controlplane-current.yaml
+worker-current.yaml

@@ -9,6 +9,14 @@
           "dhcp": true,
           "mtu": 1500
         }
+      ],
+      "extraHostEntries": [
+        {
+          "ip": "$ZZ_API_ADDR",
+          "aliases": [
+            "$ZZ_API_HOSTNAME"
+          ]
+        }
       ]
     }
   },
