@@ -74,7 +74,7 @@ The 3 worker nodes and Ryzen server are connected to the 8-port switch with 2.5G
 Multiple wired access points are scattered around the house and backyard.
 
 The Kubernetes cluster and IPs are on the 10.0.40.x subnet with VLAN tagging. Pods and services are on the 10.40.x.x and 10.41.x.x subnets respectively.
-The Kubernetes API is via a VIP address at 10.0.40.32.
+The Kubernetes API is via an external [HAProxy](https://www.haproxy.com).
 External machines (PiHole, Synology, etc) are on the main household VLAN subnet. IoT devices are on an isolated 10.0.80.x VLAN. They cannot reach the other VLANs directly but will answer when spoken to.
 
 MetalLB is used to assign visible IP addresses to Kubernetes services(e.g., MySQL). Traefik is used to reverse-proxy other services within the cluster.
