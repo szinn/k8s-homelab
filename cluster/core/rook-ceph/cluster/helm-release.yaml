@@ -116,8 +116,8 @@ spec:
 
     ingress:
       dashboard:
+        ingressClassName: "traefik"
         annotations:
-          kubernetes.io/ingress.class: "traefik"
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: ${CONFIG_CERTIFICATE_ISSUER}
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
