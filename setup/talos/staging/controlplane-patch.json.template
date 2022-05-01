@@ -8,9 +8,17 @@
           "interface": "eth0",
           "dhcp": true,
           "mtu": 1500,
-          "vip": {
-            "ip": "10.0.40.80"
+          "vip: {
+            "ip:" "ZZ_API_ADDR"
           }
+        }
+      ],
+      "extraHostEntries": [
+        {
+          "ip": "$ZZ_API_ADDR",
+          "aliases": [
+            "$ZZ_API_HOSTNAME"
+          ]
         }
       ]
     }
@@ -25,11 +33,26 @@
   },
   {"op": "add", "path": "/machine/kubelet/extraArgs", "value":
     {
-      "feature-gates": "MixedProtocolLBService=true",
+      "feature-gates": "GracefulNodeShutdown=true,MixedProtocolLBService=true",
       "rotate-server-certificates": true
     }
   },
-  {"op": "add", "path": "/cluster/proxy/disabled", "value": true },
+  {"op": "add", "path": "/cluster/apiServer/extraArgs", "value":
+    {
+      "feature-gates": "GracefulNodeShutdown=true,MixedProtocolLBService=true",
+    }
+  },
+{ "op": "add", "path": "/cluster/apiServer/certSANs", "value":
+  [
+   "ZZ_API_HOSTNAME"
+  ]
+},
+{ "op": "add", "path": "/machine/certSANs", "value":
+  [
+    "ZZ_API_HOSTNAME"
+   ]
+},
+{"op": "add", "path": "/cluster/proxy/disabled", "value": true },
   {"op": "add", "path": "/cluster/network/cni", "value":
     {
       "name": "custom",
@@ -52,6 +75,6 @@
     "https://raw.githubusercontent.com/alex1989hu/kubelet-serving-cert-approver/v0.3.0/deploy/ha-install.yaml",
     "https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml"
   ]},
-  {"op": "replace", "path": "/cluster/network/podSubnets/0", "value": "10.50.0.0/16"},
-  {"op": "replace", "path": "/cluster/network/serviceSubnets/0", "value": "10.51.0.0/16"}
+  {"op": "replace", "path": "/cluster/network/podSubnets/0", "value": "10.40.0.0/16"},
+  {"op": "replace", "path": "/cluster/network/serviceSubnets/0", "value": "10.41.0.0/16"}
 ]

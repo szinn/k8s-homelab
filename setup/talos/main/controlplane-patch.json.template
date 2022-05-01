@@ -44,12 +44,12 @@
   },
 { "op": "add", "path": "/cluster/apiServer/certSANs", "value":
   [
-   "main.zinn.ca"
+   "ZZ_API_HOSTNAME"
   ]
 },
 { "op": "add", "path": "/machine/certSANs", "value":
   [
-    "main.zinn.ca"
+    "ZZ_API_HOSTNAME"
    ]
 },
 {"op": "add", "path": "/cluster/proxy/disabled", "value": true },
