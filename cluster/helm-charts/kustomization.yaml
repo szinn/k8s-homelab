@@ -7,6 +7,7 @@ resources:
   - bitnami-charts.yaml
   - cilium-charts.yaml
   - deliveryhero-charts.yaml
+  - descheduler-charts.yaml
   - external-dns-charts.yaml
   - fairwinds-charts.yaml
   - fluent-bit-charts.yaml
