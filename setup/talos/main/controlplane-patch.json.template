@@ -37,6 +37,11 @@
       "rotate-server-certificates": true
     }
   },
+  {"op": "add", "path": "/cluster/apiServer/extraArgs", "value":
+    {
+      "feature-gates": "GracefulNodeShutdown=true,MixedProtocolLBService=true",
+    }
+  },
 { "op": "add", "path": "/cluster/apiServer/certSANs", "value":
   [
    "main.zinn.ca"
