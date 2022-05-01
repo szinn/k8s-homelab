@@ -5,6 +5,11 @@ kind: ServiceAccount
 metadata:
   name: "cilium"
   namespace: kube-system
+  labels:
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    meta.helm.sh/release-name: "cilium"
+    meta.helm.sh/release-namespace: "kube-system"
 ---
 # Source: cilium/templates/cilium-operator/serviceaccount.yaml
 apiVersion: v1
@@ -12,6 +17,11 @@ kind: ServiceAccount
 metadata:
   name: "cilium-operator"
   namespace: kube-system
+  labels:
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    meta.helm.sh/release-name: "cilium"
+    meta.helm.sh/release-namespace: "kube-system"
 ---
 # Source: cilium/templates/cilium-configmap.yaml
 apiVersion: v1
@@ -19,6 +29,11 @@ kind: ConfigMap
 metadata:
   name: cilium-config
   namespace: kube-system
+  labels:
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    meta.helm.sh/release-name: "cilium"
+    meta.helm.sh/release-namespace: "kube-system"
 data:
 
   # Identity allocation mode selects how identities are shared between cilium
@@ -153,6 +168,11 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: cilium
+  labels:
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    meta.helm.sh/release-name: "cilium"
+    meta.helm.sh/release-namespace: "kube-system"
 rules:
 - apiGroups:
   - networking.k8s.io
@@ -249,6 +269,11 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: cilium-operator
+  labels:
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    meta.helm.sh/release-name: "cilium"
+    meta.helm.sh/release-namespace: "kube-system"
 rules:
 - apiGroups:
   - ""
@@ -350,6 +375,11 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: cilium
+  labels:
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    meta.helm.sh/release-name: "cilium"
+    meta.helm.sh/release-namespace: "kube-system"
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -364,6 +394,11 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: cilium-operator
+  labels:
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    meta.helm.sh/release-name: "cilium"
+    meta.helm.sh/release-namespace: "kube-system"
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -381,6 +416,10 @@ metadata:
   namespace: kube-system
   labels:
     k8s-app: cilium
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    meta.helm.sh/release-name: "cilium"
+    meta.helm.sh/release-namespace: "kube-system"
 spec:
   selector:
     matchLabels:
@@ -495,7 +534,7 @@ spec:
               key: custom-cni-conf
               optional: true
         - name: KUBERNETES_SERVICE_HOST
-          value: "10.0.40.80"
+          value: "staging.zinn.ca"
         - name: KUBERNETES_SERVICE_PORT
           value: "6443"
         lifecycle:
@@ -583,7 +622,7 @@ spec:
               key: clean-cilium-bpf-state
               optional: true
         - name: KUBERNETES_SERVICE_HOST
-          value: "10.0.40.80"
+          value: "staging.zinn.ca"
         - name: KUBERNETES_SERVICE_PORT
           value: "6443"
         securityContext:
@@ -669,6 +708,10 @@ metadata:
   labels:
     io.cilium/app: operator
     name: cilium-operator
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    meta.helm.sh/release-name: "cilium"
+    meta.helm.sh/release-namespace: "kube-system"
 spec:
   # See docs on ServerCapabilities.LeasesResourceLock in file pkg/k8s/version/version.go
   # for more details.
@@ -728,7 +771,7 @@ spec:
               name: cilium-config
               optional: true
         - name: KUBERNETES_SERVICE_HOST
-          value: "10.0.40.80"
+          value: "staging.zinn.ca"
         - name: KUBERNETES_SERVICE_PORT
           value: "6443"
         livenessProbe:
