@@ -44,12 +44,14 @@
   },
 { "op": "add", "path": "/cluster/apiServer/certSANs", "value":
   [
-   "ZZ_API_HOSTNAME"
+    "ZZ_API_HOSTNAME",
+    "ZZ_API_ADDR"
   ]
 },
 { "op": "add", "path": "/machine/certSANs", "value":
   [
-    "ZZ_API_HOSTNAME"
+    "ZZ_API_HOSTNAME",
+    "ZZ_API_ADDR"
    ]
 },
 {"op": "add", "path": "/cluster/proxy/disabled", "value": true },
@@ -57,7 +59,7 @@
     {
       "name": "custom",
       "urls": [
-        "https://raw.githubusercontent.com/szinn/k8s-homelab/main/setup/talos/main/cilium-quick-install.yaml"
+        "http://router/main-cilium-quick-install.yaml"
       ]
     }
   },
