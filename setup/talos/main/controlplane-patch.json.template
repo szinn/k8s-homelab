@@ -9,7 +9,7 @@
           "dhcp": true,
           "mtu": 1500,
           "vip: {
-            "ip:" "ZZ_API_ADDR"
+            "ip:" "$ZZ_API_ADDR"
           }
         }
       ],
@@ -44,14 +44,14 @@
   },
 { "op": "add", "path": "/cluster/apiServer/certSANs", "value":
   [
-    "ZZ_API_HOSTNAME",
-    "ZZ_API_ADDR"
+    "$ZZ_API_HOSTNAME",
+    "$ZZ_API_ADDR"
   ]
 },
 { "op": "add", "path": "/machine/certSANs", "value":
   [
-    "ZZ_API_HOSTNAME",
-    "ZZ_API_ADDR"
+    "$ZZ_API_HOSTNAME",
+    "$ZZ_API_ADDR"
    ]
 },
 {"op": "add", "path": "/cluster/proxy/disabled", "value": true },
