@@ -7,13 +7,8 @@ spec:
   nodeName: HOSTNAME
   containers:
     - name: disk-wipe
-      image: busybox
+      image: ubuntu
       securityContext:
         privileged: true
-      command: [
-        "/bin/sh",
-        "-c",
-        "blkdiscard /dev/nvme0n1",
-        "dd if=/dev/zero bs=1M count=100 oflag=direct of=/dev/nvme0n1",
-        "wipefs -af /dev/nvme0n1"
-      ]
+      command: ["/bin/sh", "-c"]
+      args: ["blkdiscard /dev/sdb; dd if=/dev/zero bs=1M count=1000 oflag=direct of=/dev/sdb; wipefs -af /dev/sdb"]
