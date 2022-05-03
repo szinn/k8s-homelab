@@ -10,4 +10,10 @@ spec:
       image: busybox
       securityContext:
         privileged: true
-      command: ["/bin/sh", "-c", "dd if=/dev/zero bs=1M count=100 oflag=direct of=/dev/nvme0n1"]
+      command: [
+        "/bin/sh",
+        "-c",
+        "blkdiscard /dev/nvme0n1",
+        "dd if=/dev/zero bs=1M count=100 oflag=direct of=/dev/nvme0n1",
+        "wipefs -af /dev/nvme0n1"
+      ]
