@@ -91,8 +91,8 @@ Most/all internal services have a Traefik middleware to verify that the requesti
 
 ## Repository Structure
 
-The repository supports multiple clusters -- in particular, I have a "main" cluster which runs on the above hardware, and then I can also deploy to a "staging" cluster which can run on
-VMs/nodes that are created through [k3d](https://k3d.io/v5.3.0/) or Proxmox VMs. The staging cluster lets me try out new packages, figure out configuration etc, before committing to the main repo and cluster.
+The repository supports multiple clusters -- in particular, I have a "main" cluster which runs on the above hardware. I previously had a staging cluster that could use the same source, but have since
+moved that to a separate repo.
 
 Adding something new to the cluster usually requires a lot of trial and error initially. When I am trying something out, I will work in a staging environment as much as possible and then move to the main cluster.
 If additional iterations are required, I will usually try and do amended commits rather than a chain of commits with comments such as "Trying again" or "Maybe this will work", etc.
@@ -138,7 +138,6 @@ The cluster is configured through multiple levels:
 All values for the configurations are stored in a set of environment variables described below.
 
 There should be at least one cluster `main` that will be used from the `main` branch of the repo.
-Any other cluster types will be synced out of a configurable branch with the same name as the cluster type (e.g., the staging cluster will be synced from the staging branch of the repo)
 
 ### External Environment Configuration
 
