@@ -4,18 +4,7 @@ version: '3'
 vars:
   PROJECT_DIR:
     sh: "git rev-parse --show-toplevel"
-  K3S_PRODUCTION_MASTER_USERNAME: "ubuntu"
-  K3S_PRODUCTION_MASTER_NODE: "k3s-1p"
 
 includes:
   flux: .taskfiles/flux.yaml
   pre-commit: .taskfiles/pre-commit.yaml
-
-tasks:
-  kube-production:
-    desc: Remotely fetch production config
-    cmds:
-      - rsync --verbose --progress --partial  {{.K3S_PRODUCTION_MASTER_USERNAME}}@{{.K3S_PRODUCTION_MASTER_NODE}}:/home/{{.K3S_PRODUCTION_MASTER_USERNAME}}/.kube/k3s.yaml ~/.kube/config
-      - sed -i '' 's/127.0.0.1/lb.zinn.ca/g' ~/.kube/config
-      - sed -i '' 's/default/production/g' ~/.kube/config
-      - chmod go-r ~/.kube/config

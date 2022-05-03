@@ -2,7 +2,7 @@
 # kubeProxyReplacement enables kube-proxy replacement in Cilium BPF datapath
 kubeProxyReplacement: "strict"
 
-k8sServiceHost: "main.zinn.ca"
+k8sServiceHost: "ZZ_API_HOSTNAME"
 k8sServicePort: 6443
 
 ipam:

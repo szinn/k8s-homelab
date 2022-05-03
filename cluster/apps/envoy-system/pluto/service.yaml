@@ -6,7 +6,7 @@ metadata:
   namespace: envoy-system
 spec:
   type: ExternalName
-  externalName: pluto.zinn.ca.
+  externalName: pluto.${SECRET_DOMAIN_NAME}.
   ports:
     - name: pluto
       port: 5000

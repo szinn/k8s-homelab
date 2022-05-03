@@ -6,4 +6,4 @@
 export SETUP_CONFIG_ROOT="$HOME/.config/k8s-homelab"
 
 # The list of clusters that are managed by this setup.
-export SETUP_CLUSTERS="main staging"
+export SETUP_CLUSTERS="main"

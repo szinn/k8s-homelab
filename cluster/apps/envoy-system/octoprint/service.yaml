@@ -6,7 +6,7 @@ metadata:
   namespace: envoy-system
 spec:
   type: ExternalName
-  externalName: octo.zinn.ca.
+  externalName: octo.${SECRET_DOMAIN_NAME}.
   ports:
     - name: http
       port: 80
