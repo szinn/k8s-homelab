@@ -194,6 +194,15 @@
                 "postgres"
             ]
         },
+        {
+            "matchDatasources": [
+                "docker"
+            ],
+            "allowedVersions": "<v1.24",
+            "matchPackageNames": [
+                "k8s-at-home/kubectl"
+            ]
+        },
         //{
         //    "matchDatasources": ["docker"],
         //    "allowedVersions": "<2",

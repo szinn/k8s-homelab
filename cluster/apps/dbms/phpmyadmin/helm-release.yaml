@@ -29,13 +29,10 @@ spec:
       hostname: phpmyadmin.${SECRET_DOMAIN_NAME}
       path: /
       pathType: Prefix
-      certManager: true
       annotations:
         kubernetes.io/ingress.class: traefik
-        cert-manager.io/cluster-issuer: ${CONFIG_CERTIFICATE_ISSUER}
         traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
-      tls: true
     resources:
       requests:
         memory: 100Mi

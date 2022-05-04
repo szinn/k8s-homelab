@@ -6,8 +6,6 @@ metadata:
   namespace: envoy-system
   annotations:
     kubernetes.io/ingress.class: traefik
-    kubernetes.io/tls-acme: 'true'
-    cert-manager.io/cluster-issuer: ${CONFIG_CERTIFICATE_ISSUER}
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
     traefik.ingress.kubernetes.io/router.middlewares: "envoy-system-add-pihole-admin-internal@kubernetescrd"
 spec:
@@ -22,10 +20,6 @@ spec:
                 name: pihole
                 port:
                   number: 80
-  tls:
-    - secretName: pihole-tls
-      hosts:
-        - *host
 
 ---
 

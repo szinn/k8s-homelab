@@ -27,8 +27,6 @@ spec:
         enabled: true
         ingressClassName: "traefik"
         annotations:
-          kubernetes.io/tls-acme: "true"
-          cert-manager.io/cluster-issuer: ${CONFIG_CERTIFICATE_ISSUER}
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
         hosts:
@@ -36,10 +34,6 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
-        tls:
-          - secretName: dashboard-tls
-            hosts:
-              - *host
     initContainers:
       new-install:
         image: busybox:latest

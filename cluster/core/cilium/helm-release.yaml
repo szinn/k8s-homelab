@@ -89,13 +89,8 @@ spec:
           enabled: true
           annotations:
             kubernetes.io/ingress.class: "traefik"
-            cert-manager.io/cluster-issuer: ${CONFIG_CERTIFICATE_ISSUER}
           hosts:
             - "hubble.${SECRET_DOMAIN_NAME}"
-          tls:
-            - secretName: hubble-tls
-              hosts:
-                - "hubble.${SECRET_DOMAIN_NAME}"
 
     bgp:
       enabled: false
