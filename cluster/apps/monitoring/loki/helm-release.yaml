@@ -24,7 +24,7 @@ spec:
       auth_enabled: false
       storage_config:
         aws:
-          s3: s3://thanos:thanos-monitoring@minio.dbms.svc.cluster.local.:9000/loki
+          s3: s3://thanos:thanos-monitoring@minio.dbms:9000/loki
           region: ca-wat-1
           s3forcepathstyle: true
           insecure: true
