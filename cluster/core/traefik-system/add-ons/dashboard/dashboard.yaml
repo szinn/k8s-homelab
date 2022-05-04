@@ -6,14 +6,9 @@ metadata:
   namespace: traefik-system
   annotations:
     kubernetes.io/ingress.class: "traefik"
-    kubernetes.io/tls-acme: "true"
-    cert-manager.io/cluster-issuer: ${CONFIG_CERTIFICATE_ISSUER}
     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+    traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
 spec:
-  tls:
-    - hosts:
-        - &host "traefik.${SECRET_DOMAIN_NAME}"
-      secretName: traefik-dashboard-tls
   rules:
     - host: *host
       http:

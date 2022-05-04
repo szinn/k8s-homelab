@@ -38,8 +38,6 @@ spec:
         enabled: true
         ingressClassName: "traefik"
         annotations:
-          kubernetes.io/tls-acme: "true"
-          cert-manager.io/cluster-issuer: ${CONFIG_CERTIFICATE_ISSUER}
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-external-auth@kubernetescrd"
           external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_NAME}"
@@ -49,10 +47,6 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
-        tls:
-          - secretName: home-assistant-tls
-            hosts:
-              - *host-home
     securityContext:
       privileged: true
     metrics:
@@ -102,8 +96,6 @@ spec:
           enabled: true
           ingressClassName: "traefik"
           annotations:
-            kubernetes.io/tls-acme: "true"
-            cert-manager.io/cluster-issuer: ${CONFIG_CERTIFICATE_ISSUER}
             traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
             traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
           hosts:
@@ -111,10 +103,6 @@ spec:
               paths:
                 - path: /
                   pathType: Prefix
-          tls:
-            - secretName: home-assistant-code-server-tls
-              hosts:
-                - *host-code
         volumeMounts:
           - name: config
             mountPath: /config

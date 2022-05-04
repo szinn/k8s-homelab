@@ -41,18 +41,12 @@ spec:
       enabled: true
       annotations:
         kubernetes.io/ingress.class: traefik
-        kubernetes.io/tls-acme: "true"
-        cert-manager.io/cluster-issuer: ${CONFIG_CERTIFICATE_ISSUER}
         traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
       hosts:
         - "grafana.${SECRET_DOMAIN_NAME}"
       path: /
       pathType: Prefix
-      tls:
-        - secretName: grafana-tls
-          hosts:
-            - "grafana.${SECRET_DOMAIN_NAME}"
     plugins:
       - pr0ps-trackmap-panel
       - grafana-clock-panel

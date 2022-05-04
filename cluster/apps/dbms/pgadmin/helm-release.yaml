@@ -35,8 +35,6 @@ spec:
       enabled: true
       annotations:
         kubernetes.io/ingress.class: traefik
-        kubernetes.io/tls-acme: "true"
-        cert-manager.io/cluster-issuer: ${CONFIG_CERTIFICATE_ISSUER}
         traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
       hosts:
@@ -44,10 +42,6 @@ spec:
           paths:
             - path: /
               pathType: Prefix
-      tls:
-        - secretName: pgadmin-tls
-          hosts:
-            - *host
     persistentVolume:
       enabled: true
       storageClass: ceph-block
