@@ -18,7 +18,7 @@ spec:
   values:
     image:
       repository: quay.io/minio/minio
-      tag: RELEASE.2022-04-30T22-23-53Z
+      tag: RELEASE.2022-05-03T20-36-08Z
     nameOverride: minio
     env:
       TZ: "${CONFIG_TIMEZONE}"
