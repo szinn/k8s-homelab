@@ -51,8 +51,6 @@ spec:
         enabled: true
         ingressClassName: traefik
         annotations:
-          kubernetes.io/tls-acme: "true"
-          cert-manager.io/cluster-issuer: ${CONFIG_CERTIFICATE_ISSUER}
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
         hosts:
@@ -68,11 +66,6 @@ spec:
                 pathType: Prefix
                 service:
                   port: 9000
-        tls:
-          - secretName: minio-tls
-            hosts:
-              - *host-minio
-              - *host-s3
     persistence:
       data:
         enabled: true

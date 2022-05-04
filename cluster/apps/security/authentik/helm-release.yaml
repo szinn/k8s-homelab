@@ -28,20 +28,13 @@ spec:
       enabled: true
       ingressClassName: "traefik"
       annotations:
-        cert-manager.io/cluster-issuer: ${CONFIG_CERTIFICATE_ISSUER}
         traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-        kubernetes.io/tls-acme: "true"
         external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_NAME}"
         external-dns/is-public: "true"
       hosts:
         - host: &host auth.${SECRET_DOMAIN_NAME}
           paths:
             - path: /
-
-      tls:
-        - secretName: authentik-tls
-          hosts:
-            - *host
 
     geoip:
       enabled: true

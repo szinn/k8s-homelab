@@ -118,17 +118,11 @@ spec:
       dashboard:
         ingressClassName: "traefik"
         annotations:
-          kubernetes.io/tls-acme: "true"
-          cert-manager.io/cluster-issuer: ${CONFIG_CERTIFICATE_ISSUER}
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
           traefik.ingress.kubernetes.io/router.middlewares: traefik-system-internal@kubernetescrd
         host:
           name: "rook.${SECRET_DOMAIN_NAME}"
           path: "/"
-        tls:
-          - secretName: rook-tls
-            hosts:
-              - "rook.${SECRET_DOMAIN_NAME}"
 
     cephBlockPools:
       - name: ceph-blockpool
