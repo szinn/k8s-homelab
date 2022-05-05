@@ -38,11 +38,7 @@ spec:
       new-install:
         image: busybox:latest
         imagePullPolicy: IfNotPresent
-        command:
-          [
-            "sh",
-            "/scripts/init-pvc.sh",
-          ]
+        command: ["sh", "/scripts/init-pvc.sh"]
         volumeMounts:
           - name: config
             mountPath: /config

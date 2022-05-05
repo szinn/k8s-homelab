@@ -151,8 +151,8 @@ spec:
           events:
             - create
             - update
-             - delete
-             - error
+              - delete
+              - error
           updateSetting:
             includeDiff: true
             fields:

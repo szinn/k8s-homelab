@@ -66,9 +66,9 @@ spec:
       dashboardproviders.yaml:
         apiVersion: 1
         providers:
-          - name: 'default'
+          - name: "default"
             orgId: 1
-            folder: ''
+            folder: ""
             type: file
             disableDeletion: false
             allowUiUpdates: true

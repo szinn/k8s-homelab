@@ -11,4 +11,7 @@ spec:
       securityContext:
         privileged: true
       command: ["/bin/sh", "-c"]
-      args: ["blkdiscard /dev/sdb; dd if=/dev/zero bs=1M count=1000 oflag=direct of=/dev/sdb; wipefs -af /dev/sdb"]
+      args:
+        [
+          "blkdiscard /dev/sdb; dd if=/dev/zero bs=1M count=1000 oflag=direct of=/dev/sdb; wipefs -af /dev/sdb",
+        ]

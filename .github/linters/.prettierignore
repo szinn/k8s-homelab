@@ -1,0 +1,3 @@
+.vscode
+*.sops.*
+gotk-components.yaml

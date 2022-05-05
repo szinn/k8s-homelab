@@ -1,8 +1,6 @@
 ---
 default: true
-"no-inline-html": {
-  "allowed_elements": ["h1", "div", "img"]
-}
+"no-inline-html": {"allowed_elements": ["h1", "div", "img"]}
 
 # MD013/line-length - Line length
 MD013:

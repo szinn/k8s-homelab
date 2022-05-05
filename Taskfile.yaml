@@ -1,5 +1,5 @@
 ---
-version: '3'
+version: "3"
 
 vars:
   PROJECT_DIR:
@@ -7,4 +7,9 @@ vars:
 
 includes:
   flux: .taskfiles/flux.yaml
+  format: .taskfiles/format.yaml
   pre-commit: .taskfiles/pre-commit.yaml
+
+tasks:
+  none:
+    desc: Placeholder

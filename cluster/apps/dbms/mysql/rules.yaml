@@ -3,7 +3,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
   annotations:
-    prometheus-operator-validated: 'true'
+    prometheus-operator-validated: "true"
   name: mysql
   namespace: dbms
 spec:

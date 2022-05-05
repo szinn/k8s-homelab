@@ -8,8 +8,8 @@ metadata:
   name: prometheus-ceph-rules
   namespace: default
 spec:
-# Import the raw prometheus rules since they have descriptions that should not be processed with the helm templates
-# copied from https://github.com/ceph/ceph/blob/master/monitoring/ceph-mixin/prometheus_alerts.yml
+  # Import the raw prometheus rules since they have descriptions that should not be processed with the helm templates
+  # copied from https://github.com/ceph/ceph/blob/master/monitoring/ceph-mixin/prometheus_alerts.yml
   groups:
     - name: cluster health
       rules:
@@ -806,7 +806,7 @@ spec:
             summary: MON/OSD operations are slow to complete
             description: >
               {{ $value }} OSD requests are taking too long to process (osd_op_complaint_time exceeded)
-  # cephadm alerts
+    # cephadm alerts
     - name: cephadm
       rules:
         - alert: CephadmUpgradeFailed
@@ -850,7 +850,7 @@ spec:
               orchestrator from service management and reconciliation. If this is
               not intentional, resume cephadm operations with 'ceph orch resume'
 
-  # prometheus alerts
+    # prometheus alerts
     # - name: PrometheusServer
     #   rules:
     #     - alert: PrometheusJobMissing
@@ -868,7 +868,7 @@ spec:
     #
     #           Please review the job definitions in the prometheus.yml file of the prometheus
     #           instance.
-  # Object related events
+    # Object related events
     - name: rados
       rules:
         - alert: CephObjectMissing
@@ -885,7 +885,7 @@ spec:
               A version of a RADOS object can not be found, even though all OSDs are up. I/O
               requests for this object from clients will block (hang). Resolving this issue may
               require the object to be rolled back to a prior version manually, and manually verified.
-  # Generic
+    # Generic
     - name: generic
       rules:
         - alert: CephDaemonCrash

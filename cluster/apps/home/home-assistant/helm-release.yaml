@@ -74,7 +74,7 @@ spec:
           [
             "sh",
             "-c",
-            'until nc -vz mysql.dbms 3306; do echo "Waiting for mysql..."; sleep 2; done;'
+            'until nc -vz mysql.dbms 3306; do echo "Waiting for mysql..."; sleep 2; done;',
           ]
     addons:
       codeserver:
