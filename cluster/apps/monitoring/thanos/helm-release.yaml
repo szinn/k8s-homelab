@@ -41,11 +41,8 @@ spec:
         hostname: "thanos.${SECRET_DOMAIN_NAME}"
         ingressClassName: "traefik"
         annotations:
-          kubernetes.io/tls-acme: "true"
-          cert-manager.io/cluster-issuer: ${CONFIG_CERTIFICATE_ISSUER}
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
-        tls: true
     queryFrontend:
       enabled: false
     bucketweb:
