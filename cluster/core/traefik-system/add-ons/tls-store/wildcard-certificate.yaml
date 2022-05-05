@@ -13,3 +13,4 @@ spec:
   dnsNames:
     - "${SECRET_DOMAIN_NAME}"
     - "*.${SECRET_DOMAIN_NAME}"
+    - "*.test.${SECRET_DOMAIN_NAME}"
