@@ -23,8 +23,7 @@ spec:
     deploymentStrategy:
       type: Recreate
     persistence:
-      enabled: true
-      existingClaim: monitoring-grafana-pvc
+      enabled: false
     env:
       GF_EXPLORE_ENABLED: true
       GF_SECURITY_ALLOW_EMBEDDING: true
@@ -66,16 +65,56 @@ spec:
       dashboardproviders.yaml:
         apiVersion: 1
         providers:
-          - name: "default"
+          - name: "system"
             orgId: 1
-            folder: ""
+            folder: "System"
             type: file
             disableDeletion: false
             allowUiUpdates: true
             options:
               path: /var/lib/grafana/dashboards/default
+          - name: "cilium"
+            orgId: 1
+            folder: "Cilium"
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/cilium
+          - name: "unifi"
+            orgId: 1
+            folder: "Unifi"
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/unifi
+          - name: "ceph"
+            orgId: 1
+            folder: "Ceph"
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/ceph
+          - name: "flux"
+            orgId: 1
+            folder: "Flux"
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/flux
+          - name: "data"
+            orgId: 1
+            folder: "Data"
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/data
     dashboards:
-      default:
+      system:
         1-node-exporter:
           url: https://grafana.com/api/dashboards/11074/revisions/9/download
           datasource: Prometheus
@@ -83,9 +122,19 @@ spec:
           gnetId: 1860
           revision: 23
           datasource: Prometheus
-        prometheus-exporter-summary:
-          url: https://raw.githubusercontent.com/billimek/k8s-gitops/master/monitoring/grafana/dashboards/prometheus_exporter_summary.json
+        cert-manager:
+          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/cert-manager/dashboards/cert-manager.json
           datasource: Prometheus
+        traefik:
+          gnetId: 11462
+          revision: 1
+          datasource: Prometheus
+        # Ref: https://grafana.com/grafana/dashboards/2842
+        metallb:
+          gnetId: 14127
+          revision: 1
+          datasource: Prometheus
+      data:
         mysql-overview:
           gnetId: 7362
           revision: 5
@@ -94,11 +143,15 @@ spec:
           gnetId: 9628
           revision: 7
           datasource: Prometheus
-        traefik:
-          gnetId: 11462
-          revision: 1
+        minio:
+          gnetId: 13502
+          revision: 10
           datasource: Prometheus
-        # Ref: https://grafana.com/grafana/dashboards/2842
+        redis:
+          gnetId: 12776
+          revision: 2
+          datasource: Redis
+      ceph:
         ceph-cluster:
           gnetId: 2842
           revision: 14
@@ -113,6 +166,7 @@ spec:
           gnetId: 5342
           revision: 5
           datasource: Prometheus
+      unifi:
         # Ref: https://grafana.com/grafana/dashboards/11315
         unifi-client-insights:
           gnetId: 11315
@@ -133,14 +187,23 @@ spec:
           gnetId: 11312
           revision: 8
           datasource: Prometheus
-        minio:
-          gnetId: 13502
-          revision: 10
+      flux:
+        flux-cluster:
+          url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/grafana/dashboards/cluster.json
           datasource: Prometheus
-        redis:
-          gnetId: 12776
-          revision: 2
-          datasource: Redis
+        flux-control-plane:
+          url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/grafana/dashboards/control-plane.json
+          datasource: Prometheus
+      cilium:
+        cilium-dashboard:
+          url: https://raw.githubusercontent.com/cilium/cilium/v1.9.1/examples/kubernetes/addons/prometheus/files/grafana-dashboards/cilium-dashboard.json
+          datasource: Prometheus
+        cilium-operator-dashboard:
+          url: https://raw.githubusercontent.com/cilium/cilium/v1.9.1/examples/kubernetes/addons/prometheus/files/grafana-dashboards/cilium-operator-dashboard.json
+          datasource: Prometheus
+        hubble-dashboard:
+          url: https://raw.githubusercontent.com/cilium/cilium/v1.9.1/examples/kubernetes/addons/prometheus/files/grafana-dashboards/hubble-dashboard.json
+          datasource: Prometheus
     sidecar:
       datasources:
         enabled: true
@@ -148,6 +211,10 @@ spec:
       dashboards:
         enabled: true
         searchNamespace: ALL
+        folderAnnotation: "grafana_folder"
+        provider:
+          allowUiUpdates: true
+          foldersFromFilesStructure: true
     datasources:
       datasources.yaml:
         apiVersion: 1
@@ -164,6 +231,8 @@ spec:
     grafana.ini:
       server:
         root_url: "https://grafana.${SECRET_DOMAIN_NAME}"
+      default:
+        force_migration: true
       paths:
         data: /var/lib/grafana/data
         logs: /var/log/grafana

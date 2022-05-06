@@ -7,5 +7,4 @@ resources:
   - helm-release.yaml
   - issuers
   - ddns
-  - dashboard
   - prometheus-rules.yaml
