@@ -186,7 +186,8 @@ The NFS drives are available across the cluster but are at a slower speed than t
 
 ### Data Backup and Recovery
 
-This is a work in progress, but I'm currently experimenting with [Kasten.io K10](https://www.kasten.io/product/).
+Currently, I use a combination of built-in application backups (e.g., *arr applications will backup weekly), an external shell script that will backup databases (mysql and postgres),
+and a couple of apps that I have backed up their configuration as it doesn't change frequently and it gets automatically restored upon the very first startup.
 
 ## Installation
 

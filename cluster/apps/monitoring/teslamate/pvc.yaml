@@ -4,8 +4,6 @@ kind: PersistentVolumeClaim
 metadata:
   name: monitoring-teslamate-pvc
   namespace: monitoring
-  labels:
-    kasten.io/backup-volume: "enabled"
 spec:
   storageClassName: ceph-block
   accessModes:

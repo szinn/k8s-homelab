@@ -4,8 +4,6 @@ kind: PersistentVolumeClaim
 metadata:
   name: dbms-mysql-pvc
   namespace: dbms
-  labels:
-    kasten.io/backup-volume: "enabled"
 spec:
   storageClassName: ceph-block
   accessModes:
