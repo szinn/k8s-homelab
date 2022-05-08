@@ -40,6 +40,14 @@ spec:
         # renovate: docker-image
         image: quay.io/ceph/ceph:v17.2.0
 
+      # TODO(rook-ceph): Enable host network on next rebuild
+      # network:
+      #   provider: host
+      # TODO(rook-ceph): Enable compression on next rebuild
+      # connections:
+      #   compression:
+      #     enabled: true
+
       resources:
         mgr:
           requests:
@@ -123,6 +131,10 @@ spec:
         host:
           name: "rook.${SECRET_DOMAIN_NAME}"
           path: "/"
+
+    cephBlockPoolsVolumeSnapshotClass:
+      enabled: true
+      name: csi-rbdplugin-snapclass
 
     cephBlockPools:
       - name: ceph-blockpool
