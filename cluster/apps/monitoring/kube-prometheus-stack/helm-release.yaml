@@ -70,6 +70,8 @@ spec:
       enabled: false
     kubeScheduler:
       enabled: false
+    kubeStateMetrics:
+      enabled: true
     alertmanager:
       ingress:
         enabled: true

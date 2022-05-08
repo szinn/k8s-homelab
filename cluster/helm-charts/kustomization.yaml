@@ -15,6 +15,7 @@ resources:
   - infracloudio-charts.yaml
   - jetstack-charts.yaml
   - k8s-at-home-charts.yaml
+  - kubernetes-sigs-metrics-server-charts.yaml
   - kyverno-charts.yaml
   - prometheus-community-charts.yaml
   - rook-ceph-charts.yaml

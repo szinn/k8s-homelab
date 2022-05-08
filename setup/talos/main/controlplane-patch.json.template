@@ -74,8 +74,7 @@
     }
   },
   {"op": "replace", "path": "/cluster/extraManifests", "value":[
-    "https://raw.githubusercontent.com/alex1989hu/kubelet-serving-cert-approver/v0.3.0/deploy/ha-install.yaml",
-    "https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml"
+    "https://raw.githubusercontent.com/alex1989hu/kubelet-serving-cert-approver/v0.3.0/deploy/ha-install.yaml"
   ]},
   {"op": "replace", "path": "/cluster/network/podSubnets/0", "value": "10.40.0.0/16"},
   {"op": "replace", "path": "/cluster/network/serviceSubnets/0", "value": "10.41.0.0/16"}
