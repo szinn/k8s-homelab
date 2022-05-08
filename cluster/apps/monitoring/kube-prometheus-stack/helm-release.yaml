@@ -144,6 +144,8 @@ spec:
                   storage: 1Gi
     kube-state-metrics:
       fullnameOverride: kube-state-metrics
+      metricLabelsAllowlist:
+        - persistentvolumeclaims=[*]
     prometheus-node-exporter:
       fullnameOverride: node-exporter
       prometheus:
