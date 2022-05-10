@@ -6,7 +6,8 @@
 
 # Name and IP for haproxy of the cluster API endpoint
 export ZZ_API_HOSTNAME="main.${SECRET_DOMAIN_NAME}"
-export ZZ_API_ADDR="10.0.40.2"
+export ZZ_API_ADDR="10.0.40.32"
+export ZZ_LOGGING_ADDR="${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}"
 
 # Create the patch files from the template
 cat controlplane-patch.json.template | envsubst > controlplane-patch.json
