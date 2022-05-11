@@ -7,5 +7,6 @@ metadata:
 spec:
   chain:
     middlewares:
+      - name: cloudflare-only
       - name: security-auth
         namespace: security
