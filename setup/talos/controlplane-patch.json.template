@@ -37,9 +37,13 @@
       "rotate-server-certificates": true
     }
   },
-  {"op": "add", "path": "/machine/extraKernelArgs", "value": [
-    "talos.logging.kernel=udp://$ZZ_LOGGING_ADDR:6001/"
-  ]},
+  {"op": "add", "path": "/machine/install", "value":
+    {
+      "extraKernelArgs": [
+        "talos.logging.kernel=udp://$ZZ_LOGGING_ADDR:6001/"
+      ]
+    }
+  },
   {"op": "add", "path": "/machine/logging", "value":
     {
       "destinations": [
