@@ -22,7 +22,7 @@ spec:
     image:
       registry: docker.io
       repository: dpage/pgadmin4
-      tag: 6.8
+      tag: 6.9
     existingSecret: pgadmin-secrets
     env:
       email: ${SECRET_ADMIN_EMAIL}
