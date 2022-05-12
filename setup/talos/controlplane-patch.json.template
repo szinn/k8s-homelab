@@ -8,8 +8,8 @@
           "interface": "eth0",
           "dhcp": true,
           "mtu": 1500,
-          "vip: {
-            "ip:" "$ZZ_API_ADDR"
+          "vip": {
+            "ip": "$ZZ_API_ADDR"
           }
         }
       ],
@@ -23,15 +23,6 @@
       ]
     }
   },
-  {"op": "add", "path": "/machine/extraKernelArgs", "value": [
-    "talos.logging.kernel=udp://$ZZ_LOGGING_ADDR:6001/"
-  ]},
-  {"op": "add", "path": "/machine/logging/destinations", "value": [
-    {
-      "endpoint": "udp://$ZZ_LOGGING_ADDR:6002/",
-      "format": "json_lines"
- }
-  ]},
   {"op": "replace", "path": "/machine/time", "value":
     {
       "disabled": false,
@@ -46,23 +37,24 @@
       "rotate-server-certificates": true
     }
   },
-  {"op": "add", "path": "/cluster/apiServer/extraArgs", "value":
+  {"op": "add", "path": "/machine/extraKernelArgs", "value": [
+    "talos.logging.kernel=udp://$ZZ_LOGGING_ADDR:6001/"
+  ]},
+  {"op": "add", "path": "/machine/logging", "value":
     {
-      "feature-gates": "GracefulNodeShutdown=true,MixedProtocolLBService=true",
+      "destinations": [
+        {
+          "endpoint": "udp://$ZZ_LOGGING_ADDR:6002/",
+          "format": "json_lines"
+        }
+      ]
     }
   },
-{ "op": "add", "path": "/cluster/apiServer/certSANs", "value":
-  [
-    "$ZZ_API_HOSTNAME",
-    "$ZZ_API_ADDR"
-  ]
-},
-{ "op": "add", "path": "/machine/certSANs", "value":
-  [
-    "$ZZ_API_HOSTNAME",
-    "$ZZ_API_ADDR"
-   ]
-},
+  {"op": "add", "path": "/cluster/apiServer/extraArgs", "value":
+    {
+      "feature-gates": "GracefulNodeShutdown=true,MixedProtocolLBService=true"
+    }
+  },
 {"op": "add", "path": "/cluster/proxy/disabled", "value": true },
   {"op": "add", "path": "/cluster/network/cni", "value":
     {

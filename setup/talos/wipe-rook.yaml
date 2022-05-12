@@ -13,5 +13,5 @@ spec:
       command: ["/bin/sh", "-c"]
       args:
         [
-          "blkdiscard /dev/sdb; dd if=/dev/zero bs=1M count=1000 oflag=direct of=/dev/sdb; wipefs -af /dev/sdb",
+          "apt update; apt install fdisk gdisk parted udev -y; sgdisk --zap-all /dev/nvme0n1; dd if=/dev/zero bs=1M count=1000 oflag=direct of=/dev/nvme0n1; wipefs -af /dev/nvme0n1; blkdiscard /dev/nvme0n1; partprobe /dev/nvme0n1"
         ]

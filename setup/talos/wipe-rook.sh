@@ -1,5 +1,5 @@
 #!/bin/bash
-ROOK_WORKERS="stage-4 stage-5 stage-6"
+ROOK_WORKERS="k8s-4 k8s-5 k8s-6"
 
 for i in $ROOK_WORKERS; do
   echo "Wiping $i"

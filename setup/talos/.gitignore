@@ -1,4 +1,4 @@
-k8s-[1-6].yaml
+k8s-*.yaml
 controlplane.yaml
 worker.yaml
 talosconfig

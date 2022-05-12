@@ -20,11 +20,24 @@
       ]
     }
   },
-  {"op": "replace", "path": "/machine/time", "value":
+   {"op": "replace", "path": "/machine/time", "value":
     {
       "disabled": false,
       "servers": [
         "time.cloudflare.com"
+      ]
+    }
+  },
+  {"op": "add", "path": "/machine/extraKernelArgs", "value": [
+    "talos.logging.kernel=udp://$ZZ_LOGGING_ADDR:6001/"
+  ]},
+  {"op": "add", "path": "/machine/logging", "value":
+    {
+      "destinations": [
+        {
+          "endpoint": "udp://$ZZ_LOGGING_ADDR:6002/",
+          "format": "json_lines"
+        }
       ]
     }
   },
