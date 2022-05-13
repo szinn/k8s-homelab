@@ -99,8 +99,16 @@
               "registryUrl=(?<registryUrl>.*?)\n *chart: (?<depName>.*?)\n *version: (?<currentValue>.*)\n"
           ],
           "datasourceTemplate": "helm"
+      },
+      {
+        "fileMatch": ["cluster/.+\\.ya?ml$"],
+        "matchStrings": [
+          "helmRepo(sitory)?=(?<registryUrl>\\S*?)\\s+chart=(?<depName>\\S*?)\\n.*?(?<currentValue>\\d+\\.\\d+\\.\\d+).*?\\n"
+        ],
+        "datasourceTemplate": "helm",
+        "extractVersionTemplate": "^.*?(?<version>\\d+\\.\\d+\\.\\d+).*?$"
       }
-  ],
+    ],
 
     "packageRules": [
         // Setup datasources
