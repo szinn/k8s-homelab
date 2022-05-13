@@ -21,7 +21,6 @@ talosctl gen config "main" "https://${ZZ_API_HOSTNAME}:6443" --config-patch-cont
 cat controlplane.yaml | sed -e "s/ZZ_HOSTNAME/k8s-1/" > k8s-1.yaml
 cat controlplane.yaml | sed -e "s/ZZ_HOSTNAME/k8s-2/" > k8s-2.yaml
 cat controlplane.yaml | sed -e "s/ZZ_HOSTNAME/k8s-3/" > k8s-3.yaml
-cat controlplane.yaml | sed -e "s/ZZ_HOSTNAME/k8s-7/" > k8s-7.yaml
 
 # Worker configuration
 cat worker.yaml | sed -e "s/ZZ_HOSTNAME/k8s-4/" > k8s-4.yaml
