@@ -48,12 +48,6 @@ spec:
       runAsUser: 1001
       runAsGroup: 1001
       fsGroup: 1001
-    resources:
-      requests:
-        memory: 100Mi
-        cpu: 100m
-      limits:
-        memory: 1000Mi
     prometheus:
       podMonitor:
         enabled: true

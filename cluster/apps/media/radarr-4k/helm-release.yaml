@@ -54,12 +54,6 @@ spec:
       runAsUser: 1001
       runAsGroup: 1001
       fsGroup: 1001
-    resources:
-      requests:
-        memory: 250Mi
-        cpu: 500m
-      limits:
-        memory: 2000Mi
     metrics:
       enabled: true
       serviceMonitor:
