@@ -20,6 +20,7 @@ spec:
               namespaces:
                 - "cert-manager"
                 - "dashboard"
+                - "dev"
                 - "flux-system"
       mutate:
         patchStrategicMerge:
