@@ -35,7 +35,8 @@ spec:
         traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
     resources:
       requests:
-        memory: 100Mi
-        cpu: 100m
+        cpu: 15m
+        memory: 64M
       limits:
-        memory: 500Mi
+        cpu: 15m
+        memory: 110M

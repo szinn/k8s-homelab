@@ -29,6 +29,13 @@ spec:
         args:
           - "--disable-log-bin"
         existingClaim: dbms-mysql-pvc
+      resources:
+        requests:
+          cpu: 10m
+          memory: 629M
+        limits:
+          cpu: 15m
+          memory: 883M
     auth:
       existingSecret: mysql-secrets
       database: ""
@@ -42,3 +49,10 @@ spec:
         namespace: dbms
         interval: 3m
         scrapeTimeout: 1m
+      resources:
+        requests:
+          cpu: 10m
+          memory: 32M
+        limits:
+          cpu: 15m
+          memory: 34M

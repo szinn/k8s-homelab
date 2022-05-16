@@ -31,6 +31,13 @@ spec:
         loadBalancerIP: ${CONFIG_SVC_POSTGRES_ADDR}
       persistence:
         existingClaim: dbms-postgres-pvc
+      resources:
+        requests:
+          cpu: 10m
+          memory: 110M
+        limits:
+          cpu: 32m
+          memory: 179M
     metrics:
       enabled: true
       image:
@@ -38,6 +45,13 @@ spec:
         repository: bitnami/postgres-exporter
       serviceMonitor:
         enabled: true
+      resources:
+        requests:
+          cpu: 10m
+          memory: 32M
+        limits:
+          cpu: 15m
+          memory: 34M
     commonAnnotations:
       prometheus.io/probe: "true"
       prometheus.io/protocol: "tcp"

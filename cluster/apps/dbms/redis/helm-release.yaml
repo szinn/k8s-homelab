@@ -23,6 +23,22 @@ spec:
       repository: bitnami/redis
     auth:
       enabled: false
+    master:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 32M
+        limits:
+          cpu: 15m
+          memory: 34M
+    replica:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 32M
+        limits:
+          cpu: 15m
+          memory: 32M
     metrics:
       enabled: true
       image:
@@ -30,3 +46,10 @@ spec:
         repository: bitnami/redis-exporter
       serviceMonitor:
         enabled: true
+      resources:
+        requests:
+          cpu: 10m
+          memory: 32M
+        limits:
+          cpu: 15m
+          memory: 34M

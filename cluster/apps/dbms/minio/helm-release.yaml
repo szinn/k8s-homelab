@@ -75,7 +75,8 @@ spec:
       secret.reloader.stakater.com/reload: "minio-secrets"
     resources:
       requests:
-        memory: 100Mi
-        cpu: 100m
+        cpu: 22m
+        memory: 764M
       limits:
-        memory: 750Mi
+        cpu: 49m
+        memory: 1073M
