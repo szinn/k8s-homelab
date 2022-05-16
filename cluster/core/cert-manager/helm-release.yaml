@@ -29,6 +29,13 @@ spec:
     installCRDs: false
     webhook:
       enabled: true
+      resources:
+        requests:
+          cpu: 15m
+          memory: 64M
+        limits:
+          cpu: 15m
+          memory: 64M
     extraArgs:
       - --dns01-recursive-nameservers=1.1.1.1:53
       - --dns01-recursive-nameservers-only
@@ -37,3 +44,18 @@ spec:
       servicemonitor:
         enabled: true
         prometheusInstance: monitoring
+    resources:
+      requests:
+        cpu: 15m
+        memory: 79M
+      limits:
+        cpu: 15m
+        memory: 132M
+    cainjector:
+      resources:
+        requests:
+          cpu: 15m
+          memory: 127M
+        limits:
+          cpu: 15m
+          memory: 258M

@@ -19,6 +19,7 @@ spec:
           - resources:
               namespaces:
                 - "flux-system"
+                - "cert-manager"
       mutate:
         patchStrategicMerge:
           spec:
