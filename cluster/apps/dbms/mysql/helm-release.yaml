@@ -34,7 +34,7 @@ spec:
           cpu: 10m
           memory: 629M
         limits:
-          cpu: 15m
+          # cpu: 15m
           memory: 883M
     auth:
       existingSecret: mysql-secrets
@@ -54,5 +54,5 @@ spec:
           cpu: 10m
           memory: 32M
         limits:
-          cpu: 15m
+          # cpu: 15m
           memory: 34M

@@ -34,7 +34,7 @@ spec:
           cpu: 15m
           memory: 64M
         limits:
-          cpu: 15m
+          # cpu: 15m
           memory: 64M
     extraArgs:
       - --dns01-recursive-nameservers=1.1.1.1:53
@@ -47,15 +47,15 @@ spec:
     resources:
       requests:
         cpu: 15m
-        memory: 79M
+        memory: 94M
       limits:
-        cpu: 15m
+        # cpu: 15m
         memory: 132M
     cainjector:
       resources:
         requests:
           cpu: 15m
-          memory: 127M
+          memory: 183M
         limits:
-          cpu: 15m
+          # cpu: 15m
           memory: 258M

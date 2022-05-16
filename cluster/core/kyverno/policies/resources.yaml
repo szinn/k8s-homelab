@@ -18,11 +18,11 @@ spec:
                 kyverno.io/ignore: "true"
           - resources:
               namespaces:
-                - "cert-manager"
-                - "dashboard"
-                - "dbms"
-                - "dev"
-                - "envoy-system"
+                # - "cert-manager"
+                # - "dashboard"
+                # - "dbms"
+                # - "dev"
+                # - "envoy-system"
                 - "flux-system"
       mutate:
         patchStrategicMerge:
