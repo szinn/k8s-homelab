@@ -18,8 +18,9 @@ spec:
                 kyverno.io/ignore: "true"
           - resources:
               namespaces:
-                - "flux-system"
                 - "cert-manager"
+                - "dashboard"
+                - "flux-system"
       mutate:
         patchStrategicMerge:
           spec:
