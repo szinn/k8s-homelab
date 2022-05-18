@@ -42,5 +42,4 @@ for i in $SETUP_CLUSTERS; do
   build_config yaml $i cluster/config/$i
 done
 
-build_config yaml common cluster/core
-build_config yaml main cluster/apps
+build_config yaml main cluster/core cluster/apps
