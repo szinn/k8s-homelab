@@ -2,7 +2,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: &app lidarr-exporter
+  name: &app radarr-exporter
   namespace: media
   labels: &labels
     app.kubernetes.io/instance: *app
