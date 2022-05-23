@@ -72,6 +72,20 @@ spec:
       enabled: false
     kubeStateMetrics:
       enabled: true
+    kube-state-metrics:
+      fullnameOverride: kube-state-metrics
+      metricLabelsAllowlist:
+        - persistentvolumeclaims=[*]
+      prometheus:
+        monitor:
+          enabled: true
+          relabelings:
+            - action: replace
+              regex: (.*)
+              replacement: $1
+              sourceLabels:
+                - __meta_kubernetes_pod_node_name
+              targetLabel: kubernetes_node
     alertmanager:
       ingress:
         enabled: true
@@ -93,17 +107,9 @@ spec:
           repeat_interval: 6h
           receiver: "slack"
           routes:
-            - match:
-                alertname: Watchdog
-              receiver: "null"
-              continue: false
-            - match:
-                alertname: CPUThrottlingHigh
-              receiver: "null"
-              continue: false
-            - match:
-                alertname: InfoInhibitor
-              receiver: "null"
+            - receiver: "null"
+              matchers:
+                - alertname =~ "InfoInhibitor|Watchdog|CPUThrottlingHigh"
               continue: false
             - receiver: "slack"
         receivers:
@@ -142,10 +148,6 @@ spec:
               resources:
                 requests:
                   storage: 1Gi
-    kube-state-metrics:
-      fullnameOverride: kube-state-metrics
-      metricLabelsAllowlist:
-        - persistentvolumeclaims=[*]
     prometheus-node-exporter:
       fullnameOverride: node-exporter
       prometheus:
@@ -184,6 +186,8 @@ spec:
         enabled: true
       prometheusSpec:
         replicas: 3
+        podAntiAffinity: hard
+        retentionSize: "6GB"
         replicaExternalLabelName: "replica"
         ruleSelector: {}
         ruleNamespaceSelector: {}
@@ -194,7 +198,7 @@ spec:
         podMonitorSelector: {}
         podMonitorNamespaceSelector: {}
         podMonitorSelectorNilUsesHelmValues: false
-        retention: 6h
+        retention: 2d
         enableAdminAPI: true
         walCompression: true
         storageSpec:
