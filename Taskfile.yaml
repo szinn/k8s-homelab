@@ -16,6 +16,21 @@ tasks:
     cmds:
       - kubectl delete pods --field-selector status.phase=Failed -A --ignore-not-found=true
 
+  alpine:
+    desc: Run alpine container
+    cmds:
+      - kubectl run -it alpine --image alpine:3.15.4
+
+  dnsutils:
+    desc: Run DNSUtils pod
+    cmds:
+      - kubectl run -it dnsutils --image gcr.io/kubernetes-e2e-test-images/dnsutils:1.3
+
+  rook-password:
+    desc: Retrieve the rook-ceph password
+    cmds:
+      - kubectl -n rook-ceph get secret rook-ceph-dashboard-password -o jsonpath="{['data']['password']}" | base64 --decode | pbcopy && echo "Copied to clipboard"
+
   what-dockerhub:
     desc: What dockerhub images are running in my cluster
     cmds:
