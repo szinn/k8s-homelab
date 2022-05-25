@@ -5,7 +5,7 @@ metadata:
   name: openbooks
   namespace: media
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
       chart: kah-common-chart
@@ -14,7 +14,7 @@ spec:
         kind: HelmRepository
         name: k8s-at-home-charts
         namespace: flux-system
-      interval: 5m
+      interval: 15m
   values:
     nameOverride: openbooks
     image:
@@ -28,10 +28,8 @@ spec:
     service:
       main:
         enabled: true
-        type: ClusterIP
         ports:
           http:
-            enabled: true
             port: 80
     persistence:
       data:
