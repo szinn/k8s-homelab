@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: openbooks
+  name: &app openbooks
   namespace: media
 spec:
   interval: 15m
@@ -16,7 +16,8 @@ spec:
         namespace: flux-system
       interval: 15m
   values:
-    nameOverride: openbooks
+    global:
+      nameOverride: *app
     image:
       repository: docker.io/evanbuss/openbooks
       tag: latest
@@ -27,15 +28,9 @@ spec:
       GUID: "1000"
     service:
       main:
-        enabled: true
         ports:
           http:
             port: 80
-    persistence:
-      data:
-        enabled: true
-        existingClaim: openbooks-pvc
-        mountPath: /data
     ingress:
       main:
         enabled: true
@@ -44,9 +39,14 @@ spec:
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
         hosts:
-          - host: &host "openbooks.${SECRET_DOMAIN_NAME}"
+          - host: "{{ .Release.Name }}.${SECRET_DOMAIN_NAME}"
             paths:
               - path: /
                 pathType: Prefix
                 service:
                   port: 80
+    persistence:
+      data:
+        enabled: true
+        existingClaim: openbooks-pvc
+        mountPath: /data
