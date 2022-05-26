@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://charts.bitnami.com/bitnami
       chart: postgresql
-      version: 11.2.6
+      version: 11.3.0
       sourceRef:
         kind: HelmRepository
         name: bitnami-charts
@@ -55,3 +55,12 @@ spec:
     commonAnnotations:
       prometheus.io/probe: "true"
       prometheus.io/protocol: "tcp"
+  valuesFrom:
+    - kind: Secret
+      name: postgres-secrets
+      valuesKey: password
+      targetPath: global.postgresql.auth.postgresPassword
+    - kind: Secret
+      name: postgres-secrets
+      valuesKey: password
+      targetPath: global.postgresql.auth.password
