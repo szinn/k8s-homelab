@@ -9,7 +9,6 @@ spec:
   timeout: 15m
   chart:
     spec:
-      # renovate: registryUrl=https://charts.bitnami.com/bitnami
       chart: redis
       version: 16.10.0
       sourceRef:
