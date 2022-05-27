@@ -1,249 +1,106 @@
 {
-    "extends": [
-        "config:base",
-        ":enableRenovate",
-        ":disableRateLimiting",
-        ":dependencyDashboard",
-        ":semanticCommits",
-        ":separatePatchReleases",
-        "docker:enableMajor",
-        ":enablePreCommit",
-        "github>szinn/k8s-homelab//.github/renovate/commitMessage",
-        "github>szinn/k8s-homelab//.github/renovate/labels",
-        "github>szinn/k8s-homelab//.github/renovate/semanticCommits",
-        "github>szinn/k8s-homelab//.github/renovate/allowedVersions",
-        "github>szinn/k8s-homelab//.github/renovate/autoMerge"
-    ],
-
-    "platform": "github",
-    "repositories": ["szinn/k8s-homelab"],
-    "onboarding": false,
-    "requireConfig": false,
-    "timezone": "America/Toronto",
-    "dependencyDashboard": true,
-    "dependencyDashboardTitle": "Renovate Dashboard",
-
-    // set up ignored deps
-    "ignoreDeps": [
-        "ghcr.io/fluxcd/helm-controller",
-        "ghcr.io/fluxcd/image-automation-controller",
-        "ghcr.io/fluxcd/image-reflector-controller",
-        "ghcr.io/fluxcd/kustomize-controller",
-        "ghcr.io/fluxcd/notification-controller",
-        "ghcr.io/fluxcd/source-controller"
-    ],
-    // Setup renovate managers
-    "helm-values": {
-        "fileMatch": [
-            "cluster/.+/helm-release\\.yaml$"
-        ]
+  "extends": [
+    ":enableRenovate",
+    "config:base",
+    ":disableRateLimiting",
+    ":dependencyDashboard",
+    ":semanticCommits",
+    "docker:enableMajor",
+    ":enablePreCommit",
+    "github>szinn/k8s-homelab//.github/renovate/allowedVersions.json5",
+    "github>szinn/k8s-homelab//.github/renovate/autoMerge.json5",
+    "github>szinn/k8s-homelab//.github/renovate/commitMessage.json5",
+    "github>szinn/k8s-homelab//.github/renovate/groups.json5",
+    "github>szinn/k8s-homelab//.github/renovate/labels.json5",
+    "github>szinn/k8s-homelab//.github/renovate/semanticCommits.json5"
+  ],
+  "platform": "github",
+  "username": "rosey-bot[bot]",
+  "repositories": ["szinn/k8s-homelab"],
+  "onboarding": false,
+  "requireConfig": false,
+  "gitAuthor": "rosey-bot <98030736+rosey-bot[bot]@users.noreply.github.com>",
+  "dependencyDashboardTitle": "Renovate Dashboard 🤖",
+  "suppressNotifications": ["prIgnoreNotification"],
+  "rebaseWhen": "conflicted",
+  "commitBodyTable": true,
+  "ignoreDeps": [
+    "ghcr.io/fluxcd/helm-controller",
+    "ghcr.io/fluxcd/image-automation-controller",
+    "ghcr.io/fluxcd/image-reflector-controller",
+    "ghcr.io/fluxcd/kustomize-controller",
+    "ghcr.io/fluxcd/notification-controller",
+    "ghcr.io/fluxcd/source-controller"
+  ],
+  "docker-compose": {
+    "fileMatch": ["ansible/.+/docker-compose.*\\.ya?ml(\\.j2)?$"]
+  },
+  "flux": {
+    "fileMatch": ["cluster/.+\\.ya?ml$"]
+  },
+  "helm-values": {
+    "fileMatch": ["cluster/.+\\.ya?ml$"]
   },
   "kubernetes": {
-    "fileMatch": [
-            "cluster/.+\\.yaml$"
-        ]
+    "fileMatch": ["cluster/.+\\.ya?ml$"]
   },
-    "flux": {
-        "fileMatch": [
-            "cluster/.+\\.ya?ml$"
-        ]
-    },
-    "helmv3": {
-        "fileMatch": [
-            "charts/.+/Chart\\.ya?ml$"
-        ]
-    },
-
-    "regexManagers": [
-    // regexManager to read and process GitHub release artifacts
+  "regexManagers": [
     {
+      "description": "Process various dependencies",
       "fileMatch": [
-                "cluster/.+\\.yaml$"
-            ],
-      "matchStrings": [
-        "https://github.com/(?<org>.*=?)/(?<repo>.*=?)/releases/download/(?<currentValue>.*=?)/.*"
-      ],
-      "datasourceTemplate": "github-releases",
-      "depNameTemplate": "{{org}}/{{repo}}"
-    },
-
-        // Generic Regex Manager
-    {
-      "fileMatch": [
-        "cluster/.+\\.yaml$"
+        "ansible/.+\\.ya?ml$",
+        "cluster/.+\\.ya?ml$",
+        "hack/.+\\.sh$"
       ],
       "matchStrings": [
-        "datasource=(?<datasource>.*?) depName=(?<depName>.*?)\n .*: (?<currentValue>.*=?)"
+        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( versioning=(?<versioning>\\S+))?\n.*?\"(?<currentValue>.*)\"\n"
+      ],
+      "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}",
+      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
+    },
+    // regexManager to read and process Traefik CRD's
+    {
+      "fileMatch": [
+        "cluster/crds/traefik/.+\\.yaml$"
+      ],
+      "matchStrings": [
+        "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n *tag: v(?<currentValue>.*)\n"
+      ],
+      "datasourceTemplate": "helm"
+    },
+    {
+      "description": "Process GitRepository CRD dependencies - Chart and Github Release are the same version",
+      "fileMatch": [
+        "cluster/crds/cert-manager/.+\\.ya?ml$",
+        "cluster/crds/external-snapshotter/.+\\.ya?ml$",
+        "cluster/crds/kube-prometheus-stack/.+\\.ya?ml$",
+        "cluster/crds/kyverno/.+\\.ya?ml$",
+        "cluster/crds/rook-ceph/.+\\.ya?ml$"
+      ],
+      "matchStrings": [
+        "registryUrl=(?<registryUrl>\\S+) chart=(?<depName>\\S+)\n.*?(?<currentValue>[^-\\s]*)\n"
+      ],
+      "datasourceTemplate": "helm"
+    },
+    {
+      "description": "Process Kustomization CRD dependencies - Image and Github Release are the same version",
+      "fileMatch": ["cluster/crds/.+\\.ya?ml$"],
+      "matchStrings": [
+        "datasource=(?<datasource>\\S+) image=(?<depName>\\S+)\n.*?-\\s(.*?)\/(?<currentValue>[^/]+)\/[^/]+\n"
       ],
       "datasourceTemplate": "docker"
-    },
-    // Generic Docker image Regex manager
-    //{
-    //    "fileMatch": [
-    //      "cluster/.+\\.yaml$"
-    //    ],
-    //    "matchStrings": [
-    //      "# renovate: docker-image( registryUrl=(?<registryUrl>.*?))?( versioning=(?<versioning>.*=?))?\n .*: (?<depName>.*?):(?<currentValue>.*=?)"
-    //    ],
-    //    "datasourceTemplate": "docker",
-    //    "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}docker{{/if}}",
-    //    "registryUrlTemplate": "{{#if registryUrl}}{{{registryUrl}}}{{else}}{{/if}}"
-    //  },
-
-      // Generic charge Regex manager
-      {
-          "fileMatch": [
-              "cluster/^.*\\.yaml$"
-          ],
-          "matchStrings": [
-              "registryUrl=(?<registryUrl>.*?)\n *chart: (?<depName>.*?)\n *version: (?<currentValue>.*)\n"
-          ],
-          "datasourceTemplate": "helm"
-      },
-      {
-        "fileMatch": ["cluster/.+\\.ya?ml$"],
-        "matchStrings": [
-          "helmRepo(sitory)?=(?<registryUrl>\\S*?)\\s+chart=(?<depName>\\S*?)\\n.*?(?<currentValue>\\d+\\.\\d+\\.\\d+).*?\\n"
-        ],
-        "datasourceTemplate": "helm",
-        "extractVersionTemplate": "^.*?(?<version>\\d+\\.\\d+\\.\\d+).*?$"
-      }
-    ],
-
-    "packageRules": [
-        // Setup datasources
-        {
-            "matchDatasources": [
-                "helm"
-            ],
-            //"commitMessageTopic": "Helm chart {{depName}}",
-            //"semanticCommitScope": "charts",
-            "separateMinorPatch": true,
-            "ignoreDeprecated": true
-        },
-
-        {
-            "enabled": true,
-            "matchDatasources": [
-                "docker"
-            ],
-            //"commitMessageTopic": "Docker image {{depName}}",
-            "commitMessageExtra": "to {{#if isSingleVersion}}{{{newVersion}}}{{else}}{{{newValue}}}{{/if}}",
-            "matchUpdateTypes": [
-                "major",
-                "minor",
-                "patch"
-            ]
-        },
-
-        {
-            "matchDatasources": [
-                "docker"
-            ],
-            //"semanticCommitScope": "images",
-            "separateMinorPatch": true
-        },
-
-        // Custom version schemes
+    }
+  ],
+  "packageRules": [
     {
-      "matchDatasources": [
-                "docker"
-            ],
+      "description": "Use loose versioning for certain dependencies",
+      "matchDatasources": ["docker", "github-releases"],
+      "versioning": "loose",
       "matchPackageNames": [
-                "blakeblackshear/frigate"
-            ],
-      "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-(?<compatibility>.*)$"
-    },
-        {
-            "matchDatasources": [
-                "docker"
-            ],
-            "versioning": "regex:^RELEASE\\.(?<major>\\d+)-(?<minor>\\d+)-(?<patch>\\d+)T.*Z(-(?<compatibility>.*))?$",
-            "matchPackageNames": [
-                "quay.io/minio/minio"
-            ]
-        },
-
-    // Group packages
-    {
-      "matchDatasources": ["helm", "docker"],
-      "matchPackagePatterns": ["^rook.ceph"],
-      "groupName": "rook-ceph-suite",
-      "additionalBranchPrefix": "",
-      "separateMinorPatch": true
-    },
-
-        // pin package versions
-        {
-            "matchDatasources": [
-                "docker"
-            ],
-            "allowedVersions": "<15",
-            "matchPackageNames": [
-                "postgresql",
-                "bitnami/postgresql"
-            ]
-        },
-        {
-            "matchDatasources": [
-                "docker"
-            ],
-            "allowedVersions": "<10",
-            "matchPackageNames": [
-                "linuxserver/heimdall"
-            ]
-        },
-        {
-            "matchDatasources": [
-                "docker"
-            ],
-            "allowedVersions": "<14",
-            "matchPackageNames": [
-                "postgres"
-            ]
-        },
-        {
-            "matchDatasources": [
-                "docker"
-            ],
-            "allowedVersions": "<v1.24",
-            "matchPackageNames": [
-                "ghcr.io/k8s-at-home/kubectl"
-            ]
-        },
-        //{
-        //    "matchDatasources": ["docker"],
-        //    "allowedVersions": "<2",
-        //    "matchPackageNames": [
-        //    "influxdb"
-        //    ]
-        //},
-        //{
-        //    "matchDatasources": ["helm"],
-        //    "allowedVersions": "<2",
-        //    "matchPackageNames": ["metallb"]
-        //},
-        {
-            "matchDatasources": ["github-releases", "docker"],
-            "matchPackagePatterns": [
-              "external-snapshotter",
-              "snapshot-controller"
-            ],
-            "groupName": "external-snapshotter-suite",
-            "additionalBranchPrefix": "",
-            "separateMinorPatch": true
-        },
-        {
-            "matchDatasources": [
-                "github-tags",
-                "docker"
-            ],
-            "matchPackagePatterns": [
-                "rancher/system-upgrade-controller"
-            ],
-            "groupName": "system-upgrade-controller-suite",
-            "additionalBranchPrefix": "",
-            "separateMinorPatch": true
-        }
-    ]
+        "ghcr.io/k8s-at-home/plex",
+        "ghcr.io/k8s-at-home/qbittorrent",
+        "Hypfer/Valetudo"
+      ]
+    }
+  ]
 }

@@ -1,25 +1,25 @@
 ---
-apiVersion: source.toolkit.fluxcd.io/v1beta1
+apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: GitRepository
 metadata:
-  name: kyverno-source
+  name: rook-ceph-source
   namespace: flux-system
 spec:
   interval: 12h
-  url: https://github.com/kyverno/kyverno.git
+  url: https://github.com/rook/rook.git
   ref:
-    # renovate: registryUrl=https://kyverno.github.io/kyverno chart=kyverno
-    tag: helm-chart-v2.3.3
+    # renovate: registryUrl=https://charts.rook.io/release chart=rook-ceph
+    tag: v1.9.4
   ignore: |
     # exclude all
     /*
-    # path to crds
-    !/config/crds
+    # include crd directory
+    !/deploy/examples/crds.yaml
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: kyverno-crds
+  name: crds-rook-ceph
   namespace: flux-system
 spec:
   interval: 30m
@@ -27,4 +27,4 @@ spec:
   wait: true
   sourceRef:
     kind: GitRepository
-    name: kyverno-source
+    name: rook-ceph-source

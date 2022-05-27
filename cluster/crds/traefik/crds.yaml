@@ -5,11 +5,11 @@ metadata:
   name: traefik-crd-source
   namespace: flux-system
 spec:
-  interval: 30m
+  interval: 12h
   url: https://github.com/traefik/traefik-helm-chart.git
   ref:
-    # renovate: helmRepositoryl=https://helm.traefik.io/traefik chart=traefik
-    tag: v10.14.2
+    # renovate: registryUrl=https://helm.traefik.io/traefik chart=traefik
+    tag: v10.19.5
   ignore: |
     # exclude all
     /*
