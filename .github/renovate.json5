@@ -92,6 +92,16 @@
     }
   ],
   "packageRules": [
+    // pin package versions
+    {
+      "matchDatasources": [
+          "docker"
+      ],
+      "allowedVersions": "<10",
+      "matchPackageNames": [
+          "linuxserver/heimdall"
+      ]
+    },
     {
       "description": "Use loose versioning for certain dependencies",
       "matchDatasources": ["docker", "github-releases"],
