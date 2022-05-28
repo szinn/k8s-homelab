@@ -1,6 +1,15 @@
 {
   "packageRules": [
     {
+      "matchDatasources": [
+          "docker"
+      ],
+      "allowedVersions": "<10",
+      "matchPackageNames": [
+          "linuxserver/heimdall"
+      ]
+    },
+    {
       "matchDatasources": ["docker"],
       "matchPackageNames": ["docker.io/kopia/kopia"],
       "allowedVersions": "<10"

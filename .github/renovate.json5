@@ -5,6 +5,7 @@
     ":disableRateLimiting",
     ":dependencyDashboard",
     ":semanticCommits",
+    ":separatePatchReleases",
     "docker:enableMajor",
     ":enablePreCommit",
     "github>szinn/k8s-homelab//.github/renovate/allowedVersions.json5",
@@ -15,12 +16,12 @@
     "github>szinn/k8s-homelab//.github/renovate/semanticCommits.json5"
   ],
   "platform": "github",
-  "username": "repo-jeeves",
+  "username": "repo-jeeves[bot]",
   "repositories": ["szinn/k8s-homelab"],
   "onboarding": false,
   "requireConfig": false,
-  "gitAuthor": "repo-jeeves <449824+repo-jeeves[bot]@users.noreply.github.com>",
-  "dependencyDashboard": true,
+  "gitAuthor": "repo-jeeves <106431701+repo-jeeves[bot]@users.noreply.github.com>",
+  "timezone": "America/Toronto",
   "dependencyDashboardTitle": "Renovate Dashboard",
   "suppressNotifications": ["prIgnoreNotification"],
   "rebaseWhen": "conflicted",
@@ -33,9 +34,6 @@
     "ghcr.io/fluxcd/notification-controller",
     "ghcr.io/fluxcd/source-controller"
   ],
-  "docker-compose": {
-    "fileMatch": ["ansible/.+/docker-compose.*\\.ya?ml(\\.j2)?$"]
-  },
   "flux": {
     "fileMatch": ["cluster/.+\\.ya?ml$"]
   },
@@ -49,7 +47,6 @@
     {
       "description": "Process various dependencies",
       "fileMatch": [
-        "ansible/.+\\.ya?ml$",
         "cluster/.+\\.ya?ml$",
         "hack/.+\\.sh$"
       ],
@@ -61,6 +58,7 @@
     },
     // regexManager to read and process Traefik CRD's
     {
+      "description": "Process GitRepository CRD dependencies - Chart and Github Release are the same version",
       "fileMatch": [
         "cluster/crds/traefik/.+\\.yaml$"
       ],
@@ -93,16 +91,6 @@
     }
   ],
   "packageRules": [
-    // pin package versions
-    {
-      "matchDatasources": [
-          "docker"
-      ],
-      "allowedVersions": "<10",
-      "matchPackageNames": [
-          "linuxserver/heimdall"
-      ]
-    },
     {
       "description": "Use loose versioning for certain dependencies",
       "matchDatasources": ["docker", "github-releases"],
