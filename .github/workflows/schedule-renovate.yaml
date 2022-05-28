@@ -37,7 +37,7 @@ jobs:
         with:
           config-file: "${{ env.RENOVATE_CONFIG_FILE }}"
       - name: Generate Token
-        uses: tibdex/github-app-token@v1.5.0
+        uses: tibdex/github-app-token@v1.5.2
         id: generate-token
         with:
           app_id: "${{ secrets.BOT_APP_ID }}"
