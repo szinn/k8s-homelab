@@ -5,7 +5,7 @@ metadata:
   name: actions-runner-controller
   namespace: dev
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
       chart: actions-runner-controller
@@ -14,7 +14,7 @@ spec:
         kind: HelmRepository
         name: actions-runner-controller-charts
         namespace: flux-system
-      interval: 5m
+      interval: 15m
 
   install:
     crds: CreateReplace

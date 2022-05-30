@@ -5,7 +5,7 @@ metadata:
   name: botkube
   namespace: monitoring
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
       chart: botkube
@@ -14,7 +14,7 @@ spec:
         kind: HelmRepository
         name: infracloudio-charts
         namespace: flux-system
-      interval: 5m
+      interval: 15m
   values:
     image:
       repository: infracloudio/botkube

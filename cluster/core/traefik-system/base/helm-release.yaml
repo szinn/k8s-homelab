@@ -5,7 +5,7 @@ metadata:
   name: traefik
   namespace: traefik-system
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
       chart: traefik
@@ -14,7 +14,7 @@ spec:
         kind: HelmRepository
         name: traefik-charts
         namespace: flux-system
-      interval: 5m
+      interval: 15m
   dependsOn:
     - name: cert-manager
       namespace: cert-manager

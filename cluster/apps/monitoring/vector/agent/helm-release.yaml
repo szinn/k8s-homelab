@@ -8,7 +8,7 @@ spec:
   dependsOn:
     - name: loki
       namespace: monitoring
-  interval: 5m
+  interval: 15m
   chart:
     spec:
       chart: vector
@@ -17,7 +17,7 @@ spec:
         kind: HelmRepository
         name: vector-charts
         namespace: flux-system
-      interval: 5m
+      interval: 15m
   values:
     role: "Agent"
 

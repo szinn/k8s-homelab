@@ -10,7 +10,7 @@ metadata:
   labels:
     app.kubernetes.io/managed-by: Helm
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
       chart: cilium
@@ -19,7 +19,7 @@ spec:
         kind: HelmRepository
         name: cilium-charts
         namespace: flux-system
-      interval: 5m
+      interval: 15m
   install:
     remediation: # perform remediation when helm install fails
       retries: 3

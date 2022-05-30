@@ -5,7 +5,7 @@ metadata:
   name: postgres
   namespace: dbms
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
       chart: postgresql
@@ -14,7 +14,7 @@ spec:
         kind: HelmRepository
         name: bitnami-charts
         namespace: flux-system
-      interval: 5m
+      interval: 15m
   values:
     image:
       registry: public.ecr.aws
