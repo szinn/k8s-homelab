@@ -1,7 +1,13 @@
 {
   "packageRules": [
     {
-      "matchDatasources": ["docker"],
+      "matchDatasources": [
+        "docker",
+        "github-actions",
+        "github-releases",
+        "github-tags",
+        "helm"
+      ],
       "automerge": true,
       "automergeType": "branch",
       "requiredStatusChecks": null,
@@ -11,7 +17,8 @@
         "ghcr.io/k8s-at-home/lidarr",
         "ghcr.io/k8s-at-home/prowlarr",
         "ghcr.io/k8s-at-home/radarr",
-        "ghcr.io/k8s-at-home/sonarr"
+        "ghcr.io/k8s-at-home/sonarr",
+        "renovatebot/github-action"
       ]
     }
   ]
