@@ -10,7 +10,6 @@ resources:
   - descheduler-charts.yaml
   - external-dns-charts.yaml
   - fairwinds-charts.yaml
-  - fluent-bit-charts.yaml
   - grafana-charts.yaml
   - infracloudio-charts.yaml
   - jetstack-charts.yaml
