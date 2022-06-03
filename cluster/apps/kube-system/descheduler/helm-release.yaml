@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: descheduler
-      version: 0.24.0
+      version: 0.24.1
       sourceRef:
         kind: HelmRepository
         name: descheduler-charts
@@ -22,7 +22,9 @@ spec:
     deschedulerPolicy:
       strategies:
         RemoveDuplicates:
-          enabled: false
+          enabled: true
+        RemovePodsViolatingNodeTaints:
+          enabled: true
         RemovePodsViolatingNodeAffinity:
           enabled: true
           params:
@@ -42,9 +44,13 @@ spec:
           enabled: true
           params:
             failedPods:
-              # reasons:
-              #   - "NodeAffinity"
               includingInitContainers: true
               excludeOwnerKinds:
                 - "Job"
               minPodLifetimeSeconds: 3600
+        RemovePodsHavingTooManyRestarts:
+          enabled: true
+          params:
+            podsHavingTooManyRestarts:
+              podRestartThreshold: 100
+              includingInitContainers: true
