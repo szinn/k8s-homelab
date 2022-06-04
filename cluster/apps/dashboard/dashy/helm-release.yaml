@@ -1,0 +1,51 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app dashy
+  namespace: dashboard
+spec:
+  interval: 15m
+  install:
+    createNamespace: true
+  chart:
+    spec:
+      chart: kah-common-chart
+      version: 1.1.2
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+      interval: 15m
+  values:
+    global:
+      nameOverride: *app
+    image:
+      repository: lissy93/dashy
+      tag: 2.0.9
+    env:
+      TZ: ${CONFIG_TIMEZONE}
+    service:
+      main:
+        ports:
+          http:
+            port: 80
+    podSecurityContext:
+      supplementalGroups:
+        - 65534
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
+        hosts:
+          - host: "{{ .Release.Name }}.${SECRET_DOMAIN_NAME}"
+            paths:
+              - path: /
+                pathType: Prefix
+    persistence:
+      config:
+        enabled: true
+        existingClaim: dashy-pvc
+        mountPath: /app/public/
