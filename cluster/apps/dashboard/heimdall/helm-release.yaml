@@ -68,7 +68,7 @@ spec:
       init-pvc:
         enabled: true
         type: configMap
-        name: init-pvc
+        name: init-dashboard-pvc
         mountPath: /scripts
         readOnly: true
     resources:
