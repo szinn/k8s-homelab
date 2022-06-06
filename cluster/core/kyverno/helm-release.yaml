@@ -34,3 +34,9 @@ spec:
             app.kubernetes.io/instance: kyverno
     serviceMonitor:
       enabled: true
+    resources:
+      limits:
+        memory: 613Mi
+      requests:
+        cpu: 100m
+        memory: 352Mi
