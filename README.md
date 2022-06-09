@@ -28,20 +28,21 @@ At the bottom of this page, is the bringup process that I follow for this cluste
 
 ## Hardware
 
-| Device                          | Count | OS Disk Size | Data Disk Size | RAM  | Operating System                       |
-| ------------------------------- | ----- | ------------ | -------------- | ---- | -------------------------------------- |
-| Ryzen 3900 12c24t server        | 1     | 1TB          | 4x4TB SATA     | 64GB | [Proxmox](https://www.proxmox.com/en/) |
-| \* K8s control plane nodes      | 3     | 40GB         |                | 8GB  | Talos                                  |
-| \* Router                       | 1     | 20GB         |                | 8GB  | Ubuntu 21.10                           |
-| \* TrueNAS Core                 | 1     |              | (on 4x4TB)     | 16GB | TrueNAS Core 12                        |
-| Raspberry Pi                    | 1     |              |                |      | PiHole                                 |
-| Raspberry Pi                    | 1     |              |                |      | OctoPrint                              |
-| Intel NUC11PAHi7 (worker nodes) | 3     | 500GB SSD    | 1TB NVMe       | 64GB | Talos                                  |
-| Synology 1019+                  | 1     |              | 5x8TB SATA     |      |                                        |
-| UDMPro                          | 1     |              |                |      |                                        |
-| USW-Pro-24-PoE                  | 1     |              |                |      |                                        |
-| USW-Enterprise-8-PoE            | 1     |              |                |      |                                        |
-| UNVR                            | 1     |              | 3x4TB SATA     |      |                                        |
+| Device                                               | Count | OS Disk Size | Data Disk Size | RAM  | Operating System                       |
+| ---------------------------------------------------- | ----- | ------------ | -------------- | ---- | -------------------------------------- |
+| Ryzen 3900 12c24t server                             | 1     | 1TB          | 4x4TB SATA     | 64GB | [Proxmox](https://www.proxmox.com/en/) |
+| \* Router                                            | 1     | 20GB         |                | 8GB  | Ubuntu 21.10                           |
+| Raspberry Pi                                         | 1     |              |                |      | PiHole                                 |
+| Raspberry Pi                                         | 1     |              |                |      | OctoPrint                              |
+| TESmart 8-port HDMI Switch                           | 1     |              |                |      |                                        |
+| PiKVM                                                | 1     |              |                |      |                                        |
+| Intel NUC11PAHi7 (worker nodes)                      | 3     | 500GB SSD    | 1TB NVMe       | 64GB | Talos                                  |
+| Beelink MiniPC, Celeron J4125 (controlplane nodes)   | 3     | 256GB SSD    |                | 8GB  | Talos                                  |
+| Synology 1019+ (NFS server)                          | 1     |              | 5x8TB SATA     |      |                                        |
+| UDMPro                                               | 1     |              |                |      |                                        |
+| USW-Pro-24-PoE                                       | 1     |              |                |      |                                        |
+| USW-Enterprise-8-PoE                                 | 1     |              |                |      |                                        |
+| UNVR                                                 | 1     |              | 3x4TB SATA     |      |                                        |
 
 ## Kubernetes
 
