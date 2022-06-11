@@ -68,9 +68,21 @@
       "datasourceTemplate": "helm"
     },
     {
+      "description": "Process CRD dependencies",
+      "fileMatch": [
+        "cluster/crds/cert-manager/.+\\.ya?ml$"
+      ],
+      "matchStrings": [
+        // GitRepository and Flux Kustomization where 'Git tag' matches 'Helm' version
+        "registryUrl=(?<registryUrl>\\S+) chart=(?<depName>\\S+)\n.*?(?<currentValue>[^-\\s]*)\n",
+        // Kustomization where 'GitHub release artifact' matches 'Docker image' version
+        "datasource=(?<datasource>\\S+) image=(?<depName>\\S+)\n.*?-\\s(.*?)\/(?<currentValue>[^/]+)\/[^/]+\n"
+      ],
+      "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}helm{{/if}}"
+    },
+    {
       "description": "Process GitRepository CRD dependencies - Chart and Github Release are the same version",
       "fileMatch": [
-        "cluster/crds/cert-manager/.+\\.ya?ml$",
         "cluster/crds/external-snapshotter/.+\\.ya?ml$",
         "cluster/crds/kube-prometheus-stack/.+\\.ya?ml$",
         "cluster/crds/kyverno/.+\\.ya?ml$",
