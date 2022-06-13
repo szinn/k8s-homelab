@@ -22,6 +22,7 @@ tasks:
     cmds:
       - flux reconcile kustomization crds
       - flux reconcile kustomization config
+      - flux reconcile kustomization charts
       - flux reconcile kustomization core
     silent: false
 
