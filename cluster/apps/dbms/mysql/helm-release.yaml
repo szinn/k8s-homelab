@@ -31,10 +31,10 @@ spec:
       resources:
         requests:
           cpu: 10m
-          memory: 629M
+          memory: 717M
         limits:
           # cpu: 15m
-          memory: 883M
+          memory: 1031M
     auth:
       existingSecret: mysql-secrets
       database: ""

@@ -32,10 +32,10 @@ spec:
     resources:
       requests:
         cpu: 10m
-        memory: 37M
+        memory: 50M
       limits:
         cpu: 15m
-        memory: 51M
+        memory: 72M
 
     githubWebhookServer:
       enabled: true

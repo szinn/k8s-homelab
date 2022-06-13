@@ -53,4 +53,4 @@ spec:
         memory: 164M
       limits:
         # cpu: 15m
-        memory: 230M
+        memory: 236M

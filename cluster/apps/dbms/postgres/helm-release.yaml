@@ -36,7 +36,7 @@ spec:
           memory: 110M
         limits:
           # cpu: 32m
-          memory: 179M
+          memory: 209M
     metrics:
       enabled: true
       image:
