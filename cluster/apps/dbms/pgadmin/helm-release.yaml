@@ -22,6 +22,8 @@ spec:
       registry: docker.io
       repository: dpage/pgadmin4
       tag: "6.10"
+    deploymentStrategy:
+      type: Recreate
     existingSecret: pgadmin-secrets
     env:
       email: ${SECRET_ADMIN_EMAIL}
