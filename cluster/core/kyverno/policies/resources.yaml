@@ -4,6 +4,8 @@ kind: ClusterPolicy
 metadata:
   name: resources
 spec:
+  background: true
+  generateExistingOnPolicyUpdate: true
   rules:
     - name: remove-cpu-limits
       match:
@@ -23,7 +25,7 @@ spec:
                 # - "dbms"
                 # - "dev"
                 # - "envoy-system"
-                - "flux-system"
+                - "unused-flux-system"
       mutate:
         patchStrategicMerge:
           spec:
