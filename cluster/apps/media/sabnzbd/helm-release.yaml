@@ -2,25 +2,39 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: sabnzbd
+  name: &app sabnzbd
   namespace: media
 spec:
   interval: 15m
   chart:
     spec:
-      chart: sabnzbd
-      version: 9.3.2
+      chart: kah-common-chart
+      version: 1.1.2
       sourceRef:
         kind: HelmRepository
         name: k8s-at-home-charts
         namespace: flux-system
       interval: 15m
   values:
+    global:
+      nameOverride: *app
     image:
       repository: ghcr.io/k8s-at-home/sabnzbd
       tag: v3.6.0
     env:
       TZ: ${CONFIG_TIMEZONE}
+      HOST_WHITELIST_ENTRIES: >-
+        sabnzbd,
+        sabnzbd.media,
+        sabnzbd.media.svc,
+        sabnzbd.media.svc.cluster,
+        sabnzbd.media.svc.cluster.local,
+        sabnzbd.${SECRET_DOMAIN_NAME}
+    service:
+      main:
+        ports:
+          http:
+            port: 8080
     ingress:
       main:
         enabled: true
@@ -29,7 +43,7 @@ spec:
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
         hosts:
-          - host: &host "sabnzbd.${SECRET_DOMAIN_NAME}"
+          - host: "{{ .Release.Name }}.${SECRET_DOMAIN_NAME}"
             paths:
               - path: /
                 pathType: Prefix
@@ -41,13 +55,12 @@ spec:
       downloads:
         enabled: true
         existingClaim: downloads-pvc
-        mountPath: "/downloads"
+        mountPath: /downloads
+      incomplete:
+        enabled: true
+        type: emptyDir
+        mountPath: /incomplete
     podSecurityContext:
       runAsUser: 1001
       runAsGroup: 1001
       fsGroup: 1001
-    prometheus:
-      podMonitor:
-        enabled: true
-        interval: 10m
-        scrapeTimeout: 2m
