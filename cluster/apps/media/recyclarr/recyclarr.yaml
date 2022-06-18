@@ -11,12 +11,19 @@
 sonarr:
   - base_url: http://sonarr:8989
     api_key: ${SONARR_APIKEY}
-    quality_definition: hybrid
+    quality_definition: series
     release_profiles:
       - trash_ids:
           - EBC725268D687D588A20CBC5F97E538B # Low Quality Groups
           - 1B018E0C53EC825085DD911102E2CA36 # Release Sources (Streaming Service)
           - 71899E6C303A07AF0E4746EFF9873532 # P2P Groups + Repack/Proper
+        strict_negative_scores: false
+      - trash_ids:
+          - 76e060895c5b8a765c310933da0a5357 # Optionals
+        filter:
+          include:
+            - 436f5a7d08fbf02ba25cb5e5dfe98e55 # Ignore Dolby Vision without HDR10 fallback
+            - f3f0f3691c6a1988d4a02963e69d11f2 # Ignore The Group -SCENE
 
 radarr:
   - base_url: http://radarr:7878
@@ -32,8 +39,6 @@ radarr:
           - name: Any
             score: 1
           - name: HD
-            score: 1
-          - name: SD
             score: 1
       - trash_ids:
           - 496f355514737f7d83bf7aa4d24f8169 # TrueHD Atmos
@@ -88,16 +93,12 @@ radarr:
             reset_unmatched_scores: true
           - name: HD
             reset_unmatched_scores: true
-          - name: SD
-            reset_unmatched_scores: true
       - trash_ids:
           - 1c7d7b04b15cc53ea61204bebbcc1ee2 # HQ
         quality_profiles:
           - name: Any
             score: 0
           - name: HD
-            score: 0
-          - name: SD
             score: 0
       - trash_ids:
           - 4b900e171accbfb172729b63323ea8ca # Optional: Multi
@@ -106,8 +107,6 @@ radarr:
           - name: Any
             score: 0
           - name: HD
-            score: 0
-          - name: SD
             score: 0
 
   - base_url: http://radarr-4k:7878

@@ -16,6 +16,6 @@ resources:
   - qbittorrent
   - radarr
   - radarr-4k
-  # - recyclarr
+  - recyclarr
   - sabnzbd
   - sonarr
