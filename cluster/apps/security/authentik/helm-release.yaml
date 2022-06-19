@@ -21,7 +21,7 @@ spec:
   values:
     image:
       repository: ghcr.io/goauthentik/server
-      tag: 2022.6.2
+      tag: 2022.6.3
 
     ingress:
       enabled: true
