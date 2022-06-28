@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: mysql
-      version: 9.1.7
+      version: 9.1.8
       sourceRef:
         kind: HelmRepository
         name: bitnami-charts
@@ -37,7 +37,6 @@ spec:
           memory: 1031M
     auth:
       existingSecret: mysql-secrets
-      database: ""
     metrics:
       enabled: true
       image:
