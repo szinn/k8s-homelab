@@ -20,7 +20,7 @@ spec:
       nameOverride: *app
     image:
       repository: linuxserver/heimdall
-      tag: 2.4.12
+      tag: 2.4.13
     env:
       TZ: ${CONFIG_TIMEZONE}
     service:
