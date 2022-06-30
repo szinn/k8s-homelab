@@ -26,9 +26,9 @@ spec:
       slack:
         enabled: true
         notiftype: short
+      discord:
+        enabled: true
     config:
-      settings:
-        clustername: local
       resources:
         - name: v1/pods
           namespaces:
@@ -192,6 +192,11 @@ spec:
   valuesFrom:
     - kind: Secret
       name: botkube-secrets
+      valuesKey: cluster-name
+      targetPath: config.settings.clustername
+      optional: false
+    - kind: Secret
+      name: botkube-secrets
       valuesKey: slack-token
       targetPath: communications.slack.token
       optional: false
@@ -199,4 +204,19 @@ spec:
       name: botkube-secrets
       valuesKey: slack-channel
       targetPath: communications.slack.channel
+      optional: false
+    - kind: Secret
+      name: botkube-secrets
+      valuesKey: discord-channel
+      targetPath: communications.discord.channel
+      optional: false
+    - kind: Secret
+      name: botkube-secrets
+      valuesKey: discord-bot-id
+      targetPath: communications.discord.botid
+      optional: false
+    - kind: Secret
+      name: botkube-secrets
+      valuesKey: discord-token
+      targetPath: communications.discord.token
       optional: false
