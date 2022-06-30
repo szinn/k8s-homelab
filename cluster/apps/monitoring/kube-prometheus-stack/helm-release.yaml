@@ -115,8 +115,8 @@ spec:
           - name: "null"
           - name: "slack"
             slack_configs:
-              - channel: "#k8s-main"
-                icon_url: https://avatars3.githubusercontent.com/u/3380462
+              - icon_url: https://avatars3.githubusercontent.com/u/3380462
+                # channel: "#k8s-main"
                 username: "AlertManager"
                 send_resolved: true
                 title: |-

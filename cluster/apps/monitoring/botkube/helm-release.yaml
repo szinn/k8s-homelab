@@ -24,7 +24,7 @@ spec:
       enabled: true
     communications:
       slack:
-        enabled: true
+        enabled: false
         notiftype: short
       discord:
         enabled: true
