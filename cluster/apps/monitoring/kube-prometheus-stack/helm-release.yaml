@@ -206,9 +206,3 @@ spec:
         dashboards:
           annotations:
             grafana_folder: Prometheus
-  valuesFrom:
-    - kind: Secret
-      name: kube-prometheus-stack-secrets
-      valuesKey: address
-      targetPath: alertmanager.config.global.slack_api_url
-      optional: false
