@@ -104,19 +104,19 @@ spec:
           group_wait: 30s
           group_interval: 5m
           repeat_interval: 6h
-          receiver: "slack"
+          receiver: "discord"
           routes:
             - receiver: "null"
               matchers:
                 - alertname =~ "InfoInhibitor|Watchdog|CPUThrottlingHigh"
               continue: false
-            - receiver: "slack"
+            - receiver: "discord"
         receivers:
           - name: "null"
-          - name: "slack"
+          - name: "discord"
             slack_configs:
               - icon_url: https://avatars3.githubusercontent.com/u/3380462
-                # channel: "#k8s-main"
+                channel: "#k8s-main"
                 username: "AlertManager"
                 send_resolved: true
                 title: |-
@@ -224,6 +224,6 @@ spec:
   valuesFrom:
     - kind: Secret
       name: kube-prometheus-stack-secrets
-      valuesKey: slack-webhook
+      valuesKey: address
       targetPath: alertmanager.config.global.slack_api_url
       optional: false
