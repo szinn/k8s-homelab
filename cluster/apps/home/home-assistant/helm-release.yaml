@@ -22,7 +22,7 @@ spec:
   values:
     image:
       repository: ghcr.io/home-assistant/home-assistant
-      tag: 2022.6.7
+      tag: 2022.7.0
     persistence:
       config:
         enabled: true
