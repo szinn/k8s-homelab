@@ -27,7 +27,7 @@
     {
       "disabled": false,
       "servers": [
-        "time.cloudflare.com"
+        "10.0.10.251"
       ]
     }
   },

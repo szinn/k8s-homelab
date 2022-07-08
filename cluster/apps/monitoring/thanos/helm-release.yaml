@@ -32,7 +32,7 @@ spec:
       enabled: true
       replicaCount: 3
       replicaLabels:
-        - replica
+        - __replica__
       dnsDiscovery:
         sidecarsService: prometheus-thanos-discovery
         sidecarsNamespace: monitoring
@@ -49,6 +49,9 @@ spec:
       enabled: true
     compactor:
       enabled: true
+      extraFlags:
+        - "--compact.concurrency"
+        - "4"
       retentionResolutionRaw: 30d
       retentionResolution5m: 30d
       retentionResolution1h: 30d
