@@ -20,7 +20,7 @@ spec:
       nameOverride: *app
     image:
       repository: ghcr.io/k8s-at-home/jackett
-      tag: v0.20.1290
+      tag: v0.20.1292
     env:
       TZ: ${CONFIG_TIMEZONE}
     service:
