@@ -34,11 +34,13 @@ spec:
       [global]
       bdev_enable_discard = true
       bdev_async_discard = true
+      bluefs_buffered_io = false
 
     cephClusterSpec:
-      # cephVersion:
-      #   # renovate: docker-image
-      #   image: quay.io/ceph/ceph:v17.2.1
+      cephVersion:
+        # renovate: docker-image
+        # image: quay.io/ceph/ceph:v16.2.7
+        image: quay.io/ceph/ceph:v17.2.1
 
       # TODO(rook-ceph): Enable host network on next rebuild
       # network:
