@@ -32,7 +32,7 @@ spec:
       namespace: kyverno
   values:
     crds:
-      enabled: true
+      enabled: false
     csi:
       kubeletDirPath: /var/lib/kubelet
       enableCSIHostNetwork: true
