@@ -7,4 +7,4 @@ resources:
   - kyverno
   - metallb-system
   - traefik-system
-  - rook-ceph
+  # - rook-ceph
