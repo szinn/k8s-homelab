@@ -6,3 +6,4 @@ worker-patch.json
 controlplane-patch.json
 controlplane-current.yaml
 worker-current.yaml
+wildcard.yaml
