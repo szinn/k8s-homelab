@@ -9,10 +9,10 @@ spec:
   chart:
     spec:
       chart: metallb
-      version: 3.0.10
+      version: 0.13.3
       sourceRef:
         kind: HelmRepository
-        name: bitnami-charts
+        name: metallb-charts
         namespace: flux-system
       interval: 15m
   dependsOn:
@@ -26,12 +26,8 @@ spec:
     remediation:
       retries: 3
   values:
-    configInline:
-      address-pools:
-        - name: default
-          protocol: layer2
-          addresses:
-            - ${CONFIG_METALLB_IP_RANGE}
+    crds:
+      enabled: false
     prometheusRule:
       enabled: true
     controller:
