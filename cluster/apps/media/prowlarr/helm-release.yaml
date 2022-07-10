@@ -17,8 +17,8 @@ spec:
       interval: 15m
   values:
     image:
-      repository: ghcr.io/k8s-at-home/prowlarr
-      tag: v0.4.0.1802
+      repository: ghcr.io/onedr0p/prowlarr-nightly
+      tag: 0.4.3.1898
     env:
       TZ: ${CONFIG_TIMEZONE}
     ingress:
@@ -44,9 +44,8 @@ spec:
         mountPath: /config/Backups
         readOnly: false
     podSecurityContext:
-      runAsUser: 1001
-      runAsGroup: 1001
-      fsGroup: 1001
+      supplementalGroups:
+        - 1001
     prometheus:
       podMonitor:
         enabled: true

@@ -19,8 +19,8 @@ spec:
     global:
       nameOverride: *app
     image:
-      repository: ghcr.io/k8s-at-home/sabnzbd
-      tag: v3.6.0
+      repository: ghcr.io/onedr0p/sabnzbd
+      tag: 3.6.0
     env:
       TZ: ${CONFIG_TIMEZONE}
       HOST_WHITELIST_ENTRIES: >-
@@ -61,6 +61,5 @@ spec:
         type: emptyDir
         mountPath: /incomplete
     podSecurityContext:
-      runAsUser: 1001
-      runAsGroup: 1001
-      fsGroup: 1001
+      supplementalGroups:
+        - 1001
