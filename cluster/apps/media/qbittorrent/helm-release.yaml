@@ -2,41 +2,50 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: qbittorrent
+  name: &app qbittorrent
   namespace: media
 spec:
   interval: 15m
   chart:
     spec:
-      chart: qbittorrent
-      version: 13.4.3
+      chart: kah-common-chart
+      version: 1.1.2
       sourceRef:
         kind: HelmRepository
         name: k8s-at-home-charts
         namespace: flux-system
       interval: 15m
   values:
+    global:
+      nameOverride: *app
     image:
-      repository: ghcr.io/k8s-at-home/qbittorrent
-      tag: v4.4.3.1
+      repository: ghcr.io/onedr0p/qbittorrent
+      tag: 4.4.3.1
+    env:
+      TZ: ${CONFIG_TIMEZONE}
+      QBITTORRENT__PORT: &port 8080
+      QBITTORRENT__BT_PORT: &port-bt 50413
     service:
+      main:
+        ports:
+          http:
+            port: *port
       bittorrent:
         enabled: true
+        type: LoadBalancer
         annotations:
           prometheus.io/probe: "true"
           prometheus.io/protocol: tcp
-        type: LoadBalancer
         externalIPs:
           - ${CONFIG_SVC_QBITTORRENT_ADDR}
         ports:
           bittorrent:
-            port: 50413
+            enabled: true
             name: bittorrent
+            port: *port-bt
             protocol: TCP
             targetPort: 6881
         externalTrafficPolicy: Local
-    env:
-      TZ: ${CONFIG_TIMEZONE}
     ingress:
       main:
         enabled: true
@@ -45,10 +54,13 @@ spec:
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
         hosts:
-          - host: &host "qbittorrent.${SECRET_DOMAIN_NAME}"
+          - host: "{{ .Release.Name }}.${SECRET_DOMAIN_NAME}"
             paths:
               - path: /
                 pathType: Prefix
+    podSecurityContext:
+      supplementalGroups:
+        - 1001
     persistence:
       config:
         enabled: true
@@ -58,10 +70,6 @@ spec:
         enabled: true
         existingClaim: downloads-pvc
         mountMath: "/downloads"
-    podSecurityContext:
-      runAsUser: 1001
-      runAsGroup: 1001
-      fsGroup: 1001
     metrics:
       enabled: true
       exporter:
