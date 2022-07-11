@@ -13,11 +13,14 @@
       "requiredStatusChecks": null,
       "matchUpdateTypes": ["minor", "patch"],
       "matchPackageNames": [
-        "ghcr.io/k8s-at-home/jackett",
-        "ghcr.io/k8s-at-home/lidarr",
-        "ghcr.io/k8s-at-home/prowlarr",
-        "ghcr.io/k8s-at-home/radarr",
-        "ghcr.io/k8s-at-home/sonarr",
+        "ghcr.io/onedr0p/jackett",
+        "ghcr.io/onedr0p/lidarr",
+        "ghcr.io/onedr0p/prowlarr-nightly",
+        "ghcr.io/onedr0p/qbittorrent",
+        "ghcr.io/onedr0p/radarr",
+        "ghcr.io/onedr0p/recyclarr",
+        "ghcr.io/onedr0p/sabnzbd",
+        "ghcr.io/onedr0p/sonarr",
         "renovatebot/github-action"
       ]
     }
