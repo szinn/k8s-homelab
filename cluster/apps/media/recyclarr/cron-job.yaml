@@ -35,7 +35,7 @@ spec:
                   mountPath: /shared
           containers:
             - name: testing
-              image: ghcr.io/onedr0p/recyclarr:v2.2.1@sha256:7e7ae15414833b1b2a11429181644f4242134df669284de344c04de38ac24e71
+              image: ghcr.io/onedr0p/recyclarr:v2.2.1@sha256:2bd554a48eac378c93c306f61b2743b412e670133b1329e9aa16612fef1bb4db
               imagePullPolicy: Always
               env:
                 - name: TZ
