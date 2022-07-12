@@ -46,8 +46,8 @@ At the bottom of this page, is the bringup process that I follow for this cluste
 
 ## Kubernetes
 
-The cluster is based on [Talos](https://www.talos.dev/v0.14/introduction/getting-started/) with 3 control-plane nodes running in Proxmox VMs (these will likely get replaced with Raspberry Pi 4s when/if they become available) and
-3 worker nodes running on bare-metal Talos.
+The cluster is based on [Talos](https://www.talos.dev/v0.14/introduction/getting-started/) with 3 control-plane nodes running
+on the Beelink MiniPCs and 3 worker nodes running on the Intel NUCs.
 
 ### Core Components
 
