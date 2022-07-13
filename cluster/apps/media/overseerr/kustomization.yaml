@@ -5,3 +5,4 @@ resources:
   - pvc.yaml
   - init-pvc.yaml
   - helm-release.yaml
+  - backup-job.yaml

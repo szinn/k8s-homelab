@@ -1,0 +1,54 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: overseerr-backup
+  namespace: media
+spec:
+  schedule: "@daily"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      ttlSecondsAfterFinished: 86400
+      template:
+        spec:
+          automountServiceAccountToken: false
+          restartPolicy: OnFailure
+          containers:
+            - name: backup
+              image: ghcr.io/onedr0p/rclone:1.58.1
+              command:
+                - /bin/bash
+                - -c
+                - |-
+                  echo "Creating rclone configuration ..." && rclone config create backup alias remote=/backup
+                  echo "Freezing /config ..." && fsfreeze --freeze /config
+                  echo "Backing up /config ..." && tar -zcvf - -C /config . | rclone rcat "backup:/scheduled/overseerr/overseerr-$(date "+%Y%m%d_%H%M%S").tar.gz" -v
+                  echo "Unfreezing /config ..." && fsfreeze --unfreeze /config
+                  echo "Deleting old backups ..." && [[ $(rclone size "backup:/scheduled/overseerr/" --json | jq --raw-output '.count') -gt 7 ]] && rclone delete backup:/scheduled/overseerr/ --min-age 7d -v
+              volumeMounts:
+                - name: config
+                  mountPath: /config
+                - name: backup
+                  mountPath: /backup
+              securityContext:
+                privileged: true
+          volumes:
+            - name: config
+              persistentVolumeClaim:
+                claimName: overseerr-pvc
+            - name: backup
+              persistentVolumeClaim:
+                claimName: media-backups-pvc
+          affinity:
+            podAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector:
+                    matchExpressions:
+                      - key: app.kubernetes.io/name
+                        operator: In
+                        values:
+                          - overseerr
+                  topologyKey: kubernetes.io/hostname
