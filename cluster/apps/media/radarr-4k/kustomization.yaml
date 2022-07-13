@@ -5,3 +5,4 @@ resources:
   - pvc.yaml
   - helm-release.yaml
   - observability
+  - radarr-4k-secrets.sops.yaml

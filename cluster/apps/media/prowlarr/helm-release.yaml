@@ -21,6 +21,9 @@ spec:
       tag: 0.4.3.1898
     env:
       TZ: ${CONFIG_TIMEZONE}
+    envFrom:
+      - secretRef:
+          name: prowlarr-secrets
     ingress:
       main:
         enabled: true

@@ -23,6 +23,9 @@ spec:
       tag: 3.0.8.1507
     env:
       TZ: ${CONFIG_TIMEZONE}
+    envFrom:
+      - secretRef:
+          name: sonarr-secrets
     service:
       main:
         ports:

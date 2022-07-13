@@ -23,6 +23,9 @@ spec:
       tag: 4.1.0.6175
     env:
       TZ: ${CONFIG_TIMEZONE}
+    envFrom:
+      - secretRef:
+          name: radarr-secrets
     service:
       main:
         ports:

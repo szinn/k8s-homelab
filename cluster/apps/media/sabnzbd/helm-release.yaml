@@ -30,6 +30,9 @@ spec:
         sabnzbd.media.svc.cluster,
         sabnzbd.media.svc.cluster.local,
         sabnzbd.${SECRET_DOMAIN_NAME}
+    envFrom:
+      - secretRef:
+          name: sabnzbd-secrets
     service:
       main:
         ports:
