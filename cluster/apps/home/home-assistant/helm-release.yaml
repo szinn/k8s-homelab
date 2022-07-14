@@ -22,7 +22,7 @@ spec:
   values:
     image:
       repository: ghcr.io/onedr0p/home-assistant
-      tag: 2022.7.3
+      tag: 2022.7.4
     persistence:
       config:
         enabled: true
