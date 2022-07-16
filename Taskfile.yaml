@@ -6,9 +6,9 @@ vars:
     sh: "git rev-parse --show-toplevel"
 
 includes:
-  flux: .taskfiles/flux.yaml
-  format: .taskfiles/format.yaml
-  pre-commit: .taskfiles/pre-commit.yaml
+  flux: .taskfiles/FluxTasks.yaml
+  format: .taskfiles/FormatTasks.yaml
+  pre-commit: .taskfiles/PreCommitTasks.yaml
   restore: .taskfiles/RestoreTasks.yaml
 
 tasks:
