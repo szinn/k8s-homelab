@@ -45,31 +45,8 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
-    #initContainers:
-    #  new-install:
-    #    image: busybox:latest
-    #    imagePullPolicy: IfNotPresent
-    #    command: ["sh", "/scripts/init-pvc.sh"]
-    #    volumeMounts:
-    #      - name: config
-    #        mountPath: /app/config
-    #      - name: backup
-    #        mountPath: /backups
-    #      - name: init-pvc
-    #        mountPath: /scripts
     persistence:
       config:
         enabled: true
         existingClaim: overseerr-pvc
         mountPath: /app/config
-    #   backup:
-    #    enabled: true
-    #    existingClaim: media-backups-pvc
-    #    mountPath: /backups
-    #    readOnly: false
-    #  init-pvc:
-    #    enabled: true
-    #    type: configMap
-    #    name: overseerr-init-pvc
-    #    mountPath: /scripts
-    #    readOnly: true

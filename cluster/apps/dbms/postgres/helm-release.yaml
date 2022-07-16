@@ -24,6 +24,8 @@ spec:
       username: root
       database: root
       existingSecret: postgres-secrets
+    commonLabels:
+      pmb.home.arpa/backup-claim: "dbms-postgres-pvc"
     primary:
       service:
         type: LoadBalancer

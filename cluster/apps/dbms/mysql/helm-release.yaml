@@ -20,6 +20,8 @@ spec:
       registry: public.ecr.aws
       repository: bitnami/mysql
     architecture: standalone
+    commonLabels:
+      pmb.home.arpa/backup-claim: "dbms-mysql-pvc"
     primary:
       service:
         type: LoadBalancer
