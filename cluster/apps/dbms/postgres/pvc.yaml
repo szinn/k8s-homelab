@@ -4,6 +4,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: dbms-postgres-pvc
   namespace: dbms
+  labels:
+    app.kubernetes.io/name: &name postgres
+    app.kubernetes.io/instance: *name
 spec:
   storageClassName: ceph-block
   accessModes:

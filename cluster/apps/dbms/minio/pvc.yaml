@@ -4,6 +4,9 @@ kind: PersistentVolume
 metadata:
   name: minio-nfs-pv
   namespace: dbms
+  labels:
+    app.kubernetes.io/name: &name minio
+    app.kubernetes.io/instance: *name
 spec:
   storageClassName: minio-nfs
   capacity:

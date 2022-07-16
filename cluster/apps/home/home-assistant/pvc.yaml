@@ -4,6 +4,9 @@ kind: PersistentVolume
 metadata:
   name: home-assistant-nfs-pv
   namespace: home
+  labels:
+    app.kubernetes.io/name: &name home-assistant
+    app.kubernetes.io/instance: *name
 spec:
   storageClassName: home-assistant-nfs
   capacity:

@@ -4,6 +4,9 @@ kind: PersistentVolume
 metadata:
   name: dashy-nfs-pv
   namespace: dashboard
+  labels:
+    app.kubernetes.io/name: &name dashy
+    app.kubernetes.io/instance: *name
 spec:
   storageClassName: dashy-nfs
   capacity:

@@ -9,6 +9,7 @@ includes:
   flux: .taskfiles/flux.yaml
   format: .taskfiles/format.yaml
   pre-commit: .taskfiles/pre-commit.yaml
+  restore: .taskfiles/RestoreTasks.yaml
 
 tasks:
   delete-failed-pods:

@@ -4,6 +4,9 @@ kind: PersistentVolume
 metadata:
   name: heimdall-backups-nfs-pv
   namespace: dashboard
+  labels:
+    app.kubernetes.io/name: &name heimdall
+    app.kubernetes.io/instance: *name
 spec:
   storageClassName: heimdall-backups-nfs
   capacity:

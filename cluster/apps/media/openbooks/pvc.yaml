@@ -4,6 +4,9 @@ kind: PersistentVolume
 metadata:
   name: openbooks-nfs-pv
   namespace: media
+  labels:
+    app.kubernetes.io/name: &name openbooks
+    app.kubernetes.io/instance: *name
 spec:
   storageClassName: openbooks-nfs
   capacity:

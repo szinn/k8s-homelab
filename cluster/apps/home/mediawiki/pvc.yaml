@@ -4,6 +4,9 @@ kind: PersistentVolume
 metadata:
   name: mediawiki-nfs-pv
   namespace: home
+  labels:
+    app.kubernetes.io/name: &name mediawiki
+    app.kubernetes.io/instance: *name
 spec:
   storageClassName: mediawiki-nfs
   capacity:

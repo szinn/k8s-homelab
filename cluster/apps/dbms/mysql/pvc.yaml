@@ -4,6 +4,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: dbms-mysql-pvc
   namespace: dbms
+  labels:
+    app.kubernetes.io/name: &name mysql
+    app.kubernetes.io/instance: *name
 spec:
   storageClassName: ceph-block
   accessModes:

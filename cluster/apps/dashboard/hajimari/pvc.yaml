@@ -4,6 +4,9 @@ kind: PersistentVolume
 metadata:
   name: hajimari-nfs-pv
   namespace: dashboard
+  labels:
+    app.kubernetes.io/name: &name hajimari
+    app.kubernetes.io/instance: *name
 spec:
   storageClassName: hajimari-nfs
   capacity:

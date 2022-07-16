@@ -4,6 +4,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: radarr-pvc
   namespace: media
+  labels:
+    app.kubernetes.io/name: &name radarr
+    app.kubernetes.io/instance: *name
 spec:
   accessModes:
     - ReadWriteOnce

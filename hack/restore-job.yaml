@@ -1,0 +1,79 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: $APP-restore-pv
+  namespace: $NAMESPACE
+spec:
+  storageClassName: $APP-restore
+  capacity:
+    storage: 1Mi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    server: ${SECRET_NFS_SERVER}
+    path: "${SECRET_NFS_ROOTDIR}/backups"
+  mountOptions:
+    - nfsvers=4
+    - tcp
+    - intr
+    - hard
+    - noatime
+    - nodiratime
+    - nolock
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: $APP-restore-pvc
+  namespace: $NAMESPACE
+spec:
+  storageClassName: $APP-restore
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Mi
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: $APP-restore
+  namespace: $NAMESPACE
+spec:
+  ttlSecondsAfterFinished: 3600
+  template:
+    spec:
+      automountServiceAccountToken: false
+      restartPolicy: OnFailure
+      containers:
+        - name: restore
+          image: ghcr.io/onedr0p/kopia:0.11.3@sha256:2ae9ede0edac68c09d517abd71fa12c96efcf19f27ce7ffca968cebb10ed0e2d
+          env:
+            - name: APP
+              value: $APP
+            - name: KOPIA_PASSWORD
+              value: "none"
+          command:
+            - /bin/bash
+            - -c
+            - |-
+              shopt -s dotglob
+              printf "[01/03] Remove previous data ...\n" && rm -rf /data/config/*
+              printf "[02/03] Connect to repo ...\n"      && kopia repo connect filesystem --path=/data/backups/kopia --override-hostname=cluster --override-username=root
+              printf "[03/03] Restore latest snap ...\n"  && kopia snap restore "$(kopia snapshot list /$APP --json | jq --raw-output '.[-1] | .id')" /data/config
+          volumeMounts:
+            - name: config
+              mountPath: /data/config
+            - name: backups
+              mountPath: /data/backups
+          securityContext:
+            privileged: true
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: $PVC
+        - name: backups
+          persistentVolumeClaim:
+            claimName: $APP-restore-pvc
