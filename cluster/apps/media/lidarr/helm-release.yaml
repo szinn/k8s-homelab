@@ -18,6 +18,9 @@ spec:
   values:
     global:
       nameOverride: *app
+    controller:
+      labels:
+        pmb.home.arpa/backup-claim: "lidarr-pvc"
     image:
       repository: ghcr.io/onedr0p/lidarr
       tag: 1.0.2.2592
