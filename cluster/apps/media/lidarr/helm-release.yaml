@@ -84,5 +84,5 @@ spec:
       backup:
         enabled: true
         existingClaim: media-backups-pvc
-        mountPath: /config/Backups
+        mountPath: /backups
         readOnly: false
