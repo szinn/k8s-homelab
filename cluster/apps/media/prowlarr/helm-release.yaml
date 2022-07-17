@@ -2,28 +2,42 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: prowlarr
+  name: &app prowlarr
   namespace: media
 spec:
   interval: 15m
   chart:
     spec:
-      chart: prowlarr
-      version: 4.4.2
+      chart: kah-common-chart
+      version: 1.1.2
       sourceRef:
         kind: HelmRepository
         name: k8s-at-home-charts
         namespace: flux-system
       interval: 15m
   values:
+    global:
+      nameOverride: *app
+    controller:
+      labels:
+        pmb.home.arpa/backup-claim: "prowlarr-pvc"
     image:
       repository: ghcr.io/onedr0p/prowlarr-nightly
       tag: 0.4.3.1898
     env:
       TZ: ${CONFIG_TIMEZONE}
+      PROWLARR__INSTANCE_NAME: Prowlarr
+      PROWLARR__PORT: &port 9696
+      PROWLARR__BRANCH: nightly
+      PROWLARR__LOG_LEVEL: info
     envFrom:
       - secretRef:
           name: prowlarr-secrets
+    service:
+      main:
+        ports:
+          http:
+            port: *port
     ingress:
       main:
         enabled: true
@@ -36,19 +50,22 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
+    podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      fsGroupChangePolicy: "OnRootMismatch"
+      supplementalGroups:
+        - 100
     persistence:
       config:
         enabled: true
-        existingClaim: media-pvc
-        subPath: prowlarr
+        existingClaim: prowlarr-pvc
       backup:
         enabled: true
         existingClaim: media-backups-pvc
-        mountPath: /config/Backups
+        mountPath: /backups
         readOnly: false
-    podSecurityContext:
-      supplementalGroups:
-        - 1001
     prometheus:
       podMonitor:
         enabled: true
