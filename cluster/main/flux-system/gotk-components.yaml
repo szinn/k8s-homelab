@@ -897,8 +897,8 @@ spec:
               secretRef:
                 description: The secret name containing the Git credentials. For HTTPS
                   repositories the secret must contain username and password fields.
-                  For SSH repositories the secret must contain identity, identity.pub
-                  and known_hosts fields.
+                  For SSH repositories the secret must contain identity and known_hosts
+                  fields.
                 properties:
                   name:
                     description: Name of the referent.
@@ -1241,8 +1241,7 @@ spec:
                 description: SecretRef specifies the Secret containing authentication
                   credentials for the GitRepository. For HTTPS repositories the Secret
                   must contain 'username' and 'password' fields. For SSH repositories
-                  the Secret must contain 'identity', 'identity.pub' and 'known_hosts'
-                  fields.
+                  the Secret must contain 'identity' and 'known_hosts' fields.
                 properties:
                   name:
                     description: Name of the referent.
@@ -1402,6 +1401,15 @@ spec:
                   - type
                   type: object
                 type: array
+              contentConfigChecksum:
+                description: 'ContentConfigChecksum is a checksum of all the configurations
+                  related to the content of the source artifact:  - .spec.ignore  -
+                  .spec.recurseSubmodules  - .spec.included and the checksum of the
+                  included artifacts observed in .status.observedGeneration version
+                  of the object. This can be used to determine if the content of the
+                  included repository has changed. It has the format of `<algo>:<checksum>`,
+                  for example: `sha256:<checksum>`.'
+                type: string
               includedArtifacts:
                 description: IncludedArtifacts contains a list of the last successfully
                   included Artifacts as instructed by GitRepositorySpec.Include.
@@ -2286,16 +2294,20 @@ spec:
                 properties:
                   secretRef:
                     description: SecretRef holds the name to a secret that contains
-                      a 'value' key with the kubeconfig file as the value. It must
-                      be in the same namespace as the HelmRelease. It is recommended
-                      that the kubeconfig is self-contained, and the secret is regularly
-                      updated if credentials such as a cloud-access-token expire.
-                      Cloud specific `cmd-path` auth helpers will not function without
-                      adding binaries and credentials to the Pod that is responsible
-                      for reconciling the HelmRelease.
+                      a key with the kubeconfig file as the value. If no key is specified
+                      the key will default to 'value'. The secret must be in the same
+                      namespace as the HelmRelease. It is recommended that the kubeconfig
+                      is self-contained, and the secret is regularly updated if credentials
+                      such as a cloud-access-token expire. Cloud specific `cmd-path`
+                      auth helpers will not function without adding binaries and credentials
+                      to the Pod that is responsible for reconciling the HelmRelease.
                     properties:
+                      key:
+                        description: Key in the Secret, when not specified an implementation-specific
+                          default key is used.
+                        type: string
                       name:
-                        description: Name of the referent.
+                        description: Name of the Secret.
                         type: string
                     required:
                     - name
@@ -3214,6 +3226,13 @@ spec:
                 default: 60s
                 description: Timeout of the index fetch operation, defaults to 60s.
                 type: string
+              type:
+                description: Type of the HelmRepository. When this field is set to  "oci",
+                  the URL field value must be prefixed with "oci://".
+                enum:
+                - default
+                - oci
+                type: string
               url:
                 description: URL of the Helm repository, a valid URL contains at least
                   a protocol and host.
@@ -4063,17 +4082,21 @@ spec:
                   is empty.
                 properties:
                   secretRef:
-                    description: SecretRef holds the name to a secret that contains
-                      a 'value' key with the kubeconfig file as the value. It must
-                      be in the same namespace as the Kustomization. It is recommended
-                      that the kubeconfig is self-contained, and the secret is regularly
-                      updated if credentials such as a cloud-access-token expire.
-                      Cloud specific `cmd-path` auth helpers will not function without
-                      adding binaries and credentials to the Pod that is responsible
-                      for reconciling the Kustomization.
+                    description: SecretRef holds the name of a secret that contains
+                      a key with the kubeconfig file as the value. If no key is set,
+                      the key will default to 'value'. The secret must be in the same
+                      namespace as the Kustomization. It is recommended that the kubeconfig
+                      is self-contained, and the secret is regularly updated if credentials
+                      such as a cloud-access-token expire. Cloud specific `cmd-path`
+                      auth helpers will not function without adding binaries and credentials
+                      to the Pod that is responsible for reconciling the Kustomization.
                     properties:
+                      key:
+                        description: Key in the Secret, when not specified an implementation-specific
+                          default key is used.
+                        type: string
                       name:
-                        description: Name of the referent.
+                        description: Name of the Secret.
                         type: string
                     required:
                     - name
@@ -4586,6 +4609,7 @@ spec:
                 - opsgenie
                 - alertmanager
                 - grafana
+                - githubdispatch
                 type: string
               username:
                 description: Bot username for this provider
@@ -4997,6 +5021,8 @@ rules:
   resources:
   - namespaces
   - secrets
+  - configmaps
+  - serviceaccounts
   verbs:
   - get
   - list
@@ -5012,7 +5038,6 @@ rules:
   - ""
   resources:
   - configmaps
-  - configmaps/status
   verbs:
   - get
   - list
@@ -5021,6 +5046,14 @@ rules:
   - update
   - patch
   - delete
+- apiGroups:
+  - ""
+  resources:
+  - configmaps/status
+  verbs:
+  - get
+  - update
+  - patch
 - apiGroups:
   - coordination.k8s.io
   resources:
@@ -5181,7 +5214,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
-        image: ghcr.io/fluxcd/helm-controller:v0.20.1
+        image: ghcr.io/fluxcd/helm-controller:v0.22.2
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
@@ -5263,7 +5296,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
-        image: ghcr.io/fluxcd/kustomize-controller:v0.24.4
+        image: ghcr.io/fluxcd/kustomize-controller:v0.26.3
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
@@ -5344,7 +5377,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
-        image: ghcr.io/fluxcd/notification-controller:v0.23.4
+        image: ghcr.io/fluxcd/notification-controller:v0.24.1
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
@@ -5436,7 +5469,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
-        image: ghcr.io/fluxcd/source-controller:v0.24.3
+        image: ghcr.io/fluxcd/source-controller:v0.25.10
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
