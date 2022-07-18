@@ -56,6 +56,7 @@
       ]
     }
   },
+  {"op": "remove", "path": "/cluster/apiServer/admissionControl"},
   {"op": "add", "path": "/cluster/apiServer/extraArgs", "value":
     {
       "feature-gates": "GracefulNodeShutdown=true,MixedProtocolLBService=true"

@@ -5,5 +5,5 @@ metadata:
   name: home
   labels:
     goldilocks.fairwinds.com/enabled: "true"
-    pod-security.kubernetes.io/enforce: privileged
-    pod-security.kubernetes.io/enforce-version: latest
+    # pod-security.kubernetes.io/enforce: privileged
+    # pod-security.kubernetes.io/enforce-version: latest
