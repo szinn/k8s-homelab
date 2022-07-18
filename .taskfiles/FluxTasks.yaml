@@ -81,5 +81,4 @@ tasks:
   hr-restart:
     desc: Restart all failed Helm Releases
     cmds:
-      - kubectl get hr --all-namespaces | grep False | awk '{print $2, $1}' | xargs -l bash -c 'flux suspend hr $0 -n $1'
-      - kubectl get hr --all-namespaces | grep False | awk '{print $2, $1}' | xargs -l bash -c 'flux resume hr $0 -n $1'
+      - kubectl get hr -A | grep False | awk '{printf("flretry hr %s -n %s\n", $2, $1)}'
