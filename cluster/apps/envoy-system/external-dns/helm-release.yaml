@@ -39,9 +39,13 @@ spec:
     sources:
       - ingress
     txtPrefix: "k8s."
-    txtOwnerId: "default"
+    txtOwnerId: "homelab"
     domainFilters:
       - "${SECRET_DOMAIN_NAME}"
+    serviceMonitor:
+      enabled: true
+    podAnnotations:
+      secret.reloader.stakater.com/reload: cloudflare-secrets
     resources:
       requests:
         cpu: 15m
