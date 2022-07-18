@@ -6,6 +6,7 @@ vars:
     sh: "git rev-parse --show-toplevel"
 
 includes:
+  backup: .taskfiles/BackupTasks.yaml
   flux: .taskfiles/FluxTasks.yaml
   format: .taskfiles/FormatTasks.yaml
   pre-commit: .taskfiles/PreCommitTasks.yaml
