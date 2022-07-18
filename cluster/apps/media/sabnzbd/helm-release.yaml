@@ -64,5 +64,7 @@ spec:
         type: emptyDir
         mountPath: /incomplete
     podSecurityContext:
-      supplementalGroups:
-        - 1001
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      fsGroupChangePolicy: "OnRootMismatch"

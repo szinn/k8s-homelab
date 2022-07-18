@@ -25,6 +25,7 @@ spec:
 
     env:
       TZ: ${CONFIG_TIMEZONE}
+      ENCRYPTION_KEY: ${TESLAMATE_ENCRYPTION_KEY}
       DISABLE_MQTT: "true"
       DATABASE_HOST: postgres-postgresql.dbms
       DATABASE_NAME: teslamate
@@ -34,6 +35,9 @@ spec:
           secretKeyRef:
             name: teslamate-secrets
             key: postgres-password
+    envFrom:
+      - secretRef:
+          name: teslamate-secrets
     postgresql:
       enabled: false
 
