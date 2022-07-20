@@ -18,9 +18,6 @@ spec:
   values:
     global:
       nameOverride: *app
-    controller:
-      labels:
-        pmb.home.arpa/backup-claim: "overseerr-pvc"
     image:
       repository: ghcr.io/sct/overseerr
       tag: 1.29.1

@@ -18,9 +18,6 @@ spec:
   values:
     global:
       nameOverride: *app
-    controller:
-      labels:
-        pmb.home.arpa/backup-claim: "sonarr-pvc"
     image:
       repository: ghcr.io/onedr0p/sonarr
       tag: 3.0.8.1507

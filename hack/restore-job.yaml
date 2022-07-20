@@ -39,8 +39,8 @@ spec:
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: $APP-restore
-  namespace: $NAMESPACE
+  name: ${APP}-restore-snapshot
+  namespace: ${NAMESPACE}
 spec:
   ttlSecondsAfterFinished: 3600
   template:
@@ -51,8 +51,6 @@ spec:
         - name: restore
           image: ghcr.io/onedr0p/kopia:0.11.3@sha256:2ae9ede0edac68c09d517abd71fa12c96efcf19f27ce7ffca968cebb10ed0e2d
           env:
-            - name: APP
-              value: $APP
             - name: KOPIA_PASSWORD
               value: "none"
           command:
@@ -60,20 +58,21 @@ spec:
             - -c
             - |-
               shopt -s dotglob
-              printf "[01/03] Remove previous data ...\n" && rm -rf /data/config/*
-              printf "[02/03] Connect to repo ...\n"      && kopia repo connect filesystem --path=/data/backups/kopia --override-hostname=cluster --override-username=root
-              printf "[03/03] Restore latest snap ...\n"  && kopia snap restore "$(kopia snapshot list /$APP --json | jq --raw-output '.[-1] | .id')" /data/config
+              printf "\e[1;32m%-6s\e[m\n" "[01/03] Remove previous data ..." && rm -rf /data/${NAMESPACE}/${APP}/*
+              printf "\e[1;32m%-6s\e[m\n" "[02/03] Connect to repo ..."      && kopia repo connect filesystem --path=/snapshots --override-hostname=cluster --override-username=root
+              printf "\e[1;32m%-6s\e[m\n" "[03/03] Restore snapshot ..."     && kopia snap restore "${SNAPSHOT}" /data/${NAMESPACE}/${APP}
+              printf "\e[1;32m%-6s\e[m\n" "[09/09] Disconnect from repo ..." && kopia repo disconnect
           volumeMounts:
-            - name: config
-              mountPath: /data/config
-            - name: backups
-              mountPath: /data/backups
+            - name: ${APP}-data
+              mountPath: /data/${NAMESPACE}/${APP}
+            - name: snapshots
+              mountPath: /snapshots
           securityContext:
             privileged: true
       volumes:
-        - name: config
+        - name: ${APP}-data
           persistentVolumeClaim:
-            claimName: $PVC
-        - name: backups
+            claimName: ${VOLUME}
+        - name: snapshots
           persistentVolumeClaim:
-            claimName: $APP-restore-pvc
+            claimName: ${APP}-restore-pvc

@@ -18,9 +18,6 @@ spec:
   values:
     global:
       nameOverride: *app
-    controller:
-      labels:
-        pmb.home.arpa/backup-claim: "radarr-pvc"
     image:
       repository: ghcr.io/onedr0p/radarr
       tag: 4.1.0.6175

@@ -18,9 +18,6 @@ spec:
   values:
     global:
       nameOverride: *app
-    controller:
-      labels:
-        pmb.home.arpa/backup-claim: "prowlarr-pvc"
     image:
       repository: ghcr.io/onedr0p/prowlarr-nightly
       tag: 0.4.3.1905
