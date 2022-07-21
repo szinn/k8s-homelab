@@ -71,7 +71,14 @@ spec:
             r3 = replace(r2, "10.0.40.18", "k8s-3")
             r4 = replace(r3, "10.0.40.19", "k8s-4")
             r5 = replace(r4, "10.0.40.20", "k8s-5")
-            .node = replace(r5, "10.0.40.21", "k8s-6")
+            r6 = replace(r5, "10.0.40.21", "k8s-6")
+            s1 = replace(r6, "10.0.40.64", "stage-1")
+            s2 = replace(s1, "10.0.40.65", "stage-2")
+            s3 = replace(s2, "10.0.40.66", "stage-3")
+            s4 = replace(s3, "10.0.40.67", "stage-4")
+            s5 = replace(s4, "10.0.40.68", "stage-5")
+            s6 = replace(s5, "10.0.40.69", "stage-6")
+            .node = s6
 
         service_hostname_transform:
           type: remap
@@ -83,7 +90,14 @@ spec:
             r3 = replace(r2, "10.0.40.18", "k8s-3")
             r4 = replace(r3, "10.0.40.19", "k8s-4")
             r5 = replace(r4, "10.0.40.20", "k8s-5")
-            .node = replace(r5, "10.0.40.21", "k8s-6")
+            r6 = replace(r5, "10.0.40.21", "k8s-6")
+            s1 = replace(r6, "10.0.40.64", "stage-1")
+            s2 = replace(s1, "10.0.40.65", "stage-2")
+            s3 = replace(s2, "10.0.40.66", "stage-3")
+            s4 = replace(s3, "10.0.40.67", "stage-4")
+            s5 = replace(s4, "10.0.40.68", "stage-5")
+            s6 = replace(s5, "10.0.40.69", "stage-6")
+            .node = s6
 
       # Sinks
       sinks:
