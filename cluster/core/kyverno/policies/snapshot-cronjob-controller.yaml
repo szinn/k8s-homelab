@@ -33,6 +33,15 @@ spec:
         - name: namespace
           variable:
             jmesPath: "request.object.metadata.namespace"
+        - name: nodeAffinity
+          variable:
+            value:
+              enabled: "{{ (request.object.metadata.labels.\"snapshot.home.cluster/nodeAffinity\" || 'true') == 'true' }}"
+              labels:
+                - key: "app.kubernetes.io/name"
+                  operator: "In"
+                  values:
+                    - "{{ request.object.metadata.labels.\"app.kubernetes.io/name\" }}"
       generate:
         synchronize: true
         apiVersion: batch/v1
@@ -110,14 +119,6 @@ spec:
                     affinity:
                       podAffinity:
                         requiredDuringSchedulingIgnoredDuringExecution:
-                          - labelSelector:
-                              matchExpressions:
-                                - key: app.kubernetes.io/name
-                                  operator: In
-                                  values:
-                                    - "{{ request.object.metadata.labels.\"app.kubernetes.io/name\" }}"
-                                - key: app.kubernetes.io/instance
-                                  operator: In
-                                  values:
-                                    - "{{ request.object.metadata.labels.\"app.kubernetes.io/instance\" }}"
-                            topologyKey: kubernetes.io/hostname
+                          - topologyKey: kubernetes.io/hostname
+                            labelSelector:
+                              matchExpressions: "{{ nodeAffinity.enabled && nodeAffinity.labels || [] }}"
