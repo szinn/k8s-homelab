@@ -20,7 +20,7 @@ spec:
   values:
     image:
       repository: teslamate/teslamate
-      tag: 1.27.0
+      tag: 1.27.1
       pullPolicy: IfNotPresent
 
     env:
