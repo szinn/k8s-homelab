@@ -21,7 +21,7 @@ spec:
   values:
     image:
       repository: ghcr.io/k8s-at-home/node-red
-      tag: v3.0.0
+      tag: v3.0.1
     env:
       TZ: "${CONFIG_TIMEZONE}"
       NODE_RED_ENABLE_PROJECTS: "true"
