@@ -33,43 +33,18 @@ spec:
       name: "${CONFIG_CLUSTER_NAME}"
       id: "1"
 
-    rollOutCiliumPods: true
-
-    localRedirectPolicy: true
+    securityContext:
+      privileged: true
 
     kubeProxyReplacement: "strict"
     kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
-
-    nativeRoutingCIDR: ${CONFIG_K8S_POD_CIDR}
-
     k8sServiceHost: "${CONFIG_CLUSTER_NAME}.${SECRET_BASE_DOMAIN_NAME}"
     k8sServicePort: 6443
 
-    loadBalancer:
-      algorithm: "maglev"
-      mode: "dsr"
-
-    tunnel: "disabled"
-
-    autoDirectNodeRoutes: true
-
-    endpointRoutes:
-      enabled: true
+    ipv4NativeRoutingCIDR: "${CONFIG_K8S_POD_CIDR}"
 
     ipam:
       mode: "kubernetes"
-
-    prometheus:
-      enabled: true
-      serviceMonitor:
-        enabled: true
-
-    operator:
-      rollOutPods: true
-      prometheus:
-        enabled: true
-        serviceMonitor:
-          enabled: true
 
     containerRuntime:
       integration: containerd
@@ -100,10 +75,14 @@ spec:
           hosts:
             - "hubble.${SECRET_DOMAIN_NAME}"
 
-    bgp:
-      enabled: false
-      announce:
-        loadbalancerIP: true
+    prometheus:
+      enabled: true
+      serviceMonitor:
+        enabled: true
 
-    externalIPs:
-      enabled: false
+    operator:
+      rollOutPods: true
+      prometheus:
+        enabled: true
+        serviceMonitor:
+          enabled: true
