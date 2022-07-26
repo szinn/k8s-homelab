@@ -2,13 +2,13 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: heimdall-backups-nfs-pv
+  name: heimdall-backup
   namespace: dashboard
   labels:
     app.kubernetes.io/name: &name heimdall
     app.kubernetes.io/instance: *name
 spec:
-  storageClassName: heimdall-backups-nfs
+  storageClassName: heimdall-backup
   capacity:
     storage: 1Mi
   accessModes:
@@ -29,10 +29,10 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: heimdall-backups-pvc
+  name: heimdall-backup
   namespace: dashboard
 spec:
-  storageClassName: heimdall-backups-nfs
+  storageClassName: heimdall-backup
   accessModes:
     - ReadWriteMany
   resources:

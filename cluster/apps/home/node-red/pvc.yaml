@@ -2,13 +2,13 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: node-red-nfs-pv
+  name: node-red-datastore
   namespace: home
   labels:
     app.kubernetes.io/name: &name node-red
     app.kubernetes.io/instance: *name
 spec:
-  storageClassName: node-red-nfs
+  storageClassName: node-red-datastore
   capacity:
     storage: 1Mi
   accessModes:
@@ -29,10 +29,10 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: home-node-red-pvc
+  name: node-red-datastore
   namespace: home
 spec:
-  storageClassName: node-red-nfs
+  storageClassName: node-red-datastore
   accessModes:
     - ReadWriteOnce
   resources:

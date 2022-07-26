@@ -70,16 +70,16 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: lidarr-pvc
+        existingClaim: lidarr-config
       media:
         enabled: true
-        existingClaim: plex-pvc
+        existingClaim: plex-datastore
       downloads:
         enabled: true
-        existingClaim: downloads-pvc
+        existingClaim: downloads
         mountMath: "/downloads"
       backup:
         enabled: true
-        existingClaim: media-backups-pvc
+        existingClaim: media-backups
         mountPath: /backups
         readOnly: false

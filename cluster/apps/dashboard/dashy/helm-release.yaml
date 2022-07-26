@@ -47,5 +47,5 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: dashy-pvc
+        existingClaim: dashy-config
         mountPath: /app/public/

@@ -57,10 +57,10 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: prowlarr-pvc
+        existingClaim: prowlarr-config
       backup:
         enabled: true
-        existingClaim: media-backups-pvc
+        existingClaim: media-backups
         mountPath: /backups
         readOnly: false
     prometheus:

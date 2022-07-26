@@ -54,13 +54,13 @@ spec:
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
         hosts:
-          - host: &host-minio "minio.${SECRET_DOMAIN_NAME}"
+          - host: "minio.${SECRET_DOMAIN_NAME}"
             paths:
               - path: /
                 pathType: Prefix
                 service:
                   port: 9001
-          - host: &host-s3 "s3.${SECRET_DOMAIN_NAME}"
+          - host: "s3.${SECRET_DOMAIN_NAME}"
             paths:
               - path: /
                 pathType: Prefix
@@ -69,7 +69,7 @@ spec:
     persistence:
       data:
         enabled: true
-        existingClaim: dbms-minio-pvc
+        existingClaim: minio-datastore
         mountPath: /data
     podAnnotations:
       secret.reloader.stakater.com/reload: "minio-secrets"

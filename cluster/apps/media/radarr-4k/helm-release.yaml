@@ -53,17 +53,17 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: radarr-4k-pvc
+        existingClaim: radarr-4k-config
       media:
         enabled: true
-        existingClaim: plex-pvc
+        existingClaim: plex-datastore
       downloads:
         enabled: true
-        existingClaim: downloads-pvc
+        existingClaim: downloads
         mountMath: "/downloads"
       backup:
         enabled: true
-        existingClaim: media-backups-4k-pvc
+        existingClaim: media-4k-backups
         mountPath: /backups
         readOnly: false
     resources:

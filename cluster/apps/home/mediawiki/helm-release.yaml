@@ -37,7 +37,7 @@ spec:
         external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_NAME}"
         external-dns/is-public: "true"
     persistence:
-      existingClaim: home-mediawiki-pvc
+      existingClaim: mediawiki-datastore
       subPath: mediawiki
     externalDatabase:
       existingSecret: wiki-secrets

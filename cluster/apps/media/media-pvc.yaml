@@ -2,10 +2,10 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: media-nfs-pv
+  name: media-datastore
   namespace: media
 spec:
-  storageClassName: media-nfs
+  storageClassName: media-datastore
   capacity:
     storage: 1Mi
   accessModes:
@@ -26,10 +26,10 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: media-pvc
+  name: media-datastore
   namespace: media
 spec:
-  storageClassName: media-nfs
+  storageClassName: media-datastore
   accessModes:
     - ReadWriteMany
   resources:

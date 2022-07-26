@@ -53,11 +53,11 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: media-pvc
+        existingClaim: media-datastore
         subPath: sabnzbd
       downloads:
         enabled: true
-        existingClaim: downloads-pvc
+        existingClaim: downloads
         mountPath: /downloads
       incomplete:
         enabled: true

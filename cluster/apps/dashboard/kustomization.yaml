@@ -4,5 +4,4 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - dashy
-  # - hajimari
   # - heimdall

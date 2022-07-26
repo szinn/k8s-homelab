@@ -2,13 +2,13 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: openbooks-nfs-pv
+  name: openbooks-config
   namespace: media
   labels:
     app.kubernetes.io/name: &name openbooks
     app.kubernetes.io/instance: *name
 spec:
-  storageClassName: openbooks-nfs
+  storageClassName: openbooks-config
   capacity:
     storage: 1Mi
   accessModes:
@@ -29,10 +29,10 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: openbooks-pvc
+  name: openbooks-config
   namespace: media
 spec:
-  storageClassName: openbooks-nfs
+  storageClassName: openbooks-config
   accessModes:
     - ReadWriteOnce
   resources:

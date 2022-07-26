@@ -13,7 +13,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: ${SECRET_NFS_SERVER}
-    path: "${SECRET_NFS_ROOTDIR}/backups"
+    path: "${SECRET_NFS_ROOTDIR}/backups/kopia"
   mountOptions:
     - nfsvers=4
     - tcp

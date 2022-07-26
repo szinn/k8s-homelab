@@ -64,11 +64,11 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: media-pvc
+        existingClaim: media-datastore
         subPath: qbittorrent
       downloads:
         enabled: true
-        existingClaim: downloads-pvc
+        existingClaim: downloads
         mountMath: "/downloads"
     metrics:
       enabled: true

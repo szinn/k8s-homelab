@@ -62,7 +62,7 @@ spec:
         skipuninstall: true
       backup:
         enabled: true
-        existingClaim: heimdall-backups-pvc
+        existingClaim: heimdall-backup
         mountPath: /backups
         readOnly: false
       init-pvc:

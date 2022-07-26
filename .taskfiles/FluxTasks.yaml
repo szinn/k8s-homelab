@@ -11,10 +11,10 @@ tasks:
       - flux resume helmrelease -n security authentik
 
   sync:
-    desc: Sync flux-system with the Git Repository
+    desc: Sync flux-cluster with the Git Repository
     cmds:
-      - flux reconcile source git flux-system
-      - flux reconcile kustomization flux-system
+      - flux reconcile source git flux-cluster
+      - flux reconcile kustomization flux-cluster
     silent: false
 
   score_only:

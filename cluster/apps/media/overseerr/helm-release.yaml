@@ -45,5 +45,5 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: overseerr-pvc
+        existingClaim: overseerr-config
         mountPath: /app/config

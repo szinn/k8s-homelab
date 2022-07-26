@@ -42,7 +42,7 @@ spec:
       data:
         enabled: true
         mountPath: /data
-        existingClaim: home-node-red-pvc
+        existingClaim: node-red-datastore
     resources:
       requests:
         memory: 350Mi

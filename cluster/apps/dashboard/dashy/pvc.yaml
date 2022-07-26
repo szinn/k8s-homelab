@@ -2,13 +2,13 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: dashy-nfs-pv
+  name: dashy-config
   namespace: dashboard
   labels:
     app.kubernetes.io/name: &name dashy
     app.kubernetes.io/instance: *name
 spec:
-  storageClassName: dashy-nfs
+  storageClassName: dashy-config
   capacity:
     storage: 2Gi
   accessModes:
@@ -29,10 +29,10 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: dashy-pvc
+  name: dashy-config
   namespace: dashboard
 spec:
-  storageClassName: dashy-nfs
+  storageClassName: dashy-config
   accessModes:
     - ReadWriteOnce
   resources:

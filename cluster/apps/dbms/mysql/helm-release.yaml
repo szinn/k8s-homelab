@@ -27,7 +27,7 @@ spec:
       persistence:
         args:
           - "--disable-log-bin"
-        existingClaim: dbms-mysql-pvc
+        existingClaim: mysql-datastore
       resources:
         requests:
           cpu: 10m

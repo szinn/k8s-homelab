@@ -2,10 +2,10 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: media-backups-4k-nfs-pv
+  name: media-4k-backups
   namespace: media
 spec:
-  storageClassName: media-backups-4k-nfs
+  storageClassName: media-4k-backups
   capacity:
     storage: 1Mi
   accessModes:
@@ -26,10 +26,10 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: media-backups-4k-pvc
+  name: media-4k-backups
   namespace: media
 spec:
-  storageClassName: media-backups-4k-nfs
+  storageClassName: media-4k-backups
   accessModes:
     - ReadWriteMany
   resources:

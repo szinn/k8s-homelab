@@ -2,13 +2,13 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: minio-nfs-pv
+  name: minio-datastore
   namespace: dbms
   labels:
     app.kubernetes.io/name: &name minio
     app.kubernetes.io/instance: *name
 spec:
-  storageClassName: minio-nfs
+  storageClassName: minio-datastore
   capacity:
     storage: 10Gi
   accessModes:
@@ -29,12 +29,12 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: dbms-minio-pvc
+  name: minio-datastore
   namespace: dbms
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: minio-nfs
+  storageClassName: minio-datastore
   resources:
     requests:
       storage: 10Gi

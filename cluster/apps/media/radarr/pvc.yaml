@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: radarr-pvc
+  name: radarr-config
   namespace: media
   labels:
     app.kubernetes.io/name: &name radarr
