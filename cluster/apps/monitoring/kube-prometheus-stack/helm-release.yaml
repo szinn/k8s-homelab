@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: kube-prometheus-stack
-      version: 38.0.2
+      version: 37.3.0
       sourceRef:
         kind: HelmRepository
         name: prometheus-community-charts
