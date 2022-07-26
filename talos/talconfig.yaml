@@ -1,3 +1,4 @@
+---
 clusterName: ${CONFIG_CLUSTER_NAME}
 talosVersion: v1.1.1
 kubernetesVersion: v1.24.2
@@ -50,7 +51,7 @@ nodes:
       - interface: eth0
         mtu: 1500
         dhcp: true
-  - hostname: k8s-20
+  - hostname: k8s-5
     ipAddress: 10.0.40.68
     controlPlane: false
     installDisk: /dev/sda
@@ -126,10 +127,7 @@ controlPlane:
       time:
         disabled: false
         servers:
-          - server 0.ca.pool.ntp.org
-          - server 1.ca.pool.ntp.org
-          - server 2.ca.pool.ntp.org
-          - server 3.ca.pool.ntp.org
+          - ca.pool.ntp.org
       token: ${machineToken}
 worker:
   configPatches:
@@ -162,7 +160,7 @@ worker:
         extraHostEntries:
           - aliases:
               - ${CONFIG_CLUSTER_NAME}.${SECRET_BASE_DOMAIN_NAME}
-            ip: 10.0.40.80
+            ip: ${CONFIG_VIP_IP}
       time:
         disabled: false
         servers:
