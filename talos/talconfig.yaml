@@ -1,0 +1,170 @@
+clusterName: ${CONFIG_CLUSTER_NAME}
+talosVersion: v1.1.1
+kubernetesVersion: v1.24.2
+endpoint: https://${CONFIG_CLUSTER_NAME}.${SECRET_BASE_DOMAIN_NAME}:6443
+domain: cluster.local
+clusterPodNets:
+  - ${CONFIG_K8S_POD_CIDR}
+clusterSvcNets:
+  - ${CONFIG_K8S_SERVICE_CIDR}
+cniConfig:
+  name: custom
+  urls:
+    - http://router/${CONFIG_CLUSTER_NAME}-cilium-quick-install.yaml
+nodes:
+  - hostname: k8s-1
+    ipAddress: 10.0.40.16
+    controlPlane: true
+    installDisk: /dev/sda
+    networkInterfaces:
+      - interface: eth0
+        mtu: 1500
+        dhcp: true
+        vip:
+          ip: ${CONFIG_VIP_IP}
+  - hostname: k8s-2
+    ipAddress: 10.0.40.17
+    controlPlane: true
+    installDisk: /dev/sda
+    networkInterfaces:
+      - interface: eth0
+        mtu: 1500
+        dhcp: true
+        vip:
+          ip: ${CONFIG_VIP_IP}
+  - hostname: k8s-3
+    ipAddress: 10.0.40.18
+    controlPlane: true
+    installDisk: /dev/sda
+    networkInterfaces:
+      - interface: eth0
+        mtu: 1500
+        dhcp: true
+        vip:
+          ip: ${CONFIG_VIP_IP}
+  - hostname: k8s-4
+    ipAddress: 10.0.40.19
+    controlPlane: false
+    installDisk: /dev/sda
+    networkInterfaces:
+      - interface: eth0
+        mtu: 1500
+        dhcp: true
+  - hostname: k8s-20
+    ipAddress: 10.0.40.68
+    controlPlane: false
+    installDisk: /dev/sda
+    networkInterfaces:
+      - interface: eth0
+        mtu: 1500
+        dhcp: true
+  - hostname: k8s-6
+    ipAddress: 10.0.40.21
+    controlPlane: false
+    installDisk: /dev/sda
+    networkInterfaces:
+      - interface: eth0
+        mtu: 1500
+        dhcp: true
+controlPlane:
+  configPatches:
+    - op: add
+      path: /machine/kubelet/extraArgs
+      value:
+        feature-gates: GracefulNodeShutdown=true,MixedProtocolLBService=true
+        rotate-server-certificates: "true"
+    - op: add
+      path: /machine/install/extraKernelArgs
+      value:
+        - talos.logging.kernel=udp://${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}:6001/
+    - op: add
+      path: /cluster/proxy
+      value:
+        disabled: true
+    - op: add
+      path: /cluster/controllerManager/extraArgs
+      value:
+        bind-address: 0.0.0.0
+    - op: add
+      path: /cluster/scheduler/extraArgs
+      value:
+        bind-address: 0.0.0.0
+    - op: remove
+      path: /cluster/apiServer/admissionControl
+  inlinePatch:
+    cluster:
+      aescbcEncryptionSecret: ${aescbcEncryptionKey}
+      aggregatorCA:
+        crt: ${k8sAggregatorCert}
+        key: ${k8sAggregatorCertKey}
+      ca:
+        crt: ${clusterCert}
+        key: ${clusterCertKey}
+      etcd:
+        ca:
+          crt: ${etcdCert}
+          key: ${etcdCertKey}
+      extraManifests:
+        - https://raw.githubusercontent.com/alex1989hu/kubelet-serving-cert-approver/main/deploy/ha-install.yaml
+      secret: ${clusterSecret}
+      serviceAccount:
+        key: ${k8sServiceAccountKey}
+      token: ${clusterToken}
+    machine:
+      ca:
+        crt: ${machineCert}
+        key: ${machineCertKey}
+      logging:
+        destinations:
+          - endpoint: udp://${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}:6002/
+            format: json_lines
+      network:
+        extraHostEntries:
+          - aliases:
+              - ${CONFIG_CLUSTER_NAME}.${SECRET_BASE_DOMAIN_NAME}
+            ip: ${CONFIG_VIP_IP}
+      time:
+        disabled: false
+        servers:
+          - server 0.ca.pool.ntp.org
+          - server 1.ca.pool.ntp.org
+          - server 2.ca.pool.ntp.org
+          - server 3.ca.pool.ntp.org
+      token: ${machineToken}
+worker:
+  configPatches:
+    - op: add
+      path: /machine/kubelet/extraArgs
+      value:
+        feature-gates: GracefulNodeShutdown=true,MixedProtocolLBService=true
+        rotate-server-certificates: "true"
+    - op: add
+      path: /machine/install/extraKernelArgs
+      value:
+        - talos.logging.kernel=udp://${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}:6001/
+  inlinePatch:
+    cluster:
+      aescbcEncryptionSecret: ${aescbcEncryptionKey}
+      ca:
+        crt: ${clusterCert}
+        key: ${clusterCertKey}
+      secret: ${clusterSecret}
+      token: ${clusterToken}
+    machine:
+      ca:
+        crt: ${machineCert}
+        key: ${machineCertKey}
+      logging:
+        destinations:
+          - endpoint: udp://${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}:6002/
+            format: json_lines
+      network:
+        extraHostEntries:
+          - aliases:
+              - ${CONFIG_CLUSTER_NAME}.${SECRET_BASE_DOMAIN_NAME}
+            ip: 10.0.40.80
+      time:
+        disabled: false
+        servers:
+          - pool.ntp.org
+      token: ${machineToken}
