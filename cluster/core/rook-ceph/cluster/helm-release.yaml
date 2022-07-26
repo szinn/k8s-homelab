@@ -39,8 +39,8 @@ spec:
     cephClusterSpec:
       cephVersion:
         # renovate: docker-image
-        # image: quay.io/ceph/ceph:v16.2.7
-        image: quay.io/ceph/ceph:v17.2.1
+        image: quay.io/ceph/ceph:v16.2.7
+        # image: quay.io/ceph/ceph:v17.2.1
 
       # TODO(rook-ceph): Enable host network on next rebuild
       # network:
