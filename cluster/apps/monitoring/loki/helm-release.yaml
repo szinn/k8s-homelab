@@ -19,6 +19,11 @@ spec:
     image:
       repository: ghcr.io/k8s-at-home/loki
 
+    service:
+      type: LoadBalancer
+      externalTrafficPolicy: Cluster
+      loadBalancerIP: ${CONFIG_SVC_LOKI_ADDR}
+
     config:
       auth_enabled: false
       storage_config:
