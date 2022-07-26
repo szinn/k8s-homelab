@@ -1,61 +1,19 @@
 #!/bin/bash
-#!/bin/bash
 #
+export SOPS_AGE_KEY_FILE="$HOME/.config/sops/age/keys.txt"
+
 . ./common.sh
 . ./setup-config.sh
-
-need kubectl
-need flux
-
-# Check to make sure it is a recognized cluster
-cluster=""
-for i in $SETUP_CLUSTERS; do
-  if test "$i" == "$1"; then
-    cluster=$1
-  fi
-done
-if test -z "$cluster"; then
-    echo "Invalid environment $1 - must be one of $SETUP_CLUSTERS"
-    exit 1
-fi
-
-installFlux() {
-  message "Installing fluxv2"
-  flux check --pre > /dev/null
-  FLUX_PRE=$?
-  if [ $FLUX_PRE != 0 ]; then
-    echo -e "flux prereqs not met:\n"
-    flux check --pre
-    exit 1
-  fi
-  if [ -z "$GITHUB_TOKEN" ]; then
-    echo "GITHUB_TOKEN is not set! Check $REPO_ROOT/setup/.env"
-    exit 1
-  fi
-
-  flux bootstrap github \
-    --owner=$GITHUB_USER \
-    --repository=$GITHUB_REPO \
-    --branch $SETUP_GITHUB_BRANCH \
-    --private=false \
-    --personal \
-    --network-policy=false \
-    --path=cluster/$cluster
-
-  FLUX_INSTALLED=$?
-  if [ $FLUX_INSTALLED != 0 ]; then
-    echo -e "flux did not install correctly, aborting!"
-    exit 1
-  fi
-}
-
-message "Bootstrapping cluster $cluster"
-
 . $SETUP_CONFIG_ROOT/env.base
-. $SETUP_CONFIG_ROOT/env.$cluster
+. $SETUP_CONFIG_ROOT/env.main
 
-# Load SOPS key into cluster for decoding
-createNamespace flux-system
-cat $SOPS_AGE_KEY_FILE | kubectl -n flux-system create secret generic sops-age --from-file=age.agekey=/dev/stdin 2>/dev/null >/dev/null
+echo "Bootstrapping cluster main"
 
-installFlux
+flux install --export --network-policy=false | kubectl apply -f -
+cat $SOPS_AGE_KEY_FILE | kubectl -n flux-system create secret generic sops-age --from-file=age.agekey=/dev/stdin
+kubectl -n flux-system create secret generic github-deploy-key \
+  --from-file=identity=${SETUP_CONFIG_ROOT}/id_${CONFIG_CLUSTER_NAME} \
+  --from-file=identity.pub=${SETUP_CONFIG_ROOT}/id_${CONFIG_CLUSTER_NAME}.pub \
+  --from-literal=known_hosts="github.com ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEmKSENjQEezOmxkZMy7opKgwFB9nkt5YRrYMjNuG5N87uRgg6CLrbo5wAdT/y6v0mKV0U2w0WZ2YB/++Tpockg="
+kubectl apply -f ../cluster/${CONFIG_CLUSTER_NAME}/flux-system/flux-installation.yaml
+kubectl apply -f ../cluster/${CONFIG_CLUSTER_NAME}/flux-system/flux-cluster.yaml
