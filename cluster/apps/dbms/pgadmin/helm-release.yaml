@@ -22,7 +22,7 @@ spec:
       registry: docker.io
       repository: dpage/pgadmin4
       tag: "6.12"
-    deploymentStrategy:
+    strategy:
       type: Recreate
     existingSecret: pgadmin-secrets
     env:
