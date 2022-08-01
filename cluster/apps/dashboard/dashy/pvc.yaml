@@ -31,6 +31,10 @@ kind: PersistentVolumeClaim
 metadata:
   name: dashy-config
   namespace: dashboard
+  labels:
+    app.kubernetes.io/name: &name dashy
+    app.kubernetes.io/instance: *name
+    snapshot.home.arpa/enabled: "true"
 spec:
   storageClassName: dashy-config
   accessModes:

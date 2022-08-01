@@ -38,43 +38,61 @@ tasks:
           deployment/kopia in namespace/{{.KOPIA_NAMESPACE | default "kopia"}} not found
 
   create:
-    desc: Spawn a job to create a snapshot for an app (task snapshot:create APP=plex [TIMEOUT=<timeout>])
+    desc: Create a job to backup an app (ex. task PVC=plex-config-v1 backup:volume)
+    interactive: true
     cmds:
       - |
-        kubectl -n {{.NAMESPACE}} create job --from=cronjob/{{.APP}}-snapshot {{.APP}}-snapshot-{{.TS}} --dry-run=client --output yaml \
+        kubectl -n {{.NAMESPACE}} create job --from=cronjob/{{.APP}}-{{.PVC}}-snapshot {{.APP}}-snapshot-{{.TS}} --dry-run=client --output yaml \
           | yq eval "del(.spec.template.spec.initContainers)" - \
           | kubectl apply -f -
-      - sleep 2
-      - kubectl -n {{.NAMESPACE}} wait pod --for condition=ready --selector=job-name={{.APP}}-snapshot-{{.TS}} --timeout={{.TIMEOUT | default "1m"}}
+      - kubectl -n {{.NAMESPACE}} wait pod --for condition=ready --selector=job-name={{.APP}}-snapshot-{{.TS}} --timeout=1m
       - kubectl -n {{.NAMESPACE}} logs --selector=job-name={{.APP}}-snapshot-{{.TS}} -f
       - kubectl -n {{.NAMESPACE}} delete job {{.APP}}-snapshot-{{.TS}}
-    vars: *vars
-    preconditions: *preconditions
+    vars:
+      NAMESPACE:
+        sh: kubectl get pvc -A | grep {{.PVC}} | awk '{print $1}'
+      APP:
+        sh: kubectl -n {{.NAMESPACE}} get pvc {{.PVC}} -o jsonpath='{.metadata.labels.app\.kubernetes\.io\/name}'
+      TS:
+        sh: date "+%Y%m%d%H%M%S"
+    preconditions:
+      - sh: kubectl -n {{.NAMESPACE}} get cronjob {{.APP}}-{{.PVC}}-snapshot
+        msg: "Error: cronjob/{{.APP}}-{{.PVC}}-snapshot in namespace/{{.NAMESPACE}} not found"
+      - sh: kubectl -n {{.NAMESPACE}} get pvc {{.PVC}}
+        msg: "Error: pvc/{{.PVC}} in namespace/{{.NAMESPACE}} not found"
 
   restore:
-    desc: Spawn a job to restore an app from a snapshot (task snapshot:restore APP=plex [SNAPSHOT=(latest|<snapshot-id>) KOPIA_NAMESPACE=<namespace> TIMEOUT=<timeout>])
+    desc: Create a job to restore a kopia snapshot (ex. task PVC=plex-config-v1 restore:volume)
+    interactive: true
     cmds:
       - flux -n {{.NAMESPACE}} suspend helmrelease {{.APP}}
-      - kubectl -n {{.NAMESPACE}} scale {{.NAME}} --replicas 0
+      - kubectl -n {{.NAMESPACE}} scale deployment {{.APP}} --replicas 0
       - kubectl -n {{.NAMESPACE}} wait pod --for delete --selector="app.kubernetes.io/name={{.APP}}" --timeout=2m
-      - envsubst < <(cat ./hack/restore-job.yaml) | kubectl apply -f -
-      - sleep 2
-      - kubectl -n {{.NAMESPACE}} wait job --for condition=complete {{.APP}}-restore-snapshot --timeout={{.TIMEOUT | default "60m"}}
+      - . $HOME/.config/k8s-homelab/env.base && . $HOME/.config/k8s-homelab/env.main && envsubst < <(cat ./hack/restore-job.yaml) | kubectl apply -f -
+      - kubectl -n {{.NAMESPACE}} wait job --for condition=complete {{.APP}}-{{.PVC}}-restore-snapshot --timeout=60m
       - flux -n {{.NAMESPACE}} resume helmrelease {{.APP}}
-      - kubectl -n {{.NAMESPACE}} logs job/{{.APP}}-restore-snapshot
-      - kubectl -n {{.NAMESPACE}} delete job {{.APP}}-restore-snapshot
+      - kubectl -n {{.NAMESPACE}} logs job/{{.APP}}-{{.PVC}}-restore-snapshot
+      - kubectl -n {{.NAMESPACE}} delete job {{.APP}}-{{.PVC}}-restore-snapshot
       - kubectl -n {{.NAMESPACE}} delete pvc {{.APP}}-restore-pvc
       - kubectl -n {{.NAMESPACE}} delete pv {{.APP}}-restore-pv
-    vars: *vars
+    vars:
+      NAMESPACE:
+        sh: kubectl get pvc -A | grep {{.PVC}} | awk '{print $1}'
+      APP:
+        sh: kubectl -n {{.NAMESPACE}} get pvc {{.PVC}} -o jsonpath='{.metadata.labels.app\.kubernetes\.io\/name}'
     env:
-      APP: "{{.APP}}"
-      NAMESPACE: "{{.NAMESPACE}}"
-      VOLUME: "{{.VOLUME}}"
+      PVC: "{{.PVC}}"
+      NAMESPACE:
+        sh: kubectl get pvc -A | grep {{.PVC}} | awk '{print $1}'
+      APP:
+        sh: kubectl -n {{.NAMESPACE}} get pvc {{.PVC}} -o jsonpath='{.metadata.labels.app\.kubernetes\.io\/name}'
       SNAPSHOT:
         sh: |
           if [[ {{.SNAPSHOT}} == "latest" ]]; then
-            kubectl exec deployment/kopia -n {{.KOPIA_NAMESPACE | default "kopia"}} -- kopia snapshot list /data/{{.NAMESPACE}}/{{.APP}} --json | jq --raw-output '.[-1] | .id'
+            kubectl exec deployment/kopia -n {{.KOPIA_NAMESPACE | default "kopia"}} -- kopia snapshot list /data/{{.NAMESPACE}}/{{.APP}}/{{.PVC}} --json | jq --raw-output '.[-1] | .id'
           else
             echo {{.SNAPSHOT}}
           fi
-    preconditions: *preconditions
+    preconditions:
+      - sh: kubectl -n {{.NAMESPACE}} get pvc {{.PVC}}
+        msg: "Error: pvc/{{.PVC}} in namespace/{{.NAMESPACE}} not found"
