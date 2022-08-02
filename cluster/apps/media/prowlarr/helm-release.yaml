@@ -43,7 +43,7 @@ spec:
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
         hosts:
-          - host: &host "prowlarr.${SECRET_DOMAIN_NAME}"
+          - host: "prowlarr.${SECRET_DOMAIN_NAME}"
             paths:
               - path: /
                 pathType: Prefix

@@ -42,7 +42,7 @@ spec:
           external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_NAME}"
           external-dns/is-public: "true"
         hosts:
-          - host: &host-home "home.${SECRET_DOMAIN_NAME}"
+          - host: "home.${SECRET_DOMAIN_NAME}"
             paths:
               - path: /
                 pathType: Prefix
@@ -98,7 +98,7 @@ spec:
             traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
             traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
           hosts:
-            - host: &host-code "ha-code.${SECRET_DOMAIN_NAME}"
+            - host: "ha-code.${SECRET_DOMAIN_NAME}"
               paths:
                 - path: /
                   pathType: Prefix

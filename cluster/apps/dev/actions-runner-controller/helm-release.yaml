@@ -54,7 +54,7 @@ spec:
           external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
         ingressClassName: traefik
         hosts:
-          - host: &host "runner.${SECRET_DOMAIN_NAME}"
+          - host: "runner.${SECRET_DOMAIN_NAME}"
             paths:
               - path: /
                 pathType: Prefix
