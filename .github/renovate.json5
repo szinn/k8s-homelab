@@ -1,13 +1,14 @@
 {
   "extends": [
-    ":enableRenovate",
     "config:base",
+    "docker:enableMajor",
     ":disableRateLimiting",
     ":dependencyDashboard",
     ":semanticCommits",
-    ":separatePatchReleases",
-    "docker:enableMajor",
     ":enablePreCommit",
+    ":automergeDigest",
+    ":automergeBranchPush",
+    ":separatePatchReleases",
     "github>szinn/k8s-homelab//.github/renovate/allowedVersions.json5",
     "github>szinn/k8s-homelab//.github/renovate/autoMerge.json5",
     "github>szinn/k8s-homelab//.github/renovate/commitMessage.json5",
@@ -48,6 +49,7 @@
       "description": "Process various dependencies",
       "fileMatch": [
         "cluster/.+\\.ya?ml$",
+        "hack/.+\\.ya?ml$",
         "hack/.+\\.sh$"
       ],
       "matchStrings": [
@@ -100,6 +102,15 @@
         "datasource=(?<datasource>\\S+) image=(?<depName>\\S+)\n.*?-\\s(.*?)\/(?<currentValue>[^/]+)\/[^/]+\n"
       ],
       "datasourceTemplate": "docker"
+    },
+    {
+      "description": "Process raw GitHub URLs",
+      "fileMatch": ["cluster/.+\\.ya?ml$"],
+      "matchStrings": [
+        "https:\\/\\/raw.githubusercontent.com\\/(?<depName>[\\w\\d\\-_]+\\/[\\w\\d\\-_]+)\\/(?<currentValue>[\\w\\d\\.\\-_]+)\\/.*"
+      ],
+      "datasourceTemplate": "github-releases",
+      "versioningTemplate": "semver"
     }
   ],
   "packageRules": [
@@ -108,9 +119,7 @@
       "matchDatasources": ["docker", "github-releases"],
       "versioning": "loose",
       "matchPackageNames": [
-        "ghcr.io/k8s-at-home/plex",
-        "ghcr.io/k8s-at-home/qbittorrent",
-        "Hypfer/Valetudo"
+        "ghcr.io/k8s-at-home/qbittorrent"
       ]
     }
   ]
