@@ -28,7 +28,6 @@ spec:
       auth_enabled: false
       storage_config:
         aws:
-          s3: s3://thanos:thanos-monitoring@minio.dbms:9000/loki
           region: ca-wat-1
           s3forcepathstyle: true
           insecure: true
@@ -75,3 +74,8 @@ spec:
         memory: 1G
       limits:
         memory: 1G
+  valuesFrom:
+    - kind: Secret
+      name: loki-secrets
+      valuesKey: s3-path
+      targetPath: config.storage_config.aws.s3
