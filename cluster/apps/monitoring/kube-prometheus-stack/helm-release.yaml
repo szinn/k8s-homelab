@@ -115,7 +115,7 @@ spec:
           - name: "null"
           - name: "discord"
             webhook_configs:
-              - url: 'http://alertmanager-discord:9094'
+              - url: "http://alertmanager-discord:9094"
         inhibit_rules:
           - source_match:
               severity: "critical"
