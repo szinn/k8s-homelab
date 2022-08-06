@@ -8,7 +8,8 @@ vars:
 includes:
   flux: .taskfiles/FluxTasks.yaml
   format: .taskfiles/FormatTasks.yaml
-  pre-commit: .taskfiles/PreCommitTasks.yaml
+  commit: .taskfiles/PreCommitTasks.yaml
+  rook: .taskfiles/ROokTasks.yaml
   snapshot: .taskfiles/SnapshotTasks.yaml
 
 tasks:

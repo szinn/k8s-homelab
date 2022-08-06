@@ -39,7 +39,7 @@ jobs:
               join(
                 fromJSON('
                   [
-                    "ANSIBLE_ANSIBLE_LINT",
+                    "ACTION_ACTIONLINT",
                     "COPYPASTE_JSCPD",
                     "KUBERNETES_KUBEVAL",
                     "MARKDOWN_MARKDOWNLINT",
@@ -52,8 +52,6 @@ jobs:
                 ','
               )
             }}
-          ANSIBLE_DIRECTORY: ansible
-          ANSIBLE_ANSIBLE_LINT_CONFIG_FILE: .ansible-lint
           KUBERNETES_DIRECTORY: cluster
           KUBERNETES_KUBEVAL_ARGUMENTS: --ignore-missing-schemas
           KUBERNETES_KUBEVAL_FILTER_REGEX_INCLUDE: "(kubernetes)"
