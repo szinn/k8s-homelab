@@ -9,7 +9,7 @@ includes:
   flux: .taskfiles/FluxTasks.yaml
   format: .taskfiles/FormatTasks.yaml
   commit: .taskfiles/PreCommitTasks.yaml
-  rook: .taskfiles/ROokTasks.yaml
+  rook: .taskfiles/RookTasks.yaml
   snapshot: .taskfiles/SnapshotTasks.yaml
 
 tasks:
