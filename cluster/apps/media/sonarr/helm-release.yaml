@@ -20,7 +20,7 @@ spec:
       nameOverride: *app
     image:
       repository: ghcr.io/onedr0p/sonarr
-      tag: 3.0.8.1507
+      tag: 3.0.9.1549
     env:
       TZ: ${CONFIG_TIMEZONE}
     envFrom:
