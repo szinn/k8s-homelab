@@ -142,9 +142,9 @@ There should be at least one cluster `main` that will be used from the `main` br
 
 ### External Environment Configuration
 
-A base file [setup/env.base](./setup/env.base.template) is used to define any configuration about the external devices on the network (e.g., NAS drives) and config/secrets that are common to all of the cluster configurations.
+A base file [setup/env.base](./setup/env.base-template) is used to define any configuration about the external devices on the network (e.g., NAS drives) and config/secrets that are common to all of the cluster configurations.
 
-Each cluster configuration (e.g. main or staging) has a file [setup/env.<cluster_type>](./setup/env.main.template) that is used to define any configuration that is specific to that cluster.
+Each cluster configuration (e.g. main or staging) has a file [setup/env.<cluster_type>](./setup/env.main-template) that is used to define any configuration that is specific to that cluster.
 For example, the IP addresses that should be reserved through MetalLB for services such as Traefik for MySQL.
 
 All values are defined as shell environment variables.
@@ -243,8 +243,6 @@ Maintenance of the cluster is fairly minimal.
 
 - renovate creates PRs to update helm charts, flux system files, or docker images in the cluster;
 - flux applies any merged PRs or changes to the repo to the cluster automatically.
-
-Occasionally, the cluster doesn't come fully back when kured reboots it and some of the pods need a nudge to get back to running.
 
 I manually keep the router VM and PiHole up to date through Anisble scripts.
 
