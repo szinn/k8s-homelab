@@ -15,3 +15,4 @@ talosctl apply-config -i -n 10.0.40.21 -f ./clusterconfig/main-k8s-6.yaml
 
 # It will take a few minutes for the nodes to spin up with the configuration.  Once ready, execute
 # talosctl bootstrap -n 10.0.40.16
+# curl http://router/main-cilium-quick-install.yaml | kubectl apply -f -

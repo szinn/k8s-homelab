@@ -9,9 +9,7 @@ clusterPodNets:
 clusterSvcNets:
   - ${CONFIG_K8S_SERVICE_CIDR}
 cniConfig:
-  name: custom
-  urls:
-    - http://router/${CONFIG_CLUSTER_NAME}-cilium-quick-install.yaml
+  name: none
 nodes:
   - hostname: k8s-1
     ipAddress: 10.0.40.16
