@@ -158,5 +158,9 @@ spec:
               name: vector-aggregator
             patch:
               - op: add
-                path: /spec/loadBalancerIP
-                value: ${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}
+                path: /metadata/annotations
+                value:
+                  metallb.universe.tf/loadBalancerIPs: ${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}
+              - op: replace
+                path: /spec/externalTrafficPolicy
+                value: Local

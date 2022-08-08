@@ -34,10 +34,9 @@ spec:
         enabled: true
         type: LoadBalancer
         annotations:
+          metallb.universe.tf/loadBalancerIPs: ${CONFIG_SVC_QBITTORRENT_ADDR}
           prometheus.io/probe: "true"
           prometheus.io/protocol: tcp
-        externalIPs:
-          - ${CONFIG_SVC_QBITTORRENT_ADDR}
         ports:
           bittorrent:
             enabled: true

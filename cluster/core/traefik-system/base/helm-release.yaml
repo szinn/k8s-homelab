@@ -31,8 +31,9 @@ spec:
     service:
       enabled: true
       type: LoadBalancer
+      annotations:
+        metallb.universe.tf/loadBalancerIPs: ${CONFIG_SVC_TRAEFIK_ADDR}
       spec:
-        loadBalancerIP: "${CONFIG_SVC_TRAEFIK_ADDR}"
         externalTrafficPolicy: Local
     logs:
       general:
