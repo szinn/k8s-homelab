@@ -129,6 +129,10 @@ spec:
           gnetId: 11462
           revision: 1
           datasource: Prometheus
+        traefik-ingress:
+          gnetId: 4475
+          revision: 5
+          datasource: Prometheus
         # Ref: https://grafana.com/grafana/dashboards/2842
         metallb:
           gnetId: 14127
