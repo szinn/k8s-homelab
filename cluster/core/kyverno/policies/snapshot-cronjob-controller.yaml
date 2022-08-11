@@ -34,7 +34,7 @@ spec:
       context:
         - name: appName
           variable:
-            jmesPath: "request.object.metadata.labels.\"app.kubernetes.io/name\""
+            jmesPath: 'request.object.metadata.labels."app.kubernetes.io/name"'
         - name: claimName
           variable:
             jmesPath: "request.object.metadata.name"
@@ -44,16 +44,16 @@ spec:
         - name: nodeAffinity
           variable:
             value:
-              ignored: "{{ (request.object.metadata.labels.\"snapshot.home.arpa/ignoreAffinity\" || 'false') == 'false' }}"
+              ignored: '{{ (request.object.metadata.labels."snapshot.home.arpa/ignoreAffinity" || ''false'') == ''false'' }}'
               labels:
                 - key: app.kubernetes.io/name
                   operator: "In"
                   values:
-                    - "{{ request.object.metadata.labels.\"app.kubernetes.io/name\" }}"
+                    - '{{ request.object.metadata.labels."app.kubernetes.io/name" }}'
                 - key: app.kubernetes.io/instance
                   operator: "In"
                   values:
-                    - "{{ request.object.metadata.labels.\"app.kubernetes.io/instance\" }}"
+                    - '{{ request.object.metadata.labels."app.kubernetes.io/instance" }}'
       generate:
         synchronize: true
         apiVersion: batch/v1
@@ -63,8 +63,8 @@ spec:
         data:
           metadata:
             labels:
-              app.kubernetes.io/name: "{{ request.object.metadata.labels.\"app.kubernetes.io/name\" }}"
-              app.kubernetes.io/instance: "{{ request.object.metadata.labels.\"app.kubernetes.io/instance\" }}"
+              app.kubernetes.io/name: '{{ request.object.metadata.labels."app.kubernetes.io/name" }}'
+              app.kubernetes.io/instance: '{{ request.object.metadata.labels."app.kubernetes.io/instance" }}'
             ownerReferences:
               - apiVersion: "{{ request.object.apiVersion }}"
                 kind: "{{ request.object.kind }}"
