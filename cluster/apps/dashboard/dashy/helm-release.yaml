@@ -49,3 +49,33 @@ spec:
         enabled: true
         existingClaim: dashy-config
         mountPath: /app/public/
+    addons:
+      codeserver:
+        enabled: true
+        image:
+          repository: codercom/code-server
+          tag: 4.5.1
+        workingDir: "/config"
+        git:
+          deployKeySecret: dashy-code-server-secret
+        args:
+          - --auth
+          - "none"
+          - --user-data-dir
+          - "/config/.vscode"
+          - --extensions-dir
+          - "/config/.vscode"
+        ingress:
+          enabled: true
+          ingressClassName: "traefik"
+          annotations:
+            traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+            traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
+          hosts:
+            - host: "dashy-code.${SECRET_DOMAIN_NAME}"
+              paths:
+                - path: /
+                  pathType: Prefix
+        volumeMounts:
+          - name: config
+            mountPath: /config
