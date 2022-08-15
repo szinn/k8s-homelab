@@ -1,9 +1,0 @@
-k8s-*.yaml
-controlplane.yaml
-worker.yaml
-talosconfig
-worker-patch.json
-controlplane-patch.json
-controlplane-current.yaml
-worker-current.yaml
-wildcard.yaml
