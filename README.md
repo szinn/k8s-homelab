@@ -196,7 +196,7 @@ and a couple of apps that I have backed up their configuration as it doesn't cha
 
 The machines are configured using Talos (see [Getting Started](https://www.talos.dev/v0.14/introduction/getting-started/) for a walkthrough).
 
-The scripts I used for generating the Talos configuration are found in [setup/talos](./setup/talos).
+The scripts I used for generating the Talos configuration are found in [talos](./talos).
 
 The expectation is that at the end of this step, your machines are up and running and the command line tool `kubectl` can be used to interact with the cluster.
 
