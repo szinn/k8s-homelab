@@ -18,7 +18,7 @@ spec:
   values:
     image:
       repository: grafana/grafana
-      tag: 9.0.7
+      tag: 9.1.0
     deploymentStrategy:
       type: Recreate
     persistence:
