@@ -76,8 +76,8 @@ spec:
                 path: mon-endpoints
         - name: nas-backup
           nfs:
-            server: "${SECRET_NFS_SERVER}"
-            path: ${SECRET_NFS_ROOTDIR}/backups/kubernetes
+            server: "${SECRET_ATLAS_NFS_SERVER}"
+            path: "${SECRET_ATLAS_NFS_ROOTDIR}"
         - name: direct-mount-scripts
           projected:
             defaultMode: 0775
