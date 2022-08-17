@@ -63,7 +63,8 @@ spec:
         mountMath: "/downloads"
       backup:
         enabled: true
-        existingClaim: media-4k-backups
+        existingClaim: media-backups
+        subPath: radarr-4k
         mountPath: /backups
         readOnly: false
     resources:

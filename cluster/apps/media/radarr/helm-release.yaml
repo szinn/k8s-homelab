@@ -81,6 +81,7 @@ spec:
       backup:
         enabled: true
         existingClaim: media-backups
+        subPath: radarr
         mountPath: /backups
         readOnly: false
     resources:

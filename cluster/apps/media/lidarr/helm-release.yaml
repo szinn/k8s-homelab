@@ -81,5 +81,6 @@ spec:
       backup:
         enabled: true
         existingClaim: media-backups
+        subPath: lidarr
         mountPath: /backups
         readOnly: false

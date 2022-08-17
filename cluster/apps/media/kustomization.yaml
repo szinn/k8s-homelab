@@ -6,7 +6,6 @@ resources:
   - downloads-pvc.yaml
   - media-pvc.yaml
   - media-backups-pvc.yaml
-  - media-backups-4k-pvc.yaml
   - plex-pvc.yaml
   - jackett
   - lidarr

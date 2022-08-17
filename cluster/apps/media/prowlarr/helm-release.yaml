@@ -61,6 +61,7 @@ spec:
       backup:
         enabled: true
         existingClaim: media-backups
+        subPath: prowlarr
         mountPath: /backups
         readOnly: false
     prometheus:

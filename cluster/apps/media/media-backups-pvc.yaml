@@ -12,8 +12,8 @@ spec:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   nfs:
-    server: ${SECRET_NFS_SERVER}
-    path: "${SECRET_NFS_ROOTDIR}/backups/media"
+    server: ${SECRET_ATLAS_NFS_SERVER}
+    path: "${SECRET_ATLAS_NFS_ROOTDIR}/media/backups"
   mountOptions:
     - nfsvers=4
     - tcp
