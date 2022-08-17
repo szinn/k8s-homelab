@@ -81,5 +81,6 @@ spec:
       backup:
         enabled: true
         existingClaim: media-backups
+        subPath: sonarr
         mountPath: /backups
         readOnly: false
