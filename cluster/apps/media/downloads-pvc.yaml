@@ -13,7 +13,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: ${SECRET_ATLAS_NFS_SERVER}
-    path: "${SECRET_ATLAS_NFS_ROOTDIR}/media/downloads"
+    path: "${SECRET_ATLAS_NFS_ROOTDIR}/downloads"
   mountOptions:
     - nfsvers=4
     - tcp
