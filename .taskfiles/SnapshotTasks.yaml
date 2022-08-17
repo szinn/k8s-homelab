@@ -45,6 +45,7 @@ tasks:
         kubectl -n {{.NAMESPACE}} create job --from=cronjob/{{.APP}}-{{.PVC}}-snapshot {{.APP}}-snapshot-{{.TS}} --dry-run=client --output yaml \
           | yq eval "del(.spec.template.spec.initContainers)" - \
           | kubectl apply -f -
+      - sleep 2
       - kubectl -n {{.NAMESPACE}} wait pod --for condition=ready --selector=job-name={{.APP}}-snapshot-{{.TS}} --timeout=1m
       - kubectl -n {{.NAMESPACE}} logs --selector=job-name={{.APP}}-snapshot-{{.TS}} -f
       - kubectl -n {{.NAMESPACE}} delete job {{.APP}}-snapshot-{{.TS}}
@@ -62,7 +63,7 @@ tasks:
         msg: "Error: pvc/{{.PVC}} in namespace/{{.NAMESPACE}} not found"
 
   restore:
-    desc: Create a job to restore a kopia snapshot (ex. task PVC=plex-config-v1 restore:volume)
+    desc: Create a job to restore a kopia snapshot (ex. task PVC=plex-config-v1 SNAPSHOT=latest restore:volume)
     interactive: true
     cmds:
       - flux -n {{.NAMESPACE}} suspend helmrelease {{.APP}}
