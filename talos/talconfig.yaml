@@ -103,8 +103,6 @@ controlPlane:
         ca:
           crt: ${etcdCert}
           key: ${etcdCertKey}
-      extraManifests:
-        - https://raw.githubusercontent.com/alex1989hu/kubelet-serving-cert-approver/main/deploy/ha-install.yaml
       secret: ${clusterSecret}
       serviceAccount:
         key: ${k8sServiceAccountKey}
