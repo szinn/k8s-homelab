@@ -20,7 +20,7 @@ spec:
       nameOverride: *app
     image:
       repository: ghcr.io/onedr0p/sabnzbd
-      tag: 3.6.0
+      tag: 3.6.1
     env:
       TZ: ${CONFIG_TIMEZONE}
       HOST_WHITELIST_ENTRIES: >-
