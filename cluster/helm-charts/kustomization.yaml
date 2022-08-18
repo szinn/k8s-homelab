@@ -5,6 +5,7 @@ resources:
   - actions-runner-controller-charts.yaml
   - authentik-charts.yaml
   - bitnami-charts.yaml
+  - bjw-s-charts.yaml
   - cilium-charts.yaml
   - deliveryhero-charts.yaml
   - descheduler-charts.yaml
