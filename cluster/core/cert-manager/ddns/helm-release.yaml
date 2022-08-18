@@ -8,15 +8,14 @@ spec:
   interval: 5m
   chart:
     spec:
-      chart: kah-common-chart
-      version: 1.2.2
+      chart: app-template
+      version: 0.1.1
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home-charts
+        name: bjw-s-charts
         namespace: flux-system
       interval: 5m
   values:
-    nameOverride: cf-ddns
     image:
       repository: docker.io/oznu/cloudflare-ddns
       tag: latest

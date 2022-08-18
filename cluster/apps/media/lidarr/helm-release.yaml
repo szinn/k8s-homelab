@@ -2,22 +2,20 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: &app lidarr
+  name: lidarr
   namespace: media
 spec:
   interval: 15m
   chart:
     spec:
-      chart: kah-common-chart
-      version: 1.2.2
+      chart: app-template
+      version: 0.1.1
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home-charts
+        name: bjw-s-charts
         namespace: flux-system
       interval: 15m
   values:
-    global:
-      nameOverride: *app
     image:
       repository: ghcr.io/onedr0p/lidarr
       tag: 1.0.2.2592
