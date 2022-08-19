@@ -20,7 +20,9 @@ spec:
       registry: public.ecr.aws
       repository: bitnami/redis
     auth:
-      enabled: false
+      enabled: true
+      existingSecret: redis-secrets
+      existingSecretPasswordKey: password
     master:
       resources:
         requests:

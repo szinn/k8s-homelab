@@ -21,7 +21,7 @@ spec:
   values:
     image:
       repository: ghcr.io/goauthentik/server
-      tag: 2022.8.2
+      tag: 2022.8.1
 
     ingress:
       enabled: true
@@ -88,6 +88,10 @@ spec:
         secretKeyRef:
           name: authentik-secrets
           key: AUTHENTIK_REDIS__HOST
+      AUTHENTIK_REDIS__PASSWORD:
+        secretKeyRef:
+          name: authentik-secrets
+          key: AUTHENTIK_REDIS__PASSWORD
       AUTHENTIK_REDIS__CACHE_DB:
         secretKeyRef:
           name: authentik-secrets
