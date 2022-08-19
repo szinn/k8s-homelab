@@ -20,16 +20,17 @@ spec:
       registry: public.ecr.aws
       repository: bitnami/redis
     auth:
-      enabled: true
-      existingSecret: redis-secrets
-      existingSecretPasswordKey: password
+      enabled: false
     master:
+      service:
+        type: LoadBalancer
+        annotations:
+          metallb.universe.tf/loadBalancerIPs: ${CONFIG_SVC_REDIS_ADDR}
       resources:
         requests:
           cpu: 10m
           memory: 32M
         limits:
-          # cpu: 15m
           memory: 34M
     replica:
       resources:
@@ -37,7 +38,6 @@ spec:
           cpu: 10m
           memory: 32M
         limits:
-          # cpu: 15m
           memory: 32M
     metrics:
       enabled: true
@@ -51,5 +51,4 @@ spec:
           cpu: 10m
           memory: 32M
         limits:
-          # cpu: 15m
           memory: 34M
