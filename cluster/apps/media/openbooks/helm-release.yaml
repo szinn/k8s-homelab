@@ -46,5 +46,4 @@ spec:
     persistence:
       data:
         enabled: true
-        existingClaim: media-datastore
-        subPath: openbooks
+        existingClaim: openbooks-config

@@ -2,18 +2,18 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: media-datastore
+  name: openbooks-config
   namespace: media
 spec:
-  storageClassName: media-datastore
+  storageClassName: openbooks-config
   capacity:
     storage: 1Mi
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: ${SECRET_ATLAS_NFS_SERVER}
-    path: "${SECRET_ATLAS_NFS_ROOTDIR}/media"
+    path: "${SECRET_ATLAS_NFS_ROOTDIR}/media/openbooks"
   mountOptions:
     - nfsvers=4
     - tcp
@@ -26,12 +26,16 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: media-datastore
+  name: openbooks-config
   namespace: media
+  labels:
+    app.kubernetes.io/name: &name openbooks
+    app.kubernetes.io/instance: *name
+    snapshot.home.arpa/enabled: "true"
 spec:
-  storageClassName: media-datastore
+  storageClassName: openbooks-config
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   resources:
     requests:
       storage: 1Mi

@@ -1,0 +1,41 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: sabnzbd-config
+  namespace: media
+spec:
+  storageClassName: sabnzbd-config
+  capacity:
+    storage: 1Mi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    server: ${SECRET_ATLAS_NFS_SERVER}
+    path: "${SECRET_ATLAS_NFS_ROOTDIR}/media/sabnzbd"
+  mountOptions:
+    - nfsvers=4
+    - tcp
+    - intr
+    - hard
+    - noatime
+    - nodiratime
+    - nolock
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sabnzbd-config
+  namespace: media
+  labels:
+    app.kubernetes.io/name: &name sabnzbd
+    app.kubernetes.io/instance: *name
+    snapshot.home.arpa/enabled: "true"
+spec:
+  storageClassName: sabnzbd-config
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Mi

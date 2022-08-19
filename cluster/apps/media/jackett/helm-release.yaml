@@ -62,5 +62,4 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: media-datastore
-        subPath: jackett
+        existingClaim: jackett-config

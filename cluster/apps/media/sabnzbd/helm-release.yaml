@@ -51,8 +51,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: media-datastore
-        subPath: sabnzbd
+        existingClaim: sabnzbd-config
       downloads:
         enabled: true
         existingClaim: downloads

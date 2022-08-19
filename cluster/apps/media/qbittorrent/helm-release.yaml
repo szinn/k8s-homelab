@@ -61,8 +61,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: media-datastore
-        subPath: qbittorrent
+        existingClaim: qbittorrent-config
       downloads:
         enabled: true
         existingClaim: downloads
