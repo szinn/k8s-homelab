@@ -1,0 +1,52 @@
+---
+totp:
+  disable: false
+  issuer: ${SECRET_BASE_DOMAIN_NAME}
+
+authentication_backend:
+  password_reset:
+    disable: true
+  refresh_interval: 5m
+  file:
+    path: /config/users.yaml
+    password:
+      algorithm: argon2id
+      iterations: 1
+      key_length: 32
+      salt_length: 16
+      memory: 1024
+      parallelism: 8
+
+access_control:
+  default_policy: deny
+  networks:
+    - name: internal
+      networks:
+        - 10.0.10.0/24
+        - 10.0.40.2/32
+
+  rules:
+    - domain: '*.${SECRET_DOMAIN_NAME}'
+      networks:
+        - internal
+      policy: bypass
+    - domain: 'home.${SECRET_DOMAIN_NAME}'
+      policy: one_factor
+      subject:
+        - 'group:users'
+    - domain: 'wiki.${SECRET_DOMAIN_NAME}'
+      policy: one_factor
+      subject:
+        - 'group:users'
+
+session:
+  redis:
+    high_availability:
+      sentinel_name: redis-master
+      nodes:
+        - host: redis-node-0.redis-headless.dbms.svc.cluster.local
+          port: 26379
+        - host: redis-node-1.redis-headless.dbms.svc.cluster.local
+          port: 26379
+        - host: redis-node-2.redis-headless.dbms.svc.cluster.local
+          port: 26379
