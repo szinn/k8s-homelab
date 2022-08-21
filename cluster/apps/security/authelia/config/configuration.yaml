@@ -1,7 +1,6 @@
 ---
 totp:
   disable: false
-  issuer: ${SECRET_BASE_DOMAIN_NAME}
 
 authentication_backend:
   password_reset:
@@ -24,7 +23,6 @@ access_control:
       networks:
         - 10.0.10.0/24
         - 10.0.40.2/32
-
   rules:
     - domain: '*.${SECRET_DOMAIN_NAME}'
       networks:
