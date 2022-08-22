@@ -4,8 +4,11 @@ metadata:
     name: postgres-superuser
     namespace: dbms
 stringData:
-    username: ENC[AES256_GCM,data:H1Y7NCKyVRM=,iv:8kK5OO51hvNFD1cdXswny/q9UQVt9WccTOUbEi+fvqY=,tag:txpUQRDiwAYIDs+HLlz0Qg==,type:str]
-    password: ENC[AES256_GCM,data:nY41dCXoBaqnWkGOCG4Jxw==,iv:j6DLT7Oaq54612YIxsP2rfKaDPagduH5wkwq41ncVm4=,tag:eHaLryAwZLncxVaNw77cDQ==,type:str]
+    username: ENC[AES256_GCM,data:l0GVS+GG0cY=,iv:zjGUAAHE3xSehdOof9Tz4OQbJDYpm7M24DMQ5PNKcQI=,tag:4Bd81nAYSBedE4Iz7vxYTg==,type:str]
+    password: ENC[AES256_GCM,data:B6ydyOXX1h/WEDV2bRDPPw==,iv:+LPM1jCpma61dFjG0T6e5fboP0Wn4EYZEsfFpIl86KI=,tag:/jnaoxyvzAEZ18kl7+ZmUw==,type:str]
+    MINIO_ACCESS_KEY: ENC[AES256_GCM,data:EvVkzG4i9YnXLg==,iv:5APwp1QLyweSuoWz9GS0HofzSSRBwQPQ5IoJXDo/vfA=,tag:qxikjbbFWCmo9nRZmIJ43g==,type:str]
+    MINIO_SECRET_KEY: ENC[AES256_GCM,data:M18TF98jwAWLWuQrEJjpx/nzQr4Dcki78+fPYsaDQ+Xgm/G50bykuzSRcMlKLVt12BG/NfPtdtlfZc3wu3mxjw==,iv:1w4sSwA/3i1kTohQc3sI9U2FFIML8XjK5dnc9GX9aog=,tag:PxlRTQa4ZjxpDtIGB+Ey/A==,type:str]
+    MINIO_REGION: ENC[AES256_GCM,data:NVZyI4utaAQ=,iv:ZpuS/vPUBFaNcFWCjhujfzBMiAooNBIFKuJT0IygJkU=,tag:vOoJR+njOWM1JWxkQyPtrw==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -15,14 +18,14 @@ sops:
         - recipient: age1p28u8xjm5sf7jdavc8xsqtw7lxgscefxs7a5dtqszr2885xeputsh9y64y
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBhM1NFTVVEYkxleG8xaVdY
-            Q1VCYm1ZTDM4WDZ1Y0tMdnMzN1RlWWtQbXpzCkFpL2VTeklTY0RYWnNVY1FNVWtW
-            SklXUEVwVnFSVzRnblBrOERma2ErcmsKLS0tIHZITVI0MHhmbmZSNzE3aml3OGZW
-            RTFtSkkvK082QkkxR0xKWUprUmt3RzAKtd3frIhglDykaoMc4y+y0D9ProSkHG6Q
-            9rJETBE3z1oNgt8GQvi6coMuAP/CsVxDVlh4aVKeWj1CeFgWD/iaFg==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBpczdxMUVyNjdEWHhGNzF1
+            SVQ1MlZEazErTmM4RGwzYmFaSE5XaHJ1SWkwCi95WFZpczZyandRekY0ekNteCt2
+            eWlwVDZyc2tSN3A4VzNONEE1VVNpUDgKLS0tIHZrVE5hTmNBVEUra3NkL2pEUEc3
+            MU9lbm45RG1SY0pLVk1pT1NYd0tNMVEK/w5EyB7IEY9lvOVMJed8X6BiJDCPYHM4
+            bKTArvPu8LPRekaR5zxloYXUBysBVwt+9wrXUwhQoLlRRQJjCMf/sA==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2022-08-22T12:08:51Z"
-    mac: ENC[AES256_GCM,data:sWFku6zCsOe98UlgFaohppJX4bx56g2RN7C/JVCV8jigitjDCVp97iUETTHKfRSAEmKGbe/c3kHsn72X6NQv6rtgeDHaliDhj3Aj3RaO/6uVtcrJLT4cRoQmRXquyKcHYEpbtmg+nM7RVpHnNU59QlgB2SjTa99qV19EU4GQdSA=,iv:W9+XV2jyewOYLskR5u95noSHS2eLL74+PdCbsUfqIq0=,tag:sKqgCAyCzy2cW/NWdNVIsQ==,type:str]
+    lastmodified: "2022-08-23T02:09:32Z"
+    mac: ENC[AES256_GCM,data:/P2v7J/M1xEMf5lHm09cRUy+hqcGO6VFRTs/GLziVVKmwJrD9JcAd6ZsLnJw3/Qmwvpl2s42fO3+YZjp/m4hD0COj0/eVm+lftb4nEuMlQOg58JhLYKjtr7dRgH7hSKbmXG3xcbXyp7svd6FGGLpF5bIDy3/3pnuWAjKbH/cqDI=,iv:KEknpx0zh56EXo/hnUwceOKuMQBh4aC4kRVTdssxkQg=,tag:8HfeBJLRDl1hJC5z/3Tdwg==,type:str]
     pgp: []
     encrypted_regex: ((?i)(displayname|email|pass|secret($|[^N])|key|token|^data$|^stringData))
     version: 3.7.3
