@@ -143,10 +143,6 @@ spec:
           gnetId: 7362
           revision: 5
           datasource: Prometheus
-        postgres-overview:
-          gnetId: 9628
-          revision: 7
-          datasource: Prometheus
         minio:
           gnetId: 13502
           revision: 10

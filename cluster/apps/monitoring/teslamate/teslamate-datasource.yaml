@@ -13,7 +13,7 @@ data:
     - name: TeslaMate
       type: postgres
       access: proxy
-      url: postgres-r.dbms.svc.cluster.local:5432
+      url: postgres-any.dbms.svc.cluster.local:5432
       database: teslamate
       user: teslamate
       secureJsonData:
