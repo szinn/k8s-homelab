@@ -15,6 +15,9 @@ spec:
         name: k8s-at-home-charts
         namespace: flux-system
       interval: 15m
+  dependsOn:
+    - name: postgres
+      namespace: dbms
 
   # See https://github.com/k8s-at-home/charts/blob/master/charts/teslamate/values.yaml
   values:
@@ -25,19 +28,22 @@ spec:
 
     env:
       TZ: ${CONFIG_TIMEZONE}
-      ENCRYPTION_KEY: ${TESLAMATE_ENCRYPTION_KEY}
       DISABLE_MQTT: "true"
-      DATABASE_HOST: postgres-postgresql.dbms
+      DATABASE_HOST: postgres-rw.dbms
       DATABASE_NAME: teslamate
-      DATABASE_USER: teslamate
+      DATABASE_USER:
+        valueFrom:
+          secretKeyRef:
+            name: teslamate
+            key: POSTGRES_USER
       DATABASE_PASS:
         valueFrom:
           secretKeyRef:
-            name: teslamate-secrets
-            key: postgres-password
+            name: teslamate
+            key: POSTGRES_PASS
     envFrom:
       - secretRef:
-          name: teslamate-secrets
+          name: teslamate
     postgresql:
       enabled: false
 
