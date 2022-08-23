@@ -72,8 +72,8 @@ spec:
       backups:
         enabled: true
         type: nfs
-        server: "${SECRET_ATLAS_NFS_SERVER}"
-        path: "${SECRET_ATLAS_NFS_ROOTDIR}/kopia"
+        server: "${SECRET_NFS_SERVER}"
+        path: "${SECRET_NFS_ROOTDIR}/kopia"
         mountPath: /backups
     podAnnotations:
       configmap.reloader.stakater.com/reload: *app
