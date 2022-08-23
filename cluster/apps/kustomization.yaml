@@ -12,5 +12,6 @@ resources:
   - home
   - media
   - monitoring
+  - outline
   - security
   # - whoami
