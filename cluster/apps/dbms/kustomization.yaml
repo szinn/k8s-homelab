@@ -5,6 +5,7 @@ resources:
   - namespace.yaml
   - cloudnative-pg
   - minio
+  - minio-hades
   - mysql
   - phpmyadmin
   - pgadmin
