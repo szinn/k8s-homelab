@@ -2,18 +2,17 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: home-assistant
+  name: &app home-assistant
   namespace: home
 spec:
-  releaseName: home-assistant
   interval: 15m
   chart:
     spec:
-      chart: home-assistant
-      version: 13.4.2
+      chart: app-template
+      version: 0.1.1
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home-charts
+        name: bjw-s-charts
         namespace: flux-system
       interval: 15m
   dependsOn:
@@ -23,15 +22,17 @@ spec:
     image:
       repository: ghcr.io/onedr0p/home-assistant
       tag: 2022.8.6
-    persistence:
-      config:
-        enabled: true
-        existingClaim: home-assistant-datastore
     env:
       TZ: "${CONFIG_TIMEZONE}"
     envFrom:
       - secretRef:
           name: home-assistant-secrets
+    service:
+      main:
+        type: ClusterIP
+        ports:
+          http:
+            port: 8123
     ingress:
       main:
         enabled: true
@@ -46,12 +47,6 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
-    securityContext:
-      privileged: true
-    metrics:
-      enabled: false
-    hostNetwork: true
-    dnsPolicy: ClusterFirstWithHostNet
     probes:
       liveness:
         enabled: false
@@ -59,10 +54,17 @@ spec:
         enabled: false
       startup:
         enabled: false
-    mariadb:
-      enabled: false
-    postgresql:
-      enabled: false
+    podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      fsGroupChangePolicy: "OnRootMismatch"
+      supplementalGroups:
+        - 100
+    persistence:
+      config:
+        enabled: true
+        existingClaim: home-assistant-datastore
     podAnnotations:
       secret.reloader.stakater.com/reload: home-assistant-secrets
     initContainers:
