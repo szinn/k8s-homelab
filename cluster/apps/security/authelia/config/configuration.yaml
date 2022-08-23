@@ -48,3 +48,20 @@ session:
           port: 26379
         - host: redis-node-2.redis-headless.dbms.svc.cluster.local
           port: 26379
+
+
+identity_providers:
+  oidc:
+    cors:
+      endpoints: ["authorization", "token", "revocation", "introspection"]
+      allowed_origins_from_client_redirect_uris: true
+    clients:
+      - id: outline
+        description: Outline
+        secret: "${SECRET_OUTLINE_OAUTH_CLIENT_SECRET}"
+        public: false
+        authorization_policy: one_factor
+        pre_configured_consent_duration: 1y
+        scopes: ["openid", "profile", "email"]
+        redirect_uris: ["https://docs.${SECRET_DOMAIN_NAME}/auth/oidc.callback"]
+        userinfo_signing_algorithm: none

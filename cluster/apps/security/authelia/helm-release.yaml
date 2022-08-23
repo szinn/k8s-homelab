@@ -21,8 +21,6 @@ spec:
     remediation:
       retries: 5
   dependsOn:
-    - name: mysql
-      namespace: dbms
     - name: redis
       namespace: dbms
   values:
@@ -32,6 +30,12 @@ spec:
     image:
       repository: ghcr.io/authelia/authelia
       tag: 4.36.4
+    env:
+      AUTHELIA_IDENTITY_PROVIDERS_OIDC_ISSUER_PRIVATE_KEY:
+        valueFrom:
+          secretKeyRef:
+            name: authelia-users
+            key: issuer-private-key
     envFrom:
       - secretRef:
           name: *app
