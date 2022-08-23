@@ -15,8 +15,8 @@ spec:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   nfs:
-    server: ${SECRET_ATLAS_NFS_SERVER}
-    path: "${SECRET_ATLAS_NFS_ROOTDIR}/dashboard/dashy"
+    server: ${SECRET_NFS_SERVER}
+    path: "${SECRET_NFS_ROOTDIR}/dashboard/dashy"
   mountOptions:
     - nfsvers=4
     - tcp
