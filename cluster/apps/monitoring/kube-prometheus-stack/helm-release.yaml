@@ -169,7 +169,7 @@ spec:
       thanosServiceMonitor:
         enabled: true
       prometheusSpec:
-        replicas: 3
+        replicas: 1
         podAntiAffinity: hard
         retentionSize: "6GB"
         replicaExternalLabelName: "replica"
