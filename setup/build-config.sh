@@ -20,17 +20,6 @@ build_config() {
     . $SETUP_CONFIG_ROOT/env.$TARGET
   fi
 
-  if test -d $REPO_ROOT/cluster/config/$TARGET; then
-    for i in cluster-config.cfg cluster-secrets.sops.cfg; do
-      if ! test -f $REPO_ROOT/cluster/config/$TARGET/$i; then
-        touch $REPO_ROOT/cluster/config/$TARGET/$i
-      fi
-      if ! test -z "$(diff $i $REPO_ROOT/cluster/config/$TARGET/$i)"; then
-        cp $i $REPO_ROOT/cluster/config/$TARGET
-      fi
-    done
-  fi
-
   for i in $*; do
     echo "Processing directory $i"
     find $REPO_ROOT/$i -type f -name "*.cfg" -exec $(dirname $0)/update-config.sh {} \;
@@ -38,8 +27,4 @@ build_config() {
   done
 }
 
-for i in $SETUP_CLUSTERS; do
-  build_config yaml $i cluster/config/$i
-done
-
-build_config yaml main cluster/core cluster/apps cluster/main
+build_config yaml main cluster/core cluster/config cluster/apps cluster/main
