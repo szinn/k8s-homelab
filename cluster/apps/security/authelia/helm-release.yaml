@@ -34,7 +34,7 @@ spec:
       AUTHELIA_IDENTITY_PROVIDERS_OIDC_ISSUER_PRIVATE_KEY:
         valueFrom:
           secretKeyRef:
-            name: authelia-users
+            name: authelia-files
             key: issuer-private-key
     envFrom:
       - secretRef:
@@ -78,7 +78,7 @@ spec:
       users:
         enabled: true
         type: secret
-        name: authelia-users
+        name: authelia-files
         subPath: users.yaml
         mountPath: /config/users.yaml
         readOnly: false

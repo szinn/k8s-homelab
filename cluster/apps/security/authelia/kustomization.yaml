@@ -5,7 +5,7 @@ namespace: security
 resources:
   - authelia-auth.yaml
   - authelia-secrets.sops.yaml
-  - authelia-users.sops.yaml
+  - authelia-files.sops.yaml
   - helm-release.yaml
 patchesStrategicMerge:
   - patches/env.yaml
