@@ -8,3 +8,5 @@ resources:
   - helm-release.yaml
   - podmonitor.yaml
   - rules.yaml
+patchesStrategicMerge:
+  - patches/postgres.yaml
