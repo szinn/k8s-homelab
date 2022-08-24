@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - cloudflare-only.yaml
   - error-handling.yaml
+  - external.yaml
   - external-auth.yaml
   - https-redirect.yaml
   - internal-auth.yaml
