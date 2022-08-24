@@ -46,6 +46,11 @@ spec:
       main:
         enabled: true
         ingressClassName: "traefik"
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-external-auth@kubernetescrd"
+          # external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_NAME}"
+          # external-dns/is-public: "true"
         hosts:
           - host: "docs.${SECRET_DOMAIN_NAME}"
             paths:
