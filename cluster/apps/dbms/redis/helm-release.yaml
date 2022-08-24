@@ -28,7 +28,6 @@ spec:
     auth:
       enabled: false
       sentinel: false
-      # existingSecret: *app
     sentinel:
       enabled: true
       masterSet: redis-master

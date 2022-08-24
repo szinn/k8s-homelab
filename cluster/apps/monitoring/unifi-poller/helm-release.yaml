@@ -2,17 +2,17 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: unifi-poller
+  name: &app unifi-poller
   namespace: monitoring
 spec:
   interval: 15m
   chart:
     spec:
-      chart: unifi-poller
-      version: 11.1.2
+      chart: app-template
+      version: 0.1.1
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home-charts
+        name: bjw-s-charts
         namespace: flux-system
       interval: 15m
   install:
@@ -24,23 +24,21 @@ spec:
     env:
       TZ: "${CONFIG_TIMEZONE}"
       UP_UNIFI_DEFAULT_ROLE: "homelab-controller"
-      UP_UNIFI_DEFAULT_URL: "https://styx.${SECRET_DOMAIN_NAME}"
       UP_UNIFI_DEFAULT_VERIFY_SSL: false
-      UP_UNIFI_DEFAULT_USER:
-        valueFrom:
-          secretKeyRef:
-            name: unifi-poller-secrets
-            key: user
-      UP_UNIFI_DEFAULT_PASS:
-        valueFrom:
-          secretKeyRef:
-            name: unifi-poller-secrets
-            key: password
       UP_UNIFI_DEFAULT_SAVE_SITES: true
       UP_UNIFI_DEFAULT_SAVE_DPI: false
       UP_INFLUXDB_DISABLE: true
       UP_PROMETHEUS_DISABLE: false
       UP_PROMETHEUS_NAMESPACE: "unifipoller"
+    envFrom:
+      - secretRef:
+          name: *app
+    service:
+      main:
+        type: ClusterIP
+        ports:
+          http:
+            port: 9130
     metrics:
       enabled: true
       serviceMonitor:

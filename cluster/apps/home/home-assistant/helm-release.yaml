@@ -22,11 +22,9 @@ spec:
     image:
       repository: ghcr.io/onedr0p/home-assistant
       tag: 2022.8.6
-    env:
-      TZ: "${CONFIG_TIMEZONE}"
     envFrom:
       - secretRef:
-          name: home-assistant-secrets
+          name: *app
     service:
       main:
         type: ClusterIP
@@ -66,7 +64,7 @@ spec:
         enabled: true
         existingClaim: home-assistant-datastore
     podAnnotations:
-      secret.reloader.stakater.com/reload: home-assistant-secrets
+      secret.reloader.stakater.com/reload: *app
     initContainers:
       wait-for-mysql:
         image: busybox:latest
@@ -85,7 +83,7 @@ spec:
           tag: 4.6.0
         workingDir: "/config"
         git:
-          deployKeySecret: home-assistant-code-server-secret
+          deployKeySecret: home-assistant-code-server
         args:
           - --auth
           - "none"
