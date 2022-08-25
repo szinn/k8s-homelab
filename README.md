@@ -155,14 +155,13 @@ This file is used as an optimization so that the YAML files will only be regener
 
 ### Setup Configuration
 
-The file [setup/cluster-config.cfg](./setup/cluster-config.cfg) defines a ConfigMap resource that will be filled in with values from the `env.XXX` configuration files and will be placed in the `/cluster/config/<cluster_type>` directory.
+The file [cluster-config.cfg](./cluster/config/cluster-config.cfg) defines a ConfigMap resource that will be filled in with values from the `env.XXX` configuration files.
 Flux will load this file to the cluster at the beginning of the resolve phase so that the ConfigMap values are available through the Kustomization post-build step.
 Since the configuration values are stored in a ConfigMap resource, the resulting YAML file will make them visible in the repo. If you do not wish to have them visible, use the `cluster-secrets.sops.cfg` file described below.
 
 ### Cluster Secrets
 
-The file [setup/cluster-secrets.sops.cfg](./setup/cluster-secrets.sops.cfg) defines a Secret resource that will be filled in with values from the `env.XXX` configuration files and then encrypted with Mozilla/sops.
-The resulting Secret resource will be placed in the `/cluster/config/<cluster_type>` directory and will also be loaded prior to the resolve phase so that the secrets will be available through the Kustomization post-build step.
+The file [cluster-secrets.sops.cfg](./cluster/config/cluster-secrets.sops.cfg) defines a Secret resource that will be filled in with values from the `env.XXX` configuration files and then encrypted with Mozilla/sops.
 
 ### Application Secrets
 
