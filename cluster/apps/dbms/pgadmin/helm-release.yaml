@@ -21,7 +21,7 @@ spec:
     image:
       registry: docker.io
       repository: dpage/pgadmin4
-      tag: "6.12"
+      tag: "6.13"
     strategy:
       type: Recreate
     existingSecret: pgadmin-secrets
