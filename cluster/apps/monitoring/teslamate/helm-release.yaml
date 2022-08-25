@@ -54,7 +54,7 @@ spec:
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
         hosts:
-          - host: "teslamate.${SECRET_DOMAIN_NAME}"
+          - host: "{{ .Release.Name }}.${SECRET_DOMAIN_NAME}"
             paths:
               - path: /
                 pathType: Prefix
