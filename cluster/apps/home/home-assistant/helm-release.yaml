@@ -16,7 +16,7 @@ spec:
         namespace: flux-system
       interval: 15m
   dependsOn:
-    - name: mysql
+    - name: postgres
       namespace: dbms
   values:
     image:
@@ -65,16 +65,6 @@ spec:
         existingClaim: home-assistant-datastore
     podAnnotations:
       secret.reloader.stakater.com/reload: *app
-    initContainers:
-      wait-for-mysql:
-        image: busybox:latest
-        imagePullPolicy: IfNotPresent
-        command:
-          [
-            "sh",
-            "-c",
-            'until nc -vz mysql.dbms 3306; do echo "Waiting for mysql..."; sleep 2; done;',
-          ]
     addons:
       codeserver:
         enabled: true

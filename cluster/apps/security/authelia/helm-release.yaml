@@ -23,6 +23,8 @@ spec:
   dependsOn:
     - name: redis
       namespace: dbms
+    - name: postgres
+      namespace: dbms
   values:
     controller:
       replicas: 1
