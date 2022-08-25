@@ -19,7 +19,7 @@ spec:
           restartPolicy: OnFailure
           initContainers:
             - name: render-configs
-              image: ghcr.io/onedr0p/recyclarr:2.3.1
+              image: ghcr.io/onedr0p/recyclarr:2.4.0
               imagePullPolicy: Always
               envFrom:
                 - secretRef:
@@ -36,7 +36,7 @@ spec:
                   mountPath: /shared
           containers:
             - name: sonarrs
-              image: ghcr.io/onedr0p/recyclarr:2.3.1
+              image: ghcr.io/onedr0p/recyclarr:2.4.0
               imagePullPolicy: Always
               env:
                 - name: TZ
@@ -55,7 +55,7 @@ spec:
                   subPath: recyclarr.yaml
                   readOnly: true
             - name: radarrs
-              image: ghcr.io/onedr0p/recyclarr:2.3.1
+              image: ghcr.io/onedr0p/recyclarr:2.4.0
               imagePullPolicy: Always
               env:
                 - name: TZ
