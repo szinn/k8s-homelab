@@ -10,7 +10,7 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: traefik
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
-    traefik.ingress.kubernetes.io/router.middlewares: "envoy-system-add-pihole-admin-internal@kubernetescrd"
+    traefik.ingress.kubernetes.io/router.middlewares: "networking-add-pihole-admin-internal@kubernetescrd"
 spec:
   rules:
     - host: pihole-ui.${SECRET_DOMAIN_NAME}
@@ -44,4 +44,4 @@ spec:
   chain:
     middlewares:
       - name: traefik-system-internal@kubernetescrd
-      - name: envoy-system-add-pihole-admin@kubernetescrd
+      - name: networking-add-pihole-admin@kubernetescrd
