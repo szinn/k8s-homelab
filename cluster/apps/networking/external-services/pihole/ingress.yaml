@@ -3,7 +3,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: &app pihole-ui
-  namespace: envoy-system
+  namespace: networking
   labels:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
@@ -13,7 +13,7 @@ metadata:
     traefik.ingress.kubernetes.io/router.middlewares: "envoy-system-add-pihole-admin-internal@kubernetescrd"
 spec:
   rules:
-    - host: &host pihole-ui.${SECRET_DOMAIN_NAME}
+    - host: pihole-ui.${SECRET_DOMAIN_NAME}
       http:
         paths:
           - path: /
@@ -29,7 +29,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: add-pihole-admin
-  namespace: envoy-system
+  namespace: networking
 spec:
   addPrefix:
     prefix: "/admin"
@@ -39,7 +39,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: add-pihole-admin-internal
-  namespace: envoy-system
+  namespace: networking
 spec:
   chain:
     middlewares:

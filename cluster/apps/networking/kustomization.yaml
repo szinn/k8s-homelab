@@ -4,7 +4,4 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - external-dns
-  - hades
-  - octoprint
-  - pihole
-  - pluto
+  - external-services

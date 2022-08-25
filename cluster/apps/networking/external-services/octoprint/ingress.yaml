@@ -2,8 +2,8 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: &app hades-ui
-  namespace: envoy-system
+  name: &app octo-ui
+  namespace: networking
   labels:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
@@ -13,13 +13,13 @@ metadata:
     traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
 spec:
   rules:
-    - host: &host hades-ui.${SECRET_DOMAIN_NAME}
+    - host: octo-ui.${SECRET_DOMAIN_NAME}
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: hades
+                name: octo
                 port:
-                  number: 5000
+                  number: 80

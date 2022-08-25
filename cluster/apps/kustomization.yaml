@@ -5,13 +5,13 @@ resources:
   - dashboard
   - dbms
   - dev
-  - envoy-system
   - flux-system
   - kopia
   - kube-system
   - home
   - media
   - monitoring
+  - networking
   - outline
   - security
   # - whoami
