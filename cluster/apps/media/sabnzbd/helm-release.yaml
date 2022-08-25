@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: sabnzbd
+  name: &app sabnzbd
   namespace: media
 spec:
   interval: 15m
@@ -30,7 +30,7 @@ spec:
         sabnzbd.${SECRET_DOMAIN_NAME}
     envFrom:
       - secretRef:
-          name: sabnzbd-secrets
+          name: *app
     service:
       main:
         ports:
@@ -60,6 +60,8 @@ spec:
         enabled: true
         type: emptyDir
         mountPath: /incomplete
+    podAnnotations:
+      secret.reloader.stakater.com/reload: *app
     podSecurityContext:
       runAsUser: 568
       runAsGroup: 568

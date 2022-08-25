@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: radarr
+  name: &app radarr
   namespace: media
 spec:
   interval: 15m
@@ -23,7 +23,7 @@ spec:
       TZ: ${CONFIG_TIMEZONE}
     envFrom:
       - secretRef:
-          name: radarr-secrets
+          name: *app
     service:
       main:
         ports:
@@ -82,6 +82,8 @@ spec:
         subPath: radarr
         mountPath: /backups
         readOnly: false
+    podAnnotations:
+      secret.reloader.stakater.com/reload: *app
     resources:
       requests:
         cpu: 100m
