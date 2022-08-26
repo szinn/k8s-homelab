@@ -9,7 +9,7 @@ metadata:
     app.kubernetes.io/instance: *app
 spec:
   type: ExternalName
-  externalName: ragnar.${SECRET_DOMAIN_NAME}.
+  externalName: atlas.${SECRET_DOMAIN_NAME}.
   ports:
     - name: *app
       port: 9001

@@ -13,7 +13,7 @@ metadata:
     traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
 spec:
   rules:
-    - host: atlas-minio.${SECRET_DOMAIN_NAME}
+    - host: minio.${SECRET_DOMAIN_NAME}
       http:
         paths:
           - path: /

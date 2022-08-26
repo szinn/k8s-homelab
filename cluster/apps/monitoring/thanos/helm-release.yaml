@@ -25,7 +25,6 @@ spec:
       type: s3
       config:
         bucket: thanos
-        endpoint: minio.dbms:9000
         access_key: thanos
         insecure: true
     query:
@@ -75,3 +74,7 @@ spec:
       name: *app
       valuesKey: secret-key
       targetPath: objstoreConfig.config.secret_key
+    - kind: Secret
+      name: *app
+      valuesKey: s3-endpoint
+      targetPath: objstoreConfig.config.endpoint

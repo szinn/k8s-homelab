@@ -3,10 +3,7 @@
   "Statement": [
       {
           "Action": [
-              "s3:ListBucket",
-              "s3:PutObject",
-              "s3:GetObject",
-              "s3:DeleteObject"
+              "s3:*"
           ],
           "Effect": "Allow",
           "Resource": ["arn:aws:s3:::outline/*", "arn:aws:s3:::outline"],

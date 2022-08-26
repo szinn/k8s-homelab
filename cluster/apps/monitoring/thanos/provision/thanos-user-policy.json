@@ -6,7 +6,7 @@
               "s3:*"
           ],
           "Effect": "Allow",
-          "Resource": ["arn:aws:s3:::postgresql/*", "arn:aws:s3:::postgresql"],
+          "Resource": ["arn:aws:s3:::thanos/*", "arn:aws:s3:::thanos"],
           "Sid": ""
       }
   ]

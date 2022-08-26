@@ -20,8 +20,8 @@ spec:
       wal:
         compression: bzip2
         maxParallel: 8
-      destinationPath: s3://main/postgresql/
-      endpointURL: http://ragnar.${SECRET_DOMAIN_NAME}:9000
+      destinationPath: s3://postgresql/
+      endpointURL: http://atlas.${SECRET_DOMAIN_NAME}:9000
       serverName: postgres-v1
       s3Credentials:
         accessKeyId:
