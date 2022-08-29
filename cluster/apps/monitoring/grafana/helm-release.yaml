@@ -151,11 +151,11 @@ spec:
           gnetId: 7362
           revision: 5
           datasource: Prometheus
-        minio:
-          gnetId: 13502
-          revision: 10
-          datasource: Prometheus
         redis:
+          gnetId: 14091
+          revision: 1
+          datasource: Prometheus
+        redis-sentinel:
           gnetId: 12776
           revision: 2
           datasource: Redis
