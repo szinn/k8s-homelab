@@ -18,3 +18,5 @@ spec:
         envFrom:
           - secretRef:
               name: *app
+          - secretRef:
+              name: postgres-superuser

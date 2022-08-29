@@ -11,7 +11,7 @@ spec:
     size: 50Gi
     storageClass: ceph-block
   superuserSecret:
-    name: postgres-superuser
+    name: postgres
   monitoring:
     enablePodMonitor: true
   backup:
@@ -25,11 +25,11 @@ spec:
       serverName: postgres-v1
       s3Credentials:
         accessKeyId:
-          name: postgres-superuser
+          name: postgres
           key: MINIO_ACCESS_KEY
         secretAccessKey:
-          name: postgres-superuser
+          name: postgres
           key: MINIO_SECRET_KEY
         region:
-          name: postgres-superuser
+          name: postgres
           key: MINIO_REGION

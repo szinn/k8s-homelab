@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - dashboard
   - postgres.sops.yaml
+  - postgres-superuser.sops.yaml
   - helm-release.yaml
   - cluster.yaml
   - service.yaml

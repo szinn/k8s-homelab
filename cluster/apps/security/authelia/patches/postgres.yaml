@@ -17,11 +17,6 @@ spec:
               secretKeyRef:
                 name: authelia
                 key: AUTHELIA_STORAGE_POSTGRES_DATABASE
-          - name: POSTGRES_SUPER_PASS
-            valueFrom:
-              secretKeyRef:
-                name: authelia
-                key: POSTGRES_SUPER_PASS
           - name: POSTGRES_USER
             valueFrom:
               secretKeyRef:
@@ -32,3 +27,6 @@ spec:
               secretKeyRef:
                 name: authelia
                 key: AUTHELIA_STORAGE_POSTGRES_PASSWORD
+        envFrom:
+          - secretRef:
+              name: postgres-superuser
