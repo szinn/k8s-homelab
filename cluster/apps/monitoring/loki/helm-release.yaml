@@ -8,78 +8,139 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: loki
-      version: 2.15.2
+      chart: loki-simple-scalable
+      version: 1.8.10
       sourceRef:
         kind: HelmRepository
         name: grafana-charts
         namespace: flux-system
       interval: 15m
   values:
-    image:
-      repository: ghcr.io/k8s-at-home/loki
-
-    service:
-      type: LoadBalancer
-      externalTrafficPolicy: Cluster
-      annotations:
-        metallb.universe.tf/loadBalancerIPs: ${CONFIG_SVC_LOKI_ADDR}
-
-    config:
-      auth_enabled: false
-      storage_config:
-        aws:
-          region: ca-wat-1
-          s3forcepathstyle: true
-          insecure: true
-        boltdb_shipper:
-          active_index_directory: /data/loki/index
-          cache_location: /data/loki/index_cache
-          resync_interval: 5s
+    loki:
+      structuredConfig:
+        auth_enabled: false
+        server:
+          log_level: info
+          http_listen_port: 3100
+          grpc_listen_port: 9095
+        memberlist:
+          join_members: ["loki-memberlist"]
+        limits_config:
+          retention_period: 30d
+          enforce_metric_name: false
+          reject_old_samples: true
+          reject_old_samples_max_age: 168h
+          max_cache_freshness_per_query: 10m
+          split_queries_by_interval: 15m
+          ingestion_rate_mb: 8
+          ingestion_burst_size_mb: 16
+        schema_config:
+          configs:
+            - from: "2021-08-01"
+              store: boltdb-shipper
+              object_store: s3
+              schema: v11
+              index:
+                prefix: loki_index_
+                period: 24h
+        common:
+          path_prefix: /var/loki
+          replication_factor: 3
+          storage:
+            s3:
+              region: ca-wat-1
+              bucketnames: loki
+              insecure: true
+              s3forcepathstyle: true
+          ring:
+            kvstore:
+              store: memberlist
+        ruler:
+          enable_api: true
+          enable_alertmanager_v2: true
+          alertmanager_url: http://alertmanager-operated:9093
+          storage:
+            type: local
+            local:
+              directory: /rules
+          rule_path: /tmp/scratch
+          ring:
+            kvstore:
+              store: memberlist
+        distributor:
+          ring:
+            kvstore:
+              store: memberlist
+        compactor:
+          working_directory: /var/loki/boltdb-shipper-compactor
           shared_store: s3
-      schema_config:
-        configs:
-          - from: "2022-01-01"
-            store: boltdb-shipper
-            object_store: s3
-            schema: v11
-            index:
-              prefix: index_
-              period: 24h
-      limits_config:
-        retention_period: 720h
-        enforce_metric_name: false
-        reject_old_samples: true
-        reject_old_samples_max_age: 168h
-        ingestion_rate_mb: 16
-        ingestion_burst_size_mb: 24
-      table_manager:
-        retention_deletes_enabled: true
-        retention_period: 720h
-
-      compactor:
-        working_directory: /data/compactor
-        shared_store: s3
-        compaction_interval: 5m
-        retention_enabled: true
-
-    persistence:
-      enabled: false
-
-    podAnnotations:
-      secret.reloader.stakater.com/reload: loki-secrets
-
-    serviceMonitor:
+          compaction_interval: 10m
+          retention_enabled: true
+          retention_delete_delay: 2h
+          retention_delete_worker_count: 150
+        ingester:
+          max_chunk_age: 1h
+          lifecycler:
+            ring:
+              kvstore:
+                store: memberlist
+        analytics:
+          reporting_enabled: false
+    gateway:
       enabled: true
-
-    resources:
-      requests:
-        cpu: 100m
-        memory: 1G
-      limits:
-        memory: 1G
+      replicas: 3
+      service:
+        type: LoadBalancer
+        annotations:
+          metallb.universe.tf/loadBalancerIPs: ${CONFIG_SVC_LOKI_ADDR}
+      ingress:
+        enabled: true
+        ingressClassName: "traefik"
+        hosts:
+          - host: "loki.${SECRET_DOMAIN_NAME}"
+            paths:
+              - path: /
+                pathType: Prefix
+    write:
+      replicas: 3
+      persistence:
+        size: 10Gi
+        storageClass: ceph-block
+    read:
+      replicas: 3
+      extraVolumeMounts:
+        - name: loki-rules
+          mountPath: /rules/fake
+        - name: loki-rules-tmp
+          mountPath: /tmp/scratch
+        - name: loki-tmp
+          mountPath: /tmp/loki-tmp
+      extraVolumes:
+        - name: loki-rules
+          configMap:
+            name: loki-alerting-rules
+        - name: loki-rules-tmp
+          emptyDir: {}
+        - name: loki-tmp
+          emptyDir: {}
+      persistence:
+        size: 10Gi
+        storageClass: ceph-block
+    monitoring:
+      selfMonitoring:
+        enabled: false
+        grafanaAgent:
+          installOperator: false
   valuesFrom:
-    - kind: Secret
+    - targetPath: loki.structuredConfig.common.storage.s3.endpoint
+      kind: Secret
       name: loki-secrets
-      valuesKey: s3-path
-      targetPath: config.storage_config.aws.s3
+      valuesKey: BUCKET_HOST
+    - targetPath: loki.structuredConfig.common.storage.s3.access_key_id
+      kind: Secret
+      name: loki-secrets
+      valuesKey: AWS_ACCESS_KEY_ID
+    - targetPath: loki.structuredConfig.common.storage.s3.secret_access_key
+      kind: Secret
+      name: loki-secrets
+      valuesKey: AWS_SECRET_ACCESS_KEY

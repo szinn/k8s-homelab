@@ -93,11 +93,11 @@ spec:
           type: loki
           inputs:
             - kubernetes_logs
-          endpoint: http://loki.monitoring:3100
+          endpoint: http://loki-gateway:80
           encoding:
             codec: json
           batch:
-            max_bytes: 2049000
+            max_bytes: 524288
           out_of_order_action: rewrite_timestamp
           remove_label_fields: true
           remove_timestamp: true
@@ -114,13 +114,13 @@ spec:
           type: loki
           inputs:
             - kernel_hostname_transform
-          endpoint: http://loki.monitoring:3100
+          endpoint: http://loki-gateway:80
           encoding:
             codec: json
             except_fields:
               - __host
           batch:
-            max_bytes: 1048576
+            max_bytes: 524288
           out_of_order_action: rewrite_timestamp
           labels:
             node: >-
@@ -134,13 +134,13 @@ spec:
           type: loki
           inputs:
             - service_hostname_transform
-          endpoint: http://loki.monitoring:3100
+          endpoint: http://loki-gateway:80
           encoding:
             codec: json
             except_fields:
               - __host
           batch:
-            max_bytes: 400000
+            max_bytes: 524288
           out_of_order_action: rewrite_timestamp
           labels:
             node: >-
