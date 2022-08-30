@@ -85,7 +85,8 @@ spec:
             r4 = replace(r3, "10.0.40.19", "k8s-4")
             r5 = replace(r4, "10.0.40.20", "k8s-5")
             r6 = replace(r5, "10.0.40.21", "k8s-6")
-            .node = r6
+            r7 = replace(r6, "10.*", "talos")
+            .node = r7
 
       # Sinks
       sinks:
