@@ -121,6 +121,14 @@ spec:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/kubernetes
+          - name: "loki"
+            orgId: 1
+            folder: "Loki"
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/loki
     dashboards:
       system:
         1-node-exporter:
@@ -159,6 +167,11 @@ spec:
           gnetId: 12776
           revision: 2
           datasource: Redis
+      loki:
+        loki-metrics:
+          gnetId: 13407
+          revision: 1
+          datasource: Prometheus
       ceph:
         # ceph-cluster:
         #   gnetId: 2842

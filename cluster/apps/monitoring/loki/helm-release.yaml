@@ -15,6 +15,13 @@ spec:
         name: grafana-charts
         namespace: flux-system
       interval: 15m
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
   values:
     loki:
       structuredConfig:
@@ -89,6 +96,12 @@ spec:
     gateway:
       enabled: true
       replicas: 3
+      verboseLogging: false
+      deploymentStrategy:
+        type: RollingUpdate
+        rollingUpdate:
+          maxUnavailable: 2
+          maxSurge: 0
       service:
         type: LoadBalancer
         annotations:
@@ -117,8 +130,7 @@ spec:
           mountPath: /tmp/loki-tmp
       extraVolumes:
         - name: loki-rules
-          configMap:
-            name: loki-alerting-rules
+          emptyDir: {}
         - name: loki-rules-tmp
           emptyDir: {}
         - name: loki-tmp
