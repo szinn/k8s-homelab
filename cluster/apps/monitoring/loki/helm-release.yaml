@@ -139,6 +139,17 @@ spec:
         size: 10Gi
         storageClass: ceph-block
     monitoring:
+      dashboards:
+        enabled: true
+        annotations:
+          kustomize.toolkit.fluxcd.io/substitute: disabled
+          grafana_folder: Loki
+        labels:
+          grafana_dashboard: "true"
+      rules:
+        enabled: true
+      serviceMonitor:
+        enabled: true
       selfMonitoring:
         enabled: false
         grafanaAgent:
