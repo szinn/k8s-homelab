@@ -70,7 +70,7 @@ spec:
         enabled: true
         image:
           repository: codercom/code-server
-          tag: 4.6.0
+          tag: 4.6.1
         workingDir: "/config"
         git:
           deployKeySecret: home-assistant-code-server
