@@ -27,11 +27,6 @@ spec:
     existingSecret: pgadmin-secrets
     env:
       email: ${SECRET_ADMIN_EMAIL}
-      password:
-        valueFrom:
-          secretKeyRef:
-            name: pgadmin-secrets
-            key: password
     ingress:
       enabled: true
       annotations:
