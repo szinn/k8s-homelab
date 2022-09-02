@@ -10,8 +10,21 @@
     },
     "material-icon-theme.folders.associations": {
         ".taskfiles": "utils",
-        "hack": "scripts"
-    },
+        "dashboard": "app",
+        "dbms": "database",
+        "dev": "less",
+        "flux-system": "kubernetes",
+        "kopia": "server",
+        "kube-system": "kubernetes",
+        "media": "video",
+        "monitoring": "event",
+        "networking": "connection",
+        "outline": "docs",
+        "security": "keys",
+        "setup": "import",
+        "hack": "scripts",
+        "config": "environment"
+        },
     "prettier.configPath": ".github/linters/.prettierrc.yaml",
     "prettier.ignorePath": ".github/linters/.prettierignore",
     "yaml.schemas": {
