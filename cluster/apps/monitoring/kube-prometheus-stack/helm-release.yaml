@@ -199,6 +199,13 @@ spec:
           objectStorageConfig:
             name: thanos-objstore-secret
             key: objstore.yml
+        additionalScrapeConfigs:
+          - job_name: minio-job
+            metrics_path: /minio/v2/metrics/cluster
+            scheme: http
+            static_configs:
+              - targets:
+                  - ragnar.${SECRET_DOMAIN_NAME}:9000
     grafana:
       enabled: false
       forceDeployDashboards: true
