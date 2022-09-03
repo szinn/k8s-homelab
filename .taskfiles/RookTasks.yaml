@@ -2,7 +2,6 @@
 version: "3"
 
 tasks:
-
   toolbox:
     desc: Exec into the Rook Ceph toolbox
     interactive: true

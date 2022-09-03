@@ -1,0 +1,9 @@
+---
+version: "3"
+
+tasks:
+  shell:
+    desc: Shell into the rw pod of redis-sentinel
+    interactive: true
+    cmds:
+      - kubectl -n dbms exec -it $(redis-cli -h redis -p 26379 sentinel master redis-master | grep redis-node | sed -e "s/.redis-headless.*//") -- redis-cli
