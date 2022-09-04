@@ -11,10 +11,3 @@ message() {
   echo "# $1"
   echo "######################################################################"
 }
-
-createNamespace() {
-  kubectl wait --for=jsonpath='{.status.phase}'=Active namespace/$1 > /dev/null 2>&1
-  if [ "$?" != 0 ]; then
-    kubectl create namespace $1
-  fi
-}
