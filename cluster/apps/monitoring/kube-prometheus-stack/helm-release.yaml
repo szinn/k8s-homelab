@@ -205,7 +205,7 @@ spec:
             scheme: http
             static_configs:
               - targets:
-                  - ragnar.${SECRET_DOMAIN_NAME}:9000
+                  - atlas.${SECRET_DOMAIN_NAME}:9000
     grafana:
       enabled: false
       forceDeployDashboards: true
