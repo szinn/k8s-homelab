@@ -24,18 +24,18 @@ access_control:
         - 10.0.10.0/24
         - 10.0.40.2/32
   rules:
-    - domain: '*.${SECRET_DOMAIN_NAME}'
+    - domain: "*.${SECRET_DOMAIN_NAME}"
       networks:
         - internal
       policy: bypass
-    - domain: 'home.${SECRET_DOMAIN_NAME}'
+    - domain: "home.${SECRET_DOMAIN_NAME}"
       policy: one_factor
       subject:
-        - 'group:users'
-    - domain: 'wiki.${SECRET_DOMAIN_NAME}'
+        - "group:users"
+    - domain: "wiki.${SECRET_DOMAIN_NAME}"
       policy: one_factor
       subject:
-        - 'group:users'
+        - "group:users"
 
 session:
   redis:
@@ -48,7 +48,6 @@ session:
           port: 26379
         - host: redis-node-2.redis-headless.dbms.svc.cluster.local
           port: 26379
-
 
 identity_providers:
   oidc:

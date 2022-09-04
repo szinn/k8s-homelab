@@ -26,7 +26,6 @@ x-vars: &vars
   TS: '{{now | date "20060102150405"}}'
 
 tasks:
-
   list:
     desc: List all existing snapshots for an app (task snapshot:list APP=plex [KOPIA_NAMESPACE=<namespace>])
     cmds:
