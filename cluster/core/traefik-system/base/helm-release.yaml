@@ -27,7 +27,7 @@ spec:
   values:
     deployment:
       enabled: true
-      replicas: 1
+      replicas: 3
     service:
       enabled: true
       type: LoadBalancer
