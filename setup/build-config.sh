@@ -12,7 +12,7 @@ rebuild_config() {
   SHAFILE=$2
   NEWSHA=$3
   BASE=${1%.cfg}
-  DEST=$BASE.$EXTENSION
+  DEST=$BASE.yaml
 
   echo "Rebuilding configuration for $1"
 

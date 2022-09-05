@@ -5,3 +5,5 @@ resources:
   - namespace.yaml
   - external-dns
   - external-services
+  - shlink-api
+  - shlink-web
