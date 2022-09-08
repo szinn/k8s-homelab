@@ -31,15 +31,15 @@ access_control:
     - domain: "draw.${SECRET_DOMAIN_NAME}"
       policy: one_factor
       subject:
-        - "group:users"
+        - "group:app-draw"
     - domain: "home.${SECRET_DOMAIN_NAME}"
       policy: one_factor
       subject:
-        - "group:users"
+        - "group:app-home"
     - domain: "wiki.${SECRET_DOMAIN_NAME}"
       policy: one_factor
       subject:
-        - "group:users"
+        - "group:app-wiki"
 
 session:
   redis:
