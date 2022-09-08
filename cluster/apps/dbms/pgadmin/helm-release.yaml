@@ -2,52 +2,64 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: pgadmin
+  name: &app pgadmin
   namespace: dbms
 spec:
   interval: 15m
   chart:
     spec:
-      chart: pgadmin4
-      version: 1.12.0
+      chart: app-template
+      version: 0.1.1
       sourceRef:
         kind: HelmRepository
-        name: runix-charts
+        name: bjw-s-charts
         namespace: flux-system
       interval: 15m
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
   dependsOn:
     - name: postgres
   values:
     image:
-      registry: docker.io
       repository: dpage/pgadmin4
       tag: "6.13"
     strategy:
       type: Recreate
-    existingSecret: pgadmin-secrets
-    env:
-      email: ${SECRET_ADMIN_EMAIL}
+    envFrom:
+      - secretRef:
+          name: *app
+    service:
+      main:
+        ports:
+          http:
+            port: 80
     ingress:
-      enabled: true
-      annotations:
-        kubernetes.io/ingress.class: traefik
-        traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-        traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
-      hosts:
-        - host: "pgadmin.${SECRET_DOMAIN_NAME}"
-          paths:
-            - path: /
-              pathType: Prefix
-    persistentVolume:
-      enabled: true
-      storageClass: ceph-block
-      accessModes:
-        - ReadWriteOnce
-      size: 100Mi
+      main:
+        enabled: true
+        ingressClassName: "traefik"
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
+        hosts:
+          - host: "{{ .Release.Name }}.${SECRET_DOMAIN_NAME}"
+            paths:
+              - path: /
+                pathType: Prefix
+    persistence:
+      config:
+        enable: true
+        existingClaim: pgadmin-config
+        mountPath: "/var/lib/pgadmin"
+    podAnnotations:
+      configmap.reloader.stakater.com/reload: *app
     resources:
       requests:
         cpu: 15m
         memory: 164M
       limits:
-        # cpu: 15m
         memory: 236M
