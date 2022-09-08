@@ -5,6 +5,7 @@ resources:
   - dashboard
   - dbms
   - dev
+  - excalidraw
   - flux-system
   - kopia
   - kube-system
