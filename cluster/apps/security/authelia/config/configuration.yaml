@@ -28,6 +28,10 @@ access_control:
       networks:
         - internal
       policy: bypass
+    - domain: "draw.${SECRET_DOMAIN_NAME}"
+      policy: one_factor
+      subject:
+        - "group:users"
     - domain: "home.${SECRET_DOMAIN_NAME}"
       policy: one_factor
       subject:
