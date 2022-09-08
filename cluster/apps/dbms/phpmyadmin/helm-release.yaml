@@ -23,6 +23,9 @@ spec:
       repository: bitnami/phpmyadmin
     env:
       TZ: ${CONFIG_TIMEZONE}
+      DATABASE_ALLOW_NO_PASSWORD: false
+      PHPMYADMIN_ALLOW_ARBITRARY_SERVER: false
+      DATABASE_HOST: mysql
     ingress:
       enabled: true
       hostname: phpmyadmin.${SECRET_DOMAIN_NAME}
