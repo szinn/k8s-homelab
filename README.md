@@ -30,8 +30,8 @@ At the bottom of this page, is the bringup process that I follow for this cluste
 
 | Device                                               | Count | OS Disk Size | Data Disk Size | RAM  | Operating System                       |
 | ---------------------------------------------------- | ----- | ------------ | -------------- | ---- | -------------------------------------- |
-| Ryzen 3900 12c24t server                             | 1     | 1TB          | 4x4TB SATA     | 64GB | [Proxmox](https://www.proxmox.com/en/) |
-| \* Router                                            | 1     | 20GB         |                | 8GB  | Ubuntu 21.10                           |
+| Ryzen 3900 12c24t NAS server                         | 1     | 1TB          | 2x16Tb, 2x12Tb SATA     | 64GB | Ubuntu 22.04 |
+| \* Router                                            | 1     | 20GB         |                | 8GB  | Ubuntu 22.04                           |
 | Raspberry Pi                                         | 1     |              |                |      | PiHole                                 |
 | Raspberry Pi                                         | 1     |              |                |      | OctoPrint                              |
 | TESmart 8-port HDMI Switch                           | 1     |              |                |      |                                        |
