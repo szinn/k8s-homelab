@@ -15,8 +15,8 @@ spec:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   nfs:
-    server: ${SECRET_NFS_SERVER}
-    path: "${SECRET_NFS_ROOTDIR}/home/home-assistant"
+    server: ${SECRET_ATLAS_NFS_SERVER}
+    path: "${SECRET_ATLAS_NFS_ROOTDIR}/home/home-assistant"
   mountOptions:
     - nfsvers=4
     - tcp

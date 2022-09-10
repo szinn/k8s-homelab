@@ -49,6 +49,13 @@ spec:
         enabled: true
         mountPath: /data
         existingClaim: node-red-datastore
+    podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      fsGroupChangePolicy: "OnRootMismatch"
+      supplementalGroups:
+        - 100
     resources:
       requests:
         memory: 350Mi

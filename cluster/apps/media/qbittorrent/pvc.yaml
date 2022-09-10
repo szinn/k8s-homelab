@@ -1,29 +1,5 @@
 ---
 apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: qbittorrent-config
-  namespace: media
-spec:
-  storageClassName: qbittorrent-config
-  capacity:
-    storage: 1Mi
-  accessModes:
-    - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
-  nfs:
-    server: ${SECRET_NFS_SERVER}
-    path: "${SECRET_NFS_ROOTDIR}/media/qbittorrent"
-  mountOptions:
-    - nfsvers=4
-    - tcp
-    - intr
-    - hard
-    - noatime
-    - nodiratime
-    - nolock
----
-apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: qbittorrent-config
@@ -33,9 +9,9 @@ metadata:
     app.kubernetes.io/instance: *name
     snapshot.home.arpa/enabled: "true"
 spec:
-  storageClassName: qbittorrent-config
+  storageClassName: ceph-block
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 1Mi
+      storage: 1Gi
