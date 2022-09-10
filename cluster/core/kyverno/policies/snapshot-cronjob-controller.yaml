@@ -127,8 +127,8 @@ spec:
                           claimName: "{{ claimName }}"
                       - name: snapshots
                         nfs:
-                          server: "${SECRET_NFS_SERVER}"
-                          path: "${SECRET_NFS_ROOTDIR}/kopia"
+                          server: "${SECRET_ATLAS_NFS_SERVER}"
+                          path: "${SECRET_ATLAS_NFS_ROOTDIR}/kopia"
                     affinity:
                       podAffinity:
                         requiredDuringSchedulingIgnoredDuringExecution:
