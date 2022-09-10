@@ -154,6 +154,11 @@ spec:
           gnetId: 14127
           revision: 1
           datasource: Prometheus
+        # Ref: https://grafana.com/grafana/dashboards/7845
+        zfs:
+          gnetId: 7845
+          revision: 4
+          datasource: Prometheus
       data:
         mysql-overview:
           gnetId: 7362
@@ -167,6 +172,11 @@ spec:
           gnetId: 12776
           revision: 2
           datasource: Redis
+        # Ref: https://grafana.com/grafana/dashboards/13502
+        minio:
+          gnetId: 13502
+          revision: 10
+          datasource: Prometheus
       loki:
         loki-metrics:
           gnetId: 13407
