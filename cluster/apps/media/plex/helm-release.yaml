@@ -31,17 +31,22 @@ spec:
       tag: 1.28.2.6151-914ddd2b3@sha256:0b1c10bda8403bb984eb8ae77ec19dd5abdaacc57e2ec42be4316f9dafec6977
     env:
       TZ: "${CONFIG_TIMEZONE}"
+      ADVERTISE_IP: "http://{{ .Release.Name }}.${SECRET_DOMAIN_NAME}:32400/"
+      ALLOWED_NETWORKS: "10.0.0.0/8"
     envFrom:
       - secretRef:
           name: *app
     service:
       main:
         type: LoadBalancer
+        externalTrafficPolicy: Local
+        externalIPs:
+          - ${CONFIG_SVC_PLEX_ADDR}
         annotations:
           metallb.universe.tf/loadBalancerIPs: ${CONFIG_SVC_PLEX_ADDR}
         ports:
           http:
-            port: &port 32400
+            port: 32400
     ingress:
       main:
         enabled: true
