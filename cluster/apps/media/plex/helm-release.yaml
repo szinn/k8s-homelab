@@ -20,11 +20,11 @@ spec:
   upgrade:
     remediation:
       retries: 5
-  # dependsOn:
-  #   - name: intel-gpu-plugin
-  #     namespace: kube-system
-  #   - name: node-feature-discovery
-  #     namespace: kube-system
+  dependsOn:
+    - name: intel-gpu-plugin
+      namespace: kube-system
+    - name: node-feature-discovery
+      namespace: kube-system
   values:
     image:
       repository: ghcr.io/onedr0p/plex
@@ -84,20 +84,20 @@ spec:
       transcode:
         enabled: true
         type: emptyDir
-    # affinity:
-    #   nodeAffinity:
-    #     requiredDuringSchedulingIgnoredDuringExecution:
-    #       nodeSelectorTerms:
-    #         - matchExpressions:
-    #             - key: feature.node.kubernetes.io/custom-intel-gpu
-    #               operator: In
-    #               values:
-    #                 - "true"
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: feature.node.kubernetes.io/custom-intel-gpu
+                  operator: In
+                  values:
+                    - "true"
     resources:
       requests:
-        # gpu.intel.com/i915: 1
+        gpu.intel.com/i915: 1
         cpu: 100m
         memory: 2000Mi
       limits:
-        # gpu.intel.com/i915: 1
+        gpu.intel.com/i915: 1
         memory: 10000Mi
