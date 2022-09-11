@@ -18,6 +18,7 @@ resources:
   - kubernetes-sigs-metrics-server-charts.yaml
   - kyverno-charts.yaml
   - metallb-charts.yaml
+  - node-feature-discovery-charts.yaml
   - prometheus-community-charts.yaml
   - rook-ceph-charts.yaml
   - runix-charts.yaml
