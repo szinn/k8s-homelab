@@ -41,9 +41,9 @@ spec:
       main:
         type: LoadBalancer
         externalTrafficPolicy: Local
+        externalIPs: ["${CONFIG_SVC_PLEX_ADDR}"]
         annotations:
           metallb.universe.tf/loadBalancerIPs: ${CONFIG_SVC_PLEX_ADDR}
-          metallb.universe.tf/allow-shared-ip: plex
         ports:
           http:
             port: 32400
