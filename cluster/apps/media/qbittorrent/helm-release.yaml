@@ -43,6 +43,8 @@ spec:
             protocol: TCP
             targetPort: 6881
         externalTrafficPolicy: Local
+        monitor:
+          enabled: false
     ingress:
       main:
         enabled: true
