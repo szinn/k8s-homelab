@@ -1,0 +1,83 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: home-assistant-code-server
+  namespace: home
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 0.2.0
+      interval: 15m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+  values:
+    image:
+      repository: ghcr.io/coder/code-server
+      tag: 4.7.0
+    podSecurityContext:
+      runAsUser: 0
+      runAsGroup: 0
+    args:
+      - --auth
+      - none
+      - --user-data-dir
+      - "/config/.vscode"
+      - --extensions-dir
+      - "/config/.vscode"
+      - --port
+      - &port "12321"
+      - "/config"
+    service:
+      main:
+        ports:
+          http:
+            port: *port
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "traefik"
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-external-auth@kubernetescrd"
+        hosts:
+          - host: "ha-code.${SECRET_DOMAIN_NAME}"
+            paths:
+              - path: /
+    persistence:
+      config:
+        enabled: true
+        existingClaim: home-assistant-datastore
+      sshkey:
+        enabled: true
+        type: secret
+        name: home-assistant-code-server
+        items:
+          - key: id_rsa
+            path: id_rsa
+        mountPath: /root/.ssh
+        defaultMode: 256
+    affinity:
+      podAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values: ["home-assistant"]
+                - key: app.kubernetes.io/instance
+                  operator: In
+                  values: ["home-assistant"]
+            topologyKey: kubernetes.io/hostname
+    podAnnotations:
+      secret.reloader.stakater.com/reload: home-assistant-code-server
+    resources:
+      requests:
+        cpu: 11m
+        memory: 94M
+      limits:
+        memory: 1007M
