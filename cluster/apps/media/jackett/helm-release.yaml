@@ -18,7 +18,7 @@ spec:
   values:
     image:
       repository: ghcr.io/onedr0p/jackett
-      tag: 0.20.1892
+      tag: 0.20.1901
     env:
       TZ: ${CONFIG_TIMEZONE}
     service:
