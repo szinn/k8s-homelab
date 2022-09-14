@@ -4,7 +4,6 @@ kind: Kustomization
 resources:
   - pvc.yaml
   - home-assistant-secrets.sops.yaml
-  - home-assistant-code-server-secret.sops.yaml
   - helm-release.yaml
   - podmonitor.yaml
   - rules.yaml
