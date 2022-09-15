@@ -1,5 +1,5 @@
 #!/bin/bash
-. ~/.config/k8s-homelab/env.base
+. $HOME/Development/k8s-config/env.base
 
 echo -n '{"db":0,"sentinels":[{"host":"redis-node-0.redis-headless.dbms.svc.cluster.local","port":26379},{"host":"redis-node-1.redis-headless.dbms.svc.cluster.local","port":26379},{"host":"redis-node-2.redis-headless.dbms.svc.cluster.local","port":26379}],"name":"redis-master"}' | base64 -i -
 # Use this base64 encoded string in the Kubernetes secret

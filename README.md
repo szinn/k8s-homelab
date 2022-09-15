@@ -212,7 +212,7 @@ Again, filling these in is typically a one-time operation, but as you add functi
 Pairing with the env.XXX files, you will need to expose your configuration in the `cluster-config.cfg` and `cluster-secrets.sops.cfg` files. You don't need to hard-code any values there, just follow the template.
 
 The file [setup/setup-config.sh](./setup/setup-config.sh) contains minimal information required for the setup scripts.
-`SETUP_ENV_FILES_DIR` defines the location where the env.XXX files reside. I keep mine in `$HOME/.config/k8s-homelab`. `SETUP_CLUSTER_TYPES` defines the types of clusters that are supported.
+`SETUP_ENV_FILES_DIR` defines the location where the env.XXX files reside. I keep mine in an external project called `k8s-config`. `SETUP_CLUSTER_TYPES` defines the types of clusters that are supported.
 
 Once the environment and the cluster config/secret file templates are created, run the `build-config.sh` script file and fix any errors.
 Examine all the updated `.YAML` files to ensure that the appropriate configuration is filled in.

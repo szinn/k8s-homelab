@@ -68,7 +68,7 @@ tasks:
       - flux -n {{.NAMESPACE}} suspend helmrelease {{.APP}}
       - kubectl -n {{.NAMESPACE}} scale deployment {{.APP}} --replicas 0
       - kubectl -n {{.NAMESPACE}} wait pod --for delete --selector="app.kubernetes.io/name={{.APP}}" --timeout=2m
-      - . $HOME/.config/k8s-homelab/env.base && . $HOME/.config/k8s-homelab/env.main && envsubst < <(cat ./hack/restore-job.yaml) | kubectl apply -f -
+      - . $HOME/Development/k8s-config/env.base && . $HOME/Development/k8s-config/env.main && envsubst < <(cat ./hack/restore-job.yaml) | kubectl apply -f -
       - kubectl -n {{.NAMESPACE}} wait job --for condition=complete {{.APP}}-{{.PVC}}-restore-snapshot --timeout=60m
       - flux -n {{.NAMESPACE}} resume helmrelease {{.APP}}
       - kubectl -n {{.NAMESPACE}} logs job/{{.APP}}-{{.PVC}}-restore-snapshot
