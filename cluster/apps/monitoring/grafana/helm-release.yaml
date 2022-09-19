@@ -19,6 +19,8 @@ spec:
     image:
       repository: grafana/grafana
       tag: 9.1.5
+    rbac:
+      pspEnabled: false
     deploymentStrategy:
       type: Recreate
     persistence:
