@@ -1,7 +1,7 @@
 ---
 clusterName: ${CONFIG_CLUSTER_NAME}
 talosVersion: v1.2.2
-kubernetesVersion: v1.25.1
+kubernetesVersion: v1.24.5
 endpoint: https://${CONFIG_CLUSTER_NAME}.${SECRET_BASE_DOMAIN_NAME}:6443
 domain: cluster.local
 clusterPodNets:
