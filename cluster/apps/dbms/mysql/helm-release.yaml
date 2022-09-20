@@ -21,20 +21,19 @@ spec:
       repository: bitnami/mysql
     architecture: standalone
     primary:
+      # args:
+      #   - "--disable-log-bin"
       service:
         type: LoadBalancer
         annotations:
           metallb.universe.tf/loadBalancerIPs: ${CONFIG_SVC_MYSQL_ADDR}
       persistence:
-        args:
-          - "--disable-log-bin"
         existingClaim: mysql-datastore
       resources:
         requests:
           cpu: 10m
           memory: 717M
         limits:
-          # cpu: 15m
           memory: 1031M
     auth:
       existingSecret: mysql-secrets
@@ -53,5 +52,4 @@ spec:
           cpu: 10m
           memory: 32M
         limits:
-          # cpu: 15m
           memory: 34M
