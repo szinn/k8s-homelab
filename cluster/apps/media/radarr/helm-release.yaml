@@ -84,3 +84,16 @@ spec:
         readOnly: false
     podAnnotations:
       secret.reloader.stakater.com/reload: *app
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - sabnzbd
+                      - radarr-4k
+              topologyKey: kubernetes.io/hostname
