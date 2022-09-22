@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - downloads-pvc.yaml
+  - incomplete-pvc.yaml
   - media-backups-pvc.yaml
   - plex-pvc.yaml
   - jackett
