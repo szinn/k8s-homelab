@@ -7,4 +7,3 @@ resources:
   - metrics-server
   - node-feature-discovery
   - reloader
-  # - secret-reflector
