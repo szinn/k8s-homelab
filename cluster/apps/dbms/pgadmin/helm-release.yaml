@@ -50,11 +50,22 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
+    podSecurityContext:
+      runAsUser: 5050
+      runAsGroup: 5050
+      fsGroup: 5050
+      fsGroupChangePolicy: "OnRootMismatch"
     persistence:
       config:
-        enable: true
+        enabled: true
         existingClaim: pgadmin-config
         mountPath: "/var/lib/pgadmin"
+      server-json:
+        enabled: true
+        type: configMap
+        name: servers-json
+        subPath: servers.json
+        mountPath: /pgadmin4/servers.json
     podAnnotations:
       configmap.reloader.stakater.com/reload: *app
     resources:
