@@ -66,68 +66,53 @@ nodes:
         mtu: 1500
         dhcp: true
 controlPlane:
-  configPatches:
-    - op: add
-      path: /machine/kubelet/extraArgs
-      value:
-        feature-gates: GracefulNodeShutdown=true,MixedProtocolLBService=true
-        rotate-server-certificates: "true"
-    - op: add
-      path: /machine/install/extraKernelArgs
-      value:
-        - talos.logging.kernel=udp://${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}:6001/
-    - op: add
-      path: /cluster/proxy
-      value:
-        disabled: true
-    - op: add
-      path: /cluster/controllerManager/extraArgs
-      value:
-        bind-address: 0.0.0.0
-    - op: add
-      path: /cluster/scheduler/extraArgs
-      value:
-        bind-address: 0.0.0.0
-    - op: remove
-      path: /cluster/apiServer/admissionControl
-  inlinePatch:
-    machine:
-      logging:
-        destinations:
-          - endpoint: udp://${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}:6002/
-            format: json_lines
-      network:
-        extraHostEntries:
-          - aliases:
-              - ${CONFIG_CLUSTER_NAME}.${SECRET_BASE_DOMAIN_NAME}
-            ip: ${CONFIG_VIP_IP}
-      time:
-        disabled: false
-        servers:
-          - ca.pool.ntp.org
+  patches:
+    - "@patch-common.yaml"
+    - |-
+      - op: add
+        path: /cluster/proxy
+        value:
+          disabled: true
+      - op: add
+        path: /cluster/controllerManager/extraArgs
+        value:
+          bind-address: 0.0.0.0
+      - op: add
+        path: /cluster/scheduler/extraArgs
+        value:
+          bind-address: 0.0.0.0
+      - op: remove
+        path: /cluster/apiServer/admissionControl
+    - |-
+      machine:
+        logging:
+          destinations:
+            - endpoint: udp://${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}:6002/
+              format: json_lines
+        network:
+          extraHostEntries:
+            - ip: ${CONFIG_VIP_IP}
+              aliases:
+                - ${CONFIG_CLUSTER_NAME}.${SECRET_BASE_DOMAIN_NAME}
+        time:
+          disabled: false
+          servers:
+            - ca.pool.ntp.org
 worker:
-  configPatches:
-    - op: add
-      path: /machine/kubelet/extraArgs
-      value:
-        feature-gates: GracefulNodeShutdown=true,MixedProtocolLBService=true
-        rotate-server-certificates: "true"
-    - op: add
-      path: /machine/install/extraKernelArgs
-      value:
-        - talos.logging.kernel=udp://${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}:6001/
-  inlinePatch:
-    machine:
-      logging:
-        destinations:
-          - endpoint: udp://${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}:6002/
-            format: json_lines
-      network:
-        extraHostEntries:
-          - aliases:
-              - ${CONFIG_CLUSTER_NAME}.${SECRET_BASE_DOMAIN_NAME}
-            ip: ${CONFIG_VIP_IP}
-      time:
-        disabled: false
-        servers:
-          - ca.pool.ntp.org
+  patches:
+    - "@patch-common.yaml"
+    - |-
+      machine:
+        logging:
+          destinations:
+            - endpoint: udp://${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}:6002/
+              format: json_lines
+        network:
+          extraHostEntries:
+            - ip: ${CONFIG_VIP_IP}
+              aliases:
+                - ${CONFIG_CLUSTER_NAME}.${SECRET_BASE_DOMAIN_NAME}
+        time:
+          disabled: false
+          servers:
+            - ca.pool.ntp.org
