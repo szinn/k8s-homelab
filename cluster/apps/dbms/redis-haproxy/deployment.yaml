@@ -32,7 +32,7 @@ spec:
               topologyKey: "kubernetes.io/hostname"
       containers:
         - name: redis-haproxy
-          image: haproxy:2.3
+          image: haproxy:2.6
           ports:
             - containerPort: 8080
             - containerPort: 6379
