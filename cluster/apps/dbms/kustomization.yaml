@@ -6,3 +6,4 @@ resources:
   - cloudnative-pg
   - pgadmin
   - redis
+  - redis-haproxy
