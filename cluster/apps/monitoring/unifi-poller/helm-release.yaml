@@ -19,7 +19,7 @@ spec:
     createNamespace: true
   values:
     image:
-      repository: ghcr.io/k8s-at-home/unpoller
+      repository: docker.io/golift/unifi-poller
       tag: 2.1.3
     env:
       TZ: "${CONFIG_TIMEZONE}"
@@ -35,14 +35,6 @@ spec:
           name: *app
     service:
       main:
-        type: ClusterIP
         ports:
           http:
             port: 9130
-    metrics:
-      enabled: true
-      serviceMonitor:
-        interval: 1m
-        scrapeTimeout: 30s
-      prometheusRule:
-        enabled: true
