@@ -12,7 +12,7 @@ spec:
   chart:
     spec:
       chart: vector
-      version: 0.16.0
+      version: 0.16.2
       sourceRef:
         kind: HelmRepository
         name: vector-charts
@@ -30,6 +30,12 @@ spec:
     tolerations:
       - key: node-role.kubernetes.io/control-plane
         effect: NoSchedule
+
+    env:
+      - name: VECTOR_SELF_NODE_NAME
+        valueFrom:
+          fieldRef:
+            fieldPath: spec.nodeName
 
     customConfig:
       data_dir: /vector-data-dir

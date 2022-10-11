@@ -30,7 +30,7 @@ At the bottom of this page, is the bringup process that I follow for this cluste
 
 | Device                                               | Count | OS Disk Size | Data Disk Size | RAM  | Operating System                       |
 | ---------------------------------------------------- | ----- | ------------ | -------------- | ---- | -------------------------------------- |
-| Ryzen 3900 12c24t NAS server                         | 1     | 1TB          | 2x16Tb, 2x12Tb SATA     | 64GB | Ubuntu 22.04 |
+| Ryzen 3900 12c24t NAS server                         | 1     | 1TB          | 1TB NVME, 4x16Tb, 2x12Tb SATA     | 64GB | Ubuntu 22.04 |
 | \* Router                                            | 1     | 20GB         |                | 8GB  | Ubuntu 22.04                           |
 | Raspberry Pi                                         | 1     |              |                |      | PiHole                                 |
 | Raspberry Pi                                         | 1     |              |                |      | OctoPrint                              |
@@ -75,10 +75,10 @@ The 3 worker nodes and Ryzen server are connected to the 8-port switch with 2.5G
 Multiple wired access points are scattered around the house and backyard.
 
 The Kubernetes cluster and IPs are on the 10.0.40.x subnet with VLAN tagging. Pods and services are on the 10.40.x.x and 10.41.x.x subnets respectively.
-The Kubernetes API is via an external [HAProxy](https://www.haproxy.com).
+The Kubernetes API is accessed via an external [HAProxy](https://www.haproxy.com).
 External machines (PiHole, Synology, etc) are on the main household VLAN subnet. IoT devices are on an isolated 10.0.80.x VLAN. They cannot reach the other VLANs directly but will answer when spoken to.
 
-MetalLB is used to assign visible IP addresses to Kubernetes services(e.g., MySQL). Traefik is used to reverse-proxy other services within the cluster.
+MetalLB is used to assign visible IP addresses to Kubernetes services(e.g., MySQL). Traefik is used to reverse-proxy services within the cluster.
 
 DNS is managed by CoreDNS in the cluster which then forwards unresolved requests to PiHole which is also running an [unbound](https://docs.pi-hole.net/guides/dns/unbound/) recursive DNS server.
 The PiHole has a local DNS configuration to map names to either IPs (assigned by MetalLB) or CNAME records that map to the Traefik IP.
