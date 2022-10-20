@@ -27,7 +27,7 @@ spec:
   values:
     image:
       repository: dpage/pgadmin4
-      tag: "6.14"
+      tag: "6.15"
     strategy:
       type: Recreate
     envFrom:
