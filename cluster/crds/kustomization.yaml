@@ -9,4 +9,3 @@ resources:
   - metallb
   - rook-ceph
   - traefik
-  - external-snapshotter

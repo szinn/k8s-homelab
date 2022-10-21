@@ -134,10 +134,6 @@ spec:
           name: "rook.${SECRET_DOMAIN_NAME}"
           path: "/"
 
-    cephBlockPoolsVolumeSnapshotClass:
-      enabled: true
-      name: csi-rbdplugin-snapclass
-
     cephBlockPools:
       - name: ceph-blockpool
         spec:

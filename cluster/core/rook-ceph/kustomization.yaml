@@ -5,5 +5,4 @@ resources:
   - namespace.yaml
   - operator
   - cluster
-  - snapshot-controller
   - add-ons
