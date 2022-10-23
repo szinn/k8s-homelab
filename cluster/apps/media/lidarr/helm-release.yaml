@@ -75,7 +75,7 @@ spec:
       downloads:
         enabled: true
         existingClaim: downloads
-        mountMath: "/downloads"
+        mountPath: /downloads
       backup:
         enabled: true
         existingClaim: media-backups
