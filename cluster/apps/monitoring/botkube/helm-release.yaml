@@ -114,7 +114,7 @@ spec:
           events:
             - create
             - delete
-            - error
+            # - error
         # - name: v1/secrets
         #   namespaces:
         #     include:
