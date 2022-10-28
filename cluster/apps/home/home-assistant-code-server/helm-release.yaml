@@ -18,7 +18,7 @@ spec:
   values:
     image:
       repository: ghcr.io/coder/code-server
-      tag: 4.8.0
+      tag: 4.8.1
     podSecurityContext:
       runAsUser: 0
       runAsGroup: 0
