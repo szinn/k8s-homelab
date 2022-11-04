@@ -18,7 +18,7 @@ spec:
   values:
     image:
       repository: ghcr.io/onedr0p/sabnzbd
-      tag: 3.6.1
+      tag: 3.7.0
     env:
       TZ: ${CONFIG_TIMEZONE}
       HOST_WHITELIST_ENTRIES: >-
