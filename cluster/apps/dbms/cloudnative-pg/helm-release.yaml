@@ -34,3 +34,6 @@ spec:
               kind: CustomResourceDefinition
               metadata:
                 name: not-used
+  values:
+    crds:
+      create: true
