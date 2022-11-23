@@ -18,7 +18,7 @@ spec:
   values:
     image:
       repository: grafana/grafana
-      tag: 9.2.5
+      tag: 9.2.6
     rbac:
       pspEnabled: false
     deploymentStrategy:
