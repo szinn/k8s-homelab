@@ -21,7 +21,7 @@ spec:
       strategy: RollingUpdate
     image:
       repository: docker.io/intel/intel-gpu-plugin
-      tag: 0.25.0
+      tag: 0.25.1
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
