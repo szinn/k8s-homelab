@@ -71,20 +71,18 @@ radarr:
           - e0c07d59beb37348e975a930d5e50319 # Criterion Collection
           - 957d0f44b592285f26449575e8b1167e # Special Edition
           - eecf3a857724171f968a66cb5719e152 # IMAX
-          - 9f6cbff8cfe4ebbc1bde14c7b7bec0de # IMAX Enhanced
-          - 403f3f6266b90439cacc1e07cae4dc2d # HQ-Remux
-          - 26fa26253af4001701fedb56cec376dc # HQ-Webdl
-          - 66aaa8c2c03c0191a95f0d655b75ab10 # UHD CtrlHD
-          - 4da96773192a51cf96178212642ca3bb # UHD LEGi0N
-          - 96848626e1570c122aba8642fe2714a2 # UHD HQMUX
-          - ffebc267e9c98d3d383f37b238550079 # UHD W4NK3R
-          - ac49fdbf6a662d380556f40ff4856f29 # UHD WEBDV
-          - afeb99e5db09290546f742503ce1cdb6 # UHD DON
-          - e7718d7a3ce595f289bfee26adc178f5 # Repack
+          - 4d74ac4c4db0b64bff6ce0cffef99bf0 # UHD Blueray Tier 01
+          - a58f517a70193f8e578056642178419d # UHD Blueray Tier 02
+          - e71939fae578037e7aed3ee219bbe7c1 # UHD Blueray Tier 03
+          - c20f169ef63c5f40c2def54abaf4438e # WEB Tier 01
+          - 403816d65392c79236dcb6dd591aeda4 # WEB Tier 02
+          - af94e0fe497124d1f9ce732069ec8c3b # WEB Tier 03
+          - e7718d7a3ce595f289bfee26adc178f5 # Repack/Proper
+          - ae43b294509409a6a13919dedd4764c4 # Repack2
           - ed38b889b31be83fda192888e2286d83 # BR-DISK -10000
-          - 90cedc1fea7ea5d11298bebd3d1d3223 # EVO (no WEBDL) -1000
           - 90a6f9a284dff5103f6346090e6280c8 # LQ -10000
           - b8cd450cbfa689c0259a01d9e29ba3d6 # 3D -10000
+          - 9c38ebb7384dada637be8899efa68e6f # SDR -10000
           - 7357cf5161efbf8c4d5d0c30b4815ee2 # Obfuscated
           - ae9b7c9ebde1f3bd336a8cbd1ec4c5e5 # No-RlsGroup removed do avoid multiple downloads
           - dc98083864ea246d05a42df0d05f81cc # x265 (720/1080p)
@@ -152,20 +150,18 @@ radarr:
           - e0c07d59beb37348e975a930d5e50319 # Criterion Collection
           - 957d0f44b592285f26449575e8b1167e # Special Edition
           - eecf3a857724171f968a66cb5719e152 # IMAX
-          - 9f6cbff8cfe4ebbc1bde14c7b7bec0de # IMAX Enhanced
-          - 403f3f6266b90439cacc1e07cae4dc2d # HQ-Remux
-          - 26fa26253af4001701fedb56cec376dc # HQ-Webdl
-          - 66aaa8c2c03c0191a95f0d655b75ab10 # UHD CtrlHD
-          - 4da96773192a51cf96178212642ca3bb # UHD LEGi0N
-          - 96848626e1570c122aba8642fe2714a2 # UHD HQMUX
-          - ffebc267e9c98d3d383f37b238550079 # UHD W4NK3R
-          - ac49fdbf6a662d380556f40ff4856f29 # UHD WEBDV
-          - afeb99e5db09290546f742503ce1cdb6 # UHD DON
-          - e7718d7a3ce595f289bfee26adc178f5 # Repack
+          - 4d74ac4c4db0b64bff6ce0cffef99bf0 # UHD Blueray Tier 01
+          - a58f517a70193f8e578056642178419d # UHD Blueray Tier 02
+          - e71939fae578037e7aed3ee219bbe7c1 # UHD Blueray Tier 03
+          - c20f169ef63c5f40c2def54abaf4438e # WEB Tier 01
+          - 403816d65392c79236dcb6dd591aeda4 # WEB Tier 02
+          - af94e0fe497124d1f9ce732069ec8c3b # WEB Tier 03
+          - e7718d7a3ce595f289bfee26adc178f5 # Repack/Proper
+          - ae43b294509409a6a13919dedd4764c4 # Repack2
           - ed38b889b31be83fda192888e2286d83 # BR-DISK -10000
-          - 90cedc1fea7ea5d11298bebd3d1d3223 # EVO (no WEBDL) -1000
           - 90a6f9a284dff5103f6346090e6280c8 # LQ -10000
           - b8cd450cbfa689c0259a01d9e29ba3d6 # 3D -10000
+          - 9c38ebb7384dada637be8899efa68e6f # SDR -10000
           - 7357cf5161efbf8c4d5d0c30b4815ee2 # Obfuscated
           - ae9b7c9ebde1f3bd336a8cbd1ec4c5e5 # No-RlsGroup removed do avoid multiple downloads
           - dc98083864ea246d05a42df0d05f81cc # x265 (720/1080p)
