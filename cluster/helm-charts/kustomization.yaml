@@ -10,6 +10,7 @@ resources:
   - cloudnative-pg-charts.yaml
   - deliveryhero-charts.yaml
   - descheduler-charts.yaml
+  - dysnix-charts.yaml
   - external-dns-charts.yaml
   - fairwinds-charts.yaml
   - grafana-charts.yaml

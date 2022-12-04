@@ -1,0 +1,76 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: postgres-cluster
+  namespace: &namespace dbms
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: raw
+      version: v0.3.1
+      sourceRef:
+        kind: HelmRepository
+        name: dysnix-charts
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  dependsOn:
+    - name: postgres
+      namespace: dbms
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+  values:
+    resources:
+      - apiVersion: postgresql.cnpg.io/v1
+        kind: Cluster
+        metadata:
+          name: postgres
+          namespace: dbms
+        spec:
+          imageName: ghcr.io/cloudnative-pg/postgresql:15.0
+          instances: 3
+          primaryUpdateStrategy: unsupervised
+          storage:
+            size: 50Gi
+            storageClass: ceph-block
+          superuserSecret:
+            name: postgres
+          monitoring:
+            enablePodMonitor: true
+          backup:
+            retentionPolicy: 30d
+            barmanObjectStore:
+              wal:
+                compression: bzip2
+                maxParallel: 8
+              destinationPath: s3://postgresql/
+              endpointURL: http://atlas.${SECRET_BASE_DOMAIN_NAME}:9000
+              serverName: postgres-${CONFIG_CLUSTER_NAME}
+              s3Credentials:
+                accessKeyId:
+                  name: postgres
+                  key: MINIO_ACCESS_KEY
+                secretAccessKey:
+                  name: postgres
+                  key: MINIO_SECRET_KEY
+                region:
+                  name: postgres
+                  key: MINIO_REGION
+      - apiVersion: postgresql.cnpg.io/v1
+        kind: ScheduledBackup
+        metadata:
+          name: postgres
+          namespace: dbms
+        spec:
+          schedule: "@daily"
+          immediate: true
+          backupOwnerReference: self
+          cluster:
+            name: postgres
