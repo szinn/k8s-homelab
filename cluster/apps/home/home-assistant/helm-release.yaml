@@ -21,7 +21,7 @@ spec:
   values:
     image:
       repository: ghcr.io/onedr0p/home-assistant
-      tag: 2022.12.0
+      tag: 2022.12.1
     envFrom:
       - secretRef:
           name: *app
