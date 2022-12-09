@@ -9,7 +9,7 @@ spec:
   url: https://github.com/traefik/traefik-helm-chart.git
   ref:
     # renovate: registryUrl=https://helm.traefik.io/traefik chart=traefik
-    tag: v20.7.0
+    tag: v20.8.0
   ignore: |
     # exclude all
     /*
