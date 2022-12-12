@@ -12,7 +12,7 @@ sonarr:
   - base_url: http://sonarr:8989
     api_key: ${SONARR_APIKEY}
     quality_definition:
-      typw: series
+      type: series
     release_profiles:
       - trash_ids:
           - EBC725268D687D588A20CBC5F97E538B # Low Quality Groups
