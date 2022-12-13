@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: redis
-      version: 17.3.14
+      version: 17.3.16
       sourceRef:
         kind: HelmRepository
         name: bitnami-charts
@@ -23,7 +23,7 @@ spec:
       retries: 5
   values:
     global:
-      imageRegistry: public.ecr.aws
+      # imageRegistry: public.ecr.aws
       storageClass: ceph-block
     auth:
       enabled: false
