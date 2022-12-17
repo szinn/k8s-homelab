@@ -30,7 +30,7 @@ spec:
         surge: 0
     image:
       repository: ghcr.io/shlinkio/shlink-web-client
-      tag: 3.8.1
+      tag: 3.8.2
     env:
       SHLINK_SERVER_URL: "https://ln.${SECRET_DOMAIN_NAME}"
     envFrom:
