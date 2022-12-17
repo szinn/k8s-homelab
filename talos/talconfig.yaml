@@ -97,7 +97,7 @@ controlPlane:
         time:
           disabled: false
           servers:
-            - ca.pool.ntp.org
+            - pool.ntp.org
 worker:
   patches:
     - "@patch-common.yaml"
@@ -115,4 +115,4 @@ worker:
         time:
           disabled: false
           servers:
-            - ca.pool.ntp.org
+            - pool.ntp.org
