@@ -1,0 +1,16 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: wildcard-certificate
+  namespace: traefik-system
+spec:
+  secretName: wildcard-tls
+  issuerRef:
+    name: ${CONFIG_CERTIFICATE_ISSUER}
+    kind: ClusterIssuer
+  commonName: "${SECRET_DOMAIN_NAME}"
+  dnsNames:
+    - "${SECRET_DOMAIN_NAME}"
+    - "*.${SECRET_DOMAIN_NAME}"
+    - "*.test.${SECRET_DOMAIN_NAME}"

@@ -1,7 +1,9 @@
 #!/bin/bash
 
-. ./common.sh
-. ./setup-config.sh
+APP_DIR="$(dirname $0)"
+
+. ${APP_DIR}/common.sh
+. ${APP_DIR}/setup-config.sh
 
 need sops
 need find
@@ -72,4 +74,4 @@ build_config() {
   done
 }
 
-build_config main cluster/core cluster/config cluster/apps cluster/main
+build_config ${SETUP_CLUSTER} kubernetes

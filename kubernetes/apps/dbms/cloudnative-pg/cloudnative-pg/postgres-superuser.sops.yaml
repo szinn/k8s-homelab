@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: postgres-superuser
+    namespace: dbms
+stringData:
+    username: ENC[AES256_GCM,data:iuvNsrKCRZs=,iv:O6trKP9rzGrVGz28LkkImr3cGjGJE13HlRiNJtCgOXM=,tag:SsZotXrKsJBDY5jFkikscQ==,type:str]
+    password: ENC[AES256_GCM,data:kI7+3Irn/3yQdOUxUijnwg==,iv:pcVGF7pvh1eiuiZhYtaqOxvwiqUJRQD0F11+s3loZEc=,tag:rr9Xxzq6ECN9yDqMgKsObA==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1p28u8xjm5sf7jdavc8xsqtw7lxgscefxs7a5dtqszr2885xeputsh9y64y
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB1SHVaa3o0NVpNMGR1WUdU
+            eXF2T282UFhMeTE3VEV4TEkvNUlwcWNpNEhFCnhKdXEvVlBVOHNOQjAzeXZodDNK
+            cFRSV2VZaDl2REl1OXNMczN0WWtDMGsKLS0tICtRWFpFQ1dDdHVEKytyTWF5UThN
+            Lzhha0dLd2RRczBxSzdoV2wxNm1oaDQKx0obIw7ZKvAJefz2f5wmV4qKxGciYMir
+            wE6SPlJTcRM++JqNHEWtyd6azbT5evB6tfXtm5/dz+nPsYWvI40T2g==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-12-19T13:31:08Z"
+    mac: ENC[AES256_GCM,data:4BnUOWVv7aj32J+zxWQlO6zim00kJlZ1wFlHn91DbiuOhcfaQUGnSDf1rAEmW++q8edNqRvbTfZaoi88VokHoercoCkOm+LqvblSjCwDZZfzMYJ8wTVdxwh9B8icCXtibVB6SRDsYEneRh8VUh9IJc/LGN7yB04QVBUtdLB5K+I=,iv:6+qnKJCBCw/h13C3iFtUmwggxaTkXPIp+O5dZ+Qeoeg=,tag:ByfCumYFKgBFPPdSzhAFyw==,type:str]
+    pgp: []
+    encrypted_regex: ((?i)(displayname|email|pass|secret($|[^N])|key|token|^data$|^stringData))
+    version: 3.7.3

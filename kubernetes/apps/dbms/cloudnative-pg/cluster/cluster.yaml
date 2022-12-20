@@ -1,0 +1,42 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: postgres
+  namespace: dbms
+  annotations:
+    kyverno.io/ignore: "true"
+spec:
+  imageName: ghcr.io/cloudnative-pg/postgresql:15.0
+  instances: 3
+  primaryUpdateStrategy: unsupervised
+  storage:
+    size: 100Gi
+    storageClass: ceph-block
+  superuserSecret:
+    name: postgres-superuser
+  postgresql:
+    parameters:
+      max_connections: "300"
+      shared_buffers: 512MB
+  monitoring:
+    enablePodMonitor: true
+  backup:
+    retentionPolicy: 30d
+    barmanObjectStore:
+      wal:
+        compression: bzip2
+        maxParallel: 8
+      destinationPath: s3://postgresql/
+      endpointURL: http://atlas.${SECRET_BASE_DOMAIN_NAME}:9000
+      serverName: postgres-${CONFIG_CLUSTER_NAME}
+      s3Credentials:
+        accessKeyId:
+          name: postgres-minio
+          key: MINIO_ACCESS_KEY
+        secretAccessKey:
+          name: postgres-minio
+          key: MINIO_SECRET_KEY
+        region:
+          name: postgres-minio
+          key: MINIO_REGION

@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ceph-test-data
+  namespace: rook-ceph
+  labels:
+    app.kubernetes.io/name: &name rook-direct-mount
+    app.kubernetes.io/instance: *name
+spec:
+  storageClassName: ceph-block
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Mi

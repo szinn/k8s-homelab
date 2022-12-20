@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: postgres-minio
+    namespace: dbms
+stringData:
+    MINIO_ACCESS_KEY: ENC[AES256_GCM,data:x8OB3O+mzFB90A==,iv:7W6c9sl5vWbJ3BAO9pnm11bhYYWTHYhnxynXOXudWTc=,tag:HkQCyu8dm/huOfAMb6CjHg==,type:str]
+    MINIO_SECRET_KEY: ENC[AES256_GCM,data:j4HNWeD99NgOntNiRREPAa9tUgW9ttCky6KCynv8mArQLFHwKUr+nyvLPVFQ5C2Ugt1OYti/gPEaJFnKUcMCRw==,iv:4EkQCy6RDaj4b35+BBB6qGmZ0DcTQzn60o3rebtOP44=,tag:ciMKd82v+YjEaFYWk6z8rg==,type:str]
+    MINIO_REGION: ENC[AES256_GCM,data:BAUoniHaFmg=,iv:OiBUjvZKUHiymQ3xaU4SV/oiAWY9hS7v07kLuxANQ+s=,tag:zcJbl/UQtl2nvR3lwwkTeg==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1p28u8xjm5sf7jdavc8xsqtw7lxgscefxs7a5dtqszr2885xeputsh9y64y
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB4SkVpOXFsTW1OdHlCYlpq
+            dlFlN0ZnajZ1QWtBY1hiS1NnbUw0K1Y1b0JrCmFHNXN3V3BlekE1NnhKUk92WTI4
+            OVFpNU1ZUm11cnhzKzJtSWR5WTM1QXcKLS0tIGlQOVIzYWJpSTBVWnhFUkNLR3VQ
+            cjJaMTluNTdJZ2VOMHpIWnJJbnFBeTQKu4hx6z0dRwc+mzD50/Rntz3/CCzul+vI
+            jQcHlvyUQu3xD4Lp3FfVdmaIAvh2bOGEXY12UeVBJGQf5oslIsTacQ==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-12-19T13:31:08Z"
+    mac: ENC[AES256_GCM,data:lzNAuoDHLn6GZiLudl9SeSbllRQsjJ7GvIXD5ndQOAmXWzITI6XbNPzblqn0jhix1O2yqHkL0lfbaeRmKs8IQIJ5Xqgk51Uek65KMoiyQDZQO85r07wejdGEvkQtjxUlR6EvJpTSL+2RjRFQcOFUPuUrK3VNIhO0/7F8Nqa3uP8=,iv:M9uk9DZoft5PeqPDMchK7IUH1tH2IeOdhHhvaYOnDx4=,tag:X7XsPmLrSVtjx5XtZKr75A==,type:str]
+    pgp: []
+    encrypted_regex: ((?i)(displayname|email|pass|secret($|[^N])|key|token|^data$|^stringData))
+    version: 3.7.3

@@ -1,0 +1,87 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: traefik
+  namespace: traefik-system
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: traefik
+      version: 20.8.0
+      sourceRef:
+        kind: HelmRepository
+        name: traefik-charts
+        namespace: flux-system
+      interval: 15m
+  install:
+    createNamespace: false
+  values:
+    deployment:
+      enabled: true
+      replicas: 1
+    service:
+      enabled: true
+      type: LoadBalancer
+      spec:
+        loadBalancerIP: "${CONFIG_SVC_TRAEFIK_ADDR}"
+        externalTrafficPolicy: Local
+    logs:
+      general:
+        format: json
+        level: INFO
+      access:
+        enabled: true
+        format: json
+    ingressClass:
+      enabled: true
+      isDefaultClass: true
+      fallbackApiVersion: v1
+    ingressRoute:
+      dashboard:
+        enabled: false
+    globalArguments:
+      - "--api.insecure=true"
+      - "--serversTransport.insecureSkipVerify=true"
+      - "--providers.kubernetesingress.ingressclass=traefik"
+      - "--providers.kubernetesingress.allowexternalnameservices"
+      - "--metrics.prometheus=true"
+      - "--metrics.prometheus.entryPoint=metrics"
+      - "--entryPoints.websecure.forwardedHeaders.trustedIPs=10.0.0.0/8,192.168.0.0/16,103.21.244.0/22,103.22.200.0/22,103.31.4.0/22,104.16.0.0/13,104.24.0.0/14,108.162.192.0/18,131.0.72.0/22,141.101.64.0/18,162.158.0.0/15,172.64.0.0/13,173.245.48.0/20,188.114.96.0/20,190.93.240.0/20,197.234.240.0/22,198.41.128.0/17,2400:cb00::/32,2606:4700::/32,2803:f800::/32,2405:b500::/32,2405:8100::/32,2a06:98c0::/29,2c0f:f248::/32"
+    additionalArguments:
+      - "--providers.kubernetesingress.ingressendpoint.ip=${CONFIG_SVC_TRAEFIK_ADDR}"
+    ports:
+      traefik:
+        expose: true
+      web:
+        redirectTo: websecure
+      websecure:
+        tls:
+          enabled: true
+          options: "default"
+          domains:
+            - main: "${SECRET_DOMAIN_NAME}"
+              sans:
+                - "*.${SECRET_DOMAIN_NAME}"
+          stores: traefik-system-default@kubernetescrd
+      metrics:
+        port: 8082
+        expose: true
+        exposedPort: 8082
+    pilot:
+      enabled: false
+    experimental:
+      plugins:
+        enabled: true
+    providers:
+      kubernetesCRD:
+        enabled: true
+        allowCrossNamespace: true
+        allowExternalNameServices: true
+    resources:
+      requests:
+        memory: 100Mi
+        cpu: 500m
+      limits:
+        memory: 500Mi

@@ -6,4 +6,4 @@
 export SETUP_CONFIG_ROOT="$HOME/Development/k8s-config"
 
 # The list of clusters that are managed by this setup.
-export SETUP_CLUSTERS="main"
+export SETUP_CLUSTER="main"

@@ -1,0 +1,12 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: external-auth
+  namespace: traefik-system
+spec:
+  chain:
+    middlewares:
+      - name: cloudflare-only
+      - name: security-auth
+        namespace: security
