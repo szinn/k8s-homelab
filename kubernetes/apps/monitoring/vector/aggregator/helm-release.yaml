@@ -1,0 +1,154 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: vector-aggregator
+  namespace: monitoring
+spec:
+  dependsOn:
+    - name: loki
+      namespace: monitoring
+  interval: 15m
+  chart:
+    spec:
+      chart: vector
+      version: 0.18.0
+      sourceRef:
+        kind: HelmRepository
+        name: vector-charts
+        namespace: flux-system
+      interval: 15m
+  values:
+    role: "Stateless-Aggregator"
+    podMonitor:
+      enabled: true
+    service:
+      enabled: true
+      type: LoadBalancer
+    customConfig:
+      data_dir: /vector-data-dir
+      api:
+        enabled: false
+      # Sources
+      sources:
+        kubernetes_logs:
+          address: 0.0.0.0:6000
+          type: vector
+          version: "2"
+        talos_kernel_logs:
+          address: 0.0.0.0:6001
+          type: socket
+          mode: udp
+          max_length: 102400
+          decoding:
+            codec: json
+          host_key: __host
+        talos_service_logs:
+          address: 0.0.0.0:6002
+          type: socket
+          mode: udp
+          max_length: 102400
+          decoding:
+            codec: json
+          host_key: __host
+      # Transformas
+      transforms:
+        kernel_hostname_transform:
+          type: remap
+          inputs:
+            - talos_kernel_logs
+          source: |-
+            r1 = replace!(.__host, "10.0.40.16", "k8s-1")
+            r2 = replace(r1, "10.0.40.17", "k8s-2")
+            r3 = replace(r2, "10.0.40.18", "k8s-3")
+            r4 = replace(r3, "10.0.40.19", "k8s-4")
+            r5 = replace(r4, "10.0.40.20", "k8s-5")
+            r6 = replace(r5, "10.0.40.21", "k8s-6")
+            .node = r6
+        service_hostname_transform:
+          type: remap
+          inputs:
+            - talos_service_logs
+          source: |-
+            r1 = replace!(.__host, "10.0.40.16", "k8s-1")
+            r2 = replace(r1, "10.0.40.17", "k8s-2")
+            r3 = replace(r2, "10.0.40.18", "k8s-3")
+            r4 = replace(r3, "10.0.40.19", "k8s-4")
+            r5 = replace(r4, "10.0.40.20", "k8s-5")
+            r6 = replace(r5, "10.0.40.21", "k8s-6")
+            r7 = replace(r6, r'10.*', "talos")
+            .node = r7
+      # Sinks
+      sinks:
+        loki_kubernetes:
+          type: loki
+          inputs:
+            - kubernetes_logs
+          endpoint: http://loki-gateway:80
+          encoding:
+            codec: json
+          batch:
+            max_bytes: 524288
+          out_of_order_action: rewrite_timestamp
+          remove_label_fields: true
+          remove_timestamp: true
+          labels:
+            container: >-
+              {{`{{ kubernetes.container_name }}`}}
+            namespace: >-
+              {{`{{ kubernetes.pod_namespace }}`}}
+            node: >-
+              {{`{{ kubernetes.pod_node_name }}`}}
+            cluster: "${CONFIG_CLUSTER_NAME}"
+        talos_kernel:
+          type: loki
+          inputs:
+            - kernel_hostname_transform
+          endpoint: http://loki-gateway:80
+          encoding:
+            codec: json
+            except_fields:
+              - __host
+          batch:
+            max_bytes: 524288
+          out_of_order_action: rewrite_timestamp
+          labels:
+            node: >-
+              {{`{{ node }}`}}
+            facility: >-
+              {{`{{ facility }}`}}
+            cluster: "${CONFIG_CLUSTER_NAME}"
+            namespace: "talos:kernel"
+        talos_service:
+          type: loki
+          inputs:
+            - service_hostname_transform
+          endpoint: http://loki-gateway:80
+          encoding:
+            codec: json
+            except_fields:
+              - __host
+          batch:
+            max_bytes: 524288
+          out_of_order_action: rewrite_timestamp
+          labels:
+            node: >-
+              {{`{{ node }}`}}
+            talos_service: >-
+              {{`{{ "talos-service" }}`}}
+            cluster: "${CONFIG_CLUSTER_NAME}"
+            namespace: "talos:service"
+  postRenderers:
+    - kustomize:
+        patchesJson6902:
+          - target:
+              kind: Service
+              name: vector-aggregator
+            patch:
+              - op: add
+                path: /metadata/annotations
+                value:
+                  metallb.universe.tf/loadBalancerIPs: ${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}
+              - op: replace
+                path: /spec/externalTrafficPolicy
+                value: Local
