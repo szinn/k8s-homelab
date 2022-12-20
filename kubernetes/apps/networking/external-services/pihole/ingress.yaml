@@ -1,0 +1,47 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: &app pihole-ui
+  namespace: networking
+  labels:
+    app.kubernetes.io/name: *app
+    app.kubernetes.io/instance: *app
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.middlewares: "networking-add-pihole-admin-internal@kubernetescrd"
+spec:
+  rules:
+    - host: pihole-ui.${SECRET_DOMAIN_NAME}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: pihole
+                port:
+                  number: 80
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: add-pihole-admin
+  namespace: networking
+spec:
+  addPrefix:
+    prefix: "/admin"
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: add-pihole-admin-internal
+  namespace: networking
+spec:
+  chain:
+    middlewares:
+      - name: traefik-system-internal@kubernetescrd
+      - name: networking-add-pihole-admin@kubernetescrd
