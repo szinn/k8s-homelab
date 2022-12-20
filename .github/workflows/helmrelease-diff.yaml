@@ -1,0 +1,115 @@
+---
+name: "HelmRelease Diff"
+
+on:
+  pull_request:
+    branches: ["main"]
+    paths: ["kubernetes/**/helmr-elease.yaml"]
+
+env:
+  BOT_USERNAME: "repo-jeeves[bot]"
+  HELMREPOSITORY_DIR: ./kubernetes/cluster/repositories/helm-charts
+
+jobs:
+  changed-files:
+    name: Detect File Changes
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3.2.0
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@0626c3f94002c0a9d7491dd7fed7055bbdff6f92 # v35.1.0
+        with:
+          json: true
+          files: |
+            kubernetes/**/helm-release.yaml
+
+      - id: set-matrix
+        run: echo "matrix={\"file\":${{ steps.changed-files.outputs.all_changed_files }}}" >> "${GITHUB_OUTPUT}"
+
+  diff:
+    name: Diff on Helm Releases
+    runs-on: ubuntu-latest
+    needs: [changed-files]
+    strategy:
+      matrix: ${{ fromJSON(needs.changed-files.outputs.matrix) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3.2.0
+
+      - name: Checkout default branch
+        uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3.2.0
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          path: default
+
+      - name: Generate Token
+        uses: tibdex/github-app-token@021a2405c7f990db57f5eae5397423dcc554159c # renovate: tag=v1.7.0
+        id: generate-token
+        with:
+          app_id: ${{ secrets.BOT_APP_ID }}
+          private_key: ${{ secrets.BOT_APP_PRIVATE_KEY }}
+
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Setup Tools
+        run: |
+          brew install helm homeport/tap/dyff kustomize yq
+
+      - name: Template out Helm values on pull request
+        id: pull-request
+        run: |
+          releaseName=$(yq eval '.metadata.name' "${{ matrix.file }}")
+          manifests=$(npx zx ./.github/scripts/helmrelease-diff.mjs \
+            --helm-release-name "${releaseName}" \
+            --kustomize-base-dir "$(dirname "${{ matrix.file }}")" \
+            --helm-repository-dir ${{ env.HELMREPOSITORY_DIR }})
+          echo "file=${manifests}" >> "${GITHUB_OUTPUT}"
+
+      - name: Template out Helm values on default branch
+        id: default
+        working-directory: default
+        run: |
+          releaseName=$(yq eval '.metadata.name' "${{ matrix.file }}")
+          manifests=$(npx zx ../.github/scripts/helmrelease-diff.mjs \
+            --helm-release-name "${releaseName}" \
+            --kustomize-base-dir "$(dirname "${{ matrix.file }}")" \
+            --helm-repository-dir ${{ env.HELMREPOSITORY_DIR }})
+          echo "file=${manifests}" >> "${GITHUB_OUTPUT}"
+
+      - name: Diff
+        id: diff
+        run: |
+          diff=$(dyff between --color off --truecolor off --omit-header \
+            ${{ steps.default.outputs.file }} \
+            ${{ steps.pull-request.outputs.file }} | tail -n +2)
+          echo "diff<<EOF" >> "${GITHUB_OUTPUT}"
+          echo "${diff}" >> "${GITHUB_OUTPUT}"
+          echo "EOF" >> "${GITHUB_OUTPUT}"
+
+      - name: Find Comment
+        uses: peter-evans/find-comment@81e2da3af01c92f83cb927cf3ace0e085617c556 # v2.2.0
+        id: find-comment
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: ${{ env.BOT_USERNAME }}
+          body-includes: ${{ matrix.file }}
+
+      - name: Create or update comment
+        uses: peter-evans/create-or-update-comment@5adcb0bb0f9fb3f95ef05400558bdb3f329ee808 # renovate: tag=v2.1.0
+        with:
+          token: ${{ steps.generate-token.outputs.token }}
+          comment-id: ${{ steps.find-comment.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            Helm Release: `${{ matrix.file }}`
+
+            ```
+            ${{ steps.diff.outputs.diff }}
+            ```
+          edit-mode: replace
