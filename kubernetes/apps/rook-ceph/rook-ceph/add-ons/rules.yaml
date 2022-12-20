@@ -6,7 +6,7 @@ metadata:
     prometheus: rook-prometheus
     role: alert-rules
   name: prometheus-ceph-rules
-  namespace: default
+  namespace: rook-ceph
 spec:
   # Import the raw prometheus rules since they have descriptions that should not be processed with the helm templates
   # copied from https://github.com/ceph/ceph/blob/master/monitoring/ceph-mixin/prometheus_alerts.yml
