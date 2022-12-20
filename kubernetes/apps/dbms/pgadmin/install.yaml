@@ -2,12 +2,12 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: dashy
+  name: pgadmin
   namespace: flux-system
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: ./kubernetes/apps/web-tools/dashy/app
+  path: ./kubernetes/apps/dbms/pgadmin/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -15,8 +15,8 @@ spec:
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
-      name: dashy
-      namespace: web-tools
+      name: pgadmin
+      namespace: dbms
   interval: 30m
   retryInterval: 2m
   timeout: 1m

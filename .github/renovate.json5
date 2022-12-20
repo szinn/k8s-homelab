@@ -37,19 +37,19 @@
     "ghcr.io/fluxcd/source-controller"
   ],
   "flux": {
-    "fileMatch": ["cluster/.+\\.ya?ml$"]
+    "fileMatch": ["kubernetes/.+\\.ya?ml$"]
   },
   "helm-values": {
-    "fileMatch": ["cluster/.+\\.ya?ml$"]
+    "fileMatch": ["kubernetes/.+\\.ya?ml$"]
   },
   "kubernetes": {
-    "fileMatch": ["cluster/.+\\.ya?ml$"]
+    "fileMatch": ["kubernetes/.+\\.ya?ml$"]
   },
   "regexManagers": [
     {
       "description": "Process various dependencies",
       "fileMatch": [
-        "cluster/.+\\.ya?ml$",
+        "kubernetes/.+\\.ya?ml$",
         "hack/.+\\.ya?ml$",
         "hack/.+\\.sh$"
       ],
@@ -59,54 +59,9 @@
       "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}",
       "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
     },
-    // regexManager to read and process Traefik CRD's
-    {
-      "description": "Process GitRepository CRD dependencies - Chart and Github Release are the same version",
-      "fileMatch": [
-        "cluster/crds/traefik/.+\\.yaml$"
-      ],
-      "matchStrings": [
-        "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n *tag: v(?<currentValue>.*)\n"
-      ],
-      "datasourceTemplate": "helm"
-    },
-    {
-      "description": "Process CRD dependencies",
-      "fileMatch": [
-        "cluster/crds/cert-manager/.+\\.ya?ml$"
-      ],
-      "matchStrings": [
-        // GitRepository and Flux Kustomization where 'Git tag' matches 'Helm' version
-        "registryUrl=(?<registryUrl>\\S+) chart=(?<depName>\\S+)\n.*?(?<currentValue>[^-\\s]*)\n",
-        // Kustomization where 'GitHub release artifact' matches 'Docker image' version
-        "datasource=(?<datasource>\\S+) image=(?<depName>\\S+)\n.*?-\\s(.*?)\/(?<currentValue>[^/]+)\/[^/]+\n"
-      ],
-      "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}helm{{/if}}"
-    },
-    {
-      "description": "Process GitRepository CRD dependencies - Chart and Github Release are the same version",
-      "fileMatch": [
-        "cluster/crds/external-snapshotter/.+\\.ya?ml$",
-        "cluster/crds/kube-prometheus-stack/.+\\.ya?ml$",
-        "cluster/crds/kyverno/.+\\.ya?ml$",
-        "cluster/crds/rook-ceph/.+\\.ya?ml$"
-      ],
-      "matchStrings": [
-        "registryUrl=(?<registryUrl>\\S+) chart=(?<depName>\\S+)\n.*?(?<currentValue>[^-\\s]*)\n"
-      ],
-      "datasourceTemplate": "helm"
-    },
-    {
-      "description": "Process Kustomization CRD dependencies - Image and Github Release are the same version",
-      "fileMatch": ["cluster/crds/.+\\.ya?ml$"],
-      "matchStrings": [
-        "datasource=(?<datasource>\\S+) image=(?<depName>\\S+)\n.*?-\\s(.*?)\/(?<currentValue>[^/]+)\/[^/]+\n"
-      ],
-      "datasourceTemplate": "docker"
-    },
     {
       "description": "Process raw GitHub URLs",
-      "fileMatch": ["cluster/.+\\.ya?ml$"],
+      "fileMatch": ["kubernetes/.+\\.ya?ml$"],
       "matchStrings": [
         "https:\\/\\/raw.githubusercontent.com\\/(?<depName>[\\w\\d\\-_]+\\/[\\w\\d\\-_]+)\\/(?<currentValue>[\\w\\d\\.\\-_]+)\\/.*"
       ],

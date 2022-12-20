@@ -1,0 +1,22 @@
+---
+apiVersion: /v1
+kind: Service
+metadata:
+  name: redis-haproxy-service
+  namespace: dbms
+  annotations:
+    metallb.universe.tf/loadBalancerIPs: ${CONFIG_SVC_REDIS_ADDR}
+spec:
+  type: LoadBalancer
+  ports:
+    - name: dashboard
+      port: 8080
+      targetPort: 8080
+    - name: redis-write
+      port: 6379
+      targetPort: 6379
+    - name: redis-read
+      port: 6380
+      targetPort: 6380
+  selector:
+    app: redis-haproxy
