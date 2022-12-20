@@ -1,0 +1,19 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: &app home-assistant
+  namespace: home
+spec:
+  podMetricsEndpoints:
+    - interval: 1m
+      path: /api/prometheus
+      port: http
+      scrapeTimeout: 30s
+      bearerTokenSecret:
+        name: *app
+        key: HASS_BEARER_TOKEN
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: *app
+      app.kubernetes.io/name: *app

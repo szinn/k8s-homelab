@@ -1,0 +1,20 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  annotations:
+    prometheus-operator-validated: "true"
+  name: home-assistant
+  namespace: home
+spec:
+  groups:
+    - name: home-assistant
+      rules:
+        - alert: HomeAssistantAbsent
+          expr: absent(up{job=~".*home-assistant.*"} == 1)
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            description: Home Assistant has disappeared from Prometheus service discovery.
+            summary: Home Assistant is down.
