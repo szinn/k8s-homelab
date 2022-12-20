@@ -13,45 +13,8 @@ tasks:
   sync:
     desc: Sync flux-cluster with the Git Repository
     cmds:
-      - flux reconcile source git flux-cluster
-      - flux reconcile kustomization flux-cluster
-    silent: false
-
-  score_only:
-    desc: Sync core kustomization with the Git Repository
-    cmds:
-      - flux reconcile kustomization crds
-      - flux reconcile kustomization config
-      - flux reconcile kustomization charts
-      - flux reconcile kustomization core
-    silent: false
-
-  score:
-    desc: Sync core kustomization with the Git Repository
-    cmds:
-      - task flux:sync
-      - task flux:score_only
-    silent: false
-
-  sapps_only:
-    desc: Sync apps kustomization with the Git Repository and display kustomization list
-    cmds:
-      - flux reconcile kustomization apps
-    silent: false
-
-  sapps:
-    desc: Sync apps kustomization with the Git Repository and display kustomization list
-    cmds:
-      - task flux:sync
-      - task flux:sapps_only
-    silent: false
-
-  sall:
-    desc: Sync apps kustomizations with the Git Repository
-    cmds:
-      - task flux:sync  --verbose
-      - task flux:score_only --verbose
-      - task flux:sapps_only --verbose
+      - flux reconcile source git homelab-kubernetes
+      - flux reconcile kustomization cluster
     silent: false
 
   hr:
