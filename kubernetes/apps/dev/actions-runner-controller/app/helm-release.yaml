@@ -1,0 +1,68 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: actions-runner-controller
+  namespace: dev
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: actions-runner-controller
+      version: 0.21.1
+      sourceRef:
+        kind: HelmRepository
+        name: actions-runner-controller-charts
+        namespace: flux-system
+      interval: 15m
+
+  install:
+    crds: CreateReplace
+  upgrade:
+    crds: CreateReplace
+
+  values:
+    authSecret:
+      create: false
+      name: actions-runner-controller-auth
+
+    image:
+      repository: summerwind/actions-runner-controller
+
+    resources:
+      requests:
+        cpu: 10m
+        memory: 50M
+      limits:
+        cpu: 15m
+        memory: 72M
+
+    githubWebhookServer:
+      enabled: true
+      syncPeriod: 10m
+
+      secret:
+        create: false
+        name: actions-runner-controller-webhook
+
+      ingress:
+        enabled: true
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          external-dns/is-public: "true"
+          external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_NAME}"
+          external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
+        ingressClassName: traefik
+        hosts:
+          - host: "runner.${SECRET_DOMAIN_NAME}"
+            paths:
+              - path: /
+                pathType: Prefix
+
+      resources:
+        requests:
+          cpu: 10m
+          memory: 32M
+        limits:
+          cpu: 15m
+          memory: 34M

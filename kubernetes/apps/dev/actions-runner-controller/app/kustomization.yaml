@@ -1,0 +1,8 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - actions-runner-controller-auth.sops.yaml
+  - actions-runner-controller-webhook.sops.yaml
+  - helm-release.yaml
+  - pvc.yaml
