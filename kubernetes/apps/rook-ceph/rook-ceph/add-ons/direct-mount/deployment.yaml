@@ -55,8 +55,6 @@ spec:
               mountPath: /scripts
             - name: nas-backup
               mountPath: /mnt/nas-backup
-            - name: ceph-data
-              mountPath: /mnt/ceph-data
           resources: {}
       # if hostNetwork: false, the "rbd map" command hangs, see https://github.com/rook/rook/issues/2021
       hostNetwork: true
@@ -78,14 +76,11 @@ spec:
                 path: mon-endpoints
         - name: nas-backup
           nfs:
-            server: "${SECRET_NFS_SERVER}"
-            path: ${SECRET_NFS_ROOTDIR}/backups/kubernetes
+            server: "${SECRET_ATLAS_NFS_SERVER}"
+            path: "${SECRET_ATLAS_NFS_ROOTDIR}"
         - name: direct-mount-scripts
           projected:
             defaultMode: 0775
             sources:
               - configMap:
                   name: direct-mount-scripts
-        - name: ceph-data
-          persistentVolumeClaim:
-            claimName: ceph-test-data

@@ -12,5 +12,5 @@ sleep 1
 for i in $ROOK_WORKERS; do
   echo "Waiting for $i to complete"
   kubectl wait --timeout=900s --for=jsonpath='{.status.phase}=Succeeded' pod disk-wipe-$i -n default
-  # kubectl delete pod disk-wipe-$i
+  kubectl delete pod disk-wipe-$i
 done
