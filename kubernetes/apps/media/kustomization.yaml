@@ -3,8 +3,16 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - namespace.yaml
+  - pvc
+  - jackett/install.yaml
+  - lidarr/install.yaml
+  - openbooks/install.yaml
+  - overseerr/install.yaml
   - plex/install.yaml
-  - downloads-pvc.yaml
-  - incomplete-pvc.yaml
-  - media-backups-pvc.yaml
-  - media-pvc.yaml
+  - prowlarr/install.yaml
+  - qbittorrent/install.yaml
+  - radarr/install.yaml
+  - radarr-4k/install.yaml
+  - recyclarr/install.yaml
+  - sabnzbd/install.yaml
+  - sonarr/install.yaml
