@@ -1,0 +1,56 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+      {
+          "Effect": "Allow",
+          "Principal": {
+              "AWS": [
+                  "*"
+              ]
+          },
+          "Action": [
+              "s3:GetBucketLocation"
+          ],
+          "Resource": [
+              "arn:aws:s3:::outline"
+          ]
+      },
+      {
+          "Effect": "Allow",
+          "Principal": {
+              "AWS": [
+                  "*"
+              ]
+          },
+          "Action": [
+              "s3:ListBucket"
+          ],
+          "Resource": [
+              "arn:aws:s3:::outline"
+          ],
+          "Condition": {
+              "StringEquals": {
+                  "s3:prefix": [
+                      "avatars",
+                      "public"
+                  ]
+              }
+          }
+      },
+      {
+          "Effect": "Allow",
+          "Principal": {
+              "AWS": [
+                  "*"
+              ]
+          },
+          "Action": [
+              "s3:GetObject"
+          ],
+          "Resource": [
+              "arn:aws:s3:::outline/avatars*",
+              "arn:aws:s3:::outline/public*"
+          ]
+      }
+  ]
+}

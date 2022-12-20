@@ -4,8 +4,10 @@ metadata:
     name: postgres-superuser
     namespace: dbms
 stringData:
-    username: ENC[AES256_GCM,data:iuvNsrKCRZs=,iv:O6trKP9rzGrVGz28LkkImr3cGjGJE13HlRiNJtCgOXM=,tag:SsZotXrKsJBDY5jFkikscQ==,type:str]
-    password: ENC[AES256_GCM,data:kI7+3Irn/3yQdOUxUijnwg==,iv:pcVGF7pvh1eiuiZhYtaqOxvwiqUJRQD0F11+s3loZEc=,tag:rr9Xxzq6ECN9yDqMgKsObA==,type:str]
+    POSTGRES_SUPER_USER: ENC[AES256_GCM,data:b8Pc8zyja5c=,iv:jdb1n7nEZuACLUSNwpATsrAmhOR+lYghtptgWuCQRZ4=,tag:dstcKTW0ykQLerdVUN2UJw==,type:str]
+    POSTGRES_SUPER_PASS: ENC[AES256_GCM,data:S3fg0pCPmAWHc8gP1tHwlg==,iv:wvjO+PviAQfTbNEtzmNpswm0KxjMyE8V/9j4iRc8G3k=,tag:IU/ijMWI6A4UWC7YRcH/Wg==,type:str]
+    username: ENC[AES256_GCM,data:6fqaDnZcAhQ=,iv:yvgIOCOuzjut+PDG+2QQzw/ff06TxX0T3K5iWeYr6eY=,tag:jUu/lEZZEtbqLmAPigVcaA==,type:str]
+    password: ENC[AES256_GCM,data:nnj82ONd1/UvnozAoIO6Iw==,iv:P4VZZnWQa6nL3tvOsf4YpnxMqH5RVuTfyFC2L8kPr7k=,tag:q02LgW+JkoTK6aRR+YrfXA==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -15,14 +17,14 @@ sops:
         - recipient: age1p28u8xjm5sf7jdavc8xsqtw7lxgscefxs7a5dtqszr2885xeputsh9y64y
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB1SHVaa3o0NVpNMGR1WUdU
-            eXF2T282UFhMeTE3VEV4TEkvNUlwcWNpNEhFCnhKdXEvVlBVOHNOQjAzeXZodDNK
-            cFRSV2VZaDl2REl1OXNMczN0WWtDMGsKLS0tICtRWFpFQ1dDdHVEKytyTWF5UThN
-            Lzhha0dLd2RRczBxSzdoV2wxNm1oaDQKx0obIw7ZKvAJefz2f5wmV4qKxGciYMir
-            wE6SPlJTcRM++JqNHEWtyd6azbT5evB6tfXtm5/dz+nPsYWvI40T2g==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB3anpydktwckppNEowOHdN
+            YXQzQzZIbXoxekxPY3pOVHlMQW5YemtyM0hFCkJoVEZyTFpqV1U5ckp1aW5WUm8x
+            VW5yclJ6ZFJvMjFRYnRIS29INC9CV0EKLS0tIGM3SHV5ZWZOWDdmazMwcCtiQkRz
+            MEtvSmVabnJUUmZKUTJwbm4xdjR1S1EKg+1KxAZmauAklnUFWlolacUxjLiHkJmb
+            728SSPqnFLUJ65/zczguuZ0D6adIC9j+HV2oBRdOaEcPhTXfEYBv0A==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2022-12-19T13:31:08Z"
-    mac: ENC[AES256_GCM,data:4BnUOWVv7aj32J+zxWQlO6zim00kJlZ1wFlHn91DbiuOhcfaQUGnSDf1rAEmW++q8edNqRvbTfZaoi88VokHoercoCkOm+LqvblSjCwDZZfzMYJ8wTVdxwh9B8icCXtibVB6SRDsYEneRh8VUh9IJc/LGN7yB04QVBUtdLB5K+I=,iv:6+qnKJCBCw/h13C3iFtUmwggxaTkXPIp+O5dZ+Qeoeg=,tag:ByfCumYFKgBFPPdSzhAFyw==,type:str]
+    lastmodified: "2022-12-20T11:47:00Z"
+    mac: ENC[AES256_GCM,data:XFA4bkdb3oN5jctcL3eprtaMc4Kgz0iDGoYHXuylSICcGFbC8KwMBLIurf/V0mSCuCZy0+4QdVsHp1vt/DFrPcBcIONsNFfm0yhtvzhMzp1bWENSF7EoHh2XxDvvrj//IYcZiyoTZetcmRbBWRG3hVbJwsJLKUExN+U2U7U54H8=,iv:A2OfxiZOhnbP+kMyE4376rjoS+cnjzKvd56YlO7tCqw=,tag:i6w2RFy/p/qQYAjjS/Dt/w==,type:str]
     pgp: []
     encrypted_regex: ((?i)(displayname|email|pass|secret($|[^N])|key|token|^data$|^stringData))
     version: 3.7.3

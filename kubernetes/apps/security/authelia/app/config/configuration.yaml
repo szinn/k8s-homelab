@@ -1,0 +1,83 @@
+---
+totp:
+  disable: false
+
+authentication_backend:
+  password_reset:
+    disable: true
+  refresh_interval: 5m
+  file:
+    path: /config/users.yaml
+    password:
+      algorithm: argon2id
+      iterations: 1
+      key_length: 32
+      salt_length: 16
+      memory: 1024
+      parallelism: 8
+
+access_control:
+  default_policy: deny
+  networks:
+    - name: internal
+      networks:
+        - 10.0.10.0/24
+        - 10.0.40.2/32
+  rules:
+    - domain: "*.${SECRET_DOMAIN_NAME}"
+      networks:
+        - internal
+      policy: bypass
+    - domain: "draw.${SECRET_DOMAIN_NAME}"
+      policy: one_factor
+      subject:
+        - "group:app-draw"
+    - domain: "home.${SECRET_DOMAIN_NAME}"
+      policy: one_factor
+      subject:
+        - "group:app-home"
+    - domain: "wiki.${SECRET_DOMAIN_NAME}"
+      policy: one_factor
+      subject:
+        - "group:app-wiki"
+
+telemetry:
+  metrics:
+    enabled: true
+    address: "tcp://0.0.0.0:9959"
+    buffers:
+      read: 4096
+      write: 4096
+    timeouts:
+      read: 6s
+      write: 6s
+      idle: 30s
+
+session:
+  redis:
+    high_availability:
+      sentinel_name: redis-master
+      nodes:
+        - host: redis-node-0.redis-headless.dbms.svc.cluster.local
+          port: 26379
+        - host: redis-node-1.redis-headless.dbms.svc.cluster.local
+          port: 26379
+        - host: redis-node-2.redis-headless.dbms.svc.cluster.local
+          port: 26379
+
+identity_providers:
+  oidc:
+    enable_client_debug_messages: true
+    cors:
+      endpoints: ["authorization", "token", "revocation", "introspection"]
+      allowed_origins_from_client_redirect_uris: true
+    clients:
+      - id: outline
+        description: Outline
+        secret: "${SECRET_OUTLINE_OAUTH_CLIENT_SECRET}"
+        public: false
+        authorization_policy: one_factor
+        pre_configured_consent_duration: 1y
+        scopes: ["openid", "profile", "email", "offline_access"]
+        redirect_uris: ["https://wiki.${SECRET_DOMAIN_NAME}/auth/oidc.callback"]
+        userinfo_signing_algorithm: none

@@ -1,0 +1,24 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: teslamate-datasource
+  namespace: monitoring
+  labels:
+    grafana_datasource: "1"
+data:
+  ha-datasource.yaml: |-
+    apiVersion: 1
+    datasources:
+    - name: TeslaMate
+      type: postgres
+      access: proxy
+      url: postgres-any.dbms.svc.cluster.local:5432
+      database: teslamate
+      user: teslamate
+      secureJsonData:
+        password: "sHWXLnFbjyEaG9XsdvihCw7i"
+        sslmode: disable
+      jsonData:
+        postgresVersion: 1000
+        sslmode: disable
