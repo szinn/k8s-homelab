@@ -1,4 +1,4 @@
-name: Schedule - Renovate
+name: Renovate
 
 on: # yamllint disable-line rule:truthy
   workflow_dispatch:

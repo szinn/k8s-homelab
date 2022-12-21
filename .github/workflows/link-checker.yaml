@@ -1,5 +1,5 @@
 ---
-name: Schedule - Link Checker
+name: Link Checker
 
 on: # yamllint disable-line rule:truthy
   workflow_dispatch:

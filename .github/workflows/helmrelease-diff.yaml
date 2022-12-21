@@ -4,11 +4,11 @@ name: "HelmRelease Diff"
 on:
   pull_request:
     branches: ["main"]
-    paths: ["kubernetes/**/helm-release.yaml"]
+    paths: ["kubernetes/**/helmrelease.yaml"]
 
 env:
   BOT_USERNAME: "repo-jeeves[bot]"
-  HELMREPOSITORY_DIR: ./kubernetes/cluster/repositories/helm-charts
+  KUBERNETES_DIR: kubernetes/
 
 jobs:
   changed-files:
@@ -26,7 +26,7 @@ jobs:
         with:
           json: true
           files: |
-            kubernetes/**/helm-release.yaml
+            kubernetes/**/helmrelease.yaml
 
       - id: set-matrix
         run: echo "matrix={\"file\":${{ steps.changed-files.outputs.all_changed_files }}}" >> "${GITHUB_OUTPUT}"
@@ -61,33 +61,13 @@ jobs:
         run: |
           brew install helm homeport/tap/dyff kustomize yq
 
-      - name: Template out Helm values on pull request
-        id: pull-request
-        run: |
-          releaseName=$(yq eval '.metadata.name' "${{ matrix.file }}")
-          manifests=$(npx zx ./.github/scripts/helmrelease-diff.mjs \
-            --helm-release-name "${releaseName}" \
-            --kustomize-base-dir "$(dirname "${{ matrix.file }}")" \
-            --helm-repository-dir ${{ env.HELMREPOSITORY_DIR }})
-          echo "file=${manifests}" >> "${GITHUB_OUTPUT}"
-
-      - name: Template out Helm values on default branch
-        id: default
-        working-directory: default
-        run: |
-          releaseName=$(yq eval '.metadata.name' "${{ matrix.file }}")
-          manifests=$(npx zx ../.github/scripts/helmrelease-diff.mjs \
-            --helm-release-name "${releaseName}" \
-            --kustomize-base-dir "$(dirname "${{ matrix.file }}")" \
-            --helm-repository-dir ${{ env.HELMREPOSITORY_DIR }})
-          echo "file=${manifests}" >> "${GITHUB_OUTPUT}"
-
       - name: Diff
         id: diff
         run: |
-          diff=$(dyff between --color off --truecolor off --omit-header \
-            ${{ steps.default.outputs.file }} \
-            ${{ steps.pull-request.outputs.file }} | tail -n +2)
+          diff=$(npx zx ./.github/scripts/helmReleaseDiff.mjs \
+            --current-release "default/${{ matrix.file }}" \
+            --incoming-release "${{ matrix.file }}" \
+            --kubernetes-dir ${{ env.KUBERNETES_DIR }})
           echo "diff<<EOF" >> "${GITHUB_OUTPUT}"
           echo "${diff}" >> "${GITHUB_OUTPUT}"
           echo "EOF" >> "${GITHUB_OUTPUT}"
