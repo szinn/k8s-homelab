@@ -60,7 +60,7 @@ on the Beelink MiniPCs and 3 worker nodes running on the Intel NUCs.
 
 ### GitOps
 
-[Flux](https://github.com/fluxcd/flux2) watches my [cluster](./cluster/) folder (see Directories below) and makes the changes to my cluster based on the YAML manifests.
+[Flux](https://github.com/fluxcd/flux2) watches my [cluster](./kubernetes/) folder (see Directories below) and makes the changes to my cluster based on the YAML manifests.
 
 [Renovate](https://github.com/renovatebot/renovate) watches my **entire** repository looking for dependency updates, when they are found a PR is automatically created.
 When PRs are merged [Flux](https://github.com/fluxcd/flux2) applies the changes to my cluster.
@@ -155,13 +155,13 @@ This file is used as an optimization so that the YAML files will only be regener
 
 ### Setup Configuration
 
-The file [cluster-config.cfg](./cluster/config/cluster-config.cfg) defines a ConfigMap resource that will be filled in with values from the `env.XXX` configuration files.
+The file [cluster-settings.cfg](./kubernetes/cluster/vars/cluster-settings.cfg) defines a ConfigMap resource that will be filled in with values from the `env.XXX` configuration files.
 Flux will load this file to the cluster at the beginning of the resolve phase so that the ConfigMap values are available through the Kustomization post-build step.
 Since the configuration values are stored in a ConfigMap resource, the resulting YAML file will make them visible in the repo. If you do not wish to have them visible, use the `cluster-secrets.sops.cfg` file described below.
 
 ### Cluster Secrets
 
-The file [cluster-secrets.sops.cfg](./cluster/config/cluster-secrets.sops.cfg) defines a Secret resource that will be filled in with values from the `env.XXX` configuration files and then encrypted with Mozilla/sops.
+The file [cluster-secrets.sops.cfg](./kubernetes/cluster/vars/cluster-secrets.sops.cfg) defines a Secret resource that will be filled in with values from the `env.XXX` configuration files and then encrypted with Mozilla/sops.
 
 ### Application Secrets
 
@@ -188,6 +188,7 @@ The NFS drives are available across the cluster but are at a slower speed than t
 
 Currently, I use a combination of built-in application backups (e.g., *arr applications will backup weekly), an external shell script that will backup databases (mysql and postgres),
 and a couple of apps that I have backed up their configuration as it doesn't change frequently and it gets automatically restored upon the very first startup.
+I am also using poor man's backup (PMB) that is based on kopia.
 
 ## Installation
 
@@ -225,7 +226,7 @@ At this point you should have your machines up and running with the base k3s ins
 The final step is to run the `bootstrap-cluster.sh` script as
 
 ```shell
-bootstrap-cluster.sh <cluster-name>
+bootstrap-cluster.sh
 ```
 
 This will connect flux to your repo, put the Flux controllers onto your cluster which will then load up your cluster. Pick your favourite tool (e.g., Lens) to watch your cluster come alive.
