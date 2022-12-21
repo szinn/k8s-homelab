@@ -21,13 +21,19 @@ spec:
   eventSources:
     - kind: GitRepository
       name: "*"
-    - kind: Kustomization
+    - kind: HelmRelease
       name: "*"
     - kind: HelmRepository
       name: "*"
-    - kind: HelmRelease
+    - kind: Kustomization
       name: "*"
+    - kind: OCIRepository
+      name: "*"
+    # - kind: Terraform
+    #   name: "*"
   exclusionList:
     - "error.*lookup github\\.com"
+    - "error.*lookup raw\\.githubusercontent\\.com"
+    - "dial.*tcp.*timeout"
     - "waiting.*socket"
   suspend: false
