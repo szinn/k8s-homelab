@@ -5,7 +5,7 @@ metadata:
   name: flux-manifests
   namespace: flux-system
 spec:
-  interval: 10m
+  interval: 30m
   url: oci://ghcr.io/fluxcd/flux-manifests
   ref:
     tag: v0.38.1
@@ -16,7 +16,7 @@ metadata:
   name: flux
   namespace: flux-system
 spec:
-  interval: 10m
+  interval: 30m
   path: ./
   prune: true
   wait: true
