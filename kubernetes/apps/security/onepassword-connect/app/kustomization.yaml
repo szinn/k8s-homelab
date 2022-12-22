@@ -1,0 +1,9 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - onepassword-secrets.sops.yaml
+  - helm-release.yaml
+  - onepassword-store.yaml
+patchesStrategicMerge:
+  - patches/sync.yaml

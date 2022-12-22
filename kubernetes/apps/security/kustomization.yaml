@@ -4,3 +4,5 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - authelia/install.yaml
+  - external-secrets/install.yaml
+  - onepassword-connect/install.yaml

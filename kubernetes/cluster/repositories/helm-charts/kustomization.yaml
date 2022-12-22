@@ -11,6 +11,7 @@ resources:
   - descheduler-charts.yaml
   - dysnix-charts.yaml
   - external-dns-charts.yaml
+  - external-secrets-charts.yaml
   - fairwinds-charts.yaml
   - grafana-charts.yaml
   - infracloudio-charts.yaml
