@@ -6,7 +6,7 @@
         "**/ansible/**/*.sops.yml": "yaml",
         "**/ansible/**/inventory/**/*.yml": "yaml",
         "**/terraform/**/*.tf": "terraform",
-        "**/cluster/**/*.sops.toml": "plaintext"
+        "**/kubernetes/**/*.sops.toml": "plaintext"
     },
     "material-icon-theme.folders.associations": {
         ".taskfiles": "utils",
@@ -28,7 +28,7 @@
     "prettier.configPath": ".github/linters/.prettierrc.yaml",
     "prettier.ignorePath": ".github/linters/.prettierignore",
     "yaml.schemas": {
-        "Kubernetes": "cluster/*.yaml"
+        "Kubernetes": "kubernetes/*.yaml"
     },
     "explorer.autoReveal": false
 }

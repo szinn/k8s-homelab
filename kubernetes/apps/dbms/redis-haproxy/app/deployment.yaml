@@ -10,7 +10,7 @@ metadata:
     configmap.reloader.stakater.com/reload: redis-haproxy-config
 
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: redis-haproxy

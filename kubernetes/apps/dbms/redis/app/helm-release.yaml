@@ -34,10 +34,6 @@ spec:
       getMasterTimeout: 10
       startupProbe:
         failureThreshold: 2
-      # service:
-      #   type: LoadBalancer
-      #   annotations:
-      #     metallb.universe.tf/loadBalancerIPs: ${CONFIG_SVC_REDIS_ADDR}
     metrics:
       enabled: true
       serviceMonitor:
