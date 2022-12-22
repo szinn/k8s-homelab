@@ -15,20 +15,16 @@ spec:
         name: actions-runner-controller-charts
         namespace: flux-system
       interval: 15m
-
   install:
     crds: CreateReplace
   upgrade:
     crds: CreateReplace
-
   values:
     authSecret:
       create: false
-      name: actions-runner-controller-auth
-
+      name: actions-runner-controller-secret
     image:
       repository: summerwind/actions-runner-controller
-
     resources:
       requests:
         cpu: 10m
@@ -36,15 +32,12 @@ spec:
       limits:
         cpu: 15m
         memory: 72M
-
     githubWebhookServer:
       enabled: true
       syncPeriod: 10m
-
       secret:
         create: false
-        name: actions-runner-controller-webhook
-
+        name: actions-runner-controller-secret
       ingress:
         enabled: true
         annotations:
@@ -58,7 +51,6 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
-
       resources:
         requests:
           cpu: 10m
