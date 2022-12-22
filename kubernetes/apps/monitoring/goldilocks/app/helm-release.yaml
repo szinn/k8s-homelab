@@ -24,7 +24,6 @@ spec:
           memory: 94M
         limits:
           memory: 270M
-
     dashboard:
       replicaCount: 1
       resources:
@@ -33,7 +32,6 @@ spec:
           memory: 64Mi
         limits:
           memory: 105M
-
       ingress:
         enabled: true
         ingressClassName: "traefik"
