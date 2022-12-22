@@ -10,7 +10,7 @@ metadata:
     configmap.reloader.stakater.com/reload: redis-haproxy-config
 
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app: redis-haproxy
@@ -42,6 +42,13 @@ spec:
               mountPath: /usr/local/etc/haproxy/haproxy.cfg
               subPath: haproxy.cfg
               readOnly: true
+          resources:
+            requests:
+              cpu: 15m
+              memory: 64M
+            limits:
+              cpu: 15m
+              memory: 64M
       restartPolicy: Always
       volumes:
         - name: config
