@@ -1,0 +1,36 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: flux-system-add-on-monitoring
+  namespace: flux-system
+  labels:
+    substitution.flux.home.arpa/enabled: "true"
+spec:
+  path: ./kubernetes/apps/flux-system/add-ons/monitoring
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: homelab-kubernetes
+  interval: 30m
+  retryInterval: 2m
+  timeout: 1m
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: flux-system-add-on-notification
+  namespace: flux-system
+  labels:
+    substitution.flux.home.arpa/enabled: "true"
+spec:
+  dependsOn:
+    - name: security-onepassword-connect
+  path: ./kubernetes/apps/flux-system/add-ons/notification
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: homelab-kubernetes
+  interval: 30m
+  retryInterval: 2m
+  timeout: 1m
