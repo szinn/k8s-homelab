@@ -48,7 +48,7 @@ spec:
         existingClaim: dashy-config
         mountPath: /app/public/
     podAnnotations:
-      secret.reloader.stakater.com/reload: dashy-code-server-secret
+      secret.reloader.stakater.com/reload: dashy-code-server
     addons:
       codeserver:
         enabled: true
@@ -57,7 +57,7 @@ spec:
           tag: 4.9.1
         workingDir: "/config"
         git:
-          deployKeySecret: dashy-code-server-secret
+          deployKeySecret: dashy-code-server
         args:
           - --auth
           - "none"
