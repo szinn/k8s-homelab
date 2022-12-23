@@ -32,7 +32,7 @@ spec:
       ENABLE_UNKNOWN_QUEUE_ITEMS: "false"
     envFrom:
       - secretRef:
-          name: *app
+          name: sonarr
     args: ["sonarr"]
     service:
       main:

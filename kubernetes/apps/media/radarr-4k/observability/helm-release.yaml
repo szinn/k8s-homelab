@@ -32,7 +32,7 @@ spec:
       ENABLE_UNKNOWN_QUEUE_ITEMS: "false"
     envFrom:
       - secretRef:
-          name: *app
+          name: radarr-4k
     args: ["radarr"]
     service:
       main:
