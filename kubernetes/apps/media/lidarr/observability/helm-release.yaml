@@ -30,7 +30,7 @@ spec:
       ENABLE_UNKNOWN_QUEUE_ITEMS: "false"
     envFrom:
       - secretRef:
-          name: *app
+          name: lidarr
     args: ["lidarr"]
     service:
       main:
@@ -43,3 +43,5 @@ spec:
         memory: 100Mi
       limits:
         memory: 250Mi
+    podAnnotations:
+      secret.reloader.stakater.com/reload: lidarr
