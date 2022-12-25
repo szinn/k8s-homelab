@@ -3,8 +3,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: security
 resources:
+  - authelia-secrets.yaml
   - authelia-auth.yaml
-  - authelia-secrets.sops.yaml
   - authelia-files.sops.yaml
   - helm-release.yaml
 patchesStrategicMerge:
