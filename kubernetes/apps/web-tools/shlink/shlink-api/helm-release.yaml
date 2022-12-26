@@ -33,6 +33,8 @@ spec:
       rollingUpdate:
         unavailable: 2
         surge: 0
+      annotations:
+        secret.reloader.stakater.com/reload: shlink
     image:
       repository: ghcr.io/shlinkio/shlink
       tag: 3.4.0
@@ -54,7 +56,7 @@ spec:
       TIMEZONE: "${CONFIG_TIMEZONE}"
     envFrom:
       - secretRef:
-          name: *app
+          name: shlink
     service:
       main:
         ports:
@@ -72,8 +74,6 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
-    podAnnotations:
-      secret.reloader.stakater.com/reload: *app
     topologySpreadConstraints:
       - maxSkew: 1
         topologyKey: kubernetes.io/hostname

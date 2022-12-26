@@ -22,10 +22,10 @@ spec:
           - name: POSTGRES_USER
             valueFrom:
               secretKeyRef:
-                name: shlink-api
+                name: shlink
                 key: DB_USER
           - name: POSTGRES_PASS
             valueFrom:
               secretKeyRef:
-                name: shlink-api
+                name: shlink
                 key: DB_PASSWORD
