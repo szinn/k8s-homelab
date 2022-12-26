@@ -23,6 +23,9 @@ spec:
     remediation:
       retries: 5
   values:
+    controller:
+      annotations:
+        configmap.reloader.stakater.com/reload: *app
     image:
       repository: ghcr.io/onedr0p/kopia
       tag: 0.12.1@sha256:388aee81aed06e6613108f7f1df8f748108023593fbfaae347670bdfe5340861
@@ -75,8 +78,6 @@ spec:
         server: "${SECRET_ATLAS_NFS_SERVER}"
         path: "${SECRET_ATLAS_NFS_ROOTDIR}/kopia"
         mountPath: /backups
-    podAnnotations:
-      configmap.reloader.stakater.com/reload: *app
     resources:
       requests:
         cpu: 10m

@@ -16,6 +16,8 @@ spec:
         namespace: flux-system
       interval: 15m
   values:
+    annotations:
+      configmap.reloader.stakater.com/reload: *app
     image:
       repository: grafana/grafana
       tag: 9.3.2
@@ -57,8 +59,6 @@ spec:
       - vonage-status-panel
       - https://github.com/panodata/panodata-map-panel/releases/download/0.16.0/panodata-map-panel-0.16.0.zip;grafana-worldmap-panel-ng
       - redis-datasource
-    podAnnotations:
-      configmap.reloader.stakater.com/reload: *app
     serviceMonitor:
       enabled: true
     serviceAccount:
