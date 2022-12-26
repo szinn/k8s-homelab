@@ -19,6 +19,9 @@ spec:
     - name: lidarr
       namespace: media
   values:
+    controller:
+      annotations:
+        secret.reloader.stakater.com/reload: lidarr
     image:
       repository: ghcr.io/onedr0p/exportarr
       tag: v1.1.0
@@ -43,5 +46,3 @@ spec:
         memory: 100Mi
       limits:
         memory: 250Mi
-    podAnnotations:
-      secret.reloader.stakater.com/reload: lidarr

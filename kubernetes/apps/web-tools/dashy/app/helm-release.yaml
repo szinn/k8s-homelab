@@ -18,6 +18,9 @@ spec:
         namespace: flux-system
       interval: 15m
   values:
+    controller:
+      annotations:
+        secret.reloader.stakater.com/reload: dashy-code-server
     image:
       repository: lissy93/dashy
       tag: 2.1.1
@@ -47,8 +50,6 @@ spec:
         enabled: true
         existingClaim: dashy-config
         mountPath: /app/public/
-    podAnnotations:
-      secret.reloader.stakater.com/reload: dashy-code-server
     addons:
       codeserver:
         enabled: true
