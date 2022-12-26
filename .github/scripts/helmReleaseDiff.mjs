@@ -54,12 +54,6 @@ async function kustomizeBuild(releaseBaseDir, releaseName) {
 }
 
 async function helmRepoAdd (registryName, registryUrl) {
-  echo("helm")
-  echo(helm)
-  echo("registryName")
-  echo(registryName)
-  echo("registryUrl")
-  echo(registryUrl)
   await $`${helm} repo add ${registryName} ${registryUrl}`
 }
 
