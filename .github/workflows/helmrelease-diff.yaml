@@ -7,7 +7,7 @@ on:
     paths: ["kubernetes/**/helm-release.yaml"]
 
 env:
-  BOT_USERNAME: "repo-jeeves[bot]"
+  BOT_USERNAME: repo-jeeves[bot]
   KUBERNETES_DIR: kubernetes/
 
 jobs:
