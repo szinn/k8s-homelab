@@ -4,4 +4,3 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - cert-manager/install.yaml
-  - ddns/install.yaml

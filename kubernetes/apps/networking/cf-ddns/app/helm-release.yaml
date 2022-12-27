@@ -3,7 +3,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: cf-ddns
-  namespace: cert-manager
+  namespace: networking
 spec:
   interval: 5m
   chart:
@@ -27,7 +27,7 @@ spec:
       DNS_SERVER: "1.1.1.1"
     envFrom:
       - secretRef:
-          name: cloudflare-secrets
+          name: cf-ddns-secrets
     service:
       main:
         enabled: false
