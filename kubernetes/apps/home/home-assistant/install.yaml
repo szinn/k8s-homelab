@@ -8,6 +8,7 @@ metadata:
     substitution.flux.home.arpa/enabled: "true"
 spec:
   dependsOn:
+    - name: dbms-cloudnative-pg
     - name: security-onepassword-connect
   path: ./kubernetes/apps/home/home-assistant/app
   prune: true

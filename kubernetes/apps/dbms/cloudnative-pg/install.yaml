@@ -34,6 +34,7 @@ spec:
   dependsOn:
     - name: dbms-cloudnative-pg
     - name: security-onepassword-connect
+    - name: kyverno
   path: ./kubernetes/apps/dbms/cloudnative-pg/cluster
   prune: true
   sourceRef:

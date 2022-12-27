@@ -5,3 +5,4 @@ resources:
   - postgres-minio-secret.yaml
   - cluster.yaml
   - scheduled-backup.yaml
+  - sync-postgres-secrets.yaml
