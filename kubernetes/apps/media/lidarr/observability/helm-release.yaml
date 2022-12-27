@@ -31,9 +31,11 @@ spec:
       URL: "http://lidarr.media.svc.cluster.local:8686"
       ENABLE_ADDITIONAL_METRICS: "false"
       ENABLE_UNKNOWN_QUEUE_ITEMS: "false"
-    envFrom:
-      - secretRef:
-          name: lidarr
+      APIKEY:
+        valueFrom:
+          secretKeyRef:
+            name: lidarr
+            key: APIKEY
     args: ["lidarr"]
     service:
       main:
