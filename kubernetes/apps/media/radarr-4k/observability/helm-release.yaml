@@ -33,9 +33,11 @@ spec:
       URL: "http://radarr-4k.media.svc.cluster.local:7878"
       ENABLE_ADDITIONAL_METRICS: "false"
       ENABLE_UNKNOWN_QUEUE_ITEMS: "false"
-    envFrom:
-      - secretRef:
-          name: radarr-4k
+      APIKEY:
+        valueFrom:
+          secretKeyRef:
+            name: radarr-4k
+            key: APIKEY
     args: ["radarr"]
     service:
       main:

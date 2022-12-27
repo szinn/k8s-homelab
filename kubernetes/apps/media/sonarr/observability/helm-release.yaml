@@ -33,9 +33,11 @@ spec:
       URL: "http://sonarr.media.svc.cluster.local:8989"
       ENABLE_ADDITIONAL_METRICS: "false"
       ENABLE_UNKNOWN_QUEUE_ITEMS: "false"
-    envFrom:
-      - secretRef:
-          name: sonarr
+      APIKEY:
+        valueFrom:
+          secretKeyRef:
+            name: sonarr
+            key: APIKEY
     args: ["sonarr"]
     service:
       main:
