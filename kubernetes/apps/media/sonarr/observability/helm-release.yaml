@@ -37,7 +37,7 @@ spec:
         valueFrom:
           secretKeyRef:
             name: sonarr
-            key: APIKEY
+            key: SONARR__API_KEY
     args: ["sonarr"]
     service:
       main:

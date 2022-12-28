@@ -35,7 +35,7 @@ spec:
         valueFrom:
           secretKeyRef:
             name: lidarr
-            key: APIKEY
+            key: LIDARR_API_KEY
     args: ["lidarr"]
     service:
       main:

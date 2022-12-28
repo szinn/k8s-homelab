@@ -11,7 +11,7 @@ includes:
   commit: .taskfiles/PreCommitTasks.yaml
   redis: .taskfiles/RedisTasks.yaml
   rook: .taskfiles/RookTasks.yaml
-  snapshot: .taskfiles/SnapshotTasks.yaml
+  kopia: .taskfiles/KopiaTasks.yaml
 
 tasks:
   delete-failed-pods:

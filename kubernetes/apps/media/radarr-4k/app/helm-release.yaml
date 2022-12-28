@@ -23,6 +23,8 @@ spec:
     remediation:
       retries: 3
   dependsOn:
+    - name: onepassword-connect
+      namespace: security
     - name: rook-ceph-cluster
       namespace: rook-ceph
   values:

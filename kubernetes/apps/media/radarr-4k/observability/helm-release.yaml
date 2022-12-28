@@ -37,7 +37,7 @@ spec:
         valueFrom:
           secretKeyRef:
             name: radarr-4k
-            key: APIKEY
+            key: RADARR__API_KEY
     args: ["radarr"]
     service:
       main:
