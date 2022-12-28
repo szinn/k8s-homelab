@@ -17,6 +17,15 @@ spec:
       interval: 15m
   install:
     createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+    - name: kube-prometheus-stack
   values:
     controller:
       annotations:

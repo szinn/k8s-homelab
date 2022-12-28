@@ -15,6 +15,9 @@ spec:
         name: bjw-s-charts
         namespace: flux-system
       interval: 15m
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
   values:
     image:
       repository: ghcr.io/onedr0p/jackett

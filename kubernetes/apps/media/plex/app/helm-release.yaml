@@ -21,6 +21,8 @@ spec:
     remediation:
       retries: 5
   dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
     - name: intel-gpu-plugin
       namespace: system
     - name: node-feature-discovery
