@@ -15,6 +15,14 @@ spec:
         kind: HelmRepository
         name: bjw-s-charts
         namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   values:
     controller:
       type: daemonset

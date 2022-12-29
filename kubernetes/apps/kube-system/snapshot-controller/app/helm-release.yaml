@@ -15,6 +15,7 @@ spec:
         name: piraeus-charts
         namespace: flux-system
       interval: 15m
+  maxHistory: 3
   install:
     createNamespace: true
     crds: CreateReplace
@@ -55,6 +56,7 @@ spec:
         name: piraeus-charts
         namespace: flux-system
       interval: 15m
+  maxHistory: 3
   install:
     createNamespace: true
     crds: Skip

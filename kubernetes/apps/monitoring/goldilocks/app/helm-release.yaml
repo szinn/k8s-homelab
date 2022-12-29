@@ -16,6 +16,14 @@ spec:
         namespace: flux-system
       interval: 15m
   timeout: 20m
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   values:
     controller:
       resources:

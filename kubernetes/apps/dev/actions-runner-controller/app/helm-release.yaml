@@ -15,6 +15,7 @@ spec:
         name: actions-runner-controller-charts
         namespace: flux-system
       interval: 15m
+  maxHistory: 3
   install:
     crds: CreateReplace
   upgrade:

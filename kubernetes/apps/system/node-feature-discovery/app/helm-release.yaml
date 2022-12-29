@@ -15,6 +15,7 @@ spec:
         name: node-feature-discovery-charts
         namespace: flux-system
       interval: 5m
+  maxHistory: 3
   install:
     createNamespace: true
     remediation: # perform remediation when helm install fails
