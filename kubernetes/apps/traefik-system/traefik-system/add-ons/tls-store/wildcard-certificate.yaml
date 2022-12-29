@@ -11,6 +11,6 @@ spec:
     kind: ClusterIssuer
   commonName: "${SECRET_DOMAIN_NAME}"
   dnsNames:
-    - "${SECRET_DOMAIN_NAME}"
-    - "*.${SECRET_DOMAIN_NAME}"
-    - "*.test.${SECRET_DOMAIN_NAME}"
+    - "${SECRET_BASE_DOMAIN_NAME}"
+    - "*.${SECRET_BASE_DOMAIN_NAME}"
+    - "*.test.${SECRET_BASE_DOMAIN_NAME}"
