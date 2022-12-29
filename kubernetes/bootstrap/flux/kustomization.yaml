@@ -17,7 +17,7 @@ images:
   - name: fluxcd/source-controller
     newName: ghcr.io/fluxcd/source-controller
 patches:
-  - patch: |-
+  - patch: |
       $patch: delete
       apiVersion: networking.k8s.io/v1
       kind: NetworkPolicy
@@ -27,21 +27,39 @@ patches:
       group: networking.k8s.io
       version: v1
       kind: NetworkPolicy
-  - patch: |-
+  - patch: |
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: not-used
+      spec:
+        template:
+          spec:
+            containers:
+              - name: manager
+                resources:
+                  requests:
+                    memory: 512Mi
+                  limits:
+                    memory: "2Gi"
+    target:
+      kind: Deployment
+      labelSelector: control-plane=controller
+  - patch: |
       - op: add
         path: /spec/versions/0/schema/openAPIV3Schema/properties/spec/properties/eventSources/items/properties/kind/enum/-
         value: Terraform
     target:
       kind: CustomResourceDefinition
       name: alerts.notification.toolkit.fluxcd.io
-  - patch: |-
+  - patch: |
       - op: add
         path: /spec/versions/0/schema/openAPIV3Schema/properties/spec/properties/resources/items/properties/kind/enum/-
         value: Terraform
     target:
       kind: CustomResourceDefinition
       name: receivers.notification.toolkit.fluxcd.io
-  - patch: |-
+  - patch: |
       - op: add
         path: /rules/-
         value:
