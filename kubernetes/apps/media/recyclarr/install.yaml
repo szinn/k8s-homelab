@@ -7,13 +7,17 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  dependsOn:
-    - name: security-onepassword-connect
   path: ./kubernetes/apps/media/recyclarr/app
-  prune: true
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes
+  dependsOn:
+    - name: security-onepassword-connect
+    - name: media-radarr
+    - name: media-radarr-4k
+    - name: media-sonarr
+  prune: true
+  wait: true
   interval: 30m
   retryInterval: 2m
   timeout: 1m

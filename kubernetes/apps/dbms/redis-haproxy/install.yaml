@@ -7,18 +7,19 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  dependsOn:
-    - name: dbms-redis
   path: ./kubernetes/apps/dbms/redis-haproxy/app
-  prune: true
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes
+  dependsOn:
+    - name: dbms-redis
   healthChecks:
     - apiVersion: apps/v1
       kind: Deployment
       name: redis-haproxy-deployment
       namespace: dbms
+  prune: true
+  wait: true
   interval: 30m
   retryInterval: 2m
   timeout: 1m

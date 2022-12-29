@@ -17,9 +17,6 @@ spec:
       interval: 15m
   install:
     createNamespace: true
-  dependsOn:
-    - name: radarr-4k
-      namespace: media
   values:
     controller:
       annotations:

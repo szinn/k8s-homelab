@@ -8,10 +8,11 @@ metadata:
     substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/flux-system/add-ons/monitoring
-  prune: true
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes
+  prune: true
+  wait: true
   interval: 30m
   retryInterval: 2m
   timeout: 1m
@@ -24,13 +25,14 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  dependsOn:
-    - name: security-onepassword-connect
   path: ./kubernetes/apps/flux-system/add-ons/notification
-  prune: true
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes
+  dependsOn:
+    - name: security-onepassword-connect
+  prune: true
+  wait: true
   interval: 30m
   retryInterval: 2m
   timeout: 1m

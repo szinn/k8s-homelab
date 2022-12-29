@@ -7,18 +7,20 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  dependsOn:
-    - name: security-onepassword-connect
   path: ./kubernetes/apps/dbms/cloudnative-pg/cloudnative-pg
-  prune: true
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes
+  dependsOn:
+    - name: security-onepassword-connect
+    - name: rook-ceph-cluster
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
       name: cloudnative-pg
       namespace: dbms
+  prune: true
+  wait: true
   interval: 30m
   retryInterval: 2m
   timeout: 1m
@@ -31,15 +33,16 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
+  path: ./kubernetes/apps/dbms/cloudnative-pg/cluster
+  sourceRef:
+    kind: GitRepository
+    name: homelab-kubernetes
   dependsOn:
     - name: dbms-cloudnative-pg
     - name: security-onepassword-connect
     - name: kyverno
-  path: ./kubernetes/apps/dbms/cloudnative-pg/cluster
   prune: true
-  sourceRef:
-    kind: GitRepository
-    name: homelab-kubernetes
+  wait: true
   interval: 30m
   retryInterval: 2m
   timeout: 1m

@@ -8,7 +8,6 @@ metadata:
     substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/kube-system/metrics-server/app
-  prune: true
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes
@@ -17,6 +16,8 @@ spec:
       kind: HelmRelease
       name: metrics-server
       namespace: kube-system
+  prune: true
+  wait: true
   interval: 30m
   retryInterval: 2m
   timeout: 1m

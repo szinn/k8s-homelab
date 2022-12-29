@@ -21,9 +21,6 @@ spec:
   upgrade:
     remediation:
       retries: 3
-  dependsOn:
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
   values:
     crds:
       create: true

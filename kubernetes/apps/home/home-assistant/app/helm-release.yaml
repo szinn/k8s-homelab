@@ -15,11 +15,6 @@ spec:
         name: bjw-s-charts
         namespace: flux-system
       interval: 15m
-  dependsOn:
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
-    - name: cloudnative-pg
-      namespace: dbms
   values:
     controller:
       annotations:

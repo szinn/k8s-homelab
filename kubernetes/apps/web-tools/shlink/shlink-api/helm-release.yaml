@@ -21,11 +21,6 @@ spec:
   upgrade:
     remediation:
       retries: 5
-  dependsOn:
-    - name: cloudnative-pg
-      namespace: dbms
-    - name: redis
-      namespace: dbms
   values:
     controller:
       replicas: 3

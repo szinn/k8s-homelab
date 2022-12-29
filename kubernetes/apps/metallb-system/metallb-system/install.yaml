@@ -8,7 +8,6 @@ metadata:
     substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/metallb-system/metallb-system/app
-  prune: true
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes
@@ -17,6 +16,8 @@ spec:
       kind: HelmRelease
       name: metallb-system
       namespace: metallb-system
+  prune: true
+  wait: true
   interval: 30m
   retryInterval: 2m
   timeout: 1m
@@ -29,13 +30,14 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  dependsOn:
-    - name: metallb-system
   path: ./kubernetes/apps/metallb-system/metallb-system/config
-  prune: true
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes
+  dependsOn:
+    - name: metallb-system
+  prune: true
+  wait: true
   interval: 30m
   retryInterval: 2m
   timeout: 1m

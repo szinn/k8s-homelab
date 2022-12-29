@@ -5,9 +5,6 @@ metadata:
   name: vector-aggregator
   namespace: monitoring
 spec:
-  dependsOn:
-    - name: loki
-      namespace: monitoring
   interval: 15m
   chart:
     spec:

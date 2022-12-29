@@ -8,7 +8,6 @@ metadata:
     substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/security/external-secrets/app
-  prune: true
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes
@@ -17,6 +16,8 @@ spec:
       kind: HelmRelease
       name: external-secrets
       namespace: security
+  prune: true
+  wait: true
   interval: 30m
   retryInterval: 1m
   timeout: 3m

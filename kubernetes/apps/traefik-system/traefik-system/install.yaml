@@ -8,7 +8,6 @@ metadata:
     substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/traefik-system/traefik-system/app
-  prune: true
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes
@@ -17,6 +16,8 @@ spec:
       kind: HelmRelease
       name: traefik
       namespace: traefik-system
+  prune: true
+  wait: true
   interval: 30m
   retryInterval: 2m
   timeout: 1m
@@ -29,19 +30,20 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  dependsOn:
-    - name: cert-manager
-    - name: traefik-system
   path: ./kubernetes/apps/traefik-system/traefik-system/add-ons
-  prune: true
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes
+  dependsOn:
+    - name: cert-manager
+    - name: traefik-system
   healthChecks:
     - apiVersion: traefik.containo.us/v1alpha1
       kind: TLSStore
       name: default
       namespace: traefik-system
+  prune: true
+  wait: true
   interval: 30m
   retryInterval: 2m
   timeout: 1m

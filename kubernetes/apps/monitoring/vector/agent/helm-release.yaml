@@ -5,9 +5,6 @@ metadata:
   name: vector-agent
   namespace: monitoring
 spec:
-  dependsOn:
-    - name: loki
-      namespace: monitoring
   interval: 15m
   chart:
     spec:

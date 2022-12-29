@@ -8,7 +8,6 @@ metadata:
     substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/default/whoami/app
-  prune: true
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes
@@ -17,6 +16,8 @@ spec:
       kind: HelmRelease
       name: whoami
       namespace: default
+  prune: true
+  wait: true
   interval: 30m
   retryInterval: 2m
   timeout: 1m
