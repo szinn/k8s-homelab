@@ -5,3 +5,4 @@ resources:
   - dashy-code-server-secrets.yaml
   - pvc.yaml
   - helm-release.yaml
+  - replication-config.yaml

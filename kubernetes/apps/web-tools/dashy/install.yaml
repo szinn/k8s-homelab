@@ -14,6 +14,7 @@ spec:
   dependsOn:
     - name: rook-ceph-cluster
     - name: security-onepassword-connect
+    - name: system-volsync
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
