@@ -161,6 +161,10 @@ spec:
     test:
       enabled: false
   valuesFrom:
+    - targetPath: loki.structuredConfig.common.storage.s3.region
+      kind: Secret
+      name: loki-secrets
+      valuesKey: AWS_REGION
     - targetPath: loki.structuredConfig.common.storage.s3.endpoint
       kind: Secret
       name: loki-secrets
