@@ -12,6 +12,7 @@ includes:
   redis: .taskfiles/RedisTasks.yaml
   rook: .taskfiles/RookTasks.yaml
   kopia: .taskfiles/KopiaTasks.yaml
+  vs: .taskfiles/VolSync/Tasks.yaml
 
 tasks:
   delete-failed-pods:
