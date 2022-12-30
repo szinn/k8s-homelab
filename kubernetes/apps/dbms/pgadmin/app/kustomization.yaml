@@ -6,6 +6,7 @@ resources:
   - pgadmin-secret.yaml
   - pvc.yaml
   - helm-release.yaml
+  - replication-config.yaml
 configMapGenerator:
   - name: servers-json
     files:
