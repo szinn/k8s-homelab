@@ -1,0 +1,47 @@
+---
+apiVersion: actions.summerwind.dev/v1alpha1
+kind: RunnerDeployment
+metadata:
+  name: k8s-homelab
+  namespace: dev
+spec:
+  template:
+    spec:
+      image: ghcr.io/actions-runner-controller/actions-runner-controller/actions-runner-dind:ubuntu-22.04@sha256:0c662c9ffc6770cb021e5dff91789fa481966a6d42eefb6756ff48978a9109cb
+      imagePullPolicy: Always
+      dockerdWithinRunnerContainer: true
+      ephemeral: true
+      repository: szinn/k8s-homelab
+      labels: ["self-hosted"]
+      securityContext:
+        supplementalGroups:
+          - 65542
+      volumeMounts:
+        - name: cache-volume
+          mountPath: /cache
+      volumes:
+        - name: cache-volume
+          persistentVolumeClaim:
+            claimName: actions-runner-controller-cache
+---
+apiVersion: actions.summerwind.dev/v1alpha1
+kind: HorizontalRunnerAutoscaler
+metadata:
+  name: k8s-homelab
+  namespace: dev
+spec:
+  scaleTargetRef:
+    name: k8s-homelab
+  scaleUpTriggers:
+    - githubEvent:
+        checkRun:
+          types: ["created"]
+          status: "queued"
+      amount: 1
+      duration: "1m"
+  minReplicas: 1
+  maxReplicas: 3
+  metrics:
+    - type: TotalNumberOfQueuedAndInProgressWorkflowRuns
+      repositoryNames:
+        - szinn/k8s-homelab
