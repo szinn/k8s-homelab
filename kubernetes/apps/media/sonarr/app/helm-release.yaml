@@ -32,6 +32,7 @@ spec:
       tag: 3.0.9.1549
     env:
       TZ: ${CONFIG_TIMEZONE}
+      SONARR__LOG_LEVEL: info
     envFrom:
       - secretRef:
           name: *app

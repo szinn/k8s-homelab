@@ -32,6 +32,7 @@ spec:
       tag: 4.2.4.6635
     env:
       TZ: ${CONFIG_TIMEZONE}
+      RADARR__LOG_LEVEL: info
     envFrom:
       - secretRef:
           name: *app
