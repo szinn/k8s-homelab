@@ -5,3 +5,4 @@ resources:
   - plex-secrets.yaml
   - pvc.yaml
   - helm-release.yaml
+  - replication-config.yaml

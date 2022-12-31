@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - pvc.yaml
   - helm-release.yaml
+  - replication-config.yaml
