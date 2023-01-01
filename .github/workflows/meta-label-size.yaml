@@ -17,6 +17,7 @@ jobs:
         with:
           app_id: "${{ secrets.BOT_APP_ID }}"
           private_key: "${{ secrets.BOT_APP_PRIVATE_KEY }}"
+
       - name: Label Size
         uses: pascalgn/size-label-action@v0.4.3
         env:

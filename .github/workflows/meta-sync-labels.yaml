@@ -14,14 +14,18 @@ jobs:
     name: Sync Labels
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
       - name: Generate Token
         uses: tibdex/github-app-token@v1.7.0
         id: generate-token
         with:
           app_id: "${{ secrets.BOT_APP_ID }}"
           private_key: "${{ secrets.BOT_APP_PRIVATE_KEY }}"
+
+      - name: Checkout
+        uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3.2.0
+        with:
+          token: "${{ steps.generate-token.outputs.token }}"
+
       - name: Sync Labels
         uses: EndBug/label-sync@v2
         with:
