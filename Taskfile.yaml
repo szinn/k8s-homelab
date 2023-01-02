@@ -6,87 +6,12 @@ vars:
     sh: "git rev-parse --show-toplevel"
 
 includes:
-  flux: .taskfiles/FluxTasks.yaml
-  format: .taskfiles/FormatTasks.yaml
-  commit: .taskfiles/PreCommitTasks.yaml
-  redis: .taskfiles/RedisTasks.yaml
-  rook: .taskfiles/RookTasks.yaml
-  kopia: .taskfiles/KopiaTasks.yaml
+  es: .taskfiles/ExternalSecrets/Tasks.yaml
+  fmt: .taskfiles/Format/Tasks.yaml
+  fx: .taskfiles/Flux/Tasks.yaml
+  kopia: .taskfiles/Kopia/Tasks.yaml
+  kub: .taskfiles/Kubernetes/Tasks.yaml
+  pc: .taskfiles/PreCommit/Tasks.yaml
+  redis: .taskfiles/Redis/Tasks.yaml
+  rook: .taskfiles/Rook/Tasks.yaml
   vs: .taskfiles/VolSync/Tasks.yaml
-
-tasks:
-  delete-failed-pods:
-    desc: Deletes failed pods
-    cmds:
-      - kubectl delete pods --field-selector status.phase=Failed -A --ignore-not-found=true
-
-  alpine:
-    desc: Run alpine container
-    cmds:
-      - kubectl run -it alpine --image alpine:3.15.4
-
-  dnsutils:
-    desc: Run DNSUtils pod
-    cmds:
-      - kubectl run -it dnsutils --image gcr.io/kubernetes-e2e-test-images/dnsutils:1.3
-
-  rook-password:
-    desc: Retrieve the rook-ceph password
-    cmds:
-      - kubectl -n rook-ceph get secret rook-ceph-dashboard-password -o jsonpath="{['data']['password']}" | base64 --decode | pbcopy && echo "Copied to clipboard"
-
-  what-dockerhub:
-    desc: What dockerhub images are running in my cluster
-    cmds:
-      - kubectl get pods --all-namespaces -o=jsonpath="{range .items[*]}{'\n'}{range .spec.containers[*]}{.image}{'\n'}{end}{end}" | sort | uniq | grep -Ev 'quay|gcr|ghcr|ecr|us-docker' | grep -Ev 'bitnami|rook|intel|grafana' |  sed -e 's/docker\.io\///g' | sort | uniq
-
-  debug-networking:
-    desc: Create a netshoot container for debugging
-    cmds:
-      - kubectl run tmp-shell --rm -i --tty --image docker.io/nicolaka/netshoot:latest {{.CLI_ARGS}}
-
-  debug-volume:
-    desc: |
-      Attach a volume to a container for debugging, ex.
-      VOLUME=zigbee2mqtt-config-v1 NAMESPACE=home task debug-volume
-    interactive: true
-    cmds:
-      - defer: kubectl -n ${NAMESPACE} delete pod debug-${VOLUME}
-      - |
-        cat <<EOF | kubectl apply -f -
-        kind: Pod
-        apiVersion: v1
-        metadata:
-          name: "debug-${VOLUME}"
-          namespace: "${NAMESPACE}"
-          labels:
-            volume: "${VOLUME}"
-        spec:
-          containers:
-            - name: debug
-              image: docker.io/library/alpine:3.15
-              command: ["/bin/sh"]
-              tty: true
-              lifecycle:
-                postStart:
-                  exec:
-                    command:
-                      - /bin/sh
-                      - -c
-                      - apk add --no-cache curl nano
-              volumeMounts:
-                - name: data
-                  mountPath: /data
-                - name: backups
-                  mountPath: /mnt/backups
-          volumes:
-            - name: data
-              persistentVolumeClaim:
-                claimName: "${VOLUME}"
-            - name: backups
-              nfs:
-                server: "hades"
-                path: "/volume1/K8S/main"
-        EOF
-      - kubectl -n $NAMESPACE wait --for=condition=ready pod -l volume=$VOLUME
-      - kubectl -n $NAMESPACE exec (kubectl get pod -n $NAMESPACE -l volume=$VOLUME -o name) -it debug -- /bin/sh
