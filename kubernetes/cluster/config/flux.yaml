@@ -16,26 +16,13 @@ metadata:
   name: flux
   namespace: flux-system
 spec:
-  interval: 30m
+  interval: 10m
   path: ./
   prune: true
   wait: true
   sourceRef:
     kind: OCIRepository
     name: flux-manifests
-  images:
-    - name: fluxcd/helm-controller
-      newName: ghcr.io/fluxcd/helm-controller
-    - name: fluxcd/image-automation-controller
-      newName: ghcr.io/fluxcd/image-automation-controller
-    - name: fluxcd/image-reflector-controller
-      newName: ghcr.io/fluxcd/image-reflector-controller
-    - name: fluxcd/kustomize-controller
-      newName: ghcr.io/fluxcd/kustomize-controller
-    - name: fluxcd/notification-controller
-      newName: ghcr.io/fluxcd/notification-controller
-    - name: fluxcd/source-controller
-      newName: ghcr.io/fluxcd/source-controller
   patches:
     - patch: |
         $patch: delete
@@ -65,16 +52,6 @@ spec:
       target:
         kind: Deployment
         labelSelector: control-plane=controller
-    - patch: |
-        - op: add
-          path: /spec/template/spec/containers/0/args/-
-          value: --concurrent=20
-        - op: add
-          path: /spec/template/spec/containers/0/args/-
-          value: --requeue-dependency=5s
-      target:
-        kind: Deployment
-        name: "(kustomize-controller|helm-controller|source-controller)"
     - patch: |
         - op: add
           path: /spec/versions/0/schema/openAPIV3Schema/properties/spec/properties/eventSources/items/properties/kind/enum/-
