@@ -20,6 +20,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: redis-haproxy-service
+                name: redis-haproxy
                 port:
                   number: 8080

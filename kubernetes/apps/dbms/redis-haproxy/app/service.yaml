@@ -2,7 +2,7 @@
 apiVersion: /v1
 kind: Service
 metadata:
-  name: redis-haproxy-service
+  name: redis-haproxy
   namespace: dbms
   annotations:
     metallb.universe.tf/loadBalancerIPs: ${CONFIG_SVC_REDIS_ADDR}
