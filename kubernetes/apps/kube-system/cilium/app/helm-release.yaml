@@ -22,34 +22,30 @@ spec:
       interval: 15m
   maxHistory: 3
   install:
-    remediation: # perform remediation when helm install fails
+    remediation:
       retries: 3
   upgrade:
-    remediation: # perform remediation when helm upgrade fails
-      retries: 3
-      remediateLastFailure: true # remediate the last failure, when no retries remain
     cleanupOnFail: true
+    remediation:
+      retries: 3
+      remediateLastFailure: true
+  uninstall:
+    keepHistory: false
   values:
     cluster:
       name: "${CONFIG_CLUSTER_NAME}"
       id: "1"
-
     securityContext:
       privileged: true
-
     kubeProxyReplacement: "strict"
     kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
     k8sServiceHost: "${CONFIG_CLUSTER_NAME}.${SECRET_BASE_DOMAIN_NAME}"
     k8sServicePort: 6443
-
     ipv4NativeRoutingCIDR: "${CONFIG_K8S_POD_CIDR}"
-
     ipam:
       mode: "kubernetes"
-
     containerRuntime:
       integration: containerd
-
     hubble:
       enabled: true
       serviceMonitor:

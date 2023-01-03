@@ -23,6 +23,8 @@ spec:
   upgrade:
     remediation:
       retries: 3
+  uninstall:
+    keepHistory: false
   values:
     metrics:
       enabled: true
