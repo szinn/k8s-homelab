@@ -21,8 +21,11 @@ spec:
     remediation:
       retries: 5
   upgrade:
+    cleanupOnFail: true
     remediation:
       retries: 5
+  uninstall:
+    keepHistory: false
   values:
     loki:
       structuredConfig:
