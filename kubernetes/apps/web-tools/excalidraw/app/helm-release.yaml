@@ -14,14 +14,18 @@ spec:
         kind: HelmRepository
         name: bjw-s-charts
         namespace: flux-system
+      interval: 15m
   maxHistory: 3
   install:
     createNamespace: true
     remediation:
-      retries: 5
+      retries: 3
   upgrade:
+    cleanupOnFail: true
     remediation:
-      retries: 5
+      retries: 3
+  uninstall:
+    keepHistory: false
   values:
     controller:
       replicas: 1
@@ -30,13 +34,13 @@ spec:
         unavailable: 2
         surge: 0
     image:
-      repository: ghcr.io/onedr0p/excalidraw
-      tag: 0.13.0
+      repository: docker.io/excalidraw/excalidraw
+      tag: latest@sha256:352d4025404bd9f95bdfff379b74eb1a792d20491b1bba71eb978cd390253bc0
     service:
       main:
         ports:
           http:
-            port: 8080
+            port: 80
     ingress:
       main:
         enabled: true
@@ -58,3 +62,9 @@ spec:
         labelSelector:
           matchLabels:
             app.kubernetes.io/name: *app
+    resources:
+      requests:
+        cpu: 5m
+        memory: 10Mi
+      limits:
+        memory: 50Mi
