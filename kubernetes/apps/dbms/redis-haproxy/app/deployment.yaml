@@ -37,6 +37,7 @@ spec:
             - containerPort: 8080
             - containerPort: 6379
             - containerPort: 6380
+            - containerPort: 26379
           volumeMounts:
             - name: config
               mountPath: /usr/local/etc/haproxy/haproxy.cfg

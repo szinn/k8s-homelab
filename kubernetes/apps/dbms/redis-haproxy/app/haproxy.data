@@ -8,11 +8,9 @@ defaults
     timeout client 50000ms
     timeout server 50000ms
 
-
 frontend http
     bind :8080
     default_backend stats
-
 
 backend stats
     mode http
@@ -37,11 +35,13 @@ frontend redis-read
     bind *:6380
     default_backend redis-online
 
-
 frontend redis-write
     bind *:6379
     default_backend redis-primary
 
+frontend redis-sentinel
+    bind *:26379
+    default_backend redis-sentinel
 
 backend redis-primary
     mode tcp
@@ -53,7 +53,6 @@ backend redis-primary
     server redis-1 redis-node-1.redis-headless.dbms.svc.cluster.local:6379 check inter 1s
     server redis-2 redis-node-2.redis-headless.dbms.svc.cluster.local:6379 check inter 1s
 
-
 backend redis-online
     mode tcp
     balance roundrobin
@@ -63,3 +62,13 @@ backend redis-online
     server redis-0 redis-node-0.redis-headless.dbms.svc.cluster.local:6379 check inter 1s
     server redis-1 redis-node-1.redis-headless.dbms.svc.cluster.local:6379 check inter 1s
     server redis-2 redis-node-2.redis-headless.dbms.svc.cluster.local:6379 check inter 1s
+
+backend redis-sentinel
+    mode tcp
+    balance roundrobin
+    option tcp-check
+    tcp-check send PING\r\n
+    tcp-check expect string +PONG
+    server redis-0 redis-node-0.redis-headless.dbms.svc.cluster.local:26379 check inter 1s
+    server redis-1 redis-node-1.redis-headless.dbms.svc.cluster.local:26379 check inter 1s
+    server redis-2 redis-node-2.redis-headless.dbms.svc.cluster.local:26379 check inter 1s

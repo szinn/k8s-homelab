@@ -18,5 +18,8 @@ spec:
     - name: redis-read
       port: 6380
       targetPort: 6380
+    - name: redis-sentinel
+      port: 26379
+      targetPort: 26379
   selector:
     app: redis-haproxy

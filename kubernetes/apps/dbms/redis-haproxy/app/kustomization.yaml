@@ -5,6 +5,7 @@ namespace: dbms
 resources:
   - deployment.yaml
   - service.yaml
+  - ingress.yaml
 configMapGenerator:
   - name: redis-haproxy-config
     files:
