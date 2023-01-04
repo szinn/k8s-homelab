@@ -36,9 +36,9 @@ spec:
     env:
       TZ: ${CONFIG_TIMEZONE}
       READARR__LOG_LEVEL: info
-    # envFrom:
-    #   - secretRef:
-    #       name: *app
+    envFrom:
+      - secretRef:
+          name: *app
     service:
       main:
         ports:
