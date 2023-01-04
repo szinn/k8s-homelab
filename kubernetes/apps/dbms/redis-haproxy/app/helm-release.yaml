@@ -1,0 +1,82 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: redis-haproxy
+  namespace: dbms
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+      interval: 15m
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controller:
+      replicas: 2
+      strategy: RollingUpdate
+      rollingUpdate:
+        unavailable: 2
+        surge: 0
+    image:
+      repository: haproxy
+      tag: "2.7"
+    service:
+      main:
+        enabled: true
+        type: LoadBalancer
+        annotations:
+          metallb.universe.tf/loadBalancerIPs: ${CONFIG_SVC_REDIS_ADDR}
+        ports:
+          http:
+            port: 8080
+            targetPort: 8080
+          redis-write:
+            port: 6379
+            targetPort: 6379
+          redis-read:
+            port: 6380
+            targetPort: 6380
+          redis-sentinel:
+            port: 26379
+            targetPort: 26379
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "traefik"
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
+        hosts:
+          - host: "redis-ui.${SECRET_DOMAIN_NAME}"
+            paths:
+              - path: /
+                pathType: Prefix
+    podSecurityContext:
+      runAsUser: 99
+      runAsGroup: 99
+      fsGroup: 99
+      fsGroupChangePolicy: "OnRootMismatch"
+    persistence:
+      config:
+        enabled: true
+        type: configMap
+        name: redis-haproxy-config
+        mountPath: /usr/local/etc/haproxy/haproxy.cfg
+        subPath: haproxy.cfg
+        readOnly: true
