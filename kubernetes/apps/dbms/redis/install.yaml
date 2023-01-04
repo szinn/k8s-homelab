@@ -21,3 +21,28 @@ spec:
   interval: 30m
   retryInterval: 2m
   timeout: 1m
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: dbms-redis-lb
+  namespace: flux-system
+  labels:
+    substitution.flux.home.arpa/enabled: "true"
+spec:
+  path: ./kubernetes/apps/dbms/redis/lb
+  sourceRef:
+    kind: GitRepository
+    name: homelab-kubernetes
+  dependsOn:
+    - name: dbms-redis
+  healthChecks:
+    - apiVersion: apps/v1
+      kind: helm.toolkit.fluxcd.io/v2beta1
+      name: redis-lb
+      namespace: dbms
+  prune: true
+  wait: true
+  interval: 30m
+  retryInterval: 2m
+  timeout: 1m
