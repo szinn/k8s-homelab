@@ -13,6 +13,7 @@ resources:
   - qbittorrent/install.yaml
   - radarr/install.yaml
   - radarr-4k/install.yaml
+  - readarr/install.yaml
   - recyclarr/install.yaml
   - sabnzbd/install.yaml
   - sonarr/install.yaml
