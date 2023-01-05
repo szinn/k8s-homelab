@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - pvc
+  - calibre-web/install.yaml
   - jackett/install.yaml
   - lidarr/install.yaml
   - openbooks/install.yaml

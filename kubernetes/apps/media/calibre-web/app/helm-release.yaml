@@ -1,0 +1,74 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: calibre-web
+  namespace: media
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+      interval: 15m
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    image:
+      repository: ghcr.io/bjw-s/calibre-web
+      tag: 0.6.19@sha256:2090b8d6ae43d56435b0dc27b9c3bc1bf43500d1b268a0eecfe890b1d6b03e72
+    env:
+      TZ: ${CONFIG_TIMEZONE}
+      CACHE_DIR: /cache
+    service:
+      main:
+        ports:
+          http:
+            port: 8083
+    ingress:
+      main:
+        enabled: true
+        annotations:
+        ingressClassName: traefik
+        hosts:
+          - host: books.${SECRET_DOMAIN_NAME}
+            paths:
+              - path: /
+    podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      fsGroupChangePolicy: "OnRootMismatch"
+      supplementalGroups:
+        - 65539
+    enableServiceLinks: false
+    persistence:
+      config:
+        enabled: true
+        existingClaim: calibre-web-config
+      media:
+        enabled: true
+        existingClaim: media-datastore
+      cache:
+        enabled: true
+        type: emptyDir
+        mountPath: /cache
+    resources:
+      requests:
+        cpu: 15m
+        memory: 249M
+      limits:
+        memory: 299M
