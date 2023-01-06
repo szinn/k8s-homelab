@@ -5,4 +5,4 @@ resources:
   - namespace.yaml
   - cf-ddns/install.yaml
   - external-dns/install.yaml
-  - external-services
+  - external-services/install.yaml
