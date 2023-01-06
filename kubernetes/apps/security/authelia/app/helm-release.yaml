@@ -46,18 +46,34 @@ spec:
       main:
         ports:
           http:
-            port: 9091
+            port: &port 9091
           metrics:
             enabled: true
             port: 9959
-        monitor:
-          enabled: true
-          endpoints:
-            - port: metrics
-              scheme: http
-              path: /metrics
-              interval: 1m
-              scrapeTimeout: 10s
+    probes:
+      liveness: &probes
+        enabled: true
+        custom: true
+        spec:
+          httpGet:
+            path: /api/health
+            port: *port
+          initialDelaySeconds: 0
+          periodSeconds: 10
+          timeoutSeconds: 1
+          failureThreshold: 3
+      readiness: *probes
+      startup:
+        enabled: false
+    serviceMonitor:
+      main:
+        enabled: true
+        endpoints:
+          - port: metrics
+            scheme: http
+            path: /metrics
+            interval: 1m
+            scrapeTimeout: 10s
     ingress:
       main:
         enabled: true
