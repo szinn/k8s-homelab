@@ -7,8 +7,7 @@
     ":semanticCommits",
     ":enablePreCommit",
     ":automergeDigest",
-    ":automergeBranchPush",
-    ":separatePatchReleases",
+    ":automergeBranch",
     "github>szinn/k8s-homelab//.github/renovate/allowedVersions.json5",
     "github>szinn/k8s-homelab//.github/renovate/autoMerge.json5",
     "github>szinn/k8s-homelab//.github/renovate/commitMessage.json5",
@@ -21,21 +20,13 @@
   "username": "repo-jeeves[bot]",
   "repositories": ["szinn/k8s-homelab"],
   "onboarding": false,
-  "requireConfig": false,
+  "requireConfig": "optional",
   "gitAuthor": "repo-jeeves <106431701+repo-jeeves[bot]@users.noreply.github.com>",
   "timezone": "America/Toronto",
   "dependencyDashboardTitle": "Renovate Dashboard",
   "suppressNotifications": ["prIgnoreNotification"],
   "rebaseWhen": "conflicted",
   "commitBodyTable": true,
-  "ignoreDeps": [
-    "ghcr.io/fluxcd/helm-controller",
-    "ghcr.io/fluxcd/image-automation-controller",
-    "ghcr.io/fluxcd/image-reflector-controller",
-    "ghcr.io/fluxcd/kustomize-controller",
-    "ghcr.io/fluxcd/notification-controller",
-    "ghcr.io/fluxcd/source-controller"
-  ],
   "flux": {
     "fileMatch": ["kubernetes/.+\\.ya?ml$"]
   },
@@ -75,8 +66,8 @@
       "matchDatasources": ["docker", "github-releases"],
       "versioning": "loose",
       "matchPackageNames": [
-        "ghcr.io/onedr0p/plex",
-        "ghcr.io/k8s-at-home/qbittorrent"
+        "plex",
+        "qbittorrent"
       ]
     }
   ]

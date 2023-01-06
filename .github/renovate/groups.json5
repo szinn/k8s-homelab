@@ -1,6 +1,16 @@
 {
   "packageRules": [
     {
+      "description": "1Password Connect and Sync images",
+      "groupName": "1Password",
+      "matchPackagePatterns": ["1password"],
+      "matchDatasources": ["docker"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
+      "separateMinorPatch": true
+    },
+    {
       "description": "Rook-Ceph image and chart",
       "groupName": "Rook Ceph",
       "matchPackagePatterns": ["rook.ceph"],
