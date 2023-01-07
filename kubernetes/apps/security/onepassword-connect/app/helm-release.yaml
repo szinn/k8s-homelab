@@ -67,18 +67,18 @@ spec:
           initialDelaySeconds: 15
       startup:
         enabled: false
-    # ingress:
-    #   main:
-    #     enabled: true
-    #     ingressClassName: traefik
-    #     annotations:
-    #       traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-    #       traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
-    #     hosts:
-    #       - host: "{{ .Release.Name }}.${SECRET_DOMAIN_NAME}"
-    #         paths:
-    #           - path: /
-    #             pathType: Prefix
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: traefik
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
+        hosts:
+          - host: "{{ .Release.Name }}.${SECRET_DOMAIN_NAME}"
+            paths:
+              - path: /
+                pathType: Prefix
     podSecurityContext:
       runAsUser: 999
       runAsGroup: 999
