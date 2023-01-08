@@ -2,7 +2,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: cluster-apps-tf-controller
+  name: infrastructure-tf-controller
   namespace: flux-system
   labels:
     substitution.flux.home.arpa/enabled: "true"
@@ -18,21 +18,23 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
-# ---
-# apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
-# kind: Kustomization
-# metadata:
-#   name: cluster-apps-tf-controller-terraforms
-#   namespace: flux-system
-#   labels:
-#     substitution.flux.home.arpa/enabled: "true"
-# spec:
-#   interval: 10m
-#   path: "./kubernetes/cluster-0/apps/infrastructure/tf-controller/terraforms"
-#   prune: true
-#   sourceRef:
-#     kind: GitRepository
-#     name: home-ops-kubernetes
-#   wait: true
-#   dependsOn:
-#     - name: cluster-apps-tf-controller
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: infrastructure-tf-controller-terraforms
+  namespace: flux-system
+  labels:
+    substitution.flux.home.arpa/enabled: "true"
+spec:
+  path: "./kubernetes/apps/infrastructure/tf-controller/terraforms"
+  sourceRef:
+    kind: GitRepository
+    name: homelab-kubernetes
+  dependsOn:
+    - name: infrastructure-tf-controller
+  prune: true
+  wait: true
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m
