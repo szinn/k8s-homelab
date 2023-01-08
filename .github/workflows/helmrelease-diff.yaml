@@ -1,7 +1,7 @@
 ---
 name: "HelmRelease Diff"
 
-on:
+on: # yamllint disable-line rule:truthy
   pull_request:
     branches: ["main"]
     paths: ["kubernetes/**/helm-release.yaml"]
