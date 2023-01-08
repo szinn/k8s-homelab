@@ -1,8 +1,6 @@
 ---
 ignore: |
-  utils/
-  charts/
-  docs/
+  hack/
   .private/
   .terraform/
   .vscode/
