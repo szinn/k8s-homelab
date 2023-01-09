@@ -11,6 +11,23 @@ resource "minio_s3_bucket" "bucket" {
   acl           = "private"
 }
 
+resource "minio_s3_bucket_policy" "bucket" {
+  bucket = minio_s3_bucket.bucket.bucket
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {"AWS": ["*"]},
+      "Resource": ["arn:aws:s3:::${minio_s3_bucket.bucket.bucket}"],
+      "Action": ["s3:ListBucket"]
+    }
+  ]
+}
+EOF
+}
+
 resource "minio_iam_user" "user" {
   name          = var.user_name != null ? var.user_name : var.bucket_name
   force_destroy = true
