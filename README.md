@@ -142,14 +142,14 @@ There should be at least one cluster `main` that will be used from the `main` br
 
 ### External Environment Configuration
 
-A base file [setup/env.base](./setup/env.base-template) is used to define any configuration about the external devices on the network (e.g., NAS drives) and config/secrets that are common to all of the cluster configurations.
+A base file [setup/env.base](./infrastructure/setup/env.base-template) is used to define any configuration about the external devices on the network (e.g., NAS drives) and config/secrets that are common to all of the cluster configurations.
 
-Each cluster configuration (e.g. main or staging) has a file [setup/env.<cluster_type>](./setup/env.main-template) that is used to define any configuration that is specific to that cluster.
+Each cluster configuration (e.g. main or staging) has a file [setup/env.<cluster_type>](./infrastructure/setup/env.main-template) that is used to define any configuration that is specific to that cluster.
 For example, the IP addresses that should be reserved through MetalLB for services such as Traefik for MySQL.
 
 All values are defined as shell environment variables.
 
-The shell script [setup/build-config.sh](./setup/build-config.sh) is responsible for traversing the whole repo and creating the appropriate YAML files and encrypting them when necessary.
+The shell script [setup/build-config.sh](./infrastructure/setup/build-config.sh) is responsible for traversing the whole repo and creating the appropriate YAML files and encrypting them when necessary.
 With this structure, all files can be checked in to the repo with no risk of leaking secret values. `build-config.sh` will also create a `.sha256` file for each of the `.cfg` files processed.
 This file is used as an optimization so that the YAML files will only be regenerated if the actual values change, which keeps the number of files in an updating PR smaller.
 
@@ -196,7 +196,7 @@ I am also using poor man's backup (PMB) that is based on kopia.
 
 The machines are configured using Talos (see [Getting Started](https://www.talos.dev/v0.14/introduction/getting-started/) for a walkthrough).
 
-The scripts I used for generating the Talos configuration are found in [talos](./talos).
+The scripts I used for generating the Talos configuration are found in [talos](./infrastructure/talos).
 
 The expectation is that at the end of this step, your machines are up and running and the command line tool `kubectl` can be used to interact with the cluster.
 
@@ -212,7 +212,7 @@ Again, filling these in is typically a one-time operation, but as you add functi
 
 Pairing with the env.XXX files, you will need to expose your configuration in the `cluster-config.cfg` and `cluster-secrets.sops.cfg` files. You don't need to hard-code any values there, just follow the template.
 
-The file [setup/setup-config.sh](./setup/setup-config.sh) contains minimal information required for the setup scripts.
+The file [setup/setup-config.sh](./infrastructure/setup/setup-config.sh) contains minimal information required for the setup scripts.
 `SETUP_ENV_FILES_DIR` defines the location where the env.XXX files reside. I keep mine in an external project called `k8s-config`. `SETUP_CLUSTER_TYPES` defines the types of clusters that are supported.
 
 Once the environment and the cluster config/secret file templates are created, run the `build-config.sh` script file and fix any errors.
