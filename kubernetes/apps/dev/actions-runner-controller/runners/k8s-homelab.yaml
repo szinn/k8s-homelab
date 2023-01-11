@@ -14,9 +14,6 @@ spec:
       ephemeral: true
       repository: szinn/k8s-homelab
       labels: ["self-hosted"]
-      securityContext:
-        supplementalGroups:
-          - 65542
       volumeMounts:
         - name: cache-volume
           mountPath: /cache
