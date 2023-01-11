@@ -15,3 +15,10 @@ includes:
   redis: .taskfiles/Redis/Tasks.yaml
   rook: .taskfiles/Rook/Tasks.yaml
   vs: .taskfiles/VolSync/Tasks.yaml
+
+tasks:
+  secrets:
+    desc: Encode config and secrets
+    cmds:
+      - |
+        infrastructure/setup/build-config.sh
