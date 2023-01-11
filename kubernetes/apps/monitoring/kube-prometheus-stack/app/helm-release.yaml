@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: kube-prometheus-stack
-      version: 43.3.0
+      version: 43.2.1
       sourceRef:
         kind: HelmRepository
         name: prometheus-community-charts
@@ -123,10 +123,8 @@ spec:
             webhook_configs:
               - url: "http://alertmanager-discord:9094"
         inhibit_rules:
-          - source_match:
-              severity: "critical"
-            target_match:
-              severity: "warning"
+          - source_matchers: ["severity = 'critical'"]
+            target_matchers: ["severity = 'warning'"]
             equal: ["alertname", "namespace"]
         templates:
           - /etc/alertmanager/config/*.tmpl
@@ -205,20 +203,20 @@ spec:
           objectStorageConfig:
             name: thanos-objstore-secret
             key: objstore.yml
-        # additionalScrapeConfigs:
-        #   - job_name: minio-job
-        #     metrics_path: /minio/v2/metrics/cluster
-        #     scheme: http
-        #     static_configs:
-        #       - targets:
-        #           - atlas.${SECRET_DOMAIN_NAME}:9000
-        #   - job_name: node-exporter
-        #     scrape_interval: 1m
-        #     scrape_timeout: 10s
-        #     honor_timestamps: true
-        #     static_configs:
-        #       - targets:
-        #           - "ragnar.${SECRET_DOMAIN_NAME}:9100"
+        additionalScrapeConfigs:
+          - job_name: minio-job
+            metrics_path: /minio/v2/metrics/cluster
+            scheme: http
+            static_configs:
+              - targets:
+                  - atlas.${SECRET_DOMAIN_NAME}:9000
+          - job_name: node-exporter
+            scrape_interval: 1m
+            scrape_timeout: 10s
+            honor_timestamps: true
+            static_configs:
+              - targets:
+                  - "ragnar.${SECRET_DOMAIN_NAME}:9100"
     grafana:
       enabled: false
       forceDeployDashboards: true
