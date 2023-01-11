@@ -32,12 +32,12 @@ spec:
     image:
       repository: ghcr.io/authelia/authelia
       tag: 4.37.5
-    env:
-      AUTHELIA_IDENTITY_PROVIDERS_OIDC_ISSUER_PRIVATE_KEY:
-        valueFrom:
-          secretKeyRef:
-            name: authelia-files
-            key: issuer-private-key
+    # env:
+    #   AUTHELIA_IDENTITY_PROVIDERS_OIDC_ISSUER_PRIVATE_KEY:
+    #     valueFrom:
+    #       secretKeyRef:
+    #         name: authelia-files
+    #         key: issuer-private-key
     envFrom:
       - secretRef:
           name: *app
@@ -104,7 +104,7 @@ spec:
       users:
         enabled: true
         type: secret
-        name: authelia-files
-        subPath: users.yaml
+        name: authelia
+        subPath: USERS_YAML
         mountPath: /config/users.yaml
         readOnly: false
