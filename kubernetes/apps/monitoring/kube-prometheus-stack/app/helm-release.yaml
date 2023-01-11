@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: kube-prometheus-stack
-      version: 43.2.1
+      version: 43.3.0
       sourceRef:
         kind: HelmRepository
         name: prometheus-community-charts
@@ -149,14 +149,21 @@ spec:
                 - __meta_kubernetes_pod_node_name
               targetLabel: kubernetes_node
     prometheusOperator:
+      resources:
+        requests:
+          cpu: 35m
+          memory: 273M
+        limits:
+          memory: 326M
       prometheusConfigReloader:
         resources:
           requests:
-            cpu: 100m
-            memory: 50Mi
+            cpu: 11m
+            memory: 32M
           limits:
-            cpu: 200m
-            memory: 100Mi
+            memory: 32M
+      serviceMonitor:
+        sampleLimit: 0
     prometheus:
       ingress:
         enabled: true
@@ -224,3 +231,5 @@ spec:
         dashboards:
           annotations:
             grafana_folder: Prometheus
+    nodeExporter:
+      enabled: true
