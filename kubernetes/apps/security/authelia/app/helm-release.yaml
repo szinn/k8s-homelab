@@ -32,12 +32,19 @@ spec:
     image:
       repository: ghcr.io/authelia/authelia
       tag: 4.37.5
-    # env:
-    #   AUTHELIA_IDENTITY_PROVIDERS_OIDC_ISSUER_PRIVATE_KEY:
-    #     valueFrom:
-    #       secretKeyRef:
-    #         name: authelia-files
-    #         key: issuer-private-key
+    env:
+      TZ: ${CONFG_TIMEZONE}
+      AUTHELIA_THEME: dark
+      AUTHELIA_DEFAULT_2FA_METHOD: totp
+      AUTHELIA_DEFAULT_REDIRECTION_URL: "https://auth.${SECRET_DOMAIN_NAME}"
+      AUTHELIA_DUO_API_DISABLE: "true"
+      AUTHELIA_LOG_LEVEL: debug
+      AUTHELIA_LOG_FORMAT: text
+      AUTHELIA_SESSION_NAME: authelia-${CONFIG_CLUSTER_NAME}
+      AUTHELIA_SESSION_DOMAIN: ${SECRET_DOMAIN_NAME}
+      AUTHELIA_SESSION_REMEMBER_ME_DURATION: 1y
+      AUTHELIA_NOTIFIER_SMTP_DISABLE_REQUIRE_TLS: "true"
+      AUTHELIA_SERVER_DISABLE_HEALTHCHECK: "true"
     envFrom:
       - secretRef:
           name: *app
