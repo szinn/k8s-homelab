@@ -103,17 +103,18 @@ The repository directories are:
 
 - **.github**: GitHub support files and renovate configuration.
 - **.taskfiles**: Auxiliary files used for the task command-line tool.
-- **cluster**: The cluster itself.
+- **infrastructure**: Code to manage the infrastructure of the cluster.
+  - **setup**: Scripts to configure and create the cluster.
+  - **talos**: Talos machine configuration.
+  - **terraform**: Terraform configuration.
+- **kubernetes**: The cluster itself.
   - **apps**: The applications to load.
-  - **charts**: Charts used for local customized helm charts.
-  - **config**: Where cluster-config.yaml and cluster-secrets.sops.yaml will be created.
-  - **core**: The core packages loaded prior to the applications.
-  - **crds**: CRD resources that must be loaded prior to any helm package processing.
-  - **helm-charts**: The locations for any of the helm charts required in the cluster.
-  - **main**: The main cluster.
-- **setup**: Scripts to configure and create the cluster.
+  - **bootstrap**: The initial code loaded on the cluster to bootstrap it.
+  - **cluster**: The definition of the cluster.
+    - **config**: The configuration of the cluster to use flux.
+    - **repositories**: Sources of code for the cluster.
+    - **vars**: The ConfigMap and Secret used for variable substitution by Flux.
 - **hack**: Miscellaneous stuff that really has nothing to do with managing the cluster.
-- **utils**: Miscellaneous utilities for managing the cluster.
 
 ### Environment Setup
 
@@ -130,16 +131,6 @@ pre-commit auto-update
 ```
 
 ## Cluster Configuration
-
-The cluster is configured through multiple levels:
-
-- cluster configuration;
-- cluster secrets;
-- application secrets.
-
-All values for the configurations are stored in a set of environment variables described below.
-
-There should be at least one cluster `main` that will be used from the `main` branch of the repo.
 
 ### External Environment Configuration
 
@@ -166,8 +157,7 @@ The file [cluster-secrets.sops.cfg](./kubernetes/cluster/vars/cluster-secrets.so
 
 ### Application Secrets
 
-Each application may require a Secret resource for configuration in the helm chart. In each package, an `application-config.cfg` or `application-secret.sops.cfg` files should be created.
-As with cluster secrets, the `setup/build-config.sh` script will convert the secrets template into a SOPS-encrypted YAML file.
+Application secrets are maintained by using [external-secrets](https://external-secrets.io).
 
 ## Persistent Volume Management
 
@@ -179,8 +169,7 @@ Each worker has a 1Tb NVMe drive that is managed with Rook/Ceph. The data stored
 
 ### NFS
 
-I'm still experimenting with NAS storage with regards to the cluster. Most of my home data is stored on the Synology drive, but file-level permission management has been a bit of a pain.
-I'm also going to use the TrueNAS Core storage running on the Ryzen server.
+I'm still experimenting with NAS storage with regards to the cluster. Most of my home data is stored on the NAS drive, but file-level permission management has been a bit of a pain.
 
 Applications that don't require fast access to data or only use it for temporary storage (e.g., a download directory) will store the data in NFS.
 The NFS drives are available across the cluster but are at a slower speed than the Rook/Ceph storage.
@@ -189,7 +178,7 @@ The NFS drives are available across the cluster but are at a slower speed than t
 
 Currently, I use a combination of built-in application backups (e.g., *arr applications will backup weekly), an external shell script that will backup databases (mysql and postgres),
 and a couple of apps that I have backed up their configuration as it doesn't change frequently and it gets automatically restored upon the very first startup.
-I am also using poor man's backup (PMB) that is based on kopia.
+I am also using poor man's backup (PMB) that is based on kopia as well as volsync which is based on restic and puts the backups into my Minio storage.
 
 ## Installation
 
