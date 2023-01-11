@@ -123,10 +123,8 @@ spec:
             webhook_configs:
               - url: "http://alertmanager-discord:9094"
         inhibit_rules:
-          - source_match:
-              severity: "critical"
-            target_match:
-              severity: "warning"
+          - source_matchers: ["severity = 'critical'"]
+            target_matchers: ["severity = 'warning'"]
             equal: ["alertname", "namespace"]
         templates:
           - /etc/alertmanager/config/*.tmpl
