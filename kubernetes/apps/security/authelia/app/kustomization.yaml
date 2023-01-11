@@ -6,8 +6,6 @@ resources:
   - authelia-secrets.yaml
   - authelia-auth.yaml
   - helm-release.yaml
-patchesStrategicMerge:
-  - patches/postgres.yaml
 configMapGenerator:
   - name: authelia
     files:
