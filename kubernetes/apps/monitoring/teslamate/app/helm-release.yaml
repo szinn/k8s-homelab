@@ -27,6 +27,20 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    initContainers:
+      init-db:
+        image: ghcr.io/onedr0p/postgres-initdb:14.6
+        imagePullPolicy: Always
+        env:
+          - name: POSTGRES_HOST
+            value: postgres-rw.dbms
+          - name: POSTGRES_DB
+            value: *app
+        envFrom:
+          - secretRef:
+              name: *app
+          - secretRef:
+              name: postgres-superuser
     controller:
       annotations:
         secret.reloader.stakater.com/reload: *app

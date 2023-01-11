@@ -6,5 +6,3 @@ resources:
   - helm-release.yaml
   - teslamate-datasource.yaml
   - dashboard
-patchesStrategicMerge:
-  - patches/postgres.yaml
