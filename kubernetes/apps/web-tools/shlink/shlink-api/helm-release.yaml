@@ -26,6 +26,29 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    initContainers:
+      init-db:
+        image: ghcr.io/onedr0p/postgres-initdb:14.6
+        env:
+          - name: POSTGRES_HOST
+            value: postgres-rw.dbms.svc.cluster.local
+          - name: POSTGRES_DB
+            value: shlink
+          - name: POSTGRES_SUPER_PASS
+            valueFrom:
+              secretKeyRef:
+                name: postgres-superuser
+                key: POSTGRES_SUPER_PASS
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: shlink
+                key: DB_USER
+          - name: POSTGRES_PASS
+            valueFrom:
+              secretKeyRef:
+                name: shlink
+                key: DB_PASSWORD
     controller:
       replicas: 3
       strategy: RollingUpdate

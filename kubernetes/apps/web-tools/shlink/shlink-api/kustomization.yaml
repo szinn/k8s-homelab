@@ -4,5 +4,3 @@ kind: Kustomization
 resources:
   - shlink-secrets.yaml
   - helm-release.yaml
-patchesStrategicMerge:
-  - patches/postgres.yaml
