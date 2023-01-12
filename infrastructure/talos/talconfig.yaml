@@ -97,7 +97,7 @@ controlPlane:
         time:
           disabled: false
           servers:
-            - pool.ntp.org
+            - ntp.${SECRET_BASE_DOMAIN_NAME}
 worker:
   patches:
     - "@patch-common.yaml"
@@ -115,4 +115,4 @@ worker:
         time:
           disabled: false
           servers:
-            - pool.ntp.org
+            - ntp.${SECRET_BASE_DOMAIN_NAME}
