@@ -4,4 +4,3 @@ kind: Kustomization
 resources:
   - unifi-poller-secrets.yaml
   - helm-release.yaml
-  - service-monitor.yaml
