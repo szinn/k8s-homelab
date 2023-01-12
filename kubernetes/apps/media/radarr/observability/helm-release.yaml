@@ -56,3 +56,12 @@ spec:
         memory: 100Mi
       limits:
         memory: 250Mi
+    serviceMonitor:
+      main:
+        enabled: true
+        endpoints:
+          - port: http
+            scheme: http
+            path: /metrics
+            interval: 1m
+            scrapeTimeout: 10s
