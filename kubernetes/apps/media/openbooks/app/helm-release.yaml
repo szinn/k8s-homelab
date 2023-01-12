@@ -33,24 +33,22 @@ spec:
       pullPolicy: IfNotPresent
     command: /app/openbooks
     args:
-      - "server"
-      - "--dir"
-      - "/books"
-      - "--port"
-      - "80"
-      - "--name"
-      - "ronwood"
-      - "--useragent"
-      - "mIrc"
+      - server
+      - --dir
+      - /books
+      - --port
+      - &port '8080'
+      - --name
+      - ronwood
+      - --useragent
+      - mIrc
     env:
       TZ: ${CONFIG_TIMEZONE}
-      PUID: "1000"
-      GUID: "1000"
     service:
       main:
         ports:
           http:
-            port: 80
+            port: *port
     ingress:
       main:
         enabled: true
@@ -63,8 +61,12 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
-                service:
-                  port: 80
+    podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      fsGroupChangePolicy: 'OnRootMismatch'
+
     persistence:
       books:
         enabled: true
