@@ -9,6 +9,20 @@ defaults
     timeout server 30s
     retry-on all-retryable-errors
 
+resolvers cluster_ns
+    parse-resolv-conf
+
+    hold valid    10s
+    hold other    30s
+    hold refused  30s
+    hold nx       30s
+    hold timeout  30s
+    hold obsolete 30s
+
+    resolve_retries 3
+    timeout retry 1s
+    timeout resolve 1s
+
 frontend http
     bind :8080
     http-request use-service prometheus-exporter if { path /metrics }
@@ -50,9 +64,9 @@ backend redis-primary
     tcp-check connect port 6379
     tcp-check send info\ replication\r\n
     tcp-check expect string role:master
-    server redis-0 redis-node-0.redis-headless.dbms.svc.cluster.local check inter 5s downinter 5s on-error mark-down
-    server redis-1 redis-node-1.redis-headless.dbms.svc.cluster.local check inter 5s downinter 5s on-error mark-down
-    server redis-2 redis-node-2.redis-headless.dbms.svc.cluster.local check inter 5s downinter 5s on-error mark-down
+    server redis-0 redis-node-0.redis-headless.dbms.svc.cluster.local check inter 5s resolvers cluster_ns
+    server redis-1 redis-node-1.redis-headless.dbms.svc.cluster.local check inter 5s resolvers cluster_ns
+    server redis-2 redis-node-2.redis-headless.dbms.svc.cluster.local check inter 5s resolvers cluster_ns
 
 backend redis-online
     mode http
@@ -61,9 +75,9 @@ backend redis-online
     tcp-check connect port 6379
     tcp-check send PING\r\n
     tcp-check expect string +PONG
-    server redis-0 redis-node-0.redis-headless.dbms.svc.cluster.local check inter 5s downinter 5s on-error mark-down
-    server redis-1 redis-node-1.redis-headless.dbms.svc.cluster.local check inter 5s downinter 5s on-error mark-down
-    server redis-2 redis-node-2.redis-headless.dbms.svc.cluster.local check inter 5s downinter 5s on-error mark-down
+    server redis-0 redis-node-0.redis-headless.dbms.svc.cluster.local check inter 5s resolvers cluster_ns
+    server redis-1 redis-node-1.redis-headless.dbms.svc.cluster.local check inter 5s resolvers cluster_ns
+    server redis-2 redis-node-2.redis-headless.dbms.svc.cluster.local check inter 5s resolvers cluster_ns
 
 backend redis-sentinel
     mode http
@@ -72,6 +86,6 @@ backend redis-sentinel
     tcp-check connect port 26379
     tcp-check send PING\r\n
     tcp-check expect string +PONG
-    server redis-0 redis-node-0.redis-headless.dbms.svc.cluster.local check inter 5s downinter 5s on-error mark-down
-    server redis-1 redis-node-1.redis-headless.dbms.svc.cluster.local check inter 5s downinter 5s on-error mark-down
-    server redis-2 redis-node-2.redis-headless.dbms.svc.cluster.local check inter 5s downinter 5s on-error mark-down
+    server redis-0 redis-node-0.redis-headless.dbms.svc.cluster.local check inter 5s resolvers cluster_ns
+    server redis-1 redis-node-1.redis-headless.dbms.svc.cluster.local check inter 5s resolvers cluster_ns
+    server redis-2 redis-node-2.redis-headless.dbms.svc.cluster.local check inter 5s resolvers cluster_ns
