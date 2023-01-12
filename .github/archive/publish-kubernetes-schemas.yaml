@@ -57,16 +57,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # - name: Install SSH key
-      #   uses: shimataro/ssh-key-action@v2
-      #   with:
-      #     key: ${{ secrets.SCHEMA_DEPLOY_KEY }}
-      #     known_hosts: 'just-a-placeholder-so-we-dont-get-errors'
-
-      # - name: Add known hosts
-      #   run: |
-      #     ssh-keyscan -H ${{ secrets.SCHEMA_DEPLOY_HOST }} >> ~/.ssh/known_hosts
-
       - name: Setup crd-extractor
         uses: robinraju/release-downloader@768b85c8d69164800db5fc00337ab917daf3ce68 # v1.7
         with:
@@ -120,7 +110,3 @@ jobs:
           labels: |
             org.opencontainers.image.source="https://github.com/szinn/k8s-homelab"
             org.opencontainers.image.authors="Scotte Zinn <scotte@zinn.ca>"
-
-      # - name: Publish CRD schemas
-      #   run: |
-      #     rsync -avz /home/runner/.datree/crdSchemas/ ${{ secrets.SCHEMA_DEPLOY_USER }}@${{ secrets.SCHEMA_DEPLOY_HOST }}:${{ secrets.SCHEMA_DEPLOY_PATH }}
