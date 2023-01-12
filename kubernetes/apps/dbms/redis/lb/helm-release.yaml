@@ -33,6 +33,8 @@ spec:
       rollingUpdate:
         unavailable: 2
         surge: 0
+      annotations:
+        configmap.reloader.stakater.com/reload: redis-haproxy-config
     image:
       repository: haproxy
       tag: "2.7"

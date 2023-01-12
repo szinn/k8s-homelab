@@ -4,6 +4,8 @@ kind: Kustomization
 namespace: dbms
 resources:
   - helm-release.yaml
+  - service-monitor.yaml
+  - prometheus-rules.yaml
 configMapGenerator:
   - name: redis-haproxy-config
     files:
