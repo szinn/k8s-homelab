@@ -3,10 +3,11 @@ global
     maxconn 256
 
 defaults
-    mode tcp
+    mode http
     timeout connect 4s
     timeout client 30s
     timeout server 30s
+    retry-on all-retryable-errors
 
 frontend http
     bind :8080
@@ -43,34 +44,34 @@ frontend redis-sentinel
     default_backend redis-sentinel
 
 backend redis-primary
-    mode tcp
+    mode http
     balance first
     option tcp-check
-    tcp-check connect
+    tcp-check connect port 6379
     tcp-check send info\ replication\r\n
     tcp-check expect string role:master
-    server redis-0 redis-node-0.redis-headless.dbms.svc.cluster.local:6379 check inter 1s
-    server redis-1 redis-node-1.redis-headless.dbms.svc.cluster.local:6379 check inter 1s
-    server redis-2 redis-node-2.redis-headless.dbms.svc.cluster.local:6379 check inter 1s
+    server redis-0 redis-node-0.redis-headless.dbms.svc.cluster.local check inter 1s
+    server redis-1 redis-node-1.redis-headless.dbms.svc.cluster.local check inter 1s
+    server redis-2 redis-node-2.redis-headless.dbms.svc.cluster.local check inter 1s
 
 backend redis-online
-    mode tcp
+    mode http
     balance roundrobin
     option tcp-check
-    tcp-check connect
+    tcp-check connect port 6379
     tcp-check send PING\r\n
     tcp-check expect string +PONG
-    server redis-0 redis-node-0.redis-headless.dbms.svc.cluster.local:6379 check inter 1s
-    server redis-1 redis-node-1.redis-headless.dbms.svc.cluster.local:6379 check inter 1s
-    server redis-2 redis-node-2.redis-headless.dbms.svc.cluster.local:6379 check inter 1s
+    server redis-0 redis-node-0.redis-headless.dbms.svc.cluster.local check inter 1s
+    server redis-1 redis-node-1.redis-headless.dbms.svc.cluster.local check inter 1s
+    server redis-2 redis-node-2.redis-headless.dbms.svc.cluster.local check inter 1s
 
 backend redis-sentinel
-    mode tcp
+    mode http
     balance roundrobin
     option tcp-check
-    tcp-check connect
+    tcp-check connect port 26379
     tcp-check send PING\r\n
     tcp-check expect string +PONG
-    server redis-0 redis-node-0.redis-headless.dbms.svc.cluster.local:26379 check inter 1s
-    server redis-1 redis-node-1.redis-headless.dbms.svc.cluster.local:26379 check inter 1s
-    server redis-2 redis-node-2.redis-headless.dbms.svc.cluster.local:26379 check inter 1s
+    server redis-0 redis-node-0.redis-headless.dbms.svc.cluster.local check inter 1s
+    server redis-1 redis-node-1.redis-headless.dbms.svc.cluster.local check inter 1s
+    server redis-2 redis-node-2.redis-headless.dbms.svc.cluster.local check inter 1s
