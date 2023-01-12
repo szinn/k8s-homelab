@@ -31,6 +31,17 @@ spec:
       repository: docker.io/evanbuss/openbooks
       tag: latest
       pullPolicy: IfNotPresent
+    command: /app/openbooks
+    args:
+      - "server"
+      - "--dir"
+      - "/books"
+      - "--port"
+      - "80"
+      - "--name"
+      - "ronwood"
+      - "--useragent"
+      - "mIrc"
     env:
       TZ: ${CONFIG_TIMEZONE}
       PUID: "1000"
@@ -55,6 +66,7 @@ spec:
                 service:
                   port: 80
     persistence:
-      data:
+      books:
         enabled: true
         existingClaim: openbooks-config
+        mountPath: /books
