@@ -10,15 +10,14 @@ defaults
 
 frontend http
     bind :8080
+    http-request use-service prometheus-exporter if { path /metrics }
     default_backend stats
 
 backend stats
     mode http
     stats enable
-
-    stats enable
     stats uri /
-    stats refresh 1s
+    stats refresh 5s
     stats show-legends
     stats admin if TRUE
 
