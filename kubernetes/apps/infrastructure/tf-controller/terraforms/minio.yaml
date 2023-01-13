@@ -37,11 +37,3 @@ spec:
             secretKeyRef:
               name: tf-controller-secrets
               key: OP_CONNECT_TOKEN
-      volumeMounts:
-        - name: tf-controller-sops-key
-          mountPath: /home/runner/.config/sops/age/keys.txt
-          subPath: keys.txt
-      volumes:
-        - name: tf-controller-sops-key
-          secret:
-            secretName: tf-controller-sops-key
