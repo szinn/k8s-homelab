@@ -31,8 +31,8 @@ spec:
       annotations:
         secret.reloader.stakater.com/reload: *app
     image:
-      repository: ghcr.io/onedr0p/sonarr
-      tag: 3.0.9.1549
+      repository: ghcr.io/szinn/sonarr
+      tag: 3.0.9.1549@sha256:495ff6b0c0428a007c1b93edcee292618664a6b45750b207986079cf1d0abdea
     env:
       TZ: ${CONFIG_TIMEZONE}
       SONARR__LOG_LEVEL: info
