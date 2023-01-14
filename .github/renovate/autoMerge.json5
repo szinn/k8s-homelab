@@ -8,6 +8,7 @@
       "ignoreTests": true,
       "matchUpdateTypes": ["digest"],
       "matchPackagePattern": [
+        "ghcr.io/szinn",
         "ghcr.io/onedr0p",
         "ghcr.io/bjw-s"
       ]
@@ -25,6 +26,8 @@
       "requiredStatusChecks": null,
       "matchUpdateTypes": ["minor", "patch"],
       "matchPackageNames": [
+        "ghcr.io/szinn/sonarr",
+
         "ghcr.io/onedr0p/jackett",
         "ghcr.io/onedr0p/lidarr",
         "ghcr.io/onedr0p/prowlarr-nightly",
@@ -33,6 +36,7 @@
         "ghcr.io/onedr0p/recyclarr",
         "ghcr.io/onedr0p/sabnzbd",
         "ghcr.io/onedr0p/sonarr",
+
         "renovatebot/github-action"
       ]
     }
