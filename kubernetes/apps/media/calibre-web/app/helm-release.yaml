@@ -41,8 +41,10 @@ spec:
     ingress:
       main:
         enabled: true
-        annotations:
         ingressClassName: traefik
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
         hosts:
           - host: books.${SECRET_DOMAIN_NAME}
             paths:
