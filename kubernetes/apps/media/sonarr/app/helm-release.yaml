@@ -32,7 +32,7 @@ spec:
         secret.reloader.stakater.com/reload: *app
     image:
       repository: ghcr.io/szinn/sonarr
-      tag: 3.0.9.1549@sha256:f12f7f5a9de3c6356507fd5e1d60b08b51970c1441eb63695ffe238238cf1f23
+      tag: 3.0.9.1549@sha256:db2182ef6d99a250986082bda29c0839727a70d54ebddd4139eb806fa88962c3
     env:
       TZ: ${CONFIG_TIMEZONE}
       SONARR__LOG_LEVEL: info
