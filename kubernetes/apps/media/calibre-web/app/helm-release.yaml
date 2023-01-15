@@ -29,7 +29,7 @@ spec:
   values:
     image:
       repository: ghcr.io/bjw-s/calibre-web
-      tag: 0.6.19@sha256:68452b5cdff6a16776e436b7347f3b5f84a51971edaf03dd44fd6f1778cd6605
+      tag: 0.6.19@sha256:4a50a8f7a6668b7101d90ec52d24d5ec26e61d2eca8c882e948004aa2ea8c006
     env:
       TZ: ${CONFIG_TIMEZONE}
       CACHE_DIR: /cache
