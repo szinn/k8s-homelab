@@ -224,10 +224,6 @@ spec:
             static_configs:
               - targets:
                   - "ragnar.${SECRET_DOMAIN_NAME}:9100"
-          - job_name: redis-haproxy
-            static_configs:
-              - targets:
-                  - 'redis-lb.dbms:8080'
     grafana:
       enabled: false
       forceDeployDashboards: true
