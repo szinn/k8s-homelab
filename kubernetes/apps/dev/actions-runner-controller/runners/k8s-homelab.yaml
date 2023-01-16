@@ -7,9 +7,7 @@ metadata:
 spec:
   template:
     spec:
-      image: ghcr.io/actions/actions-runner-controller/actions-runner:v2.299.1-ubuntu-20.04@sha256:69e3b023ecdb34313935952c4375a75414db79f177353123c774290028b3bb3a
-      # image: ghcr.io/actions-runner-controller/actions-runner-controller/actions-runner-dind:ubuntu-22.04@sha256:86dfb6336146d239a34c530e89468effb0c3ec518fa35c350b9dee49bb574736
-      # image: summerwind/actions-runner-dind:v2.293.0-ubuntu-20.04-933b0c7@sha256:b9efbd77aac56a2ebd92e936afe9a7bb884057c575b2c2db53676b5d86a1cc5d
+      image: ghcr.io/actions/actions-runner-controller/actions-runner-dind:v2.299.1-ubuntu-22.04
       dockerdWithinRunnerContainer: false
       ephemeral: true
       repository: szinn/k8s-homelab
@@ -36,9 +34,7 @@ spec:
     name: k8s-homelab
   scaleUpTriggers:
     - githubEvent:
-        checkRun:
-          types: ["created"]
-          status: "queued"
+        workflowJob: {}
       amount: 1
       duration: "1m"
   minReplicas: 1
