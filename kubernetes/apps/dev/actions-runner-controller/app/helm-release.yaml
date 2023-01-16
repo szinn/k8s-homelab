@@ -28,24 +28,19 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    image:
+      repository: ghcr.io/actions-runner-controller/actions-runner-controller
     authSecret:
       create: false
-      name: actions-runner-controller-secret
-    image:
-      repository: summerwind/actions-runner-controller
-    resources:
-      requests:
-        cpu: 10m
-        memory: 50M
-      limits:
-        cpu: 15m
-        memory: 72M
+      name: &secret actions-runner-controller-secret
+    annotations:
+      secret.reloader.stakater.com/reload: *secret
     githubWebhookServer:
       enabled: true
       syncPeriod: 10m
       secret:
         create: false
-        name: actions-runner-controller-secret
+        name: *secret
       ingress:
         enabled: true
         annotations:
@@ -59,10 +54,19 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
-      resources:
-        requests:
-          cpu: 10m
-          memory: 32M
-        limits:
-          cpu: 15m
-          memory: 34M
+    metrics:
+      serviceMonitor: true
+      port: 8080
+      proxy:
+        enabled: false
+    actionsMetricsServer:
+      enabled: true
+      secret:
+        enabled: true
+        create: false
+        name: *secret
+    actionsMetrics:
+      serviceMonitor: true
+      port: 8080
+      proxy:
+        enabled: false
