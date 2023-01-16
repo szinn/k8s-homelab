@@ -3,7 +3,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - recyclarr-secrets.yaml
-  - cron-job.yaml
+  - helm-release.yaml
 namespace: media
 configMapGenerator:
   - name: recyclarr

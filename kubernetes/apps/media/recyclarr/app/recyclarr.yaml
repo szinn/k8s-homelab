@@ -9,8 +9,10 @@
 # https://github.com/rcdailey/trash-updater/wiki/Configuration-Reference
 
 sonarr:
-  - base_url: http://sonarr:8989
-    api_key: ${SONARR_APIKEY}
+  standard:
+    base_url: http://sonarr:8989
+    api_key: !env_var SONARR_APIKEY
+    delete_old_custom_formats: true
     quality_definition:
       type: series
     release_profiles:
@@ -27,8 +29,9 @@ sonarr:
             - f3f0f3691c6a1988d4a02963e69d11f2 # Ignore The Group -SCENE
 
 radarr:
-  - base_url: http://radarr:7878
-    api_key: ${RADARR_APIKEY}
+  standard:
+    base_url: http://radarr:7878
+    api_key: !env_var RADARR_APIKEY
     delete_old_custom_formats: true
     quality_definition:
       type: movie
@@ -92,13 +95,6 @@ radarr:
             reset_unmatched_scores: true
           - name: HD
             reset_unmatched_scores: true
-      - trash_ids:
-          - 1c7d7b04b15cc53ea61204bebbcc1ee2 # HQ
-        quality_profiles:
-          - name: Any
-            score: 0
-          - name: HD
-            score: 0
       - trash_ids:
           - 4b900e171accbfb172729b63323ea8ca # Optional: Multi
           - 923b6abef9b17f937fab56cfcf89e1f1 # Optional: DV (WEBDL) without fallback to HDR, set to manual score 0 or -10000
@@ -108,8 +104,9 @@ radarr:
           - name: HD
             score: 0
 
-  - base_url: http://radarr-4k:7878
-    api_key: ${RADARR_4K_APIKEY}
+  fourk:
+    base_url: http://radarr-4k:7878
+    api_key: !env_var RADARR_4K_APIKEY
     delete_old_custom_formats: true
     quality_definition:
       type: movie
@@ -169,11 +166,6 @@ radarr:
         quality_profiles:
           - name: UHD
             reset_unmatched_scores: true
-      - trash_ids:
-          - 1c7d7b04b15cc53ea61204bebbcc1ee2 # HQ
-        quality_profiles:
-          - name: UHD
-            score: 0
       - trash_ids:
           - 4b900e171accbfb172729b63323ea8ca # Optional: Multi
           - 923b6abef9b17f937fab56cfcf89e1f1 # Optional: DV (WEBDL) without fallback to HDR, set to manual score 0 or -10000
