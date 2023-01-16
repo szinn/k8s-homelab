@@ -183,7 +183,7 @@ spec:
         replicas: 1
         podAntiAffinity: hard
         retentionSize: "6GB"
-        replicaExternalLabelName: "replica"
+        replicaExternalLabelName: "__replica__"
         ruleSelector: {}
         ruleNamespaceSelector: {}
         ruleSelectorNilUsesHelmValues: false
