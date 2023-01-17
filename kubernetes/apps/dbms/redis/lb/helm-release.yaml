@@ -36,7 +36,7 @@ spec:
       annotations:
         configmap.reloader.stakater.com/reload: redis-haproxy-config
     image:
-      repository: haproxy
+      repository: docker.io/haproxy
       tag: "2.7"
     service:
       main:
