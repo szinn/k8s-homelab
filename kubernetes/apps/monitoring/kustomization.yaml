@@ -9,6 +9,7 @@ resources:
   - grafana/install.yaml
   - kube-prometheus-stack/install.yaml
   - loki/install.yaml
+  - miscellaneous
   - node-problem-detector/install.yaml
   - teslamate/install.yaml
   - thanos/install.yaml
