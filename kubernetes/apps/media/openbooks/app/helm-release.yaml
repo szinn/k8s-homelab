@@ -41,7 +41,9 @@ spec:
       - --name
       - ronwood
       - --useragent
-      - mIrc
+      - 'HexChat 2.9.1'
+      - --searchbot
+      - searchook
     env:
       TZ: ${CONFIG_TIMEZONE}
     service:
