@@ -1,0 +1,69 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: postgres-backup
+  namespace: dbms
+spec:
+  concurrencyPolicy: "Forbid"
+  startingDeadlineSeconds: 30
+  schedule: "@daily"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      ttlSecondsAfterFinished: 43200
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: postgres-backup
+            app.kubernetes.io/instance: postgres-backup
+        spec:
+          serviceAccountName: default
+          automountServiceAccountToken: true
+          securityContext:
+            fsGroup: 568
+            fsGroupChangePolicy: OnRootMismatch
+            runAsGroup: 568
+            runAsUser: 568
+          dnsPolicy: ClusterFirst
+          enableServiceLinks: false
+          containers:
+            - name: postgres-backup
+              image: "docker.io/prodrigestivill/postgres-backup-local:15@sha256:93f597a7ad95d5a9d988e57c32442e6f78d6e88d809ca96bb0a3270e45c85650"
+              imagePullPolicy: IfNotPresent
+              command:
+                - /backup.sh
+              env:
+                - name: POSTGRES_HOST
+                  value: postgres-ro.dbms.svc.cluster.local
+                - name: POSTGRES_USER
+                  valueFrom:
+                    secretKeyRef:
+                      key: POSTGRES_SUPER_USER
+                      name: postgres-superuser
+                - name: POSTGRES_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      key: POSTGRES_SUPER_PASS
+                      name: postgres-superuser
+                - name: POSTGRES_DB
+                  value: outline,shlink,teslamate
+                - name: BACKUP_KEEP_DAYS
+                  value: "7"
+                - name: BACKUP_KEEP_WEEKS
+                  value: "4"
+                - name: BACKUP_KEEP_MONTHS
+                  value: "6"
+                - name: BACKUP_KEEP_MINS
+                  value: "1440"
+                - name: POSTGRES_EXTRA_OPTS
+                  value: "-b -C -Z6"
+              volumeMounts:
+                - name: backups
+                  mountPath: /backups
+          volumes:
+            - name: backups
+              persistentVolumeClaim:
+                claimName: postgres-backups
+          restartPolicy: Never
