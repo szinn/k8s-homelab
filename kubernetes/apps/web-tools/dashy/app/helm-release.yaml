@@ -47,8 +47,7 @@ spec:
       main:
         enabled: true
         annotations:
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
+          auth.home.arpa/internal: "true"
         hosts:
           - host: "{{ .Release.Name }}.${SECRET_DOMAIN_NAME}"
             paths:
@@ -79,8 +78,7 @@ spec:
           enabled: true
           ingressClassName: "traefik"
           annotations:
-            traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-            traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
+            auth.home.arpa/internal: "true"
           hosts:
             - host: "dashy-code.${SECRET_DOMAIN_NAME}"
               paths:

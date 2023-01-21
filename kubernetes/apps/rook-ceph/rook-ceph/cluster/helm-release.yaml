@@ -121,8 +121,7 @@ spec:
       dashboard:
         ingressClassName: "traefik"
         annotations:
-          traefik.ingress.kubernetes.io/router.entrypoints: websecure
-          traefik.ingress.kubernetes.io/router.middlewares: traefik-system-internal@kubernetescrd
+          auth.home.arpa/internal: "true"
         host:
           name: "rook.${SECRET_DOMAIN_NAME}"
           path: "/"

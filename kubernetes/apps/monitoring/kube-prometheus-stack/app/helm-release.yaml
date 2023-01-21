@@ -96,8 +96,7 @@ spec:
         enabled: true
         annotations:
           kubernetes.io/ingress.class: traefik
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
+          auth.home.arpa/internal: "true"
         hosts:
           - "alerts.${SECRET_DOMAIN_NAME}"
         path: /
@@ -169,8 +168,7 @@ spec:
         enabled: true
         annotations:
           kubernetes.io/ingress.class: traefik
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
+          auth.home.arpa/internal: "true"
         hosts:
           - "prometheus.${SECRET_DOMAIN_NAME}"
         path: /

@@ -1,0 +1,54 @@
+---
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: update-ingress-annotations
+  annotations:
+    policies.kyverno.io/title: Update ingress annotations
+    policies.kyverno.io/subject: Ingress
+    policies.kyverno.io/description: >-
+      This policy creates auth annotations on ingresses, external-dns,
+      and sets an explicit RFC1918 whitelist for any ingresses
+      that are not not exposed to the internet.
+spec:
+  mutateExistingOnPolicyUpdate: true
+  generateExistingOnPolicyUpdate: true
+  rules:
+    - name: websecure
+      match:
+        any:
+          - resources:
+              kinds: ["Ingress"]
+      mutate:
+        patchStrategicMerge:
+          metadata:
+            annotations:
+              +(traefik.ingress.kubernetes.io/router.entrypoints): websecure
+
+    - name: internal
+      match:
+        any:
+          - resources:
+              kinds: ["Ingress"]
+              annotations:
+                auth.home.arpa/internal: "true"
+      mutate:
+        patchStrategicMerge:
+          metadata:
+            annotations:
+              +(traefik.ingress.kubernetes.io/router.middlewares): "traefik-system-internal@kubernetescrd"
+
+    - name: external-dns
+      match:
+        any:
+          - resources:
+              kinds: ["Ingress"]
+              annotations:
+                external-dns/is-public: "true"
+      mutate:
+        patchStrategicMerge:
+          metadata:
+            annotations:
+              +(traefik.ingress.kubernetes.io/router.entrypoints): "websecure"
+              +(external-dns.alpha.kubernetes.io/target): "${SECRET_DOMAIN_NAME}"
+              +(traefik.ingress.kubernetes.io/router.middlewares): "traefik-system-cloudflare-only@kubernetescrd"

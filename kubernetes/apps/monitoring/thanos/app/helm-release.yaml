@@ -52,8 +52,7 @@ spec:
         hostname: "thanos.${SECRET_DOMAIN_NAME}"
         ingressClassName: "traefik"
         annotations:
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
+          auth.home.arpa/internal: "true"
     queryFrontend:
       enabled: false
     bucketweb:

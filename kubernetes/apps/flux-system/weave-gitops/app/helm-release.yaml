@@ -34,8 +34,7 @@ spec:
       enabled: true
       className: traefik
       annotations:
-        traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-        traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
+        auth.home.arpa/internal: "true"
       hosts:
         - host: gitops.${SECRET_DOMAIN_NAME}
           paths:

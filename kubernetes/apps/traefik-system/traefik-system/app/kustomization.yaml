@@ -5,3 +5,4 @@ resources:
   - dashboard.yaml
   - helm-release.yaml
   - service-monitor.yaml
+  - set-internal-ingress-annotations.yaml
