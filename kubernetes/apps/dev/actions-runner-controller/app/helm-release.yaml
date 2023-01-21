@@ -44,7 +44,7 @@ spec:
       ingress:
         enabled: true
         annotations:
-          auth.home.arpa/external: "true"
+          ingress.home.arpa: "external"
         ingressClassName: traefik
         hosts:
           - host: "runner.${SECRET_DOMAIN_NAME}"

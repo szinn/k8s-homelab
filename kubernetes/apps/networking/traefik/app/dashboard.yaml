@@ -6,7 +6,7 @@ metadata:
   namespace: networking
   annotations:
     kubernetes.io/ingress.class: "traefik"
-    auth.home.arpa/internal: "true"
+    ingress.home.arpa: "internal"
 spec:
   rules:
     - host: traefik.${SECRET_DOMAIN_NAME}

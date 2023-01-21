@@ -89,7 +89,7 @@ spec:
         enabled: true
         ingressClassName: "traefik"
         annotations:
-          auth.home.arpa/external: "true"
+          ingress.home.arpa: "external"
         hosts:
           - host: *host
             paths:

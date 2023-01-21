@@ -34,7 +34,7 @@ spec:
       enabled: true
       className: traefik
       annotations:
-        auth.home.arpa/internal: "true"
+        ingress.home.arpa: "internal"
       hosts:
         - host: gitops.${SECRET_DOMAIN_NAME}
           paths:

@@ -121,7 +121,7 @@ spec:
       dashboard:
         ingressClassName: "traefik"
         annotations:
-          auth.home.arpa/internal: "true"
+          ingress.home.arpa: "internal"
         host:
           name: "rook.${SECRET_DOMAIN_NAME}"
           path: "/"

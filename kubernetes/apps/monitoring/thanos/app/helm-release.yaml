@@ -52,7 +52,7 @@ spec:
         hostname: "thanos.${SECRET_DOMAIN_NAME}"
         ingressClassName: "traefik"
         annotations:
-          auth.home.arpa/internal: "true"
+          ingress.home.arpa: "internal"
     queryFrontend:
       enabled: false
     bucketweb:

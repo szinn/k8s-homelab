@@ -41,7 +41,7 @@ spec:
         enabled: true
         ingressClassName: "traefik"
         annotations:
-          auth.home.arpa/internal: "true"
+          ingress.home.arpa: "internal"
         hosts:
           - host: "{{ .Release.Name }}.${SECRET_DOMAIN_NAME}"
             paths:

@@ -9,7 +9,7 @@ metadata:
     app.kubernetes.io/instance: *app
   annotations:
     kubernetes.io/ingress.class: traefik
-    auth.home.arpa/internal: "true"
+    ingress.home.arpa: "internal"
 spec:
   rules:
     - host: s3.${SECRET_DOMAIN_NAME}

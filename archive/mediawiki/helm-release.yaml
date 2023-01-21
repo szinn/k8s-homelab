@@ -32,7 +32,7 @@ spec:
       hostname: wiki.${SECRET_DOMAIN_NAME}
       annotations:
         kubernetes.io/ingress.class: traefik
-        auth.home.arpa/external-auth: "true"
+        ingress.home.arpa: "external-auth"
     persistence:
       existingClaim: mediawiki-datastore
       subPath: mediawiki

@@ -62,7 +62,7 @@ spec:
         enabled: true
         ingressClassName: "traefik"
         annotations:
-          auth.home.arpa/internal: "true"
+          ingress.home.arpa: "internal"
         hosts:
           - host: "redis-ui.${SECRET_DOMAIN_NAME}"
             paths:
