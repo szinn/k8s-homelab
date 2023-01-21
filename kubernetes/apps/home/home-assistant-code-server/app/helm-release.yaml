@@ -55,8 +55,7 @@ spec:
         enabled: true
         ingressClassName: "traefik"
         annotations:
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-external-auth@kubernetescrd"
+          auth.home.arpa/internal: "true"
         hosts:
           - host: "ha-code.${SECRET_DOMAIN_NAME}"
             paths:

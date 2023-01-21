@@ -27,10 +27,7 @@ spec:
       enabled: true
       ingressClassName: "traefik"
       annotations:
-        traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-        external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_NAME}"
-        traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-cloudflare-only@kubernetescrd"
-        external-dns/is-public: "true"
+        auth.home.arpa/external: "true"
       hosts:
         - host: auth.${SECRET_DOMAIN_NAME}
           paths:

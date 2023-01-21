@@ -110,7 +110,7 @@ spec:
         enabled: true
         ingressClassName: "traefik"
         annotations:
-          external-dns/is-public: "true"
+          auth.home.arpa/external: "true"
         hosts:
           - host: "auth.${SECRET_DOMAIN_NAME}"
             paths:
