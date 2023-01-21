@@ -27,6 +27,8 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    image:
+      name: public.ecr.aws/docker/library/traefik
     deployment:
       enabled: true
       replicas: 1

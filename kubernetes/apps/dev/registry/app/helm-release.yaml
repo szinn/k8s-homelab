@@ -29,7 +29,7 @@ spec:
       replicas: 1
       strategy: RollingUpdate
     image:
-      repository: registry
+      repository: public.ecr.aws/library/registry
       tag: 2.8.1
     env:
       REGISTRY_HTTP_ADDR: 0.0.0.0:5000
