@@ -3,7 +3,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: error-pages
-  namespace: traefik-system
+  namespace: networking
 spec:
   interval: 15m
   chart:

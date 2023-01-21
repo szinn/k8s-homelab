@@ -36,22 +36,7 @@ spec:
         patchStrategicMerge:
           metadata:
             annotations:
-              +(traefik.ingress.kubernetes.io/router.middlewares): "traefik-system-internal@kubernetescrd"
-
-    - name: external-auth
-      match:
-        any:
-          - resources:
-              kinds: ["Ingress"]
-              annotations:
-                auth.home.arpa/external-auth: "true"
-      mutate:
-        patchStrategicMerge:
-          metadata:
-            annotations:
-              +(external-dns/is-public): "true"
-              +(external-dns.alpha.kubernetes.io/target): "${SECRET_DOMAIN_NAME}"
-              +(traefik.ingress.kubernetes.io/router.middlewares): "traefik-system-external-auth@kubernetescrd"
+              +(traefik.ingress.kubernetes.io/router.middlewares): "networking-internal@kubernetescrd"
 
     - name: external
       match:
@@ -66,4 +51,19 @@ spec:
             annotations:
               +(external-dns/is-public): "true"
               +(external-dns.alpha.kubernetes.io/target): "${SECRET_DOMAIN_NAME}"
-              +(traefik.ingress.kubernetes.io/router.middlewares): "traefik-system-cloudflare-only@kubernetescrd"
+              +(traefik.ingress.kubernetes.io/router.middlewares): "networking-cloudflare-only@kubernetescrd"
+
+    - name: external-auth
+      match:
+        any:
+          - resources:
+              kinds: ["Ingress"]
+              annotations:
+                auth.home.arpa/external-auth: "true"
+      mutate:
+        patchStrategicMerge:
+          metadata:
+            annotations:
+              +(external-dns/is-public): "true"
+              +(external-dns.alpha.kubernetes.io/target): "${SECRET_DOMAIN_NAME}"
+              +(traefik.ingress.kubernetes.io/router.middlewares): "networking-external-auth@kubernetescrd"

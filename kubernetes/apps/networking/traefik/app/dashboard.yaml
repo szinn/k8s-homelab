@@ -3,11 +3,10 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: traefik-dashboard
-  namespace: traefik-system
+  namespace: networking
   annotations:
     kubernetes.io/ingress.class: "traefik"
-    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-    traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
+    auth.home.arpa/internal: "true"
 spec:
   rules:
     - host: traefik.${SECRET_DOMAIN_NAME}

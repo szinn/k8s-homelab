@@ -43,5 +43,5 @@ metadata:
 spec:
   chain:
     middlewares:
-      - name: traefik-system-internal@kubernetescrd
+      - name: networking-internal@kubernetescrd
       - name: networking-add-pihole-admin@kubernetescrd

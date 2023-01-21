@@ -2,12 +2,12 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: traefik-system
+  name: networking-traefik
   namespace: flux-system
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: ./kubernetes/apps/traefik-system/traefik-system/app
+  path: ./kubernetes/apps/networking/traefik/app
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes
@@ -17,7 +17,7 @@ spec:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
       name: traefik
-      namespace: traefik-system
+      namespace: networking
   prune: true
   wait: true
   interval: 30m
@@ -27,23 +27,23 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: traefik-system-add-ons
+  name: networking-traefik-add-ons
   namespace: flux-system
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: ./kubernetes/apps/traefik-system/traefik-system/add-ons
+  path: ./kubernetes/apps/networking/traefik/add-ons
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes
   dependsOn:
     - name: cert-manager
-    - name: traefik-system
+    - name: networking-traefik
   healthChecks:
     - apiVersion: traefik.containo.us/v1alpha1
       kind: TLSStore
       name: default
-      namespace: traefik-system
+      namespace: networking
   prune: true
   wait: true
   interval: 30m

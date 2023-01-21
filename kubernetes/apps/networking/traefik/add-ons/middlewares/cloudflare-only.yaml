@@ -3,7 +3,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: cloudflare-ips
-  namespace: traefik-system
+  namespace: networking
 spec:
   # https://www.cloudflare.com/ips/
   ipWhiteList:
@@ -40,7 +40,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: cloudflare-only
-  namespace: traefik-system
+  namespace: networking
 spec:
   chain:
     middlewares:

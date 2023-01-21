@@ -3,7 +3,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: traefik
-  namespace: traefik-system
+  namespace: networking
 spec:
   interval: 15m
   chart:
@@ -73,7 +73,7 @@ spec:
             - main: "${SECRET_DOMAIN_NAME}"
               sans:
                 - "*.${SECRET_DOMAIN_NAME}"
-          stores: traefik-system-default@kubernetescrd
+          stores: networking-default@kubernetescrd
       metrics:
         port: 8082
         expose: true

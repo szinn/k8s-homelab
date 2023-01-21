@@ -2,11 +2,10 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
-  name: internal-auth
-  namespace: traefik-system
+  name: internal
+  namespace: networking
 spec:
   chain:
     middlewares:
       - name: rfc1918-ips
-      - name: security-auth
-        namespace: security
+      - name: error-pages

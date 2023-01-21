@@ -7,3 +7,4 @@ resources:
   - external-dns/install.yaml
   - external-services/install.yaml
   - metallb/install.yaml
+  - traefik/install.yaml

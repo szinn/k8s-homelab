@@ -3,7 +3,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: TLSStore
 metadata:
   name: default
-  namespace: traefik-system
+  namespace: networking
 spec:
   defaultCertificate:
     secretName: wildcard-tls
