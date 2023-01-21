@@ -6,3 +6,4 @@ resources:
   - cf-ddns/install.yaml
   - external-dns/install.yaml
   - external-services/install.yaml
+  - metallb/install.yaml

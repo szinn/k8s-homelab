@@ -2,20 +2,20 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: metallb-system
+  name: networking-metallb
   namespace: flux-system
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: ./kubernetes/apps/metallb-system/metallb-system/app
+  path: ./kubernetes/apps/networking/metallb/app
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
-      name: metallb-system
-      namespace: metallb-system
+      name: metallb
+      namespace: network
   prune: true
   wait: true
   interval: 30m
@@ -25,17 +25,17 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: metallb-system-config
+  name: networking-metallb-config
   namespace: flux-system
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: ./kubernetes/apps/metallb-system/metallb-system/config
+  path: ./kubernetes/apps/networking/metallb/config
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes
   dependsOn:
-    - name: metallb-system
+    - name: networking-metallb
   prune: true
   wait: true
   interval: 30m
