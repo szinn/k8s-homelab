@@ -11,6 +11,7 @@ metadata:
       and sets an explicit RFC1918 whitelist for any ingresses
       that are not not exposed to the internet.
 spec:
+  background: true
   mutateExistingOnPolicyUpdate: true
   generateExistingOnPolicyUpdate: true
   rules:
