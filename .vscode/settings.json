@@ -2,15 +2,11 @@
     "discord.enabled": true,
     "files.associations": {
         "*.json5": "jsonc",
-        "**/ansible/**/*.yml": "ansible",
-        "**/ansible/**/*.sops.yml": "yaml",
-        "**/ansible/**/inventory/**/*.yml": "yaml",
         "**/terraform/**/*.tf": "terraform",
         "**/kubernetes/**/*.sops.toml": "plaintext"
     },
     "material-icon-theme.folders.associations": {
         ".taskfiles": "utils",
-        "dashboard": "app",
         "dbms": "database",
         "dev": "less",
         "flux-system": "kubernetes",
@@ -21,6 +17,7 @@
         "networking": "connection",
         "outline": "docs",
         "security": "keys",
+        "web-tools": "app",
         "setup": "import",
         "hack": "scripts",
         "config": "environment"
