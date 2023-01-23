@@ -59,7 +59,7 @@ spec:
       - name: BACKUP_KEEP_MONTHS
         value: "6"
       - name: BACKUP_KEEP_MINS
-        value: "1440"
+        value: "7200"
       - name: POSTGRES_EXTRA_OPTS
         value: "-b -C -Z6"
     enableServiceLinks: false
