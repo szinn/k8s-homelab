@@ -8,7 +8,7 @@ spec:
   errors:
     status:
       - "300-300"
-      - "303-306"
+      - "304-306"
       - "308-599"
     query: /{status}.html
     service:
