@@ -9,8 +9,7 @@ metadata:
     app.kubernetes.io/instance: *app
   annotations:
     kubernetes.io/ingress.class: traefik
-    traefik.ingress.kubernetes.io/router.entrypoints: websecure
-    traefik.ingress.kubernetes.io/router.middlewares: "networking-add-pihole-admin-internal@kubernetescrd"
+    ingress.home.arpa: "internal"
 spec:
   rules:
     - host: pihole-ui.${SECRET_DOMAIN_NAME}

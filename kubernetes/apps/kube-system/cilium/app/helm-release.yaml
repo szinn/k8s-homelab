@@ -69,5 +69,9 @@ spec:
           enabled: true
           annotations:
             kubernetes.io/ingress.class: "traefik"
+            ingress.home.arpa: "internal"
+            # Need these explicitly here until kyverno operates on kube-system namespace.
+            traefik.ingress.kubernetes.io/router.entrypoints: websecure
+            traefik.ingress.kubernetes.io/router.middlewares: "networking-internal@kubernetescrd"
           hosts:
             - "hubble.${SECRET_DOMAIN_NAME}"

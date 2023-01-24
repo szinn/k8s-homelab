@@ -14,7 +14,24 @@ spec:
   background: true
   mutateExistingOnPolicyUpdate: true
   generateExistingOnPolicyUpdate: true
+  validationFailureAction: enforce
+
   rules:
+    - name: ensure-annotation-present
+      match:
+        any:
+          - resources:
+              kinds: ["Ingress"]
+              namespaces:
+                - kube-system
+                - "*"
+      validate:
+        message: "You must have ingress.home.arpa annotation set to internal/external/external-auth"
+        pattern:
+          metadata:
+            annotations:
+              ingress.home.arpa: "internal|external|external-auth"
+
     - name: websecure
       match:
         any:

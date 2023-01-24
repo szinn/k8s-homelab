@@ -113,6 +113,8 @@ spec:
       ingress:
         enabled: true
         ingressClassName: "traefik"
+        annotations:
+          ingress.home.arpa: "internal"
         hosts:
           - host: "loki.${SECRET_DOMAIN_NAME}"
             paths:
