@@ -1,0 +1,40 @@
+---
+### https://raw.githubusercontent.com/rook/rook/master/deploy/charts/rook-ceph-cluster/prometheus/localrules.yaml
+### ref: https://rook.github.io/docs/rook/v1.9/ceph-monitoring.html#customize-alerts
+
+# CephNodeNetworkPacketDrops
+- op: replace
+  path: /spec/groups/6/rules/1/expr
+  value: |
+    (
+      increase(node_network_receive_drop_total{device!="lo"}[1m]) +
+      increase(node_network_transmit_drop_total{device!="lo"}[1m])
+    ) / (
+      increase(node_network_receive_packets_total{device!="lo"}[1m]) +
+      increase(node_network_transmit_packets_total{device!="lo"}[1m])
+    ) >= 0.005 or (
+      increase(node_network_receive_drop_total{device!="lo"}[1m]) +
+      increase(node_network_transmit_drop_total{device!="lo"}[1m])
+    ) >= 75
+- op: add
+  path: /spec/groups/6/rules/1/for
+  value: 1m
+
+# # CephNodeNetworkPacketErrors
+# - op: add
+#   path: /spec/groups/6/rules/2/for
+#   value: 1m
+
+# CephNodeInconsistentMTU
+- op: remove
+  path: /spec/groups/6/rules/4
+# # CephPoolGrowthWarning
+# - op: replace
+#   path: /spec/groups/7/rules/0/expr
+#   # value: |
+#   #   (predict_linear(
+#   #     (max(ceph_pool_percent_used) without (pod, instance))[2d:1h], 3600 * 24 * 5
+#   #   ) * on(pool_id)
+#   value: |
+#     (predict_linear(ceph_pool_percent_used[2d], 3600 * 24 * 5) * on(pool_id)
+#     group_right ceph_pool_metadata) >= 95"
