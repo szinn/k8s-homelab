@@ -31,7 +31,7 @@ spec:
       configmap.reloader.stakater.com/reload: *app
     image:
       repository: grafana/grafana
-      tag: 9.3.2
+      tag: 9.3.4
     rbac:
       pspEnabled: false
     deploymentStrategy:
