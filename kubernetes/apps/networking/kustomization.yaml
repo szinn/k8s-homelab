@@ -3,7 +3,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - namespace.yaml
-  - cf-ddns/install.yaml
+  - cloudflare-ddns/install.yaml
   - external-dns/install.yaml
   - external-services/install.yaml
   - metallb/install.yaml

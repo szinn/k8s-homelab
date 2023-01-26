@@ -2,12 +2,12 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: networking-cf-ddns
+  name: networking-cloudflare-ddns
   namespace: flux-system
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: ./kubernetes/apps/networking/cf-ddns/app
+  path: ./kubernetes/apps/networking/cloudflare-ddns/app
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes
@@ -16,7 +16,7 @@ spec:
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
-      name: cf-ddns
+      name: cloudflare-ddns
       namespace: networking
   prune: true
   wait: true

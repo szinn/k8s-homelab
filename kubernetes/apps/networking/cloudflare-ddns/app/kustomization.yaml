@@ -2,5 +2,5 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - cf-ddns-secrets.yaml
+  - cloudflare-ddns-secrets.yaml
   - helm-release.yaml
