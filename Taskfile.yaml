@@ -9,7 +9,6 @@ includes:
   es: .taskfiles/ExternalSecrets/Tasks.yaml
   fmt: .taskfiles/Format/Tasks.yaml
   fx: .taskfiles/Flux/Tasks.yaml
-  kopia: .taskfiles/Kopia/Tasks.yaml
   kub: .taskfiles/Kubernetes/Tasks.yaml
   pc: .taskfiles/PreCommit/Tasks.yaml
   redis: .taskfiles/Redis/Tasks.yaml
