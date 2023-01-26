@@ -62,17 +62,11 @@ spec:
             cpu: "511m"
             memory: "4067M"
           limits:
-            memory: "4067M"
-        prepareosd:
-          requests:
-            cpu: "250m"
-            memory: "50Mi"
-          limits:
-            memory: "200Mi"
+            memory: "5944M"
         mgr-sidecar:
           requests:
             cpu: "49m"
-            memory: "79M"
+            memory: "94M"
           limits:
             memory: "227M"
         crashcollector:
