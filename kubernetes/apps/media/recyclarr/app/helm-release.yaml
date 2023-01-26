@@ -30,7 +30,7 @@ spec:
       type: cronjob
       cronjob:
         schedule: "@daily"
-        ttlSecondsAfterFinished: 86400
+        ttlSecondsAfterFinished: 43200
     restartPolicy: OnFailure
     image:
       repository: ghcr.io/recyclarr/recyclarr
