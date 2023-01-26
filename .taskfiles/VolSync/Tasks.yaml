@@ -21,7 +21,6 @@ vars:
   ts: '{{now | date "150405"}}'
 
 tasks:
-
   list:
     desc: List all snapshots taken by restic for a given ReplicationSource (ex. task vs:list rsrc=plex [namespace=default])
     silent: true
@@ -91,9 +90,9 @@ tasks:
         sh: |
           app=$(kubectl -n {{.namespace}} get persistentvolumeclaim {{.claim}} -o jsonpath="{.metadata.labels.app\.kubernetes\.io/name}")
           if [[ -z $(kubectl -n {{.namespace}} get persistentvolumeclaim {{.claim}} -o jsonpath="{.metadata.annotations.volume\.kubernetes\.io/storage-provisioner}") ]]; then
-            echo "deployments.apps/$app" && exit 0
+            echo "statefulsets.apps/$app" && exit 0
           fi
-          echo "deployments.apps/$app"
+          echo "statefulsets.apps/$app"
       previous: '{{.previous | default 0}}'
     env: *task-vars
     preconditions:

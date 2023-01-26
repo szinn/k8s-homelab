@@ -28,7 +28,7 @@ metadata:
   name: jackett
   namespace: media
 spec:
-  sourcePVC: jackett-config
+  sourcePVC: config-jackett-0
   trigger:
     schedule: "0 0 * * *"
   restic:
