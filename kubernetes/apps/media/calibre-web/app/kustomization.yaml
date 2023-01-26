@@ -4,5 +4,4 @@ kind: Kustomization
 namespace: media
 resources:
   - helm-release.yaml
-  - pvc.yaml
-  - replication-config.yaml
+  - volsync-config.yaml

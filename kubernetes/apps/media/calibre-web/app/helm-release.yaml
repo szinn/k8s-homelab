@@ -27,6 +27,10 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    controller:
+      type: statefulset
+      annotations:
+        reloader.stakater.com/auto: "true"
     image:
       repository: ghcr.io/bjw-s/calibre-web
       tag: 0.6.19@sha256:42283b251974f5778940ebd0e632429bcf7a1312c73576f76da52adeccda53b5
@@ -56,10 +60,13 @@ spec:
       supplementalGroups:
         - 65539
     enableServiceLinks: false
+    volumeClaimTemplates:
+      - name: config
+        mountPath: /config
+        accessMode: ReadWriteOnce
+        size: 512Mi
+        storageClass: ceph-block
     persistence:
-      config:
-        enabled: true
-        existingClaim: calibre-web-config
       media:
         enabled: true
         existingClaim: media-datastore
