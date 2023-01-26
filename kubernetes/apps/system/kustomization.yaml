@@ -5,7 +5,6 @@ resources:
   - namespace.yaml
   - descheduler/install.yaml
   - intel-gpu-plugin/install.yaml
-  - kopia/install.yaml
   - node-feature-discovery/install.yaml
   - reloader/install.yaml
   - volsync/install.yaml
