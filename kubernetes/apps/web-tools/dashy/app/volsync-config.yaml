@@ -28,7 +28,7 @@ metadata:
   name: dashy
   namespace: web-tools
 spec:
-  sourcePVC: dashy-config
+  sourcePVC: config-dashy-0
   trigger:
     schedule: "0 0 * * *"
   restic:

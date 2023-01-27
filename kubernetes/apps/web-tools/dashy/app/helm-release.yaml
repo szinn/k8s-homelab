@@ -28,6 +28,7 @@ spec:
     keepHistory: false
   values:
     controller:
+      type: statefulset
       annotations:
         secret.reloader.stakater.com/reload: dashy-code-server
     image:
@@ -40,9 +41,6 @@ spec:
         ports:
           http:
             port: 80
-    podSecurityContext:
-      supplementalGroups:
-        - 65534
     ingress:
       main:
         enabled: true
@@ -53,11 +51,12 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
-    persistence:
-      config:
-        enabled: true
-        existingClaim: dashy-config
-        mountPath: /app/public/
+    volumeClaimTemplates:
+      - name: config
+        mountPath: /app/public
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        storageClass: ceph-block
     addons:
       codeserver:
         enabled: true
