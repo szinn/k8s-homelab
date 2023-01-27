@@ -28,7 +28,7 @@ metadata:
   name: sonarr
   namespace: media
 spec:
-  sourcePVC: sonarr-config
+  sourcePVC: config-sonarr-0
   trigger:
     schedule: "0 0 * * *"
   restic:
