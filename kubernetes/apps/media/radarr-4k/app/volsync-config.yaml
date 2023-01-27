@@ -28,7 +28,7 @@ metadata:
   name: radarr-4k
   namespace: media
 spec:
-  sourcePVC: radarr-4k-config
+  sourcePVC: config-radarr-4k-0
   trigger:
     schedule: "0 0 * * *"
   restic:

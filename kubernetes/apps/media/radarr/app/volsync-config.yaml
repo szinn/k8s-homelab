@@ -28,7 +28,7 @@ metadata:
   name: radarr
   namespace: media
 spec:
-  sourcePVC: radarr-config
+  sourcePVC: config-radarr-0
   trigger:
     schedule: "0 0 * * *"
   restic:

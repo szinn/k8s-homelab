@@ -3,6 +3,5 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - radarr-4k-secrets.yaml
-  - pvc.yaml
   - helm-release.yaml
-  - replication-config.yaml
+  - volsync-config.yaml
