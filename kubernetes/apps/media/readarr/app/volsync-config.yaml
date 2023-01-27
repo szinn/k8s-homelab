@@ -28,7 +28,7 @@ metadata:
   name: readarr
   namespace: media
 spec:
-  sourcePVC: readarr-config
+  sourcePVC: config-readarr-0
   trigger:
     schedule: "0 0 * * *"
   restic:
