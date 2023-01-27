@@ -27,6 +27,10 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    controller:
+      type: statefulset
+      annotations:
+        reloader.stakater.com/auto: "true"
     image:
       repository: ghcr.io/sct/overseerr
       tag: 1.32.1
@@ -50,8 +54,9 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
-    persistence:
-      config:
-        enabled: true
-        existingClaim: overseerr-config
+    volumeClaimTemplates:
+      - name: config
         mountPath: /app/config
+        accessMode: ReadWriteOnce
+        size: 2Gi
+        storageClass: ceph-block

@@ -28,7 +28,7 @@ metadata:
   name: overseerr
   namespace: media
 spec:
-  sourcePVC: overseerr-config
+  sourcePVC: config-overseerr-0
   trigger:
     schedule: "0 0 * * *"
   restic:
