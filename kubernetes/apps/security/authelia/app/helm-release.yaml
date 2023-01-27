@@ -46,9 +46,16 @@ spec:
               secretKeyRef:
                 name: authelia
                 key: AUTHELIA_STORAGE_POSTGRES_PASSWORD
-        envFrom:
-          - secretRef:
-              name: postgres-superuser
+          - name: POSTGRES_SUPER_USER
+            valueFrom:
+              secretKeyRef:
+                name: authelia
+                key: POSTGRES_SUPER_USER
+          - name: POSTGRES_SUPER_PASS
+            valueFrom:
+              secretKeyRef:
+                name: authelia
+                key: POSTGRES_SUPER_PASS
     controller:
       annotations:
         configmap.reloader.stakater.com/reload: *app

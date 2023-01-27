@@ -37,8 +37,6 @@ spec:
         envFrom:
           - secretRef:
               name: *app
-          - secretRef:
-              name: postgres-superuser
     controller:
       type: statefulset
       annotations:
