@@ -46,10 +46,17 @@ spec:
       mode: "kubernetes"
     containerRuntime:
       integration: containerd
-    hubble:
+    prometheus:
       enabled: true
       serviceMonitor:
         enabled: true
+    operator:
+      prometheus:
+        enabled: true
+        serviceMonitor:
+          enabled: true
+    hubble:
+      enabled: true
       metrics:
         enabled:
           - dns:query;ignoreAAAA
@@ -59,6 +66,8 @@ spec:
           - port-distribution
           - icmp
           - http
+        serviceMonitor:
+          enabled: true
       relay:
         enabled: true
         rollOutPods: true
