@@ -27,6 +27,10 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    controller:
+      type: statefulset
+      annotations:
+        reloader.stakater.com/auto: "true"
     image:
       repository: ghcr.io/k8s-at-home/node-red
       tag: v3.0.2
@@ -51,18 +55,17 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
-    persistence:
-      data:
-        enabled: true
-        mountPath: /data
-        existingClaim: node-red-datastore
     podSecurityContext:
       runAsUser: 568
       runAsGroup: 568
       fsGroup: 568
       fsGroupChangePolicy: "OnRootMismatch"
-      supplementalGroups:
-        - 100
+    volumeClaimTemplates:
+      - name: data
+        mountPath: /data
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        storageClass: ceph-block
     resources:
       requests:
         memory: 350Mi

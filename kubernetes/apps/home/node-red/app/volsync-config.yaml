@@ -28,7 +28,7 @@ metadata:
   name: node-red
   namespace: home
 spec:
-  sourcePVC: node-red-datastore
+  sourcePVC: data-node-red-0
   trigger:
     schedule: "0 0 * * *"
   restic:
