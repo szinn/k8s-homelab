@@ -28,7 +28,7 @@ metadata:
   name: openbooks
   namespace: media
 spec:
-  sourcePVC: openbooks-config
+  sourcePVC: books-openbooks-0
   trigger:
     schedule: "0 0 * * *"
   restic:

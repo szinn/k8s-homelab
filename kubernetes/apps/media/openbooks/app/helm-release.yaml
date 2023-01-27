@@ -27,6 +27,10 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    controller:
+      type: statefulset
+      annotations:
+        reloader.stakater.com/auto: "true"
     image:
       repository: docker.io/evanbuss/openbooks
       tag: latest
@@ -67,9 +71,9 @@ spec:
       runAsGroup: 568
       fsGroup: 568
       fsGroupChangePolicy: 'OnRootMismatch'
-
-    persistence:
-      books:
-        enabled: true
-        existingClaim: openbooks-config
+    volumeClaimTemplates:
+      - name: books
         mountPath: /books
+        accessMode: ReadWriteOnce
+        size: 1Mi
+        storageClass: ceph-block

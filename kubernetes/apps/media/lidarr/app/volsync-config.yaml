@@ -28,7 +28,7 @@ metadata:
   name: lidarr
   namespace: media
 spec:
-  sourcePVC: lidarr-config
+  sourcePVC: config-lidarr-0
   trigger:
     schedule: "0 0 * * *"
   restic:
