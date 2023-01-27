@@ -28,7 +28,7 @@ metadata:
   name: pgadmin
   namespace: dbms
 spec:
-  sourcePVC: pgadmin-config
+  sourcePVC: config-pgadmin-0
   trigger:
     schedule: "0 0 * * *"
   restic:

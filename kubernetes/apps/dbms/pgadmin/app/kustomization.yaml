@@ -4,9 +4,8 @@ kind: Kustomization
 namespace: dbms
 resources:
   - pgadmin-secret.yaml
-  - pvc.yaml
   - helm-release.yaml
-  - replication-config.yaml
+  - volsync-config.yaml
 configMapGenerator:
   - name: servers-json
     files:
