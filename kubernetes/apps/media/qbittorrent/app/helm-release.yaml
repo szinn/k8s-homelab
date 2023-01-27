@@ -27,6 +27,10 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    controller:
+      type: statefulset
+      annotations:
+        reloader.stakater.com/auto: "true"
     image:
       repository: ghcr.io/onedr0p/qbittorrent
       tag: 4.4.3.1
@@ -70,12 +74,13 @@ spec:
       runAsGroup: 568
       fsGroup: 568
       fsGroupChangePolicy: "OnRootMismatch"
-      supplementalGroups:
-        - 1001
+    volumeClaimTemplates:
+      - name: config
+        mountPath: /config
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        storageClass: ceph-block
     persistence:
-      config:
-        enabled: true
-        existingClaim: qbittorrent-config
       downloads:
         enabled: true
         existingClaim: downloads
