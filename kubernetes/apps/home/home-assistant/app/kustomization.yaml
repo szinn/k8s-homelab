@@ -3,8 +3,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - home-assistant-secrets.yaml
-  - pvc.yaml
   - helm-release.yaml
   - podmonitor.yaml
   - rules.yaml
-  - replication-config.yaml
+  - volsync-config.yaml
