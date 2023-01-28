@@ -4,4 +4,3 @@ kind: Kustomization
 resources:
   - dashboard.yaml
   - helm-release.yaml
-  - service-monitor.yaml
