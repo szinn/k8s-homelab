@@ -5,3 +5,4 @@ resources:
   - postgres-minio-secret.yaml
   - cluster.yaml
   - scheduled-backup.yaml
+  - prometheus-rule.yaml
