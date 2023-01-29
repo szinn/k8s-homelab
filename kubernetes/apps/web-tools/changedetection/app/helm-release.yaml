@@ -36,8 +36,6 @@ spec:
       PORT: &port 5000
       USE_X_SETTINGS: 1
       PLAYWRIGHT_DRIVER_URL: ws://localhost:3000/?stealth=1&--disable-web-security=true&--user-data-dir=~/browserless-cache-123
-      PUID: 1000
-      PGID: 1000
     service:
       main:
         ports:
@@ -54,11 +52,6 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
-    podSecurityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
-      fsGroupChangePolicy: "OnRootMismatch"
     volumeClaimTemplates:
       - name: config
         mountPath: /datastore
