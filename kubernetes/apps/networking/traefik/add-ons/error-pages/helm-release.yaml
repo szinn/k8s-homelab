@@ -29,7 +29,7 @@ spec:
   values:
     image:
       repository: ghcr.io/tarampampam/error-pages
-      tag: 2.19.0
+      tag: 2.20.0
     controller:
       replicas: 1
     nameOverride: error-pages
