@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: thanos
-      version: 12.0.2
+      version: 12.0.1
       sourceRef:
         kind: HelmRepository
         name: bitnami-charts
@@ -27,12 +27,11 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    global:
+      imageRegistry: public.ecr.aws
     controller:
       annotations:
         secret.reloader.stakater.com/reload: *app
-    image:
-      registry: public.ecr.aws
-      repository: bitnami/thanos
     objstoreConfig:
       type: s3
       config:
