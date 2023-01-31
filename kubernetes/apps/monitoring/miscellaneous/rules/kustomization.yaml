@@ -4,3 +4,4 @@ kind: Kustomization
 namespace: monitoring
 resources:
   - dockerhub.yaml
+  - nas.yaml
