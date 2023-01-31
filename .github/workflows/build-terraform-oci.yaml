@@ -17,7 +17,7 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
 
       - name: Set up Homebrew
         uses: Homebrew/actions/setup-homebrew@master
@@ -28,7 +28,7 @@ jobs:
 
       - name: Get changed files
         id: changed-files
-        uses: tj-actions/changed-files@v35.4.4
+        uses: tj-actions/changed-files@57d9664f8e2aa45f26bcb59095f99aa47ae8e90d # v35.4.4
         with:
           dir_names: true
           dir_names_max_depth: 3
@@ -57,7 +57,7 @@ jobs:
       matrix: ${{ fromJSON(needs.changed-files.outputs.matrix) }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
 
       - name: Set up Homebrew
         uses: Homebrew/actions/setup-homebrew@master
@@ -67,7 +67,7 @@ jobs:
           brew install fluxcd/tap/flux
 
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v2
+        uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a # v2
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
