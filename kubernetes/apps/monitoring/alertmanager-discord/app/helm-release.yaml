@@ -35,6 +35,7 @@ spec:
       tag: 1.0.4
     env:
       TZ: ${CONFIG_TIMEZONE}
+      VERBOSE: ON
     envFrom:
       - secretRef:
           name: *app
