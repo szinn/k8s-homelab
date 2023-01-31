@@ -4,8 +4,6 @@ kind: Kustomization
 metadata:
   name: monitoring-node-problem-detector
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/monitoring/node-problem-detector/app
   sourceRef:

@@ -4,8 +4,6 @@ kind: Kustomization
 metadata:
   name: networking-traefik
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/networking/traefik/app
   sourceRef:
@@ -27,8 +25,6 @@ kind: Kustomization
 metadata:
   name: networking-traefik-add-ons
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/networking/traefik/add-ons
   sourceRef:

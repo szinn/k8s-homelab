@@ -4,8 +4,6 @@ kind: Kustomization
 metadata:
   name: dev-actions-runner-controller
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/dev/actions-runner-controller/app
   sourceRef:
@@ -29,8 +27,6 @@ kind: Kustomization
 metadata:
   name: dev-actions-runner-controller-runners
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/dev/actions-runner-controller/runners
   sourceRef:

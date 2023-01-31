@@ -4,8 +4,6 @@ kind: Kustomization
 metadata:
   name: web-tools-shlink-api
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/web-tools/shlink/shlink-api
   sourceRef:
@@ -29,8 +27,6 @@ kind: Kustomization
 metadata:
   name: web-tools-shlink-web
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/web-tools/shlink/shlink-web
   sourceRef:

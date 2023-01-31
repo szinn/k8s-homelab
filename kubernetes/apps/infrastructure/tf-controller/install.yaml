@@ -4,8 +4,6 @@ kind: Kustomization
 metadata:
   name: infrastructure-tf-controller
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: "./kubernetes/apps/infrastructure/tf-controller/app"
   sourceRef:
@@ -24,8 +22,6 @@ kind: Kustomization
 metadata:
   name: infrastructure-tf-controller-terraforms
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: "./kubernetes/apps/infrastructure/tf-controller/terraforms"
   sourceRef:

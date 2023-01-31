@@ -4,8 +4,6 @@ kind: Kustomization
 metadata:
   name: monitoring-alertmanager-discord
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/monitoring/alertmanager-discord/app
   sourceRef:

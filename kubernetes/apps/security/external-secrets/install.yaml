@@ -4,8 +4,6 @@ kind: Kustomization
 metadata:
   name: security-external-secrets
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/security/external-secrets/app
   sourceRef:

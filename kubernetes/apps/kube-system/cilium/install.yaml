@@ -4,8 +4,6 @@ kind: Kustomization
 metadata:
   name: kube-system-cilium
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/kube-system/cilium/app
   sourceRef:

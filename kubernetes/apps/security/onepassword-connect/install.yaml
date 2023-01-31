@@ -4,8 +4,6 @@ kind: Kustomization
 metadata:
   name: security-onepassword-connect
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/security/onepassword-connect/app
   sourceRef:

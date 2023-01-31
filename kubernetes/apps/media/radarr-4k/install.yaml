@@ -4,8 +4,6 @@ kind: Kustomization
 metadata:
   name: media-radarr-4k
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/media/radarr-4k/app
   sourceRef:
@@ -31,8 +29,6 @@ kind: Kustomization
 metadata:
   name: media-radarr-4k-observability
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/media/radarr-4k/observability
   sourceRef:

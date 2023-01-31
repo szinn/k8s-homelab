@@ -4,8 +4,6 @@ kind: Kustomization
 metadata:
   name: media-plex
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/media/plex/app
   sourceRef:

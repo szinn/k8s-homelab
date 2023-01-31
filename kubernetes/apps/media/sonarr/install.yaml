@@ -4,8 +4,6 @@ kind: Kustomization
 metadata:
   name: media-sonarr
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/media/sonarr/app
   sourceRef:
@@ -31,8 +29,6 @@ kind: Kustomization
 metadata:
   name: media-sonarr-observability
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/media/sonarr/observability
   sourceRef:

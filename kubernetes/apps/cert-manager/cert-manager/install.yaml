@@ -4,8 +4,6 @@ kind: Kustomization
 metadata:
   name: cert-manager
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/cert-manager/cert-manager/app
   sourceRef:
@@ -27,8 +25,6 @@ kind: Kustomization
 metadata:
   name: cert-manager-issuers
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/cert-manager/cert-manager/issuers
   sourceRef:

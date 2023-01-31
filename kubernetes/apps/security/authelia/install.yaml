@@ -4,8 +4,6 @@ kind: Kustomization
 metadata:
   name: security-authelia
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/security/authelia/app
   sourceRef:

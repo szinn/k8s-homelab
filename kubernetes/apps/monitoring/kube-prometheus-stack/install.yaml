@@ -4,8 +4,6 @@ kind: Kustomization
 metadata:
   name: monitoring-kube-prometheus-stack
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/monitoring/kube-prometheus-stack/app
   sourceRef:

@@ -4,8 +4,6 @@ kind: Kustomization
 metadata:
   name: dbms-pgadmin
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/dbms/pgadmin/app
   sourceRef:

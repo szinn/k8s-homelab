@@ -4,8 +4,6 @@ kind: Kustomization
 metadata:
   name: home-n8n
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/home/n8n/app
   sourceRef:

@@ -4,8 +4,6 @@ kind: Kustomization
 metadata:
   name: monitoring-unifi-poller
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/monitoring/unifi-poller/app
   sourceRef:

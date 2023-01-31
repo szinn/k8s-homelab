@@ -4,8 +4,6 @@ kind: Kustomization
 metadata:
   name: flux-system-add-on-monitoring
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/flux-system/add-ons/monitoring
   sourceRef:
@@ -22,8 +20,6 @@ kind: Kustomization
 metadata:
   name: flux-system-add-on-notification
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/flux-system/add-ons/notification
   sourceRef:

@@ -4,8 +4,6 @@ kind: Kustomization
 metadata:
   name: media-recyclarr
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/media/recyclarr/app
   sourceRef:

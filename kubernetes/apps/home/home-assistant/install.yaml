@@ -4,8 +4,6 @@ kind: Kustomization
 metadata:
   name: home-home-assistant
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/home/home-assistant/app
   sourceRef:

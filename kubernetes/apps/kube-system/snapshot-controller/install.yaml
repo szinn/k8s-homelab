@@ -4,8 +4,6 @@ kind: Kustomization
 metadata:
   name: kube-system-snapshot-controller
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/kube-system/snapshot-controller/app
   sourceRef:

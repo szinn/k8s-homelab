@@ -4,8 +4,6 @@ kind: Kustomization
 metadata:
   name: media-lidarr
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/media/lidarr/app
   sourceRef:
@@ -31,8 +29,6 @@ kind: Kustomization
 metadata:
   name: media-lidarr-observability
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/media/lidarr/observability
   sourceRef:

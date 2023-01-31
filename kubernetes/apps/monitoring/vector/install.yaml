@@ -4,8 +4,6 @@ kind: Kustomization
 metadata:
   name: monitoring-vector-agent
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/monitoring/vector/agent
   sourceRef:
@@ -27,8 +25,6 @@ kind: Kustomization
 metadata:
   name: monitoring-vector-aggregator
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/monitoring/vector/aggregator
   sourceRef:

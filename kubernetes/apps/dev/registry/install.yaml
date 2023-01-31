@@ -4,8 +4,6 @@ kind: Kustomization
 metadata:
   name: dev-registry
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/dev/registry/app
   sourceRef:

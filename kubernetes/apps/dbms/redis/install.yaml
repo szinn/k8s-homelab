@@ -4,8 +4,6 @@ kind: Kustomization
 metadata:
   name: dbms-redis
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/dbms/redis/app
   sourceRef:
@@ -27,8 +25,6 @@ kind: Kustomization
 metadata:
   name: dbms-redis-lb
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/dbms/redis/lb
   sourceRef:

@@ -4,8 +4,6 @@ kind: Kustomization
 metadata:
   name: dbms-cloudnative-pg
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/dbms/cloudnative-pg/cloudnative-pg
   sourceRef:
@@ -30,8 +28,6 @@ kind: Kustomization
 metadata:
   name: dbms-cloudnative-pg-cluster
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/dbms/cloudnative-pg/cluster
   sourceRef:
@@ -52,8 +48,6 @@ kind: Kustomization
 metadata:
   name: dbms-cloudnative-pg-backup
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/dbms/cloudnative-pg/backup
   sourceRef:
