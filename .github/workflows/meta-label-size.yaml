@@ -12,14 +12,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Generate Token
-        uses: tibdex/github-app-token@v1.8.0
+        uses: tibdex/github-app-token@b62528385c34dbc9f38e5f4225ac829252d1ea92 # v1.8.0
         id: generate-token
         with:
           app_id: "${{ secrets.BOT_APP_ID }}"
           private_key: "${{ secrets.BOT_APP_PRIVATE_KEY }}"
 
       - name: Label Size
-        uses: pascalgn/size-label-action@v0.4.3
+        uses: pascalgn/size-label-action@1619680c5ac1ef360b944bb56a57587ba4aa2af8 # v0.4.3
         env:
           GITHUB_TOKEN: "${{ steps.generate-token.outputs.token }}"
         with:
