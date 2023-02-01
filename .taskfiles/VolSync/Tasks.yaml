@@ -2,16 +2,16 @@
 version: "3"
 
 x-task-vars: &task-vars
-  RSRC: '{{.rsrc}}'
-  CONTROLLER: '{{.controller}}'
-  controller: '{{.controller}}'
-  NAMESPACE: '{{.namespace}}'
-  claim: '{{.claim}}'
-  CLAIM: '{{.claim}}'
-  TS: '{{.ts}}'
-  kustomization: '{{.kustomization}}'
-  KUSTOMIZATION: '{{.kustomization}}'
-  PREVIOUS: '{{.previous}}'
+  RSRC: "{{.rsrc}}"
+  CONTROLLER: "{{.controller}}"
+  controller: "{{.controller}}"
+  NAMESPACE: "{{.namespace}}"
+  claim: "{{.claim}}"
+  CLAIM: "{{.claim}}"
+  TS: "{{.ts}}"
+  kustomization: "{{.kustomization}}"
+  KUSTOMIZATION: "{{.kustomization}}"
+  PREVIOUS: "{{.previous}}"
 
 vars:
   destinationTemplate: "{{.PROJECT_DIR}}/.taskfiles/VolSync/ReplicationDestination.tmpl.yaml"
@@ -93,7 +93,7 @@ tasks:
             echo "statefulsets.apps/$app" && exit 0
           fi
           echo "statefulsets.apps/$app"
-      previous: '{{.previous | default 0}}'
+      previous: "{{.previous | default 0}}"
     env: *task-vars
     preconditions:
       - sh: test -f {{.wipeJobTemplate}}

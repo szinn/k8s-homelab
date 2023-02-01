@@ -80,6 +80,7 @@ jobs:
             --current-release "default/${{ matrix.file }}" \
             --incoming-release "${{ matrix.file }}" \
             --kubernetes-dir ${{ env.KUBERNETES_DIR }})
+          # shellcheck disable=SC2129
           echo "diff<<EOF" >> "${GITHUB_OUTPUT}"
           echo "${diff}" >> "${GITHUB_OUTPUT}"
           echo "EOF" >> "${GITHUB_OUTPUT}"

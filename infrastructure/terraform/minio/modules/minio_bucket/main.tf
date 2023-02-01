@@ -7,8 +7,8 @@ terraform {
 }
 
 resource "minio_s3_bucket" "bucket" {
-  bucket        = var.bucket_name
-  acl           = "private"
+  bucket = var.bucket_name
+  acl    = "private"
 }
 
 resource "minio_s3_bucket_policy" "bucket" {

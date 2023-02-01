@@ -75,6 +75,7 @@ jobs:
 
       - name: Publish OCI
         run: |
+          # shellcheck disable=SC2046
           flux push artifact oci://ghcr.io/szinn/terraform-$(basename ${{ matrix.project }}):$(git rev-parse --short HEAD) \
             --path="./${{ matrix.project }}" \
             --source="$(git config --get remote.origin.url)" \
@@ -82,5 +83,5 @@ jobs:
 
       - name: Tag OCI
         run: |
-          flux tag artifact oci://ghcr.io/szinn/terraform-$(basename ${{ matrix.project }}):$(git rev-parse --short HEAD) \
-            --tag main
+          # shellcheck disable=SC2046
+          flux tag artifact oci://ghcr.io/szinn/terraform-$(basename ${{ matrix.project }}):$(git rev-parse --short HEAD) --tag main

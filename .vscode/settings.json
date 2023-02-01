@@ -22,8 +22,8 @@
         "hack": "scripts",
         "config": "environment"
         },
-    "prettier.configPath": ".github/linters/.prettierrc.yaml",
-    "prettier.ignorePath": ".github/linters/.prettierignore",
+    "prettier.configPath": ".github/linters/prettier/.prettierrc.yaml",
+    "prettier.ignorePath": ".github/linters/prettier/.prettierignore",
     "yaml.schemas": {
         "Kubernetes": "kubernetes/*.yaml"
     },

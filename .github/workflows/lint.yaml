@@ -46,6 +46,7 @@ jobs:
                     "MARKDOWN_MARKDOWNLINT",
                     "REPOSITORY_GIT_DIFF",
                     "REPOSITORY_SECRETLINT",
+                    "TERRAFORM_TERRAFORM_FMT",
                     "YAML_PRETTIER",
                     "YAML_YAMLLINT"
                   ]
@@ -53,11 +54,11 @@ jobs:
                 ','
               )
             }}
-          KUBERNETES_DIRECTORY: cluster
+          COPYPASTE_JSCPD_CONFIG_FILE: .github/linters/jscpd/jscpd.json
+          KUBERNETES_DIRECTORY: kubernetes
           KUBERNETES_KUBEVAL_ARGUMENTS: --ignore-missing-schemas
           KUBERNETES_KUBEVAL_FILTER_REGEX_INCLUDE: "(kubernetes)"
-          MARKDOWN_MARKDOWNLINT_CONFIG_FILE: .github/linters/.markdownlint.yaml
+          MARKDOWN_MARKDOWNLINT_CONFIG_FILE: .github/linters/markdownlint/.markdownlint.yaml
           MARKDOWN_MARKDOWNLINT_RULES_PATH: .github/
-          YAML_YAMLLINT_CONFIG_FILE: .github/linters/.yamllint.yaml
-          YAML_PRETTIER_CONFIG_FILE: .github/linters/.prettierrc.yaml
-          YAML_PRETTIER_FILTER_REGEX_EXCLUDE: "(.*\\.sops\\.ya?ml)"
+          YAML_YAMLLINT_CONFIG_FILE: .github/linters/yamllint/.yamllint.yaml
+          YAML_PRETTIER_CONFIG_FILE: .github/linters/prettier/.prettierrc.yaml
