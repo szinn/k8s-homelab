@@ -75,5 +75,5 @@ spec:
       - name: books
         mountPath: /books
         accessMode: ReadWriteOnce
-        size: 1Mi
+        size: 2Gi
         storageClass: ceph-block
