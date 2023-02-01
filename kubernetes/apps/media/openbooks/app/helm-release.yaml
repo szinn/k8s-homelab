@@ -41,11 +41,11 @@ spec:
       - --dir
       - /books
       - --port
-      - '8080'
+      - "8080"
       - --name
       - ronwood
       - --useragent
-      - 'HexChat 2.9.1'
+      - "HexChat 2.9.1"
       - --searchbot
       - searchook
     env:
@@ -70,7 +70,7 @@ spec:
       runAsUser: 568
       runAsGroup: 568
       fsGroup: 568
-      fsGroupChangePolicy: 'OnRootMismatch'
+      fsGroupChangePolicy: "OnRootMismatch"
     volumeClaimTemplates:
       - name: books
         mountPath: /books

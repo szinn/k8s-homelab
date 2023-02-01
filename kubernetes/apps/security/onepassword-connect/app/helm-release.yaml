@@ -102,9 +102,9 @@ spec:
               secretKeyRef:
                 name: onepassword-secrets
                 key: 1password-credentials.json
-          - { name: OP_HTTP_PORT, value: &port 8081 }
-          - { name: OP_BUS_PORT, value: "11221" }
-          - { name: OP_BUS_PEERS, value: "localhost:11220" }
+          - {name: OP_HTTP_PORT, value: &port 8081}
+          - {name: OP_BUS_PORT, value: "11221"}
+          - {name: OP_BUS_PEERS, value: "localhost:11220"}
         readinessProbe:
           httpGet:
             path: /health
