@@ -18,24 +18,29 @@ spec:
           - resources:
               annotations:
                 kyverno.io/ignore: "true"
-          - resources:
-              namespaces:
-                # - "cert-manager"
-                # - "dashboard"
-                # - "dbms"
-                # - "dev"
-                # - "envoy-system"
-                - "unused-flux-system"
       mutate:
-        patchStrategicMerge:
-          spec:
-            initContainers:
-              - (name): "*"
-                resources:
-                  limits:
-                    cpu: null
-            containers:
-              - (name): "*"
-                resources:
-                  limits:
-                    cpu: null
+        patchesJson6902: |-
+          - path: "/spec/initContainers/0/resources/limits/cpu"
+            op: remove
+          - path: "/spec/initContainers/1/resources/limits/cpu"
+            op: remove
+          - path: "/spec/initContainers/2/resources/limits/cpu"
+            op: remove
+          - path: "/spec/initContainers/3/resources/limits/cpu"
+            op: remove
+          - path: "/spec/initContainers/4/resources/limits/cpu"
+            op: remove
+          - path: "/spec/initContainers/5/resources/limits/cpu"
+            op: remove
+          - path: "/spec/containers/0/resources/limits/cpu"
+            op: remove
+          - path: "/spec/containers/1/resources/limits/cpu"
+            op: remove
+          - path: "/spec/containers/2/resources/limits/cpu"
+            op: remove
+          - path: "/spec/containers/3/resources/limits/cpu"
+            op: remove
+          - path: "/spec/containers/4/resources/limits/cpu"
+            op: remove
+          - path: "/spec/containers/5/resources/limits/cpu"
+            op: remove
