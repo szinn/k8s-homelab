@@ -27,8 +27,24 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    installCRDs: true
+    crds:
+      install: true
     replicaCount: 3
+    grafana:
+      enabled: true
+      annotations:
+        grafana_folder: System
+    serviceMonitor:
+      enabled: true
+    backgroundController:
+      serviceMonitor:
+        enabled: true
+    cleanupController:
+      serviceMonitor:
+        enabled: true
+    reportsController:
+      serviceMonitor:
+        enabled: true
     topologySpreadConstraints:
       - maxSkew: 1
         topologyKey: kubernetes.io/hostname
@@ -37,11 +53,3 @@ spec:
           matchLabels:
             app.kubernetes.io/instance: kyverno
             app.kubernetes.io/component: kyverno
-    serviceMonitor:
-      enabled: true
-    resources:
-      requests:
-        cpu: 108m
-        memory: 512Mi
-      limits:
-        memory: 1060Mi
