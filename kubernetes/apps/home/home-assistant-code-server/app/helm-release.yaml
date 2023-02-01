@@ -43,13 +43,13 @@ spec:
       - --extensions-dir
       - "/config/.vscode"
       - --port
-      - &port "12321"
+      - "12321"
       - "/config"
     service:
       main:
         ports:
           http:
-            port: *port
+            port: 12321
     ingress:
       main:
         enabled: true
