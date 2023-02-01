@@ -27,7 +27,6 @@ spec:
     keepHistory: false
   values:
     global:
-      # imageRegistry: public.ecr.aws
       storageClass: ceph-block
     auth:
       enabled: false
