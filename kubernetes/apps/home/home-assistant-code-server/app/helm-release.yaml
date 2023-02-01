@@ -63,7 +63,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: home-assistant-datastore
+        existingClaim: config-home-assistant-0
       sshkey:
         enabled: true
         type: secret
