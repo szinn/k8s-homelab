@@ -41,7 +41,7 @@ spec:
       - --dir
       - /books
       - --port
-      - &port '8080'
+      - '8080'
       - --name
       - ronwood
       - --useragent
@@ -54,7 +54,7 @@ spec:
       main:
         ports:
           http:
-            port: *port
+            port: 8080
     ingress:
       main:
         enabled: true
