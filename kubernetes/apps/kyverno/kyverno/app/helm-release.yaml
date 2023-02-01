@@ -36,6 +36,7 @@ spec:
         labelSelector:
           matchLabels:
             app.kubernetes.io/instance: kyverno
+            app.kubernetes.io/component: kyverno
     serviceMonitor:
       enabled: true
     resources:
