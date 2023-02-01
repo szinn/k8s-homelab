@@ -1,3 +1,4 @@
 .vscode
 **/*.sops.*
 archive/
+**/.terraform/*

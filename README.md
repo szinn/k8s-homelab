@@ -3,6 +3,7 @@
 <img src="https://camo.githubusercontent.com/5b298bf6b0596795602bd771c5bddbb963e83e0f/68747470733a2f2f692e696d6775722e636f6d2f7031527a586a512e706e67" align="center" width="144px" height="144px"/>
 
 <!-- markdownlint-disable no-trailing-punctuation -->
+
 ### My home operations repository :octocat:
 
 _... managed with Flux, Renovate and GitHub_ 🤖
@@ -29,21 +30,21 @@ At the bottom of this page, is the bringup process that I follow for this cluste
 
 ## Hardware
 
-| Device                                               | Count | OS Disk Size | Data Disk Size | RAM  | Operating System                       |
-| ---------------------------------------------------- | ----- | ------------ | -------------- | ---- | -------------------------------------- |
-| Ryzen 3900 12c24t NAS server                         | 1     | 1TB          | 1TB NVME, 4x16Tb, 2x12Tb SATA     | 64GB | Ubuntu 22.04 |
-| \* Router                                            | 1     | 20GB         |                | 8GB  | Ubuntu 22.04                           |
-| Raspberry Pi                                         | 1     |              |                |      | PiHole                                 |
-| Raspberry Pi                                         | 1     |              |                |      | OctoPrint                              |
-| TESmart 8-port HDMI Switch                           | 1     |              |                |      |                                        |
-| PiKVM                                                | 1     |              |                |      |                                        |
-| Intel NUC11PAHi7 (worker nodes)                      | 3     | 500GB SSD    | 1TB NVMe       | 64GB | Talos                                  |
-| Beelink MiniPC, Celeron J4125 (controlplane nodes)   | 3     | 256GB SSD    |                | 8GB  | Talos                                  |
-| Synology 1019+ (NFS server)                          | 1     |              | 5x8TB SATA     |      |                                        |
-| UDMPro                                               | 1     |              |                |      |                                        |
-| USW-Pro-24-PoE                                       | 1     |              |                |      |                                        |
-| USW-Enterprise-8-PoE                                 | 1     |              |                |      |                                        |
-| UNVR                                                 | 1     |              | 3x4TB SATA     |      |                                        |
+| Device                                             | Count | OS Disk Size | Data Disk Size                | RAM  | Operating System |
+| -------------------------------------------------- | ----- | ------------ | ----------------------------- | ---- | ---------------- |
+| Ryzen 3900 12c24t NAS server                       | 1     | 1TB          | 1TB NVME, 4x16Tb, 2x12Tb SATA | 64GB | Ubuntu 22.04     |
+| \* Router                                          | 1     | 20GB         |                               | 8GB  | Ubuntu 22.04     |
+| Raspberry Pi                                       | 1     |              |                               |      | PiHole           |
+| Raspberry Pi                                       | 1     |              |                               |      | OctoPrint        |
+| TESmart 8-port HDMI Switch                         | 1     |              |                               |      |                  |
+| PiKVM                                              | 1     |              |                               |      |                  |
+| Intel NUC11PAHi7 (worker nodes)                    | 3     | 500GB SSD    | 1TB NVMe                      | 64GB | Talos            |
+| Beelink MiniPC, Celeron J4125 (controlplane nodes) | 3     | 256GB SSD    |                               | 8GB  | Talos            |
+| Synology 1019+ (NFS server)                        | 1     |              | 5x8TB SATA                    |      |                  |
+| UDMPro                                             | 1     |              |                               |      |                  |
+| USW-Pro-24-PoE                                     | 1     |              |                               |      |                  |
+| USW-Enterprise-8-PoE                               | 1     |              |                               |      |                  |
+| UNVR                                               | 1     |              | 3x4TB SATA                    |      |                  |
 
 ## Kubernetes
 
@@ -176,7 +177,7 @@ The NFS drives are available across the cluster but are at a slower speed than t
 
 ### Data Backup and Recovery
 
-Currently, I use a combination of built-in application backups (e.g., *arr applications will backup weekly), an external shell script that will backup databases (mysql and postgres),
+Currently, I use a combination of built-in application backups (e.g., \*arr applications will backup weekly), an external shell script that will backup databases (mysql and postgres),
 and a couple of apps that I have backed up their configuration as it doesn't change frequently and it gets automatically restored upon the very first startup.
 I am also using poor man's backup (PMB) that is based on kopia as well as volsync which is based on restic and puts the backups into my Minio storage.
 

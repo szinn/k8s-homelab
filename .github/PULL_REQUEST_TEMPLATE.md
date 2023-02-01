@@ -1,10 +1,9 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: ''
+title: ""
 labels: kind/bug
-assignees: ''
-
+assignees: ""
 ---
 
 ## Description of the change
@@ -22,6 +21,7 @@ assignees: ''
 ## Applicable issues
 
 <!-- Enter any applicable Issues here (You can reference an issue using #) -->
+
 - fixes #
 
 ## Additional information

@@ -1,10 +1,9 @@
 ---
 name: Question
 about: Ask a question to the maintainer
-title: ''
+title: ""
 labels: kind/question
-assignees: ''
-
+assignees: ""
 ---
 
 ## Details

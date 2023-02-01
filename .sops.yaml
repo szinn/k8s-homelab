@@ -5,6 +5,6 @@ creation_rules:
     age: >-
       age1p28u8xjm5sf7jdavc8xsqtw7lxgscefxs7a5dtqszr2885xeputsh9y64y
   - path_regex: kubernetes/.*\.ya?ml
-    encrypted_regex: '((?i)(displayname|email|pass|secret($|[^N])|key|token|^data$|^stringData))'
+    encrypted_regex: "((?i)(displayname|email|pass|secret($|[^N])|key|token|^data$|^stringData))"
     age: >-
       age1p28u8xjm5sf7jdavc8xsqtw7lxgscefxs7a5dtqszr2885xeputsh9y64y
