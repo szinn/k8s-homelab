@@ -29,15 +29,10 @@ spec:
   values:
     crds:
       enabled: true
+    prometheus:
+      namespace: "monitoring"
+      serviceAccount: "prometheus-prometheus"
+      serviceMonitor:
+        enabled: true
     prometheusRule:
       enabled: true
-    controller:
-      metrics:
-        enabled: true
-        serviceMonitor:
-          enabled: true
-    speaker:
-      metrics:
-        enabled: true
-        serviceMonitor:
-          enabled: true
