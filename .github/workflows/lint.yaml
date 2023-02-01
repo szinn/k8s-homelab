@@ -60,5 +60,6 @@ jobs:
           KUBERNETES_KUBEVAL_FILTER_REGEX_INCLUDE: "(kubernetes)"
           MARKDOWN_MARKDOWNLINT_CONFIG_FILE: .github/linters/markdownlint/.markdownlint.yaml
           MARKDOWN_MARKDOWNLINT_RULES_PATH: .github/
+          REPOSITORY_SECRETLINT_CONFIG_FILE: .github/linters/secretlint/.secretlintrc.json
           YAML_YAMLLINT_CONFIG_FILE: .github/linters/yamllint/.yamllint.yaml
           YAML_PRETTIER_CONFIG_FILE: .github/linters/prettier/.prettierrc.yaml
