@@ -81,7 +81,6 @@ spec:
         server: "${SECRET_ATLAS_NFS_SERVER}"
         path: /mnt/atlas/media/
         mountPath: /data
-        readOnly: true
       backup:
         enabled: true
         type: nfs
