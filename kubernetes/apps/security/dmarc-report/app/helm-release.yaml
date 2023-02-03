@@ -41,7 +41,7 @@ spec:
         secret.reloader.stakater.com/reload: *app
     image:
       repository: ghcr.io/szinn/dmarc-report
-      tag: 1.4.1@sha256:9822f50d66b8564739d9b4471734b63ec72e62661f404265a5cf3015e478c88f
+      tag: 1.4.1@sha256:57fd5dee2b0b2409c5d55996a2ea960a15d872a3f55d9a3b9845e88c6859952d
       pullPolicy: IfNotPresent
     env:
       TZ: ${CONFIG_TIMEZONE}
