@@ -33,6 +33,8 @@ spec:
     service:
       enabled: true
       type: LoadBalancer
+      annotations:
+        metallb.universe.tf/loadBalancerIPs: ${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}
     customConfig:
       data_dir: /vector-data-dir
       api:
@@ -146,17 +148,3 @@ spec:
               {{`{{ "talos-service" }}`}}
             cluster: "${CONFIG_CLUSTER_NAME}"
             namespace: "talos:service"
-  postRenderers:
-    - kustomize:
-        patchesJson6902:
-          - target:
-              kind: Service
-              name: vector-aggregator
-            patch:
-              - op: add
-                path: /metadata/annotations
-                value:
-                  metallb.universe.tf/loadBalancerIPs: ${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}
-              - op: replace
-                path: /spec/externalTrafficPolicy
-                value: Local
