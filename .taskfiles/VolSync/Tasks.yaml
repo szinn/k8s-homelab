@@ -21,6 +21,7 @@ vars:
   ts: '{{now | date "150405"}}'
 
 tasks:
+
   list:
     desc: List all snapshots taken by restic for a given ReplicationSource (ex. task vs:list rsrc=plex [namespace=default])
     silent: true
@@ -62,7 +63,7 @@ tasks:
   #   - kubectl get replicationsources --all-namespaces --no-headers | awk '{print $2, $1}' | xargs --max-procs=2 -l bash -c 'task vs:restore rsrc=$0 namespace=$1'
   #
   restore:
-    desc: Trigger a Restic ReplicationSource restore (ex. task vs:restore rsrc=plex [namespace=default] [previous=n])
+    desc: Trigger a Restic ReplicationSource restore (ex. task vs:restore rsrc=plex [namespace=default])
     cmds:
       - task: restore-suspend-app
         vars: *task-vars
@@ -89,10 +90,11 @@ tasks:
       controller:
         sh: |
           app=$(kubectl -n {{.namespace}} get persistentvolumeclaim {{.claim}} -o jsonpath="{.metadata.labels.app\.kubernetes\.io/name}")
-          if [[ -z $(kubectl -n {{.namespace}} get persistentvolumeclaim {{.claim}} -o jsonpath="{.metadata.annotations.volume\.kubernetes\.io/storage-provisioner}") ]]; then
-            echo "statefulsets.apps/$app" && exit 0
+          if kubectl -n {{ .namespace }} get deployment.apps/$app >/dev/null 2>&1 ; then
+            echo "deployment.apps/$app"
+          else
+            echo "statefulset.apps/$app"
           fi
-          echo "statefulsets.apps/$app"
       previous: "{{.previous | default 0}}"
     env: *task-vars
     preconditions:
