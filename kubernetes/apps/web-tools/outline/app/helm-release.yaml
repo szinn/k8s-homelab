@@ -57,7 +57,7 @@ spec:
         enabled: true
         ingressClassName: "traefik"
         annotations:
-          ingress.home.arpa: "external-auth"
+          ingress.home.arpa/type: "external-auth"
         hosts:
           - host: "wiki.${SECRET_DOMAIN_NAME}"
             paths:

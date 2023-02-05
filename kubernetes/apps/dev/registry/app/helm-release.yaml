@@ -45,7 +45,7 @@ spec:
         enabled: true
         ingressClassName: "traefik"
         annotations:
-          ingress.home.arpa: "internal"
+          ingress.home.arpa/type: "internal"
         hosts:
           - host: "registry.${SECRET_DOMAIN_NAME}"
             paths:

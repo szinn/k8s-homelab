@@ -54,7 +54,7 @@ spec:
       enabled: true
       annotations:
         kubernetes.io/ingress.class: traefik
-        ingress.home.arpa: "internal"
+        ingress.home.arpa/type: "internal"
       hosts:
         - "grafana.${SECRET_DOMAIN_NAME}"
       path: /

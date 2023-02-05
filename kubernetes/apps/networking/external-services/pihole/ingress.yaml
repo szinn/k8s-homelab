@@ -9,7 +9,7 @@ metadata:
     app.kubernetes.io/instance: *app
   annotations:
     kubernetes.io/ingress.class: traefik
-    ingress.home.arpa: "internal"
+    ingress.home.arpa/type: "internal"
     traefik.ingress.kubernetes.io/router.middlewares: "networking-add-pihole-admin-internal@kubernetescrd"
 spec:
   rules:

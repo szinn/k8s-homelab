@@ -52,7 +52,7 @@ spec:
         enabled: true
         ingressClassName: "traefik"
         annotations:
-          ingress.home.arpa: "internal"
+          ingress.home.arpa/type: "internal"
         hosts:
           - host: "shlink.${SECRET_DOMAIN_NAME}"
             paths:

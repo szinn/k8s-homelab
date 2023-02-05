@@ -47,7 +47,7 @@ spec:
         enabled: true
         ingressClassName: traefik
         annotations:
-          ingress.home.arpa: "internal"
+          ingress.home.arpa/type: "internal"
         hosts:
           - host: books.${SECRET_DOMAIN_NAME}
             paths:
