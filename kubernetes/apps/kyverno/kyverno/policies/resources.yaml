@@ -3,8 +3,16 @@ apiVersion: kyverno.io/v1
 kind: ClusterPolicy
 metadata:
   name: resources
+  annotations:
+    policies.kyverno.io/title: Delete CPU Limits
+    policies.kyverno.io/category: Best Practices
+    policies.kyverno.io/severity: medium
+    policies.kyverno.io/subject: Pod
+    policies.kyverno.io/description: >-
+      This policy deletes CPU limits from all Podsspec:
 spec:
   background: true
+  mutateExistingOnPolicyUpdate: true
   generateExistingOnPolicyUpdate: true
   rules:
     - name: remove-cpu-limits
@@ -19,28 +27,12 @@ spec:
               annotations:
                 kyverno.io/ignore: "true"
       mutate:
-        patchesJson6902: |-
-          - path: "/spec/initContainers/0/resources/limits/cpu"
-            op: remove
-          - path: "/spec/initContainers/1/resources/limits/cpu"
-            op: remove
-          - path: "/spec/initContainers/2/resources/limits/cpu"
-            op: remove
-          - path: "/spec/initContainers/3/resources/limits/cpu"
-            op: remove
-          - path: "/spec/initContainers/4/resources/limits/cpu"
-            op: remove
-          - path: "/spec/initContainers/5/resources/limits/cpu"
-            op: remove
-          - path: "/spec/containers/0/resources/limits/cpu"
-            op: remove
-          - path: "/spec/containers/1/resources/limits/cpu"
-            op: remove
-          - path: "/spec/containers/2/resources/limits/cpu"
-            op: remove
-          - path: "/spec/containers/3/resources/limits/cpu"
-            op: remove
-          - path: "/spec/containers/4/resources/limits/cpu"
-            op: remove
-          - path: "/spec/containers/5/resources/limits/cpu"
-            op: remove
+        foreach:
+          - list: "request.object.spec.containers"
+            patchesJson6902: |-
+              - path: /spec/containers/{{elementIndex}}/resources/limits/cpu
+                op: remove
+          - list: "request.object.spec.initContainers"
+            patchesJson6902: |-
+              - path: /spec/initContainers/{{elementIndex}}/resources/limits/cpu
+                op: remove
