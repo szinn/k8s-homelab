@@ -32,13 +32,16 @@ spec:
       repository: parabuzzle/craneoperator
       tag: 2.2.5
     env:
+      PORT: 8080
       REGISTRY_HOST: registry.${SECRET_DOMAIN_NAME}
+      REGISTRY_PORT: 443
+      SSL_VERIFY: false
       REGISTRY_ALLOW_DELETE: true
     service:
       main:
         ports:
           http:
-            port: 80
+            port: 8080
     ingress:
       main:
         enabled: true
