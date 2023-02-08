@@ -15,7 +15,7 @@ spec:
   mutateExistingOnPolicyUpdate: true
   generateExistingOnPolicyUpdate: true
   rules:
-    - name: delete-cpu-limits
+    - name: delete-containers-cpu-limits
       match:
         any:
           - resources:
@@ -24,40 +24,39 @@ spec:
       exclude:
         any:
           - resources:
-              annotations:
-                kyverno.io/ignore: "true"
+              kinds:
+                - Pod
+              selector:
+                matchLabels:
+                  job-name: "*"
       mutate:
         foreach:
           - list: "request.object.spec.containers"
             patchesJson6902: |-
               - path: /spec/containers/{{elementIndex}}/resources/limits/cpu
                 op: remove
-          # - list: "request.object.spec.initContainers"
-          #   patchesJson6902: |-
-          #     - path: /spec/initContainers/{{elementIndex}}/resources/limits/cpu
-          #       op: remove
-        # patchesJson6902: |-
-        #   - path: "/spec/initContainers/0/resources/limits/cpu"
-        #     op: remove
-        #   - path: "/spec/initContainers/1/resources/limits/cpu"
-        #     op: remove
-        #   - path: "/spec/initContainers/2/resources/limits/cpu"
-        #     op: remove
-        #   - path: "/spec/initContainers/3/resources/limits/cpu"
-        #     op: remove
-        #   - path: "/spec/initContainers/4/resources/limits/cpu"
-        #     op: remove
-        #   - path: "/spec/initContainers/5/resources/limits/cpu"
-        #     op: remove
-        #   - path: "/spec/containers/0/resources/limits/cpu"
-        #     op: remove
-        #   - path: "/spec/containers/1/resources/limits/cpu"
-        #     op: remove
-        #   - path: "/spec/containers/2/resources/limits/cpu"
-        #     op: remove
-        #   - path: "/spec/containers/3/resources/limits/cpu"
-        #     op: remove
-        #   - path: "/spec/containers/4/resources/limits/cpu"
-        #     op: remove
-        #   - path: "/spec/containers/5/resources/limits/cpu"
-        #     op: remove
+    - name: delete-initcontainers-cpu-limits
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+      exclude:
+        any:
+          - resources:
+              kinds:
+                - Pod
+              selector:
+                matchLabels:
+                  job-name: "*"
+      preconditions:
+        all:
+          - key: "{{ request.object.spec.initContainers[] || `[]` | length(@) }}"
+            operator: GreaterThanOrEquals
+            value: 1
+      mutate:
+        foreach:
+          - list: "request.object.spec.initContainers"
+            patchesJson6902: |-
+              - path: /spec/initContainers/{{elementIndex}}/resources/limits/cpu
+                op: remove
