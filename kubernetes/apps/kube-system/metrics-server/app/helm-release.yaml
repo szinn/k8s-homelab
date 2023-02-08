@@ -26,6 +26,8 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    image:
+      repository: registry.k8s.io/metrics-server/metrics-server
     metrics:
       enabled: true
     serviceMonitor:

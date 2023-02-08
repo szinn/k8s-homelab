@@ -27,6 +27,8 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    image:
+      repository: registry.k8s.io/node-problem-detector/node-problem-detector
     metrics:
       enabled: true
       serviceMonitor:
