@@ -17,6 +17,6 @@ spec:
               is in a unexpected state {{$labels.state}}
           expr: |
             node_zfs_zpool_state{state!="online"} > 0
-          for: 15m
+          for: 10m
           labels:
             severity: critical
