@@ -68,9 +68,6 @@ spec:
         size: 2Gi
         storageClass: ceph-block
     persistence:
-      config:
-        enabled: true
-        existingClaim: radarr-4k-config
       media:
         enabled: true
         existingClaim: media-datastore
