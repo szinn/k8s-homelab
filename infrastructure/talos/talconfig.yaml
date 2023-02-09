@@ -1,6 +1,6 @@
 ---
 clusterName: ${CONFIG_CLUSTER_NAME}
-talosVersion: v1.3.3
+talosVersion: v1.3.4
 kubernetesVersion: v1.26.1
 endpoint: https://${CONFIG_CLUSTER_NAME}.${SECRET_BASE_DOMAIN_NAME}:6443
 domain: cluster.local
