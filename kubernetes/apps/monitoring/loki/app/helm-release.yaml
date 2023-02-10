@@ -160,14 +160,15 @@ spec:
           grafana_dashboard: "true"
       rules:
         enabled: true
+        alerting: true
       serviceMonitor:
         enabled: false
       selfMonitoring:
         enabled: false
-        lokiCanary:
-          enabled: false
         grafanaAgent:
           installOperator: false
+      lokiCanary:
+        enabled: false
     test:
       enabled: false
   valuesFrom:

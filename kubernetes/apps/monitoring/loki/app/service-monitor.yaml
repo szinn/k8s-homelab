@@ -9,11 +9,20 @@ metadata:
     app.kubernetes.io/instance: *app
     app.kubernetes.io/name: *app
 spec:
+  namespaceSelector:
+    matchNames:
+      - monitoring
   selector:
+    matchExpressions:
+      - { key: app.kubernetes.io/component, operator: In, values: [read]}
+      - { key: app.kubernetes.io/instance, operator: In, values: [*app]}
+      - { key: app.kubernetes.io/name, operator: In, values: [*app]}
+      - { key: prometheus.io/service-monitor, operator: NotIn, values: ["false"]}
+
     matchLabels:
       <<: *labels
   endpoints:
-    - port: "3100"
+    - port: http-metrics
       scheme: http
       path: /metrics
       interval: 2m
