@@ -43,7 +43,7 @@ spec:
         secret.reloader.stakater.com/reload: *app
     image:
       repository: ghcr.io/onedr0p/home-assistant
-      tag: 2023.2.3@sha256:4dec60ce9a1cebbd2397142d0324e2cd762331f1c0cb447fd7c80ead17190e17
+      tag: 2023.2.3@sha256:dd5235b9b4de2b5dd51e9bb9a87a8b4c55feb6d4a5ab2ed9b4ce116ae7584d80
     envFrom:
       - secretRef:
           name: *app
