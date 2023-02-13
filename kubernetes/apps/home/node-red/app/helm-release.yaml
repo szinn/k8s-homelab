@@ -27,6 +27,24 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    initContainers:
+      npm-update:
+        image: node:19-alpine
+        env:
+          npm_config_cache: /data/.npm
+        command:
+          - /bin/sh
+          - -c
+          - |
+            if [[ -f /data/package.json ]]; then
+                npm install --save $(npm outdated | cut -d' ' -f 1 | sed '1d' | xargs -I '$' echo '$@latest' | xargs echo);
+            else
+                echo "Skipping npm updates, no package.json found.";
+            fi
+        workingDir: /data
+        volumeMounts:
+          - name: data
+            mountPath: /data
     controller:
       type: statefulset
       annotations:
