@@ -31,7 +31,7 @@ spec:
         secret.reloader.stakater.com: onepassword-connect-secrets
     image:
       repository: docker.io/1password/connect-api
-      tag: 1.6.0
+      tag: 1.6.1
     env:
       OP_BUS_PORT: "11220"
       OP_BUS_PEERS: "localhost:11221"
@@ -95,7 +95,7 @@ spec:
     sidecars:
       sync:
         name: sync
-        image: docker.io/1password/connect-sync:1.6.0
+        image: docker.io/1password/connect-sync:1.6.1
         env:
           - name: OP_SESSION
             valueFrom:
