@@ -227,13 +227,13 @@ spec:
           datasource: Prometheus
       cilium:
         cilium-dashboard:
-          url: https://raw.githubusercontent.com/cilium/cilium/v1.12.6/examples/kubernetes/addons/prometheus/files/grafana-dashboards/cilium-dashboard.json
+          url: https://raw.githubusercontent.com/cilium/cilium/v1.12.7/examples/kubernetes/addons/prometheus/files/grafana-dashboards/cilium-dashboard.json
           datasource: Prometheus
         cilium-operator-dashboard:
-          url: https://raw.githubusercontent.com/cilium/cilium/v1.12.6/examples/kubernetes/addons/prometheus/files/grafana-dashboards/cilium-operator-dashboard.json
+          url: https://raw.githubusercontent.com/cilium/cilium/v1.12.7/examples/kubernetes/addons/prometheus/files/grafana-dashboards/cilium-operator-dashboard.json
           datasource: Prometheus
         hubble-dashboard:
-          url: https://raw.githubusercontent.com/cilium/cilium/v1.12.6/examples/kubernetes/addons/prometheus/files/grafana-dashboards/hubble-dashboard.json
+          url: https://raw.githubusercontent.com/cilium/cilium/v1.12.7/examples/kubernetes/addons/prometheus/files/grafana-dashboards/hubble-dashboard.json
           datasource: Prometheus
       kubernetes:
         api-server:
