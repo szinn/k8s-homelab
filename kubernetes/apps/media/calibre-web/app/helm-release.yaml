@@ -33,7 +33,7 @@ spec:
         reloader.stakater.com/auto: "true"
     image:
       repository: ghcr.io/bjw-s/calibre-web
-      tag: 0.6.19@sha256:cb1962c8bafa9c4b8b41bb5e17671332bc9697fc709944d59f24747c31c5adf2
+      tag: 0.6.19@sha256:21ead5b41aecdd914175244611f7e0c0b7fe56a370840d39849da4baed00b57a
     env:
       TZ: ${CONFIG_TIMEZONE}
       CACHE_DIR: /cache
