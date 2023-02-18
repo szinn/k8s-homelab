@@ -11,7 +11,7 @@ spec:
     name: homelab-kubernetes
   dependsOn:
     - name: dbms-cloudnative-pg
-    - name: security-onepassword-connect
+    - name: security-external-secrets-stores
     - name: rook-ceph-cluster
     - name: system-volsync
   healthChecks:

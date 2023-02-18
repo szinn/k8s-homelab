@@ -31,7 +31,7 @@ spec:
     kind: GitRepository
     name: homelab-kubernetes
   dependsOn:
-    - name: security-onepassword-connect
+    - name: security-external-secrets-stores
     - name: cert-manager
   prune: true
   wait: true

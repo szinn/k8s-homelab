@@ -10,7 +10,7 @@ spec:
     kind: GitRepository
     name: homelab-kubernetes
   dependsOn:
-    - name: security-onepassword-connect
+    - name: security-external-secrets-stores
     - name: media-radarr
     - name: media-radarr-4k
     - name: media-sonarr

@@ -10,7 +10,7 @@ spec:
     kind: GitRepository
     name: homelab-kubernetes
   dependsOn:
-    - name: security-onepassword-connect
+    - name: security-external-secrets-stores
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease

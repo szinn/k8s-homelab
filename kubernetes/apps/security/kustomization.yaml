@@ -6,4 +6,3 @@ resources:
   - authelia/install.yaml
   - dmarc-report/install.yaml
   - external-secrets/install.yaml
-  - onepassword-connect/install.yaml
