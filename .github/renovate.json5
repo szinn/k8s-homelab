@@ -8,6 +8,7 @@
     ":enablePreCommit",
     ":automergeDigest",
     ":automergeBranchPush",
+    ":separatePatchReleases",
     "github>szinn/k8s-homelab//.github/renovate/allowedVersions.json5",
     "github>szinn/k8s-homelab//.github/renovate/autoMerge.json5",
     "github>szinn/k8s-homelab//.github/renovate/commitMessage.json5",
@@ -64,7 +65,10 @@
   "packageRules": [
     {
       "description": "Use loose versioning for certain dependencies",
-      "matchDatasources": ["docker"],
+      "matchDatasources": [
+        "docker",
+        "github-releases"
+      ],
       "versioning": "loose",
       "matchPackagePatterns": [
         "changedetection",
