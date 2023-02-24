@@ -27,7 +27,7 @@
   "timezone": "America/Toronto",
   "dependencyDashboardTitle": "Renovate Dashboard",
   "suppressNotifications": ["prIgnoreNotification"],
-  "rebaseWhen": "conflicted",
+  "rebaseWhen": "auto",
   "commitBodyTable": true,
   "flux": {
     "fileMatch": ["kubernetes/.+\\.ya?ml$"]
