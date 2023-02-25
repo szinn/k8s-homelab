@@ -51,7 +51,7 @@ spec:
         enabled: true
         ingressClassName: traefik
         annotations:
-          ingress.home.arpa/type: "internal"
+          ingress.home.arpa/type: "external"
         hosts:
           - host: photos.${SECRET_DOMAIN_NAME}
             paths:
