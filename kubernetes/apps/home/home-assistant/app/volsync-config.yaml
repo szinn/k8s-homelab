@@ -35,6 +35,9 @@ spec:
     copyMethod: Snapshot
     pruneIntervalDays: 14
     repository: home-assistant-restic-secret
+    moverSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
     cacheCapacity: 1Gi
     retain:
       hourly: 0

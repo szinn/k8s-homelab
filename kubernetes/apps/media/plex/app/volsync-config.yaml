@@ -35,6 +35,9 @@ spec:
     copyMethod: Snapshot
     pruneIntervalDays: 14
     repository: plex-restic-secret
+    moverSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
     cacheCapacity: 5Gi
     retain:
       hourly: 0

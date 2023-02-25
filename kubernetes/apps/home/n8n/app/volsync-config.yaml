@@ -35,6 +35,9 @@ spec:
     copyMethod: Snapshot
     pruneIntervalDays: 10
     repository: n8n-restic-secret
+    moverSecurityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
     cacheCapacity: 2Gi
     retain:
       hourly: 0

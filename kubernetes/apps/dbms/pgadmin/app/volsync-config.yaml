@@ -35,6 +35,9 @@ spec:
     copyMethod: Snapshot
     pruneIntervalDays: 14
     repository: pgadmin-restic-secret
+    moverSecurityContext:
+      runAsUser: 5050
+      runAsGroup: 5050
     cacheCapacity: 1Gi
     retain:
       hourly: 0
