@@ -26,29 +26,47 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    initContainers:
+      01-init-config:
+        image: public.ecr.aws/docker/library/busybox:latest
+        imagePullPolicy: IfNotPresent
+        command: ["/bin/sh", "-c", "cp /tmp/config/recyclarr.yml /config/recyclarr.yml"]
+        volumeMounts:
+          - { name: config-file, mountPath: /tmp/config }
+          - { name: config, mountPath: /config }
     controller:
-      type: cronjob
-      cronjob:
-        schedule: "@daily"
-        ttlSecondsAfterFinished: 43200
-    restartPolicy: OnFailure
+      type: statefulset
+      annotations:
+        reloader.stakater.com/auto: "true"
     image:
       repository: ghcr.io/recyclarr/recyclarr
-      tag: edge@sha256:a1231ce96eacd7a85cdab07e95c9fcb758d30e1ac2dc59360654d860c360ad09
-    command: ["/app/recyclarr/recyclarr"]
-    args: ["sync"]
+      tag: edge
     envFrom:
       - secretRef:
           name: recyclarr
     service:
       main:
         enabled: false
+    podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      fsGroupChangePolicy: OnRootMismatch
+    volumeClaimTemplates:
+      - name: config
+        mountPath: /config
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        storageClass: ceph-block
     persistence:
-      config:
+      config-file:
         enabled: true
         type: configMap
-        name: recyclarr
-        subPath: recyclarr.yaml
-        mountPath: /config/recyclarr.yml
-        defaultMode: 0775
-        readOnly: true
+        name: recyclarr-configmap
+        mountPath: "-"
+    resources:
+      requests:
+        cpu: 10m
+        memory: 50Mi
+      limits:
+        memory: 200Mi

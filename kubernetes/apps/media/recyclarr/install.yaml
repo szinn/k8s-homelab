@@ -11,6 +11,8 @@ spec:
     name: homelab-kubernetes
   dependsOn:
     - name: security-external-secrets-stores
+    - name: rook-ceph-cluster
+    - name: system-volsync
     - name: media-radarr
     - name: media-radarr-4k
     - name: media-sonarr
