@@ -43,9 +43,3 @@ spec:
           operator: "Exists"
     monitoring:
       enabled: true
-    resources:
-      requests:
-        cpu: 100m
-        memory: 204Mi
-      limits:
-        memory: 453Mi
