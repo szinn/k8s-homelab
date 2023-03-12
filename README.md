@@ -76,7 +76,7 @@ The external is connected to the UDMPro with a [Wireguard](https://www.wireguard
 The 3 worker nodes and Ryzen server are connected to the 8-port switch with 2.5Gb ethernet. The Unifi components are connected with 10Gb ethernet connections.
 Multiple wired access points are scattered around the house and backyard.
 
-The Kubernetes cluster and IPs are on the 10.0.40.x subnet with VLAN tagging. Pods and services are on the 10.40.x.x and 10.41.x.x subnets respectively.
+The Kubernetes cluster and IPs are on the 10.40.0.x subnet with VLAN tagging. Pods and services are on the 10.40.x.x and 10.41.x.x subnets respectively.
 The Kubernetes API is accessed via an external [HAProxy](https://www.haproxy.com).
 External machines (PiHole, Synology, etc) are on the main household VLAN subnet. IoT devices are on an isolated 10.0.80.x VLAN. They cannot reach the other VLANs directly but will answer when spoken to.
 

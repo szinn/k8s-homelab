@@ -22,7 +22,7 @@ access_control:
     - name: internal
       networks:
         - 10.0.10.0/24
-        - 10.0.40.2/32
+        - 10.40.0.2/32
   rules:
     - domain: "*.${SECRET_DOMAIN_NAME}"
       networks:

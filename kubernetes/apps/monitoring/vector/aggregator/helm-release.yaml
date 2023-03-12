@@ -68,24 +68,24 @@ spec:
           inputs:
             - talos_kernel_logs
           source: |-
-            r1 = replace!(.__host, "10.0.40.16", "k8s-1")
-            r2 = replace(r1, "10.0.40.17", "k8s-2")
-            r3 = replace(r2, "10.0.40.18", "k8s-3")
-            r4 = replace(r3, "10.0.40.19", "k8s-4")
-            r5 = replace(r4, "10.0.40.20", "k8s-5")
-            r6 = replace(r5, "10.0.40.21", "k8s-6")
+            r1 = replace!(.__host, "10.40.0.16", "k8s-1")
+            r2 = replace(r1, "10.40.0.17", "k8s-2")
+            r3 = replace(r2, "10.40.0.18", "k8s-3")
+            r4 = replace(r3, "10.40.0.19", "k8s-4")
+            r5 = replace(r4, "10.40.0.20", "k8s-5")
+            r6 = replace(r5, "10.40.0.21", "k8s-6")
             .node = r6
         service_hostname_transform:
           type: remap
           inputs:
             - talos_service_logs
           source: |-
-            r1 = replace!(.__host, "10.0.40.16", "k8s-1")
-            r2 = replace(r1, "10.0.40.17", "k8s-2")
-            r3 = replace(r2, "10.0.40.18", "k8s-3")
-            r4 = replace(r3, "10.0.40.19", "k8s-4")
-            r5 = replace(r4, "10.0.40.20", "k8s-5")
-            r6 = replace(r5, "10.0.40.21", "k8s-6")
+            r1 = replace!(.__host, "10.40.0.16", "k8s-1")
+            r2 = replace(r1, "10.40.0.17", "k8s-2")
+            r3 = replace(r2, "10.40.0.18", "k8s-3")
+            r4 = replace(r3, "10.40.0.19", "k8s-4")
+            r5 = replace(r4, "10.40.0.20", "k8s-5")
+            r6 = replace(r5, "10.40.0.21", "k8s-6")
             r7 = replace(r6, r'10.*', "talos")
             .node = r7
       # Sinks

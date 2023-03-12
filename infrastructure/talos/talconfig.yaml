@@ -12,7 +12,7 @@ cniConfig:
   name: none
 nodes:
   - hostname: k8s-1
-    ipAddress: 10.0.40.16
+    ipAddress: 10.40.0.16
     controlPlane: true
     installDisk: /dev/sda
     networkInterfaces:
