@@ -79,6 +79,47 @@ spec:
     volumeClaimTemplates:
       - name: config
         mountPath: /config
-        accessMode: ReadWriteMany
-        size: 5Gi
+        accessMode: ReadWriteOnce
+        size: 8Gi
         storageClass: ceph-block
+    addons:
+      codeserver:
+        enabled: true
+        image:
+          repository: ghcr.io/coder/code-server
+          tag: 4.10.1
+        env:
+          TZ: "${TIMEZONE}"
+        workingDir: /config
+        args:
+          - --auth
+          - none
+          - --user-data-dir
+          - "/config/.vscode"
+          - --extensions-dir
+          - "/config/.vscode"
+          - --port
+          - "12321"
+          - "/config"
+        ingress:
+          enabled: true
+          ingressClassName: "traefik"
+          annotations:
+            ingress.home.arpa/type: "internal"
+          hosts:
+            - host: "ha-code.${SECRET_DOMAIN_NAME}"
+              paths:
+                - path: /
+        persistence:
+          sshkey:
+            enabled: true
+            type: secret
+            name: home-assistant-code-server
+            items:
+              - key: id_rsa
+                path: id_rsa
+            mountPath: /root/.ssh
+            defaultMode: 256
+        volumeMounts:
+          - name: config
+            mountPath: /config

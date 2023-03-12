@@ -4,6 +4,5 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - home-assistant/install.yaml
-  - home-assistant-code-server/install.yaml
   - node-red/install.yaml
   - n8n/install.yaml
