@@ -1,7 +1,7 @@
 ---
 clusterName: ${CONFIG_CLUSTER_NAME}
-talosVersion: v1.3.5
-kubernetesVersion: v1.26.1
+talosVersion: v1.3.6
+kubernetesVersion: v1.26.2
 endpoint: https://${CONFIG_CLUSTER_NAME}.${SECRET_BASE_DOMAIN_NAME}:6443
 domain: cluster.local
 clusterPodNets:
@@ -12,7 +12,7 @@ cniConfig:
   name: none
 nodes:
   - hostname: k8s-1
-    ipAddress: 10.40.0.16
+    ipAddress: 10.10.0.16
     controlPlane: true
     installDisk: /dev/sda
     networkInterfaces:
@@ -22,7 +22,7 @@ nodes:
         vip:
           ip: ${CONFIG_VIP_IP}
   - hostname: k8s-2
-    ipAddress: 10.0.40.17
+    ipAddress: 10.10.0.17
     controlPlane: true
     installDisk: /dev/sda
     networkInterfaces:
@@ -32,7 +32,7 @@ nodes:
         vip:
           ip: ${CONFIG_VIP_IP}
   - hostname: k8s-3
-    ipAddress: 10.0.40.18
+    ipAddress: 10.10.0.18
     controlPlane: true
     installDisk: /dev/sda
     networkInterfaces:
@@ -42,7 +42,7 @@ nodes:
         vip:
           ip: ${CONFIG_VIP_IP}
   - hostname: k8s-4
-    ipAddress: 10.0.40.19
+    ipAddress: 10.10.0.19
     controlPlane: false
     installDisk: /dev/sda
     networkInterfaces:
@@ -50,7 +50,7 @@ nodes:
         mtu: 1500
         dhcp: true
   - hostname: k8s-5
-    ipAddress: 10.0.40.68
+    ipAddress: 10.10.0.20
     controlPlane: false
     installDisk: /dev/sda
     networkInterfaces:
@@ -58,7 +58,7 @@ nodes:
         mtu: 1500
         dhcp: true
   - hostname: k8s-6
-    ipAddress: 10.0.40.21
+    ipAddress: 10.10.0.21
     controlPlane: false
     installDisk: /dev/sda
     networkInterfaces:
