@@ -2,8 +2,8 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: "unlock-${rsrc}-${ts}"
-  namespace: "${namespace}"
+  name: "unlock-${RSRC}-${TS}"
+  namespace: "${NAMESPACE}"
 spec:
   ttlSecondsAfterFinished: 3600
   template:
@@ -16,4 +16,4 @@ spec:
           args: ["unlock", "--remove-all"]
           envFrom:
             - secretRef:
-                name: "${rsrc}-restic-secret"
+                name: "${RSRC}-restic-secret"
