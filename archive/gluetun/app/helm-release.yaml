@@ -29,7 +29,7 @@ spec:
   values:
     image:
       repository: docker.io/qmcgaw/gluetun
-      tag: v3.32.0
+      tag: v1.8.1@sha256:690b6365728fe9012ad4cdfca38334992664596513dca187d1b93d2025205776
     env:
       - name: VPN_SERVICE_PROVIDER
         value: "private internet access"
@@ -60,14 +60,8 @@ spec:
         ports:
           http:
             port: 8888
-    securityContext:
-      capabilities:
-        add:
-          - NET_ADMIN
-    probes:
-      liveness:
-        enabled: false
-      readiness:
-        enabled: false
-      startup:
-        enabled: false
+    podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      fsGroupChangePolicy: "OnRootMismatch"

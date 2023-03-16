@@ -6,6 +6,5 @@ resources:
   - cloudflare-ddns/install.yaml
   - external-dns/install.yaml
   - external-services/install.yaml
-  - gluetun/install.yaml
   - metallb/install.yaml
   - traefik/install.yaml
