@@ -30,7 +30,7 @@ spec:
       replicas: 3
     image:
       repository: docker.io/traefik/whoami
-      tag: v1.8.7
+      tag: v1.9.0
     service:
       main:
         ports:
