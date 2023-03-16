@@ -17,4 +17,4 @@ data:
         version: 1
         isDefault: true
         jsonData:
-          maxLines: 1000
+          maxLines: 100
