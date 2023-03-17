@@ -30,20 +30,14 @@ spec:
     installCRDs: true
     replicaCount: 1
     leaderElect: true
-    grafana:
-      enabled: true
     serviceMonitor:
       enabled: true
       interval: 1m
-    backgroundController:
+    webhook:
       serviceMonitor:
         enabled: true
         interval: 1m
-    cleanupController:
-      serviceMonitor:
-        enabled: true
-        interval: 1m
-    reportsController:
+    certController:
       serviceMonitor:
         enabled: true
         interval: 1m
