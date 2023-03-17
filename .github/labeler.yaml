@@ -2,6 +2,6 @@
 area/github:
   - ".github/**/*"
 area/cluster:
-  - "cluster/**/*"
+  - "kubernetes/**/*"
 area/hack:
   - "hack/**/*"
