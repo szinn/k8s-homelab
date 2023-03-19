@@ -10,7 +10,7 @@ spec:
     kind: GitRepository
     name: homelab-kubernetes
   dependsOn:
-    - name: tekton-pipelines
+    - name: tekton-pipeline
   prune: true
   wait: true
   interval: 30m
