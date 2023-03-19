@@ -1,0 +1,22 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: feature-flags
+  namespace: tekton-pipelines
+  labels:
+    app.kubernetes.io/instance: tekton-deployment
+    app.kubernetes.io/part-of: tekton-pipelines
+data:
+  # If disable-affinity-assistant is false, you cannot run multi-architecture
+  # pipelines on native hardware. Affinity assistant is excellent for some workflows.
+  disable-affinity-assistant: "true"
+  disable-creds-init: "false"
+  disable-home-env-overwrite: "true"
+  disable-working-directory-overwrite: "true"
+  enable-api-fields: alpha
+  enable-custom-tasks: "false"
+  enable-tekton-oci-bundles: "false"
+  require-git-ssh-secret-known-hosts: "false"
+  running-in-environment-with-injected-sidecars: "true"
+  scope-when-expressions-to-task: "false"

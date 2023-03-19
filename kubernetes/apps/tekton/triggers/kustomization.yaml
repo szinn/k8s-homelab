@@ -1,0 +1,7 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: tekton-pipelines
+resources:
+  # Triggers
+  - https://github.com/tektoncd/triggers/releases/download/v0.22.1/release.yaml
+  - https://github.com/tektoncd/triggers/releases/download/v0.22.1/interceptors.yaml
