@@ -35,28 +35,30 @@ spec:
     cluster:
       name: "${CONFIG_CLUSTER_NAME}"
       id: "1"
+
     securityContext:
       privileged: true
+      capabilities:
+        ciliumAgent: "{CHOWN,KILL,NET_ADMIN,NET_RAW,IPC_LOCK,SYS_ADMIN,SYS_RESOURCE,DAC_OVERRIDE,FOWNER,SETGID,SETUID}"
+        cleanCiliumState: "{NET_ADMIN,SYS_ADMIN,SYS_RESOURCE}"
+    cgroup:
+      autoMount:
+        enabled: false
+      hostRoot: "/sys/fs/cgroup"
+
     kubeProxyReplacement: "strict"
-    kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
     k8sServiceHost: "${CONFIG_CLUSTER_NAME}.${SECRET_BASE_DOMAIN_NAME}"
     k8sServicePort: 6443
+
     ipv4NativeRoutingCIDR: "${CONFIG_K8S_POD_CIDR}"
+
     ipam:
       mode: "kubernetes"
-    containerRuntime:
-      integration: containerd
-    prometheus:
+
+    hubble:
       enabled: true
       serviceMonitor:
         enabled: true
-    operator:
-      prometheus:
-        enabled: true
-        serviceMonitor:
-          enabled: true
-    hubble:
-      enabled: true
       metrics:
         enabled:
           - dns:query;ignoreAAAA
@@ -66,8 +68,6 @@ spec:
           - port-distribution
           - icmp
           - http
-        serviceMonitor:
-          enabled: true
       relay:
         enabled: true
         rollOutPods: true
@@ -79,8 +79,5 @@ spec:
           annotations:
             kubernetes.io/ingress.class: "traefik"
             ingress.home.arpa/type: "internal"
-            # Need these explicitly here until kyverno operates on kube-system namespace.
-            traefik.ingress.kubernetes.io/router.entrypoints: websecure
-            traefik.ingress.kubernetes.io/router.middlewares: "networking-internal@kubernetescrd"
           hosts:
             - "hubble.${SECRET_DOMAIN_NAME}"

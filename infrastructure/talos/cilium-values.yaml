@@ -5,9 +5,15 @@ cluster:
 
 securityContext:
   privileged: true
+  capabilities:
+    ciliumAgent: "{CHOWN,KILL,NET_ADMIN,NET_RAW,IPC_LOCK,SYS_ADMIN,SYS_RESOURCE,DAC_OVERRIDE,FOWNER,SETGID,SETUID}"
+    cleanCiliumState: "{NET_ADMIN,SYS_ADMIN,SYS_RESOURCE}"
+cgroup:
+  autoMount:
+    enabled: false
+  hostRoot: "/sys/fs/cgroup"
 
 kubeProxyReplacement: "strict"
-kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
 k8sServiceHost: "${CONFIG_CLUSTER_NAME}.${SECRET_BASE_DOMAIN_NAME}"
 k8sServicePort: 6443
 
@@ -16,12 +22,29 @@ ipv4NativeRoutingCIDR: "${CONFIG_K8S_POD_CIDR}"
 ipam:
   mode: "kubernetes"
 
-containerRuntime:
-  integration: containerd
-
 hubble:
-  enabled: false
-
-ipv6:
-  # -- Enable IPv6 support.
-  enabled: false
+  enabled: true
+  serviceMonitor:
+    enabled: true
+  metrics:
+    enabled:
+      - dns:query;ignoreAAAA
+      - drop
+      - tcp
+      - flow
+      - port-distribution
+      - icmp
+      - http
+  relay:
+    enabled: true
+    rollOutPods: true
+  ui:
+    enabled: true
+    rollOutPods: true
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: "traefik"
+        ingress.home.arpa/type: "internal"
+      hosts:
+        - "hubble.${SECRET_DOMAIN_NAME}"
