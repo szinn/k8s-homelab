@@ -60,6 +60,16 @@
       ],
       "datasourceTemplate": "github-releases",
       "versioningTemplate": "semver"
+    },
+    {
+      "description": "Process GitHub release URLs",
+      "fileMatch": ["kubernetes/.+\\.ya?ml$"],
+      "matchStrings": [
+        "https:\\/\\/github.com\\/(?<depName>[\\w\\d\\-_]+\\/[\\w\\d\\-_]+)\\/releases\\/download\\/(?<currentValue>[\\w\\d\\.\\-_]+)\\/.*",
+        "https:\\/\\/github.com\\/(?<depName>[\\w\\d\\-_]+\\/[\\w\\d\\-_]+)\\/releases\\/download\\/v(?<currentValue>[\\w\\d\\.\\-_]+)\\/.*"
+      ],
+      "datasourceTemplate": "github-releases",
+      "versioningTemplate": "semver"
     }
   ],
   "packageRules": [
