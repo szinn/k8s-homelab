@@ -1,0 +1,19 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: tekton-pipelines
+resources:
+  # Git CLI - https://hub.tekton.dev/tekton/task/git-cli
+  - https://raw.githubusercontent.com/tektoncd/catalog/main/task/git-cli/0.4/git-cli.yaml
+  # Git Clone - https://hub.tekton.dev/tekton/task/git-clone
+  - https://raw.githubusercontent.com/tektoncd/catalog/main/task/git-clone/0.9/git-clone.yaml
+  # Buildah - https://hub.tekton.dev/tekton/task/buildah
+  - https://raw.githubusercontent.com/tektoncd/catalog/main/task/buildah/0.5/buildah.yaml
+  # Kubernetes Actions - https://hub.tekton.dev/tekton/task/kubernetes-actions
+  - https://raw.githubusercontent.com/tektoncd/catalog/main/task/kubernetes-actions/0.2/kubernetes-actions.yaml
+  # Curl - https://hub.tekton.dev/tekton/task/curl
+  - https://raw.githubusercontent.com/tektoncd/catalog/main/task/curl/0.1/curl.yaml
+  # SonarQube Scanner - https://hub.tekton.dev/tekton/task/sonarqube-scanner
+  - https://raw.githubusercontent.com/tektoncd/catalog/main/task/sonarqube-scanner/0.4/sonarqube-scanner.yaml
+  # GitLeaks https://hub.tekton.dev/tekton/task/gitleaks
+  - https://raw.githubusercontent.com/tektoncd/catalog/main/task/gitleaks/0.1/gitleaks.yaml
