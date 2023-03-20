@@ -3,4 +3,4 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: tekton-pipelines
 resources:
-  - https://github.com/tektoncd/chains/releases/download/v0.14.0/release.yaml
+  - https://github.com/tektoncd/chains/releases/download/v0.15.0/release.yaml

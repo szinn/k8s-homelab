@@ -4,5 +4,5 @@ kind: Kustomization
 namespace: tekton-pipelines
 resources:
   # Triggers
-  - https://github.com/tektoncd/triggers/releases/download/v0.22.2/release.yaml
-  - https://github.com/tektoncd/triggers/releases/download/v0.22.2/interceptors.yaml
+  - https://github.com/tektoncd/triggers/releases/download/v0.23.0/release.yaml
+  - https://github.com/tektoncd/triggers/releases/download/v0.23.0/interceptors.yaml
