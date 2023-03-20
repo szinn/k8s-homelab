@@ -25,7 +25,12 @@
     "prettier.configPath": ".github/linters/prettier/.prettierrc.yaml",
     "prettier.ignorePath": ".github/linters/prettier/.prettierignore",
     "yaml.schemas": {
-        "Kubernetes": "kubernetes/*.yaml"
+        "https://json.schemastore.org/taskfile.json": [
+            "Taskfile.yaml",
+            ".taskfiles/*.yaml"
+        ],
+        "Kubernetes": "kubernetes/*.yaml",
+        "https://json.schemastore.org/kustomization.json": "file:///Users/scotte/Development/k8s-homelab/kubernetes/apps/tekton/tasks/kustomization.yaml"
     },
     "explorer.autoReveal": false
 }
