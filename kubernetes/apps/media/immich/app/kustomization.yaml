@@ -10,6 +10,7 @@ resources:
   - microservices
   - machine-learning
   - proxy
+  - typesense
   - web
 labels:
   - pairs:
