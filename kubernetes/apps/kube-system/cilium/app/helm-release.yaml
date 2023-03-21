@@ -55,6 +55,11 @@ spec:
     ipam:
       mode: "kubernetes"
 
+    prometheus:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+
     hubble:
       enabled: true
       serviceMonitor:
