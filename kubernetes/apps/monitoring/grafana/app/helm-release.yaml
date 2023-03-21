@@ -185,10 +185,10 @@ spec:
           revision: 2
           datasource: Redis
         # Ref: https://grafana.com/grafana/dashboards/13502
-        minio:
-          gnetId: 13502
-          revision: 21
-          datasource: Prometheus
+        # minio:
+        #   gnetId: 13502
+        #   revision: 21
+        #   datasource: Prometheus
       loki:
         loki-metrics:
           gnetId: 13407
