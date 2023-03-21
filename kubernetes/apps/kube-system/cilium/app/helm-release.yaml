@@ -60,11 +60,17 @@ spec:
       serviceMonitor:
         enabled: true
 
+    operator:
+      prometheus:
+        enabled: true
+        serviceMonitor:
+          enabled: true
+
     hubble:
       enabled: true
-      serviceMonitor:
-        enabled: true
       metrics:
+        serviceMonitor:
+          enabled: true
         enabled:
           - dns:query;ignoreAAAA
           - drop
