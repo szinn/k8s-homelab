@@ -18,7 +18,6 @@ spec:
   mountOptions:
     - nfsvers=4
     - tcp
-    - intr
     - hard
     - noatime
     - nodiratime
