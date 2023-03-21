@@ -179,21 +179,23 @@ spec:
         enabled: true
       prometheusSpec:
         replicas: 1
-        podAntiAffinity: hard
-        retentionSize: "6GB"
         replicaExternalLabelName: "__replica__"
-        ruleSelector: {}
-        ruleNamespaceSelector: {}
+        scrapeInterval: 1m
+        podAntiAffinity: hard
         ruleSelectorNilUsesHelmValues: false
-        serviceMonitorSelector: {}
-        serviceMonitorNamespaceSelector: {}
         serviceMonitorSelectorNilUsesHelmValues: false
-        podMonitorSelector: {}
-        podMonitorNamespaceSelector: {}
         podMonitorSelectorNilUsesHelmValues: false
-        retention: 2d
+        probeSelectorNilUsesHelmValues: false
         enableAdminAPI: true
         walCompression: true
+        retention: 2d
+        retentionSize: "6GB"
+        ruleSelector: {}
+        ruleNamespaceSelector: {}
+        serviceMonitorSelector: {}
+        serviceMonitorNamespaceSelector: {}
+        podMonitorSelector: {}
+        podMonitorNamespaceSelector: {}
         storageSpec:
           volumeClaimTemplate:
             spec:
