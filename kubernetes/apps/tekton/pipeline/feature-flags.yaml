@@ -16,7 +16,7 @@ data:
   disable-working-directory-overwrite: "true"
   enable-api-fields: alpha
   enable-custom-tasks: "false"
-  enable-tekton-oci-bundles: "false"
+  enable-tekton-oci-bundles: "true"
   require-git-ssh-secret-known-hosts: "false"
   running-in-environment-with-injected-sidecars: "true"
   scope-when-expressions-to-task: "false"
