@@ -72,17 +72,17 @@
         "commitMessageTopic": "{{{groupName}}} group"
       },
       "separateMinorPatch": false
-    },
-    {
-      "description": "Tekton",
-      "groupName": "Tekton",
-      "matchPackagePatterns": ["tektoncd"],
-      "matchDatasources": ["github-releases"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "group": {
-        "commitMessageTopic": "{{{groupName}}} group"
-      },
-      "separateMinorPatch": false
+    // },
+    // {
+    //   "description": "Tekton",
+    //   "groupName": "Tekton",
+    //   "matchPackagePatterns": ["tektoncd"],
+    //   "matchDatasources": ["github-releases"],
+    //   "matchUpdateTypes": ["minor", "patch"],
+    //   "group": {
+    //     "commitMessageTopic": "{{{groupName}}} group"
+    //   },
+    //   "separateMinorPatch": false
     }
   ]
 }
