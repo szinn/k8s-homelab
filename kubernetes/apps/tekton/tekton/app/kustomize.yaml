@@ -20,7 +20,7 @@ spec:
     !/triggers/previous/v0.22.0/release.yaml
     # renovate: datasource=github-releases depName=tektoncd/triggers
     !/triggers/previous/v0.22.1/interceptors.yaml
-    # renovate: datasource=github-releases depName=tektoncd/chains
+    # renovate: datasource=github-releases depName=tektoncd/chains versioning=regex:\n.*previous/v(?<major\d+)\.(?<minor\d+)\.(?<patch>\d+).*
     !/chains/previous/v0.14.0/release.yaml
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
