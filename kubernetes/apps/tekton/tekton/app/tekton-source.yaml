@@ -13,15 +13,15 @@ spec:
   ignore: |
     /*
     # renovate: depName=tektoncd/pipeline
-    !/pipeline/previous/v0.45.0/release.yaml
+    !/pipeline/previous/v0.46.0/release.yaml
     # renovate: depName=tektoncd/dashboard
-    !/dashboard/previous/v0.33.0/release-full.yaml
+    !/dashboard/previous/v0.34.0/release-full.yaml
     # renovate: depName=tektoncd/triggers
-    !/triggers/previous/v0.22.0/release.yaml
+    !/triggers/previous/v0.22.2/release.yaml
     # renovate: depName=tektoncd/triggers
-    !/triggers/previous/v0.22.1/interceptors.yaml
+    !/triggers/previous/v0.22.2/interceptors.yaml
     # renovate: depName=tektoncd/chains
-    !/chains/previous/v0.14.0/release.yaml
+    !/chains/previous/v0.15.0/release.yaml
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
