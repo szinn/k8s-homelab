@@ -12,15 +12,15 @@ spec:
   timeout: 60s
   ignore: |
     /*
-    # renovate: depName=tektoncd/pipeline
+    # tekton: component=pipeline depName=tektoncd/pipeline
     !/pipeline/previous/v0.46.0/release.yaml
-    # renovate: depName=tektoncd/dashboard
+    # tekton: component=dashboard depName=tektoncd/dashboard
     !/dashboard/previous/v0.33.0/release-full.yaml
-    # renovate: depName=tektoncd/triggers
+    # tekton: component=triggers depName=tektoncd/triggers
     !/triggers/previous/v0.22.2/release.yaml
-    # renovate: depName=tektoncd/triggers
+    # tekton: component=interceptors depName=tektoncd/triggers
     !/triggers/previous/v0.22.1/interceptors.yaml
-    # renovate: depName=tektoncd/chains
+    # tekton: component=chains depName=tektoncd/chains
     !/chains/previous/v0.15.0/release.yaml
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2

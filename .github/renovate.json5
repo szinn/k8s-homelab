@@ -45,7 +45,7 @@
         "kubernetes/.+\\.ya?ml$"
       ],
       "matchStrings": [
-        "#\\s?renovate: depName=(?<depName>\\S+)?\n.*?(?<currentValue>v\\d+\\.\\d+\\.\\d+)"
+        "#\\s?tekton: component=(?<component>\\S+) depName=(?<depName>\\S+).*\n.*\\/previous\\/(?<currentValue>v\\d+\\.\\d+\\.\\d+)\\/"
       ],
       "datasourceTemplate": "github-releases"
     },
