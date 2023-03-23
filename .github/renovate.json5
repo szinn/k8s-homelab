@@ -40,6 +40,16 @@
   },
   "regexManagers": [
     {
+      "description": "Process Tekton bucket dependencies",
+      "fileMatch": [
+        "kubernetes/.+\\.ya?ml$"
+      ],
+      "matchStrings": [
+        "#\\s?renovate: depName=(?<depName>.*?)\\s?.*/previous/(?<currentValue>[\\w\\d\\.\\-_]+)/"
+      ],
+      "datasourceTemplate": "github-releases"
+    },
+    {
       "description": "Process various dependencies",
       "fileMatch": [
         "kubernetes/.+\\.ya?ml$",
@@ -47,7 +57,7 @@
         "hack/.+\\.sh$"
       ],
       "matchStrings": [
-        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( versioning=(?<versioning>\\S+))?\n.*?\"(?<currentValue>.*)\"\n"
+        "renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( versioning=(?<versioning>\\S+))?\n.*?\"(?<currentValue>.*)\"\n"
       ],
       "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}",
       "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
