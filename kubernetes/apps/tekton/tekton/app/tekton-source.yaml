@@ -19,7 +19,7 @@ spec:
     # tekton: component=triggers depName=tektoncd/triggers
     !/triggers/previous/v0.22.2/release.yaml
     # tekton: component=interceptors depName=tektoncd/triggers
-    !/triggers/previous/v0.22.1/interceptors.yaml
+    !/triggers/previous/v0.22.2/interceptors.yaml
     # tekton: component=chains depName=tektoncd/chains
     !/chains/previous/v0.15.0/release.yaml
 ---
