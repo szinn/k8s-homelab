@@ -1,0 +1,49 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: Bucket
+metadata:
+  name: tekton
+  namespace: flux-system
+spec:
+  provider: generic
+  interval: 15m
+  bucketName: tekton-releases
+  endpoint: storage.googleapis.com
+  timeout: 60s
+  ignore: |
+    /*
+    # renovate: datasource=github-releases depName=tektoncd/pipeline
+    !/pipeline/previous/v0.45.0/release.yaml
+    # renovate: datasource=github-releases depName=tektoncd/dashboard
+    !/dashboard/previous/v0.33.0/release-full.yaml
+    # renovate: datasource=github-releases depName=tektoncd/triggers
+    !/triggers/previous/v0.22.0/release.yaml
+    # renovate: datasource=github-releases depName=tektoncd/triggers
+    !/triggers/previous/v0.22.1/interceptors.yaml
+    # renovate: datasource=github-releases depName=tektoncd/chains
+    !/chains/previous/v0.14.0/release.yaml
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: tekton-deployment
+  namespace: flux-system
+spec:
+  sourceRef:
+    kind: Bucket
+    name: tekton
+  prune: true
+  wait: true
+  interval: 15m
+  retryInterval: 1m
+  timeout: 3m
+  patches:
+    # Broken manifests on release. https://github.com/tektoncd/triggers/issues/1479
+    - patch: |
+        - op: remove
+          path: /metadata/labels
+          value:
+            pod-security.kubernetes.io/enforce
+      target:
+        kind: Namespace
+        name: tekton-pipelines

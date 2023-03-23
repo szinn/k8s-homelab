@@ -1,0 +1,9 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - chains/install.yaml
+  - dashboard/install.yaml
+  - pipeline/install.yaml
+  - tasks/install.yaml
+  - triggers/install.yaml
