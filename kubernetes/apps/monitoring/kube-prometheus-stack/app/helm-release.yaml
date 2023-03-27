@@ -58,7 +58,11 @@ spec:
         prometheus: true
         prometheusOperator: true
     kubeControllerManager:
-      enabled: false
+      enabled: true
+      endpoints:
+        - 10.10.0.16
+        - 10.10.0.17
+        - 10.10.0.18
     kubeEtcd:
       enabled: false
     kubelet:
@@ -71,10 +75,18 @@ spec:
             targetLabel: instance
     kubeApiServer:
       enabled: true
+      endpoints:
+        - 10.10.0.16
+        - 10.10.0.17
+        - 10.10.0.18
     kubeProxy:
       enabled: false
     kubeScheduler:
-      enabled: false
+      enabled: true
+      endpoints:
+        - 10.10.0.16
+        - 10.10.0.17
+        - 10.10.0.18
     kubeStateMetrics:
       enabled: true
     kube-state-metrics:
@@ -231,3 +243,5 @@ spec:
             grafana_folder: Prometheus
     nodeExporter:
       enabled: true
+    serviceMonitor:
+      scrapeTimeout: 60s
