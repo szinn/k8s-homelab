@@ -29,6 +29,10 @@ spec:
       kind: HelmRelease
       name: immich-web
       namespace: media
+    # - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+    #   kind: HelmRelease
+    #   name: immich-machine-learning
+    #   namespace: media
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
       name: immich-typesense

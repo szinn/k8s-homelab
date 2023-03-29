@@ -8,7 +8,7 @@ resources:
   - redis
   - server
   - microservices
-  - machine-learning
+  # - machine-learning
   - proxy
   - typesense
   - web
