@@ -275,12 +275,28 @@ spec:
         deleteDatasources:
           - name: Loki
             orgId: 1
+          - name: Alertmanager
+            orgId: 1
         datasources:
           - name: Prometheus
             type: prometheus
             access: proxy
             url: http://thanos-query:9090/
             isDefault: false
+          - name: Loki
+            type: loki
+            access: proxy
+            url: http://loki-gateway.monitoring.svc.cluster.local.:80
+            version: 1
+            isDefault: true
+            jsonData:
+              maxLines: 100
+          - name: Alertmanager
+            type: alertmanager
+            access: proxy
+            url: http://prometheus-alertmanager.monitoring.svc.cluster.local:9093
+            jsonData:
+              implementation: prometheus
     grafana.ini:
       server:
         root_url: "https://grafana.${SECRET_DOMAIN_NAME}"
