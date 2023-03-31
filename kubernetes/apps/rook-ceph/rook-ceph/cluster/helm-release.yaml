@@ -94,6 +94,7 @@ spec:
       dashboard:
         enabled: true
         urlPrefix: /
+        ssl: false
 
       storage:
         useAllNodes: false
@@ -113,7 +114,7 @@ spec:
 
     ingress:
       dashboard:
-        ingressClassName: "traefik"
+        ingressClassName: "nginx"
         annotations:
           ingress.home.arpa/type: "internal"
         host:

@@ -54,11 +54,12 @@ on the Beelink MiniPCs and 3 worker nodes running on the Intel NUCs.
 ### Core Components
 
 - [mozilla/sops](https://toolkit.fluxcd.io/guides/mozilla-sops/): Manages secrets for Kubernetes.
-- [traefik/traefik](https://traefik.io): Manages reverse-proxy access to Kubernetes services.
+- [kubernetes/ingress-nginx](https://github.com/kubernetes/ingress-nginx): Manages reverse-proxy access to Kubernetes services.
 - [metallb/metallb](https://metallb.universe.tf): Manages IP assignment for exposed Kubernetes services.
 - [rook/rook](https://github.com/rook/rook): Distributed block storage for persistent storage.
 - [jetstack/cert-manager](https://cert-manager.io/docs/): Creates SSL certificates for services in my Kubernetes cluster.
 - [kubernetes-sigs/external-dns](https://github.com/kubernetes-sigs/external-dns): Automatically manages DNS records from my cluster in a cloud DNS provider.
+- [kyverno](https://kyverno.io): Handles Ingress management and other cluster policies.
 
 ### GitOps
 
@@ -71,7 +72,7 @@ Charts and images are tagged in the various YAML files to enable Renovate to wat
 
 ## Network Configuration
 
-The external is connected to the UDMPro with a [Wireguard](https://www.wireguard.com) port forwarded to the router VM and ports 80/443 forwarded to the Traefik IP in the cluster.
+The external is connected to the UDMPro with a [Wireguard](https://www.wireguard.com) port forwarded to the router VM and ports 80/443 forwarded to the ingress-nginx IP in the cluster.
 
 The 3 worker nodes and Ryzen server are connected to the 8-port switch with 2.5Gb ethernet. The Unifi components are connected with 10Gb ethernet connections.
 Multiple wired access points are scattered around the house and backyard.
@@ -80,17 +81,19 @@ The Kubernetes cluster and IPs are on the 10.40.0.x subnet with VLAN tagging. Po
 The Kubernetes API is accessed via an external [HAProxy](https://www.haproxy.com).
 External machines (PiHole, Synology, etc) are on the main household VLAN subnet. IoT devices are on an isolated 10.0.80.x VLAN. They cannot reach the other VLANs directly but will answer when spoken to.
 
-MetalLB is used to assign visible IP addresses to Kubernetes services(e.g., MySQL). Traefik is used to reverse-proxy services within the cluster.
+MetalLB is used to assign visible IP addresses to Kubernetes services(e.g., MySQL). Ingress-nginx is used to reverse-proxy services within the cluster.
 
 DNS is managed by CoreDNS in the cluster which then forwards unresolved requests to PiHole which is also running an [unbound](https://docs.pi-hole.net/guides/dns/unbound/) recursive DNS server.
-The PiHole has a local DNS configuration to map names to either IPs (assigned by MetalLB) or CNAME records that map to the Traefik IP.
+The PiHole has a local DNS configuration to map names to either IPs (assigned by MetalLB) or CNAME records that map to the ingress-nginx IP.
 
 The external DNS is managed via [Cloudflare](https://www.cloudflare.com/en-ca/).
 External names are managed by [external-dns](https://github.com/kubernetes-sigs/external-dns) on the cluster and, since my home IP can be changed at any time, DDNS is maintained by the
 [oznu/cloudflare-ddns](https://hub.docker.com/r/oznu/cloudflare-ddns/) docker image. Certificates are managed through CloudFlare as well using cert-manager and the DNS01 challenge protocol.
 
-Any services that are exposed externally use [Authentik](https://goauthentik.io) for access authentication via a Traefik middleware.
-Most/all internal services have a Traefik middleware to verify that the requesting IP address is on the internal network.
+Any services that are exposed externally use [Authelia](https://www.authelia.com) for access authentication via a ingress-nginx.
+
+Kyverno policies require every Ingress instance has an annotation that indicates if it is an internal, external, or external-auth annotation.
+The policy adds the appropriate annotations to the Ingress to configure ingress-nginx and external-dns.
 
 ## Repository Structure
 
@@ -138,7 +141,7 @@ pre-commit auto-update
 A base file [setup/env.base](./infrastructure/setup/env.base-template) is used to define any configuration about the external devices on the network (e.g., NAS drives) and config/secrets that are common to all of the cluster configurations.
 
 Each cluster configuration (e.g. main or staging) has a file [setup/env.<cluster_type>](./infrastructure/setup/env.main-template) that is used to define any configuration that is specific to that cluster.
-For example, the IP addresses that should be reserved through MetalLB for services such as Traefik for MySQL.
+For example, the IP addresses that should be reserved through MetalLB for services such as the reverse proxy (ingress-nginx) or for Redis.
 
 All values are defined as shell environment variables.
 

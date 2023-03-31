@@ -4,7 +4,6 @@ kind: Kustomization
 namespace: security
 resources:
   - authelia-secrets.yaml
-  - authelia-auth.yaml
   - helm-release.yaml
 configMapGenerator:
   - name: authelia

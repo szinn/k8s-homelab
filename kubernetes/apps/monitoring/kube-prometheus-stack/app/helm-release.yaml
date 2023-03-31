@@ -107,7 +107,7 @@ spec:
       ingress:
         enabled: true
         annotations:
-          kubernetes.io/ingress.class: traefik
+          kubernetes.io/ingress.class: nginx
           ingress.home.arpa/type: "internal"
         hosts:
           - "alerts.${SECRET_DOMAIN_NAME}"
@@ -179,7 +179,7 @@ spec:
       ingress:
         enabled: true
         annotations:
-          kubernetes.io/ingress.class: traefik
+          kubernetes.io/ingress.class: nginx
           ingress.home.arpa/type: "internal"
         hosts:
           - "prometheus.${SECRET_DOMAIN_NAME}"

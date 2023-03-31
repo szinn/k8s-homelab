@@ -2,9 +2,8 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
 metadata:
-  name: traefik-charts
+  name: ingress-nginx-charts
   namespace: flux-system
 spec:
-  interval: 30m
-  url: https://helm.traefik.io/traefik
-  timeout: 3m
+  interval: 2h
+  url: https://kubernetes.github.io/ingress-nginx

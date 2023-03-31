@@ -8,9 +8,10 @@ metadata:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
   annotations:
-    kubernetes.io/ingress.class: traefik
+    kubernetes.io/ingress.class: nginx
     ingress.home.arpa/type: "internal"
-    traefik.ingress.kubernetes.io/router.middlewares: "networking-add-pihole-admin-internal@kubernetescrd"
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      rewrite /(.*) /admin/$1 break;
 spec:
   rules:
     - host: pihole-ui.${SECRET_DOMAIN_NAME}
@@ -23,25 +24,3 @@ spec:
                 name: pihole
                 port:
                   number: 80
-
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: add-pihole-admin
-  namespace: networking
-spec:
-  addPrefix:
-    prefix: "/admin"
-
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: add-pihole-admin-internal
-  namespace: networking
-spec:
-  chain:
-    middlewares:
-      - name: networking-internal@kubernetescrd
-      - name: networking-add-pihole-admin@kubernetescrd

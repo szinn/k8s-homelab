@@ -53,7 +53,7 @@ spec:
     ingress:
       enabled: true
       annotations:
-        kubernetes.io/ingress.class: traefik
+        kubernetes.io/ingress.class: nginx
         ingress.home.arpa/type: "internal"
       hosts:
         - "grafana.${SECRET_DOMAIN_NAME}"
@@ -155,14 +155,6 @@ spec:
           datasource: Prometheus
         external-secrets:
           url: https://raw.githubusercontent.com/external-secrets/external-secrets/main/docs/snippets/dashboard.json
-          datasource: Prometheus
-        traefik:
-          gnetId: 11462
-          revision: 1
-          datasource: Prometheus
-        traefik-ingress:
-          gnetId: 4475
-          revision: 5
           datasource: Prometheus
         # Ref: https://grafana.com/grafana/dashboards/2842
         metallb:

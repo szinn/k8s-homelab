@@ -32,7 +32,7 @@ spec:
       username: admin
     ingress:
       enabled: true
-      className: traefik
+      className: nginx
       annotations:
         ingress.home.arpa/type: "internal"
       hosts:

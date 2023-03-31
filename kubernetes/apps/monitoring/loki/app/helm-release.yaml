@@ -124,14 +124,17 @@ spec:
           metallb.universe.tf/loadBalancerIPs: ${CONFIG_SVC_LOKI_ADDR}
       ingress:
         enabled: true
-        ingressClassName: "traefik"
+        ingressClassName: "nginx"
         annotations:
           ingress.home.arpa/type: "internal"
         hosts:
-          - host: "loki.${SECRET_DOMAIN_NAME}"
+          - host: &host "loki.${SECRET_DOMAIN_NAME}"
             paths:
               - path: /
                 pathType: Prefix
+        tls:
+          - hosts:
+              - *host
     write:
       replicas: 3
       persistence:

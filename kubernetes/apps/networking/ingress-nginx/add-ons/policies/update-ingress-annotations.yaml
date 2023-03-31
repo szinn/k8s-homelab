@@ -1,0 +1,87 @@
+---
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: update-ingress-annotations
+  annotations:
+    policies.kyverno.io/title: Update ingress annotations
+    policies.kyverno.io/subject: Ingress
+    policies.kyverno.io/description: >-
+      This policy creates auth annotations on ingresses, external-dns,
+      and sets an explicit RFC1918 whitelist for any ingresses
+      that are not not exposed to the internet.
+spec:
+  background: true
+  mutateExistingOnPolicyUpdate: true
+  generateExistingOnPolicyUpdate: true
+  validationFailureAction: enforce
+  rules:
+    - name: ensure-annotation-present
+      match:
+        any:
+          - resources:
+              kinds: ["Ingress"]
+      validate:
+        message: "You must have ingress.home.arpa/type annotation set to internal/external/external-auth"
+        pattern:
+          metadata:
+            annotations:
+              ingress.home.arpa/type: "internal|external|external-auth"
+
+    - name: websecure
+      match:
+        any:
+          - resources:
+              kinds: ["Ingress"]
+      mutate:
+        patchStrategicMerge:
+          metadata:
+            annotations:
+              +(nginx.ingress.kubernetes.io/force-ssl-redirect): "true"
+
+    - name: internal
+      match:
+        any:
+          - resources:
+              kinds: ["Ingress"]
+              annotations:
+                ingress.home.arpa/type: "internal"
+      mutate:
+        patchStrategicMerge:
+          metadata:
+            annotations:
+              +(nginx.ingress.kubernetes.io/whitelist-source-range): "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
+
+    - name: external
+      match:
+        any:
+          - resources:
+              kinds: ["Ingress"]
+              annotations:
+                ingress.home.arpa/type: "external"
+      mutate:
+        patchStrategicMerge:
+          metadata:
+            annotations:
+              +(external-dns/is-public): "true"
+              +(external-dns.alpha.kubernetes.io/target): "${SECRET_DOMAIN_NAME}"
+
+    - name: external-auth
+      match:
+        any:
+          - resources:
+              kinds: ["Ingress"]
+              annotations:
+                ingress.home.arpa/type: "external-auth"
+      mutate:
+        patchStrategicMerge:
+          metadata:
+            annotations:
+              +(external-dns/is-public): "true"
+              +(external-dns.alpha.kubernetes.io/target): "${SECRET_BASE_DOMAIN_NAME}"
+              +(nginx.ingress.kubernetes.io/auth-method): GET
+              +(nginx.ingress.kubernetes.io/auth-url): http://authelia.security.svc.cluster.local/api/verify
+              +(nginx.ingress.kubernetes.io/auth-signin): https://auth.${SECRET_BASE_DOMAIN_NAME}?rm=$request_method
+              +(nginx.ingress.kubernetes.io/auth-response-headers): Remote-User,Remote-Name,Remote-Groups,Remote-Email
+              +(nginx.ingress.kubernetes.io/auth-snippet): proxy_set_header X-Forwarded-Method $request_method;
+              +(nginx.ingress.kubernetes.io/whitelist-source-range): "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"

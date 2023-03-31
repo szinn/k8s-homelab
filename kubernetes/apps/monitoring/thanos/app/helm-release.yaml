@@ -51,7 +51,7 @@ spec:
       ingress:
         enabled: true
         hostname: "thanos.${SECRET_DOMAIN_NAME}"
-        ingressClassName: "traefik"
+        ingressClassName: "nginx"
         annotations:
           ingress.home.arpa/type: "internal"
     queryFrontend:
