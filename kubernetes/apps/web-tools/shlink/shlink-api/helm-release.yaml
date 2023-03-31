@@ -64,7 +64,7 @@ spec:
         secret.reloader.stakater.com/reload: shlink
     image:
       repository: ghcr.io/shlinkio/shlink
-      tag: 3.5.2
+      tag: 3.5.3
     env:
       DB_DRIVER: postgres
       DB_HOST: postgres-rw.dbms.svc.cluster.local
