@@ -27,7 +27,7 @@ spec:
     keepHistory: false
   values:
     controller:
-      replicaCount: 1
+      replicaCount: 3
       updateStrategy:
         type: RollingUpdate
       service:
