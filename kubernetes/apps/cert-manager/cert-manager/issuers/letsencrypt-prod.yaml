@@ -15,4 +15,4 @@ spec:
             email: ${SECRET_ADMIN_EMAIL}
             apiTokenSecretRef:
               name: cloudflare-secrets
-              key: API_KEY
+              key: API_TOKEN

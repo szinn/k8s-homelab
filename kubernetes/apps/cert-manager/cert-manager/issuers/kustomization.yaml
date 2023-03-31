@@ -4,4 +4,3 @@ kind: Kustomization
 resources:
   - cloudflare-secrets.yaml
   - letsencrypt-prod.yaml
-  - letsencrypt-staging.yaml
