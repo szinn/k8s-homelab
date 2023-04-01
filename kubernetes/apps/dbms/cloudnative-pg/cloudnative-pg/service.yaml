@@ -9,6 +9,7 @@ metadata:
     app.kubernetes.io/instance: *app
   annotations:
     metallb.universe.tf/loadBalancerIPs: ${CONFIG_SVC_POSTGRES_ADDR}
+    coredns.io/hostname: postgres.${SECRET_DOMAIN_NAME}
 spec:
   type: LoadBalancer
   ports:
