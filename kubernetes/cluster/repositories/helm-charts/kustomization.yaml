@@ -29,4 +29,4 @@ resources:
   - stakater-charts.yaml
   - tf-controller-charts.yaml
   - vector-charts.yaml
-  - weave-gitops.yaml
+  - weave-gitops-charts.yaml
