@@ -7,7 +7,7 @@ metadata:
 spec:
   secretName: wildcard-tls
   issuerRef:
-    name: ${CONFIG_CERTIFICATE_ISSUER}
+    name: letsencrypt-prod
     kind: ClusterIssuer
   commonName: "${SECRET_DOMAIN_NAME}"
   dnsNames:
