@@ -14,7 +14,7 @@ cgroup:
   hostRoot: "/sys/fs/cgroup"
 
 kubeProxyReplacement: "strict"
-k8sServiceHost: "${CONFIG_CLUSTER_NAME}.${SECRET_BASE_DOMAIN_NAME}"
+k8sServiceHost: "${CONFIG_CLUSTER_NAME}.${SECRET_MAIN_DOMAIN_NAME}"
 k8sServicePort: 6443
 
 ipv4NativeRoutingCIDR: "${CONFIG_K8S_POD_CIDR}"

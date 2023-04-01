@@ -28,7 +28,7 @@ spec:
         compression: bzip2
         maxParallel: 8
       destinationPath: s3://postgresql/
-      endpointURL: http://atlas.${SECRET_BASE_DOMAIN_NAME}:9000
+      endpointURL: http://atlas.${SECRET_MAIN_DOMAIN_NAME}:9000
       serverName: postgres-${CONFIG_CLUSTER_NAME}
       s3Credentials:
         accessKeyId:

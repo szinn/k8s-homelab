@@ -2,7 +2,7 @@
 clusterName: ${CONFIG_CLUSTER_NAME}
 talosVersion: v1.3.6
 kubernetesVersion: v1.26.3
-endpoint: https://${CONFIG_CLUSTER_NAME}.${SECRET_BASE_DOMAIN_NAME}:6443
+endpoint: https://${CONFIG_CLUSTER_NAME}.${SECRET_MAIN_DOMAIN_NAME}:6443
 domain: cluster.local
 clusterPodNets:
   - ${CONFIG_K8S_POD_CIDR}
@@ -93,11 +93,11 @@ controlPlane:
           extraHostEntries:
             - ip: ${CONFIG_VIP_IP}
               aliases:
-                - ${CONFIG_CLUSTER_NAME}.${SECRET_BASE_DOMAIN_NAME}
+                - ${CONFIG_CLUSTER_NAME}.${SECRET_MAIN_DOMAIN_NAME}
         time:
           disabled: false
           servers:
-            - ntp.${SECRET_BASE_DOMAIN_NAME}
+            - ntp.${SECRET_MAIN_DOMAIN_NAME}
 worker:
   patches:
     - "@patch-common.yaml"
@@ -111,8 +111,8 @@ worker:
           extraHostEntries:
             - ip: ${CONFIG_VIP_IP}
               aliases:
-                - ${CONFIG_CLUSTER_NAME}.${SECRET_BASE_DOMAIN_NAME}
+                - ${CONFIG_CLUSTER_NAME}.${SECRET_MAIN_DOMAIN_NAME}
         time:
           disabled: false
           servers:
-            - ntp.${SECRET_BASE_DOMAIN_NAME}
+            - ntp.${SECRET_MAIN_DOMAIN_NAME}
