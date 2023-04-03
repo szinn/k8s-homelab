@@ -1,0 +1,52 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: minio
+  namespace: networking
+spec:
+  ports:
+    - protocol: TCP
+      port: 9001
+      targetPort: 9001
+---
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: minio
+  namespace: networking
+  labels:
+    kubernetes.io/service-name: minio
+addressType: IPv4
+ports:
+  - name: http
+    appProtocol: http
+    protocol: TCP
+    port: 9001
+endpoints:
+  - addresses:
+      - "10.10.0.4"
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: &app minio
+  namespace: networking
+  labels:
+    app.kubernetes.io/name: *app
+    app.kubernetes.io/instance: *app
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    ingress.home.arpa/type: "internal"
+spec:
+  rules:
+    - host: minio.${SECRET_DOMAIN_NAME}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: *app
+                port:
+                  number: 9001
