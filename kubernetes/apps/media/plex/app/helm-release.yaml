@@ -32,7 +32,7 @@ spec:
         secret.reloader.stakater.com/reload: *app
     image:
       repository: ghcr.io/onedr0p/plex
-      tag: 1.31.3.6868-28fc46b27@sha256:9bc113df99bb8255aa77e79be66d7558092d361592f9934299e1353bfacb32f4
+      tag: 1.31.3.6868-28fc46b27@sha256:6be3a2110e0fa96edb16bb9adf406e3636b7b14e991db834d5e37fd327da1781
     env:
       TZ: "${CONFIG_TIMEZONE}"
       ADVERTISE_IP: "http://${CONFIG_SVC_PLEX_ADDR}:32400,https://{{ .Release.Name }}.${SECRET_DOMAIN_NAME}:443"
