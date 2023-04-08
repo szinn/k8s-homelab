@@ -36,6 +36,12 @@ spec:
       name: "${CONFIG_CLUSTER_NAME}"
       id: "1"
 
+    autoDirectNodeRoutes: true
+    bgp:
+      announce:
+        loadbalancerIP: true
+      enabled: true
+
     securityContext:
       privileged: true
       capabilities:
@@ -46,25 +52,34 @@ spec:
         enabled: false
       hostRoot: "/sys/fs/cgroup"
 
-    kubeProxyReplacement: "strict"
-    k8sServiceHost: "${CONFIG_CLUSTER_NAME}.${SECRET_MAIN_DOMAIN_NAME}"
-    k8sServicePort: 6443
+    containerRuntime:
+      integration: containerd
 
-    ipv4NativeRoutingCIDR: "${CONFIG_K8S_POD_CIDR}"
+    endpointRoutes:
+      enabled: true
 
     ipam:
       mode: "kubernetes"
+
+    kubeProxyReplacement: "strict"
+    kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
+    k8sServiceHost: "${CONFIG_CLUSTER_NAME}.${SECRET_TECH_DOMAIN_NAME}"
+    k8sServicePort: 6443
+    ipv4NativeRoutingCIDR: "${CONFIG_K8S_POD_CIDR}"
+
+    loadBalancer:
+      algorithm: maglev
+      mode: dsr
+    localRedirectPolicy: true
+    operator:
+      rollOutPods: true
+    rollOutCiliumPods: true
+    tunnel: disabled
 
     prometheus:
       enabled: true
       serviceMonitor:
         enabled: true
-
-    operator:
-      prometheus:
-        enabled: true
-        serviceMonitor:
-          enabled: true
 
     hubble:
       enabled: true

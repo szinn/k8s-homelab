@@ -1,64 +1,75 @@
 ---
 clusterName: ${CONFIG_CLUSTER_NAME}
-talosVersion: v1.3.6
+talosVersion: v1.3.7
 kubernetesVersion: v1.26.3
-endpoint: https://${CONFIG_CLUSTER_NAME}.${SECRET_MAIN_DOMAIN_NAME}:6443
-domain: cluster.local
-clusterPodNets:
-  - ${CONFIG_K8S_POD_CIDR}
-clusterSvcNets:
-  - ${CONFIG_K8S_SERVICE_CIDR}
+endpoint: https://${CONFIG_CLUSTER_NAME}.zinn.tech:6443
+
 cniConfig:
   name: none
+
+additionalApiServerCertSans:
+  - ${CONFIG_K8S_CLUSTER_ENDPOINT_IP}
+
+additionalMachineCertSans:
+  - ${CONFIG_K8S_CLUSTER_ENDPOINT_IP}
+  - ${CONFIG_CLUSTER_NAME}.zinn.tech
+
+domain: cluster.local
+
+clusterSvcNets:
+  - ${CONFIG_K8S_SERVICE_CIDR}
+clusterPodNets:
+  - ${CONFIG_K8S_POD_CIDR}
+
 nodes:
-  - hostname: k8s-1
+  - hostname: k8s-1.zinn.tech
     ipAddress: 10.10.0.16
+    disableSearchDomain: true
     controlPlane: true
     installDisk: /dev/sda
     networkInterfaces:
       - interface: eth0
         mtu: 1500
         dhcp: true
-        vip:
-          ip: ${CONFIG_VIP_IP}
-  - hostname: k8s-2
+  - hostname: k8s-2.zinn.tech
     ipAddress: 10.10.0.17
+    disableSearchDomain: true
     controlPlane: true
     installDisk: /dev/sda
     networkInterfaces:
       - interface: eth0
         mtu: 1500
         dhcp: true
-        vip:
-          ip: ${CONFIG_VIP_IP}
-  - hostname: k8s-3
+  - hostname: k8s-3.zinn.tech
     ipAddress: 10.10.0.18
+    disableSearchDomain: true
     controlPlane: true
     installDisk: /dev/sda
     networkInterfaces:
       - interface: eth0
         mtu: 1500
         dhcp: true
-        vip:
-          ip: ${CONFIG_VIP_IP}
-  - hostname: k8s-4
+  - hostname: k8s-4.zinn.tech
     ipAddress: 10.10.0.19
+    disableSearchDomain: true
     controlPlane: false
     installDisk: /dev/sda
     networkInterfaces:
       - interface: eth0
         mtu: 1500
         dhcp: true
-  - hostname: k8s-5
+  - hostname: k8s-5.zinn.tech
     ipAddress: 10.10.0.20
+    disableSearchDomain: true
     controlPlane: false
     installDisk: /dev/sda
     networkInterfaces:
       - interface: eth0
         mtu: 1500
         dhcp: true
-  - hostname: k8s-6
+  - hostname: k8s-6.zinn.tech
     ipAddress: 10.10.0.21
+    disableSearchDomain: true
     controlPlane: false
     installDisk: /dev/sda
     networkInterfaces:
@@ -67,52 +78,89 @@ nodes:
         dhcp: true
 controlPlane:
   patches:
-    - "@patch-common.yaml"
     - |-
-      - op: add
-        path: /cluster/proxy
-        value:
+      cluster:
+        apiServer:
+        controllerManager:
+          extraArgs:
+            bind-address: 0.0.0.0
+        discovery:
+          registries:
+            service:
+              disabled: true
+        proxy:
           disabled: true
-      - op: add
-        path: /cluster/controllerManager/extraArgs
-        value:
-          bind-address: 0.0.0.0
-      - op: add
-        path: /cluster/scheduler/extraArgs
-        value:
-          bind-address: 0.0.0.0
+        scheduler:
+          extraArgs:
+            bind-address: 0.0.0.0
+      machine:
+        files:
+          - content: |
+              [plugins]
+                [plugins."io.containerd.grpc.v1.cri"]
+                  enable_unprivileged_ports = true
+                  enable_unprivileged_icmp = true
+            path: /etc/cri/conf.d/20-customization.part
+            op: create
+        kubelet:
+          extraArgs:
+            feature-gates: GracefulNodeShutdown=true
+            rotate-server-certificates: "true"
+        install:
+          extraKernelArgs:
+            - talos.logging.kernel=udp://${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}:6001/
+        logging:
+          destinations:
+            - endpoint: udp://${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}:6002/
+              format: json_lines
+        network:
+          extraHostEntries:
+            - ip: ${CONFIG_K8S_CLUSTER_ENDPOINT_IP}
+              aliases:
+                - ${CONFIG_CLUSTER_NAME}.zinn.tech
+        sysctls:
+          fs.inotify.max_user_watches: "1048576"
+          fs.inotify.max_user_instances: "8192"
+        time:
+          disabled: false
+          servers:
+            - 10.10.0.1
+
+    - |-
       - op: remove
         path: /cluster/apiServer/admissionControl
-    - |-
-      machine:
-        logging:
-          destinations:
-            - endpoint: udp://${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}:6002/
-              format: json_lines
-        network:
-          extraHostEntries:
-            - ip: ${CONFIG_VIP_IP}
-              aliases:
-                - ${CONFIG_CLUSTER_NAME}.${SECRET_MAIN_DOMAIN_NAME}
-        time:
-          disabled: false
-          servers:
-            - ntp.${SECRET_MAIN_DOMAIN_NAME}
 worker:
   patches:
-    - "@patch-common.yaml"
     - |-
       machine:
+        files:
+          - content: |
+              [plugins]
+                [plugins."io.containerd.grpc.v1.cri"]
+                  enable_unprivileged_ports = true
+                  enable_unprivileged_icmp = true
+            path: /etc/cri/conf.d/20-customization.part
+            op: create
+        kubelet:
+          extraArgs:
+            feature-gates: GracefulNodeShutdown=true
+            rotate-server-certificates: "true"
+        install:
+          extraKernelArgs:
+            - talos.logging.kernel=udp://${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}:6001/
         logging:
           destinations:
             - endpoint: udp://${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}:6002/
               format: json_lines
         network:
           extraHostEntries:
-            - ip: ${CONFIG_VIP_IP}
+            - ip: ${CONFIG_K8S_CLUSTER_ENDPOINT_IP}
               aliases:
-                - ${CONFIG_CLUSTER_NAME}.${SECRET_MAIN_DOMAIN_NAME}
+                - ${CONFIG_CLUSTER_NAME}.zinn.tech
+        sysctls:
+          fs.inotify.max_user_watches: "1048576"
+          fs.inotify.max_user_instances: "8192"
         time:
           disabled: false
           servers:
-            - ntp.${SECRET_MAIN_DOMAIN_NAME}
+            - 10.10.0.1

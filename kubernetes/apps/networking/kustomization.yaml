@@ -8,4 +8,3 @@ resources:
   - external-services/install.yaml
   - ingress-nginx/install.yaml
   - k8s-gateway/install.yaml
-  - metallb/install.yaml
