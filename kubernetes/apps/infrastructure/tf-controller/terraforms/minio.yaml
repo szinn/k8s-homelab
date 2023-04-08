@@ -31,7 +31,7 @@ spec:
     spec:
       env:
         - name: OP_CONNECT_HOST
-          value: http://onepassword-connect.${SECRET_MAIN_DOMAIN_NAME}:8438
+          value: http://onepassword-connect.${SECRET_TECH_DOMAIN_NAME}:8438
         - name: OP_CONNECT_TOKEN
           valueFrom:
             secretKeyRef:
