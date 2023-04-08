@@ -156,11 +156,6 @@ spec:
         external-secrets:
           url: https://raw.githubusercontent.com/external-secrets/external-secrets/main/docs/snippets/dashboard.json
           datasource: Prometheus
-        # Ref: https://grafana.com/grafana/dashboards/2842
-        metallb:
-          gnetId: 14127
-          revision: 1
-          datasource: Prometheus
         # Ref: https://grafana.com/grafana/dashboards/7845
         zfs:
           gnetId: 7845

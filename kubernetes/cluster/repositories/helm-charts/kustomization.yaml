@@ -20,7 +20,6 @@ resources:
   - jetstack-charts.yaml
   - kubernetes-sigs-metrics-server-charts.yaml
   - kyverno-charts.yaml
-  - metallb-charts.yaml
   - node-feature-discovery-charts.yaml
   - piraeus-charts.yaml
   - prometheus-community-charts.yaml

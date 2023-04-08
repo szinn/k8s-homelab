@@ -33,8 +33,7 @@ spec:
     service:
       enabled: true
       type: LoadBalancer
-      annotations:
-        metallb.universe.tf/loadBalancerIPs: ${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}
+      loadBalancerIP: "${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}"
     customConfig:
       data_dir: /vector-data-dir
       api:

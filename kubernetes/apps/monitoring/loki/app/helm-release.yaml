@@ -120,8 +120,7 @@ spec:
           maxSurge: 0
       service:
         type: LoadBalancer
-        annotations:
-          metallb.universe.tf/loadBalancerIPs: ${CONFIG_SVC_LOKI_ADDR}
+        loadBalancerIP: "${CONFIG_SVC_LOKI_ADDR}"
       ingress:
         enabled: true
         ingressClassName: "nginx"

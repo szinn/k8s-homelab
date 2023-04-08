@@ -41,7 +41,7 @@ At the bottom of this page, is the bringup process that I follow for this cluste
 | Intel NUC11PAHi7 (worker nodes)                    | 3     | 500GB SSD    | 1TB NVMe                      | 64GB | Talos            |
 | Beelink MiniPC, Celeron J4125 (controlplane nodes) | 3     | 256GB SSD    |                               | 8GB  | Talos            |
 | Synology 1019+ (NFS server)                        | 1     |              | 5x8TB SATA                    |      |                  |
-| UDMPro                                             | 1     |              |                               |      |                  |
+| VyOS ROuter                                        | 1     |              |                               |      |                  |
 | USW-Pro-24-PoE                                     | 1     |              |                               |      |                  |
 | USW-Enterprise-8-PoE                               | 1     |              |                               |      |                  |
 | UNVR                                               | 1     |              | 3x4TB SATA                    |      |                  |
@@ -55,7 +55,6 @@ on the Beelink MiniPCs and 3 worker nodes running on the Intel NUCs.
 
 - [mozilla/sops](https://toolkit.fluxcd.io/guides/mozilla-sops/): Manages secrets for Kubernetes.
 - [kubernetes/ingress-nginx](https://github.com/kubernetes/ingress-nginx): Manages reverse-proxy access to Kubernetes services.
-- [metallb/metallb](https://metallb.universe.tf): Manages IP assignment for exposed Kubernetes services.
 - [rook/rook](https://github.com/rook/rook): Distributed block storage for persistent storage.
 - [jetstack/cert-manager](https://cert-manager.io/docs/): Creates SSL certificates for services in my Kubernetes cluster.
 - [kubernetes-sigs/external-dns](https://github.com/kubernetes-sigs/external-dns): Automatically manages DNS records from my cluster in a cloud DNS provider.
@@ -81,10 +80,10 @@ The Kubernetes cluster and IPs are on the 10.40.0.x subnet with VLAN tagging. Po
 The Kubernetes API is accessed via an external [HAProxy](https://www.haproxy.com).
 External machines (PiHole, Synology, etc) are on the main household VLAN subnet. IoT devices are on an isolated 10.0.80.x VLAN. They cannot reach the other VLANs directly but will answer when spoken to.
 
-MetalLB is used to assign visible IP addresses to Kubernetes services(e.g., MySQL). Ingress-nginx is used to reverse-proxy services within the cluster.
+Cilium works with the router using BGP to route external IPs to Kubernetes services(e.g., MySQL). Ingress-nginx is used to reverse-proxy services within the cluster.
 
 DNS is managed by CoreDNS in the cluster which then forwards unresolved requests to PiHole which is also running an [unbound](https://docs.pi-hole.net/guides/dns/unbound/) recursive DNS server.
-The PiHole has a local DNS configuration to map names to either IPs (assigned by MetalLB) or CNAME records that map to the ingress-nginx IP.
+The PiHole has a local DNS configuration to map names to either IPs (assigned by Ingress-nginx) or CNAME records that map to the ingress-nginx IP.
 
 The external DNS is managed via [Cloudflare](https://www.cloudflare.com/en-ca/).
 External names are managed by [external-dns](https://github.com/kubernetes-sigs/external-dns) on the cluster and, since my home IP can be changed at any time, DDNS is maintained by the
@@ -141,7 +140,7 @@ pre-commit auto-update
 A base file [setup/env.base](./infrastructure/setup/env.base-template) is used to define any configuration about the external devices on the network (e.g., NAS drives) and config/secrets that are common to all of the cluster configurations.
 
 Each cluster configuration (e.g. main or staging) has a file [setup/env.<cluster_type>](./infrastructure/setup/env.main-template) that is used to define any configuration that is specific to that cluster.
-For example, the IP addresses that should be reserved through MetalLB for services such as the reverse proxy (ingress-nginx) or for Redis.
+For example, the IP addresses that should be reserved through ingress-nginx for services such as the reverse proxy (ingress-nginx) or for Redis.
 
 All values are defined as shell environment variables.
 
