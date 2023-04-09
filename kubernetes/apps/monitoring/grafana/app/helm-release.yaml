@@ -161,6 +161,12 @@ spec:
           gnetId: 7845
           revision: 4
           datasource: Prometheus
+        speedtest-exporter-hub:
+          gnetId: 13665
+          revision: 4
+          datasource:
+            - name: "DS_PROMETHEUS"
+              value: Prometheus
       data:
         mysql-overview:
           gnetId: 7362
