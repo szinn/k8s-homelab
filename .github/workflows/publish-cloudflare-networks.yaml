@@ -1,0 +1,51 @@
+---
+name: "Publish Cloudflare Networks"
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
+
+env:
+  DEFAULT_CLOUDFLARE_NETWORKS_FILE: |-
+    kubernetes/apps/networking/ingress-nginx/app/cloudflare-networks.txt
+
+jobs:
+  cloudflare-networks:
+    name: Cloudflare Networks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate Token
+        uses: tibdex/github-app-token@b62528385c34dbc9f38e5f4225ac829252d1ea92 # v1.8.0
+        id: generate-token
+        with:
+          app_id: "${{ secrets.BOT_APP_ID }}"
+          private_key: "${{ secrets.BOT_APP_PRIVATE_KEY }}"
+
+      - name: Checkout
+        uses: actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3 # v3.5.0
+        with:
+          token: "${{ steps.generate-token.outputs.token }}"
+
+      - name: Cloudflare Networks
+        run: |
+          cloudflare_networks_file=$(find . -name "cloudflare-networks.txt" -print -quit)
+          if [[ -f "${cloudflare_networks_file}" ]]; then
+              npx zx ./.github/scripts/cloudflareNetworks.mjs > "${cloudflare_networks_file}"
+              exit 0
+          fi
+          npx zx ./.github/scripts/cloudflareNetworks.mjs > ${{ env.DEFAULT_CLOUDFLARE_NETWORKS_FILE }}
+
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@5b4a9f6a9e2af26e5f02351490b90d01eb8ec1e5 # v5.0.0
+        with:
+          token: "${{ steps.generate-token.outputs.token }}"
+          branch: github-action/update-cloudflare-networks
+          delete-branch: true
+          title: "chore(github-action): update cloudflare networks"
+          signoff: true
+          commit-message: "chore(github-action): update cloudflare networks"
+          body: |
+            Update cloudflare networks configmap from https://api.cloudflare.com/client/v4/ips
+          labels: |
+            renovate/github-action
