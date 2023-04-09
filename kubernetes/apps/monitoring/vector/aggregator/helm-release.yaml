@@ -1,20 +1,20 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: vector-aggregator
+  name: &app vector-aggregator
   namespace: monitoring
 spec:
   interval: 15m
   chart:
     spec:
-      chart: vector
-      version: 0.20.1
+      chart: app-template
+      version: 1.3.2
       sourceRef:
         kind: HelmRepository
-        name: vector-charts
+        name: bjw-s-charts
         namespace: flux-system
-      interval: 15m
   maxHistory: 3
   install:
     createNamespace: true
@@ -27,131 +27,74 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    role: "Stateless-Aggregator"
-    podMonitor:
-      enabled: true
+    initContainers:
+      01-init-geoip:
+        image: ghcr.io/maxmind/geoipupdate:v4.11.1
+        imagePullPolicy: IfNotPresent
+        env:
+          - { name: GEOIPUPDATE_EDITION_IDS, value: GeoLite2-City }
+          - { name: GEOIPUPDATE_FREQUENCY, value: "0" }
+          - { name: GEOIPUPDATE_VERBOSE, value: "true" }
+        envFrom:
+          - secretRef:
+              name: vector-aggregator-secret
+        volumeMounts:
+          - { name: geoip, mountPath: /usr/share/GeoIP }
+    controller:
+      replicas: 3
+      strategy: RollingUpdate
+      annotations:
+        reloader.stakater.com/auto: "true"
+    image:
+      # https://github.com/vectordotdev/vector/issues/6715
+      repository: ghcr.io/onedr0p/vector
+      tag: 0.28.1-debian
+    args: ["--config", "/etc/vector/vector.yaml"]
     service:
-      enabled: true
-      type: LoadBalancer
-      loadBalancerIP: "${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}"
-    customConfig:
-      data_dir: /vector-data-dir
-      api:
-        enabled: false
-      # Sources
-      sources:
-        kubernetes_logs:
-          address: 0.0.0.0:6000
-          type: vector
-          version: "2"
-        talos_kernel_logs:
-          address: 0.0.0.0:6001
-          type: socket
-          mode: udp
-          max_length: 102400
-          decoding:
-            codec: json
-          host_key: __host
-        talos_service_logs:
-          address: 0.0.0.0:6002
-          type: socket
-          mode: udp
-          max_length: 102400
-          decoding:
-            codec: json
-          host_key: __host
-      # Transformas
-      transforms:
-        kubernetes_remap:
-          type: remap
-          inputs:
-            - kubernetes_logs
-          source: |-
-            .custom_app_name = .pod_labels."app.kubernetes.io/name" || .pod_labels.app || .pod_labels."k8s-app" || "unknown"
-        kernel_hostname_transform:
-          type: remap
-          inputs:
-            - talos_kernel_logs
-          source: |-
-            r1 = replace!(.__host, "10.10.0.16", "k8s-1")
-            r2 = replace(r1, "10.10.0.17", "k8s-2")
-            r3 = replace(r2, "10.10.0.18", "k8s-3")
-            r4 = replace(r3, "10.10.0.19", "k8s-4")
-            r5 = replace(r4, "10.10.0.20", "k8s-5")
-            r6 = replace(r5, "10.10.0.21", "k8s-6")
-            .node = r6
-        service_hostname_transform:
-          type: remap
-          inputs:
-            - talos_service_logs
-          source: |-
-            r1 = replace!(.__host, "10.10.0.16", "k8s-1")
-            r2 = replace(r1, "10.10.0.17", "k8s-2")
-            r3 = replace(r2, "10.10.0.18", "k8s-3")
-            r4 = replace(r3, "10.10.0.19", "k8s-4")
-            r5 = replace(r4, "10.10.0.20", "k8s-5")
-            r6 = replace(r5, "10.10.0.21", "k8s-6")
-            r7 = replace(r6, r'10.*', "talos")
-            .node = r7
-      # Sinks
-      sinks:
-        loki_kubernetes:
-          type: loki
-          inputs:
-            - kubernetes_remap
-          endpoint: http://loki-gateway:80
-          encoding:
-            codec: json
-          batch:
-            max_bytes: 524288
-          out_of_order_action: rewrite_timestamp
-          remove_label_fields: true
-          remove_timestamp: true
-          labels:
-            app: >-
-              {{`{{ custom_app_name }}`}}
-            container: >-
-              {{`{{ kubernetes.container_name }}`}}
-            namespace: >-
-              {{`{{ kubernetes.pod_namespace }}`}}
-            node: >-
-              {{`{{ kubernetes.pod_node_name }}`}}
-            cluster: "${CONFIG_CLUSTER_NAME}"
-        talos_kernel:
-          type: loki
-          inputs:
-            - kernel_hostname_transform
-          endpoint: http://loki-gateway:80
-          encoding:
-            codec: json
-            except_fields:
-              - __host
-          batch:
-            max_bytes: 524288
-          out_of_order_action: rewrite_timestamp
-          labels:
-            node: >-
-              {{`{{ node }}`}}
-            facility: >-
-              {{`{{ facility }}`}}
-            cluster: "${CONFIG_CLUSTER_NAME}"
-            namespace: "talos:kernel"
-        talos_service:
-          type: loki
-          inputs:
-            - service_hostname_transform
-          endpoint: http://loki-gateway:80
-          encoding:
-            codec: json
-            except_fields:
-              - __host
-          batch:
-            max_bytes: 524288
-          out_of_order_action: rewrite_timestamp
-          labels:
-            node: >-
-              {{`{{ node }}`}}
-            talos_service: >-
-              {{`{{ "talos-service" }}`}}
-            cluster: "${CONFIG_CLUSTER_NAME}"
-            namespace: "talos:service"
+      main:
+        type: LoadBalancer
+        annotations:
+          coredns.io/hostname: vector.${SECRET_DOMAIN_NAME}
+        externalIPs: ["${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}"]
+        loadBalancerIP: "${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}"
+        externalTrafficPolicy: Local
+        ports:
+          http:
+            port: 8686
+          kubernetes:
+            enabled: true
+            port: 6000
+          taloskernel:
+            enabled: true
+            port: 6001
+            protocol: UDP
+          talosservice:
+            enabled: true
+            port: 6002
+            protocol: UDP
+          vyos:
+            enabled: true
+            port: 6003
+    persistence:
+      config:
+        enabled: true
+        type: configMap
+        name: vector-aggregator-configmap # overriden by kustomizeconfig
+        subPath: vector.yaml
+        mountPath: /etc/vector/vector.yaml
+        readOnly: true
+      data:
+        enabled: true
+        type: emptyDir
+        mountPath: /vector-data-dir
+      geoip:
+        enabled: true
+        type: emptyDir
+        mountPath: /usr/share/GeoIP
+    topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: *app
