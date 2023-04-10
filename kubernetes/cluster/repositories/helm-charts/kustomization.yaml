@@ -27,5 +27,4 @@ resources:
   - runix-charts.yaml
   - stakater-charts.yaml
   - tf-controller-charts.yaml
-  - vector-charts.yaml
   - weave-gitops-charts.yaml

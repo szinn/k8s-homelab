@@ -1,5 +1,19 @@
 ---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: monitoring
 resources:
   - helm-release.yaml
+  - rbac.yaml
+configMapGenerator:
+  - name: vector-agent-configmap
+    files:
+      - vector.yaml=./config/vector.yaml
+configurations:
+  - ./patches/kustomizeconfig.yaml
+labels:
+  - pairs:
+      app.kubernetes.io/name: vector-agent
+      app.kubernetes.io/instance: vector-agent
+      app.kubernetes.io/part-of: vector
