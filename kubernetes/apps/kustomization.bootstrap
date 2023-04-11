@@ -13,5 +13,4 @@ resources:
   # Step 3
   # - rook-ceph
   # Step 4
-  # - kyverno
   # - dbms
