@@ -24,7 +24,7 @@ spec:
     kind: OCIRepository
     name: flux-manifests
   patches:
-    # Delete NetworkPolicy configuration
+    # Remove NetworkPolicy configuration
     - patch: |
         $patch: delete
         apiVersion: networking.k8s.io/v1
@@ -33,7 +33,6 @@ spec:
           name: not-used
       target:
         group: networking.k8s.io
-        version: v1
         kind: NetworkPolicy
     # Increase the number of reconciliations that can be performed in parallel and bump the resources limits
     # https://fluxcd.io/flux/cheatsheets/bootstrap/#increase-the-number-of-workers
@@ -99,6 +98,16 @@ spec:
         name: (kustomize-controller|helm-controller|source-controller)
     - patch: |
         - op: add
+          path: /rules/-
+          value:
+            apiGroups: ["infra.contrib.fluxcd.io"]
+            resources: ["*"]
+            verbs: ["*"]
+      target:
+        kind: ClusterRole
+        name: crd-controller-flux-system
+    - patch: |
+        - op: add
           path: /spec/versions/0/schema/openAPIV3Schema/properties/spec/properties/eventSources/items/properties/kind/enum/-
           value: Terraform
       target:
@@ -111,13 +120,3 @@ spec:
       target:
         kind: CustomResourceDefinition
         name: receivers.notification.toolkit.fluxcd.io
-    - patch: |
-        - op: add
-          path: /rules/-
-          value:
-            apiGroups: ["infra.contrib.fluxcd.io"]
-            resources: ["*"]
-            verbs: ["*"]
-      target:
-        kind: ClusterRole
-        name: crd-controller-flux-system
