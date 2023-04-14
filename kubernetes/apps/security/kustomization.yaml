@@ -6,3 +6,4 @@ resources:
   - authelia/install.yaml
   - dmarc-report/install.yaml
   - external-secrets/install.yaml
+  - lldap/install.yaml
