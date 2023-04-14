@@ -40,17 +40,23 @@ spec:
         reloader.stakater.com/auto: "true"
     image:
       repository: ghcr.io/lldap/lldap
-      tag: v0.4.3
+      tag: latest
     env:
       TZ: ${CONFIG_TIMEZONE}
       LLDAP_HTTP_PORT: &http-port 80
       LLDAP_HTTP_URL: https://lldap.${SECRET_DOMAIN_NAME}
       LLDAP_LDAP_PORT: &ldap-port 389
+      LLDAP_LDAP_BASE_DN: dc=home,dc=arpa
+      LLDAP__IGNORED_GROUP_ATTRIBUTES: '[ "mail", "userPrincipalName", "ou" ]'
+      # LLDAP_VERBOSE: "true"
     envFrom:
       - secretRef:
           name: lldap-secret
     service:
       main:
+        type: LoadBalancer
+        externalTrafficPolicy: Local
+        loadBalancerIP: "10.10.1.15"
         ports:
           http:
             port: *http-port
