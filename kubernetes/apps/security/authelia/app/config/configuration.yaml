@@ -2,20 +2,6 @@
 totp:
   disable: false
 
-authentication_backend:
-  password_reset:
-    disable: true
-  refresh_interval: 5m
-  file:
-    path: /config/users.yaml
-    password:
-      algorithm: argon2id
-      iterations: 1
-      key_length: 32
-      salt_length: 16
-      memory: 1024
-      parallelism: 8
-
 access_control:
   default_policy: deny
   networks:
