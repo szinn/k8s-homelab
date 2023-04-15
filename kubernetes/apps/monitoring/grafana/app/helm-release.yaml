@@ -27,33 +27,39 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    extraInitContainers:
+      - name: init-db
+        image: ghcr.io/onedr0p/postgres-initdb:14.7
+        imagePullPolicy: IfNotPresent
+        envFrom:
+          - secretRef:
+              name: grafana
     annotations:
       configmap.reloader.stakater.com/reload: *app
       secret.reloader.stakater.com/reload: *app
-    image:
-      repository: grafana/grafana
-      tag: 9.4.7
     rbac:
       pspEnabled: false
-    deploymentStrategy:
-      type: Recreate
     persistence:
       enabled: false
     testFramework:
       enabled: false
     env:
+      GF_ANALYTICS_CHECK_FOR_UPDATES: false
+      # GF_AUTH_GENERIC_OAUTH_API_URL: https://auth.${SECRET_DOMAIN_NAME}/api/oidc/userinfo
+      # GF_AUTH_GENERIC_OAUTH_AUTH_URL: https://auth.${SECRET_DOMAIN_NAME}/api/oidc/authorization
+      # GF_AUTH_GENERIC_OAUTH_CLIENT_ID: grafana
+      # GF_AUTH_GENERIC_OAUTH_TOKEN_URL: https://auth.${SECRET_DOMAIN_NAME}/api/oidc/token
+      GF_DATE_FORMATS_USE_BROWSER_LOCALE: true
       GF_EXPLORE_ENABLED: true
-      GF_SECURITY_ALLOW_EMBEDDING: true
+      GF_GRAFANA_NET_URL: https://grafana.net
       GF_LOG_FILTERS: rendering:debug
       GF_LOG_MODE: console
-      GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: natel-discrete-panel,pr0ps-trackmap-panel,panodata-map-panel
-      GF_DATE_FORMATS_FULL_DATE: "MMM Do, YYYY hh:mm:ss a"
       GF_PANELS_DISABLE_SANITIZE_HTML: true
-      GF_DATE_FORMATS_USE_BROWSER_LOCALE: true
-      GF_AUTH_GENERIC_OAUTH_API_URL: https://auth.${SECRET_DOMAIN_NAME}/api/oidc/userinfo
-      GF_AUTH_GENERIC_OAUTH_AUTH_URL: https://auth.${SECRET_DOMAIN_NAME}/api/oidc/authorization
-      GF_AUTH_GENERIC_OAUTH_CLIENT_ID: grafana
-      GF_AUTH_GENERIC_OAUTH_TOKEN_URL: https://auth.${SECRET_DOMAIN_NAME}/api/oidc/token
+      GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: natel-discrete-panel,pr0ps-trackmap-panel,panodata-map-panel
+      GF_SECURITY_ALLOW_EMBEDDING: true
+      GF_SECURITY_COOKIE_SAMESITE: grafana
+      GF_DATE_FORMATS_FULL_DATE: "MMM Do, YYYY hh:mm:ss a"
+      GF_SERVER_ROOT_URL: https://grafana.${SECRET_DOMAIN_NAME}
     admin:
       existingSecret: *app
       userKey: adminUser
@@ -196,11 +202,6 @@ spec:
           gnetId: 12776
           revision: 2
           datasource: Redis
-        # Ref: https://grafana.com/grafana/dashboards/13502
-        # minio:
-        #   gnetId: 13502
-        #   revision: 21
-        #   datasource: Prometheus
       loki:
         loki-metrics:
           gnetId: 13407
@@ -307,38 +308,33 @@ spec:
             jsonData:
               implementation: prometheus
     grafana.ini:
-      server:
-        root_url: "https://grafana.${SECRET_DOMAIN_NAME}"
       default:
         force_migration: true
-      auth:
-        signout_redirect_url: https://auth.${SECRET_DOMAIN_NAME}/logout
-        oauth_auto_login: false
-      auth.generic_oauth:
-        enabled: true
-        name: Authelia
-        client_id: # Set by env vars
-        client_secret: # Set by env vars secret
-        auth_url: # Set by env vars
-        token_url: # Set by env vars
-        api_url: # Set by env vars
-        scopes: "openid profile email groups"
-        empty_scopes: false
-        login_attribute_path: preferred_username
-        groups_attribute_path: groups
-        name_attribute_path: name
-        use_pkce: true
-      auth.generic_oauth.group_mapping:
-        role_attribute_path: |
-          contains(groups[*], 'admins') && 'Admin' || contains(groups[*], 'people') && 'Viewer'
-        org_id: 1
-      auth.basic:
-        enabled: false
-        # disable_login_form: false
-      auth.anonymous:
-        enabled: true
-        org_id: 1
-        org_role: Viewer
+      # auth:
+      #   signout_redirect_url: https://auth.${SECRET_DOMAIN_NAME}/logout
+      #   oauth_auto_login: false
+      # auth.generic_oauth:
+      #   enabled: true
+      #   name: Authelia
+      #   icon: signin
+      #   client_id: grafana
+      #   scopes: "openid profile email groups"
+      #   empty_scopes: false
+      #   login_attribute_path: preferred_username
+      #   groups_attribute_path: groups
+      #   name_attribute_path: name
+      #   use_pkce: true
+      # auth.generic_oauth.group_mapping:
+      #   role_attribute_path: |
+      #     contains(groups[*], 'admins') && 'Admin' || contains(groups[*], 'people') && 'Viewer'
+      #   org_id: 1
+      # auth.basic:
+      #   enabled: false
+      #   # disable_login_form: false
+      # auth.anonymous:
+      #   enabled: true
+      #   org_id: 1
+      #   org_role: Viewer
       paths:
         data: /var/lib/grafana/data
         logs: /var/log/grafana
