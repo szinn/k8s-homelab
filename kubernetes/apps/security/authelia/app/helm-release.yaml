@@ -128,10 +128,3 @@ spec:
         subPath: configuration.yaml
         mountPath: /config/configuration.yml
         readOnly: false
-      users:
-        enabled: true
-        type: secret
-        name: authelia
-        subPath: USERS_YAML
-        mountPath: /config/users.yaml
-        readOnly: false

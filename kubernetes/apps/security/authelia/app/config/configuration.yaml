@@ -12,10 +12,6 @@ access_control:
       networks:
         - trusted
       policy: bypass
-    - domain: "draw.${SECRET_DOMAIN_NAME}"
-      policy: one_factor
-      subject:
-        - "group:app-draw"
     - domain: "home.${SECRET_DOMAIN_NAME}"
       policy: one_factor
       subject:

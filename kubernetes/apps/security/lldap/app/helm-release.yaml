@@ -47,7 +47,9 @@ spec:
       LLDAP_HTTP_URL: https://lldap.${SECRET_DOMAIN_NAME}
       LLDAP_LDAP_PORT: &ldap-port 389
       LLDAP_LDAP_BASE_DN: dc=home,dc=arpa
-      LLDAP__IGNORED_GROUP_ATTRIBUTES: '[ "mail", "userPrincipalName", "ou" ]'
+      LLDAP_IGNORED_GROUP_ATTRIBUTES: '[ "mail", "userPrincipalName", "ou" ]'
+      LLDAP_SMTP_OPTIONS__ENABLE_PASSWORD_RESET: "true"
+      LLDAP_SMTP_OPTIONS__SMTP_ENCRYPTION: "STARTTLS"
       # LLDAP_VERBOSE: "true"
     envFrom:
       - secretRef:
