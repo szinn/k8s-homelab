@@ -4,5 +4,4 @@ kind: Kustomization
 resources:
   - teslamate-secrets.yaml
   - helm-release.yaml
-  - teslamate-datasource.sops.yaml
-  - dashboard
+  - dashboards
