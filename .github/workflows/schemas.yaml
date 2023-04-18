@@ -120,5 +120,5 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           labels: |
-            org.opencontainers.image.source="https://github.com/szinn/k8s-homelab"
-            org.opencontainers.image.authors="Scotte Zinn <scotte@zinn.ca>"
+            org.opencontainers.image.source="${{ github.repositoryUrl }}"
+            org.opencontainers.image.authors="Scotte Zinn <szinn@users.noreply.github.com>"
