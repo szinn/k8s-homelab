@@ -110,7 +110,7 @@ spec:
       image:
         registry: ghcr.io
         repository: nginxinc/nginx-unprivileged
-        tag: 1.23.4-alpine
+        tag: 1.24.0-alpine
       replicas: 3
       verboseLogging: false
       deploymentStrategy:
