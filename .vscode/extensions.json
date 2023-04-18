@@ -1,10 +1,7 @@
 {
     "recommendations": [
-        "bungcip.better-toml",
         "fcrespo82.markdown-table-formatter",
         "hashicorp.terraform",
-        "mitchdenny.ecdc",
-        "ms-kubernetes-tools.vscode-kubernetes-tools",
         "oderwat.indent-rainbow",
         "signageos.signageos-vscode-sops"
     ]
