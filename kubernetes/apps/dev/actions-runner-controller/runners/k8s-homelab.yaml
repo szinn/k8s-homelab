@@ -8,14 +8,15 @@ spec:
   template:
     spec:
       image: ghcr.io/actions/actions-runner-controller/actions-runner-dind:v2.299.1-ubuntu-22.04
-      dockerdWithinRunnerContainer: false
+      imagePullPolicy: Always
+      dockerdWithinRunnerContainer: true
       ephemeral: true
       repository: szinn/k8s-homelab
       labels:
         - self-hosted
-      containers:
-        - name: docker
-          image: docker:24.0.0-beta.1-dind@sha256:d3de87b2cbfa51888f9cd083da8ac522fa0ff32d7667dfd6533e949e65b660e0
+      # containers:
+      #   - name: docker
+      #     image: docker:24.0.0-beta.1-dind@sha256:d3de87b2cbfa51888f9cd083da8ac522fa0ff32d7667dfd6533e949e65b660e0
       volumeMounts:
         - name: cache-volume
           mountPath: /cache

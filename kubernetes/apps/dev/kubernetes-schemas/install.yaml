@@ -1,0 +1,16 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: dev-kubernetes-schemas
+  namespace: flux-system
+spec:
+  path: "./kubernetes/apps/dev/kubernetes-schemas/app"
+  sourceRef:
+    kind: GitRepository
+    name: homelab-kubernetes
+  prune: true
+  wait: true
+  interval: 30m
+  retryInterval: 2m
+  timeout: 1m

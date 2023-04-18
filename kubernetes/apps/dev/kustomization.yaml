@@ -4,5 +4,6 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - actions-runner-controller/install.yaml
+  - kubernetes-schemas/install.yaml
   - registry/install.yaml
   - registry-ui/install.yaml
