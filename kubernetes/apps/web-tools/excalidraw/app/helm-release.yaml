@@ -36,7 +36,7 @@ spec:
         surge: 0
     image:
       repository: docker.io/excalidraw/excalidraw
-      tag: latest@sha256:5c0a590db985dfa9bdd576628b1f18b68a652b1fa979ee663efcb0e474e5b3a6
+      tag: latest@sha256:fe10fbefb24df0aa2b3cfe2e4f1f2750c442f63a2edd77bb81c5051777455723
     service:
       main:
         ports:
