@@ -20,7 +20,7 @@ data:
   TYPESENSE_HOST: immich-typesense.media.svc.cluster.local
   # Below are deprecated and can only be set in the Immich Admin settings
   # OAUTH_ENABLED: "true"
-  # OAUTH_ISSUER_URL: https://auth.devbu.io/.well-known/openid-configuration
+  # OAUTH_ISSUER_URL: https://auth.${SECRET_DOMAIN_NAME}/.well-known/openid-configuration
   # OAUTH_CLIENT_ID: immich
   # OAUTH_CLIENT_SECRET: "${SECRET_IMMICH_OAUTH_CLIENT_SECRET}"
   # OAUTH_AUTO_REGISTER: "true"
