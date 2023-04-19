@@ -12,7 +12,8 @@
 sonarr:
   standard:
     base_url: http://sonarr:8989
-    api_key: "!env_var SONARR_APIKEY"
+    # https://github.com/recyclarr/recyclarr/issues/180
+    api_key: !env_var SONARR_APIKEY
     delete_old_custom_formats: true
     quality_definition:
       type: series
@@ -32,7 +33,8 @@ sonarr:
 radarr:
   standard:
     base_url: http://radarr:7878
-    api_key: "!env_var RADARR_APIKEY"
+    # https://github.com/recyclarr/recyclarr/issues/180
+    api_key: !env_var RADARR_APIKEY
     delete_old_custom_formats: true
     quality_definition:
       type: movie
@@ -107,7 +109,8 @@ radarr:
 
   fourk:
     base_url: http://radarr-4k:7878
-    api_key: "!env_var RADARR_4K_APIKEY"
+    # https://github.com/recyclarr/recyclarr/issues/180
+    api_key: !env_var RADARR_4K_APIKEY
     delete_old_custom_formats: true
     quality_definition:
       type: movie
