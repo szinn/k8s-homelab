@@ -3,23 +3,23 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: web-tools-outline
+  name: self-hosted-changedetection
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/web-tools/outline/app
+  path: ./kubernetes/apps/self-hosted/changedetection/app
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes
   dependsOn:
-    - name: dbms-cloudnative-pg
-    - name: security-external-secrets-stores
+    - name: rook-ceph-cluster
+    - name: system-volsync
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
-      name: outline
-      namespace: web-tools
+      name: changedetection
+      namespace: self-hosted
   prune: true
   wait: true
   interval: 30m
   retryInterval: 2m
-  timeout: 1m
+  timeout: 3m

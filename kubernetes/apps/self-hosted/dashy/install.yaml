@@ -3,23 +3,24 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: web-tools-changedetection
+  name: self-hosted-dashy
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/web-tools/changedetection/app
+  path: ./kubernetes/apps/self-hosted/dashy/app
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes
   dependsOn:
     - name: rook-ceph-cluster
+    - name: security-external-secrets-stores
     - name: system-volsync
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
-      name: changedetection
-      namespace: web-tools
+      name: dashy
+      namespace: self-hosted
   prune: true
   wait: true
   interval: 30m
   retryInterval: 2m
-  timeout: 3m
+  timeout: 1m

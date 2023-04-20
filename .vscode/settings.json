@@ -17,7 +17,7 @@
         "networking": "connection",
         "outline": "docs",
         "security": "keys",
-        "web-tools": "app",
+        "self-hosted": "app",
         "setup": "import",
         "hack": "scripts",
         "config": "environment"

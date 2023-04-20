@@ -4,7 +4,7 @@ apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
   name: dashy-restic
-  namespace: web-tools
+  namespace: self-hosted
 spec:
   secretStoreRef:
     kind: ClusterSecretStore
@@ -28,7 +28,7 @@ apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
   name: dashy
-  namespace: web-tools
+  namespace: self-hosted
 spec:
   sourcePVC: config-dashy-0
   trigger:

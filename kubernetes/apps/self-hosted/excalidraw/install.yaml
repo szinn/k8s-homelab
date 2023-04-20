@@ -3,10 +3,10 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: web-tools-excalidraw
+  name: self-hosted-excalidraw
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/web-tools/excalidraw/app
+  path: ./kubernetes/apps/self-hosted/excalidraw/app
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes
@@ -14,7 +14,7 @@ spec:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
       name: excalidraw
-      namespace: web-tools
+      namespace: self-hosted
   prune: true
   wait: true
   interval: 30m

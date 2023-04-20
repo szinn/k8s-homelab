@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: web-tools
+  name: self-hosted
   annotations:
     volsync.backube/privileged-movers: "true"
   labels:

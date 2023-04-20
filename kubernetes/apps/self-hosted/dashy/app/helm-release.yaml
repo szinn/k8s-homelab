@@ -4,7 +4,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: dashy
-  namespace: web-tools
+  namespace: self-hosted
 spec:
   interval: 15m
   chart:
