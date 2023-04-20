@@ -1,7 +1,7 @@
 ---
 clusterName: ${CONFIG_CLUSTER_NAME}
 talosVersion: v1.4.0
-kubernetesVersion: v1.26.3
+kubernetesVersion: v1.26.4
 endpoint: https://${CONFIG_CLUSTER_NAME}.zinn.tech:6443
 
 cniConfig:
