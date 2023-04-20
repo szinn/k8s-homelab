@@ -60,7 +60,7 @@ spec:
         prometheusOperator: true
     kubeControllerManager:
       enabled: true
-      endpoints:
+      endpoints: &cp
         - 10.10.0.16
         - 10.10.0.17
         - 10.10.0.18
@@ -76,23 +76,19 @@ spec:
             targetLabel: instance
     kubeApiServer:
       enabled: true
-      endpoints:
-        - 10.10.0.16
-        - 10.10.0.17
-        - 10.10.0.18
+      endpoints: *cp
     kubeProxy:
       enabled: false
     kubeScheduler:
       enabled: true
-      endpoints:
-        - 10.10.0.16
-        - 10.10.0.17
-        - 10.10.0.18
+      endpoints: *cp
     kubeStateMetrics:
       enabled: true
     kube-state-metrics:
       fullnameOverride: kube-state-metrics
       metricLabelsAllowlist:
+        - pods=[*]
+        - deployments=[*]
         - persistentvolumeclaims=[*]
       prometheus:
         monitor:

@@ -51,7 +51,6 @@ spec:
       userKey: adminUser
       passwordKey: adminPassword
     env:
-      GF_ANALYTICS_CHECK_FOR_UPDATES: false
       GF_AUTH_GENERIC_OAUTH_API_URL: https://auth.${SECRET_DOMAIN_NAME}/api/oidc/userinfo
       GF_AUTH_GENERIC_OAUTH_AUTH_URL: https://auth.${SECRET_DOMAIN_NAME}/api/oidc/authorization
       GF_AUTH_GENERIC_OAUTH_CLIENT_ID: grafana
@@ -105,6 +104,7 @@ spec:
         provisioning: /etc/grafana/provisioning
       analytics:
         check_for_updates: false
+        check_for_plugin_updates: false
     dashboardProviders:
       dashboardproviders.yaml:
         apiVersion: 1
