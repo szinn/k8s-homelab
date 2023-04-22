@@ -14,5 +14,5 @@ data:
       - name: default
         protocol: bgp
         addresses:
-          - 10.10.1.0/24
+          - ${CONFIG_BGP_POOL_CIDR}
         avoid-buggy-ips: true
