@@ -57,9 +57,6 @@ spec:
           name: lldap-secret
     service:
       main:
-        type: LoadBalancer
-        externalTrafficPolicy: Local
-        loadBalancerIP: "10.10.1.15"
         ports:
           http:
             port: *http-port
