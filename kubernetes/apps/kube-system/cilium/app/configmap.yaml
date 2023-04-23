@@ -7,9 +7,9 @@ metadata:
 data:
   config.yaml: |
     peers:
-      - peer-address: 10.10.0.1
-        peer-asn: 64512
-        my-asn: 64512
+      - peer-address: 10.11.0.1
+        peer-asn: 65000
+        my-asn: 65001
     address-pools:
       - name: default
         protocol: bgp

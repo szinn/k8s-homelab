@@ -46,24 +46,24 @@ transforms:
     inputs:
       - talos_kernel_logs
     source: |-
-      r1 = replace!(.__host, "10.10.0.16", "k8s-1")
-      r2 = replace(r1, "10.10.0.17", "k8s-2")
-      r3 = replace(r2, "10.10.0.18", "k8s-3")
-      r4 = replace(r3, "10.10.0.19", "k8s-4")
-      r5 = replace(r4, "10.10.0.20", "k8s-5")
-      r6 = replace(r5, "10.10.0.21", "k8s-6")
+      r1 = replace!(.__host, "10.11.0.16", "k8s-1")
+      r2 = replace(r1, "10.11.0.17", "k8s-2")
+      r3 = replace(r2, "10.11.0.18", "k8s-3")
+      r4 = replace(r3, "10.11.0.19", "k8s-4")
+      r5 = replace(r4, "10.11.0.20", "k8s-5")
+      r6 = replace(r5, "10.11.0.21", "k8s-6")
       .node = r6
   service_hostname_transform:
     type: remap
     inputs:
       - talos_service_logs
     source: |-
-      r1 = replace!(.__host, "10.10.0.16", "k8s-1")
-      r2 = replace(r1, "10.10.0.17", "k8s-2")
-      r3 = replace(r2, "10.10.0.18", "k8s-3")
-      r4 = replace(r3, "10.10.0.19", "k8s-4")
-      r5 = replace(r4, "10.10.0.20", "k8s-5")
-      r6 = replace(r5, "10.10.0.21", "k8s-6")
+      r1 = replace!(.__host, "10.11.0.16", "k8s-1")
+      r2 = replace(r1, "10.11.0.17", "k8s-2")
+      r3 = replace(r2, "10.11.0.18", "k8s-3")
+      r4 = replace(r3, "10.11.0.19", "k8s-4")
+      r5 = replace(r4, "10.11.0.20", "k8s-5")
+      r6 = replace(r5, "10.11.0.21", "k8s-6")
       r7 = replace(r6, r'10.*', "talos")
       .node = r7
   # [63950.153039] [wan-local-default-D]IN=eth4 OUT= MAC=xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx SRC=xxx.xxx.xxx.xxx DST=xxx.xxx.xxx.xxx LEN=40 TOS=0x00 PREC=0x00 TTL=240 ID=60610 PROTO=TCP SPT=53451 DPT=2002 WINDOW=1024 RES=0x00 SYN URGP=0

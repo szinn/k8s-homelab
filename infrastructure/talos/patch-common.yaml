@@ -1,9 +1,0 @@
-- op: add
-  path: /machine/kubelet/extraArgs
-  value:
-    feature-gates: GracefulNodeShutdown=true,MixedProtocolLBService=true
-    rotate-server-certificates: "true"
-- op: add
-  path: /machine/install/extraKernelArgs
-  value:
-    - talos.logging.kernel=udp://${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}:6001/

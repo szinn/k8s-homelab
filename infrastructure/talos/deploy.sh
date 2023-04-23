@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Only need to do this once since the config keys will always be the same
-# talosctl --talosconfig=./clusterconfig/talosconfig config endpoint 10.10.0.16 10.10.0.17 10.10.0.18
+# talosctl --talosconfig=./clusterconfig/talosconfig config endpoint 10.11.0.16 10.11.0.17 10.11.0.18
 # talosctl config merge ./clusterconfig/talosconfig
-# talosctl kubeconfig -n 10.10.0.16
+# talosctl kubeconfig -n 10.11.0.16
 
 # Deploy the configuration to the nodes
 talosctl apply-config -i -n k8s-1 -f ./clusterconfig/main-k8s-1.zinn.tech.yaml

@@ -23,7 +23,7 @@ clusterPodNets:
 
 nodes:
   - hostname: k8s-1.zinn.tech
-    ipAddress: 10.10.0.16
+    ipAddress: 10.11.0.16
     disableSearchDomain: true
     controlPlane: true
     installDisk: /dev/sda
@@ -32,7 +32,7 @@ nodes:
         mtu: 1500
         dhcp: true
   - hostname: k8s-2.zinn.tech
-    ipAddress: 10.10.0.17
+    ipAddress: 10.11.0.17
     disableSearchDomain: true
     controlPlane: true
     installDisk: /dev/sda
@@ -41,7 +41,7 @@ nodes:
         mtu: 1500
         dhcp: true
   - hostname: k8s-3.zinn.tech
-    ipAddress: 10.10.0.18
+    ipAddress: 10.11.0.18
     disableSearchDomain: true
     controlPlane: true
     installDisk: /dev/sda
@@ -50,7 +50,7 @@ nodes:
         mtu: 1500
         dhcp: true
   - hostname: k8s-4.zinn.tech
-    ipAddress: 10.10.0.19
+    ipAddress: 10.11.0.19
     disableSearchDomain: true
     controlPlane: false
     installDisk: /dev/sda
@@ -59,7 +59,7 @@ nodes:
         mtu: 1500
         dhcp: true
   - hostname: k8s-5.zinn.tech
-    ipAddress: 10.10.0.20
+    ipAddress: 10.11.0.20
     disableSearchDomain: true
     controlPlane: false
     installDisk: /dev/sda
@@ -68,7 +68,7 @@ nodes:
         mtu: 1500
         dhcp: true
   - hostname: k8s-6.zinn.tech
-    ipAddress: 10.10.0.21
+    ipAddress: 10.11.0.21
     disableSearchDomain: true
     controlPlane: false
     installDisk: /dev/sda
@@ -124,7 +124,7 @@ controlPlane:
         time:
           disabled: false
           servers:
-            - 10.10.0.1
+            - 10.11.0.1
 
     - |-
       - op: remove
@@ -163,4 +163,4 @@ worker:
         time:
           disabled: false
           servers:
-            - 10.10.0.1
+            - 10.11.0.1
