@@ -14,4 +14,6 @@ spec:
   dnsNames:
     - "${SECRET_MAIN_DOMAIN_NAME}"
     - "*.${SECRET_MAIN_DOMAIN_NAME}"
+    - "${SECRET_TECH_DOMAIN_NAME}"
+    - "*.${SECRET_TECH_DOMAIN_NAME}"
     - "*.${SECRET_STAGING_DOMAIN_NAME}"
