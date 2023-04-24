@@ -5,6 +5,5 @@ resources:
   - namespace.yaml
   - changedetection/install.yaml
   - dashy/install.yaml
-  - excalidraw/install.yaml
   - outline/install.yaml
   - shlink/install.yaml
