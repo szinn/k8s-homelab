@@ -5,5 +5,4 @@ resources:
   - external-hades-ui.yaml
   - external-minio.yaml
   - external-octo-ui.yaml
-  - external-pihole-ui.yaml
   - external-s3.yaml
