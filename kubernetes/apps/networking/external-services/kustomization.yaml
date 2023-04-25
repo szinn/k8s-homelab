@@ -4,4 +4,3 @@ kind: Kustomization
 resources:
   - external-minio.yaml
   - external-octo-ui.yaml
-  - external-s3.yaml
