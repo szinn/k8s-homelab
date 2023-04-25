@@ -6,6 +6,9 @@ configMapGenerator:
   - name: docker-shit
     files:
       - docker-shit.json=dockershit.json
+  - name: vyos
+    files:
+      - vyos.json=vyos.json
 
 generatorOptions:
   disableNameSuffixHash: true
