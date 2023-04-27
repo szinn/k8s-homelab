@@ -20,3 +20,22 @@ spec:
   interval: 30m
   retryInterval: 2m
   timeout: 1m
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: system-node-feature-discovery-rules
+  namespace: flux-system
+spec:
+  path: ./kubernetes/apps/system/node-feature-discovery/rules
+  sourceRef:
+    kind: GitRepository
+    name: homelab-kubernetes
+  dependsOn:
+    - name: system-node-feature-discovery
+  prune: true
+  wait: true
+  interval: 15m
+  retryInterval: 1m
+  timeout: 3m

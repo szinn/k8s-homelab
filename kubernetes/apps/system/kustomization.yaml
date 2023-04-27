@@ -4,7 +4,7 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - descheduler/install.yaml
-  - intel-gpu-plugin/install.yaml
+  - intel-device-plugin/install.yaml
   - node-feature-discovery/install.yaml
   - reloader/install.yaml
   - volsync/install.yaml

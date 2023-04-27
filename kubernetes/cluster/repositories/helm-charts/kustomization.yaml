@@ -17,6 +17,7 @@ resources:
   - grafana-charts.yaml
   - infracloudio-charts.yaml
   - ingress-nginx-charts.yaml
+  - intel-charts.yaml
   - jetstack-charts.yaml
   - kubernetes-sigs-metrics-server-charts.yaml
   - kyverno-charts.yaml
