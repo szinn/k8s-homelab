@@ -28,6 +28,9 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    controller:
+      annotations:
+        secret.reloader.stakater.com/reload: *app
     image:
       repository: docker.io/golift/unifi-poller
       tag: 2.1.3
