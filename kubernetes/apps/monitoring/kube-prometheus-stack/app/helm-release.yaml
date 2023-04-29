@@ -239,10 +239,10 @@ spec:
             static_configs:
               - targets:
                   - gateway.${SECRET_TECH_DOMAIN_NAME}:9798
-          - job_name: frr-exporter
-            static_configs:
-              - targets:
-                  - gateway.${SECRET_TECH_DOMAIN_NAME}:9342
+          # - job_name: frr-exporter
+          #   static_configs:
+          #     - targets:
+          #         - gateway.${SECRET_TECH_DOMAIN_NAME}:9342
           - job_name: vyos
             scrape_interval: 1m
             scrape_timeout: 10s
