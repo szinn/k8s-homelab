@@ -233,16 +233,12 @@ spec:
                   - "ragnar.${SECRET_TECH_DOMAIN_NAME}:9100"
                   - "gateway.${SECRET_TECH_DOMAIN_NAME}:9100"
           - job_name: speedtest-exporter
-            scrape_interval: 60m
-            scrape_timeout: 60s
+            scrape_interval: 360m
+            scrape_timeout: 120s
             honor_timestamps: true
             static_configs:
               - targets:
                   - gateway.${SECRET_TECH_DOMAIN_NAME}:9798
-          # - job_name: frr-exporter
-          #   static_configs:
-          #     - targets:
-          #         - gateway.${SECRET_TECH_DOMAIN_NAME}:9342
           - job_name: vyos
             scrape_interval: 1m
             scrape_timeout: 10s
