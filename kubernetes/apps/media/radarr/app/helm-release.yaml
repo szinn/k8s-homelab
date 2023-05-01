@@ -52,6 +52,10 @@ spec:
         ingressClassName: "nginx"
         annotations:
           ingress.home.arpa/type: "internal"
+          nginx.ingress.kubernetes.io/configuration-snippet: |
+            proxy_set_header Accept-Encoding "";
+            sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.${SECRET_DOMAIN_NAME}/css/base/radarr/nord.css"></head>';
+            sub_filter_once on;
         hosts:
           - host: "{{ .Release.Name }}.${SECRET_DOMAIN_NAME}"
             paths:

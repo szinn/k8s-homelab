@@ -1,0 +1,22 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: self-hosted-theme-park
+  namespace: flux-system
+spec:
+  path: ./kubernetes/apps/self-hosted/theme-park/app
+  sourceRef:
+    kind: GitRepository
+    name: homelab-kubernetes
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+      kind: HelmRelease
+      name: theme-park
+      namespace: self-hosted
+  prune: true
+  wait: true
+  interval: 15m
+  retryInterval: 1m
+  timeout: 3m
