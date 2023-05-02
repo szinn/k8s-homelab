@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: &app external-dns
+  name: &app external-dns-cloudflare
   namespace: networking
 spec:
   interval: 15m
@@ -28,8 +28,9 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    fullnameOverride: external-dns-cloudflare
     deploymentAnnotations:
-      secret.reloader.stakater.com/reload: *app
+      secret.reloader.stakater.com/reload: external-dns-cloudflare-secret
     interval: 15m
     logLevel: debug
     provider: cloudflare
@@ -37,12 +38,12 @@ spec:
       - name: CF_API_EMAIL
         valueFrom:
           secretKeyRef:
-            name: external-dns
+            name: external-dns-cloudflare-secret
             key: email
       - name: CF_API_KEY
         valueFrom:
           secretKeyRef:
-            name: external-dns
+            name: external-dns-cloudflare-secret
             key: api-key
     extraArgs:
       - --cloudflare-proxied
@@ -50,16 +51,20 @@ spec:
     policy: sync
     sources:
       - ingress
-    txtPrefix: "k8s."
     txtOwnerId: "homelab"
+    txtPrefix: "k8s."
     domainFilters:
       - "${SECRET_DOMAIN_NAME}"
     serviceMonitor:
       enabled: true
-    resources:
-      requests:
-        cpu: 15m
-        memory: 64M
-      limits:
-        cpu: 15m
-        memory: 64M
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              version: v1
+              kind: Deployment
+              name: external-dns-cloudflare
+            patch: |
+              - op: add
+                path: /spec/template/spec/enableServiceLinks
+                value: false
