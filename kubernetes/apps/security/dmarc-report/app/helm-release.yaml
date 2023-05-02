@@ -32,7 +32,7 @@ spec:
           - name: POSTGRES_HOST
             value: postgres-rw.dbms.svc.cluster.local
           - name: POSTGRES_DB
-            value: dmarc-report
+            value: dmarc
         envFrom:
           - secretRef:
               name: *app
@@ -49,7 +49,7 @@ spec:
       REPORT_DB_TYPE: "pgsql"
       REPORT_DB_HOST: postgres-rw.dbms.svc.cluster.local
       REPORT_DB_PORT: "5432"
-      REPORT_DB_NAME: "dmarc-report"
+      REPORT_DB_NAME: "dmarc"
     envFrom:
       - secretRef:
           name: *app
