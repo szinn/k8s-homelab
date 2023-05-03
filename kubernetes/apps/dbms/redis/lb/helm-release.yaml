@@ -38,7 +38,7 @@ spec:
         configmap.reloader.stakater.com/reload: redis-haproxy-config
     image:
       repository: public.ecr.aws/docker/library/haproxy
-      tag: "2.7.7"
+      tag: "2.7.8"
     service:
       main:
         enabled: true
