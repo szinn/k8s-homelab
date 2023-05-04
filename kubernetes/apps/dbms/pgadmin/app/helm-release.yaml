@@ -34,7 +34,7 @@ spec:
         configmap.reloader.stakater.com/reload: *app
     image:
       repository: docker.io/dpage/pgadmin4
-      tag: "7.0"
+      tag: "7.1"
     strategy:
       type: Recreate
     envFrom:
