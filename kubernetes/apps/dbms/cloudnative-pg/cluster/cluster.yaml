@@ -8,7 +8,7 @@ metadata:
   annotations:
     kyverno.io/ignore: "true"
 spec:
-  imageName: ghcr.io/cloudnative-pg/postgresql:15.2-10
+  imageName: ghcr.io/cloudnative-pg/postgresql:15.2-11
   instances: 3
   primaryUpdateStrategy: unsupervised
   storage:
@@ -22,22 +22,3 @@ spec:
       shared_buffers: 512MB
   monitoring:
     enablePodMonitor: true
-  # backup:
-  #   retentionPolicy: 30d
-  #   barmanObjectStore:
-  #     wal:
-  #       compression: bzip2
-  #       maxParallel: 8
-  #     destinationPath: s3://postgresql/
-  #     endpointURL: http://atlas.${SECRET_TECH_DOMAIN_NAME}:9000
-  #     serverName: postgres-${CONFIG_CLUSTER_NAME}
-  #     s3Credentials:
-  #       accessKeyId:
-  #         name: postgres-minio
-  #         key: MINIO_ACCESS_KEY
-  #       secretAccessKey:
-  #         name: postgres-minio
-  #         key: MINIO_SECRET_KEY
-  #       region:
-  #         name: postgres-minio
-  #         key: MINIO_REGION

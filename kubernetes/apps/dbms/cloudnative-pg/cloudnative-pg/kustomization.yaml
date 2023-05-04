@@ -5,6 +5,7 @@ namespace: dbms
 resources:
   - postgres-superuser-secret.yaml
   - helm-release.yaml
+  - prometheus-rule.yaml
   - service.yaml
 configMapGenerator:
   - name: cloudnative-pg-dashboard
