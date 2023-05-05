@@ -3,23 +3,6 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: networking-external-dns-crds
-  namespace: flux-system
-spec:
-  path: ./kubernetes/apps/networking/external-dns/crds
-  sourceRef:
-    kind: GitRepository
-    name: homelab-kubernetes
-  prune: true
-  wait: true
-  interval: 30m
-  retryInterval: 2m
-  timeout: 1m
----
-# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/kustomize.toolkit.fluxcd.io/kustomization_v1.json
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
   name: networking-external-dns-cloudflare
   namespace: flux-system
 spec:
@@ -28,7 +11,6 @@ spec:
     kind: GitRepository
     name: homelab-kubernetes
   dependsOn:
-    - name: networking-external-dns-crds
     - name: security-external-secrets-stores
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1

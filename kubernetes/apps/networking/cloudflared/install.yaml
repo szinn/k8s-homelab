@@ -13,7 +13,7 @@ spec:
     kind: GitRepository
     name: homelab-kubernetes
   dependsOn:
-    - name: networking-external-dns-crds
+    - name: networking-external-dns-cloudflare
     - name: security-external-secrets-stores
   prune: true
   wait: true
