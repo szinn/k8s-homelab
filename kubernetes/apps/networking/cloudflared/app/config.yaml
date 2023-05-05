@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloudflared-configmap
+  namespace: networking
+data:
+  config.yaml: |
+    ingress:
+      - hostname: "*.${SECRET_DOMAIN_NAME}"
+        service: https://ingress-nginx-controller.networking.svc.cluster.local:443
+        originRequest:
+          originServerName: ingress.${SECRET_DOMAIN_NAME}
+      - service: http_status:404
