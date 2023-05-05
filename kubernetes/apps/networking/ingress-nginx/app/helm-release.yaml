@@ -48,7 +48,6 @@ spec:
         client-body-timeout: 120
         enable-brotli: "true"
         enable-real-ip: "true"
-        forwarded-for-header: "CF-Connecting-IP"
         hsts-max-age: "31449600"
         keep-alive: 120
         keep-alive-requests: 10000
@@ -64,7 +63,6 @@ spec:
         proxy-body-size: 0
         proxy-buffer-size: "16k"
         ssl-protocols: "TLSv1.3 TLSv1.2"
-        use-forwarded-headers: "true"
       metrics:
         enabled: true
         serviceMonitor:
@@ -83,7 +81,7 @@ spec:
               app.kubernetes.io/name: ingress-nginx
               app.kubernetes.io/component: controller
       podAnnotations:
-        configmap.reloader.stakater.com/reload: "cloudflare-networks,ingress-nginx-controller"
+        configmap.reloader.stakater.com/reload: "ingress-nginx-controller"
       resources:
         requests:
           cpu: 23m
@@ -100,10 +98,3 @@ spec:
           value: i-said-random
         - name: SHOW_DETAILS
           value: 'true'
-  valuesFrom:
-    # Cloudflare Networks
-    # https://www.cloudflare.com/ips/
-    - kind: ConfigMap
-      name: cloudflare-networks
-      valuesKey: cloudflare-networks.txt
-      targetPath: controller.config.proxy-real-ip-cidr

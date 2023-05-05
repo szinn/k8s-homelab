@@ -31,7 +31,6 @@ spec:
     fullnameOverride: external-dns-cloudflare
     deploymentAnnotations:
       secret.reloader.stakater.com/reload: external-dns-cloudflare-secret
-    interval: 15m
     logLevel: debug
     provider: cloudflare
     env:
@@ -46,10 +45,13 @@ spec:
             name: external-dns-cloudflare-secret
             key: api-key
     extraArgs:
+      - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
+      - --crd-source-kind=DNSEndpoint
       - --cloudflare-proxied
       - --annotation-filter=external-dns.alpha.kubernetes.io/target
     policy: sync
     sources:
+      - crd
       - ingress
     txtOwnerId: "homelab"
     txtPrefix: "k8s."

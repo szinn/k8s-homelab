@@ -1,0 +1,22 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: networking-cloudflared
+  namespace: flux-system
+  labels:
+    substitution.flux.home.arpa/enabled: "true"
+spec:
+  path: "./kubernetes/apps/networking/cloudflared/app"
+  sourceRef:
+    kind: GitRepository
+    name: homelab-kubernetes
+  dependsOn:
+    - name: networking-external-dns-crds
+    - name: security-external-secrets-stores
+  prune: true
+  wait: true
+  interval: 30m
+  retryInterval: 2m
+  timeout: 1m

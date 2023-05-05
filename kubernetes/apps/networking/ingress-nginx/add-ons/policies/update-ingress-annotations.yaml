@@ -40,19 +40,6 @@ spec:
             annotations:
               +(nginx.ingress.kubernetes.io/force-ssl-redirect): "true"
 
-    - name: internal
-      match:
-        any:
-          - resources:
-              kinds: ["Ingress"]
-              annotations:
-                ingress.home.arpa/type: "internal"
-      mutate:
-        patchStrategicMerge:
-          metadata:
-            annotations:
-              +(nginx.ingress.kubernetes.io/whitelist-source-range): "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
-
     - name: external
       match:
         any:
