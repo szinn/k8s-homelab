@@ -27,6 +27,19 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    initContainers:
+      01-init-geoip:
+        image: ghcr.io/maxmind/geoipupdate:v5.1.0
+        imagePullPolicy: IfNotPresent
+        env:
+          - { name: GEOIPUPDATE_EDITION_IDS, value: GeoLite2-City }
+          - { name: GEOIPUPDATE_FREQUENCY, value: "0" }
+          - { name: GEOIPUPDATE_VERBOSE, value: "true" }
+        envFrom:
+          - secretRef:
+              name: vector-aggregator-secret
+        volumeMounts:
+          - { name: geoip, mountPath: /usr/share/GeoIP }
     controller:
       replicas: 2
       strategy: RollingUpdate
@@ -76,7 +89,8 @@ spec:
         mountPath: /vector-data-dir
       geoip:
         enabled: true
-        existingClaim: vector-geoipupdate-config
+        type: emptyDir
+        mountPath: /usr/share/GeoIP
     topologySpreadConstraints:
       - maxSkew: 1
         topologyKey: kubernetes.io/hostname
