@@ -33,11 +33,34 @@ spec:
     kind: GitRepository
     name: homelab-kubernetes
   dependsOn:
+    - name: monitoring-vector-geoipupdate
     - name: security-external-secrets-stores
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
       name: vector-aggregator
+      namespace: monitoring
+  prune: true
+  wait: true
+  interval: 30m
+  retryInterval: 2m
+  timeout: 1m
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: monitoring-vector-geoipupdate
+  namespace: flux-system
+spec:
+  path: ./kubernetes/apps/monitoring/vector/geoipupdate
+  sourceRef:
+    kind: GitRepository
+    name: homelab-kubernetes
+  healthChecks:
+    - apiVersion: batch/v1
+      kind: CronJob
+      name: vector-geoipupdate
       namespace: monitoring
   prune: true
   wait: true

@@ -4,7 +4,6 @@ kind: Kustomization
 namespace: monitoring
 resources:
   - rbac.yaml
-  - vector-aggregator-secrets.yaml
   - helm-release.yaml
 configMapGenerator:
   - name: vector-aggregator-configmap
