@@ -174,7 +174,7 @@ sinks:
     remove_label_fields: true
     remove_timestamp: true
     labels:
-      node: 'vyos-firewall'
+      node: 'gateway-firewall'
   vyos:
     inputs: ["vyos_logs"]
     type: loki
@@ -185,4 +185,4 @@ sinks:
     remove_label_fields: true
     remove_timestamp: true
     labels:
-      node: 'vyos'
+      node: 'gateway'
