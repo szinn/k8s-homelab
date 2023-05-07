@@ -68,7 +68,7 @@
           "datasource": {
             "type": "loki"
           },
-          "expr": "sum(\n  count_over_time(\n    {node=\"vyos\"} \n    | json\n    | message_RULE_from_zone = \"wan\"\n    | message_RULE_to_zone = \"local\"\n    | message_RULE_action = \"D\"\n    | geoip_country_code != \"\"\n    [$__interval]\n  )\n) by (geoip_country_code)",
+          "expr": "sum(\n  count_over_time(\n    {node=\"vyos-firewall\"} \n    | json\n    | message_RULE_from_zone = \"wan\"\n    | message_RULE_to_zone = \"local\"\n    | message_RULE_action = \"D\"\n    | geoip_country_code != \"\"\n    [$__interval]\n  )\n) by (geoip_country_code)",
           "instant": false,
           "legendFormat": "{{geoip_country_code}}",
           "range": true,
@@ -133,7 +133,7 @@
           "datasource": {
             "type": "loki"
           },
-          "expr": "topk(\n  10,\n  sum by (message_DPT) (\n    count_over_time\n    (\n      {node=\"vyos\"} \n        | json\n        | message_DPT != \"\"\n        | message_RULE_from_zone = \"wan\"\n        | message_RULE_to_zone = \"local\"\n        | message_RULE_action = \"D\"\n        [$__range]\n    )\n  )\n)",
+          "expr": "topk(\n  10,\n  sum by (message_DPT) (\n    count_over_time\n    (\n      {node=\"vyos-firewall\"} \n        | json\n        | message_DPT != \"\"\n        | message_RULE_from_zone = \"wan\"\n        | message_RULE_to_zone = \"local\"\n        | message_RULE_action = \"D\"\n        [$__range]\n    )\n  )\n)",
           "instant": true,
           "legendFormat": "",
           "range": false,

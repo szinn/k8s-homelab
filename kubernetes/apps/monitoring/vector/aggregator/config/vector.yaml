@@ -164,8 +164,19 @@ sinks:
       talos_service: '{{ "talos-service" }}'
       cluster: "${CONFIG_CLUSTER_NAME}"
       namespace: "talos:service"
-  vyos:
+  vyos_firewall:
     inputs: ["vyos_firewall_geoip_remap"]
+    type: loki
+    endpoint: http://loki-gateway:80
+    encoding:
+      codec: json
+    out_of_order_action: accept
+    remove_label_fields: true
+    remove_timestamp: true
+    labels:
+      node: 'vyos-firewall'
+  vyos:
+    inputs: ["vyos_logs"]
     type: loki
     endpoint: http://loki-gateway:80
     encoding:
