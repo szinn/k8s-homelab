@@ -54,7 +54,7 @@ spec:
       main:
         type: LoadBalancer
         annotations:
-          coredns.io/hostname: vector.${SECRET_DOMAIN_NAME}
+          external-dns.alpha.kubernetes.io/hostname: vector.${SECRET_DOMAIN_NAME}
         externalIPs: ["${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}"]
         loadBalancerIP: "${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}"
         externalTrafficPolicy: Local
