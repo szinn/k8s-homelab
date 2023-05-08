@@ -3,15 +3,14 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: wildcard-certificate
+  name: tech-wildcard-certificate
   namespace: networking
 spec:
-  secretName: wildcard-tls
+  secretName: tech-wildcard-tls
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
-  commonName: "${SECRET_DOMAIN_NAME}"
+  commonName: "${SECRET_TECH_DOMAIN_NAME}"
   dnsNames:
-    - "${SECRET_MAIN_DOMAIN_NAME}"
-    - "*.${SECRET_MAIN_DOMAIN_NAME}"
-    - "*.${SECRET_STAGING_DOMAIN_NAME}"
+    - "${SECRET_TECH_DOMAIN_NAME}"
+    - "*.${SECRET_TECH_DOMAIN_NAME}"
