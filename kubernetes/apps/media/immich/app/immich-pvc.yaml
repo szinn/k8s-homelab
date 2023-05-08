@@ -16,8 +16,8 @@ spec:
     path: /mnt/atlas/media/Immich
   # Note: The first two options are strictly for NFSv4.2
   mountOptions:
-    - nfsvers=4
-    - tcp
+    - nfsvers=4.2
+    - nconnect=8
     - hard
     - noatime
     - nodiratime

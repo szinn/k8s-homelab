@@ -15,8 +15,8 @@ spec:
     server: ${SECRET_ATLAS_NFS_SERVER}
     path: "${SECRET_ATLAS_NFS_ROOTDIR}/backup/media"
   mountOptions:
-    - nfsvers=4
-    - tcp
+    - nfsvers=4.2
+    - nconnect=8
     - hard
     - noatime
     - nodiratime
