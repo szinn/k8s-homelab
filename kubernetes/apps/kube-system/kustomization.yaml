@@ -4,5 +4,6 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - cilium/install.yaml
+  - kubelet-csr-approver/install.yaml
   - metrics-server/install.yaml
   - snapshot-controller/install.yaml
