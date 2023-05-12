@@ -1,31 +1,31 @@
 {
-  packageRules: [
+  "packageRules": [
     {
-      description: "Auto merge container digests",
-      matchDatasources: ["docker"],
-      automerge: true,
-      automergeType: "branch",
-      ignoreTests: true,
-      matchUpdateTypes: ["digest"],
-      matchPackagePattern: [
+      "description": "Auto merge container digests",
+      "matchDatasources": ["docker"],
+      "automerge": true,
+      "automergeType": "branch",
+      "ignoreTests": true,
+      "matchUpdateTypes": ["digest"],
+      "matchPackagePattern": [
         "ghcr.io/szinn",
         "ghcr.io/onedr0p",
-        "ghcr.io/bjw-s",
-      ],
+        "ghcr.io/bjw-s"
+      ]
     },
     {
-      matchDatasources: [
+      "matchDatasources": [
         "docker",
         "github-actions",
         "github-releases",
         "github-tags",
-        "helm",
+        "helm"
       ],
-      automerge: true,
-      automergeType: "branch",
-      requiredStatusChecks: null,
-      matchUpdateTypes: ["minor", "patch"],
-      matchPackageNames: [
+      "automerge": true,
+      "automergeType": "branch",
+      "requiredStatusChecks": null,
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchPackageNames": [
         "ghcr.io/szinn/sonarr",
 
         "ghcr.io/onedr0p/jackett",
@@ -37,8 +37,8 @@
         "ghcr.io/onedr0p/sabnzbd",
         "ghcr.io/onedr0p/sonarr",
 
-        "renovatebot/github-action",
-      ],
-    },
-  ],
+        "renovatebot/github-action"
+      ]
+    }
+  ]
 }
