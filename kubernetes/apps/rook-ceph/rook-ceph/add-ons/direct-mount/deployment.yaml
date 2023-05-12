@@ -9,7 +9,7 @@ metadata:
   annotations:
     kyverno.io/ignore: "true"
 spec:
-  replicas: 1
+  replicas: 0
   selector:
     matchLabels:
       app: rook-direct-mount
