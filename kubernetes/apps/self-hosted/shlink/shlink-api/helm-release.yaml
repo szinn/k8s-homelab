@@ -29,43 +29,20 @@ spec:
   values:
     initContainers:
       init-db:
-        image: ghcr.io/onedr0p/postgres-initdb:14.8
-        env:
-          - name: POSTGRES_HOST
-            value: postgres-rw.dbms.svc.cluster.local
-          - name: POSTGRES_DB
-            value: shlink
-          - name: POSTGRES_SUPER_USER
-            valueFrom:
-              secretKeyRef:
-                name: shlink
-                key: POSTGRES_SUPER_USER
-          - name: POSTGRES_SUPER_PASS
-            valueFrom:
-              secretKeyRef:
-                name: shlink
-                key: POSTGRES_SUPER_PASS
-          - name: POSTGRES_USER
-            valueFrom:
-              secretKeyRef:
-                name: shlink
-                key: DB_USER
-          - name: POSTGRES_PASS
-            valueFrom:
-              secretKeyRef:
-                name: shlink
-                key: DB_PASSWORD
+        image: ghcr.io/onedr0p/postgres-init:14.8
+        imagePullPolicy: IfNotPresent
+        envFrom:
+          - secretRef:
+              name: shlink-secret
     controller:
       replicas: 1
       annotations:
-        secret.reloader.stakater.com/reload: shlink
+        secret.reloader.stakater.com/reload: shlink-secret
     image:
       repository: ghcr.io/shlinkio/shlink
       tag: 3.5.4
     env:
       DB_DRIVER: postgres
-      DB_HOST: postgres-rw.dbms.svc.cluster.local
-      DB_NAME: shlink
       DEFAULT_DOMAIN: &host "ln.${SECRET_DOMAIN_NAME}"
       DISABLE_TRACKING_FROM: 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
       ENABLE_PERIODIC_VISIT_LOCATE: "true"
@@ -80,7 +57,7 @@ spec:
       TIMEZONE: "${CONFIG_TIMEZONE}"
     envFrom:
       - secretRef:
-          name: shlink
+          name: shlink-secret
     service:
       main:
         ports:
