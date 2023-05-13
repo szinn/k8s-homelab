@@ -13,11 +13,6 @@ spec:
   dependsOn:
     - name: rook-ceph-cluster
     - name: system-volsync
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
-      name: changedetection
-      namespace: self-hosted
   prune: true
   wait: true
   interval: 30m

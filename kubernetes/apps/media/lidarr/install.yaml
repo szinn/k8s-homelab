@@ -14,11 +14,6 @@ spec:
     - name: security-external-secrets-stores
     - name: rook-ceph-cluster
     - name: system-volsync
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
-      name: lidarr
-      namespace: media
   prune: true
   wait: true
   interval: 30m
@@ -38,11 +33,6 @@ spec:
     name: homelab-kubernetes
   dependsOn:
     - name: media-lidarr
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
-      name: lidarr-exporter
-      namespace: media
   prune: true
   wait: true
   interval: 30m

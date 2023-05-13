@@ -12,11 +12,6 @@ spec:
     name: homelab-kubernetes
   dependsOn:
     - name: security-external-secrets-stores
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
-      name: external-dns-cloudflare
-      namespace: networking
   prune: true
   wait: true
   interval: 30m
@@ -38,11 +33,6 @@ spec:
     name: homelab-kubernetes
   dependsOn:
     - name: security-external-secrets-stores
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
-      name: external-dns-bind
-      namespace: networking
   prune: true
   wait: true
   interval: 10m

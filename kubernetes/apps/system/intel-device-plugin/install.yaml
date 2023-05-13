@@ -12,11 +12,6 @@ spec:
     name: homelab-kubernetes
   dependsOn:
     - name: system-node-feature-discovery
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
-      name: intel-device-plugin-operator
-      namespace: system
   prune: true
   wait: true
   interval: 15m
@@ -37,11 +32,6 @@ spec:
   dependsOn:
     - name: system-intel-device-plugin-operator
     - name: system-node-feature-discovery
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
-      name: intel-device-plugin-gpu
-      namespace: system
   prune: true
   wait: true
   interval: 15m
@@ -61,11 +51,6 @@ spec:
     name: homelab-kubernetes
   dependsOn:
     - name: system-intel-device-plugin-gpu
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
-      name: intel-gpu-exporter
-      namespace: kube-system
   prune: true
   wait: true
   interval: 15m

@@ -14,11 +14,6 @@ spec:
     - name: rook-ceph-cluster
     - name: security-external-secrets-stores
     - name: system-volsync
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
-      name: radarr
-      namespace: media
   prune: true
   wait: true
   interval: 30m
@@ -38,11 +33,6 @@ spec:
     name: homelab-kubernetes
   dependsOn:
     - name: media-radarr-4k
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
-      name: radarr-4k-exporter
-      namespace: media
   prune: true
   wait: true
   interval: 30m

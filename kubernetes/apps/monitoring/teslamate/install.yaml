@@ -13,11 +13,6 @@ spec:
   dependsOn:
     - name: dbms-cloudnative-pg
     - name: security-external-secrets-stores
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
-      name: teslamate
-      namespace: monitoring
   prune: true
   wait: true
   interval: 30m

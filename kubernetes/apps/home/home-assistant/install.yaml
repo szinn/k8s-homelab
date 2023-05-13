@@ -14,11 +14,6 @@ spec:
     - name: dbms-cloudnative-pg
     - name: security-external-secrets-stores
     - name: system-volsync
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
-      name: home-assistant
-      namespace: home
   prune: true
   wait: true
   interval: 30m
