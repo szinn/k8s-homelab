@@ -6,7 +6,7 @@ resources:
   - authelia-secrets.yaml
   - helm-release.yaml
 configMapGenerator:
-  - name: authelia
+  - name: authelia-configmap
     files:
       - config/configuration.yaml
 generatorOptions:
