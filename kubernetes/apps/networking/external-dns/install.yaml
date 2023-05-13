@@ -15,8 +15,8 @@ spec:
   prune: true
   wait: true
   interval: 30m
-  retryInterval: 2m
-  timeout: 1m
+  retryInterval: 1m
+  timeout: 5m
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -35,6 +35,6 @@ spec:
     - name: security-external-secrets-stores
   prune: true
   wait: true
-  interval: 10m
+  interval: 30m
   retryInterval: 1m
-  timeout: 3m
+  timeout: 5m

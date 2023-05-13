@@ -12,6 +12,6 @@ spec:
     name: homelab-kubernetes
   prune: true
   wait: true
-  interval: 15m
+  interval: 30m
   retryInterval: 1m
-  timeout: 3m
+  timeout: 5m
