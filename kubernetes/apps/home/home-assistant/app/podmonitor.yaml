@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/monitoring.coreos.com/prometheusrule_v1.json
+# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/monitoring.coreos.com/podmonitor_v1.json
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
@@ -12,7 +12,7 @@ spec:
       port: http
       scrapeTimeout: 30s
       bearerTokenSecret:
-        name: *app
+        name: home-assistant-secret
         key: HASS_BEARER_TOKEN
   selector:
     matchLabels:
