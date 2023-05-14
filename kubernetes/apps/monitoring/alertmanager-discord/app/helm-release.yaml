@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: &app alertmanager-discord
+  name: alertmanager-discord
   namespace: monitoring
 spec:
   interval: 15m
@@ -30,7 +30,7 @@ spec:
   values:
     controller:
       annotations:
-        secret.reloader.stakater.com/reload: *app
+        reloader.stakater.com/auto: "true"
     image:
       repository: docker.io/rogerrum/alertmanager-discord
       tag: 1.0.4
@@ -39,7 +39,7 @@ spec:
       VERBOSE: ON
     envFrom:
       - secretRef:
-          name: *app
+          name: alertmanager-discord-secret
     service:
       main:
         ports:
