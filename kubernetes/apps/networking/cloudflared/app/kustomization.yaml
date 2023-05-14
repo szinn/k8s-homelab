@@ -4,6 +4,6 @@ kind: Kustomization
 namespace: networking
 resources:
   - config.yaml
-  - tunnel-endpoint.yaml
-  - tunnel-secrets.yaml
+  - cloudflared-tunnel.yaml
+  - cloudflared-secrets.yaml
   - helm-release.yaml

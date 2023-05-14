@@ -33,7 +33,7 @@ spec:
       TUNNEL_ID:
         valueFrom:
           secretKeyRef:
-            name: cloudflared-secrets
+            name: cloudflared-secret
             key: TunnelID
     args:
       - tunnel
@@ -98,7 +98,7 @@ spec:
       creds:
         enabled: true
         type: secret
-        name: cloudflared-secrets
+        name: cloudflared-secret
         subPath: credentials.json
         mountPath: /etc/cloudflared/creds/credentials.json
         readOnly: true
