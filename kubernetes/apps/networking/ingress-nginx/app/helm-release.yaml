@@ -80,7 +80,7 @@ spec:
             matchLabels:
               app.kubernetes.io/name: ingress-nginx
               app.kubernetes.io/component: controller
-      podAnnotations:
+      annotations:
         configmap.reloader.stakater.com/reload: "ingress-nginx-controller"
       resources:
         requests:

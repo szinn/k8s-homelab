@@ -39,7 +39,6 @@ spec:
       type: Recreate
     annotations:
       reloader.stakater.com/auto: "true"
-      configmap.reloader.stakater.com/reload: grafana
     rbac:
       pspEnabled: false
     persistence:

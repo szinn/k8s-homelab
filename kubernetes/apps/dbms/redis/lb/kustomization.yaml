@@ -6,7 +6,7 @@ resources:
   - helm-release.yaml
   - prometheus-rules.yaml
 configMapGenerator:
-  - name: redis-haproxy-config
+  - name: redis-lb-configmap
     files:
       - haproxy.cfg=haproxy.data
 generatorOptions:

@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: &app external-dns-cloudflare
+  name: external-dns-cloudflare
   namespace: networking
 spec:
   interval: 15m
@@ -30,7 +30,7 @@ spec:
   values:
     fullnameOverride: external-dns-cloudflare
     deploymentAnnotations:
-      secret.reloader.stakater.com/reload: external-dns-cloudflare-secret
+      reloader.stakater.com/auto: "true"
     logLevel: debug
     provider: cloudflare
     env:

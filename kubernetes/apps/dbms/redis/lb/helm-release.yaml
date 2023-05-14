@@ -35,7 +35,7 @@ spec:
         unavailable: 2
         surge: 0
       annotations:
-        configmap.reloader.stakater.com/reload: redis-haproxy-config
+        reloader.stakater.com/auto: "true"
     image:
       repository: public.ecr.aws/docker/library/haproxy
       tag: "2.7.8"
@@ -77,7 +77,7 @@ spec:
       config:
         enabled: true
         type: configMap
-        name: redis-haproxy-config
+        name: redis-lb-configmap
         mountPath: /usr/local/etc/haproxy/haproxy.cfg
         subPath: haproxy.cfg
         readOnly: true
