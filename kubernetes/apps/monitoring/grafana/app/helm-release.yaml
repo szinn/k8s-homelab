@@ -46,7 +46,7 @@ spec:
     testFramework:
       enabled: false
     admin:
-      existingSecret: grafana-secrets
+      existingSecret: grafana-secret
       userKey: adminUser
       passwordKey: adminPassword
     env:
@@ -66,7 +66,7 @@ spec:
       GF_DATE_FORMATS_FULL_DATE: "MMM Do, YYYY hh:mm:ss a"
       GF_SERVER_ROOT_URL: https://grafana.${SECRET_DOMAIN_NAME}
     envFromSecrets:
-      - name: grafana-secrets
+      - name: grafana-secret
     grafana.ini:
       # default:
       #   force_migration: true
