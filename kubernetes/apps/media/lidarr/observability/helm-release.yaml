@@ -30,7 +30,7 @@ spec:
   values:
     controller:
       annotations:
-        secret.reloader.stakater.com/reload: lidarr
+        secret.reloader.stakater.com/reload: lidarr-secret
     image:
       repository: ghcr.io/onedr0p/exportarr
       tag: v1.3.2
@@ -43,7 +43,7 @@ spec:
       APIKEY:
         valueFrom:
           secretKeyRef:
-            name: lidarr
+            name: lidarr-secret
             key: LIDARR_API_KEY
     args: ["lidarr"]
     service:

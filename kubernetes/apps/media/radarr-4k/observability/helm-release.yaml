@@ -30,7 +30,7 @@ spec:
   values:
     controller:
       annotations:
-        secret.reloader.stakater.com/reload: radarr-4k
+        secret.reloader.stakater.com/reload: radarr-4k-secret
     image:
       repository: ghcr.io/onedr0p/exportarr
       tag: v1.3.2
@@ -43,7 +43,7 @@ spec:
       APIKEY:
         valueFrom:
           secretKeyRef:
-            name: radarr-4k
+            name: radarr-4k-secret
             key: RADARR__API_KEY
     args: ["radarr"]
     service:

@@ -30,7 +30,7 @@ spec:
   values:
     controller:
       annotations:
-        secret.reloader.stakater.com/reload: sonarr
+        secret.reloader.stakater.com/reload: sonarr-secret
     image:
       repository: ghcr.io/onedr0p/exportarr
       tag: v1.3.2
@@ -43,7 +43,7 @@ spec:
       APIKEY:
         valueFrom:
           secretKeyRef:
-            name: sonarr
+            name: sonarr-secret
             key: SONARR__API_KEY
     args: ["sonarr"]
     service:
