@@ -9,9 +9,9 @@ metadata:
     app.kubernetes.io/instance: *app
   annotations:
     external-dns.alpha.kubernetes.io/hostname: postgres.${SECRET_DOMAIN_NAME}
+    io.cilium/lb-ipam-ips: ${CONFIG_SVC_POSTGRES_ADDR}
 spec:
   type: LoadBalancer
-  loadBalancerIP: "${CONFIG_SVC_POSTGRES_ADDR}"
   ports:
     - name: postgres
       port: 5432

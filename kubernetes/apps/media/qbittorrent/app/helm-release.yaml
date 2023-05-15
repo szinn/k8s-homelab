@@ -47,8 +47,8 @@ spec:
       bittorrent:
         enabled: true
         type: LoadBalancer
-        loadBalancerIP: "${CONFIG_SVC_QBITTORRENT_ADDR}"
         annotations:
+          io.cilium/lb-ipam-ips: ${CONFIG_SVC_QBITTORRENT_ADDR}
           prometheus.io/probe: "true"
           prometheus.io/protocol: tcp
         ports:
