@@ -12,6 +12,7 @@ metadata:
     io.cilium/lb-ipam-ips: ${CONFIG_SVC_POSTGRES_ADDR}
 spec:
   type: LoadBalancer
+  loadBalancerIP: ${CONFIG_SVC_POSTGRES_ADDR}
   ports:
     - name: postgres
       port: 5432

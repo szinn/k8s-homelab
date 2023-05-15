@@ -53,6 +53,7 @@ spec:
     service:
       main:
         type: LoadBalancer
+        loadBalancerIP: ${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}
         annotations:
           io.cilium/lb-ipam-ips: ${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}
           external-dns.alpha.kubernetes.io/hostname: vector.${SECRET_DOMAIN_NAME}
