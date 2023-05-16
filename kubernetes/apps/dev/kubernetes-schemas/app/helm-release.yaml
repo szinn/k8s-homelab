@@ -32,7 +32,7 @@ spec:
       strategy: RollingUpdate
     image:
       repository: ghcr.io/szinn/kubernetes-schemas-web
-      tag: latest@sha256:5b917bdd009ec3bff65b074b009dd0ec365ecb4d28195b7c1c6998adebbeaefe
+      tag: latest@sha256:b509ec6932f06658c83c1c384cfbff8107868bba600f1b438166aeb838b6b086
     service:
       main:
         ports:
