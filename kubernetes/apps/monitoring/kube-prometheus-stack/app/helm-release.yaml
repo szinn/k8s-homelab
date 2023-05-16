@@ -233,7 +233,7 @@ spec:
                   - "ragnar.${SECRET_TECH_DOMAIN_NAME}:9100"
                   - "gateway.${SECRET_TECH_DOMAIN_NAME}:9100"
           - job_name: speedtest-exporter
-            scrape_interval: 720m
+            scrape_interval: 240m
             scrape_timeout: 120s
             honor_timestamps: true
             static_configs:
