@@ -1,13 +1,15 @@
 ---
+autoDirectNodeRoutes: true
+
 cluster:
   name: "${CONFIG_CLUSTER_NAME}"
   id: "1"
 
-autoDirectNodeRoutes: true
 bgp:
+  enabled: false
   announce:
     loadbalancerIP: true
-  enabled: false
+    podCIDR: false
 
 securityContext:
   privileged: true
@@ -17,32 +19,39 @@ securityContext:
 cgroup:
   autoMount:
     enabled: false
-  hostRoot: "/sys/fs/cgroup"
+  hostRoot: /sys/fs/cgroup
 
 containerRuntime:
   integration: containerd
 
-ipam:
-  mode: "kubernetes"
+endpointRoutes:
+  enabled: true
 
-kubeProxyReplacement: "strict"
+ipam:
+  mode: kubernetes
+
+kubeProxyReplacement: strict
+kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
 k8sServiceHost: ${CONFIG_K8S_CLUSTER_ENDPOINT_IP}
 k8sServicePort: 6443
-ipv4NativeRoutingCIDR: "${CONFIG_K8S_POD_CIDR}"
+ipv4NativeRoutingCIDR: ${CONFIG_K8S_POD_CIDR}
 
 loadBalancer:
-  algorithm: maglev
-  mode: dsr
-localRedirectPolicy: true
+  algorithm: random
+  mode: snat
+
+localRedirectPolicy: false
+
 operator:
+  enabled: true
   rollOutPods: true
+
 rollOutCiliumPods: true
+
 tunnel: disabled
 
 hubble:
   enabled: true
-  serviceMonitor:
-    enabled: true
   metrics:
     enabled:
       - dns:query;ignoreAAAA
@@ -59,10 +68,4 @@ hubble:
     enabled: true
     rollOutPods: true
     ingress:
-      enabled: true
-      annotations:
-        kubernetes.io/ingress.class: "nginx"
-        ingress.home.arpa/type: "internal"
-        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-      hosts:
-        - "hubble.${MAIN_DOMAIN_NAME}"
+      enabled: false

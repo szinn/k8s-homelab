@@ -32,84 +32,46 @@ spec:
       remediateLastFailure: true
   uninstall:
     keepHistory: false
-  values:
-    cluster:
-      name: "${CONFIG_CLUSTER_NAME}"
-      id: "1"
 
-    autoDirectNodeRoutes: true
+  valuesFrom:
+    - kind: ConfigMap
+      name: cilium-values
+
+  values:
+    bgpControlPlane:
+      enabled: false
     bgp:
+      enabled: true
       announce:
         loadbalancerIP: true
-      enabled: true
-
-    securityContext:
-      privileged: true
-      capabilities:
-        ciliumAgent: "{CHOWN,KILL,NET_ADMIN,NET_RAW,IPC_LOCK,SYS_ADMIN,SYS_RESOURCE,DAC_OVERRIDE,FOWNER,SETGID,SETUID}"
-        cleanCiliumState: "{NET_ADMIN,SYS_ADMIN,SYS_RESOURCE}"
-    cgroup:
-      autoMount:
-        enabled: false
-      hostRoot: "/sys/fs/cgroup"
-
-    containerRuntime:
-      integration: containerd
-
-    endpointRoutes:
-      enabled: true
-
-    ipam:
-      mode: "kubernetes"
-
-    kubeProxyReplacement: "strict"
-    kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
-    k8sServiceHost: "${CONFIG_CLUSTER_NAME}.${SECRET_TECH_DOMAIN_NAME}"
-    k8sServicePort: 6443
-    ipv4NativeRoutingCIDR: "${CONFIG_K8S_POD_CIDR}"
-
-    loadBalancer:
-      algorithm: maglev
-      mode: dsr
-    localRedirectPolicy: true
-    operator:
-      rollOutPods: true
-      prometheus:
-        enabled: true
-        serviceMonitor:
-          enabled: true
-    rollOutCiliumPods: true
-    tunnel: disabled
-
-    prometheus:
-      enabled: true
-      serviceMonitor:
-        enabled: true
+        podCIDR: false
 
     hubble:
-      enabled: true
       metrics:
         serviceMonitor:
           enabled: true
-        enabled:
-          - dns:query;ignoreAAAA
-          - drop
-          - tcp
-          - flow
-          - port-distribution
-          - icmp
-          - http
+
       relay:
-        enabled: true
-        rollOutPods: true
+        prometheus:
+          serviceMonitor:
+            enabled: true
+
       ui:
-        enabled: true
-        rollOutPods: true
         ingress:
           enabled: true
           annotations:
             kubernetes.io/ingress.class: "nginx"
             ingress.home.arpa/type: "internal"
             nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+            nginx.ingress.kubernetes.io/whitelist-source-range: 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
           hosts:
             - "hubble.${SECRET_DOMAIN_NAME}"
+
+    prometheus:
+      serviceMonitor:
+        enabled: true
+
+    operator:
+      prometheus:
+        serviceMonitor:
+          enabled: true
