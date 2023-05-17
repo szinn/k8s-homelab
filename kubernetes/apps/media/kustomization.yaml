@@ -11,6 +11,7 @@ resources:
   - openbooks/install.yaml
   - overseerr/install.yaml
   - plex/install.yaml
+  - plex-meta-manager/install.yaml
   - prowlarr/install.yaml
   - qbittorrent/install.yaml
   - radarr/install.yaml
