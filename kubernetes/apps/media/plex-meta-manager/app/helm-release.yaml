@@ -35,6 +35,7 @@ spec:
           - -c
           - |
             mkdir -p /config/assets
+            mkdir -p /config/missing
             exit 0
         volumeMounts:
           - name: config
@@ -70,6 +71,7 @@ spec:
         name: plex-meta-manager-secret
         subPath: config.yaml
         mountPath: /config/config.yaml
+        readOnly: false
       media:
         enabled: true
         existingClaim: media-datastore

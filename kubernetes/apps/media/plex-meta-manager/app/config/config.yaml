@@ -11,15 +11,16 @@ libraries:
       # - git: meisnate12/Studios
       # - git: meisnate12/MovieCharts
   TV Shows:
+    report_path: config/missing/TV_missing.yml
     metadata_path:
       - file: config/TV.yaml
       # - git: meisnate12/ShowCharts
       # - git: meisnate12/Networks
 
 playlist_files:
-- pmm: playlist
-  template_variables:
-    libraries: Movies, TV Shows
+  - pmm: playlist
+    template_variables:
+      libraries: Movies, TV Shows
     
 settings:
   cache: true
@@ -103,3 +104,15 @@ sonarr:
   search: false
   cutoff_search: false
   add_existing: false
+
+trakt:
+  client_id: {{ .trakt_CLIENT_ID }}
+  client_secret: {{ .trakt_CLIENT_SECRET }}
+  pin:
+  authorization:
+    access_token: {{ .trakt_ACCESS_TOKEN }}
+    token_type: Bearer
+    expires_in: {{ .trakt_EXPIRES_IN }}
+    refresh_token: {{ .trakt_REFRESH_TOKEN }}
+    scope: public
+    created_at: {{ .trakt_CREATED_AT }}
