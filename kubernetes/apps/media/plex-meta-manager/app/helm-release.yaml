@@ -35,7 +35,6 @@ spec:
           - -c
           - |
             mkdir -p /config/assets
-            mkdir -p /config/missing
             exit 0
         volumeMounts:
           - name: config

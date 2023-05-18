@@ -1,9 +1,19 @@
 libraries:
   Movies:
-    report_path: config/missing/Movies_missing.yml
     metadata_path:
       # - file: config/Movies.yaml
       - pmm: universe
+        template_variables:
+          use_separator: false
+          sep_style: gray
+          collection_order: custom
+          radarr_add_missing: true
+          exclude:
+            - arrow
+            - mummy
+            - rocky
+            - askew
+            - xmen
       # - git: meisnate12/Playlists
       # - git: Speedmod/Movies/Collections
       # - git: Speedmod/Movies/Holiday
@@ -11,7 +21,6 @@ libraries:
       # - git: meisnate12/Studios
       # - git: meisnate12/MovieCharts
   TV Shows:
-    report_path: config/missing/TV_missing.yml
     # metadata_path:
       # - file: config/TV.yaml
       # - git: meisnate12/ShowCharts
