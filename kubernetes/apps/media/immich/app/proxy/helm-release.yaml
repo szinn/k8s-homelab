@@ -37,7 +37,7 @@ spec:
         configmap.reloader.stakater.com/reload: immich-configmap
     image:
       repository: ghcr.io/immich-app/immich-proxy
-      tag: v1.55.1
+      tag: v1.56.0
     envFrom:
       - secretRef:
           name: immich-secret
