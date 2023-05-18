@@ -2,7 +2,7 @@ libraries:
   Movies:
     report_path: config/missing/Movies_missing.yml
     metadata_path:
-      - file: config/Movies.yaml
+      # - file: config/Movies.yaml
       - pmm: universe
       # - git: meisnate12/Playlists
       # - git: Speedmod/Movies/Collections
@@ -12,15 +12,15 @@ libraries:
       # - git: meisnate12/MovieCharts
   TV Shows:
     report_path: config/missing/TV_missing.yml
-    metadata_path:
-      - file: config/TV.yaml
+    # metadata_path:
+      # - file: config/TV.yaml
       # - git: meisnate12/ShowCharts
       # - git: meisnate12/Networks
 
-playlist_files:
-  - pmm: playlist
-    template_variables:
-      libraries: Movies, TV Shows
+# playlist_files:
+#   - pmm: playlist
+#     template_variables:
+#       libraries: Movies, TV Shows
     
 settings:
   cache: true

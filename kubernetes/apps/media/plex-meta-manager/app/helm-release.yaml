@@ -41,11 +41,9 @@ spec:
           - name: config
             mountPath: /config
     controller:
-      type: cronjob
+      type: statefulset
       annotations:
-        reloader.stakater.com/auto: "true"
-      cronjob:
-        schedule: 0 6 * * *
+        secret.reloader.stakater.com/reload: plex-meta-manager-secret
     image:
       repository: docker.io/meisnate12/plex-meta-manager
       tag: v1.19.0
@@ -56,8 +54,8 @@ spec:
       PMM_CONFIG: "/config/config.yaml"
       PMM_DEBUG: "true"
       PMM_READ_ONLY_CONFIG: "true"
-    command:
-      - /scripts/run.sh
+      # PMM_RUN: "true"
+      PMM_TIME: "06:00, 18:00"
     service:
       main:
         enabled: false
