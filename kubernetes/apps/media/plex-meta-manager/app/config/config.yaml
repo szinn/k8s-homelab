@@ -3,6 +3,8 @@ libraries:
     metadata_path:
       # - file: config/Movies.yaml
       - pmm: universe
+        filters:
+          genre: .not animation
         template_variables:
           use_separator: false
           sep_style: gray
@@ -10,6 +12,7 @@ libraries:
           radarr_add_missing: true
           exclude:
             - arrow
+            - dca
             - mummy
             - rocky
             - askew
