@@ -4,6 +4,7 @@ data_dir: /vector-data-dir
 sources:
   kubernetes_logs:
     type: kubernetes_logs
+    use_apiserver_cache: true
     pod_annotation_fields:
       container_image: container_image
       container_name: container_name
