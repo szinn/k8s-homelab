@@ -40,7 +40,7 @@ spec:
         secret.reloader.stakater.com/reload: shlink-secret
     image:
       repository: ghcr.io/shlinkio/shlink
-      tag: 3.5.4
+      tag: 3.6.0
     env:
       DB_DRIVER: postgres
       DEFAULT_DOMAIN: &host "ln.${SECRET_DOMAIN_NAME}"
