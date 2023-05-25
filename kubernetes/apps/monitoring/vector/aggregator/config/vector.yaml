@@ -126,7 +126,7 @@ sinks:
     remove_timestamp: true
     labels:
       app: '{{ custom_app_name }}'
-      container: '{{ kubernetes.container_name }}'
+      container: '{{ container_name }}'
       namespace: '{{ kubernetes.pod_namespace }}'
       node: '{{ kubernetes.pod_node_name }}'
       cluster: "${CONFIG_CLUSTER_NAME}"
