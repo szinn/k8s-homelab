@@ -6,7 +6,6 @@ metadata:
   name: loki
   namespace: monitoring
 spec:
-  interval: 15m
   chart:
     spec:
       chart: loki
@@ -16,6 +15,8 @@ spec:
         name: grafana-charts
         namespace: flux-system
       interval: 15m
+  interval: 30m
+  timeout: 20m
   maxHistory: 3
   install:
     createNamespace: true
