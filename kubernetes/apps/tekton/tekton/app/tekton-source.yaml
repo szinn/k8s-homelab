@@ -14,7 +14,7 @@ spec:
   ignore: |
     /*
     # tekton: depName=tektoncd/pipeline
-    !/pipeline/previous/v0.47.0/release.yaml
+    !/pipeline/previous/v0.48.0/release.yaml
     # tekton: depName=tektoncd/dashboard
     !/dashboard/previous/v0.35.0/release-full.yaml
     # tekton: depName=tektoncd/triggers
