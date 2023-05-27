@@ -30,7 +30,7 @@ jobs:
           fetch-depth: 0
 
       - name: MegaLinter
-        uses: oxsecurity/megalinter@93700f8c21c59ea784a32abe23896e49e54463b8 # v6.22.2
+        uses: oxsecurity/megalinter@e99bc276c361c2f68c4976a5f86f7421c2c4d606 # v7.0.2
         env:
           GITHUB_TOKEN: "${{ steps.generate-token.outputs.token }}"
           PRINT_ALPACA: false
