@@ -47,7 +47,6 @@ spec:
         type: LoadBalancer
         annotations:
           io.cilium/lb-ipam-ips: ${CONFIG_SVC_PLEX_ADDR}
-        externalTrafficPolicy: Local
         ports:
           http:
             port: 32400

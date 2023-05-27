@@ -39,12 +39,16 @@ spec:
 
   values:
     bgpControlPlane:
-      enabled: false
-    bgp:
       enabled: true
+    bgp:
+      enabled: false
       announce:
         loadbalancerIP: true
         podCIDR: false
+
+    loadBalancer:
+      algorithm: maglev
+      mode: dsr
 
     hubble:
       metrics:

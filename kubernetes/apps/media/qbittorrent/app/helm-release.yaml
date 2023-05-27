@@ -58,7 +58,6 @@ spec:
             port: *port-bt
             protocol: TCP
             targetPort: 6881
-        externalTrafficPolicy: Local
     ingress:
       main:
         enabled: true

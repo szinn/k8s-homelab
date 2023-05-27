@@ -37,7 +37,6 @@ spec:
         annotations:
           io.cilium/lb-ipam-ips: ${CONFIG_SVC_INGRESS_ADDR}
           external-dns.alpha.kubernetes.io/hostname: "ingress.${SECRET_DOMAIN_NAME}"
-        externalTrafficPolicy: Local
       publishService:
         enabled: true
       ingressClassResource:
