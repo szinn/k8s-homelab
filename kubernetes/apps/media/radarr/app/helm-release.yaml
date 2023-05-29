@@ -34,7 +34,7 @@ spec:
         reloader.stakater.com/auto: "true"
     image:
       repository: ghcr.io/onedr0p/radarr
-      tag: 4.4.4.7068
+      tag: 4.5.2.7388
     env:
       TZ: ${CONFIG_TIMEZONE}
       RADARR__LOG_LEVEL: info
