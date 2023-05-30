@@ -33,7 +33,6 @@ spec:
   dependsOn:
     - name: dbms-cloudnative-pg
     - name: security-external-secrets-stores
-    - name: kyverno
   prune: true
   wait: true
   interval: 30m
