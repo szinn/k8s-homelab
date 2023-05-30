@@ -4,7 +4,7 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - alertmanager-discord/install.yaml
-  - botkube/install.yaml
+  # - botkube/install.yaml
   - goldilocks/install.yaml
   - grafana/install.yaml
   - kube-prometheus-stack/install.yaml
