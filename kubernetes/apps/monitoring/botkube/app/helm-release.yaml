@@ -10,10 +10,10 @@ spec:
   chart:
     spec:
       chart: botkube
-      version: v0.12.4
+      version: v1.0.1
       sourceRef:
         kind: HelmRepository
-        name: infracloudio-charts
+        name: botkube-charts
         namespace: flux-system
       interval: 15m
   maxHistory: 3
@@ -31,207 +31,163 @@ spec:
     deployment:
       annotations:
         reloader.stakater.com/auto: "true"
-    image:
-      repository: docker.io/infracloudio/botkube
-      tag: v0.12.1
-      pullPolicy: Always
+    settings:
+      clusterName: ${CONFIG_CLUSTER_NAME}
+    analytics:
+      disable: true
+    communications:
+      default-group:
+        discord:
+          enabled: true
+          channels:
+            default:
+              notification:
+                disabled: false
+              bindings:
+                executors:
+                  - kubectl-read-only
+                sources:
+                  - k8s-recommendation-events
+                  - k8s-all-events
+                  # - crds
+                  # - k8s-all-events
+                  # - k8s-err-events
+                  # - k8s-err-with-logs-events
+          notification:
+            type: short
     serviceMonitor:
       enabled: true
-    communications:
-      slack:
+    executors:
+      kubectl-read-only:
+        botkube/kubectl:
+          enabled: true
+    actions:
+      'describe-created-resource':
         enabled: false
-        notiftype: short
-      discord:
+      'show-logs-on-error':
         enabled: true
-    config:
-      resources:
-        - name: v1/pods
-          namespaces:
-            include:
-              - all
-            ignore:
-              - kube-system
-          events:
-            - create
-            - delete
-        - name: v1/services
-          namespaces:
-            include:
-              - all
-          events:
-            - create
-            - delete
-            - error
-        - name: apps/v1/deployments
-          namespaces:
-            include:
-              - all
-          events:
-            - create
-            - update
-            - delete
-            - error
-          updateSetting:
-            includeDiff: true
-            fields:
-              - spec.template.spec.containers[*].image
-        - name: apps/v1/statefulsets
-          namespaces:
-            include:
-              - all
-          events:
-            - create
-            - update
-            - delete
-            - error
-          updateSetting:
-            includeDiff: true
-            fields:
-              - spec.template.spec.containers[*].image
-        - name: networking.k8s.io/v1beta1/ingresses
-          namespaces:
-            include:
-              - all
-          events:
-            - create
-            - delete
-            - error
-        - name: v1/nodes
-          namespaces:
-            include:
-              - all
-          events:
-            - create
-            - delete
-            - error
-        - name: v1/namespaces
-          namespaces:
-            include:
-              - all
-          events:
-            - create
-            - delete
-            - error
-        - name: v1/persistentvolumes
-          namespaces:
-            include:
-              - all
-          events:
-            - create
-            - delete
-            - error
-        - name: v1/persistentvolumeclaims
-          namespaces:
-            include:
-              - all
-          events:
-            - create
-            - delete
-            # - error
-        # - name: v1/secrets
-        #   namespaces:
-        #     include:
-        #       - all
-        #   events:
-        #     - create
-        #     - delete
-        #     - error
-        # - name: v1/configmaps
-        #   namespaces:
-        #     include:
-        #       - all
-        #   events:
-        #     - delete
-        #     - error
-        - name: apps/v1/daemonsets
-          namespaces:
-            include:
-              - all
-          events:
-            - create
-            - delete
-            - error
-            - update
-          updateSetting:
-            includeDiff: true
-            fields:
-              - spec.template.spec.containers[*].image
-        - name: batch/v1/jobs
-          namespaces:
-            include:
-              - all
-            ignore:
-              - kube-system
-          events:
-            - create
-            - update
-              - delete
-              - error
-          updateSetting:
-            includeDiff: true
-            fields:
-              - spec.template.spec.containers[*].image
-              - status.conditions[*].type
-        - name: rbac.authorization.k8s.io/v1/roles
-          namespaces:
-            include:
-              - all
-          events:
-            - create
-            - delete
-            - error
-        - name: rbac.authorization.k8s.io/v1/rolebindings
-          namespaces:
-            include:
-              - all
-          events:
-            - create
-            - delete
-            - error
-        - name: rbac.authorization.k8s.io/v1/clusterroles
-          namespaces:
-            include:
-              - all
-          events:
-            - create
-            - delete
-            - error
-        - name: rbac.authorization.k8s.io/v1/clusterrolebindings
-          namespaces:
-            include:
-              - all
-          events:
-            - create
-            - delete
-            - error
+    # sources:
+    #   crds:
+    #     displayName: CRDS
+    #     botkube/kubernetes:
+    #       context: &default-plugin-context
+    #         # -- RBAC configuration for this plugin.
+    #         rbac:
+    #           group:
+    #             # -- Static impersonation for a given username and groups.
+    #             type: Static
+    #             # -- Prefix that will be applied to .static.value[*].
+    #             prefix: ""
+    #             static:
+    #               # -- Name of group.rbac.authorization.k8s.io the plugin will be bound to.
+    #               values: [*static-group-name]
+    #           # user:
+    #             # type: Static
+    #             # -- Prefix that will be applied to .static.value[*].
+    #             # prefix: ""
+    #             # static:
+    #               # -- Name of user.rbac.authorization.k8s.io the plugin will be bound to.
+    #               # value: ""
+    #       enabled: true
+    #       namespaces:
+    #         include:
+    #           - all
+    #       events:
+    #         - create
+    #         - delete
+    #         - error
+    #       resources:
+    #         - name: helm.toolkit.fluxcd.io/v2beta1/helmreleases
+    #         - name: source.toolkit.fluxcd.io/v1beta2/helmcharts
+    #         - name: kustomize.toolkit.fluxcd.io/v1beta2/kustomizations
+    #         - name: notification.toolkit.fluxcd.io/v1beta1/alerts
+    #         - name: monitoring.coreos.com/v1/podmonitors
+    #         - name: monitoring.coreos.com/v1/servicemonitors
+    #   k8s-recommendation-events:
+    #     botkube/kubernetes:
+    #       context: &default-plugin-context
+    #         # -- RBAC configuration for this plugin.
+    #         rbac:
+    #           group:
+    #             # -- Static impersonation for a given username and groups.
+    #             type: Static
+    #             # -- Prefix that will be applied to .static.value[*].
+    #             prefix: ""
+    #             static:
+    #               # -- Name of group.rbac.authorization.k8s.io the plugin will be bound to.
+    #               values: [*static-group-name]
+    #           # user:
+    #             # type: Static
+    #             # -- Prefix that will be applied to .static.value[*].
+    #             # prefix: ""
+    #             # static:
+    #               # -- Name of user.rbac.authorization.k8s.io the plugin will be bound to.
+    #               # value: ""
+    #   k8s-all-events:
+    #     botkube/kubernetes:
+    #       context: &default-plugin-context
+    #       # event:
+    #       #   message:
+    #       #     include:
+    #       #       - ".*" # match all event messages...
+    #       #     exclude:
+    #       #       - ".*volsync.*" # ...except those containing 'volsync'
+    #       resources:
+    #         - type: v1/pods
+    #         - type: v1/services
+    #         - type: networking.k8s.io/v1/ingresses
+    #         - type: v1/nodes
+    #         - type: v1/namespaces
+    #         - type: v1/configmaps
+    #         - type: rbac.authorization.k8s.io/v1/roles
+    #         - type: rbac.authorization.k8s.io/v1/rolebindings
+    #         - type: rbac.authorization.k8s.io/v1/clusterrolebindings
+    #         - type: rbac.authorization.k8s.io/v1/clusterroles
+    #         - type: apps/v1/daemonsets
+    #         - type: apps/v1/deployments
+    #         - type: apps/v1/statefulsets
+    #   k8s-create-events:
+    #     botkube/kubernetes:
+    #       context: &default-plugin-context
+    #       resources:
+    #         - type: v1/pods
+    #         - type: v1/services
+    #         - type: networking.k8s.io/v1/ingresses
+    #         - type: v1/nodes
+    #         - type: v1/namespaces
+    #         - type: v1/configmaps
+    #         - type: apps/v1/deployments
+    #         - type: apps/v1/statefulsets
+    #         - type: apps/v1/daemonsets
+    #   k8s-err-events:
+    #     botkube/kubernetes:
+    #       context: &default-plugin-context
+    #       # event:
+    #       #   message:
+    #       #     include:
+    #       #       - ".*" # match all event messages...
+    #       #     exclude:
+    #       #       - ".*volsync.*" # ...except those containing 'volsync'
+
+    #   k8s-err-with-logs-events:
+    #     botkube/kubernetes:
+    #       context: &default-plugin-context
+    #       # event:
+    #       #   message:
+    #       #     include:
+    #       #       - ".*" # match all event messages...
+    #       #     exclude:
+    #       #       - ".*volsync.*" # ...except those containing 'volsync'
   valuesFrom:
-    - kind: Secret
-      name: botkube-secret
-      valuesKey: cluster-name
-      targetPath: config.settings.clustername
-      optional: false
-    - kind: Secret
-      name: botkube-secret
-      valuesKey: slack-token
-      targetPath: communications.slack.token
-      optional: false
-    - kind: Secret
-      name: botkube-secret
-      valuesKey: slack-channel
-      targetPath: communications.slack.channel
-      optional: false
-    - kind: Secret
-      name: botkube-secret
-      valuesKey: discord-channel
-      targetPath: communications.discord.channel
-      optional: false
-    - kind: Secret
-      name: botkube-secret
-      valuesKey: discord-bot-id
-      targetPath: communications.discord.botid
-      optional: false
-    - kind: Secret
+    - targetPath: communications.default-group.discord.token
+      kind: Secret
       name: botkube-secret
       valuesKey: discord-token
-      targetPath: communications.discord.token
-      optional: false
+    - targetPath: communications.default-group.discord.botID
+      kind: Secret
+      name: botkube-secret
+      valuesKey: discord-bot-id
+    - targetPath: communications.default-group.discord.channels.default.id
+      kind: Secret
+      name: botkube-secret
+      valuesKey: discord-channel

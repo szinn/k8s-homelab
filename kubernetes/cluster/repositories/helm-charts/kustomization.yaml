@@ -6,6 +6,7 @@ resources:
   - bitnami-charts.yaml
   - backube-charts.yaml
   - bjw-s-charts.yaml
+  - botkube-charts.yaml
   - cilium-charts.yaml
   - cloudnative-pg-charts.yaml
   - deliveryhero-charts.yaml
@@ -15,7 +16,6 @@ resources:
   - external-secrets-charts.yaml
   - fairwinds-charts.yaml
   - grafana-charts.yaml
-  - infracloudio-charts.yaml
   - ingress-nginx-charts.yaml
   - intel-charts.yaml
   - jetstack-charts.yaml
