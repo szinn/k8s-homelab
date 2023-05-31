@@ -12,8 +12,6 @@ metadata:
       and sets an explicit RFC1918 whitelist for any ingresses
       that are not not exposed to the internet.
 spec:
-  background: true
-  mutateExistingOnPolicyUpdate: true
   generateExistingOnPolicyUpdate: true
   validationFailureAction: enforce
   rules:
@@ -35,9 +33,6 @@ spec:
           - resources:
               kinds: ["Ingress"]
       mutate:
-        targets:
-          - kind: Ingress
-            namespace: "{{ request.object.metadata.namespace }}"
         patchStrategicMerge:
           metadata:
             annotations:
@@ -51,9 +46,6 @@ spec:
               annotations:
                 ingress.home.arpa/type: "external"
       mutate:
-        targets:
-          - kind: Ingress
-            namespace: "{{ request.object.metadata.namespace }}"
         patchStrategicMerge:
           metadata:
             annotations:
@@ -68,9 +60,6 @@ spec:
               annotations:
                 ingress.home.arpa/type: "external-auth"
       mutate:
-        targets:
-          - kind: Ingress
-            namespace: "{{ request.object.metadata.namespace }}"
         patchStrategicMerge:
           metadata:
             annotations:
