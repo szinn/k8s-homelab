@@ -38,7 +38,7 @@ spec:
         reloader.stakater.com/auto: "true"
     image:
       repository: public.ecr.aws/docker/library/haproxy
-      tag: "2.7.8"
+      tag: "2.8.0"
     service:
       main:
         enabled: true
