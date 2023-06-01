@@ -26,44 +26,10 @@ module "cf_domain_k8s" {
       proxied = false
     },
     {
-      id       = "aspmx4"
-      name     = "gmail"
-      priority = 10
-      value    = "aspmx4.googlemail.com"
-      type     = "MX"
-    },
-    {
-      id       = "aspmx2"
-      name     = "gmail"
-      priority = 10
-      value    = "aspmx2.googlemail.com"
-      type     = "MX"
-    },
-    {
-      id       = "aspmx3"
-      name     = "gmail"
-      priority = 10
-      value    = "aspmx3.googlemail.com"
-      type     = "MX"
-    },
-    {
-      id       = "alt2"
-      name     = "gmail"
-      priority = 5
-      value    = "alt2.aspmx.l.google.com"
-      type     = "MX"
-    },
-    {
-      id       = "alt1"
-      name     = "gmail"
-      priority = 5
-      value    = "alt1.aspmx.l.google.com"
-      type     = "MX"
-    },
-    {
-      id       = "aspmx"
-      name     = "gmail"
-      value    = "aspmx.l.google.com"
+      id       = "smtp"
+      name     = "@"
+      priority = 1
+      value    = "smtp.google.com"
       type     = "MX"
     },
     {
