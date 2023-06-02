@@ -3,32 +3,15 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: self-hosted-shlink-api
+  name: self-hosted-shlink
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/self-hosted/shlink/shlink-api
+  path: ./kubernetes/apps/self-hosted/shlink
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes
   dependsOn:
     - name: dbms-cloudnative-pg
-  prune: true
-  wait: true
-  interval: 30m
-  retryInterval: 1m
-  timeout: 5m
----
-# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/kustomize.toolkit.fluxcd.io/kustomization_v1.json
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: self-hosted-shlink-web
-  namespace: flux-system
-spec:
-  path: ./kubernetes/apps/self-hosted/shlink/shlink-web
-  sourceRef:
-    kind: GitRepository
-    name: homelab-kubernetes
   prune: true
   wait: true
   interval: 30m
