@@ -3,54 +3,15 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: system-intel-device-plugin-operator
+  name: system-intel-device-plugin
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/system/intel-device-plugin/operator
+  path: ./kubernetes/apps/system/intel-device-plugin
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes
   dependsOn:
     - name: system-node-feature-discovery
-  prune: true
-  wait: true
-  interval: 30m
-  retryInterval: 1m
-  timeout: 5m
----
-# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/kustomize.toolkit.fluxcd.io/kustomization_v1.json
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: system-intel-device-plugin-gpu
-  namespace: flux-system
-spec:
-  path: ./kubernetes/apps/system/intel-device-plugin/gpu
-  sourceRef:
-    kind: GitRepository
-    name: homelab-kubernetes
-  dependsOn:
-    - name: system-intel-device-plugin-operator
-    - name: system-node-feature-discovery
-  prune: true
-  wait: true
-  interval: 30m
-  retryInterval: 1m
-  timeout: 5m
----
-# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/kustomize.toolkit.fluxcd.io/kustomization_v1.json
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: system-intel-device-plugin-gpu-exporter
-  namespace: flux-system
-spec:
-  path: ./kubernetes/apps/system/intel-device-plugin/exporter
-  sourceRef:
-    kind: GitRepository
-    name: homelab-kubernetes
-  dependsOn:
-    - name: system-intel-device-plugin-gpu
   prune: true
   wait: true
   interval: 30m
