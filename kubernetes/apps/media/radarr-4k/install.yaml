@@ -6,7 +6,7 @@ metadata:
   name: media-radarr-4k
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/media/radarr-4k/app
+  path: ./kubernetes/apps/media/radarr-4k
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes
@@ -14,25 +14,6 @@ spec:
     - name: rook-ceph-cluster
     - name: security-external-secrets-stores
     - name: system-volsync
-  prune: true
-  wait: true
-  interval: 30m
-  retryInterval: 1m
-  timeout: 5m
----
-# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/kustomize.toolkit.fluxcd.io/kustomization_v1.json
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: media-radarr-4k-observability
-  namespace: flux-system
-spec:
-  path: ./kubernetes/apps/media/radarr-4k/observability
-  sourceRef:
-    kind: GitRepository
-    name: homelab-kubernetes
-  dependsOn:
-    - name: media-radarr-4k
   prune: true
   wait: true
   interval: 30m
