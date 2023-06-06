@@ -34,7 +34,7 @@ spec:
         reloader.stakater.com/auto: "true"
     image:
       repository: docker.io/dpage/pgadmin4
-      tag: "7.2"
+      tag: "7.3"
     strategy:
       type: Recreate
     envFrom:
