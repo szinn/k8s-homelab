@@ -18,9 +18,9 @@ spec:
     # tekton: depName=tektoncd/dashboard
     !/dashboard/previous/v0.36.1/release-full.yaml
     # tekton: depName=tektoncd/triggers
-    !/triggers/previous/v0.24.0/release.yaml
+    !/triggers/previous/v0.24.1/release.yaml
     # tekton: depName=tektoncd/triggers
-    !/triggers/previous/v0.24.0/interceptors.yaml
+    !/triggers/previous/v0.24.1/interceptors.yaml
     # tekton: depName=tektoncd/chains
     !/chains/previous/v0.16.0/release.yaml
 ---
