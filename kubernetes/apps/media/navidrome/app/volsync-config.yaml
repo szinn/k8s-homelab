@@ -21,7 +21,7 @@ spec:
         AWS_SECRET_ACCESS_KEY: '{{ .AWS_SECRET_ACCESS_KEY }}'
   dataFrom:
     - extract:
-        key: volsync-restic-template
+        key: volsync
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/volsync.backube/replicationsource_v1alpha1.json
 apiVersion: volsync.backube/v1alpha1
@@ -36,7 +36,7 @@ spec:
   restic:
     copyMethod: Snapshot
     pruneIntervalDays: 14
-    repository: lidarr-restic-secret
+    repository: navidrome-restic-secret
     cacheCapacity: 2Gi
     retain:
       hourly: 0
