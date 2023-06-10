@@ -8,6 +8,7 @@ resources:
   - calibre-web/install.yaml
   - immich/install.yaml
   - lidarr/install.yaml
+  - navidrome/install.yaml
   - openbooks/install.yaml
   - overseerr/install.yaml
   - plex/install.yaml

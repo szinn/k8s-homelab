@@ -1,0 +1,101 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: navidrome
+  namespace: media
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+      interval: 15m
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controller:
+      type: statefulset
+      annotations:
+        reloader.stakater.com/auto: "true"
+    image:
+      repository: ghcr.io/navidrome/navidrome
+      tag: 0.49.3
+    env:
+      TZ: ${CONFIG_TIMEZONE}
+      ND_AUTHREQUESTLIMIT: 0
+      ND_DATAFOLDER: /config
+      ND_ENABLEGRAVATAR: true
+      ND_ENABLESHARING: true
+      ND_LOGLEVEL: info
+      ND_MUSICFOLDER: /media/Music
+      ND_PORT: &port 8080
+      ND_PROMETHEUS_ENABLED: true
+      ND_REVERSEPROXYUSERHEADER: Remote-User
+      ND_REVERSEPROXYWHITELIST: 10.11.0.0/16
+      ND_SCANSCHEDULE: "@every 1h"
+    envFrom:
+      - secretRef:
+          name: navidrome-secret
+    service:
+      main:
+        ports:
+          http:
+            port: *port
+    probes:
+      liveness: &probes
+        enabled: true
+        custom: true
+        spec:
+          httpGet:
+            path: /ping
+            port: *port
+          initialDelaySeconds: 0
+          periodSeconds: 10
+          timeoutSeconds: 1
+          failureThreshold: 3
+      readiness: *probes
+      startup:
+        enabled: false
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: nginx
+        annotations:
+          ingress.home.arpa/type: internal
+        hosts:
+          - host: "{{ .Release.Name }}.${SECRET_DOMAIN_NAME}"
+            paths:
+              - path: /
+                pathType: Prefix
+    podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      fsGroupChangePolicy: OnRootMismatch
+    volumeClaimTemplates:
+      - name: config
+        mountPath: /config
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        storageClass: ceph-block
+    persistence:
+      media:
+        enabled: true
+        existingClaim: media-datastore
+        mountPath: /media
+        readOnly: true
