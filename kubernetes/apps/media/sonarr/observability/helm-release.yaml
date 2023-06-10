@@ -33,7 +33,7 @@ spec:
         secret.reloader.stakater.com/reload: sonarr-secret
     image:
       repository: ghcr.io/onedr0p/exportarr
-      tag: v1.5.1
+      tag: v1.5.2
     env:
       TZ: "${TIMEZONE}"
       PORT: "7373"
