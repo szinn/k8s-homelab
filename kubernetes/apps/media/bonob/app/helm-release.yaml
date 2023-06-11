@@ -39,7 +39,7 @@ spec:
       BNB_SONOS_SEED_HOST: 192.168.1.135
       BNB_SONOS_SERVICE_ID: 246
       BNB_SONOS_SERVICE_NAME: Library
-      BNB_SUBSONIC_URL: https://navidrome.${SECRET_DOMAIN_NAME}
+      BNB_SUBSONIC_URL: https://music.${SECRET_DOMAIN_NAME}
       BNB_URL: http://${CONFIG_SVC_BONOB_ADDR}:4534
     service:
       main:

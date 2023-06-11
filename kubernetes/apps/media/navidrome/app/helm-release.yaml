@@ -78,7 +78,7 @@ spec:
         annotations:
           ingress.home.arpa/type: internal
         hosts:
-          - host: "{{ .Release.Name }}.${SECRET_DOMAIN_NAME}"
+          - host: "music.${SECRET_DOMAIN_NAME}"
             paths:
               - path: /
                 pathType: Prefix
