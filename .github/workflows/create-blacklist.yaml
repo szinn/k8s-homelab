@@ -93,7 +93,7 @@ jobs:
           ls -l ${destination}
 
       - name: Upload blacklist
-        uses: svenstaro/upload-release-action@v2
+        uses: svenstaro/upload-release-action@2b9d2847a97b04d02ad5c3df2d3a27baa97ce689 # v2
         with:
           repo_token: ${{ steps.generate-token.outputs.token }}
           file: hosts.blacklist
