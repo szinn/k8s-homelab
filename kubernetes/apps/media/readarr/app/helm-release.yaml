@@ -34,7 +34,7 @@ spec:
         reloader.stakater.com/auto: "true"
     image:
       repository: ghcr.io/onedr0p/readarr-develop
-      tag: 0.1.7.1882@sha256:8196e1cf82d9db90c698fb19908964fafc41e5ec791d32dc4f09fc4732ad436d
+      tag: 0.1.8.1889@sha256:be847aff764eae5f1877b17a09ad56fb69615d46c5cfba25834042fd4bfff6eb
     env:
       TZ: ${CONFIG_TIMEZONE}
       READARR__LOG_LEVEL: info
