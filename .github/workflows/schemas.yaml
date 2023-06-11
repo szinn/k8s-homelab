@@ -59,7 +59,7 @@ jobs:
           bash "$GITHUB_WORKSPACE"/crd-extractor.sh
 
       - name: Login to GHCR
-        uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a # v2
+        uses: docker/login-action@465a07811f14bebb1938fbed4728c6a1ff8901fc # v2
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -89,7 +89,7 @@ jobs:
         uses: docker/setup-buildx-action@6a58db7e0d21ca03e6c44877909e80e45217eed2 # v2.6.0
 
       - name: Login to GHCR
-        uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a # v2
+        uses: docker/login-action@465a07811f14bebb1938fbed4728c6a1ff8901fc # v2
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
