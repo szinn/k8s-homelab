@@ -95,6 +95,7 @@ jobs:
       - name: Upload blacklist
         uses: svenstaro/upload-release-action@2b9d2847a97b04d02ad5c3df2d3a27baa97ce689 # v2
         with:
+          release_name: "Pi-Hole Blacklist"
           repo_token: ${{ steps.generate-token.outputs.token }}
           file: hosts.blacklist
           asset_name: hosts.blacklist
