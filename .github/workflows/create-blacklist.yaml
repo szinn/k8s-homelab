@@ -99,6 +99,6 @@ jobs:
           repo_token: ${{ steps.generate-token.outputs.token }}
           file: hosts.blacklist
           asset_name: hosts.blacklist
-          tag: ${{ github.ref }}
+          tag: pi-hole
           overwrite: true
           body: "Current blacklisted sites"
