@@ -4,5 +4,6 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - home-assistant/install.yaml
+  - mosquitto/install.yaml
   - node-red/install.yaml
   - n8n/install.yaml
