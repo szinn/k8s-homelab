@@ -4,12 +4,13 @@ name: "Flux Diff"
 on:
   pull_request:
     branches: ["main"]
-    paths: ["**.yaml"]
 
 jobs:
   flux-diff:
     name: Flux Diff
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     strategy:
       matrix:
         path: ["kubernetes"]
