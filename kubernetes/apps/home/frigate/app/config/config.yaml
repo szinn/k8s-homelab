@@ -54,9 +54,9 @@ objects:
 go2rtc:
   streams:
     frigate_backdoor_hq:
-      - rtspx://zeus.zinn.tech:7441/ys6PFlzdaSG04bL5
+      - rtspx://{FRIGATE_UNVR_HOST}:7441/ys6PFlzdaSG04bL5
     frigate_backdoor_lq:
-      - rtsps://zeus.zinn.tech:7441/RUxUjsfxZqIYnykp
+      - rtsps://{FRIGATE_UNVR_HOST}:7441/RUxUjsfxZqIYnykp
 
 cameras:
   backdoor:
