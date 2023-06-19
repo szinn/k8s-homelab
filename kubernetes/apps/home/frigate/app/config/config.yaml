@@ -14,10 +14,10 @@ mqtt:
 database:
   path: /data/frigate.db
 
-# detectors:
-#   coral:
-#     type: edgetpu
-#     device: usb
+detectors:
+  coral:
+    type: edgetpu
+    device: usb
 
 ffmpeg:
   global_args: ["-hide_banner", "-loglevel", "warning"]

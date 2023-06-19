@@ -99,3 +99,10 @@ spec:
       limits:
         gpu.intel.com/i915: 1
         memory: 10Gi
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+              - key: google.feature.node.kubernetes.io/coral
+                operator: DoesNotExist
