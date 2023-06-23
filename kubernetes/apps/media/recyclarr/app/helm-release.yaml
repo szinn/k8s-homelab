@@ -34,7 +34,7 @@ spec:
         reloader.stakater.com/auto: "true"
     image:
       repository: ghcr.io/recyclarr/recyclarr
-      tag: 4.4.1
+      tag: 5.0.0
     envFrom:
       - secretRef:
           name: recyclarr
