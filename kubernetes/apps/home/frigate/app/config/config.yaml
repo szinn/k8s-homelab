@@ -44,7 +44,7 @@ record:
       mode: active_objects
 
 objects:
-  track: ["person"]
+  track: ["person","dog","cat"]
   filters:
     person:
       min_area: 5000
@@ -69,4 +69,4 @@ cameras:
     detect:
       width: 1280
       height: 720
-      fps: 10
+      fps: 24

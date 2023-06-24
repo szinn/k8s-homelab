@@ -43,7 +43,6 @@ spec:
       tag: 0.12.1
     env:
       TZ: ${CONFIG_TIMEZONE}
-      LIBVA_DRIVER_NAME: i965
       FRIGATE_MQTT_USERNAME:
         valueFrom:
           secretKeyRef:
