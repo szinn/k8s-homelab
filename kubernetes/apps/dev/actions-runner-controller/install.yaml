@@ -6,7 +6,7 @@ metadata:
   name: dev-actions-runner-controller
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/dev/actions-runner-controller/app
+  path: ./kubernetes/apps/dev/actions-runner-controller/operator
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes
@@ -32,7 +32,7 @@ spec:
   dependsOn:
     - name: dev-actions-runner-controller
   prune: true
-  wait: true
+  wait: false
   interval: 30m
   retryInterval: 1m
   timeout: 5m

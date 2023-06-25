@@ -1,48 +1,58 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/actions.summerwind.dev/runnerdeployment_v1alpha1.json
-apiVersion: actions.summerwind.dev/v1alpha1
-kind: RunnerDeployment
+# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
 metadata:
   name: k8s-homelab
   namespace: dev
 spec:
-  template:
+  interval: 30m
+  chart:
     spec:
-      image: ghcr.io/actions/actions-runner-controller/actions-runner-dind:v2.299.1-ubuntu-22.04
-      imagePullPolicy: Always
-      dockerdWithinRunnerContainer: true
-      ephemeral: true
-      repository: szinn/k8s-homelab
-      labels:
-        - self-hosted
-      # containers:
-      #   - name: docker
-      #     image: docker:24.0.0-beta.1-dind@sha256:d3de87b2cbfa51888f9cd083da8ac522fa0ff32d7667dfd6533e949e65b660e0
-      volumeMounts:
-        - name: cache-volume
-          mountPath: /cache
-      volumes:
-        - name: cache-volume
-          persistentVolumeClaim:
-            claimName: actions-runner-controller-cache
----
-# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/actions.summerwind.dev/horizontalrunnerautoscaler_v1alpha1.json
-apiVersion: actions.summerwind.dev/v1alpha1
-kind: HorizontalRunnerAutoscaler
-metadata:
-  name: k8s-homelab
-  namespace: dev
-spec:
-  scaleTargetRef:
-    name: k8s-homelab
-  scaleUpTriggers:
-    - githubEvent:
-        workflowJob: {}
-      amount: 1
-      duration: "1m"
-  minReplicas: 1
-  maxReplicas: 3
-  metrics:
-    - type: TotalNumberOfQueuedAndInProgressWorkflowRuns
-      repositoryNames:
-        - szinn/k8s-homelab
+      chart: gha-runner-scale-set
+      version: 0.4.0
+      sourceRef:
+        kind: HelmRepository
+        name: actions-runner-controller-charts
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    runnerScaleSetName: k8s-homelab
+    githubConfigUrl: https://github.com/szinn/k8s-homelab
+    minRunners: 1
+    maxRunners: 3
+    containerMode:
+      type: dind
+    template:
+      spec:
+        containers:
+          - name: runner
+            image: ghcr.io/onedr0p/github-actions-runner:2.305.0
+            volumeMounts:
+              - name: cache-volume
+                mountPath: /cache
+        volumes:
+          - name: cache-volume
+            persistentVolumeClaim:
+              claimName: actions-runner-controller-cache
+  valuesFrom:
+    - kind: Secret
+      name: actions-runner-controller-secret
+      valuesKey: github_app_id
+      targetPath: githubConfigSecret.github_app_id
+    - kind: Secret
+      name: actions-runner-controller-secret
+      valuesKey: github_app_installation_id
+      targetPath: githubConfigSecret.github_app_installation_id
+    - kind: Secret
+      name: actions-runner-controller-secret
+      valuesKey: github_app_private_key
+      targetPath: githubConfigSecret.github_app_private_key

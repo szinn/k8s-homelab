@@ -20,7 +20,7 @@ env:
 jobs:
   publish-kubernetes-schemas:
     name: Publish Kubernetes Schemas
-    runs-on: ["self-hosted"]
+    runs-on: ["k8s-homelab"]
     steps:
       - name: Setup Flux CLI
         uses: fluxcd/flux2/action@main
