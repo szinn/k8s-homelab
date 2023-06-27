@@ -15,11 +15,8 @@ _... managed with Flux, Renovate and GitHub_ 🤖
 
 ## Overview
 
-This is my mono repo for my home infrastructure. It's based on the template at [k8s-at-home/template-cluster-k3](https://github.com/k8s-at-home/template-cluster-k3s) as well as many of the exemplar repos
-at [k8s-at-home/awesome-home-kubernetes](https://github.com/k8s-at-home/awesome-home-kubernetes).
-
-It follows the concept of Infrastructure as Code and by using tools such [Flux](https://github.com/fluxcd/flux2), [Renovate](https://github.com/renovatebot/renovate),
-[go-task](https://github.com/go-task/task) and shell scripts, creates a reproducible, mostly self-managing implementation.
+This is my mono repo for my home infrastructure. It's based loosely on the template at [onedr0p/flux-cluster-template](https://github.com/onedr0p/flux-cluster-template) as well as many of the exemplar repos, searchable via [https://nanne.dev/k8s-at-home-search](https://nanne.dev/k8s-at-home-search/).
+It follows the concept of Infrastructure as Code and by using tools such [Flux](https://github.com/fluxcd/flux2), [Renovate](https://github.com/renovatebot/renovate), [go-task](https://github.com/go-task/task) and shell scripts, creates a reproducible, mostly self-managing implementation.
 
 My original implementation was running on the Ryzen using custom shell scripts and 35+ docker containers managed by hand. Any upgrades, system resets, etc, all had to be manually resolved.
 It mostly ran just fine. Applying the principle "If it ain't broke, it isn't complicated enough" led me to add machines, memory, functionality to achieve a much more automated, self-managing cluster. Plus I have learned a lot!
