@@ -29,12 +29,6 @@ module "cf_domain_tech" {
       description = "Firewall rule to block bots and threats determined by CF"
       expression  = "(cf.client.bot) or (cf.threat_score gt 14)"
       action      = "block"
-    },
-    {
-      enabled     = true
-      description = "Firewall rule to block all countries except CA/US"
-      expression  = "(ip.geoip.country ne \"CA\") and (ip.geoip.country ne \"US\")"
-      action      = "block"
     }
   ]
 }
