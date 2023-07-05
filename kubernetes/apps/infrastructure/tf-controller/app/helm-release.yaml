@@ -16,13 +16,7 @@ spec:
         name: tf-controller-charts
         namespace: flux-system
       interval: 30m
-
   values:
-    image:
-      tag: upgrade-to-flux-2-rc-1-d3949b9e
-    runner:
-      image:
-        tag: upgrade-to-flux-2-rc-1-d3949b9e
     installCRDs: true
     metrics:
       enabled: true
