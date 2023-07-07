@@ -1,0 +1,52 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: birds
+  namespace: networking
+spec:
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+---
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: birds
+  namespace: networking
+  labels:
+    kubernetes.io/service-name: birds
+addressType: IPv4
+ports:
+  - name: http
+    appProtocol: http
+    protocol: TCP
+    port: 80
+endpoints:
+  - addresses:
+      - "${CONFIG_BIRDS_ADDR}"
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: &app birds
+  namespace: networking
+  labels:
+    app.kubernetes.io/name: *app
+    app.kubernetes.io/instance: *app
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    ingress.home.arpa/type: "internal"
+spec:
+  rules:
+    - host: birds.${SECRET_DOMAIN_NAME}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: *app
+                port:
+                  number: 80
