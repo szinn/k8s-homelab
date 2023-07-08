@@ -62,7 +62,7 @@ jobs:
           download "https://hosts-file.net/emd.txt"
           download "https://hosts-file.net/psh.txt"
           download "https://mirror.cedia.org.ec/malwaredomains/immortal_domains.txt"
-          download "https://www.malwaredomainlist.com/hostslist/hosts.txt"
+          # download "https://www.malwaredomainlist.com/hostslist/hosts.txt"
           download "https://bitbucket.org/ethanr/dns-blacklists/raw/8575c9f96e5b4a1308f2f12394abd86d0927a4a0/bad_lists/Mandiant_APT1_Report_Appendix_D.txt"
           download "https://v.firebog.net/hosts/Prigent-Malware.txt"
           download "https://v.firebog.net/hosts/Prigent-Phishing.txt"
