@@ -148,6 +148,9 @@ worker:
         install:
           extraKernelArgs:
             - talos.logging.kernel=udp://${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}:6001/
+          extensions:
+            - image: ghcr.io/siderolabs/i915-ucode:20230625
+            - image: ghcr.io/siderolabs/intel-ucode:20230613
         logging:
           destinations:
             - endpoint: udp://${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}:6002/
