@@ -194,7 +194,7 @@ The expectation is that at the end of this step, your machines are up and runnin
 
 You will need to have installed `flux` and the Mozilla sops tool for this bringup.
 
-The bringup of this cluster sort of follows the template cluster at [k8s-at-home/template-cluster-k3](https://github.com/k8s-at-home/template-cluster-k3s).
+The bringup of this cluster sort of follows the template cluster at [onedr0p/flux-cluster-template](https://github.com/onedr0p/flux-cluster-template).
 A Mozilla/sops secret needs to be created and the [.sops.yaml](./.sops.yaml) file updated appropriately. This is a one-time operation.
 
 There are env.XXX.template files in the setup directory. These should be filled in as appropriate with values needed. I've included descriptions in the template file.
