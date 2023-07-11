@@ -73,6 +73,7 @@ spec:
       auth:
         # signout_redirect_url: https://auth.${SECRET_DOMAIN_NAME}/logout
         oauth_auto_login: true
+        oauth_allow_insecure_email_lookup: true
       auth.generic_oauth:
         enabled: true
         name: Authelia
