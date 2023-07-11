@@ -32,6 +32,8 @@ spec:
     image:
       repository: docker.io/traefik/whoami
       tag: v1.10.0
+    env:
+      WHOAMI_PORT_NUMBER: 80
     service:
       main:
         ports:
