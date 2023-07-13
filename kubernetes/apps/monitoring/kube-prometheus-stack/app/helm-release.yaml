@@ -19,18 +19,18 @@ spec:
   maxHistory: 3
   install:
     createNamespace: true
-    crds: CreateReplace
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
-    crds: CreateReplace
     remediation:
       retries: 3
   uninstall:
     keepHistory: false
   values:
     fullnameOverride: prometheus
+    crds:
+      enabled: true
     defaultRules:
       create: true
       rules:
