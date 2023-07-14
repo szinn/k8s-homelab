@@ -32,7 +32,7 @@ spec:
   dependsOn:
     - name: infrastructure-tf-controller
   prune: true
-  wait: true
+  wait: false
   interval: 30m
   retryInterval: 1m
   timeout: 5m

@@ -11,7 +11,7 @@ spec:
     kind: GitRepository
     name: homelab-kubernetes
   prune: true
-  wait: true
+  wait: false
   interval: 30m
   retryInterval: 1m
   timeout: 5m

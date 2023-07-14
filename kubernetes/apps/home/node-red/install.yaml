@@ -14,7 +14,7 @@ spec:
     - name: home-home-assistant
     - name: system-volsync
   prune: true
-  wait: true
+  wait: false
   interval: 30m
   retryInterval: 1m
   timeout: 5m

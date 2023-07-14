@@ -14,7 +14,7 @@ spec:
     - name: rook-ceph-cluster
     - name: security-external-secrets-stores
   prune: true
-  wait: true
+  wait: false
   interval: 30m
   retryInterval: 1m
   timeout: 5m
