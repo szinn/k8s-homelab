@@ -26,6 +26,13 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+  dependsOn:
+    - name: radarr
+      namespace: media
+    - name: radarr-4k
+      namespace: media
+    - name: sonarr
+      namespace: media
   values:
     initContainers:
     controller:

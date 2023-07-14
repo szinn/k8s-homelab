@@ -27,6 +27,9 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+  dependsOn:
+    - name: radarr-4k
+      namespace: media
   values:
     controller:
       annotations:

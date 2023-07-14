@@ -25,6 +25,11 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+  dependsOn:
+    - name: redis
+      namespace: dbms
+    - name: lldap
+      namespace: security
   values:
     initContainers:
       init-db:

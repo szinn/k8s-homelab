@@ -10,6 +10,7 @@ spec:
   dependsOn:
     - name: security-external-secrets-stores
     - name: system-node-feature-discovery-rules
+    - name: system-volsync
   prune: true
   sourceRef:
     kind: GitRepository

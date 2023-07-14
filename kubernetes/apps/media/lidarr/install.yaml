@@ -12,7 +12,6 @@ spec:
     name: homelab-kubernetes
   dependsOn:
     - name: security-external-secrets-stores
-    - name: rook-ceph-cluster
     - name: system-volsync
   prune: true
   wait: false

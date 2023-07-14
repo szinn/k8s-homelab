@@ -12,6 +12,7 @@ spec:
     name: homelab-kubernetes
   dependsOn:
     - name: dbms-cloudnative-pg
+    - name: security-external-secrets-stores
   prune: true
   wait: false
   interval: 30m

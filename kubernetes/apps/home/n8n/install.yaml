@@ -13,7 +13,6 @@ spec:
   dependsOn:
     - name: dbms-cloudnative-pg
     - name: security-external-secrets-stores
-    - name: rook-ceph-cluster
     - name: system-volsync
   prune: true
   wait: false

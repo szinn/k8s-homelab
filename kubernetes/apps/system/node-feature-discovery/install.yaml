@@ -30,7 +30,7 @@ spec:
   dependsOn:
     - name: system-node-feature-discovery
   prune: true
-  wait: false
+  wait: true
   interval: 30m
   retryInterval: 1m
   timeout: 5m

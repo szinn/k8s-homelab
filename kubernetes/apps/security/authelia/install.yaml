@@ -12,7 +12,6 @@ spec:
     name: homelab-kubernetes
   dependsOn:
     - name: dbms-cloudnative-pg
-    - name: dbms-redis
     - name: security-external-secrets-stores
   prune: true
   wait: false

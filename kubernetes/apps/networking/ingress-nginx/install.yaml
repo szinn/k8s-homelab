@@ -35,7 +35,6 @@ spec:
     name: homelab-kubernetes
   dependsOn:
     - name: cert-manager
-    - name: networking-ingress-nginx
     - name: kyverno
   prune: true
   wait: false

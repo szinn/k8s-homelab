@@ -11,7 +11,6 @@ spec:
     kind: GitRepository
     name: homelab-kubernetes
   dependsOn:
-    - name: rook-ceph-cluster
     - name: security-external-secrets-stores
   prune: true
   wait: false
