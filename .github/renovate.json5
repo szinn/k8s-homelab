@@ -1,4 +1,5 @@
 {
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:base",
     "docker:enableMajor",
@@ -7,7 +8,7 @@
     ":semanticCommits",
     ":enablePreCommit",
     ":automergeDigest",
-    ":automergeBranchPush",
+    ":automergeBranch",
     ":separatePatchReleases",
     "github>szinn/k8s-homelab//.github/renovate/allowedVersions.json5",
     "github>szinn/k8s-homelab//.github/renovate/autoMerge.json5",
@@ -27,8 +28,8 @@
   "timezone": "America/Toronto",
   "dependencyDashboardTitle": "Renovate Dashboard",
   "suppressNotifications": ["prIgnoreNotification"],
-  "rebaseWhen": "auto",
-  "commitBodyTable": true,
+  // "rebaseWhen": "auto",
+  // "commitBodyTable": true,
   "flux": {
     "fileMatch": ["kubernetes/.+\\.ya?ml$"]
   },
