@@ -26,56 +26,68 @@ nodes:
     ipAddress: 10.11.0.16
     disableSearchDomain: true
     controlPlane: true
-    installDisk: /dev/sda
+    installDiskSelector:
+      busPath: /pci0000:00/0000:00:12.0/ata2/host1/target1:0:0/1:0:0:0/
     networkInterfaces:
       - interface: eth0
         mtu: 1500
         dhcp: true
+
   - hostname: k8s-2.zinn.tech
     ipAddress: 10.11.0.17
     disableSearchDomain: true
     controlPlane: true
-    installDisk: /dev/sda
+    installDiskSelector:
+      busPath: /pci0000:00/0000:00:12.0/ata2/host1/target1:0:0/1:0:0:0/
     networkInterfaces:
       - interface: eth0
         mtu: 1500
         dhcp: true
+
   - hostname: k8s-3.zinn.tech
     ipAddress: 10.11.0.18
     disableSearchDomain: true
     controlPlane: true
-    installDisk: /dev/sda
+    installDiskSelector:
+      busPath: /pci0000:00/0000:00:12.0/ata2/host1/target1:0:0/1:0:0:0/
     networkInterfaces:
       - interface: eth0
         mtu: 1500
         dhcp: true
+
   - hostname: k8s-4.zinn.tech
     ipAddress: 10.11.0.19
     disableSearchDomain: true
     controlPlane: false
-    installDisk: /dev/sda
+    installDiskSelector:
+      busPath: /pci0000:00/0000:00:17.0/ata1/host0/target0:0:0/0:0:0:0/
     networkInterfaces:
       - interface: eth0
         mtu: 1500
         dhcp: true
+
   - hostname: k8s-5.zinn.tech
     ipAddress: 10.11.0.20
     disableSearchDomain: true
     controlPlane: false
-    installDisk: /dev/sda
+    installDiskSelector:
+      busPath: /pci0000:00/0000:00:17.0/ata1/host0/target0:0:0/0:0:0:0/
     networkInterfaces:
       - interface: eth0
         mtu: 1500
         dhcp: true
+
   - hostname: k8s-6.zinn.tech
     ipAddress: 10.11.0.21
     disableSearchDomain: true
     controlPlane: false
-    installDisk: /dev/sda
+    installDiskSelector:
+      busPath: /pci0000:00/0000:00:17.0/ata1/host0/target0:0:0/0:0:0:0/
     networkInterfaces:
       - interface: eth0
         mtu: 1500
         dhcp: true
+
 controlPlane:
   patches:
     - |-
@@ -93,6 +105,8 @@ controlPlane:
         scheduler:
           extraArgs:
             bind-address: 0.0.0.0
+
+    - |-
       machine:
         files:
           - content: |
@@ -104,7 +118,7 @@ controlPlane:
             op: create
         kubelet:
           extraArgs:
-            feature-gates: GracefulNodeShutdown=true
+            feature-gates: CronJobTimeZone=true,GracefulNodeShutdown=true,NewVolumeManagerReconstruction=false
             rotate-server-certificates: "true"
         install:
           extraKernelArgs:
@@ -129,6 +143,7 @@ controlPlane:
     - |-
       - op: remove
         path: /cluster/apiServer/admissionControl
+
 worker:
   patches:
     - |-
@@ -143,7 +158,7 @@ worker:
             op: create
         kubelet:
           extraArgs:
-            feature-gates: GracefulNodeShutdown=true
+            feature-gates: CronJobTimeZone=true,GracefulNodeShutdown=true,NewVolumeManagerReconstruction=false
             rotate-server-certificates: "true"
         install:
           extraKernelArgs:
