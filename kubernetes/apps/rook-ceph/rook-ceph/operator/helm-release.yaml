@@ -31,16 +31,8 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    crds:
-      enabled: true
-    pspEnable: false
     csi:
-      kubeletDirPath: /var/lib/kubelet
-      enableCSIHostNetwork: true
-      pluginTolerations:
-        - effect: "NoExecute"
-          operator: "Exists"
-        - effect: "NoSchedule"
-          operator: "Exists"
+      csiAddons:
+        enabled: true
     monitoring:
       enabled: true
