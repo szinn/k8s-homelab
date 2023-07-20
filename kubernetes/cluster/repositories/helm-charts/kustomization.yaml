@@ -6,7 +6,6 @@ resources:
   - bitnami-charts.yaml
   - backube-charts.yaml
   - bjw-s-charts.yaml
-  - botkube-charts.yaml
   - cilium-charts.yaml
   - cloudnative-pg-charts.yaml
   - deliveryhero-charts.yaml
