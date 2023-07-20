@@ -4,7 +4,7 @@ kind: Kustomization
 helmCharts:
   - name: kubelet-csr-approver
     repo: https://postfinance.github.io/kubelet-csr-approver
-    version: 1.0.2
+    version: 1.0.3
     releaseName: kubelet-csr-approver
     namespace: kube-system
     valuesFile: values.yaml
