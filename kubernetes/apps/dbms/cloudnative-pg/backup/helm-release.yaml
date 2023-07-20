@@ -52,7 +52,7 @@ spec:
             name: postgres-superuser
             key: POSTGRES_SUPER_PASS
       - name: POSTGRES_DB
-        value: "dmarc,outline,shlink,teslamate,immich,n8n,lldap"
+        value: "dmarc,outline,shlink,teslamate,immich,lldap"
       - name: BACKUP_KEEP_DAYS
         value: "7"
       - name: BACKUP_KEEP_WEEKS
