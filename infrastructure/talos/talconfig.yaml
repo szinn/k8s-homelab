@@ -61,10 +61,26 @@ nodes:
     controlPlane: false
     installDiskSelector:
       busPath: /pci0000:00/0000:00:17.0/ata1/host0/target0:0:0/0:0:0:0/
+    machineDisks:
+      - device: /dev/disk/by-id/nvme-PCIe_SSD_9435070301DE01033512
+        partitions:
+          - mountpoint: /var/mnt/ssd
     networkInterfaces:
       - interface: eth0
         mtu: 1500
         dhcp: true
+    patches:
+      - |-
+        machine:
+          kubelet:
+            extraMounts:
+              - destination: /var/mnt/ssd
+                type: bind
+                source: /var/mnt/ssd
+                options:
+                  - rbind
+                  - rshared
+                  - rw
 
   - hostname: k8s-5.zinn.tech
     ipAddress: 10.11.0.20
@@ -72,10 +88,26 @@ nodes:
     controlPlane: false
     installDiskSelector:
       busPath: /pci0000:00/0000:00:17.0/ata1/host0/target0:0:0/0:0:0:0/
+    machineDisks:
+      - device: /dev/disk/by-id/nvme-PCIe_SSD_D6EB0703018201033336
+        partitions:
+          - mountpoint: /var/mnt/ssd
     networkInterfaces:
       - interface: eth0
         mtu: 1500
         dhcp: true
+    patches:
+      - |-
+        machine:
+          kubelet:
+            extraMounts:
+              - destination: /var/mnt/ssd
+                type: bind
+                source: /var/mnt/ssd
+                options:
+                  - rbind
+                  - rshared
+                  - rw
 
   - hostname: k8s-6.zinn.tech
     ipAddress: 10.11.0.21
@@ -83,10 +115,26 @@ nodes:
     controlPlane: false
     installDiskSelector:
       busPath: /pci0000:00/0000:00:17.0/ata1/host0/target0:0:0/0:0:0:0/
+    machineDisks:
+      - device: /dev/disk/by-id/nvme-PCIe_SSD_0546070401F302575079
+        partitions:
+          - mountpoint: /var/mnt/ssd
     networkInterfaces:
       - interface: eth0
         mtu: 1500
         dhcp: true
+    patches:
+      - |-
+        machine:
+          kubelet:
+            extraMounts:
+              - destination: /var/mnt/ssd
+                type: bind
+                source: /var/mnt/ssd
+                options:
+                  - rbind
+                  - rshared
+                  - rw
 
 controlPlane:
   patches:
