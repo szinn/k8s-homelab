@@ -189,6 +189,8 @@ spec:
       prometheusSpec:
         replicas: 1
         replicaExternalLabelName: "__replica__"
+        externalLabels:
+          cluster: ${CONFIG_CLUSTER_NAME}
         scrapeInterval: 1m
         podAntiAffinity: hard
         ruleSelectorNilUsesHelmValues: false

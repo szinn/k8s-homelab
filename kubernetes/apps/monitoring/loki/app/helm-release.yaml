@@ -149,8 +149,8 @@ spec:
                     {{- include "loki.writeSelectorLabels" . | nindent 12 }}
                 topologyKey: kubernetes.io/hostname
       persistence:
-        size: 5Gi
-        storageClass: ceph-block
+        size: 20Gi
+        storageClass: local-hostpath
     read:
       replicas: 3
       affinity: |
@@ -180,8 +180,8 @@ spec:
                     {{- include "loki.backendSelectorLabels" . | nindent 12 }}
                 topologyKey: kubernetes.io/hostname
       persistence:
-        size: 5Gi
-        storageClass: ceph-block
+        size: 20Gi
+        storageClass: local-hostpath
       extraVolumeMounts:
         - name: rules
           mountPath: /rules

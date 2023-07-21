@@ -69,16 +69,37 @@ spec:
       retentionResolution1h: 21d
       persistence:
         enabled: true
-        storageClass: ceph-block
+        storageClass: local-hostpath
         size: 15Gi
     storegateway:
       enabled: true
       persistence:
         enabled: true
-        storageClass: ceph-block
-        size: 10Gi
+        storageClass: local-hostpath
+        size: 1Gi
     ruler:
-      enabled: false
+      enabled: true
+      alertmanagers:
+        - http://alertmanager.monitoring.svc.cluster.local:9093
+      clusterName: ${CONFIG_CLUSTER_NAME} # must match with kube-prometheus-stack value `.prometheus.prometheusSpec.externalLabels.cluster`
+      config: |-
+        groups:
+          - name: "PrometheusWatcher"
+            rules:
+              - alert: "PrometheusDown"
+                expr: absent(up{job="prometheus-prometheus"})
+      dnsDiscovery:
+        enabled: true
+      persistence:
+        enabled: true
+        storageClass: local-hostpath
+        size: 512Mi
+      resources:
+        requests:
+          cpu: 23m
+          memory: 94M
+        limits:
+          memory: 113M
     metrics:
       enabled: true
       serviceMonitor:
