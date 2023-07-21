@@ -1,0 +1,83 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: local-path-provisioner
+  namespace: system
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: democratic-csi
+      version: 0.14.0
+      sourceRef:
+        name: democratic-csi-charts
+        kind: HelmRepository
+        namespace: flux-system
+  values:
+    csiDriver:
+      name: org.democratic-csi.local-hostpath
+      attachRequired: false
+      storageCapacity: true # With storage capacity tracking, the scheduler filters out nodes which do not have enough capacity.
+      fsGroupPolicy: File # fsGroupChangePolicy
+
+    storageClasses:
+      - name: local-hostpath
+        defaultClass: false
+        reclaimPolicy: Delete
+        volumeBindingMode: WaitForFirstConsumer
+        # distributed support is not yet ready for expansion
+        allowVolumeExpansion: false
+
+    volumeSnapshotClasses:
+      - name: local-hostpath
+        deletionPolicy: Delete
+        parameters:
+          dummy: {}
+
+    controller:
+      enabled: true
+      strategy: node
+      externalAttacher:
+        enabled: false
+      externalProvisioner:
+        enabled: true
+        extraArgs:
+          - --leader-election=false
+          - --node-deployment=true
+          - --node-deployment-immediate-binding=false
+          - --feature-gates=Topology=true
+          - --strict-topology=true
+          - --enable-capacity=true
+          - --capacity-ownerref-level=1
+      externalResizer:
+        enabled: false
+      externalSnapshotter:
+        enabled: true
+        extraArgs:
+          - --leader-election=false
+          - --node-deployment=true
+
+    node:
+      driver:
+        extraVolumeMounts:
+          - name: local-hostpath
+            mountPath: /var/mnt/ssd/demo-csi-local-path
+            mountPropagation: Bidirectional
+
+      extraVolumes:
+        - name: local-hostpath
+          hostPath:
+            path: /var/mnt/ssd/demo-csi-local-path
+            type: DirectoryOrCreate
+
+    driver:
+      config:
+        driver: local-hostpath
+        instance_id:
+        local-hostpath:
+          shareBasePath: /var/mnt/ssd/demo-csi-local-path
+          controllerBasePath: /var/mnt/ssd/demo-csi-local-path
+          dirPermissionsMode: "0770"
+          dirPermissionsUser: 0
+          dirPermissionsGroup: 0
