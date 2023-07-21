@@ -42,8 +42,8 @@ spec:
       runAsGroup: 5050
     cacheCapacity: 1Gi
     retain:
-      hourly: 0
       daily: 14
-      weekly: 0
-      monthly: 0
       within: 7d
+    volumeSnapshotClassName: csi-ceph-blockpool
+    storageClassName: ceph-block
+    cacheStorageClassName: local-hostpath
