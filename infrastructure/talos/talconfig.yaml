@@ -2,7 +2,7 @@
 clusterName: ${CONFIG_CLUSTER_NAME}
 talosVersion: v1.4.6
 kubernetesVersion: v1.27.3
-endpoint: https://${CONFIG_CLUSTER_NAME}.zinn.tech:6443
+endpoint: https://${CONFIG_CLUSTER_NAME}.${SECRET_TECH_DOMAIN_NAME}:6443
 
 cniConfig:
   name: none
@@ -12,7 +12,7 @@ additionalApiServerCertSans:
 
 additionalMachineCertSans:
   - ${CONFIG_K8S_CLUSTER_ENDPOINT_IP}
-  - ${CONFIG_CLUSTER_NAME}.zinn.tech
+  - ${CONFIG_CLUSTER_NAME}.${SECRET_TECH_DOMAIN_NAME}
 
 domain: cluster.local
 
@@ -22,7 +22,7 @@ clusterPodNets:
   - ${CONFIG_K8S_POD_CIDR}
 
 nodes:
-  - hostname: k8s-1.zinn.tech
+  - hostname: k8s-1.${SECRET_TECH_DOMAIN_NAME}
     ipAddress: 10.11.0.16
     disableSearchDomain: true
     controlPlane: true
@@ -33,7 +33,7 @@ nodes:
         mtu: 1500
         dhcp: true
 
-  - hostname: k8s-2.zinn.tech
+  - hostname: k8s-2.${SECRET_TECH_DOMAIN_NAME}
     ipAddress: 10.11.0.17
     disableSearchDomain: true
     controlPlane: true
@@ -44,7 +44,7 @@ nodes:
         mtu: 1500
         dhcp: true
 
-  - hostname: k8s-3.zinn.tech
+  - hostname: k8s-3.${SECRET_TECH_DOMAIN_NAME}
     ipAddress: 10.11.0.18
     disableSearchDomain: true
     controlPlane: true
@@ -55,7 +55,7 @@ nodes:
         mtu: 1500
         dhcp: true
 
-  - hostname: k8s-4.zinn.tech
+  - hostname: k8s-4.${SECRET_TECH_DOMAIN_NAME}
     ipAddress: 10.11.0.19
     disableSearchDomain: true
     controlPlane: false
@@ -82,7 +82,7 @@ nodes:
                   - rshared
                   - rw
 
-  - hostname: k8s-5.zinn.tech
+  - hostname: k8s-5.${SECRET_TECH_DOMAIN_NAME}
     ipAddress: 10.11.0.20
     disableSearchDomain: true
     controlPlane: false
@@ -109,7 +109,7 @@ nodes:
                   - rshared
                   - rw
 
-  - hostname: k8s-6.zinn.tech
+  - hostname: k8s-6.${SECRET_TECH_DOMAIN_NAME}
     ipAddress: 10.11.0.21
     disableSearchDomain: true
     controlPlane: false
@@ -182,7 +182,7 @@ controlPlane:
           extraHostEntries:
             - ip: ${CONFIG_K8S_CLUSTER_ENDPOINT_IP}
               aliases:
-                - ${CONFIG_CLUSTER_NAME}.zinn.tech
+                - ${CONFIG_CLUSTER_NAME}.${SECRET_TECH_DOMAIN_NAME}
         sysctls:
           fs.inotify.max_user_watches: "1048576"
           fs.inotify.max_user_instances: "8192"
@@ -225,7 +225,7 @@ worker:
           extraHostEntries:
             - ip: ${CONFIG_K8S_CLUSTER_ENDPOINT_IP}
               aliases:
-                - ${CONFIG_CLUSTER_NAME}.zinn.tech
+                - ${CONFIG_CLUSTER_NAME}.${SECRET_TECH_DOMAIN_NAME}
         sysctls:
           fs.inotify.max_user_watches: "1048576"
           fs.inotify.max_user_instances: "8192"
