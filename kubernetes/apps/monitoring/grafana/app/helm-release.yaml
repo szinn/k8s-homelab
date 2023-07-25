@@ -218,9 +218,13 @@ spec:
             user: teslamate
             secureJsonData:
               password: "$TESLAMATE_POSTGRES_PASSWORD"
+            basicAuth: false
+            withCredentials: false
             jsonData:
               postgresVersion: 1000
               sslmode: disable
+            version: 1
+            editable: true              
           - name: Redis
             type: redis-datasource
             access: proxy
