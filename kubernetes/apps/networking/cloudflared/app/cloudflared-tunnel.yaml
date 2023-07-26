@@ -10,4 +10,4 @@ spec:
   endpoints:
     - dnsName: ingress.${SECRET_DOMAIN_NAME}
       recordType: CNAME
-      targets: ["03aa14df-fcc4-4e2a-9ec7-9bcb4f6028bc.cfargotunnel.com"]
+      targets: ["${SECRET_CLOUDFLARED_TUNNEL_ID}"]
