@@ -224,7 +224,7 @@ spec:
               postgresVersion: 1000
               sslmode: disable
             version: 1
-            editable: true              
+            editable: true
           - name: Redis
             type: redis-datasource
             access: proxy
@@ -346,6 +346,12 @@ spec:
         1-node-exporter:
           url: https://grafana.com/api/dashboards/11074/revisions/9/download
           datasource: Prometheus
+        cloudflared:
+          gnetId: 17457 # https://grafana.com/grafana/dashboards/17457?tab=revisions
+          revision: 6
+          datasource:
+            - name: DS_PROMETHEUS
+              value: Prometheus
         node-exporter-full:
           gnetId: 1860
           revision: 30
