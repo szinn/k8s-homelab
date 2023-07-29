@@ -4,7 +4,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: snapshot-controller
-  namespace: kube-system
+  namespace: system
 spec:
   interval: 15m
   chart:
@@ -49,7 +49,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: snapshot-validation-webhook
-  namespace: kube-system
+  namespace: system
 spec:
   interval: 15m
   chart:

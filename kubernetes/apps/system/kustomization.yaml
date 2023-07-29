@@ -8,4 +8,5 @@ resources:
   - intel-device-plugin/install.yaml
   - node-feature-discovery/install.yaml
   - reloader/install.yaml
+  - snapshot-controller/install.yaml
   - volsync/install.yaml

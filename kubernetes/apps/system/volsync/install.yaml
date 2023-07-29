@@ -11,7 +11,7 @@ spec:
     kind: GitRepository
     name: homelab-kubernetes
   dependsOn:
-    - name: kube-system-snapshot-controller
+    - name: system-snapshot-controller
     - name: security-external-secrets-stores
   prune: true
   wait: true
