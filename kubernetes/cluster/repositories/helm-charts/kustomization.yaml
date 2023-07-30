@@ -21,6 +21,7 @@ resources:
   - jetstack-charts.yaml
   - kubernetes-sigs-metrics-server-charts.yaml
   - kyverno-charts.yaml
+  - lwolf-charts.yaml
   - node-feature-discovery-charts.yaml
   - piraeus-charts.yaml
   - postfinance-charts.yaml
