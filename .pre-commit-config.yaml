@@ -22,7 +22,7 @@ repos:
       - id: check-merge-conflict
       - id: check-executables-have-shebangs
   - repo: https://github.com/Lucas-C/pre-commit-hooks
-    rev: v1.5.1
+    rev: v1.5.2
     hooks:
       - id: forbid-crlf
       - id: forbid-tabs
