@@ -2,6 +2,10 @@
 totp:
   disable: false
 
+server:
+  buffers:
+    read: 12288
+
 access_control:
   default_policy: deny
   networks:
