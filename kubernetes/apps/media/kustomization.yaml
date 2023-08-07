@@ -4,7 +4,6 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - pvc
-  - bazarr/install.yaml
   - bonob/install.yaml
   - calibre-web/install.yaml
   - immich/install.yaml
