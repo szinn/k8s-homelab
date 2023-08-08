@@ -33,11 +33,12 @@ spec:
       annotations:
         reloader.stakater.com/auto: "true"
     image:
-      repository: ghcr.io/szinn/sonarr
-      tag: 3.0.10.1567@sha256:cb06303704e696d2c513fe76e628fcc530e3a9cd56fb2f7705b23b5e5a8018cc
+      repository: ghcr.io/onedr0p/sonarr-develop
+      tag: 4.0.0.600@sha256:59752df8be25d96d566f53c99a14e905a97afe636ea6bb4e806f0e245647cde1
     env:
       TZ: ${CONFIG_TIMEZONE}
       SONARR__LOG_LEVEL: info
+      SONARR__THEME: dark
     envFrom:
       - secretRef:
           name: sonarr-secret
@@ -52,10 +53,6 @@ spec:
         ingressClassName: "nginx"
         annotations:
           ingress.home.arpa/type: "internal"
-          nginx.ingress.kubernetes.io/configuration-snippet: |
-            proxy_set_header Accept-Encoding "";
-            sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.${SECRET_DOMAIN_NAME}/css/base/sonarr/nord.css"></head>';
-            sub_filter_once on;
         hosts:
           - host: "{{ .Release.Name }}.${SECRET_DOMAIN_NAME}"
             paths:
