@@ -4,5 +4,3 @@ kind: Kustomization
 resources:
   - outline-secrets.yaml
   - helm-release.yaml
-patchesStrategicMerge:
-  - patches/env.yaml

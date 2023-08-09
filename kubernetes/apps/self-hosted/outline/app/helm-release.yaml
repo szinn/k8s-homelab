@@ -39,6 +39,29 @@ spec:
     image:
       repository: docker.io/outlinewiki/outline
       tag: 0.70.2
+    env:
+      AWS_REGION: us-east-1
+      AWS_S3_UPLOAD_BUCKET_URL: "http://atlas.${SECRET_TECH_DOMAIN_NAME}:9000"
+      AWS_S3_UPLOAD_BUCKET_NAME: outline
+      AWS_S3_UPLOAD_MAX_SIZE: "26214400"
+      AWS_S3_FORCE_PATH_STYLE: "true"
+      AWS_S3_ACL: private
+      ENABLE_UPDATES: "false"
+      OIDC_CLIENT_ID: outline
+      OIDC_CLIENT_SECRET: "${SECRET_OUTLINE_OAUTH_CLIENT_SECRET}"
+      OIDC_AUTH_URI: "https://auth.${SECRET_DOMAIN_NAME}/api/oidc/authorization"
+      OIDC_TOKEN_URI: "https://auth.${SECRET_DOMAIN_NAME}/api/oidc/token"
+      OIDC_USERINFO_URI: "https://auth.${SECRET_DOMAIN_NAME}/api/oidc/userinfo"
+      OIDC_DISPLAY_NAME: "WilZinn World"
+      OIDC_SCOPES: "openid profile email offline_access"
+      OIDC_USERNAME_CLAIM: email
+      PGSSLMODE: disable
+      PORT: 3000
+      REDIS_URL: "ioredis://eyJkYiI6MCwic2VudGluZWxzIjpbeyJob3N0IjoicmVkaXMtbm9kZS0wLnJlZGlzLWhlYWRsZXNzLmRibXMuc3ZjLmNsdXN0ZXIubG9jYWwiLCJwb3J0IjoyNjM3OX0seyJob3N0IjoicmVkaXMtbm9kZS0xLnJlZGlzLWhlYWRsZXNzLmRibXMuc3ZjLmNsdXN0ZXIubG9jYWwiLCJwb3J0IjoyNjM3OX0seyJob3N0IjoicmVkaXMtbm9kZS0yLnJlZGlzLWhlYWRsZXNzLmRibXMuc3ZjLmNsdXN0ZXIubG9jYWwiLCJwb3J0IjoyNjM3OX1dLCJuYW1lIjoicmVkaXMtbWFzdGVyIn0="
+      URL: "https://wiki.${SECRET_DOMAIN_NAME}"
+      FORCE_HTTPS: "true"
+      WEB_CONCURRENCY: 10
+      LOG_LEVEL: debug
     envFrom:
       - secretRef:
           name: outline-secret
