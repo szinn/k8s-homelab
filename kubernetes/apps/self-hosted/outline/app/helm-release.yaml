@@ -42,6 +42,7 @@ spec:
     env:
       AWS_REGION: us-east-1
       AWS_S3_UPLOAD_BUCKET_URL: "http://atlas.${SECRET_TECH_DOMAIN_NAME}:9000"
+      AWS_S3_ACCELERATE_URL: "http://atlas.${SECRET_TECH_DOMAIN_NAME}:9000"
       AWS_S3_UPLOAD_BUCKET_NAME: outline
       AWS_S3_UPLOAD_MAX_SIZE: "26214400"
       AWS_S3_FORCE_PATH_STYLE: "true"
