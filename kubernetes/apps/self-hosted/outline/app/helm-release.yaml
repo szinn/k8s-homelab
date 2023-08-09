@@ -49,7 +49,6 @@ spec:
       AWS_S3_ACL: private
       ENABLE_UPDATES: "false"
       OIDC_CLIENT_ID: outline
-      OIDC_CLIENT_SECRET: "${SECRET_OUTLINE_OAUTH_CLIENT_SECRET}"
       OIDC_AUTH_URI: "https://auth.${SECRET_DOMAIN_NAME}/api/oidc/authorization"
       OIDC_TOKEN_URI: "https://auth.${SECRET_DOMAIN_NAME}/api/oidc/token"
       OIDC_USERINFO_URI: "https://auth.${SECRET_DOMAIN_NAME}/api/oidc/userinfo"
