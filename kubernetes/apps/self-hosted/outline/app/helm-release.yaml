@@ -53,13 +53,14 @@ spec:
       OIDC_TOKEN_URI: "https://auth.${SECRET_DOMAIN_NAME}/api/oidc/token"
       OIDC_USERINFO_URI: "https://auth.${SECRET_DOMAIN_NAME}/api/oidc/userinfo"
       OIDC_DISPLAY_NAME: "WilZinn World"
+      OIDC_CLIENT_SECRET: "${SECRET_OUTLINE_OAUTH_CLIENT_SECRET}"
       OIDC_SCOPES: "openid profile email offline_access"
       OIDC_USERNAME_CLAIM: email
       PGSSLMODE: disable
       PORT: 3000
       REDIS_URL: "ioredis://eyJkYiI6MCwic2VudGluZWxzIjpbeyJob3N0IjoicmVkaXMtbm9kZS0wLnJlZGlzLWhlYWRsZXNzLmRibXMuc3ZjLmNsdXN0ZXIubG9jYWwiLCJwb3J0IjoyNjM3OX0seyJob3N0IjoicmVkaXMtbm9kZS0xLnJlZGlzLWhlYWRsZXNzLmRibXMuc3ZjLmNsdXN0ZXIubG9jYWwiLCJwb3J0IjoyNjM3OX0seyJob3N0IjoicmVkaXMtbm9kZS0yLnJlZGlzLWhlYWRsZXNzLmRibXMuc3ZjLmNsdXN0ZXIubG9jYWwiLCJwb3J0IjoyNjM3OX1dLCJuYW1lIjoicmVkaXMtbWFzdGVyIn0="
       URL: "https://wiki.${SECRET_DOMAIN_NAME}"
-      FORCE_HTTPS: "true"
+      FORCE_HTTPS: true
       WEB_CONCURRENCY: 10
       LOG_LEVEL: debug
     envFrom:

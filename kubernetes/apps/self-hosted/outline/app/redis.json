@@ -1,0 +1,18 @@
+{
+  "db":0,
+  "sentinels": [
+    {
+      "host":"redis-node-0.redis-headless.dbms.svc.cluster.local",
+      "port":26379
+    },
+    {
+      "host":"redis-node-1.redis-headless.dbms.svc.cluster.local",
+      "port":26379
+    },
+    {
+      "host":"redis-node-2.redis-headless.dbms.svc.cluster.local",
+      "port":26379
+    }
+  ],
+  "name":"redis-master"
+}
