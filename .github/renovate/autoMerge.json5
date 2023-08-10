@@ -36,6 +36,7 @@
         "ghcr.io/onedr0p/recyclarr",
         "ghcr.io/onedr0p/sabnzbd",
         "ghcr.io/onedr0p/sonarr",
+        "ghcr.io/onedr0p/sonarr-develop",
 
         "renovatebot/github-action"
       ]
