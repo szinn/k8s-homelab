@@ -67,3 +67,12 @@ spec:
             paths:
               - path: /
                 type: Prefix
+    persistence:
+      sshkey:
+        enabled: true
+        type: secret
+        name: wikijs-secret
+        items:
+          - key: id_rsa
+            path: id_rsa
+        mountPath: /home/node/.ssh
