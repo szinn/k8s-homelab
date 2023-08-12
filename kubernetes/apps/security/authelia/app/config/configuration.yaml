@@ -28,7 +28,7 @@ access_control:
       subject:
         - "group:admins"
         - "group:app-wiki"
-    - domain: "wikijs.${SECRET_DOMAIN_NAME}"
+    - domain: "wiki.${SECRET_DOMAIN_NAME}"
       policy: one_factor
       subject:
         - "group:admins"
@@ -73,7 +73,7 @@ identity_providers:
         audience: []
         pre_configured_consent_duration: 1y
         scopes: ["openid", "profile", "email"]
-        redirect_uris: ["https://wikijs.${SECRET_DOMAIN_NAME}/login/4af940e3-d9f6-4cf7-8db0-635df533aed5/callback"]
+        redirect_uris: ["https://wiki.${SECRET_DOMAIN_NAME}/login/4af940e3-d9f6-4cf7-8db0-635df533aed5/callback"]
         response_modes: ["form_post"]
         userinfo_signing_algorithm: none
       - id: outline

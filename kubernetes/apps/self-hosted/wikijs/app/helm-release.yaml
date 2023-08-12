@@ -42,7 +42,7 @@ spec:
       tag: "2.5.299"
     env:
       TZ: ${CONFIG_TIMEZONE}
-      APP_URL: "https://wikijs.${SECRET_DOMAIN_NAME}"
+      APP_URL: "https://wiki.${SECRET_DOMAIN_NAME}"
       DB_TYPE: postgres
       DB_HOST: postgres-rw.dbms
       DB_PORT: 5432
@@ -63,7 +63,7 @@ spec:
         annotations:
           ingress.home.arpa/type: external-auth
         hosts:
-          - host: "wikijs.${SECRET_DOMAIN_NAME}"
+          - host: "wiki.${SECRET_DOMAIN_NAME}"
             paths:
               - path: /
                 type: Prefix
