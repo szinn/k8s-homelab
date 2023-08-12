@@ -59,7 +59,7 @@ spec:
       PGSSLMODE: disable
       PORT: 3000
       REDIS_URL: "ioredis://eyJkYiI6MCwic2VudGluZWxzIjpbeyJob3N0IjoicmVkaXMtbm9kZS0wLnJlZGlzLWhlYWRsZXNzLmRibXMuc3ZjLmNsdXN0ZXIubG9jYWwiLCJwb3J0IjoyNjM3OX0seyJob3N0IjoicmVkaXMtbm9kZS0xLnJlZGlzLWhlYWRsZXNzLmRibXMuc3ZjLmNsdXN0ZXIubG9jYWwiLCJwb3J0IjoyNjM3OX0seyJob3N0IjoicmVkaXMtbm9kZS0yLnJlZGlzLWhlYWRsZXNzLmRibXMuc3ZjLmNsdXN0ZXIubG9jYWwiLCJwb3J0IjoyNjM3OX1dLCJuYW1lIjoicmVkaXMtbWFzdGVyIn0="
-      URL: "https://wiki.${SECRET_DOMAIN_NAME}"
+      URL: "https://wikio.${SECRET_DOMAIN_NAME}"
       FORCE_HTTPS: true
       WEB_CONCURRENCY: 10
       LOG_LEVEL: debug
@@ -84,7 +84,7 @@ spec:
         annotations:
           ingress.home.arpa/type: "external-auth"
         hosts:
-          - host: "wiki.${SECRET_DOMAIN_NAME}"
+          - host: "wikio.${SECRET_DOMAIN_NAME}"
             paths:
               - path: /
                 pathType: Prefix

@@ -23,7 +23,7 @@ access_control:
       subject:
         - "group:admins"
         - "group:app-home"
-    - domain: "wiki.${SECRET_DOMAIN_NAME}"
+    - domain: "wikio.${SECRET_DOMAIN_NAME}"
       policy: one_factor
       subject:
         - "group:admins"
@@ -83,7 +83,7 @@ identity_providers:
         authorization_policy: one_factor
         pre_configured_consent_duration: 1y
         scopes: ["openid", "profile", "email", "offline_access"]
-        redirect_uris: ["https://wiki.${SECRET_DOMAIN_NAME}/auth/oidc.callback"]
+        redirect_uris: ["https://wikio.${SECRET_DOMAIN_NAME}/auth/oidc.callback"]
         userinfo_signing_algorithm: none
       - id: immich
         description: Immich
