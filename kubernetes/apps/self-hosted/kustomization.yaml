@@ -8,3 +8,4 @@ resources:
   - outline/install.yaml
   - shlink/install.yaml
   - theme-park/install.yaml
+  - wikijs/install.yaml

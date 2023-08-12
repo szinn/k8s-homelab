@@ -1,0 +1,69 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: wikijs
+  namespace: self-hosted
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+      interval: 15m
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    initContainers:
+      init-db:
+        image: ghcr.io/onedr0p/postgres-init:14.8
+        envFrom:
+          - secretRef:
+              name: wikijs-secret
+    controller:
+      annotations:
+        reloader.stakater.com/auto: "true"
+    image:
+      repository: ghcr.io/requarks/wiki
+      pullPolicy: IfNotPresent
+      tag: "2.5.299"
+    env:
+      TZ: ${CONFIG_TIMEZONE}
+      APP_URL: "https://wikijs.${SECRET_DOMAIN_NAME}"
+      DB_TYPE: postgres
+      DB_HOST: postgres-rw.dbms
+      DB_PORT: 5432
+      DB_NAME: wikijs
+      DB_USER: wikijs
+    envFrom:
+      - secretRef:
+          name: wikijs-secret
+    service:
+      main:
+        ports:
+          http:
+            port: 3000
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: nginx
+        annotations:
+          ingress.home.arpa/type: internal
+        hosts:
+          - host: "wikijs.${SECRET_DOMAIN_NAME}"
+            paths:
+              - path: /
+                type: Prefix
