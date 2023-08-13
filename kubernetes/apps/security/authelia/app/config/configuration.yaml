@@ -23,11 +23,6 @@ access_control:
       subject:
         - "group:admins"
         - "group:app-home"
-    - domain: "wikio.${SECRET_DOMAIN_NAME}"
-      policy: one_factor
-      subject:
-        - "group:admins"
-        - "group:app-wiki"
     - domain: "wiki.${SECRET_DOMAIN_NAME}"
       policy: one_factor
       subject:
@@ -67,7 +62,7 @@ identity_providers:
     clients:
       - id: wikijs
         description: WikiJS
-        secret: "${SECRET_OUTLINE_OAUTH_CLIENT_SECRET}"
+        secret: "${SECRET_WIKI_OAUTH_CLIENT_SECRET}"
         public: false
         authorization_policy: one_factor
         audience: []
@@ -75,15 +70,6 @@ identity_providers:
         scopes: ["openid", "profile", "email"]
         redirect_uris: ["https://wiki.${SECRET_DOMAIN_NAME}/login/4af940e3-d9f6-4cf7-8db0-635df533aed5/callback"]
         response_modes: ["form_post"]
-        userinfo_signing_algorithm: none
-      - id: outline
-        description: Outline
-        secret: "${SECRET_OUTLINE_OAUTH_CLIENT_SECRET}"
-        public: false
-        authorization_policy: one_factor
-        pre_configured_consent_duration: 1y
-        scopes: ["openid", "profile", "email", "offline_access"]
-        redirect_uris: ["https://wikio.${SECRET_DOMAIN_NAME}/auth/oidc.callback"]
         userinfo_signing_algorithm: none
       - id: immich
         description: Immich

@@ -5,7 +5,6 @@ resources:
   - namespace.yaml
   - changedetection/install.yaml
   - dashy/install.yaml
-  - outline/install.yaml
   - shlink/install.yaml
   - theme-park/install.yaml
   - wikijs/install.yaml
