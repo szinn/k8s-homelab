@@ -39,7 +39,7 @@ spec:
     image:
       repository: ghcr.io/requarks/wiki
       pullPolicy: IfNotPresent
-      tag: "2.5.299"
+      tag: "2.5.300"
     env:
       TZ: ${CONFIG_TIMEZONE}
       APP_URL: "https://wiki.${SECRET_DOMAIN_NAME}"
