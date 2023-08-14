@@ -30,7 +30,7 @@ spec:
   values:
     initContainers:
       init-db:
-        image: ghcr.io/onedr0p/postgres-init:14.8
+        image: ghcr.io/onedr0p/postgres-init:14.9
         imagePullPolicy: Always
         envFrom:
           - secretRef:
