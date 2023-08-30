@@ -37,7 +37,7 @@ spec:
         configmap.reloader.stakater.com/reload: immich-configmap
     image:
       repository: ghcr.io/immich-app/immich-web
-      tag: v1.75.2
+      tag: v1.76.0
     command: /bin/sh
     args:
       - ./entrypoint.sh
