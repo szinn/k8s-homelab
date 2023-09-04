@@ -18,7 +18,6 @@ resources:
   - grafana-charts.yaml
   - ingress-nginx-charts.yaml
   - intel-charts.yaml
-  - jaeger-charts.yaml
   - jetstack-charts.yaml
   - kubernetes-sigs-metrics-server-charts.yaml
   - kyverno-charts.yaml
