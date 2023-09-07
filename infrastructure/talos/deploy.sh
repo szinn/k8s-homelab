@@ -2,6 +2,7 @@
 
 # Only need to do this once since the config keys will always be the same
 # talosctl --talosconfig=./clusterconfig/talosconfig config endpoint 10.11.0.16 10.11.0.17 10.11.0.18
+# talosctl --talosconfig=./clusterconfig/talosconfig config node 10.11.0.16 10.11.0.17 10.11.0.18 10.11.0.19 10.11.0.20 10.11.0.21
 # talosctl config merge ./clusterconfig/talosconfig
 # talosctl kubeconfig -n 10.11.0.16
 
