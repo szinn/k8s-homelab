@@ -84,6 +84,20 @@
         "commitMessageTopic": "{{{groupName}}} group"
       },
       "separateMinorPatch": false
+    },
+    {
+      "description": "Github Action Runner",
+      "groupName": "gha",
+      "matchPackagePatterns": [
+        "gha-runner-scale-set",
+        "gha-runner-scale-set-controller"
+      ],
+      "matchDatasources": ["github-releases"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
+      "separateMinorPatch": false
     }
   ]
 }
