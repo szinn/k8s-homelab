@@ -33,7 +33,7 @@ spec:
         reloader.stakater.com/auto: "true"
     image:
       repository: ghcr.io/onedr0p/plex
-      tag: 1.32.5.7349-8f4248874@sha256:e2fa39779d5fe7f10ee92b9c2fc492113c3a397d3ce5032152e0cb6d557a295c
+      tag: 1.32.6.7468-07e0d4a7e@sha256:ac4c6d822de056eff755e96c78088244a900b3183a57afb7656a6ba2586173e3
     env:
       TZ: "${CONFIG_TIMEZONE}"
       ADVERTISE_IP: "http://${CONFIG_SVC_PLEX_ADDR}:32400,https://{{ .Release.Name }}.${SECRET_DOMAIN_NAME}:443"
