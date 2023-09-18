@@ -217,7 +217,7 @@ spec:
         thanos:
           image: quay.io/thanos/thanos:v0.32.2
           objectStorageConfig:
-            name: thanos-objstore-secret
+            name: thanos-s3-secret
             key: objstore.yml
         additionalScrapeConfigs:
           - job_name: minio-job

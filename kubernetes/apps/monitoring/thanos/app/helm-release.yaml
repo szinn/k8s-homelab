@@ -35,12 +35,7 @@ spec:
     controller:
       annotations:
         secret.reloader.stakater.com/reload: thanos-secret
-    objstoreConfig:
-      type: s3
-      config:
-        bucket: thanos
-        access_key: thanos
-        insecure: true
+    existingObjstoreSecret: thanos-s3-secret
     query:
       enabled: true
       replicaCount: 3
@@ -104,12 +99,3 @@ spec:
       enabled: true
       serviceMonitor:
         enabled: true
-  valuesFrom:
-    - kind: Secret
-      name: thanos-secret
-      valuesKey: secret-key
-      targetPath: objstoreConfig.config.secret_key
-    - kind: Secret
-      name: thanos-secret
-      valuesKey: s3-endpoint
-      targetPath: objstoreConfig.config.endpoint
