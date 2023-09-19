@@ -98,6 +98,20 @@
         "commitMessageTopic": "{{{groupName}}} group"
       },
       "separateMinorPatch": false
+    },
+    {
+      "description": "Snapshot controller",
+      "groupName": "SnapshotController",
+      "matchPackagePatterns": [
+        "snapshot-validation-webhook",
+        "snapshot-controller"
+      ],
+      "matchDatasources": ["github-releases"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
+      "separateMinorPatch": false
     }
   ]
 }
