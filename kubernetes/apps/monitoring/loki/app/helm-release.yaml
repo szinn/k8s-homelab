@@ -182,12 +182,6 @@ spec:
       persistence:
         size: 20Gi
         storageClass: local-hostpath
-      extraVolumeMounts:
-        - name: rules
-          mountPath: /rules
-      extraVolumes:
-        - name: rules
-          emptyDir: {}
     monitoring:
       dashboards:
         enabled: true
