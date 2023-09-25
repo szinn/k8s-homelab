@@ -31,16 +31,16 @@ snapshots:
   timestamp: false
   bounding_box: true
   retain:
-    default: 10
+    default: 20
 
 record:
   enabled: true
   retain:
-    days: 10
+    days: 20
     mode: all
   events:
     retain:
-      default: 10
+      default: 20
       mode: active_objects
 
 objects:
