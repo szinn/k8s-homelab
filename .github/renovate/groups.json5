@@ -92,7 +92,7 @@
         "gha-runner-scale-set",
         "gha-runner-scale-set-controller"
       ],
-      "matchDatasources": ["github-releases"],
+      "matchDatasources": ["docker", "github-releases"],
       "matchUpdateTypes": ["minor", "patch"],
       "group": {
         "commitMessageTopic": "{{{groupName}}} group"
@@ -106,7 +106,7 @@
         "snapshot-validation-webhook",
         "snapshot-controller"
       ],
-      "matchDatasources": ["github-releases"],
+      "matchDatasources": ["docker", "github-releases"],
       "matchUpdateTypes": ["minor", "patch"],
       "group": {
         "commitMessageTopic": "{{{groupName}}} group"
