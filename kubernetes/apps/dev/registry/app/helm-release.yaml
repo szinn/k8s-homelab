@@ -31,7 +31,7 @@ spec:
       strategy: RollingUpdate
     image:
       repository: public.ecr.aws/docker/library/registry
-      tag: 2.8.2
+      tag: 2.8.3
     env:
       REGISTRY_HTTP_ADDR: 0.0.0.0:5000
       REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /data
