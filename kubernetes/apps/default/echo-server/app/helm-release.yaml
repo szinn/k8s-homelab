@@ -10,38 +10,49 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.1
       interval: 30m
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
         namespace: flux-system
   values:
-    image:
-      repository: ghcr.io/mendhak/http-https-echo
-      tag: "30"
-    env:
-      HTTP_PORT: &port 8080
-      LOG_WITHOUT_NEWLINE: "true"
-      LOG_IGNORE_PATH: "/healthz"
+    controllers:
+      main:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: ghcr.io/mendhak/http-https-echo
+              tag: 30
+            env:
+              HTTP_PORT: &port 8080
+              LOG_WITHOUT_NEWLINE: "true"
+              LOG_IGNORE_PATH: "/healthz"
+            resources:
+              requests:
+                cpu: 5m
+                memory: 30M
+              limits:
+                memory: 30M
+
     service:
       main:
         ports:
           http:
             port: *port
+
     ingress:
       main:
         enabled: true
-        ingressClassName: "nginx"
+        className: nginx
         annotations:
           ingress.home.arpa/type: "external"
         hosts:
           - host: "{{ .Release.Name }}.${SECRET_DOMAIN_NAME}"
             paths:
               - path: /
-    resources:
-      requests:
-        cpu: 15m
-        memory: 64M
-      limits:
-        memory: 128M
+                service:
+                  name: main
+                  port: http
