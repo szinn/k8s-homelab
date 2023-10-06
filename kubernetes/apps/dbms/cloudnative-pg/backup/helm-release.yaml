@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.2
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -27,53 +27,52 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      type: cronjob
-      cronjob:
-        schedule: "@daily"
-        ttlSecondsAfterFinished: 43200
-    restartPolicy: OnFailure
-    image:
-      repository: docker.io/prodrigestivill/postgres-backup-local
-      tag: 16@sha256:085926531fbabe298792a83384d07d6146683732e53e51891ac75eaa71e09d08
-      pullPolicy: IfNotPresent
-    command: ["/backup.sh"]
-    env:
-      - name: POSTGRES_HOST
-        value: postgres-ro.dbms.svc.cluster.local
-      - name: POSTGRES_USER
-        valueFrom:
-          secretKeyRef:
-            name: postgres-superuser
-            key: POSTGRES_SUPER_USER
-      - name: POSTGRES_PASSWORD
-        valueFrom:
-          secretKeyRef:
-            name: postgres-superuser
-            key: POSTGRES_SUPER_PASS
-      - name: POSTGRES_DB
-        value: "dmarc,shlink,teslamate,immich,lldap,wikijs"
-      - name: BACKUP_KEEP_DAYS
-        value: "7"
-      - name: BACKUP_KEEP_WEEKS
-        value: "4"
-      - name: BACKUP_KEEP_MONTHS
-        value: "6"
-      - name: BACKUP_KEEP_MINS
-        value: "7200"
-      - name: POSTGRES_EXTRA_OPTS
-        value: "-b -C -Z6"
-    enableServiceLinks: false
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+      enableServiceLinks: false
+
+    controllers:
+      main:
+        type: cronjob
+        cronjob:
+          schedule: "@daily"
+          ttlSecondsAfterFinished: 43200
+        containers:
+          main:
+            image:
+              repository: docker.io/prodrigestivill/postgres-backup-local
+              tag: 16@sha256:085926531fbabe298792a83384d07d6146683732e53e51891ac75eaa71e09d08
+            command: ["/backup.sh"]
+            envFrom:
+              - secretRef:
+                  name: postgres-backups-secret
+            env:
+              - name: POSTGRES_HOST
+                value: postgres-ro.dbms
+              - name: POSTGRES_DB
+                value: "dmarc,shlink,teslamate,immich,lldap,wikijs"
+              - name: BACKUP_KEEP_DAYS
+                value: "7"
+              - name: BACKUP_KEEP_WEEKS
+                value: "4"
+              - name: BACKUP_KEEP_MONTHS
+                value: "6"
+              - name: BACKUP_KEEP_MINS
+                value: "7200"
+              - name: POSTGRES_EXTRA_OPTS
+                value: "-b -C -Z6"
+
     service:
       main:
         enabled: false
+
     persistence:
       backups:
         enabled: true
         existingClaim: postgres-backups
-        mountPath: /backups
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
-      fsGroupChangePolicy: "OnRootMismatch"
+        globalMounts:
+          - path: /backups
