@@ -28,13 +28,6 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    defaultPodOptions:
-      securityContext:
-        runAsUser: 5050
-        runAsGroup: 5050
-        fsGroup: 5050
-        fsGroupChangePolicy: OnRootMismatch
-
     controllers:
       main:
         type: statefulset
@@ -48,6 +41,12 @@ spec:
                 - path: /var/lib/pgadmin
         annotations:
           reloader.stakater.com/auto: "true"
+        pod:
+          securityContext:
+            runAsUser: 5050
+            runAsGroup: 5050
+            fsGroup: 5050
+            fsGroupChangePolicy: OnRootMismatch
         containers:
           main:
             image:

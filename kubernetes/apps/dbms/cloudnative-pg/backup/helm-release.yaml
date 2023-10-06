@@ -27,20 +27,19 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    defaultPodOptions:
-      securityContext:
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
-        fsGroupChangePolicy: OnRootMismatch
-      enableServiceLinks: false
-
     controllers:
       main:
         type: cronjob
         cronjob:
           schedule: "@daily"
           ttlSecondsAfterFinished: 43200
+        pod:
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            fsGroupChangePolicy: OnRootMismatch
+          enableServiceLinks: false
         containers:
           main:
             image:
