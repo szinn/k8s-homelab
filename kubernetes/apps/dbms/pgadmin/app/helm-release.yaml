@@ -90,6 +90,6 @@ spec:
         enabled: true
         type: configMap
         name: servers-json
-        subPath: servers.json
         globalMounts:
           - path: /pgadmin4/servers.json
+            subPath: servers.json

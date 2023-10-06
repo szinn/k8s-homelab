@@ -84,10 +84,10 @@ spec:
         enabled: true
         type: configMap
         name: redis-lb-configmap
-        subPath: haproxy.cfg
         readOnly: true
         globalMounts:
           - path: /usr/local/etc/haproxy/haproxy.cfg
+            subPath: haproxy.cfg
 
     serviceMonitor:
       main:
