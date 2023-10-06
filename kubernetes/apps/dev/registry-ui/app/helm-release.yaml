@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.2
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -26,36 +26,42 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      replicas: 1
-      strategy: RollingUpdate
-    image:
-      repository: parabuzzle/craneoperator
-      tag: 2.2.5
-    env:
-      PORT: 8080
-      REGISTRY_HOST: registry.${SECRET_DOMAIN_NAME}
-      REGISTRY_PORT: 443
-      SSL_VERIFY: false
-      REGISTRY_ALLOW_DELETE: true
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: parabuzzle/craneoperator
+              tag: 2.2.5
+            env:
+              PORT: 8080
+              REGISTRY_HOST: registry.${SECRET_DOMAIN_NAME}
+              REGISTRY_PORT: 443
+              SSL_VERIFY: false
+              REGISTRY_ALLOW_DELETE: true
+            securityContext:
+              runAsUser: 568
+              runAsGroup: 568
+              fsGroup: 568
+              fsGroupChangePolicy: "OnRootMismatch"
+
     service:
       main:
         ports:
           http:
             port: 8080
+
     ingress:
       main:
         enabled: true
-        ingressClassName: "nginx"
+        className: nginx
         annotations:
-          ingress.home.arpa/type: "internal"
+          ingress.home.arpa/type: internal
         hosts:
           - host: "{{ .Release.Name }}.${SECRET_DOMAIN_NAME}"
             paths:
               - path: /
                 pathType: Prefix
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
-      fsGroupChangePolicy: "OnRootMismatch"
+                service:
+                  name: main
+                  port: http
