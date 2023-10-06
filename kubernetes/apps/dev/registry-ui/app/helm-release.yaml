@@ -28,6 +28,12 @@ spec:
   values:
     controllers:
       main:
+        pod:
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            fsGroupChangePolicy: "OnRootMismatch"
         containers:
           main:
             image:
@@ -39,11 +45,6 @@ spec:
               REGISTRY_PORT: 443
               SSL_VERIFY: false
               REGISTRY_ALLOW_DELETE: true
-            securityContext:
-              runAsUser: 568
-              runAsGroup: 568
-              fsGroup: 568
-              fsGroupChangePolicy: "OnRootMismatch"
 
     service:
       main:

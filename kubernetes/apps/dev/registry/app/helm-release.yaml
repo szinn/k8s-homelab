@@ -28,6 +28,12 @@ spec:
   values:
     controllers:
       main:
+        pod:
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            fsGroupChangePolicy: "OnRootMismatch"
         containers:
           main:
             image:
@@ -37,11 +43,6 @@ spec:
               REGISTRY_HTTP_ADDR: 0.0.0.0:5000
               REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /data
               REGISTRY_STORAGE_DELETE_ENABLED: true
-            securityContext:
-              runAsUser: 568
-              runAsGroup: 568
-              fsGroup: 568
-              fsGroupChangePolicy: "OnRootMismatch"
 
     service:
       main:

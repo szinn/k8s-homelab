@@ -32,14 +32,14 @@ spec:
       main:
         annotations:
           reloader.stakater.com/auto: "true"
+        pod:
+          securityContext:
+            runAsUser: 99
+            runAsGroup: 99
+            fsGroup: 99
+            fsGroupChangePolicy: "OnRootMismatch"
         containers:
           main:
-            pod:
-              securityContext:
-                runAsUser: 99
-                runAsGroup: 99
-                fsGroup: 99
-                fsGroupChangePolicy: "OnRootMismatch"
             image:
               repository: public.ecr.aws/docker/library/haproxy
               tag: "2.8.3"
