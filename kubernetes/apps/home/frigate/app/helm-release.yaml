@@ -48,8 +48,6 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         pod:
-          securityContext:
-            privileged: true
           nodeSelector:
             google.feature.node.kubernetes.io/coral: "true"
             intel.feature.node.kubernetes.io/gpu: "true"
@@ -73,6 +71,8 @@ spec:
             envFrom:
               - secretRef:
                   name: frigate-secret
+            securityContext:
+              privileged: true
             probes:
               liveness: &probes
                 enabled: true
