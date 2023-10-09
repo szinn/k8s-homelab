@@ -35,7 +35,7 @@ spec:
       spec:
         containers:
           - name: runner
-            image: ghcr.io/szinn/github-actions-runner:2.309.0@sha256:e616ae3dc36a7521b5c0513b7e701963ecfc1238f429f0c1d1c775f0a433d0f1
+            image: ghcr.io/szinn/github-actions-runner:2.310.0@sha256:77aa5db9738bf105b944f53e350ee1844c391045ea99e4264f64714880f3f560
             volumeMounts:
               - name: cache-volume
                 mountPath: /cache
