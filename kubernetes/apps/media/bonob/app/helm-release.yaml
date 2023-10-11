@@ -30,7 +30,7 @@ spec:
   values:
     image:
       repository: ghcr.io/simojenki/bonob
-      tag: v0.6.10
+      tag: v0.6.11
     env:
       BNB_PORT: 4534
       BNB_LOG_LEVEL: debug
