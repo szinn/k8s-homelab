@@ -41,16 +41,6 @@
   },
   "regexManagers": [
     {
-      "description": "Process Tekton bucket dependencies",
-      "fileMatch": [
-        "kubernetes/.+\\.ya?ml$"
-      ],
-      "matchStrings": [
-        "#\\s+?tekton: depName=(?<depName>\\S+).*\n.*\\/previous\\/(?<currentValue>v\\d+\\.\\d+\\.\\d+)\\/"
-      ],
-      "datasourceTemplate": "github-releases"
-    },
-    {
       "description": "Process various dependencies",
       "fileMatch": [
         "kubernetes/.+\\.ya?ml$",
