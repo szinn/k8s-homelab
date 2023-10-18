@@ -36,7 +36,7 @@ spec:
         secret.reloader.stakater.com/reload: lidarr-secret
     image:
       repository: ghcr.io/onedr0p/exportarr
-      tag: v1.5.5
+      tag: v1.6.0
     env:
       TZ: "${TIMEZONE}"
       PORT: "7373"
