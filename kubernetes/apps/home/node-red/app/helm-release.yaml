@@ -33,7 +33,7 @@ spec:
   values:
     initContainers:
       npm-update:
-        image: node:20-alpine
+        image: node:21-alpine
         env:
           npm_config_cache: /data/.npm
         command:
