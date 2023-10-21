@@ -14,6 +14,7 @@ spec:
   storage:
     size: 100Gi
     storageClass: ceph-block
+  enableSuperuserAccess: true
   superuserSecret:
     name: postgres-superuser
   postgresql:
