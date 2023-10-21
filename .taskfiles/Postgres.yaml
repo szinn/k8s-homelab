@@ -1,0 +1,194 @@
+---
+version: "3"
+
+vars: 
+  dropDatabases: "{{.PROJECT_DIR}}/.taskfiles/drop_databases.sql"
+
+tasks:
+  down:
+    desc: Scale down all services that use Postgresql
+    cmds:
+      - task: _down
+        vars:
+          NAMESPACE: home
+          HELMRELEASE: home-assistant
+          KUSTOMIZATION: home-home-assistant
+          TYPE: statefulset
+          NAME: home-assistant
+      - task: _down
+        vars:
+          NAMESPACE: media
+          HELMRELEASE: immich-server
+          KUSTOMIZATION: media-immich
+          TYPE: deployment
+          NAME: immich-server
+      - task: _down
+        vars:
+          NAMESPACE: monitoring
+          HELMRELEASE: grafana
+          KUSTOMIZATION: monitoring-grafana
+          TYPE: deployment
+          NAME: grafana
+      - task: _down
+        vars:
+          NAMESPACE: monitoring
+          HELMRELEASE: teslamate
+          KUSTOMIZATION: monitoring-teslamate
+          TYPE: deployment
+          NAME: teslamate
+      - task: _down
+        vars:
+          NAMESPACE: security
+          HELMRELEASE: authelia
+          KUSTOMIZATION: security-authelia
+          TYPE: deployment
+          NAME: authelia
+      - task: _down
+        vars:
+          NAMESPACE: security
+          HELMRELEASE: dmarc-report
+          KUSTOMIZATION: security-dmarc-report
+          TYPE: statefulset
+          NAME: dmarc-report
+      - task: _down
+        vars:
+          NAMESPACE: security
+          HELMRELEASE: lldap
+          KUSTOMIZATION: security-lldap
+          TYPE: deployment
+          NAME: lldap
+      - task: _down
+        vars:
+          NAMESPACE: self-hosted
+          HELMRELEASE: shlink-api
+          KUSTOMIZATION: security-shlink
+          TYPE: deployment
+          NAME: shlink-api
+      - task: _down
+        vars:
+          NAMESPACE: self-hosted
+          HELMRELEASE: wikijs
+          KUSTOMIZATION: security-wikijs
+          TYPE: deployment
+          NAME: wikijs
+
+  up:
+    desc: Scale down all services that use Postgresql
+    cmds:
+      - task: _up
+        vars:
+          NAMESPACE: home
+          HELMRELEASE: home-assistant
+          KUSTOMIZATION: home-home-assistant
+          TYPE: statefulset
+          NAME: home-assistant
+          REPLICAS: 1
+      - task: _up
+        vars:
+          NAMESPACE: media
+          HELMRELEASE: immich-server
+          KUSTOMIZATION: media-immich
+          TYPE: deployment
+          NAME: immich-server
+          REPLICAS: 1
+      - task: _up
+        vars:
+          NAMESPACE: monitoring
+          HELMRELEASE: grafana
+          KUSTOMIZATION: monitoring-grafana
+          TYPE: deployment
+          NAME: grafana
+          REPLICAS: 1
+      - task: _up
+        vars:
+          NAMESPACE: monitoring
+          HELMRELEASE: teslamate
+          KUSTOMIZATION: monitoring-teslamate
+          TYPE: deployment
+          NAME: teslamate
+          REPLICAS: 1
+      - task: _up
+        vars:
+          NAMESPACE: security
+          HELMRELEASE: authelia
+          KUSTOMIZATION: security-authelia
+          TYPE: deployment
+          NAME: authelia
+          REPLICAS: 1
+      - task: _up
+        vars:
+          NAMESPACE: security
+          HELMRELEASE: dmarc-report
+          KUSTOMIZATION: security-dmarc-report
+          TYPE: statefulset
+          NAME: dmarc-report
+          REPLICAS: 1
+      - task: _up
+        vars:
+          NAMESPACE: security
+          HELMRELEASE: lldap
+          KUSTOMIZATION: security-lldap
+          TYPE: deployment
+          NAME: lldap
+          REPLICAS: 1
+      - task: _up
+        vars:
+          NAMESPACE: self-hosted
+          HELMRELEASE: shlink-api
+          KUSTOMIZATION: self-hosted-shlink
+          TYPE: deployment
+          NAME: shlink-api
+          REPLICAS: 1
+      - task: _up
+        vars:
+          NAMESPACE: self-hosted
+          HELMRELEASE: wikijs
+          KUSTOMIZATION: self-hosted-wikijs
+          TYPE: deployment
+          NAME: wikijs
+          REPLICAS: 1
+
+  restore:
+    desc: Restore databases
+    cmds:
+      - psql < {{.dropDatabases}}
+      - task: _restore_db
+        vars:
+          DATABASE: dmarc
+      - task: _restore_db
+        vars:
+          DATABASE: immich
+      - task: _restore_db
+        vars:
+          DATABASE: lldap
+      - task: _restore_db
+        vars:
+          DATABASE: shlink
+      - task: _restore_db
+        vars:
+          DATABASE: teslamate
+      - task: _restore_db
+        vars:
+          DATABASE: wikijs
+
+  _down:
+    desc: Bring a service down
+    cmds:
+      - flux suspend helmrelease -n {{.NAMESPACE}} {{.HELMRELEASE}}
+      - flux suspend kustomization {{.KUSTOMIZATION}}
+      - kubectl scale --replicas=0 -n {{.NAMESPACE}} {{.TYPE}}/{{.NAME}}
+
+  _up:
+    desc: Bring a service up
+    cmds:
+      - kubectl scale --replicas={{.REPLICAS}} -n {{.NAMESPACE}} {{.TYPE}}/{{.NAME}}
+      - flux resume helmrelease -n {{.NAMESPACE}} {{.HELMRELEASE}}
+      - flux resume kustomization {{.KUSTOMIZATION}}
+
+  _restore_db:
+    desc: Restore a database
+    cmds:
+      - cp {{.DBBACKUP}}/last/{{.DATABASE}}-latest.sql.gz /tmp
+      - gzip -d /tmp/{{.DATABASE}}-latest.sql.gz
+      - psql < /tmp/{{.DATABASE}}-latest.sql
+      - rm /tmp/{{.DATABASE}}-latest.sql
