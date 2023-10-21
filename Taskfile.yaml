@@ -6,14 +6,14 @@ vars:
     sh: "git rev-parse --show-toplevel"
 
 includes:
-  es: .taskfiles/ExternalSecrets/Tasks.yaml
-  fmt: .taskfiles/Format/Tasks.yaml
-  fx: .taskfiles/Flux/Tasks.yaml
-  kub: .taskfiles/Kubernetes/Tasks.yaml
-  pc: .taskfiles/PreCommit/Tasks.yaml
-  redis: .taskfiles/Redis/Tasks.yaml
-  rook: .taskfiles/Rook/Tasks.yaml
-  vs: .taskfiles/VolSync/Tasks.yaml
+  es: .taskfiles/ExternalSecrets.yaml
+  fmt: .taskfiles/Format.yaml
+  fx: .taskfiles/Flux.yaml
+  kub: .taskfiles/Kubernetes.yaml
+  pc: .taskfiles/PreCommit.yaml
+  redis: .taskfiles/Redis.yaml
+  rook: .taskfiles/Rook.yaml
+  vs: .taskfiles/VolSync.yaml
 
 tasks:
   secrets:
