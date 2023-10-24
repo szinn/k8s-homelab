@@ -55,7 +55,7 @@ spec:
   chart:
     spec:
       chart: snapshot-validation-webhook
-      version: 1.8.2
+      version: 1.8.3
       sourceRef:
         kind: HelmRepository
         name: piraeus-charts
