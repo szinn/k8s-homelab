@@ -33,7 +33,7 @@ spec:
         reloader.stakater.com/auto: "true"
     image:
       repository: docker.io/rogerrum/alertmanager-discord
-      tag: 1.0.4
+      tag: 1.0.5
     env:
       TZ: ${CONFIG_TIMEZONE}
       VERBOSE: ON
