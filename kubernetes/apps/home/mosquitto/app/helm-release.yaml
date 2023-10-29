@@ -82,6 +82,7 @@ spec:
       secret-file:
         type: secret
         name: mosquitto-secret
+        defaultMode: 0700
         advancedMounts:
           main:
             init-config:
