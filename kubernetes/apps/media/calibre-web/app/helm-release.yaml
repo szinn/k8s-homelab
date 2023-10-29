@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -28,16 +28,39 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      type: statefulset
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: ghcr.io/bjw-s/calibre-web
-      tag: 0.6.21@sha256:59bd0ad12124abf2f4c3621738ea3101615200491646556ef111f5e1fca6cb8e
-    env:
-      TZ: ${CONFIG_TIMEZONE}
-      CACHE_DIR: /cache
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 512Mi
+              storageClass: ceph-block
+              globalMounts:
+                - path: /config
+        pod:
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            fsGroupChangePolicy: "OnRootMismatch"
+        containers:
+          main:
+            image:
+              repository: ghcr.io/bjw-s/calibre-web
+              tag: 0.6.21@sha256:59bd0ad12124abf2f4c3621738ea3101615200491646556ef111f5e1fca6cb8e
+            env:
+              TZ: ${CONFIG_TIMEZONE}
+              CACHE_DIR: /cache
+            resources:
+              requests:
+                cpu: 15m
+                memory: 249M
+              limits:
+                memory: 299M
     service:
       main:
         ports:
@@ -46,7 +69,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
+        className: nginx
         annotations:
           ingress.home.arpa/type: "internal"
           nginx.ingress.kubernetes.io/configuration-snippet: |
@@ -57,29 +80,17 @@ spec:
           - host: books.${SECRET_DOMAIN_NAME}
             paths:
               - path: /
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
-      fsGroupChangePolicy: "OnRootMismatch"
-    enableServiceLinks: false
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /config
-        accessMode: ReadWriteOnce
-        size: 512Mi
-        storageClass: ceph-block
+                service:
+                  name: main
+                  port: http
     persistence:
       media:
-        enabled: true
         existingClaim: media-datastore
+        advancedMounts:
+          main:
+            main:
+              - path: /media
       cache:
-        enabled: true
         type: emptyDir
-        mountPath: /cache
-    resources:
-      requests:
-        cpu: 15m
-        memory: 249M
-      limits:
-        memory: 299M
+        globalMounts:
+          - path: /cache
