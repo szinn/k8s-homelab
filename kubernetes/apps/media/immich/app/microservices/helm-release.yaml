@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -27,47 +27,58 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      replicas: 1
-      strategy: RollingUpdate
-      annotations:
-        secret.reloader.stakater.com/reload: immich-secret
-        configmap.reloader.stakater.com/reload: immich-configmap
-    image:
-      repository: ghcr.io/immich-app/immich-server
-      tag: v1.83.0
-    command: /bin/sh
-    args:
-      - ./start-microservices.sh
-    envFrom:
-      - secretRef:
-          name: immich-secret
-      - configMapRef:
-          name: immich-configmap
+    controllers:
+      main:
+        strategy: RollingUpdate
+        annotations:
+          secret.reloader.stakater.com/reload: immich-secret
+          configmap.reloader.stakater.com/reload: immich-configmap
+        pod:
+          enableServiceLinks: false
+          nodeSelector:
+            intel.feature.node.kubernetes.io/gpu: "true"
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            fsGroupChangePolicy: OnRootMismatch
+          topologySpreadConstraints:
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: *app
+        containers:
+          main:
+            image:
+              repository: ghcr.io/immich-app/immich-server
+              tag: v1.83.0
+            command: /bin/sh
+            args:
+              - ./start-microservices.sh
+            envFrom:
+              - secretRef:
+                  name: immich-secret
+              - configMapRef:
+                  name: immich-configmap
     service:
       main:
         enabled: false
     persistence:
       library:
-        enabled: true
         existingClaim: immich-nfs
-        mountPath: /usr/src/app/upload
+        globalMounts:
+          - path: /usr/src/app/upload
       geocoding-dump:
-        enabled: true
         type: emptyDir
-        mountPath: /usr/src/app/.reverse-geocoding-dump
+        globalMounts:
+          - path: /usr/src/app/.reverse-geocoding-dump
       geoname-dump:
-        enabled: true
         type: emptyDir
-        mountPath: /usr/src/app/node_modules/local-reverse-geocoder/geonames_dump
+        globalMounts:
+          - path: /usr/src/app/node_modules/local-reverse-geocoder/geonames_dump
       transformers-cache:
-        enabled: true
         type: emptyDir
-        mountPath: /usr/src/app/.transformers_cache
-    topologySpreadConstraints:
-      - maxSkew: 1
-        topologyKey: kubernetes.io/hostname
-        whenUnsatisfiable: DoNotSchedule
-        labelSelector:
-          matchLabels:
-            app.kubernetes.io/name: *app
+        globalMounts:
+          - path: /usr/src/app/.transformers_cache
