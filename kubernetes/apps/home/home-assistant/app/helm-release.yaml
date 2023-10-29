@@ -39,6 +39,20 @@ spec:
         type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 8Gi
+              storageClass: ceph-block
+              globalMounts:
+                - path: /config
+        pod:
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            fsGroupChangePolicy: "OnRootMismatch"
         initContainers:
           init-db:
             image:
@@ -79,20 +93,6 @@ spec:
               - "/config"
             env:
               TZ: "${TIMEZONE}"
-        pod:
-          securityContext:
-            runAsUser: 568
-            runAsGroup: 568
-            fsGroup: 568
-            fsGroupChangePolicy: "OnRootMismatch"
-        statefulset:
-          volumeClaimTemplates:
-            - name: config
-              accessMode: ReadWriteOnce
-              size: 8Gi
-              storageClass: ceph-block
-              globalMounts:
-                - path: /config
     service:
       main:
         type: ClusterIP
