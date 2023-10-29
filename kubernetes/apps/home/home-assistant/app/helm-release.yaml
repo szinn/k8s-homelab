@@ -101,6 +101,16 @@ spec:
             port: 8123
           code-server:
             port: 8080
+    serviceMonitor:
+      main:
+        enabled: true
+        endpoints:
+          - port: http
+            scheme: http
+            path: /api/prometheus
+            bearerTokenSecret:
+              name: home-assistant-secret
+              key: HASS_BEARER_TOKEN
     ingress:
       main:
         enabled: true
