@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -28,19 +28,23 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    image:
-      repository: ghcr.io/simojenki/bonob
-      tag: v0.6.11
-    env:
-      BNB_PORT: 4534
-      BNB_LOG_LEVEL: debug
-      BNB_SONOS_AUTO_REGISTER: true
-      BNB_SONOS_DEVICE_DISCOVERY: true
-      BNB_SONOS_SEED_HOST: 192.168.1.135
-      BNB_SONOS_SERVICE_ID: 246
-      BNB_SONOS_SERVICE_NAME: Library
-      BNB_SUBSONIC_URL: https://music.${SECRET_DOMAIN_NAME}
-      BNB_URL: http://${CONFIG_SVC_BONOB_ADDR}:4534
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/simojenki/bonob
+              tag: v0.6.11
+            env:
+              BNB_PORT: 4534
+              BNB_LOG_LEVEL: debug
+              BNB_SONOS_AUTO_REGISTER: true
+              BNB_SONOS_DEVICE_DISCOVERY: true
+              BNB_SONOS_SEED_HOST: 192.168.1.135
+              BNB_SONOS_SERVICE_ID: 246
+              BNB_SONOS_SERVICE_NAME: Library
+              BNB_SUBSONIC_URL: https://music.${SECRET_DOMAIN_NAME}
+              BNB_URL: http://${CONFIG_SVC_BONOB_ADDR}:4534
     service:
       main:
         type: LoadBalancer
@@ -52,10 +56,13 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
+        className: nginx
         annotations:
           ingress.home.arpa/type: internal
         hosts:
           - host: bonob.${SECRET_DOMAIN_NAME}
             paths:
               - path: /
+                service:
+                  name: main
+                  port: http
