@@ -11,7 +11,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -31,35 +31,40 @@ spec:
     - name: home-assistant
       namespace: home
   values:
-    initContainers:
-      npm-update:
-        image: node:21-alpine
-        env:
-          npm_config_cache: /data/.npm
-        command:
-          - /bin/sh
-          - -c
-          - |
-            if [[ -f /data/package.json ]]; then
-                npm install --save $(npm outdated | cut -d' ' -f 1 | sed '1d' | xargs -I '$' echo '$@latest' | xargs echo);
-            else
-                echo "Skipping npm updates, no package.json found.";
-            fi
-        workingDir: /data
-        volumeMounts:
-          - name: data
-            mountPath: /data
-    controller:
-      type: statefulset
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: ghcr.io/k8s-at-home/node-red
-      tag: v3.0.2
-    env:
-      TZ: "${CONFIG_TIMEZONE}"
-      NODE_RED_ENABLE_PROJECTS: "true"
-      NODE_RED_ENABLE_SAFE_MODE: "false"
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        pod:
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            fsGroupChangePolicy: "OnRootMismatch"
+        statefulset:
+          volumeClaimTemplates:
+            - name: data
+              accessMode: ReadWriteOnce
+              size: 5Gi
+              storageClass: ceph-block
+              globalMounts:
+                - path: /data
+        containers:
+          main:
+            image:
+              repository: docker.io/nodered/node-red
+              tag: 3.1.0
+            env:
+              TZ: "${CONFIG_TIMEZONE}"
+              NODE_RED_ENABLE_PROJECTS: "true"
+              NODE_RED_ENABLE_SAFE_MODE: "false"
+            resources:
+              requests:
+                memory: 350Mi
+                cpu: 25m
+              limits:
+                memory: 500Mi
     service:
       main:
         type: ClusterIP
@@ -69,28 +74,13 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "nginx"
+        className: nginx
         annotations:
           ingress.home.arpa/type: "internal"
         hosts:
           - host: "{{ .Release.Name }}.${SECRET_DOMAIN_NAME}"
             paths:
               - path: /
-                pathType: Prefix
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
-      fsGroupChangePolicy: "OnRootMismatch"
-    volumeClaimTemplates:
-      - name: data
-        mountPath: /data
-        accessMode: ReadWriteOnce
-        size: 5Gi
-        storageClass: ceph-block
-    resources:
-      requests:
-        memory: 350Mi
-        cpu: 25m
-      limits:
-        memory: 500Mi
+                service:
+                  name: main
+                  port: http
