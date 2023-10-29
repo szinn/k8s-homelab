@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -26,97 +26,115 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+  dependsOn:
+    - name: cloudnative-pg
+      namespace: dbms
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+    - name: volsync
+      namespace: system
   values:
-    initContainers:
-      init-db:
-        image: ghcr.io/onedr0p/postgres-init:14.9
-        imagePullPolicy: IfNotPresent
-        envFrom:
-          - secretRef:
-              name: home-assistant-secret
-    controller:
-      type: statefulset
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: ghcr.io/onedr0p/home-assistant
-      tag: 2023.10.5@sha256:24ce89830111fe19bb2df00621dfd631fd20abe07a453ea60c2027890d5b934e
-    envFrom:
-      - secretRef:
-          name: home-assistant-secret
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 14.9
+              pullPolicy: IfNotPresent
+            envFrom:
+              - secretRef:
+                  name: home-assistant-secret
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/home-assistant
+              tag: 2023.10.5@sha256:24ce89830111fe19bb2df00621dfd631fd20abe07a453ea60c2027890d5b934e
+            envFrom:
+              - secretRef:
+                  name: home-assistant-secret
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+              startup:
+                enabled: false
+          code-server:
+            image:
+              repository: ghcr.io/coder/code-server
+              tag: 4.18.0
+            args:
+              - --auth
+              - none
+              - --user-data-dir
+              - "/config/.vscode"
+              - --extensions-dir
+              - "/config/.vscode"
+              - --port
+              - "8080"
+              - "/config"
+            env:
+              TZ: "${TIMEZONE}"
+        pod:
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            fsGroupChangePolicy: "OnRootMismatch"
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 8Gi
+              storageClass: ceph-block
+              globalMounts:
+                - path: /config
     service:
       main:
         type: ClusterIP
         ports:
           http:
             port: 8123
+          code-server:
+            port: 8080
     ingress:
       main:
         enabled: true
-        ingressClassName: "nginx"
+        className: nginx
         annotations:
           ingress.home.arpa/type: "external-auth"
         hosts:
           - host: "home.${SECRET_DOMAIN_NAME}"
             paths:
               - path: /
-                pathType: Prefix
-    probes:
-      liveness:
-        enabled: false
-      readiness:
-        enabled: false
-      startup:
-        enabled: false
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
-      fsGroupChangePolicy: "OnRootMismatch"
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /config
-        accessMode: ReadWriteOnce
-        size: 8Gi
-        storageClass: ceph-block
-    addons:
-      codeserver:
+                service:
+                  name: main
+                  port: http
+      code-server:
         enabled: true
-        image:
-          repository: ghcr.io/coder/code-server
-          tag: 4.18.0
-        env:
-          TZ: "${TIMEZONE}"
-        workingDir: /config
-        args:
-          - --auth
-          - none
-          - --user-data-dir
-          - "/config/.vscode"
-          - --extensions-dir
-          - "/config/.vscode"
-          - --port
-          - "12321"
-          - "/config"
-        ingress:
-          enabled: true
-          ingressClassName: "nginx"
-          annotations:
-            ingress.home.arpa/type: "internal"
-          hosts:
-            - host: "ha-code.${SECRET_DOMAIN_NAME}"
-              paths:
-                - path: /
-        persistence:
-          sshkey:
-            enabled: true
-            type: secret
-            name: home-assistant-secret
-            items:
-              - key: id_rsa
-                path: id_rsa
-            mountPath: /root/.ssh
-            defaultMode: 256
-        volumeMounts:
-          - name: config
-            mountPath: /config
+        className: nginx
+        annotations:
+          ingress.home.arpa/type: "internal"
+        hosts:
+          - host: "ha-code.${SECRET_DOMAIN_NAME}"
+            paths:
+              - path: /
+                service:
+                  name: main
+                  port: code-server
+    persistence:
+      sshkey:
+        enabled: true
+        type: secret
+        name: home-assistant-secret
+        items:
+          - key: id_rsa
+            path: id_rsa
+        defaultMode: 256
+        globalMounts:
+          - path: /root/.ssh
+            readOnly: true
