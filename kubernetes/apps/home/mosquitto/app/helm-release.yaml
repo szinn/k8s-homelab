@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -30,22 +30,38 @@ spec:
     - name: rook-ceph-cluster
       namespace: rook-ceph
   values:
-    initContainers:
-      01-init-config:
-        image: public.ecr.aws/docker/library/eclipse-mosquitto:2.0.18
-        imagePullPolicy: IfNotPresent
-        command: ["/bin/sh", "-c"]
-        args: ["cp /data/mosquitto_secret/* /data/external_config/ && mosquitto_passwd -U /data/external_config/mosquitto_pwd"]
-        volumeMounts:
-          - { name: secret-file, mountPath: /data/mosquitto_secret }
-          - { name: external-config, mountPath: /data/external_config }
-    controller:
-      type: statefulset
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: public.ecr.aws/docker/library/eclipse-mosquitto
-      tag: 2.0.18
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        initContainers:
+          init-config:
+            image:
+              repository: public.ecr.aws/docker/library/eclipse-mosquitto
+              tag: 2.0.18
+              pullPolicy: IfNotPresent
+            command: ["/bin/sh", "-c"]
+            args: ["cp /tmp/secret/* /mosquitto/external_config/ && mosquitto_passwd -U /mosquitto/external_config/mosquitto_pwd"]
+        containers:
+          main:
+            image:
+              repository: public.ecr.aws/docker/library/eclipse-mosquitto
+              tag: 2.0.18
+        pod:
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            fsGroupChangePolicy: OnRootMismatch
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 512Mi
+              storageClass: ceph-block
+              globalMounts:
+                - path: /data
     service:
       main:
         type: LoadBalancer
@@ -53,36 +69,24 @@ spec:
           io.cilium/lb-ipam-ips: ${CONFIG_SVC_MOSQUITTO_ADDR}
         ports:
           http:
-            enabled: false
-          mqtt:
-            enabled: true
             port: 1883
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
-      fsGroupChangePolicy: OnRootMismatch
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /data
-        accessMode: ReadWriteOnce
-        size: 512Mi
-        storageClass: ceph-block
     persistence:
       config-file:
-        enabled: true
         type: configMap
         name: mosquitto-configmap # overriden by kustomizeconfig
-        mountPath: /mosquitto/config/mosquitto.conf
-        subPath: mosquitto.conf
+        advancedMounts:
+          main:
+            main:
+              - path: /mosquitto/config/mosquitto.conf
+                subPath: mosquitto.conf
       secret-file:
-        enabled: true
         type: secret
         name: mosquitto-secret
-        subPath: mosquitto_pwd
-        mountPath: /data/mosquitto_secret/mosquitto_pwd
-        readOnly: true
+        advancedMounts:
+          main:
+            init-config:
+              - path: /tmp/secret
       external-config:
-        enabled: true
         type: emptyDir
-        mountPath: /mosquitto/external_config
+        globalMounts:
+          - path: /mosquitto/external_config
