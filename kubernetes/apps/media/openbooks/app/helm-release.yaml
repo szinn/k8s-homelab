@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -28,29 +28,46 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      type: statefulset
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: docker.io/evanbuss/openbooks
-      tag: latest
-      pullPolicy: IfNotPresent
-    command: /app/openbooks
-    args:
-      - server
-      - --dir
-      - /books
-      - --port
-      - "8080"
-      - --name
-      - ronwood
-      - --useragent
-      - "HexChat 2.9.1"
-      - --searchbot
-      - searchook
-    env:
-      TZ: ${CONFIG_TIMEZONE}
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        statefulset:
+          volumeClaimTemplates:
+            - name: books
+              accessMode: ReadWriteOnce
+              size: 2Gi
+              storageClass: ceph-block
+              globalMounts:
+                - path: /books
+        pod:
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            fsGroupChangePolicy: "OnRootMismatch"
+        containers:
+          main:
+            image:
+              repository: docker.io/evanbuss/openbooks
+              tag: latest
+              pullPolicy: IfNotPresent
+            command: /app/openbooks
+            args:
+              - server
+              - --dir
+              - /books
+              - --port
+              - "8080"
+              - --name
+              - ronwood
+              - --useragent
+              - "HexChat 2.9.1"
+              - --searchbot
+              - searchook
+            env:
+              TZ: ${CONFIG_TIMEZONE}
     service:
       main:
         ports:
@@ -59,22 +76,13 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
+        className: nginx
         annotations:
           ingress.home.arpa/type: "internal"
         hosts:
           - host: "{{ .Release.Name }}.${SECRET_DOMAIN_NAME}"
             paths:
               - path: /
-                pathType: Prefix
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
-      fsGroupChangePolicy: "OnRootMismatch"
-    volumeClaimTemplates:
-      - name: books
-        mountPath: /books
-        accessMode: ReadWriteOnce
-        size: 2Gi
-        storageClass: ceph-block
+                service:
+                  name: main
+                  port: http
