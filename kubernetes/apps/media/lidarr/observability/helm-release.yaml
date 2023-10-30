@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -31,35 +31,38 @@ spec:
     - name: lidarr
       namespace: media
   values:
-    controller:
-      annotations:
-        secret.reloader.stakater.com/reload: lidarr-secret
-    image:
-      repository: ghcr.io/onedr0p/exportarr
-      tag: v1.6.0
-    env:
-      TZ: "${TIMEZONE}"
-      PORT: "7373"
-      URL: "http://lidarr.media.svc.cluster.local:8686"
-      ENABLE_ADDITIONAL_METRICS: "false"
-      ENABLE_UNKNOWN_QUEUE_ITEMS: "false"
-      APIKEY:
-        valueFrom:
-          secretKeyRef:
-            name: lidarr-secret
-            key: LIDARR_API_KEY
-    args: ["lidarr"]
+    controllers:
+      main:
+        annotations:
+          secret.reloader.stakater.com/reload: lidarr-secret
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/exportarr
+              tag: v1.6.0
+            env:
+              TZ: "${TIMEZONE}"
+              PORT: "7373"
+              URL: "http://lidarr.media.svc.cluster.local:8686"
+              ENABLE_ADDITIONAL_METRICS: "false"
+              ENABLE_UNKNOWN_QUEUE_ITEMS: "false"
+              APIKEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: lidarr-secret
+                    key: LIDARR_API_KEY
+            args: ["lidarr"]
+            resources:
+              requests:
+                cpu: 100m
+                memory: 100Mi
+              limits:
+                memory: 250Mi
     service:
       main:
         ports:
           http:
             port: 7373
-    resources:
-      requests:
-        cpu: 100m
-        memory: 100Mi
-      limits:
-        memory: 250Mi
     serviceMonitor:
       main:
         enabled: true
