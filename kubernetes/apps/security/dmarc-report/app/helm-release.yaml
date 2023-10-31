@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -25,25 +25,38 @@ spec:
     remediation:
       retries: 3
   values:
-    initContainers:
-      init-db:
-        image: ghcr.io/onedr0p/postgres-init:14.9
-        envFrom:
-          - secretRef:
-              name: dmarc-report-secret
-    controller:
-      type: statefulset
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: ghcr.io/szinn/dmarc-report
-      tag: 1.4.1@sha256:3bdb6549f9f577ec75034a415d13beb77fec9e296428d1a1e88c955be4f20592
-      pullPolicy: IfNotPresent
-    env:
-      TZ: ${CONFIG_TIMEZONE}
-    envFrom:
-      - secretRef:
-          name: dmarc-report-secret
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 5Gi
+              storageClass: ceph-block
+              globalMounts:
+                - path: /config
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 14.9
+            envFrom:
+              - secretRef:
+                  name: dmarc-report-secret
+        containers:
+          main:
+            image:
+              repository: ghcr.io/szinn/dmarc-report
+              tag: 1.4.1@sha256:3bdb6549f9f577ec75034a415d13beb77fec9e296428d1a1e88c955be4f20592
+              pullPolicy: IfNotPresent
+            env:
+              TZ: ${CONFIG_TIMEZONE}
+            envFrom:
+              - secretRef:
+                  name: dmarc-report-secret
     service:
       main:
         ports:
@@ -52,17 +65,13 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "nginx"
+        className: nginx
         annotations:
           ingress.home.arpa/type: "internal"
         hosts:
           - host: "{{ .Release.Name }}.${SECRET_DOMAIN_NAME}"
             paths:
               - path: /
-                pathType: Prefix
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /config
-        accessMode: ReadWriteOnce
-        size: 5Gi
-        storageClass: ceph-block
+                service:
+                  name: main
+                  port: http
