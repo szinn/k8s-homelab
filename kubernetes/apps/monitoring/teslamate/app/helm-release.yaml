@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -28,25 +28,30 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    initContainers:
-      init-db:
-        image: ghcr.io/onedr0p/postgres-init:14.9
-        imagePullPolicy: Always
-        envFrom:
-          - secretRef:
-              name: teslamate-secret
-    controller:
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: teslamate/teslamate
-      tag: 1.27.3
-    env:
-      TZ: ${CONFIG_TIMEZONE}
-      DISABLE_MQTT: "true"
-    envFrom:
-      - secretRef:
-          name: teslamate-secret
+    controllers:
+      main:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 14.9
+              pullPolicy: Always
+            envFrom:
+              - secretRef:
+                  name: teslamate-secret
+        containers:
+          main:
+            image:
+              repository: teslamate/teslamate
+              tag: 1.27.3
+            env:
+              TZ: ${CONFIG_TIMEZONE}
+              DISABLE_MQTT: "true"
+            envFrom:
+              - secretRef:
+                  name: teslamate-secret
     service:
       main:
         type: ClusterIP
@@ -56,13 +61,13 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "nginx"
+        className: nginx
         annotations:
           ingress.home.arpa/type: "internal"
         hosts:
           - host: "{{ .Release.Name }}.${SECRET_DOMAIN_NAME}"
             paths:
               - path: /
-                pathType: Prefix
-    postgresql:
-      enabled: false
+                service:
+                  name: main
+                  port: http
