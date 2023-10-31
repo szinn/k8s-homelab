@@ -105,8 +105,6 @@ spec:
           - path: /downloads
       backup:
         existingClaim: media-backups
-        advancedMounts:
-          main:
-            main:
-              - path: /backups
-                subPath: lidarr
+        globalMounts:
+          - path: /backups
+            subPath: lidarr
