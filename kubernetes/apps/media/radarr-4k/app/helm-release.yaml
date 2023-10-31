@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -28,20 +28,50 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      type: statefulset
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: ghcr.io/onedr0p/radarr
-      tag: 5.0.3.8127
-    env:
-      TZ: ${CONFIG_TIMEZONE}
-      RADARR__LOG_LEVEL: info
-      RADARR__THEME: dark
-    envFrom:
-      - secretRef:
-          name: radarr-4k-secret
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 2Gi
+              storageClass: ceph-block
+              globalMounts:
+                - path: /config
+        pod:
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            fsGroupChangePolicy: "OnRootMismatch"
+          affinity:
+            podAntiAffinity:
+              preferredDuringSchedulingIgnoredDuringExecution:
+                - weight: 100
+                  podAffinityTerm:
+                    labelSelector:
+                      matchExpressions:
+                        - key: app.kubernetes.io/name
+                          operator: In
+                          values:
+                            - sabnzbd
+                            - radarr
+                    topologyKey: kubernetes.io/hostname
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/radarr
+              tag: 5.0.3.8127
+            env:
+              TZ: ${CONFIG_TIMEZONE}
+              RADARR__LOG_LEVEL: info
+              RADARR__THEME: dark
+            envFrom:
+              - secretRef:
+                  name: radarr-4k-secret
     service:
       main:
         ports:
@@ -50,49 +80,27 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "nginx"
+        className: nginx
         annotations:
           ingress.home.arpa/type: "internal"
         hosts:
           - host: "{{ .Release.Name }}.${SECRET_DOMAIN_NAME}"
             paths:
               - path: /
-                pathType: Prefix
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
-      fsGroupChangePolicy: "OnRootMismatch"
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /config
-        accessMode: ReadWriteOnce
-        size: 2Gi
-        storageClass: ceph-block
+                service:
+                  name: main
+                  port: http
     persistence:
       media:
-        enabled: true
         existingClaim: media-datastore
+        globalMounts:
+          - path: /media
       downloads:
-        enabled: true
         existingClaim: downloads
-        mountMath: "/downloads"
+        globalMounts:
+          - path: /downloads
       backup:
-        enabled: true
         existingClaim: media-backups
-        subPath: radarr-4k
-        mountPath: /backups
-        readOnly: false
-    affinity:
-      podAntiAffinity:
-        preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                  - key: app.kubernetes.io/name
-                    operator: In
-                    values:
-                      - sabnzbd
-                      - radarr
-              topologyKey: kubernetes.io/hostname
+        globalMounts:
+          - path: /backups
+            subPath: radarr-4k
