@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -27,21 +27,54 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      type: statefulset
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: ghcr.io/onedr0p/plex
-      tag: 1.32.7.7621-871adbd44@sha256:f9f77dc5e17cab9fae5ece663a64d026e3c75142b3b60bb4a52bf061957412be
-    env:
-      TZ: "${CONFIG_TIMEZONE}"
-      ADVERTISE_IP: "http://${CONFIG_SVC_PLEX_ADDR}:32400,https://{{ .Release.Name }}.${SECRET_DOMAIN_NAME}:443"
-      ALLOWED_NETWORKS: "10.0.0.0/8"
-      HOSTNAME: "plex"
-    envFrom:
-      - secretRef:
-          name: plex-secret
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              mountPath: /config
+              accessMode: ReadWriteOnce
+              size: 80Gi
+              storageClass: ceph-block
+        pod:
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            fsGroupChangePolicy: "OnRootMismatch"
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                    - key: google.feature.node.kubernetes.io/coral
+                      operator: DoesNotExist
+          nodeSelector:
+            intel.feature.node.kubernetes.io/gpu: "true"
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/plex
+              tag: 1.32.7.7621-871adbd44@sha256:f9f77dc5e17cab9fae5ece663a64d026e3c75142b3b60bb4a52bf061957412be
+            env:
+              TZ: "${CONFIG_TIMEZONE}"
+              ADVERTISE_IP: "http://${CONFIG_SVC_PLEX_ADDR}:32400,https://{{ .Release.Name }}.${SECRET_DOMAIN_NAME}:443"
+              ALLOWED_NETWORKS: "10.0.0.0/8"
+              HOSTNAME: "plex"
+            envFrom:
+              - secretRef:
+                  name: plex-secret
+            resources:
+              requests:
+                gpu.intel.com/i915: 1
+                cpu: 100m
+                memory: 2Gi
+              limits:
+                gpu.intel.com/i915: 1
+                memory: 10Gi
     service:
       main:
         type: LoadBalancer
@@ -54,55 +87,30 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "nginx"
+        className: nginx
         annotations:
           ingress.home.arpa/type: "internal"
         hosts:
           - host: "{{ .Release.Name }}.${SECRET_DOMAIN_NAME}"
             paths:
               - path: /
-                pathType: Prefix
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
-      fsGroupChangePolicy: "OnRootMismatch"
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /config
-        accessMode: ReadWriteOnce
-        size: 80Gi
-        storageClass: ceph-block
+                service:
+                  name: main
+                  port: http
     persistence:
       media:
-        enabled: true
         type: nfs
         server: "${SECRET_ATLAS_NFS_SERVER}"
         path: /mnt/atlas/media/
-        mountPath: /data
+        globalMounts:
+          - path: /data
       backup:
-        enabled: true
         type: nfs
         server: "${SECRET_ATLAS_NFS_SERVER}"
         path: "${SECRET_ATLAS_NFS_ROOTDIR}/backup/media/plex"
-        mountPath: /backup
+        globalMounts:
+          - path: /backup
       transcode:
-        enabled: true
         type: emptyDir
-    nodeSelector:
-      intel.feature.node.kubernetes.io/gpu: "true"
-    resources:
-      requests:
-        gpu.intel.com/i915: 1
-        cpu: 100m
-        memory: 2Gi
-      limits:
-        gpu.intel.com/i915: 1
-        memory: 10Gi
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-              - key: google.feature.node.kubernetes.io/coral
-                operator: DoesNotExist
+        globalMounts:
+          - path: /transcode
