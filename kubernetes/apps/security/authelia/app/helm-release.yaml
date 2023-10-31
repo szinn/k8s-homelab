@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -31,77 +31,88 @@ spec:
     - name: lldap
       namespace: security
   values:
-    initContainers:
-      init-db:
-        image: ghcr.io/onedr0p/postgres-init:14.9
-        imagePullPolicy: IfNotPresent
-        envFrom:
-          - secretRef:
-              name: authelia-secret
-    controller:
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: ghcr.io/authelia/authelia
-      tag: 4.37.5
-    env:
-      TZ: ${CONFG_TIMEZONE}
-      AUTHELIA_AUTHENTICATION_BACKEND_LDAP_ADDITIONAL_GROUPS_DN: "ou=groups"
-      AUTHELIA_AUTHENTICATION_BACKEND_LDAP_ADDITIONAL_USERS_DN: "ou=people"
-      AUTHELIA_AUTHENTICATION_BACKEND_LDAP_BASE_DN: "dc=home,dc=arpa"
-      AUTHELIA_AUTHENTICATION_BACKEND_LDAP_DISPLAY_NAME_ATTRIBUTE: "displayName"
-      AUTHELIA_AUTHENTICATION_BACKEND_LDAP_GROUP_NAME_ATTRIBUTE: "cn"
-      AUTHELIA_AUTHENTICATION_BACKEND_LDAP_GROUPS_FILTER: "(member={dn})"
-      AUTHELIA_AUTHENTICATION_BACKEND_LDAP_IMPLEMENTATION: "custom"
-      AUTHELIA_AUTHENTICATION_BACKEND_LDAP_MAIL_ATTRIBUTE: "mail"
-      AUTHELIA_AUTHENTICATION_BACKEND_LDAP_START_TLS: "false"
-      AUTHELIA_AUTHENTICATION_BACKEND_LDAP_TIMEOUT: "5s"
-      AUTHELIA_AUTHENTICATION_BACKEND_LDAP_URL: "ldap://lldap:389"
-      AUTHELIA_AUTHENTICATION_BACKEND_LDAP_USER: "uid=admin,ou=people,dc=home,dc=arpa"
-      AUTHELIA_AUTHENTICATION_BACKEND_LDAP_USERNAME_ATTRIBUTE: "uid"
-      AUTHELIA_AUTHENTICATION_BACKEND_LDAP_USERS_FILTER: "(&({username_attribute}={input})(objectClass=person))"
-      AUTHELIA_AUTHENTICATION_BACKEND_PASSWORD_RESET_DISABLE: "true"
-      AUTHELIA_AUTHENTICATION_BACKEND_REFRESH_INTERVAL: "1m"
-      AUTHELIA_DEFAULT_2FA_METHOD: totp
-      AUTHELIA_DEFAULT_REDIRECTION_URL: "https://auth.${SECRET_DOMAIN_NAME}"
-      AUTHELIA_DUO_API_DISABLE: "true"
-      AUTHELIA_LOG_FORMAT: json
-      AUTHELIA_LOG_LEVEL: debug
-      AUTHELIA_NOTIFIER_SMTP_DISABLE_REQUIRE_TLS: "true"
-      AUTHELIA_SERVER_DISABLE_HEALTHCHECK: "true"
-      AUTHELIA_SESSION_DOMAIN: ${SECRET_DOMAIN_NAME}
-      AUTHELIA_SESSION_NAME: authelia-${CONFIG_CLUSTER_NAME}
-      AUTHELIA_SESSION_REMEMBER_ME_DURATION: 1y
-      AUTHELIA_THEME: dark
-      AUTHELIA_TOTP_ISSUER: authelia.com
-      AUTHELIA_WEBAUTHN_DISABLE: "true"
-    envFrom:
-      - secretRef:
-          name: authelia-secret
-    enableServiceLinks: false
+    controllers:
+      main:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        pod:
+          enableServiceLinks: false
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            fsGroupChangePolicy: "OnRootMismatch"
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 14.9
+              pullPolicy: IfNotPresent
+            envFrom:
+              - secretRef:
+                  name: authelia-secret
+        containers:
+          main:
+            image:
+              repository: ghcr.io/authelia/authelia
+              tag: 4.37.5
+            env:
+              TZ: ${CONFG_TIMEZONE}
+              AUTHELIA_AUTHENTICATION_BACKEND_LDAP_ADDITIONAL_GROUPS_DN: "ou=groups"
+              AUTHELIA_AUTHENTICATION_BACKEND_LDAP_ADDITIONAL_USERS_DN: "ou=people"
+              AUTHELIA_AUTHENTICATION_BACKEND_LDAP_BASE_DN: "dc=home,dc=arpa"
+              AUTHELIA_AUTHENTICATION_BACKEND_LDAP_DISPLAY_NAME_ATTRIBUTE: "displayName"
+              AUTHELIA_AUTHENTICATION_BACKEND_LDAP_GROUP_NAME_ATTRIBUTE: "cn"
+              AUTHELIA_AUTHENTICATION_BACKEND_LDAP_GROUPS_FILTER: "(member={dn})"
+              AUTHELIA_AUTHENTICATION_BACKEND_LDAP_IMPLEMENTATION: "custom"
+              AUTHELIA_AUTHENTICATION_BACKEND_LDAP_MAIL_ATTRIBUTE: "mail"
+              AUTHELIA_AUTHENTICATION_BACKEND_LDAP_START_TLS: "false"
+              AUTHELIA_AUTHENTICATION_BACKEND_LDAP_TIMEOUT: "5s"
+              AUTHELIA_AUTHENTICATION_BACKEND_LDAP_URL: "ldap://lldap:389"
+              AUTHELIA_AUTHENTICATION_BACKEND_LDAP_USER: "uid=admin,ou=people,dc=home,dc=arpa"
+              AUTHELIA_AUTHENTICATION_BACKEND_LDAP_USERNAME_ATTRIBUTE: "uid"
+              AUTHELIA_AUTHENTICATION_BACKEND_LDAP_USERS_FILTER: "(&({username_attribute}={input})(objectClass=person))"
+              AUTHELIA_AUTHENTICATION_BACKEND_PASSWORD_RESET_DISABLE: "true"
+              AUTHELIA_AUTHENTICATION_BACKEND_REFRESH_INTERVAL: "1m"
+              AUTHELIA_DEFAULT_2FA_METHOD: totp
+              AUTHELIA_DEFAULT_REDIRECTION_URL: "https://auth.${SECRET_DOMAIN_NAME}"
+              AUTHELIA_DUO_API_DISABLE: "true"
+              AUTHELIA_LOG_FORMAT: json
+              AUTHELIA_LOG_LEVEL: debug
+              AUTHELIA_NOTIFIER_SMTP_DISABLE_REQUIRE_TLS: "true"
+              AUTHELIA_SERVER_DISABLE_HEALTHCHECK: "true"
+              AUTHELIA_SESSION_DOMAIN: ${SECRET_DOMAIN_NAME}
+              AUTHELIA_SESSION_NAME: authelia-${CONFIG_CLUSTER_NAME}
+              AUTHELIA_SESSION_REMEMBER_ME_DURATION: 1y
+              AUTHELIA_THEME: dark
+              AUTHELIA_TOTP_ISSUER: authelia.com
+              AUTHELIA_WEBAUTHN_DISABLE: "true"
+            envFrom:
+              - secretRef:
+                  name: authelia-secret
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/health
+                    port: 9091
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: false
     service:
       main:
         ports:
           http:
-            port: &port 9091
+            port: 9091
           metrics:
             enabled: true
             port: 9959
-    probes:
-      liveness: &probes
-        enabled: true
-        custom: true
-        spec:
-          httpGet:
-            path: /api/health
-            port: *port
-          initialDelaySeconds: 0
-          periodSeconds: 10
-          timeoutSeconds: 1
-          failureThreshold: 3
-      readiness: *probes
-      startup:
-        enabled: false
     serviceMonitor:
       main:
         enabled: true
@@ -114,24 +125,22 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "nginx"
+        className: nginx
         annotations:
           ingress.home.arpa/type: "external"
         hosts:
           - host: "auth.${SECRET_DOMAIN_NAME}"
             paths:
               - path: /
-                pathType: Prefix
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
-      fsGroupChangePolicy: "OnRootMismatch"
+                service:
+                  name: main
+                  port: http
     persistence:
       config:
         enabled: true
         type: configMap
         name: authelia-configmap
-        subPath: configuration.yaml
-        mountPath: /config/configuration.yml
-        readOnly: false
+        globalMounts:
+          - path: /config/configuration.yml
+            subPath: configuration.yaml
+            readOnly: true
