@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -27,30 +27,35 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    initContainers:
-      init-db:
-        image: ghcr.io/onedr0p/postgres-init:14.9
-        envFrom:
-          - secretRef:
-              name: wikijs-secret
-    controller:
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: ghcr.io/requarks/wiki
-      pullPolicy: IfNotPresent
-      tag: "2.5.300"
-    env:
-      TZ: ${CONFIG_TIMEZONE}
-      APP_URL: "https://wiki.${SECRET_DOMAIN_NAME}"
-      DB_TYPE: postgres
-      DB_HOST: postgres-rw.dbms
-      DB_PORT: 5432
-      DB_NAME: wikijs
-      DB_USER: wikijs
-    envFrom:
-      - secretRef:
-          name: wikijs-secret
+    controllers:
+      main:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 14.9
+            envFrom:
+              - secretRef:
+                  name: wikijs-secret
+        containers:
+          main:
+            image:
+              repository: ghcr.io/requarks/wiki
+              pullPolicy: IfNotPresent
+              tag: "2.5.300"
+            env:
+              TZ: ${CONFIG_TIMEZONE}
+              APP_URL: "https://wiki.${SECRET_DOMAIN_NAME}"
+              DB_TYPE: postgres
+              DB_HOST: postgres-rw.dbms
+              DB_PORT: 5432
+              DB_NAME: wikijs
+              DB_USER: wikijs
+            envFrom:
+              - secretRef:
+                  name: wikijs-secret
     service:
       main:
         ports:
@@ -59,14 +64,16 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
+        className: nginx
         annotations:
           ingress.home.arpa/type: external-auth
         hosts:
           - host: "wiki.${SECRET_DOMAIN_NAME}"
             paths:
               - path: /
-                type: Prefix
+                service:
+                  name: main
+                  port: http
     persistence:
       sshkey:
         enabled: true
@@ -75,4 +82,5 @@ spec:
         items:
           - key: id_rsa
             path: id_rsa
-        mountPath: /home/node/.ssh
+        globalMounts:
+          - path: /home/node/.ssh
