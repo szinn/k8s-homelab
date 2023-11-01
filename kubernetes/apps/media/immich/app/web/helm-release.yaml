@@ -53,7 +53,7 @@ spec:
           main:
             image:
               repository: ghcr.io/immich-app/immich-web
-              tag: v1.83.0
+              tag: v1.84.0
             command: /bin/sh
             args:
               - ./entrypoint.sh
