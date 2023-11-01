@@ -68,7 +68,7 @@ identity_providers:
         audience: []
         pre_configured_consent_duration: 1y
         scopes: ["openid", "profile", "email"]
-        redirect_uris: ["https://wiki.${SECRET_DOMAIN_NAME}/login/4af940e3-d9f6-4cf7-8db0-635df533aed5/callback"]
+        redirect_uris: ["https://wiki.${SECRET_DOMAIN_NAME}/login/2231b56c-daa8-4757-9ac3-81cc1e0e4615/callback"]
         response_modes: ["form_post"]
         userinfo_signing_algorithm: none
       - id: immich
