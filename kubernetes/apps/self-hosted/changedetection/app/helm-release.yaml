@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -27,16 +27,43 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      type: statefulset
-    image:
-      repository: ghcr.io/dgtlmoon/changedetection.io
-      tag: "0.45.5"
-    env:
-      TZ: ${CONFIG_TIMEZONE}
-      PORT: &port 5000
-      USE_X_SETTINGS: 1
-      PLAYWRIGHT_DRIVER_URL: ws://localhost:3000/?stealth=1&--disable-web-security=true&--user-data-dir=~/browserless-cache-123
+    controllers:
+      main:
+        type: statefulset
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 1Gi
+              storageClass: ceph-block
+              globalMounts:
+                - path: /datastore
+        containers:
+          main:
+            image:
+              repository: ghcr.io/dgtlmoon/changedetection.io
+              tag: "0.45.5"
+            env:
+              TZ: ${CONFIG_TIMEZONE}
+              PORT: &port 5000
+              USE_X_SETTINGS: 1
+              PLAYWRIGHT_DRIVER_URL: ws://localhost:3000/?stealth=1&--disable-web-security=true&--user-data-dir=~/browserless-cache-123
+          browser:
+            image:
+              repository: docker.io/browserless/chrome
+              tag: latest
+              pullPolicy: IfNotPresent
+            env:
+              - {name: SCREEN_WIDTH, value: "1920"}
+              - {name: SCREEN_HEIGHT, value: "1024"}
+              - {name: SCREEN_DEPTH, value: "16"}
+              - {name: ENABLE_DEBUGGER, value: "false"}
+              - {name: PREBOOT_CHROME, value: "true"}
+              - {name: CONNECTION_TIMEOUT, value: "300000"}
+              - {name: MAX_CONCURRENT_SESSIONS, value: "10"}
+              - {name: CHROME_REFRESH_TIME, value: "600000"}
+              - {name: DEFAULT_BLOCK_ADS, value: "true"}
+              - {name: DEFAULT_STEALTH, value: "true"}
     service:
       main:
         ports:
@@ -45,32 +72,13 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
+        className: nginx
         annotations:
           ingress.home.arpa/type: "internal"
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN_NAME}"
             paths:
               - path: /
-                pathType: Prefix
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /datastore
-        accessMode: ReadWriteOnce
-        size: 1Gi
-        storageClass: ceph-block
-    sidecars:
-      browser:
-        image: docker.io/browserless/chrome:latest
-        imagePullPolicy: IfNotPresent
-        env:
-          - {name: SCREEN_WIDTH, value: "1920"}
-          - {name: SCREEN_HEIGHT, value: "1024"}
-          - {name: SCREEN_DEPTH, value: "16"}
-          - {name: ENABLE_DEBUGGER, value: "false"}
-          - {name: PREBOOT_CHROME, value: "true"}
-          - {name: CONNECTION_TIMEOUT, value: "300000"}
-          - {name: MAX_CONCURRENT_SESSIONS, value: "10"}
-          - {name: CHROME_REFRESH_TIME, value: "600000"}
-          - {name: DEFAULT_BLOCK_ADS, value: "true"}
-          - {name: DEFAULT_STEALTH, value: "true"}
+                service:
+                  name: main
+                  port: http
