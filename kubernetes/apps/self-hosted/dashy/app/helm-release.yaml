@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -28,62 +28,69 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      type: statefulset
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: lissy93/dashy
-      tag: 2.1.1
-    env:
-      TZ: ${CONFIG_TIMEZONE}
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 1Gi
+              storageClass: ceph-block
+              globalMounts:
+                - path: /app/public
+        containers:
+          main:
+            image:
+              repository: lissy93/dashy
+              tag: 2.1.1
+            env:
+              TZ: ${CONFIG_TIMEZONE}
+          code-server:
+            image:
+              repository: codercom/code-server
+              tag: 4.18.0
+            args:
+              - --auth
+              - none
+              - --user-data-dir
+              - "/app/public/.vscode"
+              - --extensions-dir
+              - "/app/public/.vscode"
+              - --port
+              - "8080"
+              - "/app/public"
     service:
       main:
         ports:
           http:
             port: 80
+          code-server:
+            port: 8080
     ingress:
       main:
         enabled: true
+        className: nginx
         annotations:
           ingress.home.arpa/type: "internal"
         hosts:
           - host: "{{ .Release.Name }}.${SECRET_DOMAIN_NAME}"
             paths:
               - path: /
-                pathType: Prefix
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /app/public
-        accessMode: ReadWriteOnce
-        size: 1Gi
-        storageClass: ceph-block
-    addons:
-      codeserver:
+                service:
+                  name: main
+                  port: http
+      code-server:
         enabled: true
-        image:
-          repository: codercom/code-server
-          tag: 4.18.0
-        workingDir: "/config"
-        git:
-          deployKeySecret: dashy-secret
-        args:
-          - --auth
-          - "none"
-          - --user-data-dir
-          - "/config/.vscode"
-          - --extensions-dir
-          - "/config/.vscode"
-        ingress:
-          enabled: true
-          ingressClassName: "nginx"
-          annotations:
-            ingress.home.arpa/type: "internal"
-          hosts:
-            - host: "dashy-code.${SECRET_DOMAIN_NAME}"
-              paths:
-                - path: /
-                  pathType: Prefix
-        volumeMounts:
-          - name: config
-            mountPath: /config
+        className: nginx
+        annotations:
+          ingress.home.arpa/type: "internal"
+        hosts:
+          - host: "dashy-code.${SECRET_DOMAIN_NAME}"
+            paths:
+              - path: /
+                service:
+                  name: main
+                  port: code-server
