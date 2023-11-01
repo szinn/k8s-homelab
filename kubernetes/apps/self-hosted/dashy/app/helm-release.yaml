@@ -39,8 +39,11 @@ spec:
               accessMode: ReadWriteOnce
               size: 1Gi
               storageClass: ceph-block
-              globalMounts:
-                - path: /app/public
+              advancedMounts:
+                main:
+                  - path: /app/public
+                code-server:
+                  - path: /config
         containers:
           main:
             image:
@@ -48,20 +51,24 @@ spec:
               tag: 2.1.1
             env:
               TZ: ${CONFIG_TIMEZONE}
+              UID: 568
+              GID: 568
           code-server:
             image:
               repository: codercom/code-server
               tag: 4.18.0
+            securityContext:
+              runAsUser: 0
             args:
               - --auth
               - none
               - --user-data-dir
-              - "/app/public/.vscode"
+              - "/config/.vscode"
               - --extensions-dir
-              - "/app/public/.vscode"
+              - "/config/.vscode"
               - --port
               - "8080"
-              - "/app/public"
+              - "/config"
     service:
       main:
         ports:
