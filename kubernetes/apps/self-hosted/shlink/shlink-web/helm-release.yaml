@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -27,22 +27,33 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      replicas: 1
-      strategy: RollingUpdate
-      rollingUpdate:
-        unavailable: 2
-        surge: 0
-      annotations:
-        secret.reloader.stakater.com/reload: shlink-secret
-    image:
-      repository: ghcr.io/shlinkio/shlink-web-client
-      tag: 3.10.2
-    env:
-      SHLINK_SERVER_URL: "https://ln.${SECRET_DOMAIN_NAME}"
-    envFrom:
-      - secretRef:
-          name: shlink-secret
+    controllers:
+      main:
+        replicas: 1
+        strategy: RollingUpdate
+        rollingUpdate:
+          unavailable: 2
+          surge: 0
+        annotations:
+          secret.reloader.stakater.com/reload: shlink-secret
+        pod:
+          topologySpreadConstraints:
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: *app
+        containers:
+          main:
+            image:
+              repository: ghcr.io/shlinkio/shlink-web-client
+              tag: 3.10.2
+            env:
+              SHLINK_SERVER_URL: "https://ln.${SECRET_DOMAIN_NAME}"
+            envFrom:
+              - secretRef:
+                  name: shlink-secret
     service:
       main:
         ports:
@@ -51,18 +62,13 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "nginx"
+        className: nginx
         annotations:
           ingress.home.arpa/type: "internal"
         hosts:
           - host: "shlink.${SECRET_DOMAIN_NAME}"
             paths:
               - path: /
-                pathType: Prefix
-    topologySpreadConstraints:
-      - maxSkew: 1
-        topologyKey: kubernetes.io/hostname
-        whenUnsatisfiable: DoNotSchedule
-        labelSelector:
-          matchLabels:
-            app.kubernetes.io/name: *app
+                service:
+                  name: main
+                  port: http

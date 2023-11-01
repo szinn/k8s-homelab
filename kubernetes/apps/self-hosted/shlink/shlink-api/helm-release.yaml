@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -27,37 +27,50 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    initContainers:
-      init-db:
-        image: ghcr.io/onedr0p/postgres-init:14.9
-        imagePullPolicy: IfNotPresent
-        envFrom:
-          - secretRef:
-              name: shlink-secret
-    controller:
-      replicas: 1
-      annotations:
-        secret.reloader.stakater.com/reload: shlink-secret
-    image:
-      repository: ghcr.io/shlinkio/shlink
-      tag: 3.6.4
-    env:
-      DB_DRIVER: postgres
-      DEFAULT_DOMAIN: &host "ln.${SECRET_DOMAIN_NAME}"
-      DISABLE_TRACKING_FROM: 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
-      ENABLE_PERIODIC_VISIT_LOCATE: "true"
-      IS_HTTPS_ENABLED: "true"
-      PORT: &port 8080
-      REDIS_PUB_SUB_ENABLED: "true"
-      REDIS_SENTINEL_SERVICE: redis-master
-      REDIS_SERVERS: >-
-        redis-node-0.redis-headless.dbms.svc.cluster.local:26379,
-        redis-node-1.redis-headless.dbms.svc.cluster.local:26379,
-        redis-node-2.redis-headless.dbms.svc.cluster.local:26379
-      TIMEZONE: "${CONFIG_TIMEZONE}"
-    envFrom:
-      - secretRef:
-          name: shlink-secret
+    controllers:
+      main:
+        replicas: 1
+        annotations:
+          secret.reloader.stakater.com/reload: shlink-secret
+        pod:
+          topologySpreadConstraints:
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: *app
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 14.9
+            imagePullPolicy: IfNotPresent
+            envFrom:
+              - secretRef:
+                  name: shlink-secret
+        containers:
+          main:
+            image:
+              repository: ghcr.io/shlinkio/shlink
+              tag: 3.6.4
+            env:
+              DB_DRIVER: postgres
+              DEFAULT_DOMAIN: &host "ln.${SECRET_DOMAIN_NAME}"
+              DISABLE_TRACKING_FROM: 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+              ENABLE_PERIODIC_VISIT_LOCATE: "true"
+              IS_HTTPS_ENABLED: "true"
+              PORT: &port 8080
+              REDIS_PUB_SUB_ENABLED: "true"
+              REDIS_SENTINEL_SERVICE: redis-master
+              REDIS_SERVERS: >-
+                redis-node-0.redis-headless.dbms.svc.cluster.local:26379,
+                redis-node-1.redis-headless.dbms.svc.cluster.local:26379,
+                redis-node-2.redis-headless.dbms.svc.cluster.local:26379
+              TIMEZONE: "${CONFIG_TIMEZONE}"
+            envFrom:
+              - secretRef:
+                  name: shlink-secret
     service:
       main:
         ports:
@@ -66,18 +79,13 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "nginx"
+        className: nginx
         annotations:
           ingress.home.arpa/type: "external"
         hosts:
           - host: *host
             paths:
               - path: /
-                pathType: Prefix
-    topologySpreadConstraints:
-      - maxSkew: 1
-        topologyKey: kubernetes.io/hostname
-        whenUnsatisfiable: DoNotSchedule
-        labelSelector:
-          matchLabels:
-            app.kubernetes.io/name: *app
+                service:
+                  name: main
+                  port: http
