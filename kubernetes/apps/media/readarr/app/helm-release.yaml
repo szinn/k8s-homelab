@@ -51,7 +51,7 @@ spec:
           main:
             image:
               repository: ghcr.io/onedr0p/readarr-develop
-              tag: 0.3.8.2267@sha256:b844031cf2e1ee3ac332ac5b64f1ba628157097748a405a3a11aea8c5c803561
+              tag: 0.3.9.2272@sha256:2c1d5677aa1eb6346064e3bdb8b245fcd07a9c65c0a1381a7f2731a90a225020
             env:
               TZ: ${CONFIG_TIMEZONE}
               READARR__LOG_LEVEL: info
