@@ -1,7 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base",
+    "config:recommended",
     "docker:enableMajor",
     ":disableRateLimiting",
     ":dependencyDashboard",
@@ -39,8 +39,9 @@
   "kubernetes": {
     "fileMatch": ["kubernetes/.+\\.ya?ml$"]
   },
-  "regexManagers": [
+  "customManagers": [
     {
+      "customType": "regex",
       "description": "Process various dependencies",
       "fileMatch": [
         "kubernetes/.+\\.ya?ml$",
@@ -54,6 +55,7 @@
       "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
     },
     {
+      "customType": "regex",
       "description": "Process raw GitHub URLs",
       "fileMatch": ["kubernetes/.+\\.ya?ml$"],
       "matchStrings": [
@@ -63,6 +65,7 @@
       "versioningTemplate": "semver"
     },
     {
+      "customType": "regex",
       "description": "Process GitHub release URLs",
       "fileMatch": ["kubernetes/.+\\.ya?ml$"],
       "matchStrings": [
@@ -73,6 +76,7 @@
       "versioningTemplate": "semver"
     },
     {
+      "customType": "regex",
       "description": "Update docker image",
       "fileMatch": [
         "kubernetes/.+\\.ya?ml$"
