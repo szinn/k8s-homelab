@@ -41,6 +41,7 @@ spec:
       runAsUser: 568
       runAsGroup: 568
     cacheCapacity: 1Gi
+    cacheAccessModes: ["ReadWriteOnce"]
     retain:
       daily: 14
       within: 7d
