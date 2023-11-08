@@ -44,6 +44,9 @@ spec:
           - name: cache-volume
             persistentVolumeClaim:
               claimName: actions-runner-controller-cache
+    controllerServiceAccount:
+      name: actions-runner-controller-gha-rs-controller
+      namespace: dev
   valuesFrom:
     - kind: Secret
       name: actions-runner-controller-secret
