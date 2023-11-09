@@ -1,7 +1,7 @@
 ---
 clusterName: ${CONFIG_CLUSTER_NAME}
-talosVersion: v1.5.4
-kubernetesVersion: v1.28.2
+talosVersion: v1.5.5
+kubernetesVersion: v1.28.3
 endpoint: https://${CONFIG_CLUSTER_NAME}.${SECRET_TECH_DOMAIN_NAME}:6443
 
 cniConfig:
