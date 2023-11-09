@@ -225,6 +225,21 @@ spec:
               sslmode: disable
             version: 1
             editable: true
+          - name: TeslaSpy
+            type: postgres
+            access: proxy
+            url: postgres-ro.dbms.svc.cluster.local:5432
+            database: teslaspy
+            user: teslaspy
+            secureJsonData:
+              password: "$TESLASPY_POSTGRES_PASSWORD"
+            basicAuth: false
+            withCredentials: false
+            jsonData:
+              postgresVersion: 1000
+              sslmode: disable
+            version: 1
+            editable: true
           - name: Redis
             type: redis-datasource
             access: proxy
