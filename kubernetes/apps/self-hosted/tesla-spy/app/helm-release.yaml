@@ -51,7 +51,7 @@ spec:
           main:
             image:
               repository: ghcr.io/szinn/tesla-spy
-              tag: rolling
+              tag: latest
               pullPolicy: Always
             env:
               TZ: ${CONFIG_TIMEZONE}
