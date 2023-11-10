@@ -25,12 +25,6 @@ spec:
     remediation:
       retries: 3
   values:
-    defaultPodOptions:
-      securityContext:
-        runAsUser: 8779
-        runAsGroup: 8779
-        fsGroup: 8779
-        fsGroupChangePolicy: OnRootMismatch
     controllers:
       main:
         annotations:
