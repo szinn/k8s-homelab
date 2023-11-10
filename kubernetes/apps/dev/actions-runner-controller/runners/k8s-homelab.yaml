@@ -27,7 +27,7 @@ spec:
   values:
     runnerScaleSetName: k8s-homelab
     githubConfigUrl: https://github.com/szinn/k8s-homelab
-    minRunners: 1
+    minRunners: 0
     maxRunners: 3
     containerMode:
       type: dind

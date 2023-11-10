@@ -27,7 +27,7 @@ spec:
   values:
     runnerScaleSetName: tesla-spy
     githubConfigUrl: https://github.com/szinn/tesla-spy
-    minRunners: 1
+    minRunners: 0
     maxRunners: 3
     containerMode:
       type: dind
