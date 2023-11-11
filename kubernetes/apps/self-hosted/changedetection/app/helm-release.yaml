@@ -42,7 +42,7 @@ spec:
           main:
             image:
               repository: ghcr.io/dgtlmoon/changedetection.io
-              tag: "0.45.7"
+              tag: "0.45.7.1"
             env:
               TZ: ${CONFIG_TIMEZONE}
               PORT: &port 5000
