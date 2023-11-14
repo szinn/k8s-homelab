@@ -47,7 +47,7 @@ spec:
           main:
             image:
               repository: ghcr.io/immich-app/immich-proxy
-              tag: v1.85.0
+              tag: v1.86.0
             envFrom:
               - secretRef:
                   name: immich-secret
