@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - production.yaml
   - ingress.yaml
+  - service.yaml
