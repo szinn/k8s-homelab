@@ -1,0 +1,69 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &name elasticsearch
+  namespace: dbms
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: app-template
+      version: 2.2.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+      interval: 5m
+  maxHistory: 3
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 50Gi
+              storageClass: ceph-block
+              globalMounts:
+                - path: /usr/share/elasticsearch/data
+        pod:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            fsGroupChangePolicy: "OnRootMismatch"
+        containers:
+          main:
+            image:
+              repository: elasticsearch
+              tag: 8.11.0
+            env:
+              TZ: "${CONFIG_TIMEZONE}"
+              xpack.security.enabled: "true"
+              discovery.type: "single-node"
+              ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+              path.repo: "/usr/share/elasticsearch/data/snapshot"
+            envFrom:
+              - secretRef:
+                  name: elasticsearch-secret
+    service:
+      main:
+        type: LoadBalancer
+        annotations:
+          io.cilium/lb-ipam-ips: ${CONFIG_SVC_ELASTICSEARCH_ADDR}
+        ports:
+          http:
+            port: 9200

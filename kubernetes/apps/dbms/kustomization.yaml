@@ -4,5 +4,6 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - cloudnative-pg/install.yaml
+  - elasticsearch/install.yaml
   - pgadmin/install.yaml
   - redis/install.yaml
