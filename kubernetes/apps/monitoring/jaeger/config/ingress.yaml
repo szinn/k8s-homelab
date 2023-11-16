@@ -1,0 +1,24 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: &app jaeger
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/name: *app
+    app.kubernetes.io/instance: *app
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    ingress.home.arpa/type: "internal"
+spec:
+  rules:
+    - host: jaeger.${SECRET_DOMAIN_NAME}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: production-query
+                port:
+                  number: 16686
