@@ -10,8 +10,8 @@ spec:
   type: LoadBalancer
   selector:
     app: jaeger
-    app.kubernetes.io/component: collector
-    app.kubernetes.io/name: production-collector
+    app.kubernetes.io/component: all-in-one
+    app.kubernetes.io/name: production
   ports:
     - protocol: TCP
       port: 4317
