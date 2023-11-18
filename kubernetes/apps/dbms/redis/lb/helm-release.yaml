@@ -42,7 +42,7 @@ spec:
           main:
             image:
               repository: public.ecr.aws/docker/library/haproxy
-              tag: "2.8.3"
+              tag: "2.8.4"
 
     service:
       main:
