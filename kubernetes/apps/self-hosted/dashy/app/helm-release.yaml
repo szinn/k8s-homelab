@@ -56,7 +56,7 @@ spec:
           code-server:
             image:
               repository: codercom/code-server
-              tag: 4.18.0
+              tag: 4.19.0
             securityContext:
               runAsUser: 0
             args:
