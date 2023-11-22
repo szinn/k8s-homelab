@@ -6,6 +6,6 @@ resources:
   - changedetection/install.yaml
   - dashy/install.yaml
   - shlink/install.yaml
-  - tesla-spy/install.yaml
+  # - tesla-spy/install.yaml
   - theme-park/install.yaml
   - wikijs/install.yaml
