@@ -76,6 +76,19 @@ spec:
         ports:
           http:
             port: 3001
+    ingress:
+      main:
+        enabled: true
+        className: nginx
+        annotations:
+          ingress.home.arpa/type: "external"
+        hosts:
+          - host: photos.${SECRET_DOMAIN_NAME}
+            paths:
+              - path: /
+                service:
+                  name: main
+                  port: http
     persistence:
       library:
         existingClaim: immich-nfs

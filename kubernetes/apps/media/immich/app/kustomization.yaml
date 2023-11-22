@@ -9,9 +9,7 @@ resources:
   - server
   - microservices
   # - machine-learning
-  - proxy
   - typesense
-  - web
 labels:
   - pairs:
       app.kubernetes.io/name: immich
