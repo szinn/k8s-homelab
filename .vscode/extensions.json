@@ -3,6 +3,7 @@
         "fcrespo82.markdown-table-formatter",
         "hashicorp.terraform",
         "oderwat.indent-rainbow",
-        "signageos.signageos-vscode-sops"
+        "signageos.signageos-vscode-sops",
+        "ms-vscode.remote-explorer"
     ]
 }
