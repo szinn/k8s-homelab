@@ -3,7 +3,7 @@
     {
       "matchDatasources": ["docker"],
       "matchPackagePatterns": ["cloudnative-pg/postgresql"],
-      "allowedVersions": "<16"
+      "allowedVersions": "<17"
     }
   ]
 }
