@@ -30,5 +30,4 @@ resources:
   - rook-ceph-charts.yaml
   - runix-charts.yaml
   - stakater-charts.yaml
-  - tf-controller-charts.yaml
   - weave-gitops-charts.yaml
