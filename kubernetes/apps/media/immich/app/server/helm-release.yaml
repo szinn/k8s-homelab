@@ -62,7 +62,7 @@ spec:
           main:
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v1.88.2
+              tag: v1.89.0
             command: /bin/sh
             args:
               - ./start-server.sh
