@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export CONFIG_HOME=$HOME/Development/k8s-config
+export CONFIG_HOME=$HOME/.local/syscfg
 . $CONFIG_HOME/env.base
 . $CONFIG_HOME/env.main
 
