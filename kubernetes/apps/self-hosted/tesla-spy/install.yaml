@@ -12,7 +12,7 @@ spec:
     kind: GitRepository
     name: homelab-kubernetes
   healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+    - apiVersion: helm.toolkit.fluxcd.io/v2beta2
       kind: HelmRelease
       name: tesla-spy
       namespace: self-hosted
