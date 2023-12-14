@@ -51,7 +51,7 @@ spec:
           main:
             image:
               repository: ghcr.io/navidrome/navidrome
-              tag: 0.50.1
+              tag: 0.50.2
             env:
               TZ: ${CONFIG_TIMEZONE}
               ND_AUTHREQUESTLIMIT: 0
