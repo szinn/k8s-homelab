@@ -3,8 +3,8 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: postgres-backup
-  namespace: dbms
+  name: immich-postgres-backup
+  namespace: media
 spec:
   interval: 15m
   chart:
@@ -48,12 +48,12 @@ spec:
             command: ["/backup.sh"]
             envFrom:
               - secretRef:
-                  name: postgres-backups-secret
+                  name: immich-postgres-backups-secret
             env:
               - name: POSTGRES_HOST
                 value: postgres-ro.dbms
               - name: POSTGRES_DB
-                value: "dmarc,shlink,teslamate,lldap,wikijs,teslaspy"
+                value: "immich"
               - name: BACKUP_KEEP_DAYS
                 value: "7"
               - name: BACKUP_KEEP_WEEKS
@@ -72,6 +72,6 @@ spec:
     persistence:
       backups:
         enabled: true
-        existingClaim: postgres-backups
+        existingClaim: immich-postgres-backups
         globalMounts:
           - path: /backups

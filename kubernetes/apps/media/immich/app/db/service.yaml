@@ -1,0 +1,22 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: &app immich-db
+  namespace: media
+  labels:
+    app.kubernetes.io/name: *app
+    app.kubernetes.io/instance: *app
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: immich.${SECRET_DOMAIN_NAME}
+    io.cilium/lb-ipam-ips: ${CONFIG_SVC_POSTGRES_IMMICH_ADDR}
+spec:
+  type: LoadBalancer
+  ports:
+    - name: postgres
+      port: 5432
+      protocol: TCP
+      targetPort: 5432
+  selector:
+    cnpg.io/cluster: immich
+    role: primary

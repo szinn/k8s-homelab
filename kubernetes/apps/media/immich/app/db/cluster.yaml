@@ -1,0 +1,27 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/postgresql.cnpg.io/cluster_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: immich
+  namespace: media
+  annotations:
+    kyverno.io/ignore: "true"
+spec:
+  imageName: ghcr.io/bo0tzz/cnpgvecto.rs:16.1-v0.1.11
+  instances: 3
+  primaryUpdateStrategy: unsupervised
+  storage:
+    size: 20Gi
+    storageClass: ceph-block
+  enableSuperuserAccess: true
+  superuserSecret:
+    name: immich-postgres-superuser
+  postgresql:
+    parameters:
+      max_connections: "300"
+      shared_buffers: 512MB
+    shared_preload_libraries:
+      - "vectors.so"
+  monitoring:
+    enablePodMonitor: true
