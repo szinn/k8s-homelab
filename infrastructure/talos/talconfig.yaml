@@ -24,7 +24,6 @@ clusterPodNets:
 nodes:
   - hostname: k8s-1.${SECRET_TECH_DOMAIN_NAME}
     ipAddress: 10.11.0.16
-    disableSearchDomain: true
     controlPlane: true
     installDiskSelector:
       busPath: /pci0000:00/0000:00:12.0/ata2/host1/target1:0:0/1:0:0:0/
@@ -35,7 +34,6 @@ nodes:
 
   - hostname: k8s-2.${SECRET_TECH_DOMAIN_NAME}
     ipAddress: 10.11.0.17
-    disableSearchDomain: true
     controlPlane: true
     installDiskSelector:
       busPath: /pci0000:00/0000:00:12.0/ata2/host1/target1:0:0/1:0:0:0/
@@ -46,7 +44,6 @@ nodes:
 
   - hostname: k8s-3.${SECRET_TECH_DOMAIN_NAME}
     ipAddress: 10.11.0.18
-    disableSearchDomain: true
     controlPlane: true
     installDiskSelector:
       busPath: /pci0000:00/0000:00:12.0/ata2/host1/target1:0:0/1:0:0:0/
@@ -57,7 +54,6 @@ nodes:
 
   - hostname: k8s-4.${SECRET_TECH_DOMAIN_NAME}
     ipAddress: 10.11.0.19
-    disableSearchDomain: true
     controlPlane: false
     installDiskSelector:
       busPath: /pci0000:00/0000:00:17.0/ata1/host0/target0:0:0/0:0:0:0/
@@ -69,22 +65,9 @@ nodes:
       - interface: eth0
         mtu: 1500
         dhcp: true
-    patches:
-      - |-
-        machine:
-          kubelet:
-            extraMounts:
-              - destination: /var/mnt/ssd
-                type: bind
-                source: /var/mnt/ssd
-                options:
-                  - rbind
-                  - rshared
-                  - rw
 
   - hostname: k8s-5.${SECRET_TECH_DOMAIN_NAME}
     ipAddress: 10.11.0.20
-    disableSearchDomain: true
     controlPlane: false
     installDiskSelector:
       busPath: /pci0000:00/0000:00:17.0/ata1/host0/target0:0:0/0:0:0:0/
@@ -96,22 +79,9 @@ nodes:
       - interface: eth0
         mtu: 1500
         dhcp: true
-    patches:
-      - |-
-        machine:
-          kubelet:
-            extraMounts:
-              - destination: /var/mnt/ssd
-                type: bind
-                source: /var/mnt/ssd
-                options:
-                  - rbind
-                  - rshared
-                  - rw
 
   - hostname: k8s-6.${SECRET_TECH_DOMAIN_NAME}
     ipAddress: 10.11.0.21
-    disableSearchDomain: true
     controlPlane: false
     installDiskSelector:
       busPath: /pci0000:00/0000:00:17.0/ata1/host0/target0:0:0/0:0:0:0/
@@ -123,113 +93,164 @@ nodes:
       - interface: eth0
         mtu: 1500
         dhcp: true
-    patches:
-      - |-
-        machine:
-          kubelet:
-            extraMounts:
-              - destination: /var/mnt/ssd
-                type: bind
-                source: /var/mnt/ssd
-                options:
-                  - rbind
-                  - rshared
-                  - rw
 
 controlPlane:
   patches:
+    # Custom Talos installer patch
+    - &customTalosPatch |-
+      machine:
+        install:
+          extraKernelArgs:
+            - talos.logging.kernel=udp://${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}:6001/
+
+    # Enable logging
+    - &loggingPatch |-
+      machine:
+        logging:
+          destinations:
+            - endpoint: udp://${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}:6002/
+              format: json_lines
+
+    # Disable search domain everywhere
+    - &disableSearchDomainPatch |-
+      machine:
+        network:
+          disableSearchDomain: true
+
+    # Configure NTP
+    - &ntpPatch |-
+      machine:
+        time:
+          disabled: false
+          servers:
+            - 10.11.0.1
+
+    # Enable cluster discovery
+    - &discoveryPatch |-
+      cluster:
+        discovery:
+          registries:
+            kubernetes:
+              disabled: false
+            service:
+              disabled: true
+
+    # Enable KubePrism
+    - &kubePrismPatch |-
+      machine:
+        features:
+          kubePrism:
+            enabled: true
+            port: 7445
+
+    # Configure kubelet
+    - &kubeletPatch |-
+      machine:
+        kubelet:
+          extraArgs:
+            feature-gates: GracefulNodeShutdown=true,NewVolumeManagerReconstruction=false
+            rotate-server-certificates: true
+
+    # Cluster configuration
     - |-
       cluster:
-        apiServer:
         controllerManager:
           extraArgs:
             bind-address: 0.0.0.0
-        discovery:
-          registries:
-            service:
-              disabled: true
         proxy:
           disabled: true
         scheduler:
           extraArgs:
             bind-address: 0.0.0.0
+
+    # ETCD configuration
+    - |-
+      cluster:
         etcd:
           extraArgs:
             listen-metrics-urls: http://0.0.0.0:2381
+          extraConfig:
+            maxPods: 150
+          nodeIP:
+            validSubnets:
+                - 10.11.0.0/24
 
-    - |-
-      machine:
-        files:
-          - content: |
-              [plugins]
-                [plugins."io.containerd.grpc.v1.cri"]
-                  enable_unprivileged_ports = true
-                  enable_unprivileged_icmp = true
-            path: /etc/cri/conf.d/20-customization.part
-            op: create
-        kubelet:
-          extraArgs:
-            feature-gates: CronJobTimeZone=true,GracefulNodeShutdown=true,NewVolumeManagerReconstruction=false
-            rotate-server-certificates: "true"
-        install:
-          extraKernelArgs:
-            - talos.logging.kernel=udp://${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}:6001/
-        logging:
-          destinations:
-            - endpoint: udp://${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}:6002/
-              format: json_lines
-        network:
-          extraHostEntries:
-            - ip: ${CONFIG_K8S_CLUSTER_ENDPOINT_IP}
-              aliases:
-                - ${CONFIG_CLUSTER_NAME}.${SECRET_TECH_DOMAIN_NAME}
-        sysctls:
-          fs.inotify.max_user_watches: "1048576"
-          fs.inotify.max_user_instances: "8192"
-        time:
-          disabled: false
-          servers:
-            - 10.11.0.1
-
+    # Disable default API server admission plugins.
     - |-
       - op: remove
         path: /cluster/apiServer/admissionControl
 
-worker:
-  patches:
+    # Enable K8s Talos API Access
     - |-
       machine:
+        features:
+          kubernetesTalosAPIAccess:
+            enabled: true
+            allowedRoles:
+              - os:admin
+            allowedKubernetesNamespaces:
+              - kube-system
+
+    # Configure containerd
+    - &containerdPatch |-
+      machine:
         files:
-          - content: |
-              [plugins]
-                [plugins."io.containerd.grpc.v1.cri"]
-                  enable_unprivileged_ports = true
-                  enable_unprivileged_icmp = true
+          - op: create
             path: /etc/cri/conf.d/20-customization.part
-            op: create
-        kubelet:
-          extraArgs:
-            feature-gates: CronJobTimeZone=true,GracefulNodeShutdown=true,NewVolumeManagerReconstruction=false
-            rotate-server-certificates: "true"
-        install:
-          extraKernelArgs:
-            - talos.logging.kernel=udp://${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}:6001/
-          extensions:
-            - image: ghcr.io/siderolabs/i915-ucode:20230625
-            - image: ghcr.io/siderolabs/intel-ucode:20230613
-        logging:
-          destinations:
-            - endpoint: udp://${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}:6002/
-              format: json_lines
+            content: |-
+              [plugins."io.containerd.grpc.v1.cri"]
+                enable_unprivileged_ports = true
+                enable_unprivileged_icmp = true
+              [plugins."io.containerd.grpc.v1.cri".containerd]
+                discard_unpacked_layers = false
+              [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
+                discard_unpacked_layers = false
+
+    # Custom sysctl settings
+    - &sysctlPatch |-
+      machine:
+        sysctls:
+          fs.inotify.max_user_watches: 1048576
+          fs.inotify.max_user_instances: 8192
+
+    # Static host entries
+    - &staticHostEntriesPatch |-
+      machine:
         network:
           extraHostEntries:
             - ip: ${CONFIG_K8S_CLUSTER_ENDPOINT_IP}
               aliases:
                 - ${CONFIG_CLUSTER_NAME}.${SECRET_TECH_DOMAIN_NAME}
-        sysctls:
-          fs.inotify.max_user_watches: "1048576"
-          fs.inotify.max_user_instances: "8192"
-        time:
-          disabled: false
-          servers:
-            - 10.11.0.1
+
+worker:
+  patches:
+    - *customTalosPatch
+    - *loggingPatch
+    - *disableSearchDomainPatch
+    - *ntpPatch
+    - *kubePrismPatch
+    - *kubeletPatch
+    - *containerdPatch
+    - *sysctlPatch
+    - *staticHostEntriesPatch
+
+    # Extra SSD to mount
+    - |-
+      machine:
+        kubelet:
+          extraMounts:
+            - destination: /var/mnt/ssd
+              type: bind
+              source: /var/mnt/ssd
+              options:
+                - rbind
+                - rshared
+                - rw
+
+    # Graphics extensions
+    - |-
+      machine:
+        install:
+          extensions:
+            - image: ghcr.io/siderolabs/i915-ucode:20230625
+            - image: ghcr.io/siderolabs/intel-ucode:20230613

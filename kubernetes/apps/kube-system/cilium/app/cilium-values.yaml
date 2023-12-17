@@ -32,8 +32,8 @@ ipam:
 
 kubeProxyReplacement: strict
 kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
-k8sServiceHost: ${CONFIG_K8S_CLUSTER_ENDPOINT_IP}
-k8sServicePort: 6443
+k8sServiceHost: localhost
+k8sServicePort: 7445
 ipv4NativeRoutingCIDR: ${CONFIG_K8S_POD_CIDR}
 
 loadBalancer:
