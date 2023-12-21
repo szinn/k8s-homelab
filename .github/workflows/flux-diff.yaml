@@ -31,7 +31,7 @@ jobs:
           password: "${{ steps.generate-token.outputs.token }}"
 
       - name: Diff Resources
-        uses: allenporter/flux-local/action/diff@e3e84e4fcdab2191de8e65acfe62b7aedd933be4 # 4.0.0
+        uses: allenporter/flux-local/action/diff@fbbc4c3d343af3ff57180a1067d7007fd4bd4d3c # 4.1.1
         id: diff
         with:
           sources: homelab-kubernetes
