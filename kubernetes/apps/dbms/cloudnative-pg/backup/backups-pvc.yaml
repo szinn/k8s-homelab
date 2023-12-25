@@ -12,8 +12,8 @@ spec:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   nfs:
-    server: ${SECRET_ATLAS_NFS_SERVER}
-    path: "${SECRET_ATLAS_NFS_ROOTDIR}/backup/dbms"
+    server: ${SECRET_HERA_NFS_SERVER}
+    path: "${SECRET_HERA_NFS_ROOTDIR}/backup/dbms"
   mountOptions:
     - nfsvers=4.2
     - nconnect=8

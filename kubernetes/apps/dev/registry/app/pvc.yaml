@@ -12,7 +12,7 @@ spec:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   nfs:
-    server: ${SECRET_ATLAS_NFS_SERVER}
+    server: ${SECRET_HERA_NFS_SERVER}
     path: "/mnt/atlas/k8s/registry"
   mountOptions:
     - nfsvers=4.2

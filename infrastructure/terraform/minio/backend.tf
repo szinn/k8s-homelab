@@ -1,9 +1,9 @@
-terraform {
-  cloud {
-    organization = "magized"
+# terraform {
+#   cloud {
+#     organization = "magized"
 
-    workspaces {
-      name = "homelab-minio"
-    }
-  }
-}
+#     workspaces {
+#       name = "homelab-minio"
+#     }
+#   }
+# }

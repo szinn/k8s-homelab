@@ -36,7 +36,7 @@ spec:
   restic:
     copyMethod: Snapshot
     pruneIntervalDays: 14
-    repository: home-assistant-restic-secret
+    repository: frigate-restic-secret
     moverSecurityContext:
       runAsUser: 568
       runAsGroup: 568
