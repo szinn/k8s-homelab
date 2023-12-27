@@ -36,15 +36,6 @@ spec:
   values:
     controllers:
       main:
-        type: statefulset
-        statefulset:
-          volumeClaimTemplates:
-            - name: config
-              accessMode: ReadWriteOnce
-              size: 5Gi
-              storageClass: ceph-block
-              globalMounts:
-                - path: /data
         annotations:
           reloader.stakater.com/auto: "true"
         pod:
@@ -122,6 +113,13 @@ spec:
                   port: http
 
     persistence:
+      config:
+        enabled: true
+        existingClaim: "${VOLSYNC_CLAIM}"
+        advancedMounts:
+          main:
+            main:
+              - path: /data
       config-file:
         enabled: true
         type: configMap

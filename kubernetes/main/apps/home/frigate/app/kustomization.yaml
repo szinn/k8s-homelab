@@ -7,7 +7,7 @@ resources:
   - frigate-pvc.yaml
   - frigate-secrets.yaml
   - helm-release.yaml
-  - volsync-config.yaml
+  - ../../../../templates/volsync
 configMapGenerator:
   - name: frigate-configmap
     files:

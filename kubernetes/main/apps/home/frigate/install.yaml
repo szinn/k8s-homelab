@@ -6,15 +6,27 @@ metadata:
   name: home-frigate
   namespace: flux-system
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: &app frigate
+  targetNamespace: home
   path: ./kubernetes/main/apps/home/frigate/app
+  sourceRef:
+    kind: GitRepository
+    name: homelab-kubernetes
   dependsOn:
     - name: security-external-secrets-stores
     - name: system-node-feature-discovery-rules
     - name: system-volsync
+  postBuild:
+    substitute:
+      APP: *app
+      VOLSYNC_CLAIM: frigate-config
+      VOLSYNC_CAPACITY: 5Gi
+      VOLSYNC_ACCESSMODES: ReadWriteMany
+      VOLSYNC_STORAGECLASS: ceph-filesystem
+      VOLSYNC_SNAPSHOTCLASS: csi-ceph-filesystem
   prune: true
-  sourceRef:
-    kind: GitRepository
-    name: homelab-kubernetes
   wait: false
   interval: 30m
   retryInterval: 1m
