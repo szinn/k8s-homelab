@@ -6,11 +6,11 @@ resources:
   - cert-manager
   - kube-system
   # Step 2
-  - kyverno
-  - networking
-  - security/namespace.yaml
-  - security/external-secrets/install.yaml
+  # - kyverno
+  # - networking
+  # - security/namespace.yaml
+  # - security/external-secrets/install.yaml
   # Step 3
-  - rook-ceph
+  # - rook-ceph
   # Step 4
   # - dbms
