@@ -36,7 +36,7 @@ spec:
         enabled: true
         type: LoadBalancer
         annotations:
-          io.cilium/lb-ipam-ips: ${CONFIG_SVC_INGRESS_ADDR}
+          io.cilium/lb-ipam-ips: ${CONFIG_MAIN_SVC_INGRESS_ADDR}
           external-dns.alpha.kubernetes.io/hostname: "ingress.${SECRET_DOMAIN_NAME}"
       publishService:
         enabled: true

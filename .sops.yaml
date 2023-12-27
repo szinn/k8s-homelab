@@ -1,10 +1,16 @@
 ---
+keys:
+  - &scotte age1p28u8xjm5sf7jdavc8xsqtw7lxgscefxs7a5dtqszr2885xeputsh9y64y
+  - &main age1pwxsukhcw4j3x0q7x74e5suwmn48qs56ewlz9t2ndftg3mh36ftqfwcn8p
+
 creation_rules:
-  - path_regex: ansible/.*\.sops\.ya?ml
-    unencrypted_regex: "^(kind)$"
-    age: >-
-      age1p28u8xjm5sf7jdavc8xsqtw7lxgscefxs7a5dtqszr2885xeputsh9y64y
-  - path_regex: kubernetes/.*\.ya?ml
+  - path_regex: kubernetes/main/.*\.ya?ml
     encrypted_regex: "((?i)(displayname|email|pass|secret($|[^N])|key|token|^data$|^stringData))"
-    age: >-
-      age1p28u8xjm5sf7jdavc8xsqtw7lxgscefxs7a5dtqszr2885xeputsh9y64y
+    key_groups:
+      - age:
+        - *scotte
+        - *main
+  - path_regex: .*\.sops\.ya?ml
+    key_groups:
+      - age:
+        - *scotte

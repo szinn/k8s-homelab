@@ -2,12 +2,6 @@
 
 APP_DIR="$(dirname $0)"
 
-. ${APP_DIR}/common.sh
-. ${APP_DIR}/setup-config.sh
-
-need sops
-need find
-
 # Rebuild the configuration for a file and SOPS-encrypt if necessary.
 rebuild_config() {
   SRC=$1
@@ -56,17 +50,6 @@ process_directory() {
 
 # Build configurations for all .cfg/.cfg.sh files
 build_config() {
-    TARGET=$1
-    shift
-
-  message "Building configuration for $TARGET"
-
-  . $SETUP_CONFIG_ROOT/env.base
-  if test -f  $SETUP_CONFIG_ROOT/env.$TARGET; then
-    echo "Loading configuration for $TARGET"
-    . $SETUP_CONFIG_ROOT/env.$TARGET
-  fi
-
   for i in $*; do
     echo "Processing directory $i"
     process_directory $i "*.cfg"
@@ -74,4 +57,4 @@ build_config() {
   done
 }
 
-build_config ${SETUP_CLUSTER} kubernetes
+build_config kubernetes/main

@@ -123,7 +123,7 @@ spec:
       service:
         type: LoadBalancer
         annotations:
-          io.cilium/lb-ipam-ips: ${CONFIG_SVC_LOKI_ADDR}
+          io.cilium/lb-ipam-ips: ${CONFIG_MAIN_SVC_LOKI_ADDR}
       ingress:
         enabled: true
         ingressClassName: "nginx"

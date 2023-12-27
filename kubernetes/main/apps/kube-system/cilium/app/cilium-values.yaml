@@ -34,7 +34,7 @@ kubeProxyReplacement: strict
 kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
 k8sServiceHost: localhost
 k8sServicePort: 7445
-ipv4NativeRoutingCIDR: ${CONFIG_K8S_POD_CIDR}
+ipv4NativeRoutingCIDR: ${CONFIG_MAIN_POD_CIDR}
 
 loadBalancer:
   algorithm: random

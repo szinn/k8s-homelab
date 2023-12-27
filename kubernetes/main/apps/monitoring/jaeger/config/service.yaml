@@ -5,7 +5,7 @@ metadata:
   name: production-lb-collector
   namespace: monitoring
   annotations:
-    io.cilium/lb-ipam-ips: ${CONFIG_SVC_JAEGER_ADDR}
+    io.cilium/lb-ipam-ips: ${CONFIG_MAIN_SVC_JAEGER_ADDR}
 spec:
   type: LoadBalancer
   selector:

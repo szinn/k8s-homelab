@@ -6,4 +6,4 @@ metadata:
   name: main-pool
 spec:
   cidrs:
-    - cidr: ${CONFIG_BGP_POOL_CIDR}
+    - cidr: ${CONFIG_MAIN_BGP_POOL_CIDR}

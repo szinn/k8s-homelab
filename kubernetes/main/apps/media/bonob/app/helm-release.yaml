@@ -44,12 +44,12 @@ spec:
               BNB_SONOS_SERVICE_ID: 246
               BNB_SONOS_SERVICE_NAME: Library
               BNB_SUBSONIC_URL: https://music.${SECRET_DOMAIN_NAME}
-              BNB_URL: http://${CONFIG_SVC_BONOB_ADDR}:4534
+              BNB_URL: http://${CONFIG_MAIN_SVC_BONOB_ADDR}:4534
     service:
       main:
         type: LoadBalancer
         annotations:
-          io.cilium/lb-ipam-ips: ${CONFIG_SVC_BONOB_ADDR}
+          io.cilium/lb-ipam-ips: ${CONFIG_MAIN_SVC_BONOB_ADDR}
         ports:
           http:
             port: 4534

@@ -65,7 +65,7 @@ spec:
         controller: main
         type: LoadBalancer
         annotations:
-          io.cilium/lb-ipam-ips: ${CONFIG_SVC_QBITTORRENT_ADDR}
+          io.cilium/lb-ipam-ips: ${CONFIG_MAIN_SVC_QBITTORRENT_ADDR}
           prometheus.io/probe: "true"
           prometheus.io/protocol: tcp
         ports:

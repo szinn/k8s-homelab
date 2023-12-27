@@ -9,7 +9,7 @@ metadata:
     app.kubernetes.io/instance: *app
   annotations:
     external-dns.alpha.kubernetes.io/hostname: immich.${SECRET_DOMAIN_NAME}
-    io.cilium/lb-ipam-ips: ${CONFIG_SVC_POSTGRES_IMMICH_ADDR}
+    io.cilium/lb-ipam-ips: ${CONFIG_MAIN_SVC_POSTGRES_IMMICH_ADDR}
 spec:
   type: LoadBalancer
   ports:

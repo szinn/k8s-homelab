@@ -1,25 +1,25 @@
 ---
-clusterName: ${CONFIG_CLUSTER_NAME}
+clusterName: main
 talosVersion: v1.6.1
 kubernetesVersion: v1.29.0
-endpoint: https://${CONFIG_CLUSTER_NAME}.${SECRET_TECH_DOMAIN_NAME}:6443
+endpoint: https://main.${SECRET_TECH_DOMAIN_NAME}:6443
 
 cniConfig:
   name: none
 
 additionalApiServerCertSans:
-  - ${CONFIG_K8S_CLUSTER_ENDPOINT_IP}
+  - ${CONFIG_MAIN_CLUSTER_ENDPOINT_IP}
 
 additionalMachineCertSans:
-  - ${CONFIG_K8S_CLUSTER_ENDPOINT_IP}
-  - ${CONFIG_CLUSTER_NAME}.${SECRET_TECH_DOMAIN_NAME}
+  - ${CONFIG_MAIN_CLUSTER_ENDPOINT_IP}
+  - main.${SECRET_TECH_DOMAIN_NAME}
 
 domain: cluster.local
 
 clusterSvcNets:
-  - ${CONFIG_K8S_SERVICE_CIDR}
+  - ${CONFIG_MAIN_SERVICE_CIDR}
 clusterPodNets:
-  - ${CONFIG_K8S_POD_CIDR}
+  - ${CONFIG_MAIN_POD_CIDR}
 
 nodes:
   - hostname: k8s-1.${SECRET_TECH_DOMAIN_NAME}
@@ -101,14 +101,14 @@ controlPlane:
       machine:
         install:
           extraKernelArgs:
-            - talos.logging.kernel=udp://${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}:6001/
+            - talos.logging.kernel=udp://${CONFIG_MAIN_SVC_VECTOR_AGGREGATOR_ADDR}:6001/
 
     # Enable logging
     - &loggingPatch |-
       machine:
         logging:
           destinations:
-            - endpoint: udp://${CONFIG_SVC_VECTOR_AGGREGATOR_ADDR}:6002/
+            - endpoint: udp://${CONFIG_MAIN_SVC_VECTOR_AGGREGATOR_ADDR}:6002/
               format: json_lines
 
     # Disable search domain everywhere
@@ -218,9 +218,9 @@ controlPlane:
       machine:
         network:
           extraHostEntries:
-            - ip: ${CONFIG_K8S_CLUSTER_ENDPOINT_IP}
+            - ip: ${CONFIG_MAIN_CLUSTER_ENDPOINT_IP}
               aliases:
-                - ${CONFIG_CLUSTER_NAME}.${SECRET_TECH_DOMAIN_NAME}
+                - main.${SECRET_TECH_DOMAIN_NAME}
 
 worker:
   patches:

@@ -63,7 +63,7 @@ spec:
       main:
         type: LoadBalancer
         annotations:
-          io.cilium/lb-ipam-ips: ${CONFIG_SVC_ELASTICSEARCH_ADDR}
+          io.cilium/lb-ipam-ips: ${CONFIG_MAIN_SVC_ELASTICSEARCH_ADDR}
         ports:
           http:
             port: 9200

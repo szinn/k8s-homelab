@@ -61,7 +61,7 @@ spec:
               tag: 1.32.8.7639-fb6452ebf@sha256:637fe10cef736f249d96cb004c12f81646c81ca17ddce22374ea8782aa6646c2
             env:
               TZ: "${CONFIG_TIMEZONE}"
-              ADVERTISE_IP: "http://${CONFIG_SVC_PLEX_ADDR}:32400,https://{{ .Release.Name }}.${SECRET_DOMAIN_NAME}:443"
+              ADVERTISE_IP: "http://${CONFIG_MAIN_SVC_PLEX_ADDR}:32400,https://{{ .Release.Name }}.${SECRET_DOMAIN_NAME}:443"
               ALLOWED_NETWORKS: "10.0.0.0/8"
               HOSTNAME: "plex"
             envFrom:
@@ -79,7 +79,7 @@ spec:
       main:
         type: LoadBalancer
         annotations:
-          io.cilium/lb-ipam-ips: ${CONFIG_SVC_PLEX_ADDR}
+          io.cilium/lb-ipam-ips: ${CONFIG_MAIN_SVC_PLEX_ADDR}
         ports:
           http:
             port: 32400
