@@ -6,12 +6,27 @@ metadata:
   name: home-node-red
   namespace: flux-system
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: &app node-red
+  targetNamespace: home
   path: ./kubernetes/main/apps/home/node-red/app
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes
   dependsOn:
+    - name: security-external-secrets-stores
     - name: system-volsync
+  postBuild:
+    substitute:
+      APP: *app
+      APP_UID: "1000"
+      APP_GID: "1000"
+      VOLSYNC_CLAIM: node-red-config
+      VOLSYNC_CAPACITY: 5Gi
+      VOLSYNC_ACCESSMODES: ReadWriteMany
+      VOLSYNC_STORAGECLASS: ceph-filesystem
+      VOLSYNC_SNAPSHOTCLASS: csi-ceph-filesystem
   prune: true
   wait: false
   interval: 30m
