@@ -4,4 +4,4 @@ kind: Kustomization
 namespace: media
 resources:
   - helm-release.yaml
-  - volsync-config.yaml
+  - ../../../../templates/volsync
