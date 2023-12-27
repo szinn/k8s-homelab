@@ -6,12 +6,26 @@ metadata:
   name: media-openbooks
   namespace: flux-system
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: &app openbooks
+  targetNamespace: media
   path: ./kubernetes/main/apps/media/openbooks/app
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes
   dependsOn:
     - name: system-volsync
+  postBuild:
+    substitute:
+      APP: *app
+      APP_UID: "568"
+      APP_GID: "568"
+      VOLSYNC_CLAIM: openbooks-config
+      VOLSYNC_CAPACITY: 2Gi
+      VOLSYNC_ACCESSMODES: ReadWriteMany
+      VOLSYNC_STORAGECLASS: ceph-filesystem
+      VOLSYNC_SNAPSHOTCLASS: csi-ceph-filesystem
   prune: true
   wait: false
   interval: 30m
