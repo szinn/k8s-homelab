@@ -1,0 +1,78 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: cilium
+  namespace: kube-system
+  annotations:
+    meta.helm.sh/release-name: cilium
+    meta.helm.sh/release-namespace: kube-system
+  labels:
+    app.kubernetes.io/managed-by: Helm
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: cilium
+      version: 1.14.5
+      sourceRef:
+        kind: HelmRepository
+        name: cilium-charts
+        namespace: flux-system
+      interval: 15m
+  maxHistory: 3
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+      remediateLastFailure: true
+    cleanupOnFail: true
+
+  valuesFrom:
+    - kind: ConfigMap
+      name: cilium-values
+
+  values:
+    bgpControlPlane:
+      enabled: true
+    bgp:
+      enabled: false
+      announce:
+        loadbalancerIP: true
+        podCIDR: false
+
+    loadBalancer:
+      algorithm: maglev
+      mode: dsr
+
+    hubble:
+      metrics:
+        serviceMonitor:
+          enabled: true
+
+      relay:
+        prometheus:
+          serviceMonitor:
+            enabled: true
+
+      ui:
+        ingress:
+          enabled: true
+          annotations:
+            kubernetes.io/ingress.class: "nginx"
+            ingress.home.arpa/type: "internal"
+            nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+            nginx.ingress.kubernetes.io/whitelist-source-range: 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+          hosts:
+            - "hubble.${SECRET_DOMAIN_NAME}"
+
+    prometheus:
+      serviceMonitor:
+        enabled: true
+
+    operator:
+      prometheus:
+        serviceMonitor:
+          enabled: true

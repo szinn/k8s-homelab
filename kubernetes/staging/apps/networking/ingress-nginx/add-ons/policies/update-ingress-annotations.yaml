@@ -1,0 +1,51 @@
+---
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: update-ingress-annotations
+  annotations:
+    policies.kyverno.io/title: Update ingress annotations
+    policies.kyverno.io/subject: Ingress
+    policies.kyverno.io/description: >-
+      This policy creates auth annotations on ingresses, external-dns,
+      and sets an explicit RFC1918 whitelist for any ingresses
+      that are not not exposed to the internet.
+spec:
+  generateExistingOnPolicyUpdate: true
+  validationFailureAction: enforce
+  rules:
+    - name: ensure-annotation-present
+      match:
+        any:
+          - resources:
+              kinds: ["Ingress"]
+      validate:
+        message: "You must have ingress.home.arpa/type annotation set to internal"
+        pattern:
+          metadata:
+            annotations:
+              ingress.home.arpa/type: "internal"
+
+    - name: websecure
+      match:
+        any:
+          - resources:
+              kinds: ["Ingress"]
+      mutate:
+        patchStrategicMerge:
+          metadata:
+            annotations:
+              +(nginx.ingress.kubernetes.io/force-ssl-redirect): "true"
+
+    - name: internal
+      match:
+        any:
+          - resources:
+              kinds: ["Ingress"]
+              annotations:
+                ingress.home.arpa/type: "internal"
+      mutate:
+        patchStrategicMerge:
+          metadata:
+            annotations:
+              +(nginx.ingress.kubernetes.io/whitelist-source-range): "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"

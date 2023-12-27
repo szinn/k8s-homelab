@@ -2,6 +2,7 @@
 keys:
   - &scotte age1p28u8xjm5sf7jdavc8xsqtw7lxgscefxs7a5dtqszr2885xeputsh9y64y
   - &main age1pwxsukhcw4j3x0q7x74e5suwmn48qs56ewlz9t2ndftg3mh36ftqfwcn8p
+  - &staging age1cyqpra4hj22emvvsjyygd3mstyrf8vy0hktmvmv85kxgggqxzfns4pkdhy
 
 creation_rules:
   - path_regex: kubernetes/main/.*\.ya?ml
@@ -10,6 +11,12 @@ creation_rules:
       - age:
         - *scotte
         - *main
+  - path_regex: kubernetes/staging/.*\.ya?ml
+    encrypted_regex: "((?i)(displayname|email|pass|secret($|[^N])|key|token|^data$|^stringData))"
+    key_groups:
+      - age:
+        - *scotte
+        - *staging
   - path_regex: .*\.sops\.ya?ml
     key_groups:
       - age:

@@ -1,0 +1,5 @@
+---
+providerRegex: |
+  ^(stage-[1-6])$
+
+bypassDnsResolution: true

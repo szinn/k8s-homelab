@@ -9,7 +9,7 @@ echo "Bootstrapping cluster ${CLUSTER_NAME}"
 kubectl apply --server-side --kustomize ${CLUSTER_BASE}/bootstrap
 
 # Bootstrap secrets decryption key
-sops --decrypt ${REPO_ROOT}/kubenetes/${CLUSTER_NAME}/bootstrap/age-key.sops.yaml | kubectl apply -f -
+sops --decrypt ${CLUSTER_BASE}/bootstrap/age-key.sops.yaml | kubectl apply -f -
 
 # kubectl -n flux-system create secret generic github-deploy-key \
 #   --from-file=identity=${SETUP_CONFIG_ROOT}/id_${CLUSTER_NAME} \

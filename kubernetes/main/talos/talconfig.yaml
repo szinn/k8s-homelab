@@ -8,18 +8,18 @@ cniConfig:
   name: none
 
 additionalApiServerCertSans:
-  - ${CONFIG_MAIN_CLUSTER_ENDPOINT_IP}
+  - ${clusterEndpointIP}
 
 additionalMachineCertSans:
-  - ${CONFIG_MAIN_CLUSTER_ENDPOINT_IP}
+  - ${clusterEndpointIP}
   - main.${SECRET_TECH_DOMAIN_NAME}
 
 domain: cluster.local
 
 clusterSvcNets:
-  - ${CONFIG_MAIN_SERVICE_CIDR}
+  - ${clusterServiceNets}
 clusterPodNets:
-  - ${CONFIG_MAIN_POD_CIDR}
+  - ${clusterPodNets}
 
 nodes:
   - hostname: k8s-1.${SECRET_TECH_DOMAIN_NAME}
@@ -218,7 +218,7 @@ controlPlane:
       machine:
         network:
           extraHostEntries:
-            - ip: ${CONFIG_MAIN_CLUSTER_ENDPOINT_IP}
+            - ip: ${clusterEndpointIP}
               aliases:
                 - main.${SECRET_TECH_DOMAIN_NAME}
 

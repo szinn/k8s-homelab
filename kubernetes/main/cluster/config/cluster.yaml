@@ -13,6 +13,11 @@ spec:
     branch: main
   secretRef:
     name: github-deploy-key
+  ignore: |
+    # exclude all
+    /*
+    # include gitops dirs
+    !/kubernetes
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1

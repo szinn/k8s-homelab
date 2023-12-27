@@ -1,0 +1,64 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: external-dns-bind
+  namespace: networking
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: external-dns
+      version: 1.13.1
+      sourceRef:
+        kind: HelmRepository
+        name: external-dns-charts
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    fullnameOverride: external-dns-bind
+    deploymentAnnotations:
+      reloader.stakater.com/auto: "true"
+    provider: rfc2136
+    env:
+      - name: EXTERNAL_DNS_RFC2136_HOST
+        value: "10.0.5.3"
+      - name: EXTERNAL_DNS_RFC2136_PORT
+        value: "53"
+      - name: EXTERNAL_DNS_RFC2136_ZONE
+        value: ${SECRET_DOMAIN_NAME}
+      - name: EXTERNAL_DNS_RFC2136_TSIG_AXFR
+        value: "true"
+      - name: EXTERNAL_DNS_RFC2136_TSIG_KEYNAME
+        value: externaldns
+      - name: EXTERNAL_DNS_RFC2136_TSIG_SECRET_ALG
+        valueFrom:
+          secretKeyRef:
+            name: external-dns-bind-secret
+            key: externaldns-algorithm
+      - name: EXTERNAL_DNS_RFC2136_TSIG_SECRET
+        valueFrom:
+          secretKeyRef:
+            name: external-dns-bind-secret
+            key: externaldns-secret
+    policy: sync
+    sources:
+      - ingress
+      - service
+    txtOwnerId: default
+    txtPrefix: k8s.${CONFIG_CLUSTER_NAME}.
+    domainFilters:
+      - "${SECRET_DOMAIN_NAME}"
+    serviceMonitor:
+      enabled: true

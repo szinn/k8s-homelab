@@ -1,0 +1,25 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/postgresql.cnpg.io/cluster_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: postgres
+  namespace: dbms
+  annotations:
+    kyverno.io/ignore: "true"
+spec:
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.1-12
+  instances: 3
+  primaryUpdateStrategy: unsupervised
+  storage:
+    size: 100Gi
+    storageClass: ceph-block
+  enableSuperuserAccess: true
+  superuserSecret:
+    name: postgres-superuser
+  postgresql:
+    parameters:
+      max_connections: "300"
+      shared_buffers: 512MB
+  monitoring:
+    enablePodMonitor: true

@@ -1,0 +1,147 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: vector-aggregator
+  namespace: monitoring
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: vector
+      version: 0.29.0
+      sourceRef:
+        kind: HelmRepository
+        name: vector-charts
+        namespace: flux-system
+      interval: 15m
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    role: "Stateless-Aggregator"
+    podMonitor:
+      enabled: true
+    service:
+      enabled: true
+      annotations:
+        io.cilium/lb-ipam-ips: ${CONFIG_STAGING_SVC_VECTOR_AGGREGATOR_ADDR}
+      type: LoadBalancer
+    customConfig:
+      data_dir: /vector-data-dir
+      api:
+        enabled: false
+      # Sources
+      sources:
+        kubernetes_logs:
+          address: 0.0.0.0:6000
+          type: vector
+          version: "2"
+        talos_kernel_logs:
+          address: 0.0.0.0:6001
+          type: socket
+          mode: udp
+          max_length: 102400
+          decoding:
+            codec: json
+          host_key: __host
+        talos_service_logs:
+          address: 0.0.0.0:6002
+          type: socket
+          mode: udp
+          max_length: 102400
+          decoding:
+            codec: json
+          host_key: __host
+      # Transformas
+      transforms:
+        kernel_hostname_transform:
+          type: remap
+          inputs:
+            - talos_kernel_logs
+          source: |-
+            s1 = replace!(.__host, "10.12.0.16", "stage-1")
+            s2 = replace(s1, "10.12.0.17", "stage-2")
+            s3 = replace(s2, "10.12.0.18", "stage-3")
+            s4 = replace(s3, "10.12.0.19", "stage-4")
+            s5 = replace(s4, "10.12.0.20", "stage-5")
+            s6 = replace(s5, "10.12.0.21", "stage-6")
+            .node = s6
+        service_hostname_transform:
+          type: remap
+          inputs:
+            - talos_service_logs
+          source: |-
+            s1 = replace!(.__host, "10.12.0.16", "stage-1")
+            s2 = replace(s1, "10.12.0.17", "stage-2")
+            s3 = replace(s2, "10.12.0.18", "stage-3")
+            s4 = replace(s3, "10.12.0.19", "stage-4")
+            s5 = replace(s4, "10.12.0.20", "stage-5")
+            s6 = replace(s5, "10.12.0.21", "stage-6")
+            s7 = replace(s6, r'10.*', "talos")
+            .node = s7
+      # Sinks
+      sinks:
+        loki_kubernetes:
+          type: loki
+          inputs:
+            - kubernetes_logs
+          endpoint: https://loki.${SECRET_MAIN_DOMAIN_NAME}
+          encoding:
+            codec: json
+          batch:
+            max_bytes: 524288
+          out_of_order_action: rewrite_timestamp
+          remove_label_fields: true
+          remove_timestamp: true
+          labels:
+            container: >-
+              {{`{{ kubernetes.container_name }}`}}
+            namespace: >-
+              {{`{{ kubernetes.pod_namespace }}`}}
+            node: >-
+              {{`{{ kubernetes.pod_node_name }}`}}
+            cluster: "${CONFIG_CLUSTER_NAME}"
+        talos_kernel:
+          type: loki
+          inputs:
+            - kernel_hostname_transform
+          endpoint: https://loki.${SECRET_MAIN_DOMAIN_NAME}
+          encoding:
+            codec: json
+            except_fields:
+              - __host
+          batch:
+            max_bytes: 524288
+          out_of_order_action: rewrite_timestamp
+          labels:
+            node: >-
+              {{`{{ node }}`}}
+            facility: >-
+              {{`{{ facility }}`}}
+            cluster: "${CONFIG_CLUSTER_NAME}"
+            namespace: "talos:kernel"
+        talos_service:
+          type: loki
+          inputs:
+            - service_hostname_transform
+          endpoint: https://loki.${SECRET_MAIN_DOMAIN_NAME}
+          encoding:
+            codec: json
+            except_fields:
+              - __host
+          batch:
+            max_bytes: 524288
+          out_of_order_action: rewrite_timestamp
+          labels:
+            node: >-
+              {{`{{ node }}`}}
+            talos_service: >-
+              {{`{{ "talos-service" }}`}}
+            cluster: "${CONFIG_CLUSTER_NAME}"
+            namespace: "talos:service"

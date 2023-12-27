@@ -1,0 +1,18 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: networking-external-dns-bind
+  namespace: flux-system
+  labels:
+    substitution.flux.home.arpa/enabled: "true"
+spec:
+  path: "./kubernetes/staging/apps/networking/external-dns/bind"
+  sourceRef:
+    kind: GitRepository
+    name: homelab-kubernetes
+  prune: true
+  wait: true
+  interval: 10m
+  retryInterval: 1m
+  timeout: 3m

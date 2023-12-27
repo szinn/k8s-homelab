@@ -1,0 +1,36 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: downloads
+  namespace: media
+spec:
+  storageClassName: downloads
+  capacity:
+    storage: 1Mi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    server: ${SECRET_ATLAS_NFS_SERVER}
+    path: "/mnt/nvme/downloads"
+  mountOptions:
+    - nfsvers=4
+    - tcp
+    - hard
+    - noatime
+    - nodiratime
+    - nolock
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: downloads
+  namespace: media
+spec:
+  storageClassName: downloads
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Mi

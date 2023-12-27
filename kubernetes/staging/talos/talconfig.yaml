@@ -1,0 +1,216 @@
+---
+clusterName: staging
+talosVersion: v1.6.1
+kubernetesVersion: v1.29.0
+endpoint: https://staging.${SECRET_TECH_DOMAIN_NAME}:6443
+
+cniConfig:
+  name: none
+
+additionalApiServerCertSans:
+  - ${clusterEndpointIP}
+
+additionalMachineCertSans:
+  - ${clusterEndpointIP}
+  - staging.${SECRET_TECH_DOMAIN_NAME}
+
+domain: cluster.local
+
+clusterSvcNets:
+  - ${clusterServiceNets}
+clusterPodNets:
+  - ${clusterPodNets}
+
+nodes:
+  - hostname: stage-1.${SECRET_TECH_DOMAIN_NAME}
+    ipAddress: 10.12.0.16
+    controlPlane: true
+    installDisk: /dev/sda
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "de:ca:ff:10:12:10"
+        dhcp: true
+        mtu: 1500
+  - hostname: stage-2.${SECRET_TECH_DOMAIN_NAME}
+    ipAddress: 10.12.0.17
+    controlPlane: true
+    installDisk: /dev/sda
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "de:ca:ff:10:12:11"
+        dhcp: true
+        mtu: 1500
+  - hostname: stage-3.${SECRET_TECH_DOMAIN_NAME}
+    ipAddress: 10.12.0.18
+    controlPlane: true
+    installDisk: /dev/sda
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "de:ca:ff:10:12:12"
+        dhcp: true
+        mtu: 1500
+  - hostname: stage-4.${SECRET_TECH_DOMAIN_NAME}
+    ipAddress: 10.12.0.19
+    controlPlane: false
+    installDisk: /dev/sda
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "de:ca:ff:10:12:13"
+        dhcp: true
+        mtu: 1500
+  - hostname: stage-5.${SECRET_TECH_DOMAIN_NAME}
+    ipAddress: 10.12.0.20
+    controlPlane: false
+    installDisk: /dev/sda
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "de:ca:ff:10:12:14"
+        dhcp: true
+        mtu: 1500
+  - hostname: stage-6.${SECRET_TECH_DOMAIN_NAME}
+    ipAddress: 10.12.0.21
+    controlPlane: false
+    installDisk: /dev/sda
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "de:ca:ff:10:12:15"
+        dhcp: true
+        mtu: 1500
+controlPlane:
+  patches:
+    # Custom Talos installer patch
+    # - &customTalosPatch |-
+    #   machine:
+    #     install:
+    #       extraKernelArgs:
+    #         - talos.logging.kernel=udp://${CONFIG_STAGING_SVC_VECTOR_AGGREGATOR_ADDR}:6001/
+
+    # Enable logging
+    # - &loggingPatch |-
+    #   machine:
+    #     logging:
+    #       destinations:
+    #         - endpoint: udp://${CONFIG_STAGING_SVC_VECTOR_AGGREGATOR_ADDR}:6002/
+    #           format: json_lines
+
+    # Disable s=earch domain everywhere
+    - &disableSearchDomainPatch |-
+      machine:
+        network:
+          disableSearchDomain: true
+
+    # Configure NTP
+    - &ntpPatch |-
+      machine:
+        time:
+          disabled: false
+          servers:
+            - 10.12.0.1
+
+    # Enable cluster discovery
+    - &discoveryPatch |-
+      cluster:
+        discovery:
+          registries:
+            kubernetes:
+              disabled: false
+            service:
+              disabled: true
+
+    # Enable KubePrism
+    - &kubePrismPatch |-
+      machine:
+        features:
+          kubePrism:
+            enabled: true
+            port: 7445
+
+    # Configure kubelet
+    - &kubeletPatch |-
+      machine:
+        kubelet:
+          extraArgs:
+            feature-gates: GracefulNodeShutdown=true,NewVolumeManagerReconstruction=false
+            rotate-server-certificates: true
+          extraConfig:
+            maxPods: 150
+          nodeIP:
+            validSubnets:
+                - 10.12.0.0/24
+
+    # Cluster configuration
+    - |-
+      cluster:
+        controllerManager:
+          extraArgs:
+            bind-address: 0.0.0.0
+        proxy:
+          disabled: true
+        scheduler:
+          extraArgs:
+            bind-address: 0.0.0.0
+
+    # ETCD configuration
+    - |-
+      cluster:
+        etcd:
+          extraArgs:
+            listen-metrics-urls: http://0.0.0.0:2381
+
+    # Disable default API server admission plugins.
+    - |-
+      - op: remove
+        path: /cluster/apiServer/admissionControl
+
+    # Enable K8s Talos API Access
+    - |-
+      machine:
+        features:
+          kubernetesTalosAPIAccess:
+            enabled: true
+            allowedRoles:
+              - os:admin
+            allowedKubernetesNamespaces:
+              - kube-system
+
+    # Configure containerd
+    - &containerdPatch |-
+      machine:
+        files:
+          - op: create
+            path: /etc/cri/conf.d/20-customization.part
+            content: |-
+              [plugins."io.containerd.grpc.v1.cri"]
+                enable_unprivileged_ports = true
+                enable_unprivileged_icmp = true
+              [plugins."io.containerd.grpc.v1.cri".containerd]
+                discard_unpacked_layers = false
+              [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
+                discard_unpacked_layers = false
+
+    # Custom sysctl settings
+    - &sysctlPatch |-
+      machine:
+        sysctls:
+          fs.inotify.max_user_watches: 1048576
+          fs.inotify.max_user_instances: 8192
+
+    # Static host entries
+    - &staticHostEntriesPatch |-
+      machine:
+        network:
+          extraHostEntries:
+            - ip: ${clusterEndpointIP}
+              aliases:
+                - staging.${SECRET_TECH_DOMAIN_NAME}
+
+worker:
+  patches:
+    # - *customTalosPatch
+    # - *loggingPatch
+    - *disableSearchDomainPatch
+    - *ntpPatch
+    - *kubePrismPatch
+    - *containerdPatch
+    - *sysctlPatch
+    - *staticHostEntriesPatch
