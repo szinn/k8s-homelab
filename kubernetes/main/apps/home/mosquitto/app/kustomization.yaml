@@ -6,6 +6,7 @@ namespace: home
 resources:
   - mosquitto-secrets.yaml
   - helm-release.yaml
+  - ../../../../templates/volsync
 configMapGenerator:
   - name: mosquitto-configmap
     files:
