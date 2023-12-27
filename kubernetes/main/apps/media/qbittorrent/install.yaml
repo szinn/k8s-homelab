@@ -6,12 +6,27 @@ metadata:
   name: media-qbittorrent
   namespace: flux-system
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: &app qbittorrent
+  targetNamespace: media
   path: ./kubernetes/main/apps/media/qbittorrent/app
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes
   dependsOn:
+    - name: security-external-secrets-stores
     - name: system-volsync
+  postBuild:
+    substitute:
+      APP: *app
+      APP_UID: "568"
+      APP_GID: "568"
+      VOLSYNC_CLAIM: qbittorrent-config
+      VOLSYNC_CAPACITY: 2Gi
+      VOLSYNC_ACCESSMODES: ReadWriteMany
+      VOLSYNC_STORAGECLASS: ceph-filesystem
+      VOLSYNC_SNAPSHOTCLASS: csi-ceph-filesystem
   prune: true
   wait: false
   interval: 30m
