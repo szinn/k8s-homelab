@@ -234,7 +234,7 @@ spec:
             honor_timestamps: true
             static_configs:
               - targets:
-                  - "ragnar.${SECRET_TECH_DOMAIN_NAME}:9100"
+                  # - "ragnar.${SECRET_TECH_DOMAIN_NAME}:9100"
                   - "gateway.${SECRET_TECH_DOMAIN_NAME}:9100"
           - job_name: speedtest-exporter
             scrape_interval: 240m
