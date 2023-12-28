@@ -4,7 +4,6 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - alertmanager-discord/install.yaml
-  - goldilocks/install.yaml
   - grafana/install.yaml
   - jaeger/install.yaml
   - kube-prometheus-stack/install.yaml
@@ -15,4 +14,3 @@ resources:
   - thanos/install.yaml
   - unifi-poller/install.yaml
   - vector/install.yaml
-  - vpa/install.yaml
