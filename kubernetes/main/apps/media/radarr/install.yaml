@@ -6,6 +6,10 @@ metadata:
   name: media-radarr
   namespace: flux-system
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: &app radarr
+  targetNamespace: media
   path: ./kubernetes/main/apps/media/radarr
   sourceRef:
     kind: GitRepository
@@ -13,6 +17,16 @@ spec:
   dependsOn:
     - name: security-external-secrets-stores
     - name: system-volsync
+  postBuild:
+    substitute:
+      APP: *app
+      APP_UID: "568"
+      APP_GID: "568"
+      VOLSYNC_CLAIM: radarr-config
+      VOLSYNC_CAPACITY: 4Gi
+      VOLSYNC_ACCESSMODES: ReadWriteMany
+      VOLSYNC_STORAGECLASS: ceph-filesystem
+      VOLSYNC_SNAPSHOTCLASS: csi-ceph-filesystem
   prune: true
   wait: false
   interval: 30m
