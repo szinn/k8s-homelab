@@ -5,7 +5,7 @@ namespace: dbms
 resources:
   - pgadmin-secret.yaml
   - helm-release.yaml
-  - volsync-config.yaml
+  - ../../../../templates/volsync
 configMapGenerator:
   - name: servers-json
     files:

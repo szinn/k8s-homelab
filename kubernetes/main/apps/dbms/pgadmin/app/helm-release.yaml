@@ -30,22 +30,13 @@ spec:
   values:
     controllers:
       main:
-        type: statefulset
-        statefulset:
-          volumeClaimTemplates:
-            - name: config
-              accessMode: ReadWriteOnce
-              size: 1Gi
-              storageClass: ceph-block
-              globalMounts:
-                - path: /var/lib/pgadmin
         annotations:
           reloader.stakater.com/auto: "true"
         pod:
           securityContext:
-            runAsUser: 5050
-            runAsGroup: 5050
-            fsGroup: 5050
+            runAsUser: ${APP_UID}
+            runAsGroup: ${APP_GID}
+            fsGroup: ${APP_GID}
             fsGroupChangePolicy: OnRootMismatch
         containers:
           main:
@@ -86,6 +77,13 @@ spec:
                   port: http
 
     persistence:
+      config:
+        enabled: true
+        existingClaim: "${VOLSYNC_CLAIM}"
+        advancedMounts:
+          main:
+            main:
+              - path: /var/lib/pgadmin
       server-json:
         enabled: true
         type: configMap
