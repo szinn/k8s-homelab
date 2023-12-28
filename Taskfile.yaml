@@ -15,7 +15,7 @@ includes:
   redis: .taskfiles/Redis.yaml
   rook: .taskfiles/Rook.yaml
   sops: .taskfiles/Sops.yaml
-  vs: .taskfiles/VolSync.yaml
+  vs: .taskfiles/volsync/Taskfile.yaml
 
 tasks:
   secrets:
@@ -23,3 +23,8 @@ tasks:
     cmds:
       - |
         infrastructure/setup/build-config.sh
+
+  default:
+    silent: true
+    cmds:
+      - task -l
