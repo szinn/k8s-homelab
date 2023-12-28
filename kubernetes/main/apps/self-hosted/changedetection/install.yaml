@@ -6,12 +6,27 @@ metadata:
   name: self-hosted-changedetection
   namespace: flux-system
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: &app changedetection
+  targetNamespace: self-hosted
   path: ./kubernetes/main/apps/self-hosted/changedetection/app
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes
   dependsOn:
+    - name: security-external-secrets-stores
     - name: system-volsync
+  postBuild:
+    substitute:
+      APP: *app
+      APP_UID: "568"
+      APP_GID: "568"
+      VOLSYNC_CLAIM: changedetection-config
+      VOLSYNC_CAPACITY: 1Gi
+      VOLSYNC_ACCESSMODES: ReadWriteMany
+      VOLSYNC_STORAGECLASS: ceph-filesystem
+      VOLSYNC_SNAPSHOTCLASS: csi-ceph-filesystem
   prune: true
   wait: false
   interval: 30m
