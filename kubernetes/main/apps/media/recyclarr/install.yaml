@@ -6,6 +6,10 @@ metadata:
   name: media-recyclarr
   namespace: flux-system
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: &app recyclarr
+  targetNamespace: media
   path: ./kubernetes/main/apps/media/recyclarr/app
   sourceRef:
     kind: GitRepository
@@ -13,6 +17,16 @@ spec:
   dependsOn:
     - name: security-external-secrets-stores
     - name: system-volsync
+  postBuild:
+    substitute:
+      APP: *app
+      APP_UID: "568"
+      APP_GID: "568"
+      VOLSYNC_CLAIM: recyclarr-config
+      VOLSYNC_CAPACITY: 1Gi
+      VOLSYNC_ACCESSMODES: ReadWriteMany
+      VOLSYNC_STORAGECLASS: ceph-filesystem
+      VOLSYNC_SNAPSHOTCLASS: csi-ceph-filesystem
   prune: true
   wait: false
   interval: 30m
