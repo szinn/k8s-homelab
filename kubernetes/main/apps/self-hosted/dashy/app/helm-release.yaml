@@ -30,20 +30,8 @@ spec:
   values:
     controllers:
       main:
-        type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
-        statefulset:
-          volumeClaimTemplates:
-            - name: config
-              accessMode: ReadWriteOnce
-              size: 1Gi
-              storageClass: ceph-block
-              advancedMounts:
-                main:
-                  - path: /app/public
-                code-server:
-                  - path: /config
         containers:
           main:
             image:
@@ -51,8 +39,8 @@ spec:
               tag: 2.1.1
             env:
               TZ: ${CONFIG_TIMEZONE}
-              UID: 568
-              GID: 568
+              UID: ${APP_UID}
+              GID: ${APP_GID}
           code-server:
             image:
               repository: codercom/code-server
@@ -101,3 +89,13 @@ spec:
                 service:
                   name: main
                   port: code-server
+    persistence:
+      config:
+        enabled: true
+        existingClaim: "${VOLSYNC_CLAIM}"
+        advancedMounts:
+          main:
+            main:
+              - path: /app/public
+            code-server:
+              - path: /config
