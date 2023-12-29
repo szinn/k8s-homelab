@@ -59,3 +59,4 @@ build_config() {
 
 build_config kubernetes/main
 build_config kubernetes/staging
+build_config kubernetes/nas

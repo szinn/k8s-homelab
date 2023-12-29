@@ -1,0 +1,37 @@
+apiVersion: v1
+data:
+    age.agekey: ENC[AES256_GCM,data:yv/H4mIqXYQG/1AHfU89Dc3LPj8cIdQDYcZP+wW+B172AmrU1BeiURPGe4C69eryeAtJxPMdKHx93NJsRCcCYGZk7MUBcuwt1ZH+p/+5km5U0ahjo6kSPfGlM1XCkdxjjbKgHP26PHRKTALVLy9SPyWo7xXUy6V9PeYCTYGZUjj6rVEPvg16cP8BHFhwZgkpHZsACQlAX24ApPIy5AcNBxrVfc7p2XFHjdzBE/IFeMjYPLskVY7cf96q5UXC9VUN/EhuGVgLIl+8Xz3WDv8OiOBjGRbRWQ7Tivwa3qNV4ZqWMxfs+GZFr1Li9y4B0gOX75HaDI6eyHNuiDyw,iv:rgEvLQHrEDzu9LGevU+8FCN8l3kBYG8Xc4vbEniqUpA=,tag:L9htidC6jHPC33Me+PPtFg==,type:str]
+kind: Secret
+metadata:
+    creationTimestamp: null
+    name: sops-age
+    namespace: flux-system
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1p28u8xjm5sf7jdavc8xsqtw7lxgscefxs7a5dtqszr2885xeputsh9y64y
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBod00yM0U2WkRtR0x0ODRr
+            TjZmOE81OE9uRW83VFJCM2lLcS8yV2JXK1VBCmxtTDZZVnVCNzE3d0JKaVR4dHVK
+            bXplZWUrbzRCR3NzbFY0UUNVamlzNVkKLS0tIDRZV2ZNek5iamdqQjFHaENXbXgx
+            bGVLVFN6blh4aDhXYzBRMGNsd0wrZEUKDeZkIFwlyeFeh09KiYb9AtlfpK0Hd9Pw
+            EazS8KqkJ/Az3ZghQeIK/ViUN11zLC+Lx1b3rANMJesZUji6zTEa6Q==
+            -----END AGE ENCRYPTED FILE-----
+        - recipient: age1dds4jm62qnfgwdl0qqhknl223rwnktxvgr52tt3t0cdp8wk2xcfqng9s52
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBzckVGS1I1MnZqczE1QXd1
+            OEc3aWxEb1BVRUZVeUtYYndyK3c0QzJadmxrCjNSNGpoWWRGdHc5N21lWUZqZ1Zo
+            cTZ2QUo4YlhmT3BHODBKRVhkZUE1Q2MKLS0tIGxUR0Yya2Z4Y1k3T1VSMEs3U0l2
+            L0dXSWZ5SWpZb2JybmFBZ3dzSFM5S2MKLpyZqkAuNUUJ2gjZtdG3J/qCzvn9Zwgi
+            jho652NZwI0VFGWyeleKiMPbsN3zQ8g3yyK4sYos5q7yVV1NJOaxQA==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2023-12-29T21:27:57Z"
+    mac: ENC[AES256_GCM,data:FqHnTWTeQVLJb7gdpEOKjH3bH5Iii0YQmvjQSIJXRnzK6AlhZHjDTzXs3enbZAtSUjXaz8zRzB/EBKWdFugqNSIMILqyoTBcxe2wTcp8WpZyuVw2LF/agdXi2AXE667Cy9inLSLziJCz15QtxWWCuNtbSZj/9TBkXJbxI36HdvE=,iv:d+X6+YY3KvL0U8FBZH7WLUHhnGN9HCtZNnUrg3JNHHU=,tag:mUs1oXg+B2yq368jXGCrug==,type:str]
+    pgp: []
+    encrypted_regex: ((?i)(displayname|email|pass|secret($|[^N])|key|token|^data$|^stringData))
+    version: 3.8.1

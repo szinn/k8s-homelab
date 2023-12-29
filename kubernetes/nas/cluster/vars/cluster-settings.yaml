@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cluster-settings
+  namespace: flux-system
+data:
+  CONFIG_CLUSTER_NAME: nas
+  CONFIG_NAS_POD_CIDR: 10.221.0.0/16
+  CONFIG_TIMEZONE: America/Toronto
+  CONFIG_NAS_BGP_POOL_CIDR: 
+  CONFIG_NAS_SVC_INGRESS_ADDR: 10.10.1.2
+  CONFIG_NAS_SVC_VECTOR_AGGREGATOR_ADDR: 
+  CONFIG_NAS_SVC_POSTGRES_ADDR: 
