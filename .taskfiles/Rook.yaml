@@ -68,15 +68,15 @@ tasks:
     internal: true
     cmds:
       - envsubst < <(cat {{.wipeRookDiskJobTemplate}}) | kubectl apply -f -
-      - bash {{.waitForJobScript}} {{.wipeCephDiskJobName}} default
-      - kubectl -n default wait job/{{.wipeCephDiskJobName}} --for condition=complete --timeout=1m
-      - kubectl -n default logs job/{{.wipeCephDiskJobName}} --container list
-      - kubectl -n default delete job {{.wipeCephDiskJobName}}
+      - bash {{.waitForJobScript}} {{.jobName}} default
+      - kubectl -n default wait job/{{.jobName}} --for condition=complete --timeout=1m
+      - kubectl -n default logs job/{{.jobName}}
+      - kubectl -n default delete job {{.jobName}}
     vars:
       node: '{{ or .node (fail "`node` is required") }}'
       ceph_disk: '{{ or .ceph_disk (fail "`ceph_disk` is required") }}'
       jobName: 'wipe-disk-{{- .node -}}-{{- .ceph_disk | replace "/" "-" -}}-{{- .ts -}}'
-      wipeRookDiskJobTemplate: "{{.PROJECT_DIR}}/.taskfiles/rook/WipeDiskJob.tmpl.yaml"
+      wipeRookDiskJobTemplate: "{{.PROJECT_DIR}}/.taskfiles/WipeDiskJob.tmpl.yaml"
     env: *task-vars
     preconditions:
       - sh: test -f {{.waitForJobScript}}
@@ -88,14 +88,14 @@ tasks:
     internal: true
     cmds:
       - envsubst < <(cat {{.wipeRookDataJobTemplate}}) | kubectl apply -f -
-      - bash {{.waitForJobScript}} {{.wipeRookDataJobName}} default
-      - kubectl -n default wait job/{{.wipeRookDataJobName}} --for condition=complete --timeout=1m
-      - kubectl -n default logs job/{{.wipeRookDataJobName}} --container list
-      - kubectl -n default delete job {{.wipeRookDataJobName}}
+      - bash {{.waitForJobScript}} {{.jobName}} default
+      - kubectl -n default wait job/{{.jobName}} --for condition=complete --timeout=1m
+      - kubectl -n default logs job/{{.jobName}}
+      - kubectl -n default delete job {{.jobName}}
     vars:
       node: '{{ or .node (fail "`node` is required") }}'
       jobName: "wipe-rook-data-{{- .node -}}-{{- .ts -}}"
-      wipeRookDataJobTemplate: "{{.PROJECT_DIR}}/.taskfiles/rook/WipeRookDataJob.tmpl.yaml"
+      wipeRookDataJobTemplate: "{{.PROJECT_DIR}}/.taskfiles/WipeRookDataJob.tmpl.yaml"
     env: *task-vars
     preconditions:
       - sh: test -f {{.waitForJobScript}}

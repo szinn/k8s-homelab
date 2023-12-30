@@ -8,11 +8,9 @@ metadata:
 spec:
   interval: 30m
   # https://github.com/k8s-at-home/template-cluster-k3s/issues/324
-  url: ssh://git@github.com/szinn/k8s-homelab
+  url: https://github.com/szinn/k8s-homelab.git
   ref:
     branch: main
-  secretRef:
-    name: github-deploy-key
   ignore: |
     # exclude all
     /*

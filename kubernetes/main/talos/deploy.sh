@@ -15,5 +15,5 @@ talosctl apply-config -i -n k8s-5 -f ./clusterconfig/main-k8s-5.zinn.tech.yaml
 talosctl apply-config -i -n k8s-6 -f ./clusterconfig/main-k8s-6.zinn.tech.yaml
 
 # It will take a few minutes for the nodes to spin up with the configuration.  Once ready, execute
-# talosctl bootstrap -n k8s-1
+# talosctl bootstrap -n k8s-1.zinn.tech
 # ./deploy-cni.sh

@@ -5,6 +5,7 @@ resources:
   # Step 1
   - cert-manager
   - kube-system
+  - flux-system
   # Step 2
   # - kyverno
   # - networking

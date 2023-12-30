@@ -169,11 +169,6 @@ controlPlane:
         etcd:
           extraArgs:
             listen-metrics-urls: http://0.0.0.0:2381
-          extraConfig:
-            maxPods: 150
-          nodeIP:
-            validSubnets:
-                - 10.11.0.0/24
 
     # Disable default API server admission plugins.
     - |-
@@ -248,9 +243,9 @@ worker:
                 - rw
 
     # Graphics extensions
+    # - i915-ucode
+    # - intel-ucode
     - |-
       machine:
         install:
-          extensions:
-            - image: ghcr.io/siderolabs/i915-ucode:20230625
-            - image: ghcr.io/siderolabs/intel-ucode:20230613
+          image: factory.talos.dev/installer/97bf8e92fc6bba0f03928b859c08295d7615737b29db06a97be51dc63004e403:v1.6.1

@@ -4,6 +4,7 @@ CLUSTER_NAME="$1"
 CLUSTER_BASE="${REPO_ROOT}/kubernetes/${CLUSTER_NAME}"
 
 echo "Bootstrapping cluster ${CLUSTER_NAME}"
+echo "ClusterBase: $CLUSTER_BASE"
 
 # Bootstrap Flux and CRDs
 kubectl apply --server-side --kustomize ${CLUSTER_BASE}/bootstrap

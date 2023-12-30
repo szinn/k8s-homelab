@@ -8,7 +8,7 @@ CLUSTER=$3
 
 while true; do
     STATUS="$(kubectl --context "${CLUSTER}" -n "${NAMESPACE}" get pod -l job-name="${JOB_NAME}" -o jsonpath='{.items[*].status.phase}')"
-    if [[ "${STATUS}" == "Pending" ]]; then
+    if [[ "${STATUS}" == "Succeeded" ]]; then
         break
     fi
     sleep 1
