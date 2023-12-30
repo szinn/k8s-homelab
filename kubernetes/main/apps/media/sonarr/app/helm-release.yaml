@@ -57,6 +57,11 @@ spec:
               tag: 4.0.0.740@sha256:1bd88517dcc6a10917b56db2303f90957c84395ba839e833acae5d4f5459cdce
             env:
               TZ: ${CONFIG_TIMEZONE}
+              SONARR__INSTANCE_NAME: Sonarr
+              SONARR__PORT: &port 8989
+              SONARR__AUTHENTICATION_METHOD: External
+              SONARR__AUTHENTICATION_REQUIRED: DisabledForLocalAddresses
+              SONARR__APPLICATION_URL: "https://sonarr.${SECRET_DOMAIN_NAME}"
               SONARR__LOG_LEVEL: info
               SONARR__THEME: dark
             envFrom:
