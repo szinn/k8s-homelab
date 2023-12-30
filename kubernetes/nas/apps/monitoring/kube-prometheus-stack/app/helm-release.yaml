@@ -1,0 +1,173 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: kube-prometheus-stack
+  namespace: monitoring
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: kube-prometheus-stack
+      version: 55.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus-community-charts
+        namespace: flux-system
+      interval: 15m
+  maxHistory: 3
+  install:
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    fullnameOverride: prometheus
+    crds:
+      enabled: true
+    cleanPrometheusOperatorObjectNames: true
+    defaultRules:
+      create: true
+    kubeControllerManager:
+      enabled: false
+    kubeEtcd:
+      enabled: false
+    kubelet:
+      enabled: true
+      serviceMonitor:
+        metricRelabelings:
+          - action: replace
+            sourceLabels:
+              - node
+            targetLabel: instance
+    kubeApiServer:
+      enabled: true
+    kubeProxy:
+      enabled: false
+    kubeScheduler:
+      enabled: false
+    kubeStateMetrics:
+      enabled: true
+    kube-state-metrics:
+      fullnameOverride: kube-state-metrics
+      metricLabelsAllowlist:
+        - pods=[*]
+        - deployments=[*]
+        - persistentvolumeclaims=[*]
+      prometheus:
+        monitor:
+          enabled: true
+          relabelings:
+            - action: replace
+              regex: (.*)
+              replacement: $1
+              sourceLabels:
+                - __meta_kubernetes_pod_node_name
+              targetLabel: kubernetes_node
+    alertmanager:
+      enabled: false
+    prometheus:
+      ingress:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: nginx
+          ingress.home.arpa/type: "internal"
+        hosts:
+          - "prometheus.${SECRET_DOMAIN_NAME}"
+        path: /
+        pathType: Prefix
+      thanosService:
+        enabled: true
+      thanosServiceMonitor:
+        enabled: true
+      thanosServiceExternal:
+        enabled: true
+        type: LoadBalancer
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: "thanos-svc.${SECRET_DOMAIN_NAME}"
+        externalTrafficPolicy: Cluster
+      prometheusSpec:
+        additionalAlertManagerConfigs:
+          - static_configs:
+              - targets:
+                  - alerts.${SECRET_MAIN_DOMAIN_NAME}
+        enableFeatures:
+          - auto-gomaxprocs
+          - memory-snapshot-on-shutdown
+          - new-service-discovery-manager
+        externalLabels:
+          cluster: ${CONFIG_CLUSTER_NAME}
+        podMonitorSelectorNilUsesHelmValues: false
+        probeSelectorNilUsesHelmValues: false
+        replicas: 1
+        replicaExternalLabelName: "__replica__" # must match with thanos value `.query.replicaLabel[0]`
+        retention: 2d
+        retentionSize: "15GB"
+        ruleSelectorNilUsesHelmValues: false
+        scrapeConfigSelectorNilUsesHelmValues: false
+        scrapeInterval: 1m
+        serviceMonitorSelectorNilUsesHelmValues: false
+        storageSpec:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: local-hostpath
+              resources:
+                requests:
+                  storage: 20Gi
+        podAntiAffinity: hard
+        enableAdminAPI: true
+        walCompression: true
+        ruleSelector: {}
+        ruleNamespaceSelector: {}
+        serviceMonitorSelector: {}
+        serviceMonitorNamespaceSelector: {}
+        podMonitorSelector: {}
+        podMonitorNamespaceSelector: {}
+        thanos:
+          image: quay.io/thanos/thanos:v0.33.0
+          objectStorageConfig:
+            existingSecret:
+              name: thanos-s3-secret
+              key: objstore.yml
+        # additionalScrapeConfigs:
+        #   - job_name: minio-job
+        #     metrics_path: /minio/v2/metrics/cluster
+        #     scheme: http
+        #     static_configs:
+        #       - targets:
+        #           - atlas.${SECRET_TECH_DOMAIN_NAME}:9000
+        #   - job_name: node-exporter
+        #     scrape_interval: 1m
+        #     scrape_timeout: 10s
+        #     honor_timestamps: true
+        #     static_configs:
+        #       - targets:
+        #           # - "ragnar.${SECRET_TECH_DOMAIN_NAME}:9100"
+        #           - "gateway.${SECRET_TECH_DOMAIN_NAME}:9100"
+        #   - job_name: speedtest-exporter
+        #     scrape_interval: 240m
+        #     scrape_timeout: 120s
+        #     honor_timestamps: true
+        #     static_configs:
+        #       - targets:
+        #           - gateway.${SECRET_TECH_DOMAIN_NAME}:9798
+        #   - job_name: vyos
+        #     scrape_interval: 1m
+        #     scrape_timeout: 10s
+        #     honor_timestamps: true
+        #     static_configs:
+        #       - targets:
+        #           - gateway.${SECRET_TECH_DOMAIN_NAME}:9273
+    grafana:
+      enabled: false
+    nodeExporter:
+      enabled: false
+    serviceMonitor:
+      scrapeTimeout: 60s

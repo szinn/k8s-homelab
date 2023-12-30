@@ -38,30 +38,31 @@ spec:
     existingObjstoreSecret: thanos-s3-secret
     query:
       enabled: true
-      replicaCount: 3
       replicaLabels:
         - __replica__
       dnsDiscovery:
         sidecarsService: prometheus-thanos-discovery
         sidecarsNamespace: monitoring
+      stores:
+        - thanos-svc.${SECRET_NAS_DOMAIN_NAME}:10901
+    queryFrontend:
+      enabled: true
       ingress:
         enabled: true
         hostname: "thanos.${SECRET_DOMAIN_NAME}"
         ingressClassName: "nginx"
         annotations:
           ingress.home.arpa/type: "internal"
-    queryFrontend:
-      enabled: false
     bucketweb:
       enabled: true
     compactor:
       enabled: true
       extraFlags:
-        - "--compact.concurrency"
-        - "4"
-      retentionResolutionRaw: 7d
-      retentionResolution5m: 14d
-      retentionResolution1h: 21d
+        - "--compact.concurrency=4"
+        - "--delete-delay=30m"
+      retentionResolutionRaw: 14d
+      retentionResolution5m: 30d
+      retentionResolution1h: 90d
       persistence:
         enabled: true
         storageClass: local-hostpath
