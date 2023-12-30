@@ -131,7 +131,6 @@ radarr:
     replace_existing_custom_formats: true
     quality_definition:
       type: movie
-      preferred_ratio: 0.5
     quality_profiles:
       - name: HD-1080p
         reset_unmatched_scores:
@@ -209,7 +208,6 @@ radarr:
           - 923b6abef9b17f937fab56cfcf89e1f1 # Optional: DV (WEBDL) without fallback to HDR, set to manual score 0 or -10000
         quality_profiles:
           - name: HD-1080p
-            score: 0
 
   radarr_4k:
     base_url: http://radarr-4k:7878
@@ -228,7 +226,7 @@ radarr:
         upgrade:
           allowed: true
           until_quality: Remux-2160p
-        min_format_score: 0
+        min_format_score: 4500
         quality_sort: top
         qualities:
           - name: Remux-2160p
