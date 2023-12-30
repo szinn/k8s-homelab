@@ -7,6 +7,7 @@ resources:
   - grafana/install.yaml
   - jaeger/install.yaml
   - kube-prometheus-stack/install.yaml
+  - kromgo/install.yaml
   - loki/install.yaml
   - miscellaneous
   - node-problem-detector/install.yaml
