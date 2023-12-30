@@ -25,7 +25,7 @@ spec:
       retries: 5
   values:
     toolbox:
-      enabled: false
+      enabled: true
     monitoring:
       enabled: true
       createPrometheusRules: true
