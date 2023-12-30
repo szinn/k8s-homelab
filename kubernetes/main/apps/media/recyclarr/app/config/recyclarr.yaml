@@ -133,19 +133,28 @@ radarr:
       type: movie
       preferred_ratio: 0.5
     quality_profiles:
-      - name: Any
+      - name: HD-1080p
         reset_unmatched_scores:
           enabled: true
-      - name: HD
-        reset_unmatched_scores:
-          enabled: true
+        upgrade:
+          allowed: true
+          until_quality: Remux-1080p
+          until_score: 0
+        min_format_score: 0
+        quality_sort: top
+        qualities:
+          - name: Remux-1080p
+          - name: Bluray-1080p
+          - name: WEB 1080p
+            qualities:
+              - WEBDL-1080p
+              - WEBRip-1080p
+          - name: HDTV-1080p
     custom_formats:
       - trash_ids:
           - ff5bc9e8ce91d46c997ca3ac6994d6f8 # UHD FraMeSToR (set to 0, 1 or 3200)
         quality_profiles:
-          - name: Any
-            score: 1
-          - name: HD
+          - name: HD-1080p
             score: 1
       - trash_ids:
           - 496f355514737f7d83bf7aa4d24f8169 # TrueHD Atmos
@@ -194,15 +203,12 @@ radarr:
           - ae9b7c9ebde1f3bd336a8cbd1ec4c5e5 # No-RlsGroup removed do avoid multiple downloads
           - dc98083864ea246d05a42df0d05f81cc # x265 (720/1080p)
         quality_profiles:
-          - name: Any
-          - name: HD
+          - name: HD-1080p
       - trash_ids:
           - 4b900e171accbfb172729b63323ea8ca # Optional: Multi
           - 923b6abef9b17f937fab56cfcf89e1f1 # Optional: DV (WEBDL) without fallback to HDR, set to manual score 0 or -10000
         quality_profiles:
-          - name: Any
-            score: 0
-          - name: HD
+          - name: HD-1080p
             score: 0
 
   radarr_4k:
@@ -216,17 +222,27 @@ radarr:
       type: movie
       preferred_ratio: 0.5
     quality_profiles:
-      - name: Any
+      - name: Ultra-HD
         reset_unmatched_scores:
           enabled: true
-      - name: UHD
-        reset_unmatched_scores:
-          enabled: true
+        upgrade:
+          allowed: true
+          until_quality: Remux-2160p
+        min_format_score: 0
+        quality_sort: top
+        qualities:
+          - name: Remux-2160p
+          - name: Bluray-2160p
+          - name: WEB 2160p
+            qualities:
+              - WEBDL-2160p
+              - WEBRip-2160p
+          - name: HDTV-2160p
     custom_formats:
       - trash_ids:
           - ff5bc9e8ce91d46c997ca3ac6994d6f8 # UHD FraMeSToR (set to 0, 1 or 3200)
         quality_profiles:
-          - name: UHD
+          - name: Ultra-HD
             score: 1
       - trash_ids:
           - 496f355514737f7d83bf7aa4d24f8169 # TrueHD Atmos
@@ -275,10 +291,10 @@ radarr:
           - ae9b7c9ebde1f3bd336a8cbd1ec4c5e5 # No-RlsGroup removed do avoid multiple downloads
           - dc98083864ea246d05a42df0d05f81cc # x265 (720/1080p)
         quality_profiles:
-          - name: UHD
+          - name: Ultra-HD
       - trash_ids:
           - 4b900e171accbfb172729b63323ea8ca # Optional: Multi
           - 923b6abef9b17f937fab56cfcf89e1f1 # Optional: DV (WEBDL) without fallback to HDR, set to manual score 0 or -10000
         quality_profiles:
-          - name: UHD
+          - name: Ultra-HD
             score: 0
