@@ -12,6 +12,8 @@ resources:
   # - security/namespace.yaml
   # - security/external-secrets/install.yaml
   # Step 3
-  # - rook-ceph
+  # - system
   # Step 4
+  # - rook-ceph
+  # Step 5
   # - dbms

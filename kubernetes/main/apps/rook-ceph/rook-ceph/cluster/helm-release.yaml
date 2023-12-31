@@ -184,42 +184,42 @@ spec:
       isDefault: false
       deletionPolicy: Delete
 
-    cephObjectStores: []
-      # - name: ceph-objectstore
-      #   spec:
-      #     metadataPool:
-      #       failureDomain: host
-      #       replicated:
-      #         size: 3
-      #     dataPool:
-      #       failureDomain: host
-      #       erasureCoded:
-      #         dataChunks: 2
-      #         codingChunks: 1
-      #     preservePoolsOnDelete: true
-      #     gateway:
-      #       port: 80
-      #       resources:
-      #         requests:
-      #           cpu: 100m
-      #           memory: 256M
-      #         limits:
-      #           memory: 2Gi
-      #       instances: 1
-      #     healthCheck:
-      #       bucket:
-      #         interval: 60s
-      #   storageClass:
-      #     enabled: true
-      #     name: ceph-bucket
-      #     reclaimPolicy: Delete
-      #     parameters:
-      #       region: us-east-1
-      #   ingress:
-      #     enabled: true
-      #     ingressClassName: nginx
-      #     annotations:
-      #       ingress.home.arpa/type: internal
-      #     host:
-      #       name: s3-rook.${SECRET_DOMAIN_NAME}
-      #       path: /
+    cephObjectStores:
+      - name: ceph-objectstore
+        spec:
+          metadataPool:
+            failureDomain: host
+            replicated:
+              size: 3
+          dataPool:
+            failureDomain: host
+            erasureCoded:
+              dataChunks: 2
+              codingChunks: 1
+          preservePoolsOnDelete: true
+          gateway:
+            port: 80
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256M
+              limits:
+                memory: 2Gi
+            instances: 1
+          healthCheck:
+            bucket:
+              interval: 60s
+        storageClass:
+          enabled: true
+          name: ceph-bucket
+          reclaimPolicy: Delete
+          parameters:
+            region: us-east-1
+        ingress:
+          enabled: true
+          ingressClassName: nginx
+          annotations:
+            ingress.home.arpa/type: internal
+          host:
+            name: s3-rook.${SECRET_DOMAIN_NAME}
+            path: /

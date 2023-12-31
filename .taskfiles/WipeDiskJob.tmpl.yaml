@@ -21,6 +21,6 @@ spec:
           args:
             - apk add --no-cache sgdisk util-linux parted;
               sgdisk --zap-all ${ceph_disk};
-              blkdiscard ${ceph_disk};
               dd if=/dev/zero bs=1M count=10000 oflag=direct of=${ceph_disk};
+              blkdiscard ${ceph_disk};
               partprobe ${ceph_disk};
