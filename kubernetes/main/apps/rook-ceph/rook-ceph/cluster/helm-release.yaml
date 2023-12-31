@@ -198,6 +198,7 @@ spec:
               codingChunks: 1
           preservePoolsOnDelete: true
           gateway:
+            hostNetwork: true
             port: 80
             resources:
               requests:
