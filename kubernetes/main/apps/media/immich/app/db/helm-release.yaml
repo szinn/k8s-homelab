@@ -51,7 +51,7 @@ spec:
                   name: immich-postgres-backups-secret
             env:
               - name: POSTGRES_HOST
-                value: postgres-ro.dbms
+                value: immich-ro.media
               - name: POSTGRES_DB
                 value: "immich"
               - name: BACKUP_KEEP_DAYS
