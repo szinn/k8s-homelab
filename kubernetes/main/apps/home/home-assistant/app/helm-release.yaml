@@ -135,6 +135,8 @@ spec:
           main:
             main:
               - path: /config
+            code-server:
+              - path: /config
       sshkey:
         enabled: true
         type: secret
