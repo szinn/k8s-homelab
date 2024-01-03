@@ -58,7 +58,7 @@ spec:
           main:
             image:
               repository: docker.io/typesense/typesense
-              tag: 0.25.1
+              tag: 0.25.2
             envFrom:
               - secretRef:
                   name: immich-secret
