@@ -12,10 +12,8 @@ data:
   NODE_ENV: "production"
   REDIS_HOSTNAME: immich-redis.media.svc.cluster.local
   REDIS_PORT: "6379"
-  # IMMICH_WEB_URL: http://immich-web.media.svc.cluster.local:3000
   IMMICH_SERVER_URL: http://immich-server.media.svc.cluster.local:3001
   # IMMICH_MACHINE_LEARNING_URL: http://immich-machine-learning.media.svc.cluster.local:3003
-  # TYPESENSE_HOST: immich-typesense.media.svc.cluster.local
   # Below are deprecated and can only be set in the Immich Admin settings
   # OAUTH_ENABLED: "true"
   # OAUTH_ISSUER_URL: https://auth.${SECRET_DOMAIN_NAME}/.well-known/openid-configuration
