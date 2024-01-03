@@ -6,7 +6,6 @@ metadata:
   name: rook-ceph-csi-addons-controller-manager
   namespace: flux-system
 spec:
-  path: ./deploy/controller
   sourceRef:
     kind: GitRepository
     name: kubernetes-csi-addons
