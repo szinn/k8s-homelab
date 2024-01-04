@@ -5,3 +5,14 @@ namespace: cert-manager
 resources:
   - helm-release.yaml
   - prometheus-rules.yaml
+configMapGenerator:
+  - name: cert-manager-dashboard
+    files:
+      - cert-manager-dashboard.json=dashboards/cert-manager.json
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
+    grafana_folder: "System"
+  labels:
+    grafana_dashboard: "true"
