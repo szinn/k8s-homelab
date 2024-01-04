@@ -144,11 +144,6 @@ pre-commit auto-update
 
 ### External Environment Configuration
 
-A base file [setup/env.base](./infrastructure/setup/env.base-template) is used to define any configuration about the external devices on the network (e.g., NAS drives) and config/secrets that are common to all of the cluster configurations.
-
-Each cluster configuration (e.g. main or staging) has a file [setup/env.<cluster_type>](./infrastructure/setup/env.main-template) that is used to define any configuration that is specific to that cluster.
-For example, the IP addresses that should be reserved through ingress-nginx for services such as the reverse proxy (ingress-nginx) or for Redis.
-
 All values are defined as shell environment variables.
 
 The shell script [setup/build-config.sh](./infrastructure/setup/build-config.sh) is responsible for traversing the whole repo and creating the appropriate YAML files and encrypting them when necessary.
@@ -157,13 +152,13 @@ This file is used as an optimization so that the YAML files will only be regener
 
 ### Setup Configuration
 
-The file [cluster-settings.cfg](./kubernetes/cluster/vars/cluster-settings.cfg) defines a ConfigMap resource that will be filled in with values from the `env.XXX` configuration files.
+The file [cluster-settings.cfg](./kubernetes/main/cluster/vars/cluster-settings.cfg) defines a ConfigMap resource that will be filled in with values from the `env.XXX` configuration files.
 Flux will load this file to the cluster at the beginning of the resolve phase so that the ConfigMap values are available through the Kustomization post-build step.
 Since the configuration values are stored in a ConfigMap resource, the resulting YAML file will make them visible in the repo. If you do not wish to have them visible, use the `cluster-secrets.sops.cfg` file described below.
 
 ### Cluster Secrets
 
-The file [cluster-secrets.sops.cfg](./kubernetes/cluster/vars/cluster-secrets.sops.cfg) defines a Secret resource that will be filled in with values from the `env.XXX` configuration files and then encrypted with Mozilla/sops.
+The file [cluster-secrets.sops.cfg](./kubernetes/main/cluster/vars/cluster-secrets.sops.cfg) defines a Secret resource that will be filled in with values from the `env.XXX` configuration files and then encrypted with Mozilla/sops.
 
 ### Application Secrets
 
@@ -196,7 +191,7 @@ I am also using poor man's backup (PMB) that is based on kopia as well as volsyn
 
 The machines are configured using Talos (see [Getting Started](https://www.talos.dev/v0.14/introduction/getting-started/) for a walkthrough).
 
-The scripts I used for generating the Talos configuration are found in [talos](./infrastructure/talos).
+The scripts I used for generating the Talos configuration are found in [talos](./infrastructure/main/talos).
 
 The expectation is that at the end of this step, your machines are up and running and the command line tool `kubectl` can be used to interact with the cluster.
 
