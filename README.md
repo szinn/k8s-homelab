@@ -192,7 +192,7 @@ I am also using poor man's backup (PMB) that is based on kopia as well as volsyn
 
 The machines are configured using Talos (see [Getting Started](https://www.talos.dev/v0.14/introduction/getting-started/) for a walkthrough).
 
-The scripts I used for generating the Talos configuration are found in [talos](./infrastructure/main/talos).
+The scripts I used for generating the Talos configuration are found in [talos](./infrastructure/talos/main/).
 
 The expectation is that at the end of this step, your machines are up and running and the command line tool `kubectl` can be used to interact with the cluster.
 
