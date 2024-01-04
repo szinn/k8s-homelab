@@ -12,12 +12,20 @@ creation_rules:
       - age:
         - *scotte
         - *main
+  - path_regex: kubernetes/main/talos/.*\.sops\.ya?ml
+    key_groups:
+      - age:
+        - *scotte
   - path_regex: kubernetes/staging/.*\.ya?ml
     encrypted_regex: "((?i)(displayname|email|pass|secret($|[^N])|key|token|^data$|^stringData))"
     key_groups:
       - age:
         - *scotte
         - *staging
+  - path_regex: kubernetes/staging/talos/.*\.sops\.ya?ml
+    key_groups:
+      - age:
+        - *scotte
   - path_regex: kubernetes/nas/.*\.ya?ml
     encrypted_regex: "((?i)(displayname|email|pass|secret($|[^N])|key|token|^data$|^stringData))"
     key_groups:
