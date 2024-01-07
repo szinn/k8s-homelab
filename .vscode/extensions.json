@@ -1,7 +1,5 @@
 {
     "recommendations": [
-        "fcrespo82.markdown-table-formatter",
-        "hashicorp.terraform",
         "oderwat.indent-rainbow",
         "signageos.signageos-vscode-sops"
     ]

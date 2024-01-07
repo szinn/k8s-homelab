@@ -36,3 +36,8 @@ creation_rules:
     key_groups:
       - age:
         - *scotte
+  - path_regex: .*\.sops\.env
+    encrypted_regex: "(export )"
+    key_groups:
+      - age:
+        - *scotte

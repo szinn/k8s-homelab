@@ -3,14 +3,21 @@
     "files.associations": {
         "*.json5": "jsonc",
         "**/terraform/**/*.tf": "terraform",
-        "**/kubernetes/**/*.sops.toml": "plaintext"
     },
     "material-icon-theme.folders.associations": {
+        ".github": "Github",
+        "workflows": "Robot",
         ".taskfiles": "utils",
+        "hack": "Tools",
+        "kubernetes": "Cluster",
+        "kubernetes/main": "cluster",
+        "kubernetes/nas": "cluster",
+        "kubernetes/staging": "cluster",
+        "cert-manager": "guard",
         "dbms": "database",
+        "default": "cluster",
         "dev": "less",
         "flux-system": "kubernetes",
-        "kopia": "server",
         "kube-system": "kubernetes",
         "media": "video",
         "monitoring": "event",
@@ -19,9 +26,8 @@
         "security": "keys",
         "self-hosted": "app",
         "setup": "import",
-        "hack": "scripts",
         "config": "environment"
-        },
+    },
     "prettier.configPath": ".github/linters/prettier/.prettierrc.yaml",
     "prettier.ignorePath": ".github/linters/prettier/.prettierignore",
     "yaml.schemas": {
