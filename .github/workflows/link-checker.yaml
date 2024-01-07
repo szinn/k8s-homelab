@@ -29,19 +29,10 @@ jobs:
         env:
           GITHUB_TOKEN: "${{ steps.generate-token.outputs.token }}"
 
-      - name: Find Link Checker Issue
-        id: link-checker-issue
-        uses: micalevisk/last-issue-action@0d40124cc99ac8601c2516007f0c98ef3d27537b # v2
+      - name: Create Issue From File
+        if: env.lychee_exit_code != 0
+        uses: peter-evans/create-issue-from-file@v4
         with:
-          state: open
-          labels: |
-            link-checker
-      - name: Update Issue
-        uses: peter-evans/create-issue-from-file@433e51abf769039ee20ba1293a088ca19d573b7f # v4
-        with:
-          title: Broken links detected in docs 🔗
-          issue-number: "${{ steps.link-checker-issue.outputs.issue-number }}"
+          title: Link Checker Report
           content-filepath: ./lychee/out.md
-          token: "${{ steps.generate-token.outputs.token }}"
-          labels: |
-            link-checker
+          labels: report, automated issue
