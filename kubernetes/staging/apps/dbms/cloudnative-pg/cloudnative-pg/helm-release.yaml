@@ -32,3 +32,5 @@ spec:
     config:
       data:
         INHERITED_ANNOTATIONS: kyverno.io/ignore
+        INHERITED_LABELS: app.kubernetes.io/*
+
