@@ -16,6 +16,7 @@
     "**/*.md",
     "**/*.html",
     "**/*.xml",
-    "kubernetes/**/scripts/pushover-notify.sh"
+    "kubernetes/**/scripts/pushover-notify.sh",
+    "infrastructure/**"
   ]
 }
