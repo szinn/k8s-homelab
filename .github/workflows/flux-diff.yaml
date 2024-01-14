@@ -71,7 +71,7 @@ jobs:
         uses: frenck/action-setup-yq@c4b5be8b4a215c536a41d436757d9feb92836d4f # v1
 
       - name: Diff Resources
-        uses: allenporter/flux-local/action/diff@e81a6055d4301683c6b356184e0a2e31a5952102 # 4.2.2
+        uses: allenporter/flux-local/action/diff@d290eeb73abc46bd130aa32f4affd78d40806433 # 4.3.0
         id: diff
         with:
           sources: homelab-kubernetes
