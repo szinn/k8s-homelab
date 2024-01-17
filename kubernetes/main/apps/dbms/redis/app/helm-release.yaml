@@ -17,7 +17,6 @@ spec:
         namespace: flux-system
   maxHistory: 3
   install:
-    createNamespace: true
     remediation:
       retries: 3
   upgrade:
@@ -27,18 +26,25 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    global:
-      storageClass: ceph-block
     auth:
       enabled: false
       sentinel: false
+    master:
+      persistence:
+        enabled: false
+    replica:
+      persistence:
+        enabled: false
     sentinel:
       enabled: true
       masterSet: redis-master
       getMasterTimeout: 10
       startupProbe:
         failureThreshold: 2
+      persistence:
+        enabled: false
     metrics:
       enabled: true
       serviceMonitor:
         enabled: true
+        interval: 1m
