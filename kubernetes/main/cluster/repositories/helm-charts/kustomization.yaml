@@ -11,6 +11,7 @@ resources:
   - deliveryhero-charts.yaml
   - democratic-csi-charts.yaml
   - descheduler-charts.yaml
+  - dragonfly-charts.yaml
   - dysnix-charts.yaml
   - external-dns-charts.yaml
   - external-secrets-charts.yaml
