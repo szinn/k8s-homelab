@@ -30,9 +30,11 @@ spec:
     storage:
       enabled: true
       requests: 1Gi
+    podAnnotations:
+      kyverno.io/ignore: "true"
     extraArgs:
       - --dbfilename=dump
-      - --snapshot_cron=0 * * * * # cron format
+      - --snapshot_cron=* * * * * # cron format
     service:
       annotations:
         io.cilium/lb-ipam-ips: ${CONFIG_MAIN_SVC_DRAGONFLY_ADDR}
@@ -51,7 +53,8 @@ spec:
         cpu: 100m
         memory: 128Mi
       limits:
-        memory: 3Gi
+        cpu: 500m
+        memory: 512Mi
     serviceMonitor:
       enabled: true
     prometheusRule:

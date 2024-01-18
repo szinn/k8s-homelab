@@ -4,7 +4,7 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - cloudnative-pg/install.yaml
-  # - dragonfly/install.yaml   - pegs CPU to 100%
+  - dragonfly/install.yaml
   - elasticsearch/install.yaml
   - pgadmin/install.yaml
   - redis/install.yaml

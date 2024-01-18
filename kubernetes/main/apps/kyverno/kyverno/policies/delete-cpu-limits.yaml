@@ -21,6 +21,11 @@ spec:
           - resources:
               kinds:
                 - Pod
+      exclude:
+        any:
+          - resources:
+              annotations:
+                kyverno.io/ignore: "true"
       mutate:
         foreach:
           - list: "request.object.spec.containers"
@@ -33,6 +38,11 @@ spec:
           - resources:
               kinds:
                 - Pod
+      exclude:
+        any:
+          - resources:
+              annotations:
+                kyverno.io/ignore: "true"
       preconditions:
         all:
           - key: "{{ request.object.spec.initContainers[] || `[]` | length(@) }}"
