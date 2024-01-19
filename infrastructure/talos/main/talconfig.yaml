@@ -1,18 +1,18 @@
 ---
 clusterName: main
-talosVersion: v1.6.1
+talosVersion: v1.6.2
 kubernetesVersion: v1.29.0
 endpoint: https://main.${SECRET_TECH_DOMAIN_NAME}:6443
 
 cniConfig:
   name: none
 
-additionalApiServerCertSans:
-  - ${clusterEndpointIP}
-
-additionalMachineCertSans:
+additionalApiServerCertSans: &san
   - ${clusterEndpointIP}
   - main.${SECRET_TECH_DOMAIN_NAME}
+  - "127.0.0.1"
+
+additionalMachineCertSans: *san
 
 domain: cluster.local
 
@@ -218,6 +218,15 @@ controlPlane:
                 - main.${SECRET_TECH_DOMAIN_NAME}
 
 worker:
+  schematic:
+    customization:
+      extraKernelArgs:
+        - net.ifnames=0
+      systemExtensions:
+        officialExtensions:
+          - siderolabs/intel-ucode
+          - siderolabs/i915-ucode
+
   patches:
     - *customTalosPatch
     - *loggingPatch

@@ -1,18 +1,18 @@
 ---
 clusterName: staging
-talosVersion: v1.6.1
+talosVersion: v1.6.2
 kubernetesVersion: v1.29.0
 endpoint: https://staging.${SECRET_TECH_DOMAIN_NAME}:6443
 
 cniConfig:
   name: none
 
-additionalApiServerCertSans:
-  - ${clusterEndpointIP}
-
-additionalMachineCertSans:
+additionalApiServerCertSans: &san
   - ${clusterEndpointIP}
   - staging.${SECRET_TECH_DOMAIN_NAME}
+  - "127.0.0.1"
+
+additionalMachineCertSans: *san
 
 domain: cluster.local
 
