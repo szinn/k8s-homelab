@@ -1,7 +1,7 @@
 ---
 clusterName: staging
 talosVersion: v1.6.2
-kubernetesVersion: v1.29.0
+kubernetesVersion: v1.29.1
 endpoint: https://staging.${SECRET_TECH_DOMAIN_NAME}:6443
 
 cniConfig:
