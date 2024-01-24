@@ -2,7 +2,7 @@
 autoDirectNodeRoutes: true
 
 cluster:
-  name: "${CONFIG_CLUSTER_NAME}"
+  name: "main"
   id: "1"
 
 bgp:

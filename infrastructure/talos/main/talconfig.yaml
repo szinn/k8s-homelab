@@ -1,6 +1,6 @@
 ---
 clusterName: main
-talosVersion: v1.6.2
+talosVersion: v1.6.3
 kubernetesVersion: v1.29.1
 endpoint: https://main.${SECRET_TECH_DOMAIN_NAME}:6443
 
@@ -252,7 +252,7 @@ worker:
     # Graphics extensions
     # - i915-ucode
     # - intel-ucode
-    - |-
-      machine:
-        install:
-          image: factory.talos.dev/installer/97bf8e92fc6bba0f03928b859c08295d7615737b29db06a97be51dc63004e403:v1.6.1
+    # - |-
+    #   machine:
+    #     install:
+    #       image: factory.talos.dev/installer/97bf8e92fc6bba0f03928b859c08295d7615737b29db06a97be51dc63004e403:v1.6.1
