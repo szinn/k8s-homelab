@@ -78,7 +78,7 @@ tasks:
       - bash {{.waitForJobScript}} {{.jobName}} default
       - kubectl -n default wait job/{{.jobName}} --for condition=complete --timeout=1m
       - kubectl -n default logs job/{{.jobName}}
-      # - kubectl -n default delete job {{.jobName}}
+      - kubectl -n default delete job {{.jobName}}
     vars:
       node: '{{ or .node (fail "`node` is required") }}'
       ceph_disk: '{{ or .ceph_disk (fail "`ceph_disk` is required") }}'
@@ -98,7 +98,7 @@ tasks:
       - bash {{.waitForJobScript}} {{.jobName}} default
       - kubectl -n default wait job/{{.jobName}} --for condition=complete --timeout=1m
       - kubectl -n default logs job/{{.jobName}}
-      # - kubectl -n default delete job {{.jobName}}
+      - kubectl -n default delete job {{.jobName}}
     vars:
       node: '{{ or .node (fail "`node` is required") }}'
       jobName: "wipe-rook-data-{{- .node -}}-{{- .ts -}}"

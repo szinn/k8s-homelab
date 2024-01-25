@@ -7,12 +7,12 @@ resources:
   - kube-system
   - flux-system
   # Step 2
-  - kyverno
-  - networking
-  - security/namespace.yaml
-  - security/external-secrets/install.yaml
+  # - kyverno
+  # - networking
+  # - security/namespace.yaml
+  # - security/external-secrets/install.yaml
   # Step 3
-  - system
+  # - system
   # Step 4
   # - rook-ceph
   # Step 5
