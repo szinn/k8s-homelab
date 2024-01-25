@@ -63,7 +63,7 @@ spec:
               - name: BACKUP_KEEP_MINS
                 value: "7200"
               - name: POSTGRES_EXTRA_OPTS
-                value: "-b -C -Z6"
+                value: "-b -C -c -Z6"
 
     service:
       main:
