@@ -35,7 +35,7 @@ spec:
         containers:
           main:
             image:
-              repository: lissy93/dashy
+              repository: ghcr.io/lissy93/dashy
               tag: 2.1.1
             env:
               TZ: ${CONFIG_TIMEZONE}
