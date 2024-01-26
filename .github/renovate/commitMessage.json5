@@ -1,15 +1,16 @@
 {
-  commitMessageTopic: "{{depName}}",
-  commitMessageExtra: "to {{newVersion}}",
-  commitMessageSuffix: "",
-  packageRules: [
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "commitMessageTopic": "{{depName}}",
+  "commitMessageExtra": "to {{newVersion}}",
+  "commitMessageSuffix": "",
+  "packageRules": [
     {
-      matchDatasources: ["helm"],
-      commitMessageTopic: "Chart {{depName}}",
+      "matchDatasources": ["helm"],
+      "commitMessageTopic": "Chart {{depName}}"
     },
     {
-      matchDatasources: ["docker"],
-      commitMessageTopic: "Image {{depName}}",
-    },
-  ],
+      "matchDatasources": ["docker"],
+      "commitMessageTopic": "Image {{depName}}"
+    }
+  ]
 }
