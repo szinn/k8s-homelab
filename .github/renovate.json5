@@ -30,6 +30,10 @@
   "suppressNotifications": ["prIgnoreNotification"],
   // "rebaseWhen": "auto",
   // "commitBodyTable": true,
+  "ignorePaths": [
+    "kubernetes/main/apps/media/recyclarr/app/config/recyclarr.yaml",
+    "archive/**"
+  ],
   "flux": {
     "fileMatch": ["kubernetes/.+\\.ya?ml$"]
   },

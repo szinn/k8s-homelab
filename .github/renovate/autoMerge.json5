@@ -15,6 +15,11 @@
       ]
     },
     {
+      "description": "Auto merge github actions",
+      "matchDepTypes": ["action"],
+      "matchDatasources": ["github-tags"]
+    },
+    {
       "description": "Auto merge KPS minors and patches",
       "matchDatasources": ["docker", "helm"],
       "automerge": true,
