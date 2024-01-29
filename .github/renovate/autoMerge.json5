@@ -16,7 +16,6 @@
     },
     {
       "description": "Auto merge github actions",
-      "matchDepTypes": ["action"],
       "matchDatasources": ["github-tags"]
     },
     {
