@@ -16,7 +16,7 @@
     },
     {
       "description": "Auto merge KPS minors and patches",
-      "matchDatasources": ["helm"],
+      "matchDatasources": ["docker", "helm"],
       "automerge": true,
       "matchUpdateTypes": ["minor", "patch"],
       "matchPackageNames": ["kube-prometheus-stack"],
@@ -35,8 +35,7 @@
       "requiredStatusChecks": null,
       "matchUpdateTypes": ["minor", "patch"],
       "matchPackageNames": [
-        "ghcr.io/szinn/sonarr",
-
+        "ghcr.io/onedr0p/exportarr",
         "ghcr.io/onedr0p/jackett",
         "ghcr.io/onedr0p/lidarr",
         "ghcr.io/onedr0p/prowlarr-nightly",
