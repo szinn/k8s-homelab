@@ -46,7 +46,7 @@ spec:
           main:
             image:
               repository: ghcr.io/blakeblackshear/frigate
-              tag: 0.13.0
+              tag: 0.13.1
             env:
               TZ: ${CONFIG_TIMEZONE}
               FRIGATE_MQTT_USERNAME:
