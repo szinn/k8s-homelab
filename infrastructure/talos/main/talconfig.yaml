@@ -1,6 +1,6 @@
 ---
 clusterName: main
-talosVersion: v1.6.3
+talosVersion: v1.6.4
 kubernetesVersion: v1.29.1
 endpoint: https://main.${SECRET_TECH_DOMAIN_NAME}:6443
 
