@@ -50,7 +50,7 @@ spec:
           main:
             image:
               repository: ghcr.io/szinn/dmarc-report
-              tag: 1.4.1@sha256:81691a1a2ec344304e88705e89ddbb639c01594731146f2d112e6e88799812e7
+              tag: 1.4.3@sha256:f51fd75ef7bb6043ed177c038b6dfde09f7273ea5366032456090ec5689484ae
               pullPolicy: IfNotPresent
             env:
               TZ: ${CONFIG_TIMEZONE}
