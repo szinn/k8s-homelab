@@ -45,7 +45,7 @@ spec:
           main:
             image:
               repository: docker.io/nodered/node-red
-              tag: 3.1.3
+              tag: 3.1.4
             env:
               TZ: "${CONFIG_TIMEZONE}"
               NODE_RED_ENABLE_PROJECTS: "true"
