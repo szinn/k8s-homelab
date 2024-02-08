@@ -26,4 +26,3 @@ resources:
   - rook-ceph-charts.yaml
   - stakater-charts.yaml
   - vector-charts.yaml
-  - weave-gitops.yaml
