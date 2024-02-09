@@ -42,7 +42,7 @@ spec:
           main:
             image:
               repository: docker.io/dpage/pgadmin4
-              tag: "8.2"
+              tag: "8.3"
             strategy:
               type: Recreate
             envFrom:
