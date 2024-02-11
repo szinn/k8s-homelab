@@ -5,6 +5,7 @@ resources:
   - namespace.yaml
   - changedetection/install.yaml
   - dashy/install.yaml
+  - pdf-tool/install.yaml
   - shlink/install.yaml
   - tesla-spy/install.yaml
   - theme-park/install.yaml
