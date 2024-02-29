@@ -196,6 +196,9 @@ spec:
             access: proxy
             url: http://thanos-query.monitoring.svc.cluster.local:9090/
             isDefault: false
+            jsonData:
+              prometheusType: Thanos
+              timeInterval: 1m
           - name: Loki
             type: loki
             access: proxy
