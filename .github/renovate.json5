@@ -27,9 +27,8 @@
   "gitAuthor": "repo-jeeves <106431701+repo-jeeves[bot]@users.noreply.github.com>",
   "timezone": "America/Toronto",
   "dependencyDashboardTitle": "Renovate Dashboard",
-  "suppressNotifications": ["prIgnoreNotification"],
-  // "rebaseWhen": "auto",
-  // "commitBodyTable": true,
+  "suppressNotifications": ["prEditedNotification", "prIgnoreNotification"],
+  "rebaseWhen": "conflicted",
   "ignorePaths": [
     "kubernetes/main/apps/media/recyclarr/app/config/recyclarr.yaml",
     "archive/**"
