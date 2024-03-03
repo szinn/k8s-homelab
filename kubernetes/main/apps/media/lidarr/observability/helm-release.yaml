@@ -39,7 +39,7 @@ spec:
           main:
             image:
               repository: ghcr.io/onedr0p/exportarr
-              tag: v1.6.2
+              tag: v2.0.0
             env:
               TZ: "${TIMEZONE}"
               PORT: "7373"
