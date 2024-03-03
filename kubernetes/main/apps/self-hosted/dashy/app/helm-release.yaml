@@ -51,9 +51,9 @@ spec:
               - --auth
               - none
               - --user-data-dir
-              - "/config/.vscode"
+              - "/tmp/.vscode"
               - --extensions-dir
-              - "/config/.vscode"
+              - "/tmp/.vscode"
               - --port
               - "8080"
               - "/config"
@@ -99,3 +99,9 @@ spec:
               - path: /app/public
             code-server:
               - path: /config
+      temp:
+        enabled: true
+        type: emptyDir
+        advancedMounts:
+          code-server:
+            - path: /tmp/.vscode
