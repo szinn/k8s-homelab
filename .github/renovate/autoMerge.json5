@@ -24,7 +24,7 @@
       "automerge": true,
       "matchUpdateTypes": ["minor", "patch"],
       "matchPackageNames": ["kube-prometheus-stack"],
-      "ignoreTests": false
+      "ignoreTests": true
     },
     {
       "matchDatasources": [
