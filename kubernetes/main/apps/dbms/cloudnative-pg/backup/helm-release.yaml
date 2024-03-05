@@ -53,7 +53,7 @@ spec:
               - name: POSTGRES_HOST
                 value: postgres-ro.dbms
               - name: POSTGRES_DB
-                value: "dmarc,shlink,teslamate,lldap,wikijs,teslaspy"
+                value: "dmarc,shlink,teslamate,lldap,wikijs"
               - name: BACKUP_KEEP_DAYS
                 value: "7"
               - name: BACKUP_KEEP_WEEKS

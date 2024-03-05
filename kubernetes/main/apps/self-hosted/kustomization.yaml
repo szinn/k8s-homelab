@@ -7,6 +7,5 @@ resources:
   - dashy/install.yaml
   - pdf-tool/install.yaml
   - shlink/install.yaml
-  - tesla-spy/install.yaml
   - theme-park/install.yaml
   - wikijs/install.yaml
