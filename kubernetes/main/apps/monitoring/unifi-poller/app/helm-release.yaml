@@ -36,7 +36,7 @@ spec:
           main:
             image:
               repository: docker.io/golift/unifi-poller
-              tag: v2.9.5
+              tag: v2.10.0
             env:
               TZ: "${CONFIG_TIMEZONE}"
               UP_UNIFI_DEFAULT_ROLE: "homelab-controller"
