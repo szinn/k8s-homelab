@@ -44,8 +44,8 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/teslamate-org/teslamate
-              tag: "pr-3630"
+              repository: teslamate/teslamate
+              tag: 1.28.3
             env:
               TZ: ${CONFIG_TIMEZONE}
               DISABLE_MQTT: "true"
