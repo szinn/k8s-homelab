@@ -45,7 +45,7 @@ tasks:
         spec:
           containers:
             - name: debug
-              image: docker.io/library/alpine:3.15
+              image: docker.io/library/alpine:3.19
               command: ["/bin/sh"]
               tty: true
               lifecycle:
