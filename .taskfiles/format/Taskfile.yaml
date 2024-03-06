@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
 version: "3"
 
 tasks:
@@ -10,8 +11,7 @@ tasks:
     cmds:
       - >-
         prettier
-        --ignore-path '.github/linters/.prettierignore'
-        --config '.github/linters/.prettierrc.yaml'
+        --config '.github/linters/prettier/.prettierrc.yaml'
         --list-different
         --ignore-unknown
         --parser=markdown
@@ -22,9 +22,7 @@ tasks:
     cmds:
       - >-
         prettier
-        --ignore-path '.github/linters/.prettierignore'
-        --config
-        '.github/linters/.prettierrc.yaml'
+        --config '.github/linters/prettier/.prettierrc.yaml'
         --list-different
         --ignore-unknown
         --parser=yaml

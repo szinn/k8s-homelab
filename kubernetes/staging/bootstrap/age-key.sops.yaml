@@ -1,36 +1,36 @@
 apiVersion: v1
 data:
-    age.agekey: ENC[AES256_GCM,data:UiriPWmGlpO/K6niddNplsLfttq4zs0uWzl1YdS18H2hN+kyq2luqgrvJ5TNQTMjLsgFLTVX6FO6GsRlXR/l40bBtLCPb774wVCkNEkkLFfbiBUsqmajyASFSl1qbMkQBPVp8ny04ZdcwdYWnXX9hkSB53SDdhqRvpE2V6nSmi596lW2R+Tej5V8mZj7PUt6f34HAyz6Z0ZhLWOjx/M0zGxcAhpyBV4+gmJIK/PebFDRiDxoS3KvVCOwK+AkXuaXHXr/2PIF6vLFUALKEzS0jaKVBqaYe2Y8yTbee4HQoauBqCHC4M0HXRsmg3Vbf0W9ZhaDLCmqtyGBTJC0,iv:d6r75ZSoFk+BUjE1LVMscEFhEQYh+eBCM8RVY3xeafQ=,tag:8g+RUGQIqt0fe40jdfoLGg==,type:str]
+  age.agekey: ENC[AES256_GCM,data:UiriPWmGlpO/K6niddNplsLfttq4zs0uWzl1YdS18H2hN+kyq2luqgrvJ5TNQTMjLsgFLTVX6FO6GsRlXR/l40bBtLCPb774wVCkNEkkLFfbiBUsqmajyASFSl1qbMkQBPVp8ny04ZdcwdYWnXX9hkSB53SDdhqRvpE2V6nSmi596lW2R+Tej5V8mZj7PUt6f34HAyz6Z0ZhLWOjx/M0zGxcAhpyBV4+gmJIK/PebFDRiDxoS3KvVCOwK+AkXuaXHXr/2PIF6vLFUALKEzS0jaKVBqaYe2Y8yTbee4HQoauBqCHC4M0HXRsmg3Vbf0W9ZhaDLCmqtyGBTJC0,iv:d6r75ZSoFk+BUjE1LVMscEFhEQYh+eBCM8RVY3xeafQ=,tag:8g+RUGQIqt0fe40jdfoLGg==,type:str]
 kind: Secret
 metadata:
-    name: sops-age
-    namespace: flux-system
+  name: sops-age
+  namespace: flux-system
 sops:
-    kms: []
-    gcp_kms: []
-    azure_kv: []
-    hc_vault: []
-    age:
-        - recipient: age1p28u8xjm5sf7jdavc8xsqtw7lxgscefxs7a5dtqszr2885xeputsh9y64y
-          enc: |
-            -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA3TWxBcFQ0NzFHN01KNmNz
-            TXZ2bVdqeHFOcW16WVEvb0twN0hUTHVOTUFzCjRtQ2x6cWRsMlg3N1UzcUNiSUxV
-            NGtTclNhM0RncXphQitYQzNrblk3ZzAKLS0tIHhaei9aU1h1ZTVtcitXRDhUOFV4
-            VFNtdjluZUQ3WGpmanpUZml1N0xiaGMKq2iYmfa51neFTuGmouePoBO53t78+5y0
-            oE4TOBc0wL+nw0wi94GWMs+M4B4G6GPevgayYBPvuMO0NG4dLMP5Zg==
-            -----END AGE ENCRYPTED FILE-----
-        - recipient: age1cyqpra4hj22emvvsjyygd3mstyrf8vy0hktmvmv85kxgggqxzfns4pkdhy
-          enc: |
-            -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBjWUQxdlFVdlBBaHZNRkNX
-            Z0daYTdDN1BwRFM2eXZpR2ZRR0tpdElFZWtZCnBJQUJLbm5vaXFMb2I4U2NlbGpl
-            eG9qa0pyZzNHQy9mMjEzTkpkUDdlUk0KLS0tIHBVbTZsVzB2NUVtVDZxR1RuQXNZ
-            MmhWRXM1REdmckdPSnRBVmpUYkQ5YTAKLmOKPLk3rekHM2eFZJOOUA18hxaJP5v9
-            CVF/Rcbk4NEcTYejE2oLWNnBNNBcTglZkclpQijINrIc+aSR2sa8ww==
-            -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2023-12-27T14:55:29Z"
-    mac: ENC[AES256_GCM,data:kcx6zIdqEvsyGRf8SmvWIubm2AZCAkA0HPE9Mjtd3bEKxvb5JHnjLp4RvOcjZkNWN4HWnUu4r1fcL7yj15Lqbrpt092uL3lgTZspNw2AHkvaUFXU91qN0gjzdEN3lP4aoAnR5BnkIunp77e2TuQkcphajFpAN7u/H1BzDWe/jDI=,iv:QC7WU6/VceLqgFHtSmEgG3PkZ9Rdh5HJvva9n8kFeE0=,tag:aMY7fV6bS/EjqCFY3bDfPQ==,type:str]
-    pgp: []
-    encrypted_regex: ((?i)(displayname|email|pass|secret($|[^N])|key|token|^data$|^stringData))
-    version: 3.8.1
+  kms: []
+  gcp_kms: []
+  azure_kv: []
+  hc_vault: []
+  age:
+    - recipient: age1p28u8xjm5sf7jdavc8xsqtw7lxgscefxs7a5dtqszr2885xeputsh9y64y
+      enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA3TWxBcFQ0NzFHN01KNmNz
+        TXZ2bVdqeHFOcW16WVEvb0twN0hUTHVOTUFzCjRtQ2x6cWRsMlg3N1UzcUNiSUxV
+        NGtTclNhM0RncXphQitYQzNrblk3ZzAKLS0tIHhaei9aU1h1ZTVtcitXRDhUOFV4
+        VFNtdjluZUQ3WGpmanpUZml1N0xiaGMKq2iYmfa51neFTuGmouePoBO53t78+5y0
+        oE4TOBc0wL+nw0wi94GWMs+M4B4G6GPevgayYBPvuMO0NG4dLMP5Zg==
+        -----END AGE ENCRYPTED FILE-----
+    - recipient: age1cyqpra4hj22emvvsjyygd3mstyrf8vy0hktmvmv85kxgggqxzfns4pkdhy
+      enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBjWUQxdlFVdlBBaHZNRkNX
+        Z0daYTdDN1BwRFM2eXZpR2ZRR0tpdElFZWtZCnBJQUJLbm5vaXFMb2I4U2NlbGpl
+        eG9qa0pyZzNHQy9mMjEzTkpkUDdlUk0KLS0tIHBVbTZsVzB2NUVtVDZxR1RuQXNZ
+        MmhWRXM1REdmckdPSnRBVmpUYkQ5YTAKLmOKPLk3rekHM2eFZJOOUA18hxaJP5v9
+        CVF/Rcbk4NEcTYejE2oLWNnBNNBcTglZkclpQijINrIc+aSR2sa8ww==
+        -----END AGE ENCRYPTED FILE-----
+  lastmodified: "2023-12-27T14:55:29Z"
+  mac: ENC[AES256_GCM,data:kcx6zIdqEvsyGRf8SmvWIubm2AZCAkA0HPE9Mjtd3bEKxvb5JHnjLp4RvOcjZkNWN4HWnUu4r1fcL7yj15Lqbrpt092uL3lgTZspNw2AHkvaUFXU91qN0gjzdEN3lP4aoAnR5BnkIunp77e2TuQkcphajFpAN7u/H1BzDWe/jDI=,iv:QC7WU6/VceLqgFHtSmEgG3PkZ9Rdh5HJvva9n8kFeE0=,tag:aMY7fV6bS/EjqCFY3bDfPQ==,type:str]
+  pgp: []
+  encrypted_regex: ((?i)(displayname|email|pass|secret($|[^N])|key|token|^data$|^stringData))
+  version: 3.8.1

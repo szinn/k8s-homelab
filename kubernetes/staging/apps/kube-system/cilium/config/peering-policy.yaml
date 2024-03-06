@@ -12,7 +12,7 @@ spec:
       exportPodCIDR: false
       serviceSelector:
         matchExpressions:
-          - { key: somekey, operator: NotIn, values: ["never-used-value"] }
+          - {key: somekey, operator: NotIn, values: ["never-used-value"]}
       neighbors:
         - peerAddress: 10.12.0.1/32
           peerASN: 65000

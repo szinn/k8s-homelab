@@ -48,9 +48,9 @@ spec:
               tag: v6.1.0
               pullPolicy: IfNotPresent
             env:
-              - { name: GEOIPUPDATE_EDITION_IDS, value: GeoLite2-City }
-              - { name: GEOIPUPDATE_FREQUENCY, value: "0" }
-              - { name: GEOIPUPDATE_VERBOSE, value: "true" }
+              - {name: GEOIPUPDATE_EDITION_IDS, value: GeoLite2-City}
+              - {name: GEOIPUPDATE_FREQUENCY, value: "0"}
+              - {name: GEOIPUPDATE_VERBOSE, value: "true"}
             envFrom:
               - secretRef:
                   name: vector-aggregator-secret

@@ -68,7 +68,10 @@ identity_providers:
         audience: []
         pre_configured_consent_duration: 1y
         scopes: ["openid", "profile", "email"]
-        redirect_uris: ["https://wiki.${SECRET_DOMAIN_NAME}/login/2231b56c-daa8-4757-9ac3-81cc1e0e4615/callback"]
+        redirect_uris:
+          [
+            "https://wiki.${SECRET_DOMAIN_NAME}/login/2231b56c-daa8-4757-9ac3-81cc1e0e4615/callback",
+          ]
         response_modes: ["form_post"]
         userinfo_signing_algorithm: none
       - id: immich
@@ -78,7 +81,8 @@ identity_providers:
         authorization_policy: one_factor
         pre_configured_consent_duration: 1y
         scopes: ["openid", "profile", "email"]
-        redirect_uris: ["https://photos.${SECRET_DOMAIN_NAME}/auth/login", "app.immich:/"]
+        redirect_uris:
+          ["https://photos.${SECRET_DOMAIN_NAME}/auth/login", "app.immich:/"]
         userinfo_signing_algorithm: none
       - id: grafana
         description: Grafana
@@ -87,5 +91,6 @@ identity_providers:
         authorization_policy: one_factor
         pre_configured_consent_duration: 1y
         scopes: ["openid", "profile", "groups", "email"]
-        redirect_uris: ["https://grafana.${SECRET_DOMAIN_NAME}/login/generic_oauth"]
+        redirect_uris:
+          ["https://grafana.${SECRET_DOMAIN_NAME}/login/generic_oauth"]
         userinfo_signing_algorithm: none

@@ -44,7 +44,7 @@ record:
       mode: active_objects
 
 objects:
-  track: ["person","dog","cat"]
+  track: ["person", "dog", "cat"]
   filters:
     person:
       min_area: 5000

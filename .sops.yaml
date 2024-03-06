@@ -10,33 +10,33 @@ creation_rules:
     encrypted_regex: "((?i)(displayname|email|pass|secret($|[^N])|key|token|^data$|^stringData))"
     key_groups:
       - age:
-        - *scotte
-        - *main
+          - *scotte
+          - *main
   - path_regex: kubernetes/main/talos/.*\.sops\.ya?ml
     key_groups:
       - age:
-        - *scotte
+          - *scotte
   - path_regex: kubernetes/staging/.*\.ya?ml
     encrypted_regex: "((?i)(displayname|email|pass|secret($|[^N])|key|token|^data$|^stringData))"
     key_groups:
       - age:
-        - *scotte
-        - *staging
+          - *scotte
+          - *staging
   - path_regex: kubernetes/staging/talos/.*\.sops\.ya?ml
     key_groups:
       - age:
-        - *scotte
+          - *scotte
   - path_regex: kubernetes/nas/.*\.ya?ml
     encrypted_regex: "((?i)(displayname|email|pass|secret($|[^N])|key|token|^data$|^stringData))"
     key_groups:
       - age:
-        - *scotte
-        - *nas
+          - *scotte
+          - *nas
   - path_regex: .*\.sops\.ya?ml
     key_groups:
       - age:
-        - *scotte
+          - *scotte
   - path_regex: .*\.sops\.env
     key_groups:
       - age:
-        - *scotte
+          - *scotte

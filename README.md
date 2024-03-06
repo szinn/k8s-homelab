@@ -38,23 +38,23 @@ At the bottom of this page, is the bringup process that I follow for this cluste
 
 ## Hardware
 
-| Device                                             | Count | OS Disk Size | Data Disk Size                | RAM  | Operating System |
-| -------------------------------------------------- | ----- | ------------ | ----------------------------- | ---- | ---------------- |
-| Ryzen 3900 12c24t NAS server                       | 1     | 1TB          | 1TB NVME, 6x16Tb SATA         | 64GB | NixOS 23.11      |
-| Raspberry Pi                                       | 1     |              |                               |      | PiHole           |
-| Raspberry Pi                                       | 1     |              |                               |      | OctoPrint        |
-| Raspberry Pi 4B                                    | 1     |              |                               |      | BirdNet          |
-| TESmart 16-port HDMI Switch                        | 1     |              |                               |      |                  |
-| PiKVM                                              | 1     |              |                               |      |                  |
-| Intel NUC11PAHi7 (worker nodes)                    | 3     | 500GB SSD    | 1TB NVMe                      | 64GB | Talos            |
-| Beelink MiniPC, Celeron J4125 (controlplane nodes) | 3     | 256GB SSD    |                               | 8GB  | Talos            |
-| Synology 1019+ (NFS server)                        | 1     |              | 5x8TB SATA                    |      |                  |
-| VyOS Router                                        | 1     |              |                               |      |                  |
-| USW-Pro-24-PoE                                     | 1     |              |                               |      |                  |
-| USW-Enterprise-8-PoE                               | 2     |              |                               |      |                  |
-| UNVR                                               | 1     |              | 3x4TB SATA                    |      |                  |
-| Intel NUC11TNHi7                                   | 1     |              |                               | 64GB | Proxmox          |
-| Intel NUC13 Pro                                    | 1     | 1Tb          |                               | 32GB | NixOS - Hera     |
+| Device                                             | Count | OS Disk Size | Data Disk Size        | RAM  | Operating System |
+| -------------------------------------------------- | ----- | ------------ | --------------------- | ---- | ---------------- |
+| Ryzen 3900 12c24t NAS server                       | 1     | 1TB          | 1TB NVME, 6x16Tb SATA | 64GB | NixOS 23.11      |
+| Raspberry Pi                                       | 1     |              |                       |      | PiHole           |
+| Raspberry Pi                                       | 1     |              |                       |      | OctoPrint        |
+| Raspberry Pi 4B                                    | 1     |              |                       |      | BirdNet          |
+| TESmart 16-port HDMI Switch                        | 1     |              |                       |      |                  |
+| PiKVM                                              | 1     |              |                       |      |                  |
+| Intel NUC11PAHi7 (worker nodes)                    | 3     | 500GB SSD    | 1TB NVMe              | 64GB | Talos            |
+| Beelink MiniPC, Celeron J4125 (controlplane nodes) | 3     | 256GB SSD    |                       | 8GB  | Talos            |
+| Synology 1019+ (NFS server)                        | 1     |              | 5x8TB SATA            |      |                  |
+| VyOS Router                                        | 1     |              |                       |      |                  |
+| USW-Pro-24-PoE                                     | 1     |              |                       |      |                  |
+| USW-Enterprise-8-PoE                               | 2     |              |                       |      |                  |
+| UNVR                                               | 1     |              | 3x4TB SATA            |      |                  |
+| Intel NUC11TNHi7                                   | 1     |              |                       | 64GB | Proxmox          |
+| Intel NUC13 Pro                                    | 1     | 1Tb          |                       | 32GB | NixOS - Hera     |
 
 The Proxmox Intel NUC runs a 6-node Talos staging cluster where I can try out various patterns before deploying in the main cluster. The Ryzen NAS server is also running a single node K3S cluster.
 

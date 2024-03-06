@@ -15,10 +15,10 @@ spec:
       - monitoring
   selector:
     matchExpressions:
-      - { key: app.kubernetes.io/component, operator: In, values: [read]}
-      - { key: app.kubernetes.io/instance, operator: In, values: [*app]}
-      - { key: app.kubernetes.io/name, operator: In, values: [*app]}
-      - { key: prometheus.io/service-monitor, operator: NotIn, values: ["false"]}
+      - {key: app.kubernetes.io/component, operator: In, values: [read]}
+      - {key: app.kubernetes.io/instance, operator: In, values: [*app]}
+      - {key: app.kubernetes.io/name, operator: In, values: [*app]}
+      - {key: prometheus.io/service-monitor, operator: NotIn, values: ["false"]}
 
     matchLabels:
       <<: *labels

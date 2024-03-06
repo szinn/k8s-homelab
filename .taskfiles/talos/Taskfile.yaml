@@ -1,0 +1,89 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+tasks:
+  # task talos:bootstrap cluster=main controller=k8s-1
+  # task talos:bootstrap cluster=staging controller=stage-1
+  bootstrap:
+    desc: Bootstrap Talos
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
+        controller: Controller node to run command against (required)
+    prompt: Bootstrap Talos on the '{{.cluster}}' cluster... continue?
+    cmds:
+      - task: bootstrap-etcd
+        vars: &vars
+          cluster: "{{.cluster}}"
+          controller: "{{.controller}}"
+      - task: fetch-kubeconfig
+        vars: *vars
+      - task: bootstrap-integrations
+        vars: *vars
+    requires:
+      vars:
+        - cluster
+        - controller
+
+  # task talos:upgrade cluster=main node=k8s-1
+  # task talos:upgrade cluster=staging node=stage-1
+  upgrade:
+    desc: Upgrade Talos version for a node
+    vars:
+      TALOS_VERSION:
+        sh: |
+          yq -r ".talosVersion" infrastructure/talos/{{.cluster}}/talconfig.yaml
+      TALOS_IMAGE:
+        sh: |
+          talhelper genurl installer \
+            --env-file infrastructure/talos/{{.cluster}}/talenv.sops.yaml \
+            --config-file infrastructure/talos/{{.cluster}}/talconfig.yaml \
+          | grep {{.node}} \
+          | awk '{split($0,u," "); print u[2]}'
+    cmds:
+      - echo "Upgrading node {{.node}}.{{.SECRET_TECH_DOMAIN_NAME}} on cluster {{.cluster}} to image {{.TALOS_IMAGE}}"
+      - read -p "Press any key to resume ..."
+      - talosctl --context {{.cluster}} upgrade -n {{.node}}.{{.SECRET_TECH_DOMAIN_NAME}} --image {{.TALOS_IMAGE }}
+
+    requires:
+      vars:
+        - cluster
+        - node
+    preconditions:
+      - which talhelper
+      - talosctl config get-contexts | grep {{.cluster}}
+      - test -f infrastructure/talos/{{.cluster}}/talenv.sops.yaml
+      - test -f infrastructure/talos/{{.cluster}}/talconfig.yaml
+      - msg: "Talos image could not be determined for {{.node}}"
+        sh: 'test -n "{{.TALOS_IMAGE}}"'
+
+  # task talos:upgrade-k8s cluster=main
+  # task talos:upgrade-k8s cluster=staging
+  upgrade-k8s:
+    desc: Upgrade Kubernetes version for a Talos cluster
+    vars:
+      KUBERNETES_VERSION:
+        sh: |
+          yq -r ".kubernetesVersion" infrastructure/talos/{{.cluster}}/talconfig.yaml
+      CONTROLPLANE_NODE:
+        sh: |
+          talosctl --context {{.cluster}} config info \
+          | grep Endpoints: \
+          | awk '{split($0,u," "); print u[2]}' \
+          | sed -E 's/,//'
+    cmds:
+      - talosctl --context {{.cluster}} upgrade-k8s -n {{.CONTROLPLANE_NODE}} --to {{.KUBERNETES_VERSION}}
+    requires:
+      vars:
+        - cluster
+    preconditions:
+      - which talhelper
+      - talosctl config get-contexts | grep {{.cluster}}
+      - test -f infrastructure/talos/{{.cluster}}/talenv.sops.yaml
+      - test -f infrastructure/talos/{{.cluster}}/talconfig.yaml
+      - msg: "Kubernetes version could not be determined for cluster {{.cluster}}"
+        sh: 'test -n "{{.KUBERNETES_VERSION}}"'
+      - msg: "Control plane node could not be determined for cluster {{.cluster}}"
+        sh: 'test -n "{{.CONTROLPLANE_NODE}}"'
+

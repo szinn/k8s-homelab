@@ -101,4 +101,4 @@ spec:
       transformers-cache:
         type: emptyDir
         globalMounts:
-          - path:  /usr/src/app/.transformers_cache
+          - path: /usr/src/app/.transformers_cache
