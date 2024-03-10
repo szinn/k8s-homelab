@@ -42,7 +42,7 @@ spec:
           main:
             image:
               repository: ghcr.io/onedr0p/prowlarr-nightly
-              tag: 1.14.2.4318
+              tag: 1.14.3.4322
             env:
               TZ: ${CONFIG_TIMEZONE}
               PROWLARR__INSTANCE_NAME: Prowlarr
