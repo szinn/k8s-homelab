@@ -63,10 +63,6 @@ spec:
                     fieldPath: metadata.namespace
             securityContext:
               privileged: true
-    service:
-      main:
-        controller: main
-        enabled: false
     serviceAccount:
       create: true
       name: vector-agent

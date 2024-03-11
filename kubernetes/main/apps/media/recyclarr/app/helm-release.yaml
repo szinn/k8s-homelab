@@ -58,10 +58,6 @@ spec:
                 memory: 50Mi
               limits:
                 memory: 200Mi
-    service:
-      main:
-        controller: main
-        enabled: false
     persistence:
       config:
         enabled: true
