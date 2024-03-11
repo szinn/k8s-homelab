@@ -83,7 +83,7 @@ spec:
               - "8080"
               - "/config"
             env:
-              TZ: "${TIMEZONE}"
+              TZ: "${CONFIG_TIMEZONE}"
     service:
       main:
         controller: main
