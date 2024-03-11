@@ -95,7 +95,7 @@ spec:
             port: 8080
     serviceMonitor:
       main:
-        serviceName: main
+        serviceName: home-assistant
         enabled: true
         endpoints:
           - port: http
