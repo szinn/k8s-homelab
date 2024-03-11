@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-3.0.1/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.0.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -52,12 +52,13 @@ spec:
               tag: 2.0.18
         pod:
           securityContext:
-            runAsUser: ${APP_UID}
-            runAsGroup: ${APP_GID}
-            fsGroup: ${APP_GID}
+            runAsUser: 568 # ${APP_UID}
+            runAsGroup: 568 # ${APP_GID}
+            fsGroup: 568 # ${APP_GID}
             fsGroupChangePolicy: OnRootMismatch
     service:
       main:
+        controller: main
         type: LoadBalancer
         annotations:
           io.cilium/lb-ipam-ips: ${CONFIG_MAIN_SVC_MOSQUITTO_ADDR}
