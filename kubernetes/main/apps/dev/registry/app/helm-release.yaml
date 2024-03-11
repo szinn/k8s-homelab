@@ -70,4 +70,4 @@ spec:
         enabled: true
         existingClaim: registry-datastore
         globalMounts:
-          - /data
+          - path: /data
