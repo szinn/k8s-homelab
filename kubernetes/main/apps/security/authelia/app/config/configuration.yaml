@@ -43,15 +43,20 @@ telemetry:
 
 session:
   redis:
-    high_availability:
-      sentinel_name: redis-master
-      nodes:
-        - host: redis-node-0.redis-headless.dbms.svc.cluster.local
-          port: 26379
-        - host: redis-node-1.redis-headless.dbms.svc.cluster.local
-          port: 26379
-        - host: redis-node-2.redis-headless.dbms.svc.cluster.local
-          port: 26379
+    host: dragonfly.dbms
+    port: 6379
+    database_index: 0
+    maximum_active_connections: 8
+    minimum_idle_connections: 0
+    # high_availability:
+    #   sentinel_name: redis-master
+    #   nodes:
+    #     - host: redis-node-0.redis-headless.dbms.svc.cluster.local
+    #       port: 26379
+    #     - host: redis-node-1.redis-headless.dbms.svc.cluster.local
+    #       port: 26379
+    #     - host: redis-node-2.redis-headless.dbms.svc.cluster.local
+    #       port: 26379
 
 identity_providers:
   oidc:
