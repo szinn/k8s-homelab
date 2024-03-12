@@ -16,7 +16,9 @@
     },
     {
       "description": "Auto merge github actions",
-      "matchDatasources": ["github-tags"]
+      "matchDatasources": ["github-tags"],
+      "automerge": true,
+      "ignoreTests": true
     },
     {
       "description": "Auto merge KPS minors and patches",
