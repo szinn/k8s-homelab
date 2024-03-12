@@ -1,0 +1,22 @@
+---
+apiVersion: dragonflydb.io/v1alpha1
+kind: Dragonfly
+metadata:
+  name: dragonfly
+spec:
+  image: docker.dragonflydb.io/dragonflydb/dragonfly:v1.15.1
+  replicas: 3
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 1280Mi
+  args:
+    - "--maxmemory=1128Mi"
+    - "--proactor_threads=4"
+  serviceSpec:
+    type: LoadBalancer
+    annotations:
+      io.cilium/lb-ipam-ips: ${CONFIG_MAIN_SVC_DRAGONFLY_ADDR}
