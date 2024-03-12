@@ -16,7 +16,17 @@ spec:
   args:
     - "--maxmemory=1128Mi"
     - "--proactor_threads=4"
+    - "--cluster_mode=emulated"
   serviceSpec:
     type: LoadBalancer
     annotations:
-      io.cilium/lb-ipam-ips: ${CONFIG_MAIN_SVC_DRAGONFLY_ADDR}
+      io.cilium/lb-ipam-ips: ${CONFIG_MAIN_SVC_REDIS_ADDR}
+      external-dns.alpha.kubernetes.io/hostname: redis.${SECRET_DOMAIN_NAME}
+  snapshot:
+    cron: "* * * * *"
+    persistentVolumeClaimSpec:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 1Gi

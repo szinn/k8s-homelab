@@ -246,10 +246,9 @@ spec:
           - name: Redis
             type: redis-datasource
             access: proxy
-            url: redis://redis-node-0.redis-headless.dbms.svc.cluster.local:26379,redis://redis-node-1.redis-headless.dbms.svc.cluster.local:26379,redis://redis-node-2.redis-headless.dbms.svc.cluster.local:26379
+            url: redis://dragonfly.dbms.svc.cluster.local:6379
             jsonData:
-              client: sentinel
-              sentinelName: redis-master
+              client: standalone
               poolSize: 5
               timeout: 10
               pingInterval: 0

@@ -250,6 +250,13 @@ spec:
             static_configs:
               - targets:
                   - gateway.${SECRET_TECH_DOMAIN_NAME}:9273
+          # - job_name: dragonfly
+          #   scrape_interval: 1m
+          #   scrape_timeout: 10s
+          #   honor_timestamps: true
+          #   static_configs:
+          #     - targets:
+          #         - dragonfly.dbms:6379
 
     grafana:
       enabled: false
