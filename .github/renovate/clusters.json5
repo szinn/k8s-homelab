@@ -3,18 +3,27 @@
   "packageRules": [
     {
       "description": "Separate PRs for main cluster",
-      "matchFileNames": ["**/kubernetes/main/**"],
-      "additionalBranchPrefix": "main-"
+      "matchFileNames": [
+        "**/kubernetes/main/**",
+        "**/infrastructure/talos/main/**"
+      ],
+      "additionalBranchPrefix": "main-",
+      "addLabels": ["main"]
     },
     {
       "description": "Separate PRs for staging cluster",
-      "matchFileNames": ["**/kubernetes/staging/**"],
-      "additionalBranchPrefix": "staging-"
+      "matchFileNames": [
+        "**/kubernetes/staging/**",
+        "**/infrastructure/talos/staging/**"
+      ],
+      "additionalBranchPrefix": "staging-",
+      "addLabels": ["staging"]
     },
     {
       "description": "Separate PRs for nas cluster",
       "matchFileNames": ["**/kubernetes/nas/**"],
-      "additionalBranchPrefix": "nas-"
+      "additionalBranchPrefix": "nas-",
+      "addLabels": ["nas"]
     }
   ]
 }
