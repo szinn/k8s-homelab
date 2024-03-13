@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-3.0.2/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-3.0.3/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 3.0.2
+      version: 3.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -114,3 +114,15 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /transcode
+      logs:
+        type: emptyDir
+        advancedMounts:
+          main:
+            main:
+              - path: /config/Library/Application Support/Plex Media Server/Logs
+      plex-cache:
+        existingClaim: plex-cache
+        advancedMounts:
+          main:
+            main:
+              - path: /config/Library/Application Support/Plex Media Server/Cache
