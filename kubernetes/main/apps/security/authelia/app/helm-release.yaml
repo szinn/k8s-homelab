@@ -26,7 +26,7 @@ spec:
   uninstall:
     keepHistory: false
   dependsOn:
-    - name: redis
+    - name: dragonfly-operator
       namespace: dbms
     - name: lldap
       namespace: security
