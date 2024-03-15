@@ -20,19 +20,14 @@
     "github>szinn/k8s-homelab//.github/renovate/semanticCommits.json5",
     "helpers:pinGitHubActionDigests"
   ],
-  "platform": "github",
-  "username": "repo-jeeves[bot]",
-  "repositories": ["szinn/k8s-homelab"],
-  "onboarding": false,
-  "requireConfig": "optional",
-  "gitAuthor": "repo-jeeves <106431701+repo-jeeves[bot]@users.noreply.github.com>",
   "timezone": "America/Toronto",
   "dependencyDashboardTitle": "Renovate Dashboard",
   "suppressNotifications": ["prEditedNotification", "prIgnoreNotification"],
   "rebaseWhen": "conflicted",
   "ignorePaths": [
     "kubernetes/main/apps/media/recyclarr/app/config/recyclarr.yaml",
-    "archive/**"
+    "**/archive/**",
+    "**/*.sops.*"
   ],
   "flux": {
     "fileMatch": ["kubernetes/.+\\.ya?ml$"]
