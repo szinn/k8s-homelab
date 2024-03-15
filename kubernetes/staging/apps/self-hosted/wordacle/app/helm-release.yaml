@@ -1,0 +1,65 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: &app wordacle
+  namespace: self-hosted
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.0.4
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+      interval: 15m
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    controllers:
+      main:
+        annotations:
+          secret.reloader.stakater.com/reload: *app
+        pod:
+          imagePullSecrets:
+            - name: ghcr-credentials
+        containers:
+          main:
+            image:
+              repository: ghcr.io/szinn/wordacle
+              tag: latest
+              pullPolicy: Always
+            env:
+              TZ: ${CONFIG_TIMEZONE}
+            # envFrom:
+            #   - secretRef:
+            #       name: *app
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 3000
+    ingress:
+      main:
+        enabled: true
+        className: nginx
+        annotations:
+          ingress.home.arpa/type: internal
+        hosts:
+          - host: "{{ .Release.Name }}.${SECRET_DOMAIN_NAME}"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: main
+                  port: http
