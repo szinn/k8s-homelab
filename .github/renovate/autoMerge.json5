@@ -15,12 +15,6 @@
       ]
     },
     {
-      "description": "Auto merge github actions",
-      "matchDatasources": ["github-tags"],
-      "automerge": true,
-      "ignoreTests": true
-    },
-    {
       "description": "Auto merge KPS minors and patches",
       "matchDatasources": ["docker", "helm"],
       "automerge": true,
@@ -29,9 +23,9 @@
       "ignoreTests": true
     },
     {
+      "description": "Auto merge media releases",
       "matchDatasources": [
         "docker",
-        "github-actions",
         "github-releases",
         "github-tags",
         "helm"
@@ -50,9 +44,7 @@
         "ghcr.io/onedr0p/recyclarr",
         "ghcr.io/onedr0p/sabnzbd",
         "ghcr.io/onedr0p/sonarr",
-        "ghcr.io/onedr0p/sonarr-develop",
-
-        "renovatebot/github-action"
+        "ghcr.io/onedr0p/sonarr-develop"
       ]
     }
   ]
