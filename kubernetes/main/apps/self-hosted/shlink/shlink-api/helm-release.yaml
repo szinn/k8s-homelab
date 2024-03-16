@@ -53,7 +53,7 @@ spec:
           main:
             image:
               repository: ghcr.io/shlinkio/shlink
-              tag: 4.0.2
+              tag: 4.0.3
             env:
               DB_DRIVER: postgres
               DEFAULT_DOMAIN: &host "ln.${SECRET_DOMAIN_NAME}"
@@ -61,12 +61,6 @@ spec:
               ENABLE_PERIODIC_VISIT_LOCATE: "true"
               IS_HTTPS_ENABLED: "true"
               PORT: &port 8080
-              REDIS_PUB_SUB_ENABLED: "true"
-              REDIS_SENTINEL_SERVICE: redis-master
-              REDIS_SERVERS: >-
-                redis-node-0.redis-headless.dbms.svc.cluster.local:26379,
-                redis-node-1.redis-headless.dbms.svc.cluster.local:26379,
-                redis-node-2.redis-headless.dbms.svc.cluster.local:26379
               TIMEZONE: "${CONFIG_TIMEZONE}"
             envFrom:
               - secretRef:
