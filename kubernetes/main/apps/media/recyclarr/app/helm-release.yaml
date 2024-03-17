@@ -57,7 +57,7 @@ spec:
                 cpu: 10m
                 memory: 50Mi
               limits:
-                memory: 200Mi
+                memory: 500Mi
     persistence:
       config:
         enabled: true
