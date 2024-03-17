@@ -1,5 +1,5 @@
-# This Github Action is responsible for publishing Kubernetes schemas to an OCI registry.
-# It is triggered by a push to the main branch, a weekly schedule, or a manual dispatch.
+---
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 name: "Publish Kubernetes Schemas"
 
 on:
@@ -21,6 +21,9 @@ jobs:
   publish-kubernetes-schemas:
     name: Publish Kubernetes Schemas
     runs-on: ["k8s-homelab"]
+    permissions:
+      contents: read
+      packages: write
     steps:
       - name: Setup Tools
         shell: bash
@@ -43,13 +46,6 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Setup crd-extractor
-        uses: robinraju/release-downloader@368754b9c6f47c345fcfbf42bcb577c2f0f5f395 # v1.9
-        with:
-          repository: datreeio/CRDs-catalog
-          latest: true
-          fileName: crd-extractor.zip
-
       - name: Write kubeconfig
         id: kubeconfig
         uses: timheuer/base64-to-file@adaa40c0c581f276132199d4cf60afa07ce60eac # v1.2
@@ -57,12 +53,15 @@ jobs:
           encodedString: ${{ secrets.KUBECONFIG }}
           fileName: kubeconfig
 
-      - name: Run crd-extractor
+      - name: Download and run crd-extractor
         env:
           KUBECONFIG: "${{ steps.kubeconfig.outputs.filePath }}"
+        shell: bash
         run: |
-          unzip -j $GITHUB_WORKSPACE/crd-extractor.zip -d $GITHUB_WORKSPACE
-          bash "$GITHUB_WORKSPACE"/crd-extractor.sh
+          curl -fsSL -o $GITHUB_WORKSPACE/crd-extractor.sh \
+              https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/Utilities/crd-extractor.sh
+          chmod +x $GITHUB_WORKSPACE/crd-extractor.sh
+          bash $GITHUB_WORKSPACE/crd-extractor.sh
 
       - name: Login to GHCR
         uses: docker/login-action@e92390c5fb421da1463c202d546fed0ec5c39f20 # v3
