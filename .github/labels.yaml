@@ -21,8 +21,6 @@
   description: >-
     Changes made in the hack directory
 # Renovate
-- name: renovate/ansible
-  color: "ffc300"
 - name: renovate/container
   color: "ffc300"
 - name: renovate/github-action

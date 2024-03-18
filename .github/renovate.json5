@@ -10,6 +10,7 @@
     "github>szinn/k8s-homelab//.github/renovate/groups.json5",
     "github>szinn/k8s-homelab//.github/renovate/packageRules.json5"
   ],
+  "recreateWhen": "always",
   "ignorePaths": [
     "kubernetes/main/apps/media/recyclarr/app/config/recyclarr.yaml",
     "**/archive/**",
@@ -23,21 +24,5 @@
   },
   "kubernetes": {
     "fileMatch": ["kubernetes/.+\\.ya?ml$"]
-  },
-  "customManagers": [
-    // {
-    //   "customType": "regex",
-    //   "description": "Process various dependencies",
-    //   "fileMatch": [
-    //     "kubernetes/.+\\.ya?ml$",
-    //     "hack/.+\\.ya?ml$",
-    //     "hack/.+\\.sh$"
-    //   ],
-    //   "matchStrings": [
-    //     "renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( versioning=(?<versioning>\\S+))?\n.*?\"(?<currentValue>.*)\"\n"
-    //   ],
-    //   "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}",
-    //   "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
-    // },
-  ]
+  }
 }
