@@ -5,8 +5,10 @@
     "github>szinn/k8s-homelab//.github/renovate/allowedVersions.json5",
     "github>szinn/k8s-homelab//.github/renovate/autoMerge.json5",
     "github>szinn/k8s-homelab//.github/renovate/clusters.json5",
+    "github>szinn/k8s-homelab//.github/renovate/customManagers.json5",
     "github>szinn/k8s-homelab//.github/renovate/disabledDatasources.json5",
-    "github>szinn/k8s-homelab//.github/renovate/groups.json5"
+    "github>szinn/k8s-homelab//.github/renovate/groups.json5",
+    "github>szinn/k8s-homelab//.github/renovate/packageRules.json5"
   ],
   "ignorePaths": [
     "kubernetes/main/apps/media/recyclarr/app/config/recyclarr.yaml",
@@ -23,67 +25,19 @@
     "fileMatch": ["kubernetes/.+\\.ya?ml$"]
   },
   "customManagers": [
-    {
-      "customType": "regex",
-      "description": "Process various dependencies",
-      "fileMatch": [
-        "kubernetes/.+\\.ya?ml$",
-        "hack/.+\\.ya?ml$",
-        "hack/.+\\.sh$"
-      ],
-      "matchStrings": [
-        "renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( versioning=(?<versioning>\\S+))?\n.*?\"(?<currentValue>.*)\"\n"
-      ],
-      "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}",
-      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
-    },
-    {
-      "customType": "regex",
-      "description": "Process raw GitHub URLs",
-      "fileMatch": ["kubernetes/.+\\.ya?ml$"],
-      "matchStrings": [
-        "https:\\/\\/raw.githubusercontent.com\\/(?<depName>[\\w\\d\\-_]+\\/[\\w\\d\\-_]+)\\/(?<currentValue>[\\w\\d\\.\\-_]+)\\/.*"
-      ],
-      "datasourceTemplate": "github-releases",
-      "versioningTemplate": "semver"
-    },
-    {
-      "customType": "regex",
-      "description": "Process GitHub release URLs",
-      "fileMatch": ["kubernetes/.+\\.ya?ml$"],
-      "matchStrings": [
-        "https:\\/\\/github.com\\/(?<depName>[\\w\\d\\-_]+\\/[\\w\\d\\-_]+)\\/releases\\/download\\/v(?<currentValue>[\\w\\d\\.\\-_]+)\\/.*",
-        "https:\\/\\/github.com\\/(?<depName>[\\w\\d\\-_]+\\/[\\w\\d\\-_]+)\\/releases\\/download\\/(?<currentValue>[\\w\\d\\.\\-_]+)\\/.*"
-      ],
-      "datasourceTemplate": "github-releases",
-      "versioningTemplate": "semver"
-    },
-    {
-      "customType": "regex",
-      "description": "Update docker image",
-      "fileMatch": [
-        "kubernetes/.+\\.ya?ml$"
-      ],
-      "matchStrings": [
-        "imageName: (?<depName>\\S+):(?<currentValue>.*\\-.*)"
-      ],
-      "datasourceTemplate": "docker",
-      "versioningTemplate": "redhat"
-    }
-  ],
-  "packageRules": [
-    {
-      "description": "Use loose versioning for certain dependencies",
-      "matchDatasources": [
-        "docker",
-        "github-releases"
-      ],
-      "versioning": "loose",
-      "matchPackagePatterns": [
-        "changedetection",
-        "plex",
-        "qbittorrent"
-      ]
-    }
+    // {
+    //   "customType": "regex",
+    //   "description": "Process various dependencies",
+    //   "fileMatch": [
+    //     "kubernetes/.+\\.ya?ml$",
+    //     "hack/.+\\.ya?ml$",
+    //     "hack/.+\\.sh$"
+    //   ],
+    //   "matchStrings": [
+    //     "renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( versioning=(?<versioning>\\S+))?\n.*?\"(?<currentValue>.*)\"\n"
+    //   ],
+    //   "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}",
+    //   "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
+    // },
   ]
 }

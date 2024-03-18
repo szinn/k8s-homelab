@@ -1,0 +1,72 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": ["Process custom dependencies"],
+      "fileMatch": [
+        "(^|/).taskfiles/.+\\.ya?ml(?:\\.j2)?$",
+        "(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$",
+        "(^|/)hack/.+\\.ya?ml$",
+        "(^|/)hack/.+\\.sh$"
+      ],
+      "matchStrings": [
+        // # renovate: datasource=github-releases depName=k3s-io/k3s
+        // k3s_release_version: &version v1.29.0+k3s1
+        // # renovate: datasource=helm depName=cilium repository=https://helm.cilium.io
+        // version: 1.15.1
+        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( repository=(?<registryUrl>\\S+))?\\n.+: (&\\S+\\s)?(?<currentValue>\\S+)",
+        // # renovate: datasource=github-releases depName=rancher/system-upgrade-controller versioning=redhat
+        // https://github.com/rancher/system-upgrade-controller/releases/download/v0.13.2/crd.yaml
+        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( versioning=(?<versioning>\\S+))?\\n.+/(?<currentValue>(v|\\d)[^/]+)"
+      ],
+      "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}",
+      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
+    },
+    {
+      "customType": "regex",
+      "description": ["Process CloudnativePG Postgresql version"],
+      "fileMatch": [
+        "(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$"
+      ],
+      "matchStrings": [
+        "imageName: (?<depName>\\S+):(?<currentValue>.*\\-.*)"
+      ],
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "redhat"
+    },
+    {
+      "customType": "regex",
+      "description": "Process raw GitHub URLs",
+      "fileMatch": ["kubernetes/.+\\.ya?ml$"],
+      "matchStrings": [
+        "https:\\/\\/raw.githubusercontent.com\\/(?<depName>[\\w\\d\\-_]+\\/[\\w\\d\\-_]+)\\/(?<currentValue>[\\w\\d\\.\\-_]+)\\/.*"
+      ],
+      "datasourceTemplate": "github-releases",
+      "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
+      "description": "Process GitHub release URLs",
+      "fileMatch": ["kubernetes/.+\\.ya?ml$"],
+      "matchStrings": [
+        "https:\\/\\/github.com\\/(?<depName>[\\w\\d\\-_]+\\/[\\w\\d\\-_]+)\\/releases\\/download\\/v(?<currentValue>[\\w\\d\\.\\-_]+)\\/.*",
+        "https:\\/\\/github.com\\/(?<depName>[\\w\\d\\-_]+\\/[\\w\\d\\-_]+)\\/releases\\/download\\/(?<currentValue>[\\w\\d\\.\\-_]+)\\/.*"
+      ],
+      "datasourceTemplate": "github-releases",
+      "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
+      "description": "Update docker image",
+      "fileMatch": [
+        "kubernetes/.+\\.ya?ml$"
+      ],
+      "matchStrings": [
+        "imageName: (?<depName>\\S+):(?<currentValue>.*\\-.*)"
+      ],
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "redhat"
+    }
+  ]
+}
