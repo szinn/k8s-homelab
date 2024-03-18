@@ -4,10 +4,18 @@
   color: "72ccf3"
   description: >-
     Changes made in the github directory
-- name: area/cluster
+- name: cluster/main
   color: "72ccf3"
   description: >-
-    Changes made in the cluster directory
+    Changes made in the main cluster
+- name: cluster/staging
+  color: "72ccf3"
+  description: >-
+    Changes made in the staging cluster
+- name: cluster/nas
+  color: "72ccf3"
+  description: >-
+    Changes made in the nas cluster
 - name: area/hack
   color: "72ccf3"
   description: >-

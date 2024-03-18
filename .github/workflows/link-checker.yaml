@@ -1,10 +1,14 @@
 ---
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 name: Link Checker
 
 on: # yamllint disable-line rule:truthy
   workflow_dispatch:
   schedule:
     - cron: "0 0 * * *"
+
+env:
+  WORKFLOW_ISSUE_TITLE: "Link Checker Dashboard 🔗"
 
 jobs:
   link-checker:
@@ -13,7 +17,7 @@ jobs:
     steps:
       - name: Generate Token
         uses: tibdex/github-app-token@3beb63f4bd073e61482598c45c71c1019b59b73a # v2.1.0
-        id: generate-token
+        id: app-token
         with:
           app_id: "${{ secrets.BOT_APP_ID }}"
           private_key: "${{ secrets.BOT_APP_PRIVATE_KEY }}"
@@ -21,18 +25,50 @@ jobs:
       - name: Checkout
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
-          token: "${{ steps.generate-token.outputs.token }}"
+          token: "${{ steps.app-token.outputs.token }}"
 
-      - name: Link Checker
-        uses: lycheeverse/lychee-action@c053181aa0c3d17606addfe97a9075a32723548a # v1.9.3
-        id: lychee
+      - name: Setup Homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Setup Workflow Tools
+        shell: bash
+        run: brew install lychee
+
+      - name: Scan For Broken Links
+        shell: bash
         env:
-          GITHUB_TOKEN: "${{ steps.generate-token.outputs.token }}"
+          GITHUB_TOKEN: "${{ steps.app-token.outputs.token }}"
+        run: |
+          lychee --verbose --no-progress \
+              --format markdown \
+              --output results.md \
+              --exclude-all-private \
+              --exclude-mail \
+              ./**/*.md || true
 
-      - name: Create Issue From File
-        if: env.lychee_exit_code != 0
-        uses: peter-evans/create-issue-from-file@24452a72d85239eacf1468b0f1982a9f3fec4c94 # v5
+      - name: Print Output
+        run: cat results.md
+
+      - name: Find Link Checker Issue
+        id: find-issue
+        shell: bash
+        env:
+          GH_TOKEN: "${{ steps.app-token.outputs.token }}"
+        run: |
+          issue_number=$( \
+              gh issue list \
+                  --search "in:title ${{ env.WORKFLOW_ISSUE_TITLE }}" \
+                  --state open \
+                  --json number \
+                  | jq --raw-output '.[0].number' \
+          )
+          echo "issue-number=${issue_number}" >> $GITHUB_OUTPUT
+          echo "${issue_number}"
+
+      - name: Create or Update Issue
+        uses: peter-evans/create-issue-from-file@v5
         with:
-          title: Link Checker Report
-          content-filepath: ./lychee/out.md
-          labels: report, automated issue
+          token: "${{ steps.app-token.outputs.token }}"
+          title: "${{ env.WORKFLOW_ISSUE_TITLE }}"
+          issue-number: "${{ steps.find-issue.outputs.issue-number || '' }}"
+          content-filepath: results.md

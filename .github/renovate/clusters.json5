@@ -7,8 +7,7 @@
         "**/kubernetes/main/**",
         "**/infrastructure/talos/main/**"
       ],
-      "additionalBranchPrefix": "main-",
-      "commitMessagePrefix": "[main]"
+      "additionalBranchPrefix": "main-"
     },
     {
       "description": "Separate PRs for staging cluster",
@@ -16,16 +15,14 @@
         "**/kubernetes/staging/**",
         "**/infrastructure/talos/staging/**"
       ],
-      "additionalBranchPrefix": "staging-",
-      "commitMessagePrefix": "[staging]"
+      "additionalBranchPrefix": "staging-"
     },
     {
       "description": "Separate PRs for nas cluster",
       "matchFileNames": [
         "**/kubernetes/nas/**"
       ],
-      "additionalBranchPrefix": "nas-",
-      "commitMessagePrefix": "[nas]"
+      "additionalBranchPrefix": "nas-"
     }
   ]
 }

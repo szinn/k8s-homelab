@@ -47,7 +47,7 @@ jobs:
     steps:
       - name: Generate Token
         uses: tibdex/github-app-token@3beb63f4bd073e61482598c45c71c1019b59b73a # v2.1.0
-        id: generate-token
+        id: app-token
         with:
           app_id: "${{ secrets.BOT_APP_ID }}"
           private_key: "${{ secrets.BOT_APP_PRIVATE_KEY }}"
@@ -55,7 +55,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
-          token: "${{ steps.generate-token.outputs.token }}"
+          token: "${{ steps.app-token.outputs.token }}"
 
       - name: Override default config from dispatch variables
         run: |
@@ -66,5 +66,5 @@ jobs:
         uses: renovatebot/github-action@89bd050bafa5a15de5d9383e3129edf210422004 # v40.1.5
         with:
           configurationFile: .github/renovate.json5
-          token: "${{ steps.generate-token.outputs.token }}"
+          token: "${{ steps.app-token.outputs.token }}"
           renovate-version: "${{ env.WORKFLOW_RENOVATE_VERSION }}"

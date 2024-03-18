@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 name: "Build blacklist"
 
 on:
@@ -13,7 +14,7 @@ jobs:
     steps:
       - name: Generate Token
         uses: tibdex/github-app-token@3beb63f4bd073e61482598c45c71c1019b59b73a # v2.1.0
-        id: generate-token
+        id: app-token
         with:
           app_id: "${{ secrets.BOT_APP_ID }}"
           private_key: "${{ secrets.BOT_APP_PRIVATE_KEY }}"
@@ -96,7 +97,7 @@ jobs:
         uses: svenstaro/upload-release-action@04733e069f2d7f7f0b4aebc4fbdbce8613b03ccd # v2
         with:
           release_name: "Pi-Hole Blacklist"
-          repo_token: ${{ steps.generate-token.outputs.token }}
+          repo_token: ${{ steps.app-token.outputs.token }}
           file: hosts.blacklist
           asset_name: hosts.blacklist
           tag: pi-hole

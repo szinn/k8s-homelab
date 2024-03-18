@@ -1,20 +1,19 @@
 ---
 area/github:
-  - ".github/**/*"
-area/cluster:
-  - "kubernetes/**/*"
+  - changed-files:
+      - any-glob-to-any-file: ".github/**/*"
 area/hack:
-  - "hack/**/*"
+  - changed-files:
+      - any-glob-to-any-file: "hack/**/*"
 area/infrastructure:
-  - "infrastructure/**/*"
+  - changed-files:
+      - any-glob-to-any-file: "infrastructure/**/*"
 cluster/main:
   - changed-files:
       - any-glob-to-any-file: "kubernetes/main/**/*"
-      - any-glob-to-any-file: "infrastructure/talos/main/**/*"
 cluster/staging:
   - changed-files:
       - any-glob-to-any-file: "kubernetes/staging/**/*"
-      - any-glob-to-any-file: "infrastructure/talos/staging/**/*"
 cluster/nas:
   - changed-files:
       - any-glob-to-any-file: "kubernetes/nas/**/*"
