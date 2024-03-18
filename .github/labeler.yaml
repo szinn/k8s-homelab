@@ -5,3 +5,16 @@ area/cluster:
   - "kubernetes/**/*"
 area/hack:
   - "hack/**/*"
+area/infrastructure:
+  - "infrastructure/**/*"
+cluster/main:
+  - changed-files:
+      - any-glob-to-any-file: "kubernetes/main/**/*"
+      - any-glob-to-any-file: "infrastructure/talos/main/**/*"
+cluster/staging:
+  - changed-files:
+      - any-glob-to-any-file: "kubernetes/staging/**/*"
+      - any-glob-to-any-file: "infrastructure/talos/staging/**/*"
+cluster/nas:
+  - changed-files:
+      - any-glob-to-any-file: "kubernetes/nas/**/*"
