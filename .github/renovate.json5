@@ -10,7 +10,6 @@
     "github>szinn/k8s-homelab//.github/renovate/groups.json5",
     "github>szinn/k8s-homelab//.github/renovate/packageRules.json5"
   ],
-  "recreateWhen": "always",
   "ignorePaths": [
     "kubernetes/main/apps/media/recyclarr/app/config/recyclarr.yaml",
     "**/archive/**",
