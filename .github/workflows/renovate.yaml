@@ -13,10 +13,6 @@ on: # yamllint disable-line rule:truthy
         description: "Log-Level"
         default: "debug"
         required: false
-      version:
-        description: Renovate version
-        default: latest
-        required: false
   schedule:
     - cron: "0 9,22 * * *"
   push:
@@ -38,7 +34,6 @@ env:
   RENOVATE_DRY_RUN: "${{ inputs.dryRun == true }}"
   RENOVATE_PLATFORM: github
   RENOVATE_PLATFORM_COMMIT: true
-  WORKFLOW_RENOVATE_VERSION: "${{ inputs.version || 'latest' }}"
 
 jobs:
   renovate:
@@ -67,4 +62,3 @@ jobs:
         with:
           configurationFile: .github/renovate.json5
           token: "${{ steps.app-token.outputs.token }}"
-          renovate-version: "${{ env.WORKFLOW_RENOVATE_VERSION }}"
