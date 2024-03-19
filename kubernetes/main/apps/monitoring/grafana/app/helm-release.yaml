@@ -54,6 +54,7 @@ spec:
       GF_AUTH_GENERIC_OAUTH_AUTH_URL: https://auth.${SECRET_DOMAIN_NAME}/api/oidc/authorization
       GF_AUTH_GENERIC_OAUTH_TOKEN_URL: https://auth.${SECRET_DOMAIN_NAME}/api/oidc/token
       GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: natel-discrete-panel,pr0ps-trackmap-panel,panodata-map-panel
+      GF_SECURITY_ANGULAR_SUPPORT_ENABLED: true
     envFromSecrets:
       - name: grafana-secret
     grafana.ini:
