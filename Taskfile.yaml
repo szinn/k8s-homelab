@@ -2,10 +2,13 @@
 version: "3"
 
 vars:
-  PROJECT_DIR:
-    sh: "git rev-parse --show-toplevel"
+  KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
 
 includes:
+  bootstrap: .taskfiles/Bootstrap/Taskfile.yaml
+  proxmox: .taskfiles/Proxmox/Taskfile.yaml
+  talos: .taskfiles/Talos/Taskfile.yaml
+
   es:
     taskfile: .taskfiles/secrets
   fmt:
@@ -24,8 +27,6 @@ includes:
     taskfile: .taskfiles/rook
   sops:
     taskfile: .taskfiles/sops
-  talos:
-    taskfile: .taskfiles/talos
   vs:
     taskfile: .taskfiles/volsync
 

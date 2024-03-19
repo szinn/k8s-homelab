@@ -1,0 +1,121 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: '3'
+
+vars:
+  CP_VMS: 1-DE:CA:FF:10:12:10-10.12.0.16 2-DE:CA:FF:10:12:11-10.12.0.17 3-DE:CA:FF:10:12:12-10.12.0.18
+  WORKER_VMS: 4-DE:CA:FF:10:12:13-10.12.0.19 5-DE:CA:FF:10:12:14-10.12.0.20 6-DE:CA:FF:10:12:15-10.12.0.21
+  ALL_VMS: '{{.CP_VMS}} {{.WORKER_VMS}}'
+  VMID_PREFIX: 20
+
+tasks:
+  reset-staging:
+    desc: Reset staging cluster
+    cmds:
+      - task: destroy-staging
+      - task: create-staging
+
+  start-staging:
+    desc: Start staging cluster
+    cmds:
+      - for: { var: ALL_VMS, split: ' ' }
+        task: start-vm-{{.ITEM}}
+
+  stop-staging:
+    desc: Stop staging cluster
+    cmds:
+      - for: { var: ALL_VMS, split: ' ' }
+        task: stop-vm-{{.ITEM}}
+
+  destroy-staging:
+    desc: Destroy staging cluster
+    cmds:
+      - for: { var: ALL_VMS, split: ' ' }
+        task: destroy-vm-{{.ITEM}}
+
+  create-staging:
+    desc: Create staging cluster
+    cmds:
+      - for: { var: CP_VMS, split: ' ' }
+        task: create-cp-vm-{{.ITEM}}
+      - for: { var: WORKER_VMS, split: ' ' }
+        task: create-worker-vm-{{.ITEM}}
+
+  start-vm-*-*-*:
+    internal: true
+    vars:
+      vmid: '{{index .MATCH 0}}'
+    cmds:
+      - cmd: ssh ares -- qm start {{.VMID_PREFIX}}{{.vmid}}
+        ignore_error: true
+
+  stop-vm-*-*-*:
+    internal: true
+    vars:
+      vmid: '{{index .MATCH 0}}'
+    cmds:
+      - cmd: ssh ares -- qm stop {{.VMID_PREFIX}}{{.vmid}}
+        ignore_error: true
+
+  destroy-vm-*-*-*:
+    internal: true
+    vars:
+      vmid: '{{index .MATCH 0}}'
+    cmds:
+      - cmd: ssh ares -- qm stop {{.VMID_PREFIX}}{{.vmid}}
+        ignore_error: true
+      - cmd: ssh ares -- qm destroy {{.VMID_PREFIX}}{{.vmid}}
+        ignore_error: true
+
+  create-cp-vm-*-*-*:
+    internal: true
+    vars:
+      vmid: '{{index .MATCH 0}}'
+      mac: '{{index .MATCH 1}}'
+      ip: '{{index .MATCH 2}}'
+    cmds:
+      - cmd: |
+          ssh ares -- qm create {{.VMID_PREFIX}}{{.vmid}} \
+            --name stage-{{.vmid}} \
+            --description stage-{{.vmid}} \
+            --ide0 local:iso/metal-amd64.iso,media=cdrom \
+            --boot 'order=ide0\;scsi0' \
+            --memory 4096 \
+            --balloon 0 \
+            --sockets 1 \
+            --cores 8 \
+            --cpu host \
+            --scsihw 'virtio-scsi-pci' \
+            --vga type=virtio,memory=32 \
+            --scsi0 local-lvm:20 \
+            --net0 model=virtio,bridge=vmbr0,macaddr={{.mac}},mtu=1500,firewall=0,tag=12,queues=0,rate=0 \
+            --start 1
+      - cmd: ping -o -q {{.ip}}
+      - cmd: ssh ares -- qm set {{.VMID_PREFIX}}{{.vmid}} -ide0 media=cdrom,file=none
+
+  create-worker-vm-*-*-*:
+    internal: true
+    vars:
+      vmid: '{{index .MATCH 0}}'
+      mac: '{{index .MATCH 1}}'
+      ip: '{{index .MATCH 2}}'
+    cmds:
+      - cmd: |
+          ssh ares -- qm create {{.VMID_PREFIX}}{{.vmid}} \
+            --name stage-{{.vmid}} \
+            --description stage-{{.vmid}} \
+            --ide0 local:iso/metal-amd64.iso,media=cdrom \
+            --boot 'order=ide0\;scsi0' \
+            --memory 16384 \
+            --balloon 0 \
+            --sockets 1 \
+            --cores 8 \
+            --cpu host \
+            --scsihw 'virtio-scsi-pci' \
+            --vga type=virtio,memory=32 \
+            --scsi0 local-lvm:100 \
+            --scsi1 local-lvm:100 \
+            --net0 model=virtio,bridge=vmbr0,macaddr={{.mac}},mtu=1500,firewall=0,tag=12,queues=0,rate=0 \
+            --start 1
+      - cmd: ping -o -q {{.ip}}
+      - cmd: ssh ares -- qm set {{.VMID_PREFIX}}{{.vmid}} -ide0 media=cdrom,file=none

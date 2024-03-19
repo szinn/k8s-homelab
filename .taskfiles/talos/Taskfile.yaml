@@ -3,28 +3,37 @@
 version: "3"
 
 tasks:
-  # task talos:bootstrap cluster=main controller=k8s-1
-  # task talos:bootstrap cluster=staging controller=stage-1
-  bootstrap:
-    desc: Bootstrap Talos
-    summary: |
-      Args:
-        cluster: Cluster to run command against (required)
-        controller: Controller node to run command against (required)
-    prompt: Bootstrap Talos on the '{{.cluster}}' cluster... continue?
+  generate-config:
+    desc: Generate Talos configurations
+    dir: '{{.KUBERNETES_DIR}}/{{.cluster}}/bootstrap/talos'
     cmds:
-      - task: bootstrap-etcd
-        vars: &vars
-          cluster: "{{.cluster}}"
-          controller: "{{.controller}}"
-      - task: fetch-kubeconfig
-        vars: *vars
-      - task: bootstrap-integrations
-        vars: *vars
+      - talhelper genconfig --env-file talenv.sops.yaml --secret-file talsecret.sops.yaml --config-file talconfig.yaml
     requires:
       vars:
         - cluster
-        - controller
+
+  apply-config:
+    desc: Apply Talos configurations
+    dir: '{{.KUBERNETES_DIR}}/{{.cluster}}/bootstrap/talos'
+    cmds:
+      - for: { var: nodes }
+        cmd: talosctl --context {{.cluster}} --talosconfig ./clusterconfig/talosconfig apply-config -i -n {{.ITEM}} -f ./clusterconfig/{{.cluster}}-{{.ITEM}}.{{.SECRET_TECH_DOMAIN_NAME}}.yaml
+    requires:
+      vars:
+        - cluster
+        - nodes
+
+  bootstrap-etcd:
+    desc: Bootstrap Etcd
+    dir: '{{.KUBERNETES_DIR}}/{{.cluster}}/bootstrap/talos'
+    prompt: Bootstrap Talos on the '{{.cluster}}' cluster... continue?
+    cmd: until talosctl --context {{.cluster}} --talosconfig ./clusterconfig/talosconfig --nodes {{.controller}} bootstrap; do sleep 10; done
+    # vars:
+    #   controller:
+    #     sh: talosctl --context {{.cluster}} --talosconfig ./clusterconfig/talosconfig config info --output json | jq --raw-output '.endpoints[0]'
+    requires:
+      vars:
+        - cluster
 
   # task talos:upgrade cluster=main node=k8s-1
   # task talos:upgrade cluster=staging node=stage-1
