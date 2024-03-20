@@ -6,6 +6,29 @@ vars:
   dropDatabases: "{{.ROOT_DIR}}/.taskfiles/Postgres/drop_databases.sql"
 
 tasks:
+  maintenance-main:
+    desc: Set/unset maintenance mode on main cluster
+    summary: |
+      Args:
+        command: 'set' or 'unset' (required)
+    cmds:
+      - kubectl cnpg --context main maintenance {{.command}} --reusePVC -n dbms postgres
+      - kubectl cnpg --context main maintenance {{.command}} --reusePVC -n media immich
+    requires:
+      vars:
+        - command
+
+  maintenance-staging:
+    desc: Set/unset maintenance mode on main cluster
+    summary: |
+      Args:
+        command: 'set' or 'unset' (required)
+    cmds:
+      - kubectl cnpg --context staging maintenance {{.command}} --reusePVC -n dbms postgres
+    requires:
+      vars:
+        - command
+
   down:
     desc: Scale down all services that use Postgresql
     cmds:

@@ -2,9 +2,16 @@
 # yaml-language-server: $schema=https://taskfile.dev/schema.json
 version: "3"
 
+vars:
+  TALOS_SCRIPTS_DIR: "{{.ROOT_DIR}}/.taskfiles/Talos/scripts"
+
 tasks:
   bootstrap:
     desc: Bootstrap the cluster
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
+        nodes: List of hostnames in the cluster to configure
     prompt: Bootstrap Talos on the '{{.cluster}}' cluster ... continue?
     cmds:
       - task: generate-config
@@ -30,6 +37,9 @@ tasks:
 
   generate-config:
     desc: Generate Talos configurations
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
     cmds:
       - |
         talhelper genconfig \
@@ -46,6 +56,10 @@ tasks:
 
   apply-config:
     desc: Apply Talos configurations
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
+        nodes: List of hostnames in the cluster to configure
     cmds:
       - for: { var: nodes }
         cmd: |
@@ -64,6 +78,9 @@ tasks:
 
   bootstrap-etcd:
     desc: Bootstrap Etcd
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
     cmd: until talosctl --talosconfig {{.KUBERNETES_DIR}}/{{.cluster}}/talosconfig --context {{.cluster}} --nodes {{.controller}} bootstrap; do sleep 10; done
     vars:
       controller:
@@ -77,6 +94,9 @@ tasks:
 
   bootstrap-core:
     desc: Bootstrap core apps needed for Talos
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
     cmds:
       - echo {{.KUBECONFIG}}
       - kubectl config view
@@ -93,6 +113,9 @@ tasks:
 
   fetch-kubeconfig:
     desc: Fetch kubeconfig from Talos controllers
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
     cmds:
       - |
         talosctl kubeconfig \
@@ -121,11 +144,56 @@ tasks:
       - test -f {{.KUBERNETES_DIR}}/{{.cluster}}/talosconfig
       - talosctl --context {{.cluster}} config info >/dev/null 2>&1
 
+  rolling-upgrade:
+    desc: Upgrade all Talos nodes
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
+    cmds:
+      - flux --context {{.cluster}} suspend kustomization --all
+      - task: :postgres:maintenance-{{.cluster}}
+        vars:
+          command: set
+      - for: { var: nodes }
+        task: upgrade
+        vars:
+          cluster: "{{.cluster}}"
+          node: "{{.ITEM}}"
+          rollout: "true"
+      - task: :postgres:maintenance-{{.cluster}}
+        vars:
+          command: unset
+      - flux --context {{.cluster}} resume kustomization --all
+      - task: :kubernetes:delete-failed-pods
+        vars:
+          cluster: "{{.cluster}}"
+    vars:
+      TARGET_TALOS_VERSION:
+        sh: yq -r ".talosVersion" {{.KUBERNETES_DIR}}/{{.cluster}}/bootstrap/talos/talconfig.yaml
+      nodes:
+        sh: talosctl --context {{.cluster}} config info --output json | jq '.nodes[]' | xargs -L 1 dig -x | awk '{print $5}' | sed -e 's/.$//'
+    requires:
+      vars:
+        - cluster
+    preconditions:
+      - test -f {{.KUBERNETES_DIR}}/{{.cluster}}/talosconfig
+      - talosctl --context {{.cluster}} config info >/dev/null 2>&1
+      # - talosctl --context {{.cluster}} --nodes {{.nodes}} get machineconfig >/dev/null 2>&1
+
   # task talos:upgrade cluster=main node=k8s-1
   # task talos:upgrade cluster=staging node=stage-1
   upgrade:
     desc: Upgrade Talos version for a node
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
+        node: The node to upgrade
+    cmd: bash {{.TALOS_SCRIPTS_DIR}}/upgrade.sh "{{.cluster}}" "{{.node}}" "{{.TALOS_IMAGE}}" "{{.rollout}}"
+      # - echo "Upgrading node {{.node}}.{{.SECRET_TECH_DOMAIN_NAME}} on cluster {{.cluster}} to image {{.TALOS_IMAGE}}"
+      # - read -p "Press any key to resume ..."
+      # - talosctl --context {{.cluster}} upgrade -n {{.node}}.{{.SECRET_TECH_DOMAIN_NAME}} --image {{.TALOS_IMAGE}}
     vars:
+      rollout: '{{.rollout | default "false"}}'
       TALOS_VERSION:
         sh: |
           yq -r ".talosVersion" {{.KUBERNETES_DIR}}/{{.cluster}}/bootstrap/talos/talconfig.yaml
@@ -136,11 +204,6 @@ tasks:
             --config-file {{.KUBERNETES_DIR}}/{{.cluster}}/bootstrap/talos/talconfig.yaml \
           | grep {{.node}} \
           | awk '{split($0,u," "); print u[2]}'
-    cmds:
-      - echo "Upgrading node {{.node}}.{{.SECRET_TECH_DOMAIN_NAME}} on cluster {{.cluster}} to image {{.TALOS_IMAGE}}"
-      - read -p "Press any key to resume ..."
-      - talosctl --context {{.cluster}} upgrade -n {{.node}}.{{.SECRET_TECH_DOMAIN_NAME}} --image {{.TALOS_IMAGE }}
-
     requires:
       vars:
         - cluster
@@ -157,6 +220,13 @@ tasks:
   # task talos:upgrade-k8s cluster=staging
   upgrade-k8s:
     desc: Upgrade Kubernetes version for a Talos cluster
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
+    cmds:
+      - echo "Upgrading k8s on cluster {{.cluster}} to {{.KUBERNETES_VERSION}} via node {{.CONTROLPLANE_NODE}}"
+      - read -p "Press any key to resume ..."
+      - talosctl --context {{.cluster}} upgrade-k8s -n {{.CONTROLPLANE_NODE}} --to {{.KUBERNETES_VERSION}}
     vars:
       KUBERNETES_VERSION:
         sh: |
@@ -167,10 +237,6 @@ tasks:
           | grep Endpoints: \
           | awk '{split($0,u," "); print u[2]}' \
           | sed -E 's/,//'
-    cmds:
-      - echo "Upgrading k8s on cluster {{.cluster}} to {{.KUBERNETES_VERSION}} via node {{.CONTROLPLANE_NODE}}"
-      - read -p "Press any key to resume ..."
-      - talosctl --context {{.cluster}} upgrade-k8s -n {{.CONTROLPLANE_NODE}} --to {{.KUBERNETES_VERSION}}
     requires:
       vars:
         - cluster
