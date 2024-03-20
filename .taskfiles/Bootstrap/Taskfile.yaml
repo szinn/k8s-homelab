@@ -16,13 +16,11 @@ tasks:
       cluster: staging
     cmds:
       - task: :proxmox:reset-staging
-      - task: :talos:generate-config
-        vars:
-          cluster: staging
-      - task: :talos:apply-config
+      - task: :talos:bootstrap
         vars:
           cluster: staging
           nodes: stage-1 stage-2 stage-3 stage-4 stage-5 stage-6
+      - task: :proxmox:unmount-staging-cdrom
 
   nas:
     desc: "Bootstrap nas cluster"

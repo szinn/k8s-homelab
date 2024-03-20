@@ -18,3 +18,8 @@ spec:
   valuesFrom:
     - kind: ConfigMap
       name: kubelet-csr-approver-values
+  values:
+    metrics:
+      enable: true
+      serviceMonitor:
+        enabled: true

@@ -2,8 +2,8 @@
 autoDirectNodeRoutes: true
 
 cluster:
-  name: "staging"
-  id: "1"
+  name: staging
+  id: 1
 
 bgp:
   enabled: false
@@ -34,7 +34,7 @@ kubeProxyReplacement: strict
 kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
 k8sServiceHost: localhost
 k8sServicePort: 7445
-ipv4NativeRoutingCIDR: ${CONFIG_STAGING_POD_CIDR}
+ipv4NativeRoutingCIDR: 10.211.0.0/16
 
 loadBalancer:
   algorithm: random

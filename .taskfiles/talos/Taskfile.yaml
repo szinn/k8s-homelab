@@ -3,11 +3,34 @@
 version: "3"
 
 tasks:
+  bootstrap:
+    desc: Bootstrap the cluster
+    prompt: Bootstrap Talos on the '{{.cluster}}' cluster ... continue?
+    cmds:
+      - task: generate-config
+        vars:
+          cluster: '{{.cluster}}'
+      - task: apply-config
+        vars:
+          cluster: '{{.cluster}}'
+          nodes: '{{.nodes}}'
+      - task: bootstrap-etcd
+        vars:
+          cluster: '{{.cluster}}'
+      - task: bootstrap-apps
+        vars:
+          cluster: '{{.cluster}}'
+    requires:
+      vars:
+        - cluster
+        - nodes
+
   generate-config:
     desc: Generate Talos configurations
     dir: '{{.KUBERNETES_DIR}}/{{.cluster}}/bootstrap/talos'
     cmds:
       - talhelper genconfig --env-file talenv.sops.yaml --secret-file talsecret.sops.yaml --config-file talconfig.yaml
+      - cp ./clusterconfig/talosconfig ../..
     requires:
       vars:
         - cluster
@@ -25,15 +48,45 @@ tasks:
 
   bootstrap-etcd:
     desc: Bootstrap Etcd
-    dir: '{{.KUBERNETES_DIR}}/{{.cluster}}/bootstrap/talos'
-    prompt: Bootstrap Talos on the '{{.cluster}}' cluster... continue?
-    cmd: until talosctl --context {{.cluster}} --talosconfig ./clusterconfig/talosconfig --nodes {{.controller}} bootstrap; do sleep 10; done
-    # vars:
-    #   controller:
-    #     sh: talosctl --context {{.cluster}} --talosconfig ./clusterconfig/talosconfig config info --output json | jq --raw-output '.endpoints[0]'
+    cmd: until talosctl --context {{.cluster}} --talosconfig {{.KUBERNETES_DIR}}/{{.cluster}}/bootstrap/talos/clusterconfig/talosconfig --nodes {{.controller}} bootstrap; do sleep 10; done
+    vars:
+      controller:
+        sh: talosctl --context {{.cluster}} --talosconfig {{.KUBERNETES_DIR}}/{{.cluster}}/bootstrap/talos/clusterconfig/talosconfig config info --output json | jq --raw-output '.endpoints[0]'
     requires:
       vars:
         - cluster
+    preconditions:
+      - test -f {{.KUBERNETES_DIR}}/{{.cluster}}/talosconfig
+      - talosctl --context {{.cluster}} config info >/dev/null 2>&1
+
+  bootstrap-apps:
+    desc: Bootstrap core apps needed for Talos
+    cmds:
+      - until kubectl --context {{.cluster}} wait --for=condition=Ready=False nodes --all --timeout=10m; do sleep 10; done
+      - helmfile --quiet --kube-context {{.cluster}} --file {{.KUBERNETES_DIR}}/{{.cluster}}/bootstrap/talos/apps/helmfile.yaml apply --skip-diff-on-install --suppress-diff
+      - until kubectl --context {{.cluster}} wait --for=condition=Ready nodes --all --timeout=10m; do sleep 10; done
+    requires:
+      vars:
+        - cluster
+    preconditions:
+      - test -f {{.KUBERNETES_DIR}}/{{.cluster}}/talosconfig
+      - talosctl --context {{.cluster}} config info >/dev/null 2>&1
+      - test -f {{.KUBERNETES_DIR}}/{{.cluster}}/bootstrap/talos/apps/helmfile.yaml
+
+  fetch-kubeconfig:
+    desc: Fetch kubeconfig from Talos controllers
+    cmd: |
+      talosctl --context {{.cluster}} kubeconfig --nodes {{.controller}} \
+          --force --force-context-name {{.cluster}} {{.KUBERNETES_DIR}}/{{.cluster}}
+    vars:
+      controller:
+        sh: talosctl --context {{.cluster}} config info --output json | jq --raw-output '.endpoints[0]'
+    requires:
+      vars:
+        - cluster
+    preconditions:
+      - test -f {{.KUBERNETES_DIR}}/{{.cluster}}/talosconfig
+      - talosctl --context {{.cluster}} config info >/dev/null 2>&1
 
   # task talos:upgrade cluster=main node=k8s-1
   # task talos:upgrade cluster=staging node=stage-1

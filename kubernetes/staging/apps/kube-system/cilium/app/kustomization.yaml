@@ -4,10 +4,9 @@ kind: Kustomization
 namespace: kube-system
 resources:
   - helm-release.yaml
-  - lb-pool.yaml
 configMapGenerator:
-  - name: cilium-values
+  - name: cilium-helm-values
     files:
-      - values.yaml=./cilium-values.yaml
-generatorOptions:
-  disableNameSuffixHash: true
+      - values.yaml=./helm-values.yaml
+configurations:
+  - kustomizeconfig.yaml

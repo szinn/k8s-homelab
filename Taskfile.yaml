@@ -4,6 +4,9 @@ version: "3"
 vars:
   KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
 
+# env:
+#   KUBECONFIG: "./kubernetes/main/kubeconfig:./kubernetes/staging/kubeconfig:./kubernetes/nas/kubeconfig"
+
 includes:
   bootstrap: .taskfiles/Bootstrap/Taskfile.yaml
   proxmox: .taskfiles/Proxmox/Taskfile.yaml

@@ -27,6 +27,12 @@ tasks:
       - for: { var: ALL_VMS, split: ' ' }
         task: stop-vm-{{.ITEM}}
 
+  unmount-staging-cdrom:
+    desc: Unmount staging cluster CD-ROM drives
+    cmds:
+      - for: { var: ALL_VMS, split: ' ' }
+        task: unmount-cdrom-{{.ITEM}}
+
   destroy-staging:
     desc: Destroy staging cluster
     cmds:
@@ -56,6 +62,13 @@ tasks:
     cmds:
       - cmd: ssh ares -- qm stop {{.VMID_PREFIX}}{{.vmid}}
         ignore_error: true
+
+  unmount-cdrom-*-*-*:
+    internal: true
+    vars:
+      vmid: '{{index .MATCH 0}}'
+    cmds:
+      - cmd: ssh ares -- qm set {{.VMID_PREFIX}}{{.vmid}} -ide0 media=cdrom,file=none
 
   destroy-vm-*-*-*:
     internal: true
@@ -91,7 +104,6 @@ tasks:
             --net0 model=virtio,bridge=vmbr0,macaddr={{.mac}},mtu=1500,firewall=0,tag=12,queues=0,rate=0 \
             --start 1
       - cmd: ping -o -q {{.ip}}
-      - cmd: ssh ares -- qm set {{.VMID_PREFIX}}{{.vmid}} -ide0 media=cdrom,file=none
 
   create-worker-vm-*-*-*:
     internal: true
@@ -118,4 +130,3 @@ tasks:
             --net0 model=virtio,bridge=vmbr0,macaddr={{.mac}},mtu=1500,firewall=0,tag=12,queues=0,rate=0 \
             --start 1
       - cmd: ping -o -q {{.ip}}
-      - cmd: ssh ares -- qm set {{.VMID_PREFIX}}{{.vmid}} -ide0 media=cdrom,file=none
