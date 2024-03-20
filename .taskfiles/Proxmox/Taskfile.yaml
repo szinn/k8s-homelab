@@ -14,6 +14,7 @@ tasks:
     cmds:
       - task: destroy-staging
       - task: create-staging
+      - task: wait-for-startup
 
   start-staging:
     desc: Start staging cluster
@@ -46,6 +47,12 @@ tasks:
         task: create-cp-vm-{{.ITEM}}
       - for: { var: WORKER_VMS, split: ' ' }
         task: create-worker-vm-{{.ITEM}}
+
+  wait-for-startup:
+    internal: true
+    cmds:
+      - for: { var: ALL_VMS, split: ' ' }
+        task: wait-for-startup-{{.ITEM}}
 
   start-vm-*-*-*:
     internal: true
@@ -103,7 +110,6 @@ tasks:
             --scsi0 local-lvm:20 \
             --net0 model=virtio,bridge=vmbr0,macaddr={{.mac}},mtu=1500,firewall=0,tag=12,queues=0,rate=0 \
             --start 1
-      - cmd: ping -o -q {{.ip}}
 
   create-worker-vm-*-*-*:
     internal: true
@@ -129,4 +135,11 @@ tasks:
             --scsi1 local-lvm:100 \
             --net0 model=virtio,bridge=vmbr0,macaddr={{.mac}},mtu=1500,firewall=0,tag=12,queues=0,rate=0 \
             --start 1
-      - cmd: ping -o -q {{.ip}}
+
+  wait-for-startup-*-*-*:
+    internal: true
+    vars:
+      vmid: '{{index .MATCH 0}}'
+      mac: '{{index .MATCH 1}}'
+      ip: '{{index .MATCH 2}}'
+    cmd: ping -o -q {{.ip}}

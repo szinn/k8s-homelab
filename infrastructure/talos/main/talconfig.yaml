@@ -1,7 +1,7 @@
 ---
 clusterName: main
 talosVersion: v1.6.6
-kubernetesVersion: v1.29.1
+kubernetesVersion: v1.29.3
 endpoint: https://main.${SECRET_TECH_DOMAIN_NAME}:6443
 
 cniConfig:
