@@ -8,6 +8,11 @@ area/hack:
 area/infrastructure:
   - changed-files:
       - any-glob-to-any-file: "infrastructure/**/*"
+area/taskfile:
+  - changed-files:
+      - any-glob-to-any-file:
+          - ".taskfiles/**/*"
+          - "Taskfile.yaml"
 cluster/main:
   - changed-files:
       - any-glob-to-any-file: "kubernetes/main/**/*"
