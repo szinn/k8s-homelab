@@ -4,8 +4,8 @@ version: "3"
 vars:
   KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
 
-# env:
-#   KUBECONFIG: "./kubernetes/main/kubeconfig:./kubernetes/staging/kubeconfig:./kubernetes/nas/kubeconfig"
+env:
+  KUBECONFIG: "{{.KUBERNETES_DIR}}/main/kubeconfig:{{.KUBERNETES_DIR}}/staging/kubeconfig:{{.KUBERNETES_DIR}}/nas/kubeconfig"
 
 includes:
   bootstrap: .taskfiles/Bootstrap/Taskfile.yaml

@@ -3,3 +3,4 @@
 .decrypted*
 **/talosconfig
 **/kubeconfig
+**/wildcard-tls.yaml

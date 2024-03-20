@@ -12,8 +12,6 @@ tasks:
 
   staging:
     desc: "Bootstrap staging cluster"
-    vars:
-      cluster: staging
     cmds:
       - task: :proxmox:reset-staging
       - task: :talos:bootstrap
