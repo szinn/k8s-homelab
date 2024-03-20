@@ -11,7 +11,7 @@ echo "New Image: $NEW_IMAGE"
 echo "Rollout: $ROLLOUT"
 
 # Get the current machine image
-CURRENT_IMAGE="$(talosctl --context staging get  machineconfig -n $NODE -o json | jq -r '.spec.machine.install.image')"
+CURRENT_IMAGE="$(talosctl --context $CLUSTER get  machineconfig -n $NODE -o json | jq -r '.spec.machine.install.image')"
 echo "Current Image: $CURRENT_IMAGE"
 
 if test "$CURRENT_IMAGE" == "$NEW_IMAGE"; then
