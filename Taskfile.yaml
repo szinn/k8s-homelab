@@ -9,37 +9,19 @@ env:
 
 includes:
   bootstrap: .taskfiles/Bootstrap/Taskfile.yaml
+  flux: .taskfiles/Flux/Taskfile.yaml
+  format: .taskfiles/Format/Taskfile.yaml
+  kubernetes: .taskfiles/Kubernetes/Taskfile.yaml
+  postgres: .taskfiles/Postgres/Taskfile.yaml
+  pre-commit: .taskfiles/Pre-commit/Taskfile.yaml
   proxmox: .taskfiles/Proxmox/Taskfile.yaml
+  rook: .taskfiles/Rook/Taskfile.yaml
+  secrets: .taskfiles/Secrets/Taskfile.yaml
+  sops: .taskfiles/Sops/Taskfile.yaml
   talos: .taskfiles/Talos/Taskfile.yaml
-
-  es:
-    taskfile: .taskfiles/secrets
-  fmt:
-    taskfile: .taskfiles/format
-  fx:
-    taskfile: .taskfiles/flux
-  kub:
-    taskfile: .taskfiles/kubernetes
-  pc:
-    taskfile: .taskfiles/pre-commit
-  pg:
-    taskfile: .taskfiles/postgres
-  redis:
-    taskfile: .taskfiles/redis
-  rook:
-    taskfile: .taskfiles/rook
-  sops:
-    taskfile: .taskfiles/sops
-  vs:
-    taskfile: .taskfiles/volsync
+  volsync: .taskfiles/Volsync/Taskfile.yaml
 
 tasks:
-  secrets:
-    desc: Encode config and secrets
-    cmds:
-      - |
-        infrastructure/setup/build-config.sh
-
   default:
     silent: true
     cmds:

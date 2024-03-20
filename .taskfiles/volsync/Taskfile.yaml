@@ -19,7 +19,7 @@ env: &env
 
 vars:
   scriptsDir: "{{.ROOT_DIR}}/.taskfiles/_scripts"
-  templatesDir: "{{.ROOT_DIR}}/.taskfiles/volsync/templates"
+  templatesDir: "{{.ROOT_DIR}}/.taskfiles/Volsync/templates"
   ts: '{{now | date "150405"}}'
 
 tasks:

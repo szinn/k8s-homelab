@@ -3,7 +3,7 @@
 version: "3"
 
 vars:
-  dropDatabases: "{{.ROOT_DIR}}/.taskfiles/postgres/drop_databases.sql"
+  dropDatabases: "{{.ROOT_DIR}}/.taskfiles/Postgres/drop_databases.sql"
 
 tasks:
   down:
