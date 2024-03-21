@@ -7,4 +7,3 @@ resources:
   - dragonfly-operator/install.yaml
   - elasticsearch/install.yaml
   - pgadmin/install.yaml
-  # - redis/install.yaml
