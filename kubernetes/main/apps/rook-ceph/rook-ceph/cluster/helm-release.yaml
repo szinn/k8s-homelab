@@ -151,7 +151,7 @@ spec:
       deletionPolicy: Delete
 
     cephFileSystems:
-      - name: ceph-filesystem
+      - name: &cephFileSystemName ceph-filesystem
         spec:
           metadataPool:
             replicated:
@@ -163,7 +163,17 @@ spec:
           metadataServer:
             activeCount: 1
             activeStandby: true
-        storageClass:
+            priorityClassName: system-cluster-critical
+            placement:
+              topologySpreadConstraints:
+                - maxSkew: 1
+                  topologyKey: kubernetes.io/hostname
+                  whenUnsatisfiable: DoNotSchedule
+                  labelSelector:
+                    matchLabels:
+                      app.kubernetes.io/name: ceph-mds
+                      app.kubernetes.io/part-of: *cephFileSystemName
+          storageClass:
           enabled: true
           isDefault: false
           name: ceph-filesystem
