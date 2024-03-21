@@ -5,7 +5,7 @@ resources:
   - namespace.yaml
   - alertmanager-discord/install.yaml
   - grafana/install.yaml
-  - jaeger/install.yaml
+  # - jaeger/install.yaml
   - kube-prometheus-stack/install.yaml
   - kromgo/install.yaml
   - loki/install.yaml
