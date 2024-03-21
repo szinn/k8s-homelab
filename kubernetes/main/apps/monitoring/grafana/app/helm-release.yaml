@@ -125,6 +125,14 @@ spec:
               path: /var/lib/grafana/dashboards/default
             orgId: 1
             type: file
+          - name: "ceph"
+            orgId: 1
+            folder: "Ceph"
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/ceph
           - name: "cilium"
             orgId: 1
             folder: "Cilium"
@@ -174,6 +182,24 @@ spec:
             allowUiUpdates: true
             options:
               path: /var/lib/grafana/dashboards/system
+          - name: "teslamate`"
+            orgId: 1
+            folder: "Teslamate"
+            type: file
+            disableDeletion: false
+            editable: true
+            allowUiUpdates: true
+            options:
+              path: /var/lib/grafana/dashboards/teslamate
+          - name: "thanos`"
+            orgId: 1
+            folder: "Thanos"
+            type: file
+            disableDeletion: false
+            editable: true
+            allowUiUpdates: true
+            options:
+              path: /var/lib/grafana/dashboards/thanos
           - name: "unifi"
             orgId: 1
             folder: "Unifi"
@@ -301,6 +327,22 @@ spec:
           disableDelete: true
           foldersFromFilesStructure: true
     dashboards:
+      ceph:
+        ceph-cluster:
+          # renovate: depName="Ceph Cluster"
+          gnetId: 2842
+          revision: 17
+          datasource: Prometheus
+        ceph-osd:
+          # renovate: depName="Ceph - OSD (Single)"
+          gnetId: 5336
+          revision: 9
+          datasource: Prometheus
+        ceph-pools:
+          # renovate: depName="Ceph - Pools"
+          gnetId: 5342
+          revision: 9
+          datasource: Prometheus
       cilium:
         cilium-dashboard:
           url: https://raw.githubusercontent.com/cilium/cilium/v1.15.2/examples/kubernetes/main/addons/prometheus/files/grafana-dashboards/cilium-dashboard.json
@@ -312,6 +354,12 @@ spec:
           url: https://raw.githubusercontent.com/cilium/cilium/v1.15.2/examples/kubernetes/main/addons/prometheus/files/grafana-dashboards/hubble-dashboard.json
           datasource: Prometheus
       data:
+        cloudnative-pg:
+          url: https://github.com/cloudnative-pg/charts/blob/main/charts/cloudnative-pg/monitoring/grafana-dashboard.json
+          datasource: Prometheus
+        dragonfly:
+          url: https://raw.githubusercontent.com/dragonflydb/dragonfly/main/tools/local/monitoring/grafana/provisioning/dashboards/dashboard.json
+          datasource: Prometheus
         redis:
           gnetId: 14091
           revision: 1
@@ -372,6 +420,9 @@ spec:
           revision: 1
           datasource: Prometheus
       system:
+        cert-manager:
+          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/cert-manager/dashboards/cert-manager.json
+          datasource: Prometheus
         speedtest-exporter-hub:
           gnetId: 13665
           revision: 4
@@ -412,6 +463,89 @@ spec:
         zfs:
           gnetId: 7845
           revision: 4
+          datasource: Prometheus
+      teslamate:
+        battery-health:
+          url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/battery-health.json
+          datasource: TeslaMate
+        charge-level:
+          url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/charge-level.json
+          datasource: TeslaMate
+        charges:
+          url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/charges.json
+          datasource: TeslaMate
+        charging-stats:
+          url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/charging-stats.json
+          datasource: TeslaMate
+        drive-stats:
+          url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/drive-stats.json
+          datasource: TeslaMate
+        drives:
+          url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/drives.json
+          datasource: TeslaMate
+        efficiency:
+          url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/efficiency.json
+          datasource: TeslaMate
+        locations:
+          url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/locations.json
+          datasource: TeslaMate
+        milage:
+          url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/mileage.json
+          datasource: TeslaMate
+        overview:
+          url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/overview.json
+          datasource: TeslaMate
+        projected-range:
+          url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/projected-range.json
+          datasource: TeslaMate
+        states:
+          url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/states.json
+          datasource: TeslaMate
+        statistics:
+          url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/statistics.json
+          datasource: TeslaMate
+        timeline:
+          url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/timeline.json
+          datasource: TeslaMate
+        trip:
+          url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/trip.json
+          datasource: TeslaMate
+        updates:
+          url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/updates.json
+          datasource: TeslaMate
+        vampire-drain:
+          url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/vampire-drain.json
+          datasource: TeslaMate
+        visited:
+          url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/visited.json
+          datasource: TeslaMate
+      thanos:
+        thanos-bucket-replicate-dashboard:
+          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/bucket-replicate.json
+          datasource: Prometheus
+        thanos-compact-dashboard:
+          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/compact.json
+          datasource: Prometheus
+        thanos-overview-dashboard:
+          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/overview.json
+          datasource: Prometheus
+        thanos-query-dashboard:
+          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/query.json
+          datasource: Prometheus
+        thanos-query-frontend-dashboard:
+          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/query-frontend.json
+          datasource: Prometheus
+        thanos-receive-dashboard:
+          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/receive.json
+          datasource: Prometheus
+        thanos-rule-dashboard:
+          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/rule.json
+          datasource: Prometheus
+        thanos-sidecar-dashboard:
+          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/sidecar.json
+          datasource: Prometheus
+        thanos-store-dashboard:
+          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/store.json
           datasource: Prometheus
       unifi:
         # Ref: https://grafana.com/grafana/dashboards/11315

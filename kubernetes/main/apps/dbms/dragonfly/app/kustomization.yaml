@@ -4,14 +4,3 @@ kind: Kustomization
 namespace: dbms
 resources:
   - helm-release.yaml
-configMapGenerator:
-  - name: dragonfly-dashboard
-    files:
-      - dragonfly-dashboard.json=https://raw.githubusercontent.com/dragonflydb/dragonfly/main/tools/local/monitoring/grafana/provisioning/dashboards/dashboard.json
-generatorOptions:
-  disableNameSuffixHash: true
-  annotations:
-    kustomize.toolkit.fluxcd.io/substitute: disabled
-    grafana_folder: "Data"
-  labels:
-    grafana_dashboard: "true"
