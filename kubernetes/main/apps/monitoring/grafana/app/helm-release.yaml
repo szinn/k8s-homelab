@@ -384,27 +384,27 @@ spec:
         api-server:
           # renovate: depName="Kubernetes / System / API Server"
           gnetId: 15761
-          revision: 14
+          revision: 16
           datasource: Prometheus
         coredns:
           # renovate: depName="Kubernetes / System / CoreDNS"
           gnetId: 15762
-          revision: 13
+          revision: 17
           datasource: Prometheus
         global:
           # renovate: depName="Kubernetes / Views / Global"
           gnetId: 15757
-          revision: 31
+          revision: 37
           datasource: Prometheus
         namespaces:
           # renovate: depName="Kubernetes / Views / Namespaces"
           gnetId: 15758
-          revision: 27
+          revision: 34
           datasource: Prometheus
         nodes:
           # renovate: depName="Kubernetes / Views / Nodes"
           gnetId: 15759
-          revision: 19
+          revision: 29
           datasource: Prometheus
         pods:
           # renovate: depName="Kubernetes / Views / Pods"
@@ -446,7 +446,7 @@ spec:
         node-exporter-full:
           # renovate: depName="Node Exporter Full"
           gnetId: 1860
-          revision: 30
+          revision: 36
           datasource: Prometheus
         external-secrets:
           url: https://raw.githubusercontent.com/external-secrets/external-secrets/main/docs/snippets/dashboard.json
