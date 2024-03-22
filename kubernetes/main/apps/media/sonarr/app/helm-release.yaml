@@ -96,6 +96,14 @@ spec:
         className: nginx
         annotations:
           ingress.home.arpa/type: "internal"
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Media
+          gethomepage.dev/name: Sonarr
+          gethomepage.dev/icon: sonarr.png
+          gethomepage.dev/description: TV Downloads
+          gethomepage.dev/widget.type: sonarr
+          gethomepage.dev/widget.url: http://sonarr.media:8989
+          gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_SONARR_TOKEN}}"
         hosts:
           - host: "{{ .Release.Name }}.${SECRET_DOMAIN_NAME}"
             paths:

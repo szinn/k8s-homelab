@@ -99,6 +99,14 @@ spec:
             proxy_set_header Accept-Encoding "";
             sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.${SECRET_DOMAIN_NAME}/css/base/sabnzbd/nord.css"></head>';
             sub_filter_once on;
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Media
+          gethomepage.dev/name: SABnzbd
+          gethomepage.dev/icon: sabnzbd.png
+          gethomepage.dev/description: NZB Download Client
+          gethomepage.dev/widget.type: sabnzbd
+          gethomepage.dev/widget.url: http://sabnzbd.media
+          gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_SABNZBD_TOKEN}}"
         hosts:
           - host: "{{ .Release.Name }}.${SECRET_DOMAIN_NAME}"
             paths:

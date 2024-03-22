@@ -1,0 +1,168 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homepage-config
+  namespace: self-hosted
+  labels:
+    app.kubernetes.io/name: homepage
+data:
+  bookmarks.yaml: |
+    - Communicate:
+        - Discord:
+            - icon: discord.png
+              href: 'https://discord.com/app'
+        - Gmail:
+            - icon: gmail.png
+              href: 'http://gmail.com'
+        - Google Calendar:
+            - icon: google-calendar.png
+              href: 'https://calendar.google.com'
+        - Outlook:
+            - icon: https://raw.githubusercontent.com/joryirving/home-ops/main/.docs/icons/outlook.png
+              href: 'https://outlook.com'
+    - Media Links:
+        - YouTube:
+            - icon: youtube.png
+              href: 'https://youtube.com/feed/subscriptions'
+        - Spotify:
+            - icon: spotify.png
+              href: 'http://open.spotify.com'
+        - Youtube Music:
+            - icon: https://raw.githubusercontent.com/joryirving/home-ops/main/.docs/icons/youtube-music.png
+              href: 'https://music.youtube.com'
+    - Reading:
+        - Beyond:
+            - icon: https://raw.githubusercontent.com/joryirving/home-ops/main/.docs/icons/beyond.png
+              href: 'https://forums.beyond.ca/search.php?do=getnew&contenttype=vBForum_Post'
+        - Western Subaru Club:
+            - icon: https://raw.githubusercontent.com/joryirving/home-ops/main/.docs/icons/wsc.png
+              href: 'http://westernsubaruclub.com/smf/index.php?action=unread'
+        - Reddit:
+            - icon: reddit.png
+              href: 'https://reddit.com'
+    - Git:
+        - kubesearch:
+            - icon: kubernetes-dashboard.png
+              href: 'https://kubesearch.dev/'
+        - home-ops:
+            - icon: github.png
+              href: 'https://github.com/joryirving/home-ops'
+  docker.yaml: ""
+  kubernetes.yaml: |
+    mode: cluster
+  services.yaml: |
+    - Network:
+        - Cloudflared:
+            href: https://dash.cloudflare.com/
+            icon: cloudflare-zero-trust.png
+            description: Cloudflared Tunnel Status
+            widget:
+              type: cloudflared
+              accountid: {{HOMEPAGE_VAR_CLOUDFLARED_ACCOUNTID}}
+              tunnelid: {{HOMEPAGE_VAR_CLOUDFLARED_TUNNELID}}
+              key: {{HOMEPAGE_VAR_CLOUDFLARED_API_TOKEN}}
+              fields: ["status"]
+    - Calendar:
+        - Agenda:
+            widget:
+              type: calendar
+              view: agenda # optional - possible values monthly, agenda
+              maxEvents: 5 # optional - defaults to 10
+              integrations: # optional
+                - type: sonarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr>
+                  service_group: Media # group name where widget exists
+                  service_name: Sonarr # service name for that widget
+                - type: radarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr>
+                  service_group: Media # group name where widget exists
+                  service_name: Radarr # service name for that widget
+                - type: radarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr>
+                  service_group: Media # group name where widget exists
+                  service_name: Radarr-4k # service name for that widget
+  settings.yaml: |
+    title: Homelab
+    # background:
+    #   image: https://raw.githubusercontent.com/joryirving/home-ops/main/.docs/assets/101518784_p0.jpg
+    #   opacity: 20
+    favicon: https://github.com/walkxcode/dashboard-icons/blob/main/png/heimdall.png
+    theme: dark
+    color: slate
+    layout:
+      Network:
+        style: row
+        columns: 3
+        icon: mdi-network
+      Games:
+        style: row
+        columns: 2
+        icon: mdi-minecraft
+      Calendar:
+        style: column
+        icon: mdi-calendar
+      Video:
+        style: column
+        icon: mdi-play-circle
+      Books:
+        style: row
+        columns: 2
+        icon: mdi-book
+      Infrastructure:
+        style: row
+        columns: 5
+        icon: mdi-server
+      Observability:
+        style: row
+        columns:
+        icon: mdi-chart-line
+      Home:
+        style: row
+        columns: 5
+        icon: mdi-home-analytics
+      Media:
+        style: row
+        columns: 3
+        icon: mdi-download-circle
+    useEqualHeights: true
+    headerStyle: clean
+    quicklaunch:
+      searchDescriptions: true
+      hideInternetSearch: true
+      showSearchSuggestions: true
+      hideVisitURL: true
+  widgets.yaml: |
+    # - logo:
+    #     icon: https://raw.githubusercontent.com/joryirving/home-ops/main/.docs/icons/lds-transparent.png
+    - search:
+        provider: [google]
+        focus: false
+        target: _blank
+    # - greeting:
+    #     text_size: xl
+    #     text: "Howdy Hey!"
+    - kubernetes:
+        cluster:
+          cpu: true
+          memory: true
+          show: true
+          showLabel: true
+        nodes:
+          cpu: true
+          memory: true
+          show: false
+          showLabel: true
+    - openmeteo:
+        label: Home
+        latitude: {{HOMEPAGE_VAR_LATITUDE}}
+        longitude: {{HOMEPAGE_VAR_LONGITUDE}}
+        units: metric
+        cache: 5
+    # - datetime:
+    #     text_size: l
+    #     format:
+    #       timeStyle: short
+    #       dateStyle: short
+    #       hourCycle: h23
+    - unifi_console:
+        url: {{HOMEPAGE_VAR_UNIFI_URL}}
+        username: {{HOMEPAGE_VAR_UNIFI_USERNAME}}
+        password: {{HOMEPAGE_VAR_UNIFI_PASSWORD}}

@@ -97,6 +97,14 @@ spec:
         className: nginx
         annotations:
           ingress.home.arpa/type: "internal"
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Media
+          gethomepage.dev/name: Radarr
+          gethomepage.dev/icon: radarr.png
+          gethomepage.dev/description: Movie Downloads
+          gethomepage.dev/widget.type: radarr
+          gethomepage.dev/widget.url: http://radarr.media:7878
+          gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_RADARR_TOKEN}}"
         hosts:
           - host: "{{ .Release.Name }}.${SECRET_DOMAIN_NAME}"
             paths:
