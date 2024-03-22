@@ -446,7 +446,7 @@ spec:
         node-exporter-full:
           # renovate: depName="Node Exporter Full"
           gnetId: 1860
-          revision: 30
+          revision: 36
           datasource: Prometheus
         external-secrets:
           url: https://raw.githubusercontent.com/external-secrets/external-secrets/main/docs/snippets/dashboard.json
