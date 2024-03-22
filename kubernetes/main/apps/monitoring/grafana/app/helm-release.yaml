@@ -361,10 +361,12 @@ spec:
           url: https://raw.githubusercontent.com/dragonflydb/dragonfly/main/tools/local/monitoring/grafana/provisioning/dashboards/dashboard.json
           datasource: Prometheus
         redis:
+          # renovate: depName="Redis Exporter Quickstart and Dashboard"
           gnetId: 14091
           revision: 1
           datasource: Prometheus
         redis-sentinel:
+          # renovate: depName="Redis"
           gnetId: 12776
           revision: 2
           datasource: Redis
@@ -416,6 +418,7 @@ spec:
           datasource: Prometheus
       loki:
         loki-metrics:
+          # renovate: depName="Loki2.0 Global Metrics"
           gnetId: 13407
           revision: 1
           datasource: Prometheus
@@ -424,6 +427,7 @@ spec:
           url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/cert-manager/dashboards/cert-manager.json
           datasource: Prometheus
         speedtest-exporter-hub:
+          # renovate: depName="Speedtest-Exporter Dashboard"
           gnetId: 13665
           revision: 4
           datasource:
@@ -433,12 +437,14 @@ spec:
           url: https://grafana.com/api/dashboards/11074/revisions/9/download
           datasource: Prometheus
         cloudflared:
+          # renovate: depName="Cloudflare Tunnels (cloudflared)"
           gnetId: 17457 # https://grafana.com/grafana/dashboards/17457?tab=revisions
           revision: 6
           datasource:
             - name: DS_PROMETHEUS
               value: Prometheus
         node-exporter-full:
+          # renovate: depName="Node Exporter Full"
           gnetId: 1860
           revision: 30
           datasource: Prometheus
@@ -461,6 +467,7 @@ spec:
           datasource: Prometheus
         # Ref: https://grafana.com/grafana/dashboards/7845
         zfs:
+          # renovate: depName="ZFS"
           gnetId: 7845
           revision: 4
           datasource: Prometheus
@@ -548,23 +555,23 @@ spec:
           url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/store.json
           datasource: Prometheus
       unifi:
-        # Ref: https://grafana.com/grafana/dashboards/11315
         unifi-client-insights:
+          # renovate: depName="UniFi-Poller: Client Insights - Prometheus"
           gnetId: 11315
           revision: 9
           datasource: Prometheus
-        # Ref: https://grafana.com/grafana/dashboards/11311
         unifi-network-sites:
+          # renovate: depName="UniFi-Poller: Network Sites - Prometheus"
           gnetId: 11311
           revision: 5
           datasource: Prometheus
-        # Ref: https://grafana.com/grafana/dashboards/11314
         unifi-uap-insights:
+          # renovate: depName="UniFi-Poller: UAP Insights - Prometheus"
           gnetId: 11314
           revision: 10
           datasource: Prometheus
-        # Ref: https://grafana.com/grafana/dashboards/11312
         unifi-usw-insights:
+          # renovate: depName="UniFi-Poller: USW Insights - Prometheus"
           gnetId: 11312
           revision: 9
           datasource: Prometheus
