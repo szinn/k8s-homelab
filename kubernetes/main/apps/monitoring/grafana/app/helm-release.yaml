@@ -389,7 +389,7 @@ spec:
         coredns:
           # renovate: depName="Kubernetes / System / CoreDNS"
           gnetId: 15762
-          revision: 13
+          revision: 17
           datasource: Prometheus
         global:
           # renovate: depName="Kubernetes / Views / Global"
