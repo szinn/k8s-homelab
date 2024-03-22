@@ -35,6 +35,8 @@
   color: "ffc300"
 - name: renovate/github-release
   color: "ffc300"
+- name: renovate/grafana-dashboard
+  color: "ffc300"
 - name: renovate/helm
   color: "ffc300"
 - name: renovate/terraform
