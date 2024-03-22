@@ -31,7 +31,7 @@ spec:
           main:
             image:
               repository: ghcr.io/stirling-tools/s-pdf
-              tag: 0.22.3
+              tag: 0.22.4
               pullPolicy: IfNotPresent
     service:
       main:
