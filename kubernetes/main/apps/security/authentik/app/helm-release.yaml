@@ -18,12 +18,12 @@ spec:
   values:
     global:
       podAnnotations:
-        reloader.stakater.com/auto: "true"
+        secret.reloader.stakater.com/reload: &secret authentik-secret
       deploymentStrategy:
         type: RollingUpdate
       envFrom:
         - secretRef:
-            name: &secrets authentik-secret
+            name: *secret
     authentik:
       redis:
         host: dragonfly.dbms.svc.cluster.local
@@ -36,7 +36,7 @@ spec:
             pullPolicy: IfNotPresent
           envFrom:
             - secretRef:
-                name: *secrets
+                name: *secret
       autoscaling:
         enabled: true
         minReplicas: 1
