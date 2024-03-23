@@ -35,3 +35,9 @@ module "onepassword_google" {
   vault  = "Kubernetes"
   item   = "google-oauth"
 }
+
+module "onepassword_scotte" {
+  source = "github.com/bjw-s/terraform-1password-item?ref=main"
+  vault  = "Kubernetes"
+  item   = "scotte-credentials"
+}

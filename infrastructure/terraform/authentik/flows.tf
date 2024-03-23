@@ -1,11 +1,11 @@
 ## Authentication flow
 resource "authentik_flow" "authentication" {
   name               = "authentication-flow"
-  title              = "Welcome!"
+  title              = "Welcome to WilZinn World!"
   slug               = "authentication-flow"
   designation        = "authentication"
   policy_engine_mode = "all"
-  # background         = "https://placeholder.jpeg"
+  # background         = "/media/background.png"
 }
 
 resource "authentik_flow_stage_binding" "authentication-flow-binding-00" {
