@@ -1,11 +1,11 @@
 ---
 # yaml-language-server: $schema=https://taskfile.dev/schema.json
-version: '3'
+version: "3"
 
 vars:
   CP_VMS: 1-DE:CA:FF:10:12:10-10.12.0.16 2-DE:CA:FF:10:12:11-10.12.0.17 3-DE:CA:FF:10:12:12-10.12.0.18
   WORKER_VMS: 4-DE:CA:FF:10:12:13-10.12.0.19 5-DE:CA:FF:10:12:14-10.12.0.20 6-DE:CA:FF:10:12:15-10.12.0.21
-  ALL_VMS: '{{.CP_VMS}} {{.WORKER_VMS}}'
+  ALL_VMS: "{{.CP_VMS}} {{.WORKER_VMS}}"
   VMID_PREFIX: 20
 
 tasks:
@@ -19,45 +19,45 @@ tasks:
   start-staging:
     desc: Start staging cluster
     cmds:
-      - for: { var: ALL_VMS, split: ' ' }
+      - for: {var: ALL_VMS, split: " "}
         task: start-vm-{{.ITEM}}
 
   stop-staging:
     desc: Stop staging cluster
     cmds:
-      - for: { var: ALL_VMS, split: ' ' }
+      - for: {var: ALL_VMS, split: " "}
         task: stop-vm-{{.ITEM}}
 
   unmount-staging-cdrom:
     desc: Unmount staging cluster CD-ROM drives
     cmds:
-      - for: { var: ALL_VMS, split: ' ' }
+      - for: {var: ALL_VMS, split: " "}
         task: unmount-cdrom-{{.ITEM}}
 
   destroy-staging:
     desc: Destroy staging cluster
     cmds:
-      - for: { var: ALL_VMS, split: ' ' }
+      - for: {var: ALL_VMS, split: " "}
         task: destroy-vm-{{.ITEM}}
 
   create-staging:
     desc: Create staging cluster
     cmds:
-      - for: { var: CP_VMS, split: ' ' }
+      - for: {var: CP_VMS, split: " "}
         task: create-cp-vm-{{.ITEM}}
-      - for: { var: WORKER_VMS, split: ' ' }
+      - for: {var: WORKER_VMS, split: " "}
         task: create-worker-vm-{{.ITEM}}
 
   wait-for-startup:
     internal: true
     cmds:
-      - for: { var: ALL_VMS, split: ' ' }
+      - for: {var: ALL_VMS, split: " "}
         task: wait-for-startup-{{.ITEM}}
 
   start-vm-*-*-*:
     internal: true
     vars:
-      vmid: '{{index .MATCH 0}}'
+      vmid: "{{index .MATCH 0}}"
     cmds:
       - cmd: ssh ares -- qm start {{.VMID_PREFIX}}{{.vmid}}
         ignore_error: true
@@ -65,7 +65,7 @@ tasks:
   stop-vm-*-*-*:
     internal: true
     vars:
-      vmid: '{{index .MATCH 0}}'
+      vmid: "{{index .MATCH 0}}"
     cmds:
       - cmd: ssh ares -- qm stop {{.VMID_PREFIX}}{{.vmid}}
         ignore_error: true
@@ -73,14 +73,14 @@ tasks:
   unmount-cdrom-*-*-*:
     internal: true
     vars:
-      vmid: '{{index .MATCH 0}}'
+      vmid: "{{index .MATCH 0}}"
     cmds:
       - cmd: ssh ares -- qm set {{.VMID_PREFIX}}{{.vmid}} -ide0 media=cdrom,file=none
 
   destroy-vm-*-*-*:
     internal: true
     vars:
-      vmid: '{{index .MATCH 0}}'
+      vmid: "{{index .MATCH 0}}"
     cmds:
       - cmd: ssh ares -- qm stop {{.VMID_PREFIX}}{{.vmid}}
         ignore_error: true
@@ -90,9 +90,9 @@ tasks:
   create-cp-vm-*-*-*:
     internal: true
     vars:
-      vmid: '{{index .MATCH 0}}'
-      mac: '{{index .MATCH 1}}'
-      ip: '{{index .MATCH 2}}'
+      vmid: "{{index .MATCH 0}}"
+      mac: "{{index .MATCH 1}}"
+      ip: "{{index .MATCH 2}}"
     cmds:
       - cmd: |
           ssh ares -- qm create {{.VMID_PREFIX}}{{.vmid}} \
@@ -114,9 +114,9 @@ tasks:
   create-worker-vm-*-*-*:
     internal: true
     vars:
-      vmid: '{{index .MATCH 0}}'
-      mac: '{{index .MATCH 1}}'
-      ip: '{{index .MATCH 2}}'
+      vmid: "{{index .MATCH 0}}"
+      mac: "{{index .MATCH 1}}"
+      ip: "{{index .MATCH 2}}"
     cmds:
       - cmd: |
           ssh ares -- qm create {{.VMID_PREFIX}}{{.vmid}} \
@@ -139,7 +139,7 @@ tasks:
   wait-for-startup-*-*-*:
     internal: true
     vars:
-      vmid: '{{index .MATCH 0}}'
-      mac: '{{index .MATCH 1}}'
-      ip: '{{index .MATCH 2}}'
+      vmid: "{{index .MATCH 0}}"
+      mac: "{{index .MATCH 1}}"
+      ip: "{{index .MATCH 2}}"
     cmd: ping -o -q {{.ip}}

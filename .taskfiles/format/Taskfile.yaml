@@ -6,6 +6,8 @@ tasks:
   all:
     - task: markdown
     - task: yaml
+    - task: terraform
+
   markdown:
     desc: Format Markdown
     cmds:
@@ -17,6 +19,7 @@ tasks:
         --parser=markdown
         --write '*.md' '**/*.md'
     ignore_error: true
+
   yaml:
     desc: Format YAML
     cmds:
@@ -28,4 +31,10 @@ tasks:
         --parser=yaml
         --write '*.y*ml'
         '**/*.y*ml'
+    ignore_error: true
+
+  terraform:
+    desc: Format Terraform
+    cmds:
+      - terraform fmt -recursive
     ignore_error: true
