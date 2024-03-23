@@ -39,7 +39,7 @@ spec:
                 name: *secrets
       autoscaling:
         enabled: true
-        minReplicas: 2
+        minReplicas: 1
       metrics:
         prometheus:
           serviceMonitor:
@@ -55,4 +55,4 @@ spec:
     worker:
       autoscaling:
         enabled: true
-        minReplicas: 2
+        minReplicas: 1
