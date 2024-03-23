@@ -12,5 +12,9 @@ resource "authentik_user" "scotte" {
   name     = module.onepassword_scotte.fields.FULLNAME
   email    = module.onepassword_scotte.fields.EMAIL
   password = module.onepassword_scotte.fields.password
-  groups   = [data.authentik_group.admins.id, authentik_group.users.id]
+  groups   = [
+    data.authentik_group.admins.id,
+    authentik_group.users.id,
+    authentik_group.grafana_admins.id
+  ]
 }
