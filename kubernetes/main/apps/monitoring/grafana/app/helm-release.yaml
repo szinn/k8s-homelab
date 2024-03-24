@@ -54,32 +54,29 @@ spec:
       # GF_AUTH_GENERIC_OAUTH_API_URL: https://auth.${SECRET_DOMAIN_NAME}/api/oidc/userinfo
       # GF_AUTH_GENERIC_OAUTH_AUTH_URL: https://auth.${SECRET_DOMAIN_NAME}/api/oidc/authorization
       # GF_AUTH_GENERIC_OAUTH_TOKEN_URL: https://auth.${SECRET_DOMAIN_NAME}/api/oidc/token
-      
+
       GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: natel-discrete-panel,pr0ps-trackmap-panel,panodata-map-panel
       GF_SECURITY_ANGULAR_SUPPORT_ENABLED: true
     envFromSecrets:
       - name: grafana-secret
     grafana.ini:
+      analytics:
+        check_for_updates: false
+        check_for_plugin_updates: false
+        reporting_enabled: false
       auth:
-          signout_redirect_url: https://sso.${SECRET_DOMAIN_NAME}/application/o/grafana/end-session/
-          oauth_auto_login: true
+        signout_redirect_url: https://sso.${SECRET_DOMAIN_NAME}/application/o/grafana/end-session/
+        oauth_auto_login: true
       auth.generic_oauth:
-          name: authentik
-          enabled: true
-          scopes: "openid profile email"
-          auth_url: "https://sso.${SECRET_DOMAIN_NAME}/application/o/authorize/"
-          token_url: "https://sso.${SECRET_DOMAIN_NAME}/application/o/token/"
-          api_url: "https://sso.${SECRET_DOMAIN_NAME}/application/o/userinfo/"
-          # Optionally map user groups to Grafana roles
-          role_attribute_path: contains(groups, 'Grafana Admins') && 'Admin' || contains(groups, 'Grafana Editors') && 'Editor' || 'Viewer'
-      users:
-        auto_assign_org = true
-        auto_assign_org_id = 1
+        name: authentik
+        enabled: true
+        scopes: "openid profile email"
+        auth_url: "https://sso.${SECRET_DOMAIN_NAME}/application/o/authorize/"
+        token_url: "https://sso.${SECRET_DOMAIN_NAME}/application/o/token/"
+        api_url: "https://sso.${SECRET_DOMAIN_NAME}/application/o/userinfo/"
+        role_attribute_path: contains(groups, 'Grafana Admins') && 'Admin' || contains(groups, 'Grafana Editors') && 'Editor' || 'Viewer'
       # Authelia
-      # # default:
-      # #   force_migration: true
       # auth:
-      #   # signout_redirect_url: https://auth.${SECRET_DOMAIN_NAME}/logout
       #   oauth_auto_login: true
       #   oauth_allow_insecure_email_lookup: true
       # auth.generic_oauth:
@@ -127,10 +124,9 @@ spec:
         cookie_samesite: grafana
       server:
         root_url: https://grafana.${SECRET_DOMAIN_NAME}
-      analytics:
-        check_for_updates: false
-        check_for_plugin_updates: false
-        reporting_enabled: false
+      users:
+        auto_assign_org: true
+        auto_assign_org_id: 1
     dashboardProviders:
       dashboardproviders.yaml:
         apiVersion: 1

@@ -1,3 +1,11 @@
+data "authentik_flow" "default-source-authentication" {
+  slug = "default-source-authentication"
+}
+
+data "authentik_flow" "default-provider-authorization-implicit-consent" {
+  slug = "default-provider-authorization-implicit-consent"
+}
+
 ## Authentication flow
 resource "authentik_flow" "authentication" {
   name               = "authentication-flow"
@@ -143,16 +151,4 @@ resource "authentik_flow" "provider-authorization-implicit-consent" {
   denied_action      = "message_continue"
   designation        = "authorization"
   # background         = "https://placeholder.jpeg"
-}
-
-data "authentik_flow" "default-source-authentication" {
-  slug = "default-source-authentication"
-}
-
-data "authentik_flow" "default-source-enrollment" {
-  slug = "default-source-enrollment"
-}
-
-data "authentik_flow" "default-provider-authorization-implicit-consent" {
-  slug = "default-provider-authorization-implicit-consent"
 }

@@ -17,27 +17,3 @@ module "onepassword_authentik" {
   vault  = "Kubernetes"
   item   = "authentik"
 }
-
-module "onepassword_discord" {
-  source = "github.com/bjw-s/terraform-1password-item?ref=main"
-  vault  = "Kubernetes"
-  item   = "discord"
-}
-
-module "onepassword_twitter" {
-  source = "github.com/bjw-s/terraform-1password-item?ref=main"
-  vault  = "Kubernetes"
-  item   = "twitter"
-}
-
-module "onepassword_google" {
-  source = "github.com/bjw-s/terraform-1password-item?ref=main"
-  vault  = "Kubernetes"
-  item   = "google-oauth"
-}
-
-module "onepassword_scotte" {
-  source = "github.com/bjw-s/terraform-1password-item?ref=main"
-  vault  = "Kubernetes"
-  item   = "scotte-credentials"
-}

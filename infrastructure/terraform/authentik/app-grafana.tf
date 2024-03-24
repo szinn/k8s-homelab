@@ -5,14 +5,15 @@ module "onepassword_grafana" {
 }
 
 resource "authentik_provider_oauth2" "grafana" {
-  name          = "Grafana"
+  name                  = "Grafana"
+  access_token_validity = "hours=4"
 
   client_id     = module.onepassword_grafana.fields.AUTHENTIK_CLIENT_ID
   client_secret = module.onepassword_grafana.fields.AUTHENTIK_CLIENT_SECRET
 
-  authorization_flow  = data.authentik_flow.default-provider-authorization-implicit-consent.id
+  authorization_flow = data.authentik_flow.default-provider-authorization-implicit-consent.id
 
-  redirect_uris = [module.onepassword_grafana.fields.AUTHENTIK_GRAFANA_URL]
+  redirect_uris = ["https://grafana.${local.cluster_domain}/login/generic_oauth"]
 
   property_mappings = [
     data.authentik_scope_mapping.scope-email.id,
@@ -25,20 +26,23 @@ resource "authentik_application" "grafana" {
   name              = "Grafana"
   slug              = "grafana"
   protocol_provider = authentik_provider_oauth2.grafana.id
+  group             = authentik_group.infrastructure.name
+  open_in_new_tab   = true
 
-  meta_launch_url = module.onepassword_grafana.fields.AUTHENTIK_GRAFANA_URL
+  meta_icon       = "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/grafana.png"
+  meta_launch_url = "https://grafana.${local.cluster_domain}/login/generic_oauth"
 }
 
 resource "authentik_group" "grafana_admins" {
-  name    = "Grafana Admins"
+  name = "Grafana Admins"
 }
 
 resource "authentik_group" "grafana_editors" {
-  name    = "Grafana Editors"
+  name = "Grafana Editors"
 }
 
 resource "authentik_group" "grafana_viewers" {
-  name    = "Grafana Viewers"
+  name = "Grafana Viewers"
 }
 
 resource "authentik_policy_binding" "grafana-access-admin" {

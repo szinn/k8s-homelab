@@ -1,27 +1,8 @@
-##Oauth
-# resource "authentik_source_oauth" "discord" {
-#   name                = "Discord"
-#   slug                = "discord"
-#   authentication_flow = data.authentik_flow.default-source-authentication.id
-#   enrollment_flow     = authentik_flow.enrollment-invitation.uuid
-#   user_matching_mode  = "email_deny"
-
-#   provider_type   = "discord"
-#   consumer_key    = module.onepassword_discord.fields.DISCORD_BOT_ID
-#   consumer_secret = module.onepassword_discord.fields.DISCORD_TOKEN
-# }
-
-# resource "authentik_source_oauth" "twitter" {
-#   name                = "Twitter"
-#   slug                = "twitter"
-#   authentication_flow = data.authentik_flow.default-source-authentication.id
-#   enrollment_flow     = authentik_flow.enrollment-invitation.uuid
-#   user_matching_mode  = "email_deny"
-
-#   provider_type   = "twitter"
-#   consumer_key    = module.onepassword_twitter.fields.CLIENT_ID
-#   consumer_secret = module.onepassword_twitter.fields.CLIENT_SECRET
-# }
+module "onepassword_google" {
+  source = "github.com/bjw-s/terraform-1password-item?ref=main"
+  vault  = "Kubernetes"
+  item   = "google-oauth"
+}
 
 resource "authentik_source_oauth" "google" {
   name                = "Google"
