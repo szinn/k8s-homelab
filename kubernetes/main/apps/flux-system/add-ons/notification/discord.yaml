@@ -11,7 +11,7 @@ spec:
     name: discord-secrets
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/notification.toolkit.fluxcd.io/alert_v1beta2.json
-apiVersion: notification.toolkit.fluxcd.io/v1beta2
+apiVersion: notification.toolkit.fluxcd.io/v1beta3
 kind: Alert
 metadata:
   name: cluster-alert
