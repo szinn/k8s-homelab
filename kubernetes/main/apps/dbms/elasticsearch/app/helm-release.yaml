@@ -50,7 +50,7 @@ spec:
           main:
             image:
               repository: elasticsearch
-              tag: 8.12.2
+              tag: 8.13.0@sha256:dfea2aae6f142ad2ee4c71011a2fc185882f92c468b20e6f9433ca8dfe9e00ab
             env:
               TZ: "${CONFIG_TIMEZONE}"
               xpack.security.enabled: "false"
