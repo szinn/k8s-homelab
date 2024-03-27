@@ -3,10 +3,7 @@
   "packageRules": [
     {
       "description": ["Loose versioning for non-semver packages"],
-      "matchDatasources": [
-        "docker",
-        "github-releases"
-      ],
+      "matchDatasources": ["docker", "github-releases"],
       "versioning": "loose",
       "matchPackagePatterns": ["changedetection", "plex", "qbittorrent"]
     },
@@ -35,9 +32,18 @@
       "matchPackagePatterns": ["minio"]
     },
     {
-      "description": ["Don't pin digests for app-template"],
+      "description": [
+        "Don't pin digests for packages that don't have a digest"
+      ],
       "matchDatasources": ["docker"],
-      "matchPackageNames": ["ghcr.io/bjw-s/helm/app-template", "ghcr.io/fluxcd/flux-manifests"],
+      "matchPackageNames": ["ghcr.io/bjw-s/helm/app-template"],
+      "pinDigests": false
+    },
+    {
+      "description": [
+        "Don't pin digests for packages that don't have a digest"
+      ],
+      "matchManagers": ["flux"],
       "pinDigests": false
     }
   ]
