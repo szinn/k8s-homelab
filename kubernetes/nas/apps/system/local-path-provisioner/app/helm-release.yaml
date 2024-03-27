@@ -63,7 +63,7 @@ spec:
 
     node:
       driver:
-        image: ghcr.io/democratic-csi/democratic-csi:v1.8.4
+        image: ghcr.io/democratic-csi/democratic-csi:v1.9.0@sha256:cc0b51dd9eda5762e5ca5707e8c233e3fa47d2d870aa92f9ba6acacd37679b58
         extraVolumeMounts:
           - name: local-hostpath
             mountPath: *storagePath
