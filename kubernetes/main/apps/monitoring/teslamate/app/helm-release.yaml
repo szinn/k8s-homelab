@@ -36,7 +36,7 @@ spec:
           init-db:
             image:
               repository: ghcr.io/onedr0p/postgres-init
-              tag: 16.2
+              tag: 16.2@sha256:930a20e3ea8c82504d8e80f413d042d9936930d625fb098dd306b5aad427a151
               pullPolicy: Always
             envFrom:
               - secretRef:
@@ -45,7 +45,7 @@ spec:
           main:
             image:
               repository: teslamate/teslamate
-              tag: 1.28.5
+              tag: 1.28.5@sha256:aa3f37ecccc7ea77fa1e259391c8f2a05533e208228a42ebb4dbe560828db057
             env:
               TZ: ${CONFIG_TIMEZONE}
               DISABLE_MQTT: "true"

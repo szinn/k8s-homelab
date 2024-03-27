@@ -36,7 +36,7 @@ spec:
           main:
             image:
               repository: docker.io/rogerrum/alertmanager-discord
-              tag: 1.0.6
+              tag: 1.0.6@sha256:cfa615f24b7ec778ad0841c69527f798e713dfcadb7d7964dbe5b1821c767ebb
             env:
               TZ: ${CONFIG_TIMEZONE}
               VERBOSE: ON
