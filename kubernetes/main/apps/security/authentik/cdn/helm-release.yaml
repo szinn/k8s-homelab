@@ -41,6 +41,9 @@ spec:
               - server
             env:
               RUST_LOG: trace
+            envFrom:
+              - secretRef:
+                  name: sso-cdn-secret
     service:
       main:
         controller: main
