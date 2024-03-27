@@ -26,14 +26,5 @@
   },
   "kubernetes": {
     "fileMatch": ["kubernetes/.+\\.ya?ml$"]
-  },
-  "lockFileMaintenance": {
-    "enabled": true,
-    "schedule": [
-      "before 11pm"
-    ]
-  },
-  "nix": {
-    "enabled": true
   }
 }
