@@ -46,7 +46,7 @@ spec:
           init-db:
             image:
               repository: ghcr.io/onedr0p/postgres-init
-              tag: 16.2
+              tag: 16.2@sha256:930a20e3ea8c82504d8e80f413d042d9936930d625fb098dd306b5aad427a151
               pullPolicy: IfNotPresent
             envFrom:
               - secretRef:
@@ -55,7 +55,7 @@ spec:
           main:
             image:
               repository: ghcr.io/authelia/authelia
-              tag: 4.38.6
+              tag: 4.38.6@sha256:06e3153d46b4b6fdb90caf94f2303ab57773016ad025eacd64e00a5576105bbe
             env:
               TZ: ${CONFIG_TIMEZONE}
               AUTHELIA_AUTHENTICATION_BACKEND_LDAP_ADDITIONAL_GROUPS_DN: "ou=groups"

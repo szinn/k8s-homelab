@@ -31,7 +31,7 @@ spec:
           rbac-proxy:
             image:
               repository: gcr.io/kubebuilder/kube-rbac-proxy
-              tag: v0.15.0
+              tag: v0.15.0@sha256:d8cc6ffb98190e8dd403bfe67ddcb454e6127d32b87acc237b3e5240f70a20fb
             args:
               - "--secure-listen-address=0.0.0.0:8443"
               - "--upstream=http://127.0.0.1:8080/"
@@ -51,7 +51,7 @@ spec:
           app:
             image:
               repository: docker.dragonflydb.io/dragonflydb/operator
-              tag: v1.1.1
+              tag: v1.1.1@sha256:73db24768f5b652a408b864875e367979e539fe543b3c83771be61f282f34d89
             args:
               - "--health-probe-bind-address=:8081"
               - "--metrics-bind-address=127.0.0.1:8080"

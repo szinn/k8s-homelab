@@ -45,7 +45,7 @@ spec:
           01-init-db:
             image:
               repository: ghcr.io/onedr0p/postgres-init
-              tag: 16.2
+              tag: 16.2@sha256:930a20e3ea8c82504d8e80f413d042d9936930d625fb098dd306b5aad427a151
               pullPolicy: IfNotPresent
             envFrom:
               - secretRef:
@@ -54,7 +54,7 @@ spec:
           main:
             image:
               repository: ghcr.io/lldap/lldap
-              tag: v0.5.0
+              tag: v0.5.0@sha256:f0f5d92cd6c6dca9415993cfc57919f0618e87090b323a98c1536975860fa45a
             env:
               TZ: ${CONFIG_TIMEZONE}
               LLDAP_HTTP_PORT: &http-port 80
