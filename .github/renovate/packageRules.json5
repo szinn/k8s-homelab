@@ -36,7 +36,11 @@
         "Don't pin digests for packages that don't have a digest"
       ],
       "matchDatasources": ["docker"],
-      "matchPackageNames": ["ghcr.io/bjw-s/helm/app-template"],
+      "matchPackageNames": [
+        "ghcr.io/bjw-s/helm/app-template",
+        "ghcr.io/cloudnative-pg/postgresql",
+        "ghcr.io/siderolabs/installer"
+      ],
       "pinDigests": false
     },
     {
