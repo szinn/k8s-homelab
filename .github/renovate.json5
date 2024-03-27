@@ -13,6 +13,7 @@
   ],
   "ignorePaths": [
     "kubernetes/main/apps/media/recyclarr/app/config/recyclarr.yaml",
+    "kubernetes/staging/cluster/repositories/**",
     "**/archive/**",
     "**/*.sops.*"
   ],
