@@ -35,7 +35,7 @@ spec:
           main:
             image:
               repository: ghcr.io/szinn/s3-cdn
-              tag: latest@sha256:c237637eab22d7f0605b8c48066bc2b91f302de87f8a3d0c5d4140aeed07f593
+              tag: 0.2.0
               pullPolicy: Always
             args:
               - server
@@ -55,7 +55,7 @@ spec:
         enabled: true
         className: nginx
         annotations:
-          ingress.home.arpa/type: "internal"
+          ingress.home.arpa/type: external
         hosts:
           - host: "{{ .Release.Name }}.${SECRET_DOMAIN_NAME}"
             paths:
