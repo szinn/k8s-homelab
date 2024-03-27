@@ -89,12 +89,4 @@ spec:
         limits:
           memory: 463M
     defaultBackend:
-      enabled: true
-      image:
-        repository: ghcr.io/tarampampam/error-pages
-        tag: 2.27.0
-      extraEnvs:
-        - name: TEMPLATE_NAME
-          value: i-said-random
-        - name: SHOW_DETAILS
-          value: "true"
+      enabled: false
