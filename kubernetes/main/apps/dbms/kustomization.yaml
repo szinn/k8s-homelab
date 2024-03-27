@@ -5,5 +5,4 @@ resources:
   - namespace.yaml
   - cloudnative-pg/install.yaml
   - dragonfly-operator/install.yaml
-  # - elasticsearch/install.yaml
   - pgadmin/install.yaml
