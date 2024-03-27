@@ -33,7 +33,7 @@
     },
     {
       "description": [
-        "Don't pin digests for packages that don't have a digest"
+        "Don't pin digests for packages that don't have/need a digest"
       ],
       "matchDatasources": ["docker"],
       "matchPackageNames": [
