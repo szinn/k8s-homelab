@@ -33,6 +33,12 @@
       "matchDatasources": ["docker"],
       "versioning": "regex:^RELEASE\\.(?<major>\\d+)-(?<minor>\\d+)-(?<patch>\\d+)T.*Z$",
       "matchPackagePatterns": ["minio"]
+    },
+    {
+      "description": ["Don't pin digests for app-template"],
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["ghcr.io/bjw-s/helm/app-template"],
+      "pinDigests": false
     }
   ]
 }
