@@ -6,6 +6,7 @@ metadata:
   name: self-hosted-wikijs
   namespace: flux-system
 spec:
+  targetNamespace: self-hosted
   path: ./kubernetes/main/apps/self-hosted/wikijs/app
   sourceRef:
     kind: GitRepository

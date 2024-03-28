@@ -6,6 +6,7 @@ metadata:
   name: self-hosted-shlink
   namespace: flux-system
 spec:
+  targetNamespace: self-hosted
   path: ./kubernetes/main/apps/self-hosted/shlink
   sourceRef:
     kind: GitRepository

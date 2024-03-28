@@ -6,10 +6,10 @@ metadata:
   name: self-hosted-changedetection
   namespace: flux-system
 spec:
+  targetNamespace: self-hosted
   commonMetadata:
     labels:
       app.kubernetes.io/name: &app changedetection
-  targetNamespace: self-hosted
   path: ./kubernetes/main/apps/self-hosted/changedetection/app
   sourceRef:
     kind: GitRepository
