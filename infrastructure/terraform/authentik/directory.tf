@@ -27,6 +27,7 @@ resource "authentik_user" "scotte" {
     data.authentik_group.admins.id,
     authentik_group.users.id,
     authentik_group.grafana_admins.id,
+    authentik_group.wikijs_family.id,
   ]
 }
 
@@ -43,5 +44,6 @@ resource "authentik_user" "sophie" {
   password = module.onepassword_sophie.fields.password
   groups = [
     authentik_group.users.id,
+    authentik_group.wikijs_family.id,
   ]
 }
