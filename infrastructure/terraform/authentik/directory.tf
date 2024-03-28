@@ -12,6 +12,11 @@ resource "authentik_group" "infrastructure" {
   is_superuser = false
 }
 
+resource "authentik_group" "applications" {
+  name         = "Applications"
+  is_superuser = false
+}
+
 module "onepassword_scotte" {
   source = "github.com/bjw-s/terraform-1password-item?ref=main"
   vault  = "Kubernetes"
@@ -28,6 +33,7 @@ resource "authentik_user" "scotte" {
     authentik_group.users.id,
     authentik_group.grafana_admins.id,
     authentik_group.wikijs_family.id,
+    authentik_group.hades_user.id,
   ]
 }
 

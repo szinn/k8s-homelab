@@ -26,7 +26,7 @@ resource "authentik_application" "wikijs" {
   name              = "Wiki"
   slug              = "wikijs"
   protocol_provider = authentik_provider_oauth2.wikijs.id
-  group             = authentik_group.infrastructure.name
+  group             = authentik_group.applications.name
   open_in_new_tab   = true
 
   meta_icon       = "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/wikijs.png"
