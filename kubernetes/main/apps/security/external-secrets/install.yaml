@@ -6,6 +6,7 @@ metadata:
   name: security-external-secrets
   namespace: flux-system
 spec:
+  targetNamespace: security
   path: ./kubernetes/main/apps/security/external-secrets/app
   sourceRef:
     kind: GitRepository
@@ -25,6 +26,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
+  targetNamespace: security
   path: ./kubernetes/main/apps/security/external-secrets/stores
   sourceRef:
     kind: GitRepository

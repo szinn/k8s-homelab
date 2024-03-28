@@ -6,6 +6,7 @@ metadata:
   name: security-lldap
   namespace: flux-system
 spec:
+  targetNamespace: security
   path: ./kubernetes/main/apps/security/lldap/app
   sourceRef:
     kind: GitRepository

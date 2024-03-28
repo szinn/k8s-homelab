@@ -6,6 +6,7 @@ metadata:
   name: security-authelia
   namespace: flux-system
 spec:
+  targetNamespace: security
   path: ./kubernetes/main/apps/security/authelia/app
   sourceRef:
     kind: GitRepository
