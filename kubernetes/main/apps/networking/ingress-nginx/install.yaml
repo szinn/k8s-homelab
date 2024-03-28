@@ -8,6 +8,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
+  targetNamespace: networking
   path: ./kubernetes/main/apps/networking/ingress-nginx/app
   sourceRef:
     kind: GitRepository
@@ -29,6 +30,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
+  targetNamespace: networking
   path: ./kubernetes/main/apps/networking/ingress-nginx/add-ons
   sourceRef:
     kind: GitRepository

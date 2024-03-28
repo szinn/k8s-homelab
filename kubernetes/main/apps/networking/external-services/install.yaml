@@ -6,6 +6,7 @@ metadata:
   name: networking-external-services
   namespace: flux-system
 spec:
+  targetNamespace: networking
   path: ./kubernetes/main/apps/networking/external-services
   sourceRef:
     kind: GitRepository

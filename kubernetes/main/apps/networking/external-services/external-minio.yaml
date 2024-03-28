@@ -3,7 +3,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: minio
-  namespace: networking
 spec:
   ports:
     - protocol: TCP
@@ -14,7 +13,6 @@ apiVersion: discovery.k8s.io/v1
 kind: EndpointSlice
 metadata:
   name: minio
-  namespace: networking
   labels:
     kubernetes.io/service-name: minio
 addressType: IPv4
@@ -31,7 +29,6 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: &app minio
-  namespace: networking
   labels:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app

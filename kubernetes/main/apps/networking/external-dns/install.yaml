@@ -6,6 +6,7 @@ metadata:
   name: networking-external-dns-cloudflare
   namespace: flux-system
 spec:
+  targetNamespace: networking
   path: ./kubernetes/main/apps/networking/external-dns/cloudflare
   sourceRef:
     kind: GitRepository
@@ -27,6 +28,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
+  targetNamespace: networking
   path: "./kubernetes/main/apps/networking/external-dns/bind"
   sourceRef:
     kind: GitRepository
