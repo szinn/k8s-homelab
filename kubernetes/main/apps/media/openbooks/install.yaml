@@ -6,10 +6,10 @@ metadata:
   name: media-openbooks
   namespace: flux-system
 spec:
+  targetNamespace: media
   commonMetadata:
     labels:
       app.kubernetes.io/name: &app openbooks
-  targetNamespace: media
   path: ./kubernetes/main/apps/media/openbooks/app
   sourceRef:
     kind: GitRepository

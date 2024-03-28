@@ -4,7 +4,6 @@ apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
   name: immich
-  namespace: media
   annotations:
     kyverno.io/ignore: "true"
 spec:

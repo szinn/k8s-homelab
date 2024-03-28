@@ -6,10 +6,10 @@ metadata:
   name: media-prowlarr
   namespace: flux-system
 spec:
+  targetNamespace: media
   commonMetadata:
     labels:
       app.kubernetes.io/name: &app prowlarr
-  targetNamespace: media
   path: ./kubernetes/main/apps/media/prowlarr/app
   sourceRef:
     kind: GitRepository

@@ -6,10 +6,10 @@ metadata:
   name: media-calibre-web
   namespace: flux-system
 spec:
+  targetNamespace: media
   commonMetadata:
     labels:
       app.kubernetes.io/name: &app calibre-web
-  targetNamespace: media
   path: "./kubernetes/main/apps/media/calibre-web/app"
   sourceRef:
     kind: GitRepository

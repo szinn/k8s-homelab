@@ -6,10 +6,10 @@ metadata:
   name: media-radarr
   namespace: flux-system
 spec:
+  targetNamespace: media
   commonMetadata:
     labels:
       app.kubernetes.io/name: &app radarr
-  targetNamespace: media
   path: ./kubernetes/main/apps/media/radarr
   sourceRef:
     kind: GitRepository

@@ -6,10 +6,10 @@ metadata:
   name: media-qbittorrent
   namespace: flux-system
 spec:
+  targetNamespace: media
   commonMetadata:
     labels:
       app.kubernetes.io/name: &app qbittorrent
-  targetNamespace: media
   path: ./kubernetes/main/apps/media/qbittorrent/app
   sourceRef:
     kind: GitRepository
