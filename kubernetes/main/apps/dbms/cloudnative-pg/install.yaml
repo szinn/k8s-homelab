@@ -6,6 +6,7 @@ metadata:
   name: dbms-cloudnative-pg
   namespace: flux-system
 spec:
+  targetNamespace: dbms
   path: ./kubernetes/main/apps/dbms/cloudnative-pg/cloudnative-pg
   sourceRef:
     kind: GitRepository
@@ -25,6 +26,7 @@ metadata:
   name: dbms-cloudnative-pg-cluster
   namespace: flux-system
 spec:
+  targetNamespace: dbms
   path: ./kubernetes/main/apps/dbms/cloudnative-pg/cluster
   sourceRef:
     kind: GitRepository
@@ -44,6 +46,7 @@ metadata:
   name: dbms-cloudnative-pg-backup
   namespace: flux-system
 spec:
+  targetNamespace: dbms
   path: ./kubernetes/main/apps/dbms/cloudnative-pg/backup
   sourceRef:
     kind: GitRepository

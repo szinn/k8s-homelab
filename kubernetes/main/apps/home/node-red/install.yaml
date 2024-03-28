@@ -6,10 +6,10 @@ metadata:
   name: home-node-red
   namespace: flux-system
 spec:
+  targetNamespace: home
   commonMetadata:
     labels:
       app.kubernetes.io/name: &app node-red
-  targetNamespace: home
   path: ./kubernetes/main/apps/home/node-red/app
   sourceRef:
     kind: GitRepository

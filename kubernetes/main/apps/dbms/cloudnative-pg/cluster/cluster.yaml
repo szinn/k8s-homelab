@@ -4,7 +4,6 @@ apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
   name: postgres
-  namespace: dbms
   annotations:
     kyverno.io/ignore: "true"
   labels:

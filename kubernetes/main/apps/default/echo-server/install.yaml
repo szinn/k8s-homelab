@@ -8,6 +8,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
+  targetNamespace: default
   path: "./kubernetes/main/apps/default/echo-server/app"
   sourceRef:
     kind: GitRepository

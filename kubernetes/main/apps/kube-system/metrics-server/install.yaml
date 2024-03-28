@@ -6,6 +6,7 @@ metadata:
   name: kube-system-metrics-server
   namespace: flux-system
 spec:
+  targetNamespace: kube-system
   path: ./kubernetes/main/apps/kube-system/metrics-server/app
   sourceRef:
     kind: GitRepository

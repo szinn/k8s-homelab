@@ -6,7 +6,8 @@ metadata:
   name: dev-kubernetes-schemas
   namespace: flux-system
 spec:
-  path: "./kubernetes/main/apps/dev/kubernetes-schemas/app"
+  targetNamespace: dev
+  path: ./kubernetes/main/apps/dev/kubernetes-schemas/app
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes

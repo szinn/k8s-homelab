@@ -7,6 +7,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
+  targetNamespace: kube-system
   path: ./kubernetes/main/apps/kube-system/kubelet-csr-approver/app
   sourceRef:
     kind: GitRepository

@@ -6,7 +6,6 @@ metadata:
   annotations:
     prometheus-operator-validated: "true"
   name: home-assistant
-  namespace: home
 spec:
   groups:
     - name: home-assistant

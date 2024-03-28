@@ -6,10 +6,10 @@ metadata:
   name: dbms-dragonfly-operator
   namespace: flux-system
 spec:
+  targetNamespace: dbms
   commonMetadata:
     labels:
       app.kubernetes.io/name: &app dragonfly-operator
-  targetNamespace: dbms
   path: ./kubernetes/main/apps/dbms/dragonfly-operator/app
   sourceRef:
     kind: GitRepository
@@ -29,10 +29,10 @@ metadata:
   name: dbms-dragonfly-cluster
   namespace: flux-system
 spec:
+  targetNamespace: dbms
   commonMetadata:
     labels:
       app.kubernetes.io/name: &app dragonfly-cluster
-  targetNamespace: dbms
   path: ./kubernetes/main/apps/dbms/dragonfly-operator/cluster
   sourceRef:
     kind: GitRepository

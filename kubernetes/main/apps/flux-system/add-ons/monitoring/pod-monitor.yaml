@@ -1,10 +1,9 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/monitoring.coreos.com/prometheusrule_v1.json
+# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/monitoring.coreos.com/podmonitor_v1.json
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
   name: kustomize-controller
-  namespace: flux-system
   labels:
     app.kubernetes.io/instance: flux-system
     app.kubernetes.io/version: latest
@@ -18,12 +17,11 @@ spec:
   podMetricsEndpoints:
     - port: http-prom
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/monitoring.coreos.com/prometheusrule_v1.json
+# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/monitoring.coreos.com/podmonitor_v1.json
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
   name: source-controller
-  namespace: flux-system
   labels:
     app.kubernetes.io/instance: flux-system
     app.kubernetes.io/version: latest
@@ -37,12 +35,11 @@ spec:
   podMetricsEndpoints:
     - port: http-prom
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/monitoring.coreos.com/prometheusrule_v1.json
+# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/monitoring.coreos.com/podmonitor_v1.json
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
   name: helm-controller
-  namespace: flux-system
   labels:
     app.kubernetes.io/instance: flux-system
     app.kubernetes.io/version: latest
@@ -56,12 +53,11 @@ spec:
   podMetricsEndpoints:
     - port: http-prom
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/monitoring.coreos.com/prometheusrule_v1.json
+# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/monitoring.coreos.com/podmonitor_v1.json
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
   name: notification-controller
-  namespace: flux-system
   labels:
     app.kubernetes.io/instance: flux-system
     app.kubernetes.io/version: latest

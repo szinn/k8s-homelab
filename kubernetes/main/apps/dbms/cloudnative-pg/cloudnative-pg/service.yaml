@@ -3,7 +3,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: &app postgres
-  namespace: dbms
   labels:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app

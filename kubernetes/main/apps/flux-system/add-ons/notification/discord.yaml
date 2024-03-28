@@ -4,7 +4,6 @@ apiVersion: notification.toolkit.fluxcd.io/v1beta2
 kind: Provider
 metadata:
   name: discord
-  namespace: flux-system
 spec:
   type: discord
   secretRef:
@@ -15,7 +14,6 @@ apiVersion: notification.toolkit.fluxcd.io/v1beta2
 kind: Alert
 metadata:
   name: cluster-alert
-  namespace: flux-system
 spec:
   providerRef:
     name: discord

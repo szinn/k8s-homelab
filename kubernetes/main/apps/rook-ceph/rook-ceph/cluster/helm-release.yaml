@@ -173,13 +173,13 @@ spec:
                     matchLabels:
                       app.kubernetes.io/name: ceph-mds
                       app.kubernetes.io/part-of: *cephFileSystemName
-          storageClass:
+        storageClass:
           enabled: true
           isDefault: false
           name: ceph-filesystem
           reclaimPolicy: Delete
           allowVolumeExpansion: true
-          mountOptions: []
+          volumeBindingMode: Immediate
           parameters:
             csi.storage.k8s.io/provisioner-secret-name: rook-csi-cephfs-provisioner
             csi.storage.k8s.io/provisioner-secret-namespace: rook-ceph

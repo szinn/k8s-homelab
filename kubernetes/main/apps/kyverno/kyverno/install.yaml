@@ -6,6 +6,7 @@ metadata:
   name: kyverno
   namespace: flux-system
 spec:
+  targetNamespace: kyverno
   path: ./kubernetes/main/apps/kyverno/kyverno/app
   sourceRef:
     kind: GitRepository
@@ -23,6 +24,7 @@ metadata:
   name: kyverno-policies
   namespace: flux-system
 spec:
+  targetNamespace: kyverno
   path: ./kubernetes/main/apps/kyverno/kyverno/policies
   sourceRef:
     kind: GitRepository

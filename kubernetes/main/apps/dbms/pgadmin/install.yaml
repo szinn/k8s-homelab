@@ -6,10 +6,10 @@ metadata:
   name: dbms-pgadmin
   namespace: flux-system
 spec:
+  targetNamespace: dbms
   commonMetadata:
     labels:
       app.kubernetes.io/name: &app pgadmin
-  targetNamespace: dbms
   path: ./kubernetes/main/apps/dbms/pgadmin/app
   sourceRef:
     kind: GitRepository

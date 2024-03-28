@@ -6,6 +6,7 @@ metadata:
   name: kube-system-cilium
   namespace: flux-system
 spec:
+  targetNamespace: kube-system
   path: ./kubernetes/main/apps/kube-system/cilium/app
   sourceRef:
     kind: GitRepository
@@ -23,6 +24,7 @@ metadata:
   name: kube-system-cilium-config
   namespace: flux-system
 spec:
+  targetNamespace: kube-system
   path: ./kubernetes/main/apps/kube-system/cilium/config
   sourceRef:
     kind: GitRepository

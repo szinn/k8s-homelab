@@ -4,7 +4,6 @@ apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
   name: &app home-assistant
-  namespace: home
 spec:
   podMetricsEndpoints:
     - interval: 1m
