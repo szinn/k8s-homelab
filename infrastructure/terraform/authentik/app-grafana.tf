@@ -5,8 +5,9 @@ module "onepassword_grafana" {
 }
 
 resource "authentik_provider_oauth2" "grafana" {
-  name                  = "Grafana"
-  access_token_validity = "hours=4"
+  name                   = "Grafana"
+  access_token_validity  = "hours=4"
+  refresh_token_validity = "days=365"
 
   client_id     = module.onepassword_grafana.fields.AUTHENTIK_CLIENT_ID
   client_secret = module.onepassword_grafana.fields.AUTHENTIK_CLIENT_SECRET

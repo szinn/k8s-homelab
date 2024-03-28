@@ -5,8 +5,9 @@ module "onepassword_hades" {
 }
 
 resource "authentik_provider_oauth2" "hades" {
-  name                  = "Synology - Hades"
-  access_token_validity = "hours=4"
+  name                   = "Synology - Hades"
+  access_token_validity  = "hours=4"
+  refresh_token_validity = "days=365"
 
   client_id     = module.onepassword_hades.fields.AUTHENTIK_CLIENT_ID
   client_secret = module.onepassword_hades.fields.AUTHENTIK_CLIENT_SECRET
