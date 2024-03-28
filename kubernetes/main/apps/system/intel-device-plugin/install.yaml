@@ -6,6 +6,7 @@ metadata:
   name: system-intel-device-plugin
   namespace: flux-system
 spec:
+  targetNamespace: system
   path: ./kubernetes/main/apps/system/intel-device-plugin
   sourceRef:
     kind: GitRepository

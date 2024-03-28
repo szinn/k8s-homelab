@@ -6,6 +6,7 @@ metadata:
   name: system-node-feature-discovery
   namespace: flux-system
 spec:
+  targetNamespace: system
   path: ./kubernetes/main/apps/system/node-feature-discovery/app
   sourceRef:
     kind: GitRepository
@@ -23,6 +24,7 @@ metadata:
   name: system-node-feature-discovery-rules
   namespace: flux-system
 spec:
+  targetNamespace: system
   path: ./kubernetes/main/apps/system/node-feature-discovery/rules
   sourceRef:
     kind: GitRepository

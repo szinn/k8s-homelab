@@ -6,6 +6,7 @@ metadata:
   name: system-snapshot-controller
   namespace: flux-system
 spec:
+  targetNamespace: system
   path: ./kubernetes/main/apps/system/snapshot-controller/app
   sourceRef:
     kind: GitRepository
