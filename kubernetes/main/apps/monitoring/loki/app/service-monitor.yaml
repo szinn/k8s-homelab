@@ -1,10 +1,9 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/monitoring.coreos.com/prometheusrule_v1.json
+# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/monitoring.coreos.com/servicemonitor_v1.json
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: &app loki
-  namespace: monitoring
   labels: &labels
     app.kubernetes.io/component: read
     app.kubernetes.io/instance: *app

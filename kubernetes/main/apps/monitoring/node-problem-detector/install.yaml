@@ -6,6 +6,7 @@ metadata:
   name: monitoring-node-problem-detector
   namespace: flux-system
 spec:
+  targetNamespace: monitoring
   path: ./kubernetes/main/apps/monitoring/node-problem-detector/app
   sourceRef:
     kind: GitRepository

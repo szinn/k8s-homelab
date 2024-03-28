@@ -6,6 +6,7 @@ metadata:
   name: monitoring-jaeger
   namespace: flux-system
 spec:
+  targetNamespace: monitoring
   path: ./kubernetes/main/apps/monitoring/jaeger/app
   sourceRef:
     kind: GitRepository
@@ -25,6 +26,7 @@ metadata:
   name: monitoring-jaeger-config
   namespace: flux-system
 spec:
+  targetNamespace: monitoring
   path: ./kubernetes/main/apps/monitoring/jaeger/config
   sourceRef:
     kind: GitRepository

@@ -6,6 +6,7 @@ metadata:
   name: monitoring-teslamate
   namespace: flux-system
 spec:
+  targetNamespace: monitoring
   path: ./kubernetes/main/apps/monitoring/teslamate/app
   sourceRef:
     kind: GitRepository

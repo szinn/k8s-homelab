@@ -6,6 +6,7 @@ metadata:
   name: monitoring-grafana
   namespace: flux-system
 spec:
+  targetNamespace: monitoring
   path: ./kubernetes/main/apps/monitoring/grafana/app
   sourceRef:
     kind: GitRepository

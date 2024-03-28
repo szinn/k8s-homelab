@@ -6,6 +6,7 @@ metadata:
   name: monitoring-unifi-poller
   namespace: flux-system
 spec:
+  targetNamespace: monitoring
   path: ./kubernetes/main/apps/monitoring/unifi-poller/app
   sourceRef:
     kind: GitRepository

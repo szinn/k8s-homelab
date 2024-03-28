@@ -6,6 +6,7 @@ metadata:
   name: monitoring-thanos
   namespace: flux-system
 spec:
+  targetNamespace: monitoring
   path: ./kubernetes/main/apps/monitoring/thanos/app
   sourceRef:
     kind: GitRepository

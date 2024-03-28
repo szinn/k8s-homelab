@@ -4,7 +4,6 @@ automountServiceAccountToken: true
 kind: ServiceAccount
 metadata:
   name: vector-aggregator
-  namespace: monitoring
   annotations:
     meta.helm.sh/release-name: vector-aggregator
     meta.helm.sh/release-namespace: monitoring
