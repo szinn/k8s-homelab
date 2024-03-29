@@ -7,3 +7,4 @@ resources:
   - external-dns/install.yaml
   - external-services/install.yaml
   - ingress-nginx/install.yaml
+  - nginx/install.yaml
