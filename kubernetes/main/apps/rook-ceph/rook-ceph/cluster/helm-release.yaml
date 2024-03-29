@@ -115,7 +115,7 @@ spec:
       dashboard:
         ingressClassName: "nginx"
         annotations:
-          ingress.home.arpa/type: "internal"
+          ingress.home.arpa/type: internal
         host:
           name: "rook.${SECRET_DOMAIN_NAME}"
           path: "/"

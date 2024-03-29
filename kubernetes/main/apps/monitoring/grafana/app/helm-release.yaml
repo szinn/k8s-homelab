@@ -298,7 +298,7 @@ spec:
       enabled: true
       ingressClassName: nginx
       annotations:
-        ingress.home.arpa/type: "internal"
+        ingress.home.arpa/type: internal
       hosts:
         - "grafana.${SECRET_DOMAIN_NAME}"
       path: /

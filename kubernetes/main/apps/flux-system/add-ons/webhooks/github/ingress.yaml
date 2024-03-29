@@ -4,7 +4,7 @@ kind: Ingress
 metadata:
   name: webhook-receiver
   annotations:
-    ingress.home.arpa/type: "external"
+    ingress.home.arpa/type: external
 spec:
   ingressClassName: "nginx"
   rules:

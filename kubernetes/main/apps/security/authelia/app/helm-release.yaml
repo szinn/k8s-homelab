@@ -129,7 +129,7 @@ spec:
         enabled: true
         className: nginx
         annotations:
-          ingress.home.arpa/type: "external"
+          ingress.home.arpa/type: external
         hosts:
           - host: "auth.${SECRET_DOMAIN_NAME}"
             paths:

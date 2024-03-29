@@ -64,7 +64,7 @@ spec:
         enabled: true
         className: nginx
         annotations:
-          ingress.home.arpa/type: "internal"
+          ingress.home.arpa/type: internal
         hosts:
           - host: "shlink.${SECRET_DOMAIN_NAME}"
             paths:

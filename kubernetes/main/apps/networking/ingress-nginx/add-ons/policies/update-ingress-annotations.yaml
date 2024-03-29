@@ -44,7 +44,7 @@ spec:
           - resources:
               kinds: ["Ingress"]
               annotations:
-                ingress.home.arpa/type: "external"
+                ingress.home.arpa/type: external
       mutate:
         patchStrategicMerge:
           metadata:
@@ -58,7 +58,7 @@ spec:
           - resources:
               kinds: ["Ingress"]
               annotations:
-                ingress.home.arpa/type: "external-auth"
+                ingress.home.arpa/type: external-auth
       mutate:
         patchStrategicMerge:
           metadata:

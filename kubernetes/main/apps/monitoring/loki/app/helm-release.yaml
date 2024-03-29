@@ -132,7 +132,7 @@ spec:
         enabled: true
         ingressClassName: "nginx"
         annotations:
-          ingress.home.arpa/type: "internal"
+          ingress.home.arpa/type: internal
         hosts:
           - host: &host "loki.${SECRET_DOMAIN_NAME}"
             paths:

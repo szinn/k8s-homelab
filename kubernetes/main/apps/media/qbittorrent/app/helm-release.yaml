@@ -70,7 +70,7 @@ spec:
         enabled: true
         className: nginx
         annotations:
-          ingress.home.arpa/type: "internal"
+          ingress.home.arpa/type: internal
           nginx.ingress.kubernetes.io/configuration-snippet: |
             proxy_hide_header "x-webkit-csp";
             proxy_hide_header "content-security-policy";
