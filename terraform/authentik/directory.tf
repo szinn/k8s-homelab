@@ -34,6 +34,7 @@ resource "authentik_user" "scotte" {
     authentik_group.grafana_admins.id,
     authentik_group.wikijs_family.id,
     authentik_group.hades_user.id,
+    authentik_group.whoami_user.id,
   ]
 }
 

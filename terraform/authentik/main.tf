@@ -17,3 +17,15 @@ module "onepassword_authentik" {
   vault  = "Kubernetes"
   item   = "authentik"
 }
+
+resource "authentik_service_connection_kubernetes" "local" {
+  name       = "local"
+  local      = true
+  verify_ssl = false
+}
+
+locals {
+  internal_proxy_provider_ids = [
+    module.whoami.proxy_provider_id
+  ]
+}
