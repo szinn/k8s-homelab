@@ -37,7 +37,28 @@ spec:
     name: homelab-kubernetes
   dependsOn:
     - name: networking-nginx-certificates
-    - name: cert-manager-issuers
+  prune: true
+  wait: false
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: networking-nginx-external
+  namespace: flux-system
+  labels:
+    substitution.flux.home.arpa/enabled: "true"
+spec:
+  targetNamespace: networking
+  path: ./kubernetes/main/apps/networking/nginx/external
+  sourceRef:
+    kind: GitRepository
+    name: homelab-kubernetes
+  dependsOn:
+    - name: networking-nginx-certificates
   prune: true
   wait: false
   interval: 30m
