@@ -24,4 +24,3 @@ spec:
             image:
               repository: ghcr.io/bjw-s/k8s-ycl
               tag: v0.2.0
- 
