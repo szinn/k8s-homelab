@@ -67,8 +67,13 @@ variable "client_id" {
 }
 
 variable "client_secret" {
-  type        = string
-  sensitive   = true
+  type      = string
+  sensitive = true
+}
+
+variable "signing_key_id" {
+  type    = string
+  default = null
 }
 
 variable "client_type" {
@@ -87,6 +92,10 @@ variable "property_mappings" {
   default = null
 }
 
+data "authentik_certificate_key_pair" "generated" {
+  name = "authentik Self-signed Certificate"
+}
+
 resource "authentik_provider_oauth2" "main" {
   name                   = var.name
   client_id              = var.client_id
@@ -98,6 +107,7 @@ resource "authentik_provider_oauth2" "main" {
   access_token_validity  = var.access_token_validity
   refresh_token_validity = var.refresh_token_validity
   property_mappings      = var.property_mappings
+  signing_key            = coalesce(var.signing_key_id, data.authentik_certificate_key_pair.generated.id)
   lifecycle {
     ignore_changes = [
       signing_key
@@ -109,8 +119,9 @@ resource "authentik_application" "main" {
   name               = title(var.name)
   slug               = coalesce(var.slug, var.name)
   group              = var.group
+  open_in_new_tab    = true
   policy_engine_mode = var.policy_engine_mode
-  meta_launch_url    = var.meta_launch_url
+  meta_launch_url    = coalesce(var.meta_launch_url, "${var.domain}")
   meta_icon          = var.meta_icon
   meta_description   = var.meta_description
   protocol_provider  = authentik_provider_oauth2.main.id

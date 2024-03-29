@@ -5,19 +5,25 @@ module "onepassword_grafana" {
 }
 
 module "grafana" {
-  source                 = "./modules/oidc-application"
-  name                   = "grafana"
-  domain                 = "grafana.${local.cluster_domain}"
-  group                  = "Monitoring"
-  client_id              = module.onepassword_grafana.fields.AUTHENTIK_CLIENT_ID
-  client_secret          = module.onepassword_grafana.fields.AUTHENTIK_CLIENT_SECRET
+  source = "./modules/oidc-application"
+  name   = "grafana"
+  domain = "grafana.${local.cluster_domain}"
+  group  = "Monitoring"
+
+  client_id     = "grafana"
+  client_secret = module.onepassword_grafana.fields.AUTHENTIK_CLIENT_SECRET
+
   authentication_flow_id = authentik_flow.authentication.uuid
   authorization_flow_id  = data.authentik_flow.default-provider-authorization-implicit-consent.id
-  redirect_uris          = ["https://grafana.${local.cluster_domain}/login/generic_oauth"]
-  access_token_validity  = "hours=4"
-  authentik_domain       = "sso.${local.cluster_domain}"
-  meta_icon              = "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/grafana.png"
-  meta_launch_url        = "https://grafana.${local.cluster_domain}/login/generic_oauth"
+
+  redirect_uris = ["https://grafana.${local.cluster_domain}/login/generic_oauth"]
+
+  access_token_validity = "hours=4"
+
+  authentik_domain = local.authentik_domain
+  meta_icon        = "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/grafana.png"
+  meta_launch_url  = "https://grafana.${local.cluster_domain}/login/generic_oauth"
+
   property_mappings = [
     data.authentik_scope_mapping.scope-email.id,
     data.authentik_scope_mapping.scope-profile.id,
