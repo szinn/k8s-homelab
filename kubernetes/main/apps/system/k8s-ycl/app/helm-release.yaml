@@ -19,16 +19,9 @@ spec:
     controllers:
       main:
         replicas: 3
-        pod:
-          topologySpreadConstraints:
-            - maxSkew: 2
-              topologyKey: kubernetes.io/hostname
-              whenUnsatisfiable: DoNotSchedule
-              labelSelector:
-                matchLabels:
-                  app.kubernetes.io/name: *releaseName
         containers:
           main:
             image:
               repository: ghcr.io/bjw-s/k8s-ycl
               tag: v0.2.0
+ 
