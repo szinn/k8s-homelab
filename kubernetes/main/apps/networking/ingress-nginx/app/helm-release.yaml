@@ -40,7 +40,7 @@ spec:
       publishService:
         enabled: true
       ingressClassResource:
-        default: true
+        default: false
       config:
         client-header-timeout: 120
         client-body-buffer-size: "100M"
