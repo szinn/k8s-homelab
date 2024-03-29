@@ -38,6 +38,23 @@ spec:
             annotations:
               +(nginx.ingress.kubernetes.io/force-ssl-redirect): "true"
 
+    # - name: internal
+    #   match:
+    #     any:
+    #       - resources:
+    #           kinds: ["Ingress"]
+    #           annotations:
+    #             kubernetes.io/ingress.class: internal
+    #   mutate:
+    #     patchesJson6902: |-
+    #       - op: add
+    #         path: "/spec/ingressClassName"
+    #         value: internal
+    #       - op: remove
+    #         path: "/metadata/annotations/external-dns/is-public"
+    #       - op: remove
+    #         path: "/metadata/annotations/external-dns.alpha.kubernetes.io/target"
+
     - name: external
       match:
         any:
@@ -46,11 +63,19 @@ spec:
               annotations:
                 ingress.home.arpa/type: external
       mutate:
-        patchStrategicMerge:
-          metadata:
-            annotations:
-              +(external-dns/is-public): "true"
-              +(external-dns.alpha.kubernetes.io/target): "ingress.${SECRET_DOMAIN_NAME}"
+        patchesJson6902: |-
+          - op: add
+            path: "/spec/ingressClassName"
+            value: "external"
+          - op: add
+            path: "/metadata/annotations/external-dns/is-public"
+            value: "true"
+          - op: add
+            path: "/metadata/annotations/external-dns.alpha.kubernetes.io/target"
+            value: "external.${SECRET_DOMAIN_NAME}"
+          - op: add
+            path: "/metadata/annotations/foobar"
+            value: "external.${SECRET_DOMAIN_NAME}"
 
     - name: external-auth
       match:

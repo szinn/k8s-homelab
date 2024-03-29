@@ -6,7 +6,6 @@ metadata:
   annotations:
     ingress.home.arpa/type: external
 spec:
-  ingressClassName: "nginx"
   rules:
     - host: &host "flux-receiver.${SECRET_DOMAIN_NAME}"
       http:
