@@ -75,7 +75,7 @@ identity_providers:
         scopes: ["openid", "profile", "email"]
         redirect_uris:
           [
-            "https://wiki.${SECRET_DOMAIN_NAME}/login/2231b56c-daa8-4757-9ac3-81cc1e0e4615/callback",
+            "https://wiki.${SECRET_DOMAIN_NAME}/login/2231b56c-daa8-4757-9ac3-81cc1e0e4615/callback"
           ]
         response_modes: ["form_post"]
         userinfo_signing_algorithm: none
