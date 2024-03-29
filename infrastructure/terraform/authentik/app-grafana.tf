@@ -12,7 +12,10 @@ resource "authentik_provider_oauth2" "grafana" {
   client_id     = module.onepassword_grafana.fields.AUTHENTIK_CLIENT_ID
   client_secret = module.onepassword_grafana.fields.AUTHENTIK_CLIENT_SECRET
 
-  authorization_flow = data.authentik_flow.default-provider-authorization-implicit-consent.id
+  authentication_flow = authentik_flow.authentication.uuid
+  authorization_flow  = data.authentik_flow.default-provider-authorization-implicit-consent.id
+
+  signing_key = data.authentik_certificate_key_pair.generated.id
 
   redirect_uris = ["https://grafana.${local.cluster_domain}/login/generic_oauth"]
 

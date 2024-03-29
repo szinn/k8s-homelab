@@ -10,3 +10,7 @@ resource "authentik_brand" "home" {
   flow_invalidation   = authentik_flow.invalidation.uuid
   flow_user_settings  = authentik_flow.user-settings.uuid
 }
+
+data "authentik_certificate_key_pair" "generated" {
+  name = "authentik Self-signed Certificate"
+}

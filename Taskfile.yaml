@@ -8,6 +8,7 @@ env:
   KUBECONFIG: "{{.KUBERNETES_DIR}}/main/kubeconfig:{{.KUBERNETES_DIR}}/staging/kubeconfig:{{.KUBERNETES_DIR}}/nas/kubeconfig"
 
 includes:
+  authentik: .taskfiles/Authentik/Taskfile.yaml
   bootstrap: .taskfiles/Bootstrap/Taskfile.yaml
   flux: .taskfiles/Flux/Taskfile.yaml
   format: .taskfiles/Format/Taskfile.yaml
