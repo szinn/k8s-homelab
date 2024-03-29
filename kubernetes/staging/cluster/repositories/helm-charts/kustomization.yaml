@@ -19,7 +19,6 @@ resources:
   - jetstack-charts.yaml
   - kubernetes-dashboard.yaml
   - kubernetes-sigs-metrics-server-charts.yaml
-  - kyverno-charts.yaml
   - piraeus-charts.yaml
   - postfinance-charts.yaml
   - prometheus-community-charts.yaml

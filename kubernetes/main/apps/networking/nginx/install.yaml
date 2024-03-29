@@ -25,28 +25,6 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: networking-nginx-policies
-  namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
-spec:
-  targetNamespace: networking
-  path: ./kubernetes/main/apps/networking/nginx/policies
-  sourceRef:
-    kind: GitRepository
-    name: homelab-kubernetes
-  dependsOn:
-    - name: kyverno
-  prune: true
-  wait: true
-  interval: 30m
-  retryInterval: 1m
-  timeout: 5m
----
-# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/kustomize.toolkit.fluxcd.io/kustomization_v1.json
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
   name: networking-nginx-internal
   namespace: flux-system
   labels:
@@ -59,7 +37,6 @@ spec:
     name: homelab-kubernetes
   dependsOn:
     - name: networking-nginx-certificates
-    - name: networking-nginx-policies
   prune: true
   wait: false
   interval: 30m
@@ -82,7 +59,6 @@ spec:
     name: homelab-kubernetes
   dependsOn:
     - name: networking-nginx-certificates
-    - name: networking-nginx-policies
   prune: true
   wait: false
   interval: 30m

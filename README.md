@@ -72,7 +72,6 @@ on the Beelink MiniPCs and 3 worker nodes running on the Intel NUCs.
 - [rook/rook](https://github.com/rook/rook): Distributed block storage for persistent storage.
 - [jetstack/cert-manager](https://cert-manager.io/docs/): Creates SSL certificates for services in my Kubernetes cluster.
 - [kubernetes-sigs/external-dns](https://github.com/kubernetes-sigs/external-dns): Automatically manages DNS records from my cluster in a cloud DNS provider.
-- [kyverno](https://kyverno.io): Handles Ingress management and other cluster policies.
 
 ### GitOps
 
@@ -104,9 +103,6 @@ External names are managed by [external-dns](https://github.com/kubernetes-sigs/
 [oznu/cloudflare-ddns](https://hub.docker.com/r/oznu/cloudflare-ddns/) docker image. Certificates are managed through CloudFlare as well using cert-manager and the DNS01 challenge protocol.
 
 Any services that are exposed externally use [Authelia](https://www.authelia.com) for access authentication via a ingress-nginx.
-
-Kyverno policies require every Ingress instance has an annotation that indicates if it is an internal, external, or external-auth annotation.
-The policy adds the appropriate annotations to the Ingress to configure ingress-nginx and external-dns.
 
 ## Repository Structure
 

@@ -4,8 +4,6 @@ apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
   name: postgres
-  annotations:
-    kyverno.io/ignore: "true"
   labels:
     app.kubernetes.io/name: postgres-db
 spec:

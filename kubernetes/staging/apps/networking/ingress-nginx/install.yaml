@@ -23,25 +23,3 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: networking-ingress-nginx-add-ons
-  namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
-spec:
-  path: ./kubernetes/staging/apps/networking/ingress-nginx/add-ons
-  sourceRef:
-    kind: GitRepository
-    name: homelab-kubernetes
-  dependsOn:
-    - name: cert-manager
-    - name: networking-ingress-nginx
-    - name: kyverno
-  prune: true
-  wait: true
-  interval: 30m
-  retryInterval: 2m
-  timeout: 1m

@@ -5,8 +5,6 @@ kind: Cluster
 metadata:
   name: postgres
   namespace: dbms
-  annotations:
-    kyverno.io/ignore: "true"
   labels:
     app.kubernetes.io/name: postgres-db
 spec:

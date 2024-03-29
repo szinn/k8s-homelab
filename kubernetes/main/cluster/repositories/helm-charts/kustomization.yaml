@@ -23,7 +23,6 @@ resources:
   - jaegertracing-charts.yaml
   - jetstack-charts.yaml
   - kubernetes-sigs-metrics-server-charts.yaml
-  - kyverno-charts.yaml
   - lwolf-charts.yaml
   - node-feature-discovery-charts.yaml
   - piraeus-charts.yaml
