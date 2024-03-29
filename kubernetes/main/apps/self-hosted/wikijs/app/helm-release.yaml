@@ -67,7 +67,7 @@ spec:
         enabled: true
         className: nginx
         annotations:
-          ingress.home.arpa/type: external-auth
+          ingress.home.arpa/type: internal
         hosts:
           - host: "wiki.${SECRET_DOMAIN_NAME}"
             paths:

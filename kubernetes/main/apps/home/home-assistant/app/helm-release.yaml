@@ -108,7 +108,7 @@ spec:
         enabled: true
         className: nginx
         annotations:
-          ingress.home.arpa/type: "external-auth"
+          ingress.home.arpa/type: internal
         hosts:
           - host: "home.${SECRET_DOMAIN_NAME}"
             paths:
@@ -120,7 +120,7 @@ spec:
         enabled: true
         className: nginx
         annotations:
-          ingress.home.arpa/type: "internal"
+          ingress.home.arpa/type: internal
         hosts:
           - host: "ha-code.${SECRET_DOMAIN_NAME}"
             paths:
