@@ -130,9 +130,7 @@ spec:
           io.cilium/lb-ipam-ips: ${CONFIG_MAIN_SVC_LOKI_ADDR}
       ingress:
         enabled: true
-        ingressClassName: "nginx"
-        annotations:
-          ingress.home.arpa/type: internal
+        ingressClassName: internal
         hosts:
           - host: &host "loki.${SECRET_DOMAIN_NAME}"
             paths:

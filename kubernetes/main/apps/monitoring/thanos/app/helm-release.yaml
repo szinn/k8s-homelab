@@ -49,9 +49,7 @@ spec:
       ingress:
         enabled: true
         hostname: "thanos.${SECRET_DOMAIN_NAME}"
-        ingressClassName: "nginx"
-        annotations:
-          ingress.home.arpa/type: internal
+        ingressClassName: internal
     bucketweb:
       enabled: true
     compactor:

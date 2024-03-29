@@ -103,9 +103,7 @@ spec:
     alertmanager:
       ingress:
         enabled: true
-        annotations:
-          kubernetes.io/ingress.class: nginx
-          ingress.home.arpa/type: internal
+        ingressClassName: internal
         hosts:
           - "alerts.${SECRET_DOMAIN_NAME}"
         path: /
@@ -175,9 +173,7 @@ spec:
     prometheus:
       ingress:
         enabled: true
-        annotations:
-          kubernetes.io/ingress.class: nginx
-          ingress.home.arpa/type: internal
+        ingressClassName: internal
         hosts:
           - "prometheus.${SECRET_DOMAIN_NAME}"
         path: /

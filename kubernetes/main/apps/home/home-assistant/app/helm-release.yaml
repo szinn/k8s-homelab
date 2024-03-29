@@ -106,9 +106,7 @@ spec:
     ingress:
       main:
         enabled: true
-        className: nginx
-        annotations:
-          ingress.home.arpa/type: internal
+        className: internal
         hosts:
           - host: "home.${SECRET_DOMAIN_NAME}"
             paths:
@@ -118,9 +116,7 @@ spec:
                   port: http
       code-server:
         enabled: true
-        className: nginx
-        annotations:
-          ingress.home.arpa/type: internal
+        className: internal
         hosts:
           - host: "ha-code.${SECRET_DOMAIN_NAME}"
             paths:

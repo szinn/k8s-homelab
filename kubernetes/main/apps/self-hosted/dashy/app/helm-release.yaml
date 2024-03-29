@@ -67,9 +67,7 @@ spec:
     ingress:
       main:
         enabled: true
-        className: nginx
-        annotations:
-          ingress.home.arpa/type: internal
+        className: internal
         hosts:
           - host: "{{ .Release.Name }}.${SECRET_DOMAIN_NAME}"
             paths:
@@ -79,9 +77,7 @@ spec:
                   port: http
       code-server:
         enabled: true
-        className: nginx
-        annotations:
-          ingress.home.arpa/type: internal
+        className: internal
         hosts:
           - host: "dashy-code.${SECRET_DOMAIN_NAME}"
             paths:

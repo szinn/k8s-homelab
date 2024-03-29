@@ -56,9 +56,7 @@ spec:
     ingress:
       main:
         enabled: true
-        className: nginx
-        annotations:
-          ingress.home.arpa/type: internal
+        className: internal
         hosts:
           - host: bonob.${SECRET_DOMAIN_NAME}
             paths:

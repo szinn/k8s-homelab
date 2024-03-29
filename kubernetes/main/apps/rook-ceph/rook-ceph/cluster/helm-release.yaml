@@ -113,9 +113,7 @@ spec:
 
     ingress:
       dashboard:
-        ingressClassName: "nginx"
-        annotations:
-          ingress.home.arpa/type: internal
+        ingressClassName: internal
         host:
           name: "rook.${SECRET_DOMAIN_NAME}"
           path: "/"
@@ -229,9 +227,7 @@ spec:
       #       region: us-east-1
       #   ingress:
       #     enabled: true
-      #     ingressClassName: nginx
-      #     annotations:
-      #       ingress.home.arpa/type: internal
+      #     ingressClassName: internal
       #     host:
       #       name: s3-rook.${SECRET_DOMAIN_NAME}
       #       path: /

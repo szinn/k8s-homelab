@@ -82,9 +82,7 @@ spec:
     ingress:
       main:
         enabled: true
-        className: nginx
-        annotations:
-          ingress.home.arpa/type: internal
+        className: internal
         hosts:
           - host: "music.${SECRET_DOMAIN_NAME}"
             paths:

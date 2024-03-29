@@ -33,8 +33,7 @@ metadata:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
   annotations:
-    kubernetes.io/ingress.class: nginx
-    ingress.home.arpa/type: internal
+    kubernetes.io/ingress.class: internal
 spec:
   rules:
     - host: minio.${SECRET_DOMAIN_NAME}
