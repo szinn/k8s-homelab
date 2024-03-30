@@ -5,3 +5,4 @@ resources:
   - sabnzbd-secrets.yaml
   - helm-release.yaml
   - ../../../../templates/volsync
+  - ../../../../templates/gatus/cluster
