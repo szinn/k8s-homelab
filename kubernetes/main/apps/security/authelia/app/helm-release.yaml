@@ -116,7 +116,7 @@ spec:
             port: 9959
     serviceMonitor:
       main:
-        serviceName: main
+        serviceName: authelia
         enabled: true
         endpoints:
           - port: metrics
