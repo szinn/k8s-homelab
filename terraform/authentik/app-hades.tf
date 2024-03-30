@@ -17,6 +17,7 @@ module "hades" {
 
   authentication_flow_id = authentik_flow.authentication.uuid
   authorization_flow_id  = data.authentik_flow.default-provider-authorization-implicit-consent.id
+  property_mappings      = data.authentik_scope_mapping.oauth2.ids
 
   redirect_uris = [module.onepassword_hades.fields.AUTHENTIK_REDIRECT_URL]
 
@@ -24,12 +25,6 @@ module "hades" {
 
   meta_icon       = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/synology-drive-server.png"
   meta_launch_url = module.onepassword_hades.fields.AUTHENTIK_REDIRECT_URL
-
-  property_mappings = [
-    data.authentik_scope_mapping.scope-email.id,
-    data.authentik_scope_mapping.scope-profile.id,
-    data.authentik_scope_mapping.scope-openid.id,
-  ]
 }
 
 resource "authentik_group" "hades_users" {
