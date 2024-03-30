@@ -22,7 +22,7 @@ module "wikijs" {
 
   access_token_validity = "hours=4"
 
-  meta_icon       = "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/wikijs.png"
+  meta_icon       = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/wikijs.png"
   meta_launch_url = "https://wiki.${local.cluster_domain}/login"
 
   property_mappings = [

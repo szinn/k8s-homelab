@@ -9,7 +9,7 @@ module "whoami" {
   policy_engine_mode      = "any"
   authorization_flow_uuid = data.authentik_flow.default-provider-authorization-implicit-consent.id
 
-  meta_icon = "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/libreoffice.png"
+  meta_icon = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/web-check.png"
 }
 
 resource "authentik_group" "whoami_users" {

@@ -22,7 +22,7 @@ module "hades" {
 
   access_token_validity = "hours=4"
 
-  meta_icon       = "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/synology-drive-server.png"
+  meta_icon       = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/synology-drive-server.png"
   meta_launch_url = module.onepassword_hades.fields.AUTHENTIK_REDIRECT_URL
 
   property_mappings = [

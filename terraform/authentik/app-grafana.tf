@@ -22,7 +22,7 @@ module "grafana" {
 
   access_token_validity = "hours=4"
 
-  meta_icon       = "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/grafana.png"
+  meta_icon       = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/grafana.png"
   meta_launch_url = "https://grafana.${local.cluster_domain}/login/generic_oauth"
 }
 
