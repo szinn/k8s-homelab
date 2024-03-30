@@ -23,7 +23,7 @@ spec:
       io.cilium/lb-ipam-ips: ${CONFIG_MAIN_SVC_REDIS_ADDR}
       external-dns.alpha.kubernetes.io/hostname: redis.${SECRET_DOMAIN_NAME}
   snapshot:
-    cron: "0 * * * *"
+    cron: "0 */8 * * *"
     persistentVolumeClaimSpec:
       accessModes:
         - ReadWriteOnce
