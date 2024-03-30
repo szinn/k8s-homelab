@@ -3,13 +3,13 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: default-echo-server
+  name: networking-echo-server
   namespace: flux-system
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  targetNamespace: default
-  path: "./kubernetes/main/apps/default/echo-server/app"
+  targetNamespace: networking
+  path: "./kubernetes/main/apps/networking/echo-server/app"
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes

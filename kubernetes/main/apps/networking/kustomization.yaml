@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - cloudflared/install.yaml
+  - echo-server/install.yaml
   - external-dns/install.yaml
   - external-services/install.yaml
   - nginx/install.yaml
