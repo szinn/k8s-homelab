@@ -18,6 +18,7 @@
     "**/archive/**",
     "**/*.sops.*"
   ],
+  "prBodyTemplate": "{{{header}}}{{{table}}}{{{warnings}}}{{{notes}}}{{{changelogs}}}{{{configDescription}}}",
   "flux": {
     "fileMatch": ["kubernetes/.+\\.ya?ml$"]
   },
