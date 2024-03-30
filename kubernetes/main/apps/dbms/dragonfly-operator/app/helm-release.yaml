@@ -31,7 +31,7 @@ spec:
           rbac-proxy:
             image:
               repository: gcr.io/kubebuilder/kube-rbac-proxy
-              tag: v0.15.0@sha256:d8cc6ffb98190e8dd403bfe67ddcb454e6127d32b87acc237b3e5240f70a20fb
+              tag: v0.16.0@sha256:771a9a173e033a3ad8b46f5c00a7036eaa88c8d8d1fbd89217325168998113ea
             args:
               - "--secure-listen-address=0.0.0.0:8443"
               - "--upstream=http://127.0.0.1:8080/"
