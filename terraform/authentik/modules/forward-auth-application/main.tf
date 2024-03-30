@@ -40,6 +40,10 @@ variable "mode" {
   type    = string
   default = "forward_single"
 }
+variable "open_in_new_tab" {
+  type    = bool
+  default = true
+}
 
 variable "internal_host" {
   type    = string
@@ -86,7 +90,7 @@ resource "authentik_application" "main" {
   slug               = coalesce(var.slug, var.name)
   protocol_provider  = authentik_provider_proxy.main.id
   group              = var.group
-  open_in_new_tab    = true
+  open_in_new_tab    = var.open_in_new_tab
   meta_icon          = var.meta_icon
   policy_engine_mode = var.policy_engine_mode
 }

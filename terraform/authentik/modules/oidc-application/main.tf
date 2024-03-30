@@ -16,14 +16,6 @@ variable "slug" {
   type    = string
   default = null
 }
-variable "vault" {
-  type    = string
-  default = null
-}
-variable "tags" {
-  type    = list(string)
-  default = []
-}
 variable "domain" {
   type = string
 }
@@ -38,6 +30,9 @@ variable "refresh_token_validity" {
 variable "authorization_flow_id" {
   type = string
 }
+variable "authentication_flow_id" {
+  type = string
+}
 
 variable "meta_icon" {
   type    = string
@@ -50,6 +45,10 @@ variable "meta_description" {
 variable "meta_launch_url" {
   type    = string
   default = null
+}
+variable "open_in_new_tab" {
+  type    = bool
+  default = true
 }
 variable "group" {
   type = string
@@ -76,9 +75,6 @@ variable "signing_key_id" {
 variable "client_type" {
   type    = string
   default = "confidential"
-}
-variable "authentication_flow_id" {
-  type = string
 }
 variable "redirect_uris" {
   type = list(string)
@@ -116,7 +112,7 @@ resource "authentik_application" "main" {
   name               = title(var.name)
   slug               = coalesce(var.slug, var.name)
   group              = var.group
-  open_in_new_tab    = true
+  open_in_new_tab    = var.open_in_new_tab
   policy_engine_mode = var.policy_engine_mode
   meta_launch_url    = coalesce(var.meta_launch_url, "${var.domain}")
   meta_icon          = var.meta_icon
