@@ -5,6 +5,7 @@ resources:
   - namespace.yaml
   - democratic-csi/install.yaml
   - descheduler/install.yaml
+  - fstrim/install.yaml
   - intel-device-plugin/install.yaml
   - k8s-ycl/install.yaml
   - kube-cleanup-operator/install.yaml
