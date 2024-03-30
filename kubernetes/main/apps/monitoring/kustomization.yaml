@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - alertmanager-discord/install.yaml
+  - gatus/install.yaml
   - grafana/install.yaml
   # - jaeger/install.yaml
   - kube-prometheus-stack/install.yaml
