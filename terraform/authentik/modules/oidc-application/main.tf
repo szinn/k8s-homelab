@@ -16,9 +16,6 @@ variable "slug" {
   type    = string
   default = null
 }
-variable "authentik_domain" {
-  type = string
-}
 variable "vault" {
   type    = string
   default = null

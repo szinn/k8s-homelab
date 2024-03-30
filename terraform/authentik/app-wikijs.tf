@@ -6,9 +6,11 @@ module "onepassword_wikijs" {
 
 module "wikijs" {
   source = "./modules/oidc-application"
-  name   = "wikijs"
-  domain = "grafana.${local.cluster_domain}"
-  group  = "Applications"
+  slug   = "wikijs"
+
+  name   = "WilZinn Wiki"
+  domain = "wiki.${local.cluster_domain}"
+  group  = authentik_group.applications.name
 
   client_id     = "wikijs"
   client_secret = module.onepassword_wikijs.fields.AUTHENTIK_CLIENT_SECRET
@@ -20,9 +22,8 @@ module "wikijs" {
 
   access_token_validity = "hours=4"
 
-  authentik_domain = local.authentik_domain
-  meta_icon        = "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/wikijs.png"
-  meta_launch_url  = "https://wiki.${local.cluster_domain}/login"
+  meta_icon       = "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/wikijs.png"
+  meta_launch_url = "https://wiki.${local.cluster_domain}/login"
 
   property_mappings = [
     data.authentik_scope_mapping.scope-email.id,

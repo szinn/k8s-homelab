@@ -6,10 +6,11 @@ module "onepassword_hades" {
 
 module "hades" {
   source = "./modules/oidc-application"
-  name   = "Synology - Hades"
   slug   = "hades"
+
+  name   = "Synology - Hades"
   domain = "hades.${local.cluster_domain}"
-  group  = "Infrastructure"
+  group  = authentik_group.infrastructure.name
 
   client_id     = "hades"
   client_secret = module.onepassword_hades.fields.AUTHENTIK_CLIENT_SECRET
@@ -21,9 +22,8 @@ module "hades" {
 
   access_token_validity = "hours=4"
 
-  authentik_domain = local.authentik_domain
-  meta_icon        = "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/synology-drive-server.png"
-  meta_launch_url  = module.onepassword_hades.fields.AUTHENTIK_REDIRECT_URL
+  meta_icon       = "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/synology-drive-server.png"
+  meta_launch_url = module.onepassword_hades.fields.AUTHENTIK_REDIRECT_URL
 
   property_mappings = [
     data.authentik_scope_mapping.scope-email.id,

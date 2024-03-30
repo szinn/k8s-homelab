@@ -1,11 +1,15 @@
 module "whoami" {
-  source                  = "./modules/forward-auth-application"
-  name                    = "whoami"
-  domain                  = "whoami.${local.cluster_domain}"
-  group                   = "Applications"
+  source = "./modules/forward-auth-application"
+  slug   = "whoami"
+
+  name   = "Who Am I"
+  domain = "whoami.${local.cluster_domain}"
+  group  = authentik_group.infrastructure.name
+
   policy_engine_mode      = "any"
   authorization_flow_uuid = data.authentik_flow.default-provider-authorization-implicit-consent.id
-  meta_icon               = "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/libreoffice.png"
+
+  meta_icon = "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/libreoffice.png"
 }
 
 resource "authentik_group" "whoami_users" {

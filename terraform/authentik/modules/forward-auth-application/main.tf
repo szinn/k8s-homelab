@@ -9,6 +9,10 @@ terraform {
 variable "name" {
   type = string
 }
+variable "slug" {
+  type    = string
+  default = null
+}
 variable "domain" {
   type = string
 }
@@ -79,7 +83,7 @@ resource "authentik_provider_proxy" "main" {
 
 resource "authentik_application" "main" {
   name               = title(var.name)
-  slug               = var.name
+  slug               = coalesce(var.slug, var.name)
   protocol_provider  = authentik_provider_proxy.main.id
   group              = var.group
   open_in_new_tab    = true

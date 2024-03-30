@@ -23,9 +23,3 @@ resource "authentik_service_connection_kubernetes" "local" {
   local      = true
   verify_ssl = false
 }
-
-locals {
-  internal_proxy_provider_ids = [
-    module.whoami.proxy_provider_id
-  ]
-}

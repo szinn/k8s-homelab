@@ -1,45 +1,47 @@
 {
-    "discord.enabled": true,
-    "files.associations": {
-        "*.json5": "jsonc",
-        "**/terraform/**/*.tf": "terraform",
-    },
-    "material-icon-theme.folders.associations": {
-        ".github": "Github",
-        "workflows": "Robot",
-        ".taskfiles": "utils",
-        "hack": "Tools",
-        "kubernetes": "Cluster",
-        "kubernetes/main": "cluster",
-        "kubernetes/nas": "cluster",
-        "kubernetes/staging": "cluster",
-        "cert-manager": "guard",
-        "dbms": "database",
-        "default": "cluster",
-        "dev": "less",
-        "flux-system": "kubernetes",
-        "kube-system": "kubernetes",
-        "media": "video",
-        "monitoring": "event",
-        "networking": "connection",
-        "outline": "docs",
-        "security": "keys",
-        "self-hosted": "app",
-        "setup": "import",
-        "config": "environment"
-    },
-    "prettier.configPath": ".github/linters/prettier/.prettierrc.yaml",
-    "prettier.ignorePath": ".github/linters/prettier/.prettierignore",
-    "yaml.schemas": {
-        "https://json.schemastore.org/taskfile.json": [
-            "Taskfile.yaml",
-            ".taskfiles/*.yaml"
-        ],
-        "Kubernetes": "kubernetes/*.yaml",
-        "https://json.schemastore.org/kustomization.json": "file:///Users/scotte/Development/k8s-homelab/kubernetes/apps/tekton/tasks/kustomization.yaml"
-    },
-    "yaml.customTags": [
-        "!env_var"
+  "discord.enabled": true,
+  "files.associations": {
+    "*.json5": "jsonc",
+    "**/terraform/**/*.tf": "terraform"
+  },
+  "files.exclude": {
+    ".direnv/": true,
+    "result": true
+  },
+  "material-icon-theme.folders.associations": {
+    ".github": "Github",
+    "workflows": "Robot",
+    ".taskfiles": "utils",
+    "hack": "Tools",
+    "kubernetes": "Cluster",
+    "kubernetes/main": "cluster",
+    "kubernetes/nas": "cluster",
+    "kubernetes/staging": "cluster",
+    "cert-manager": "guard",
+    "dbms": "database",
+    "default": "cluster",
+    "dev": "less",
+    "flux-system": "kubernetes",
+    "kube-system": "kubernetes",
+    "media": "video",
+    "monitoring": "event",
+    "networking": "connection",
+    "outline": "docs",
+    "security": "keys",
+    "self-hosted": "app",
+    "setup": "import",
+    "config": "environment"
+  },
+  "prettier.configPath": ".github/linters/prettier/.prettierrc.yaml",
+  "prettier.ignorePath": ".github/linters/prettier/.prettierignore",
+  "yaml.schemas": {
+    "https://json.schemastore.org/taskfile.json": [
+      "Taskfile.yaml",
+      ".taskfiles/*.yaml"
     ],
-    "explorer.autoReveal": false
+    "Kubernetes": "kubernetes/*.yaml",
+    "https://json.schemastore.org/kustomization.json": "file:///Users/scotte/Development/k8s-homelab/kubernetes/apps/tekton/tasks/kustomization.yaml"
+  },
+  "yaml.customTags": ["!env_var"],
+  "explorer.autoReveal": false
 }

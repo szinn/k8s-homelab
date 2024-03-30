@@ -6,9 +6,11 @@ module "onepassword_grafana" {
 
 module "grafana" {
   source = "./modules/oidc-application"
-  name   = "grafana"
+  slug   = "grafana"
+
+  name   = "Grafana"
   domain = "grafana.${local.cluster_domain}"
-  group  = "Monitoring"
+  group  = authentik_group.monitoring.name
 
   client_id     = "grafana"
   client_secret = module.onepassword_grafana.fields.AUTHENTIK_CLIENT_SECRET
@@ -20,15 +22,8 @@ module "grafana" {
 
   access_token_validity = "hours=4"
 
-  authentik_domain = local.authentik_domain
-  meta_icon        = "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/grafana.png"
-  meta_launch_url  = "https://grafana.${local.cluster_domain}/login/generic_oauth"
-
-  property_mappings = [
-    data.authentik_scope_mapping.scope-email.id,
-    data.authentik_scope_mapping.scope-profile.id,
-    data.authentik_scope_mapping.scope-openid.id,
-  ]
+  meta_icon       = "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/grafana.png"
+  meta_launch_url = "https://grafana.${local.cluster_domain}/login/generic_oauth"
 }
 
 resource "authentik_group" "grafana_admins" {

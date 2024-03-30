@@ -12,6 +12,11 @@ resource "authentik_group" "infrastructure" {
   is_superuser = false
 }
 
+resource "authentik_group" "monitoring" {
+  name         = "Monitoring"
+  is_superuser = false
+}
+
 resource "authentik_group" "applications" {
   name         = "Applications"
   is_superuser = false
@@ -35,6 +40,7 @@ resource "authentik_user" "scotte" {
     authentik_group.wikijs_users.id,
     authentik_group.hades_users.id,
     authentik_group.whoami_users.id,
+    authentik_group.echo_server_users.id,
   ]
 }
 
