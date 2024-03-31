@@ -1,16 +1,18 @@
 locals {
   internal_proxy_provider_ids = [
+    module.home_assistant.proxy_provider_id,
     module.whoami.proxy_provider_id
   ]
 
   external_proxy_provider_ids = [
-    module.echo_server.proxy_provider_id
+    module.echo_server.proxy_provider_id,
+    module.home_assistant.proxy_provider_id,
   ]
 }
 
 resource "authentik_outpost" "internal" {
   name               = "internal"
-  service_connection = authentik_service_connection_kubernetes.local.id
+  # service_connection = authentik_service_connection_kubernetes.local.id
   protocol_providers = local.internal_proxy_provider_ids
   config = jsonencode({
     "log_level"                      = "info"
@@ -36,7 +38,7 @@ resource "authentik_outpost" "internal" {
 
 resource "authentik_outpost" "external" {
   name               = "external"
-  service_connection = authentik_service_connection_kubernetes.local.id
+  # service_connection = authentik_service_connection_kubernetes.local.id
   protocol_providers = local.external_proxy_provider_ids
   config = jsonencode({
     "log_level"                      = "info"

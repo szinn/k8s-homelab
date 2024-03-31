@@ -18,11 +18,11 @@ module "onepassword_authentik" {
   item   = "authentik"
 }
 
-resource "authentik_service_connection_kubernetes" "local" {
-  name       = "local"
-  local      = true
-  verify_ssl = false
-}
+# resource "authentik_service_connection_kubernetes" "local" {
+#   name       = "local"
+#   local      = true
+#   verify_ssl = false
+# }
 
 data "authentik_scope_mapping" "oauth2" {
   managed_list = [

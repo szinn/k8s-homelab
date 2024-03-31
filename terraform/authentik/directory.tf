@@ -41,6 +41,7 @@ resource "authentik_user" "scotte" {
     authentik_group.hades_users.id,
     authentik_group.whoami_users.id,
     authentik_group.echo_server_users.id,
+    authentik_group.home_assistant_users.id,
   ]
 }
 
@@ -58,5 +59,6 @@ resource "authentik_user" "sophie" {
   groups = [
     authentik_group.users.id,
     authentik_group.wikijs_users.id,
+    authentik_group.home_assistant_users.id,
   ]
 }

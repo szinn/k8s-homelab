@@ -20,6 +20,10 @@ variable "access_token_validity" {
   type    = string
   default = "weeks=8"
 }
+variable "authentication_flow_uuid" {
+  type    = string
+  default = null
+}
 variable "authorization_flow_uuid" {
   type = string
 }
@@ -70,6 +74,7 @@ variable "skip_path_regex" {
   type    = string
   default = null
 }
+
 resource "authentik_provider_proxy" "main" {
   name                          = var.name
   external_host                 = "https://${var.domain}"
@@ -78,6 +83,7 @@ resource "authentik_provider_proxy" "main" {
   basic_auth_password_attribute = var.basic_auth_password_attribute
   basic_auth_username_attribute = var.basic_auth_username_attribute
   mode                          = var.mode
+  authentication_flow           = var.authentication_flow_uuid
   authorization_flow            = var.authorization_flow_uuid
   access_token_validity         = var.access_token_validity
   property_mappings             = var.property_mappings
