@@ -12,6 +12,7 @@ module "home_assistant" {
   authorization_flow_uuid  = data.authentik_flow.default-provider-authorization-implicit-consent.id
 
   meta_icon = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/home-assistant.png"
+  meta_launch_url = "https://home.zinn.ca/lovelace-home/default_view"
 }
 
 resource "authentik_group" "home_assistant_users" {

@@ -114,7 +114,7 @@ resource "authentik_application" "main" {
   group              = var.group
   open_in_new_tab    = var.open_in_new_tab
   policy_engine_mode = var.policy_engine_mode
-  meta_launch_url    = coalesce(var.meta_launch_url, "${var.domain}")
+  meta_launch_url    = coalesce(var.meta_launch_url, "https://${var.domain}")
   meta_icon          = var.meta_icon
   meta_description   = var.meta_description
   protocol_provider  = authentik_provider_oauth2.main.id

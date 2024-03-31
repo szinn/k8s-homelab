@@ -32,6 +32,10 @@ variable "meta_icon" {
   type    = string
   default = null
 }
+variable "meta_launch_url" {
+  type    = string
+  default = null
+}
 variable "group" {
   type = string
 }
@@ -98,6 +102,7 @@ resource "authentik_application" "main" {
   group              = var.group
   open_in_new_tab    = var.open_in_new_tab
   meta_icon          = var.meta_icon
+  meta_launch_url    = var.meta_launch_url
   policy_engine_mode = var.policy_engine_mode
 }
 
