@@ -34,6 +34,7 @@ endpoints:
       - "[STATUS] == 200"
     alerts:
       - type: discord
+        send-on-resolved: true
   - name: flux-webhook
     group: external
     url: https://flux-receiver.$${SECRET_DOMAIN_NAME}
@@ -44,3 +45,4 @@ endpoints:
       - "[STATUS] == 404"
     alerts:
       - type: discord
+        send-on-resolved: true

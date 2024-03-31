@@ -21,3 +21,4 @@ data:
         conditions: ["[DNS_RCODE] == NOERROR"]
         alerts:
           - type: discord
+            send-on-resolved: true
