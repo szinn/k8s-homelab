@@ -42,8 +42,6 @@ spec:
       dnsDiscovery:
         sidecarsService: prometheus-thanos-discovery
         sidecarsNamespace: monitoring
-      stores:
-        - thanos-svc.${SECRET_NAS_DOMAIN_NAME}:10901
     queryFrontend:
       enabled: true
       ingress:
