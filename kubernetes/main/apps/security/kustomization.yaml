@@ -3,8 +3,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - namespace.yaml
-  - authelia/install.yaml
   - authentik/install.yaml
   - dmarc-report/install.yaml
   - external-secrets/install.yaml
-  - lldap/install.yaml
