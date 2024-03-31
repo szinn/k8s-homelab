@@ -7,6 +7,9 @@ metadata:
   namespace: flux-system
 spec:
   targetNamespace: system
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: &app node-feature-discovery
   path: ./kubernetes/main/apps/system/node-feature-discovery/app
   sourceRef:
     kind: GitRepository
@@ -25,6 +28,9 @@ metadata:
   namespace: flux-system
 spec:
   targetNamespace: system
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: &app node-feature-discovery
   path: ./kubernetes/main/apps/system/node-feature-discovery/rules
   sourceRef:
     kind: GitRepository

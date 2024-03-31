@@ -7,6 +7,9 @@ metadata:
   namespace: flux-system
 spec:
   targetNamespace: security
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: &app dmarc-report
   path: ./kubernetes/main/apps/security/dmarc-report/app
   sourceRef:
     kind: GitRepository

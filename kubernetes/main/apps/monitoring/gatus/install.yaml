@@ -7,6 +7,9 @@ metadata:
   namespace: flux-system
 spec:
   targetNamespace: monitoring
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: &app gatus
   path: ./kubernetes/main/apps/monitoring/gatus/app
   sourceRef:
     kind: GitRepository

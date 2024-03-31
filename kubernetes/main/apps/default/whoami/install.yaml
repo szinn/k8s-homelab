@@ -7,6 +7,9 @@ metadata:
   namespace: flux-system
 spec:
   targetNamespace: default
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: &app whoami
   path: ./kubernetes/main/apps/default/whoami/app
   sourceRef:
     kind: GitRepository

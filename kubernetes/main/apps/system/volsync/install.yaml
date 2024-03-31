@@ -7,6 +7,9 @@ metadata:
   namespace: flux-system
 spec:
   targetNamespace: system
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: &app volsync
   path: ./kubernetes/main/apps/system/volsync/app
   sourceRef:
     kind: GitRepository

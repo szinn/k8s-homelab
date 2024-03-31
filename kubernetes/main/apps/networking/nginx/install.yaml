@@ -9,6 +9,9 @@ metadata:
     substitution.flux.home.arpa/enabled: "true"
 spec:
   targetNamespace: networking
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: &app ingress-nginx
   path: ./kubernetes/main/apps/networking/nginx/certificates
   sourceRef:
     kind: GitRepository
@@ -31,6 +34,9 @@ metadata:
     substitution.flux.home.arpa/enabled: "true"
 spec:
   targetNamespace: networking
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: &app ingress-nginx
   path: ./kubernetes/main/apps/networking/nginx/internal
   sourceRef:
     kind: GitRepository
@@ -53,6 +59,9 @@ metadata:
     substitution.flux.home.arpa/enabled: "true"
 spec:
   targetNamespace: networking
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: &app ingress-nginx
   path: ./kubernetes/main/apps/networking/nginx/external
   sourceRef:
     kind: GitRepository

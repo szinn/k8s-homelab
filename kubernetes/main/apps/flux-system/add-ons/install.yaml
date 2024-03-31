@@ -7,6 +7,9 @@ metadata:
   namespace: flux-system
 spec:
   targetNamespace: flux-system
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: &app flux-system
   path: ./kubernetes/main/apps/flux-system/add-ons
   sourceRef:
     kind: GitRepository

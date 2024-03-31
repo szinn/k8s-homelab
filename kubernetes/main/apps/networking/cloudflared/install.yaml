@@ -9,6 +9,9 @@ metadata:
     substitution.flux.home.arpa/enabled: "true"
 spec:
   targetNamespace: networking
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: &app cloudflared
   path: "./kubernetes/main/apps/networking/cloudflared/app"
   sourceRef:
     kind: GitRepository

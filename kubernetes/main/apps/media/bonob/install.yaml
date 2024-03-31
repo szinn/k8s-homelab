@@ -7,6 +7,9 @@ metadata:
   namespace: flux-system
 spec:
   targetNamespace: media
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: &app bonob
   path: ./kubernetes/main/apps/media/bonob/app
   sourceRef:
     kind: GitRepository

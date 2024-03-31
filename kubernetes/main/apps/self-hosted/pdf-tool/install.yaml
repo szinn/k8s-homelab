@@ -8,6 +8,9 @@ metadata:
     substitution.flux.home.arpa/enabled: "true"
 spec:
   targetNamespace: self-hosted
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: &app pdf-tool
   path: ./kubernetes/main/apps/self-hosted/pdf-tool/app
   sourceRef:
     kind: GitRepository

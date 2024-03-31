@@ -9,7 +9,10 @@ metadata:
     substitution.flux.home.arpa/enabled: "true"
 spec:
   targetNamespace: networking
-  path: "./kubernetes/main/apps/networking/echo-server/app"
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: &app echo-server
+  path: ./kubernetes/main/apps/networking/echo-server/app
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes

@@ -7,6 +7,9 @@ metadata:
   namespace: flux-system
 spec:
   targetNamespace: dev
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: &app kubernetes-schemas
   path: ./kubernetes/main/apps/dev/kubernetes-schemas/app
   sourceRef:
     kind: GitRepository

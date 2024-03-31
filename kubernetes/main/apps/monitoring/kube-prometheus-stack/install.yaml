@@ -7,6 +7,9 @@ metadata:
   namespace: flux-system
 spec:
   targetNamespace: monitoring
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: &app kube-prometheus-stack
   path: ./kubernetes/main/apps/monitoring/kube-prometheus-stack/app
   sourceRef:
     kind: GitRepository

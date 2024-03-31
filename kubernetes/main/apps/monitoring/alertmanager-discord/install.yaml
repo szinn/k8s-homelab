@@ -7,6 +7,9 @@ metadata:
   namespace: flux-system
 spec:
   targetNamespace: monitoring
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: &app alertmanager-discord
   path: ./kubernetes/main/apps/monitoring/alertmanager-discord/app
   sourceRef:
     kind: GitRepository

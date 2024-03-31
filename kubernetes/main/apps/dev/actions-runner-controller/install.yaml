@@ -7,6 +7,9 @@ metadata:
   namespace: flux-system
 spec:
   targetNamespace: dev
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: &app actions-runner-controller
   path: ./kubernetes/main/apps/dev/actions-runner-controller/operator
   sourceRef:
     kind: GitRepository
@@ -27,6 +30,9 @@ metadata:
   namespace: flux-system
 spec:
   targetNamespace: dev
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: &app actions-runner-controller
   path: ./kubernetes/main/apps/dev/actions-runner-controller/runners
   sourceRef:
     kind: GitRepository

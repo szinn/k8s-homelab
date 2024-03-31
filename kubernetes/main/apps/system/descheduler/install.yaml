@@ -7,6 +7,9 @@ metadata:
   namespace: flux-system
 spec:
   targetNamespace: system
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: &app descheduler
   path: ./kubernetes/main/apps/system/descheduler/app
   sourceRef:
     kind: GitRepository

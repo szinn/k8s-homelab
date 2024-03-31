@@ -7,6 +7,9 @@ metadata:
   namespace: flux-system
 spec:
   targetNamespace: system
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: &app democratic-csi
   path: ./kubernetes/main/apps/system/democratic-csi/local-path
   sourceRef:
     kind: GitRepository

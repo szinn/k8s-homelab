@@ -7,6 +7,9 @@ metadata:
   namespace: flux-system
 spec:
   targetNamespace: monitoring
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: &app kromgo
   path: ./kubernetes/main/apps/monitoring/kromgo/app
   sourceRef:
     kind: GitRepository

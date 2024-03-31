@@ -6,6 +6,9 @@ metadata:
   namespace: flux-system
 spec:
   targetNamespace: system
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: &app kube-cleanup-operator
   path: ./kubernetes/main/apps/system/kube-cleanup-operator/app
   sourceRef:
     kind: GitRepository

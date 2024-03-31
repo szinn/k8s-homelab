@@ -7,6 +7,9 @@ metadata:
   namespace: flux-system
 spec:
   targetNamespace: monitoring
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: &app vector
   path: ./kubernetes/main/apps/monitoring/vector
   sourceRef:
     kind: GitRepository
