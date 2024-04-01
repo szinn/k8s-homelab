@@ -41,7 +41,7 @@ spec:
           main:
             image:
               repository: ghcr.io/onedr0p/lidarr
-              tag: 2.1.7.4030@sha256:57d84c65ce99243c6decd31f758b803b15f199a01aa9dd04e21dc5d4a7d92063
+              tag: 2.1.7.4030@sha256:6b9564037159c2b90f32a2ee34683275783a4b8eff4b609e2d2b1c0654c94bac
             env:
               TZ: ${CONFIG_TIMEZONE}
               LIDARR__LOG_LEVEL: info
