@@ -116,7 +116,7 @@ spec:
       image:
         registry: ghcr.io
         repository: nginxinc/nginx-unprivileged
-        tag: 1.25.4-alpine@sha256:7c1d415090a45370177a2c35283e8fc99c557c9cdcddc66d53ce6610a7eb9827
+        tag: 1.25.4-alpine@sha256:e5a49a7c7ce0b31af96bf676a3b8e7ef2f6ac1de62c86d9c84bc8083fa402948
       replicas: 3
       verboseLogging: false
       deploymentStrategy:
