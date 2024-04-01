@@ -32,9 +32,8 @@ metadata:
   labels:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
-  annotations:
-    kubernetes.io/ingress.class: internal
 spec:
+  ingressClassName: internal
   rules:
     - host: birds.${SECRET_DOMAIN_NAME}
       http:
