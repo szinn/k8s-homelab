@@ -4,7 +4,6 @@ kind: Kustomization
 resources:
   - actions-runner-controller-charts.yaml
   - authentik-charts.yaml
-  - bitnami-charts.yaml
   - backube-charts.yaml
   - bjw-s-charts.yaml
   - cilium-charts.yaml
