@@ -31,3 +31,4 @@ resources:
   - rook-ceph-charts.yaml
   - runix-charts.yaml
   - stakater-charts.yaml
+  - stevehipwell-charts.yaml

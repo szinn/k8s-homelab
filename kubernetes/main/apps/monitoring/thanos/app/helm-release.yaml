@@ -9,89 +9,198 @@ spec:
   chart:
     spec:
       chart: thanos
-      version: 14.0.2
+      version: 1.16.1
       sourceRef:
         kind: HelmRepository
-        name: bitnami-charts
+        name: stevehipwell-charts
         namespace: flux-system
       interval: 15m
   maxHistory: 3
   install:
-    createNamespace: true
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
   uninstall:
     keepHistory: false
+  valuesFrom:
+    - targetPath: objstoreConfig.value.config.bucket
+      kind: Secret
+      name: thanos-secret
+      valuesKey: S3_BUCKET
+    - targetPath: objstoreConfig.value.config.endpoint
+      kind: Secret
+      name: thanos-secret
+      valuesKey: S3_HOST
+    - targetPath: objstoreConfig.value.config.region
+      kind: Secret
+      name: thanos-secret
+      valuesKey: S3_REGION
+    - targetPath: objstoreConfig.value.config.access_key
+      kind: Secret
+      name: thanos-secret
+      valuesKey: S3_ACCESS_KEY
+    - targetPath: objstoreConfig.value.config.secret_key
+      kind: Secret
+      name: thanos-secret
+      valuesKey: S3_SECRET_KEY
   values:
-    image:
-      registry: quay.io
-      repository: thanos/thanos
-      tag: v0.34.1@sha256:567346c3f6ff2927c2c6c0daad977b2213f62d45eca54d48afd19e6deb902181
-    controller:
-      annotations:
-        secret.reloader.stakater.com/reload: thanos-secret
-    existingObjstoreSecret: thanos-s3-secret
-    query:
+    objstoreConfig:
+      value:
+        type: s3
+        config:
+          insecure: true
+    additionalEndpoints:
+      - dnssrv+_grpc._tcp.prometheus-thanos-discovery.monitoring.svc.cluster.local
+    additionalReplicaLabels: ["__replica__"]
+    serviceMonitor:
       enabled: true
-      replicaLabels:
-        - __replica__
-      dnsDiscovery:
-        sidecarsService: prometheus-thanos-discovery
-        sidecarsNamespace: monitoring
-    queryFrontend:
+    compact:
       enabled: true
-      ingress:
-        enabled: true
-        hostname: "thanos.${SECRET_DOMAIN_NAME}"
-        ingressClassName: internal
-    bucketweb:
-      enabled: true
-    compactor:
-      enabled: true
-      extraFlags:
-        - "--compact.concurrency=4"
-        - "--delete-delay=30m"
-      retentionResolutionRaw: 14d
-      retentionResolution5m: 30d
-      retentionResolution1h: 90d
+      extraArgs:
+        - --compact.concurrency=4
+        - --delete-delay=30m
+        - --retention.resolution-raw=14d
+        - --retention.resolution-5m=30d
+        - --retention.resolution-1h=60d
       persistence:
         enabled: true
         storageClass: local-hostpath
         size: 15Gi
-    storegateway:
+    query:
+      replicas: 2
+      extraArgs:
+        - --alert.query-url=http://thanos.${SECRET_DOMAIN_NAME}
+    queryFrontend:
       enabled: true
+      replicas: 2
+      extraEnv:
+        - name: THANOS_CACHE_CONFIG
+          valueFrom:
+            configMapKeyRef:
+              name: thanos-cache-configmap
+              key: cache.yaml
+      extraArgs:
+        - --query-range.response-cache-config=$(THANOS_CACHE_CONFIG)
+      podAnnotations:
+        configmap.reloader.stakater.com/reload: thanos-cache-configmap
+      ingress:
+        enabled: true
+        ingressClassName: internal
+        hosts:
+          - &queryFrontendhost thanos.${SECRET_DOMAIN_NAME}
+    rule:
+      enabled: true
+      replicas: 2
+      extraArgs: ["--web.prefix-header=X-Forwarded-Prefix"]
+      alertmanagersConfig:
+        value: |-
+          alertmanagers:
+            - api_version: v2
+              static_configs:
+                - dnssrv+_http-web._tcp.alertmanager-operated.monitoring.svc.cluster.local
+      rules:
+        value: |-
+          groups:
+            - name: PrometheusWatcher
+              rules:
+                - alert: PrometheusDown
+                  annotations:
+                    summary: A Prometheus has disappeared from Prometheus target discovery
+                  expr: absent(up{job="prometheus-prometheus"})
+                  for: 5m
+                  labels:
+                    severity: critical
       persistence:
         enabled: true
         storageClass: local-hostpath
-        size: 1Gi
-    ruler:
-      enabled: true
-      alertmanagers:
-        - http://alertmanager.monitoring.svc.cluster.local:9093
-      clusterName: ${CONFIG_CLUSTER_NAME} # must match with kube-prometheus-stack value `.prometheus.prometheusSpec.externalLabels.cluster`
-      config: |-
-        groups:
-          - name: "PrometheusWatcher"
-            rules:
-              - alert: "PrometheusDown"
-                expr: absent(up{job="prometheus-prometheus"})
-      dnsDiscovery:
-        enabled: true
+        size: 15Gi
+    storeGateway:
+      replicas: 2
+      extraEnv:
+        - name: THANOS_CACHE_CONFIG
+          valueFrom:
+            configMapKeyRef:
+              name: &configMap thanos-cache-configmap
+              key: cache.yaml
+      extraArgs:
+        - --index-cache.config=$(THANOS_CACHE_CONFIG)
+      podAnnotations:
+        configmap.reloader.stakater.com/reload: thanos-cache-configmap
       persistence:
         enabled: true
         storageClass: local-hostpath
-        size: 512Mi
-      resources:
-        requests:
-          cpu: 23m
-          memory: 94M
-        limits:
-          memory: 113M
-    metrics:
-      enabled: true
-      serviceMonitor:
-        enabled: true
+        size: 15Gi
+
+
+    # image:
+    #   registry: quay.io
+    #   repository: thanos/thanos
+    #   tag: v0.34.1@sha256:567346c3f6ff2927c2c6c0daad977b2213f62d45eca54d48afd19e6deb902181
+    # controller:
+    #   annotations:
+    #     secret.reloader.stakater.com/reload: thanos-secret
+    # existingObjstoreSecret: thanos-s3-secret
+    # query:
+    #   enabled: true
+    #   replicaLabels:
+    #     - __replica__
+    #   dnsDiscovery:
+    #     sidecarsService: prometheus-thanos-discovery
+    #     sidecarsNamespace: monitoring
+    # queryFrontend:
+    #   enabled: true
+    #   ingress:
+    #     enabled: true
+    #     hostname: "thanos.${SECRET_DOMAIN_NAME}"
+    #     ingressClassName: internal
+    # bucketweb:
+    #   enabled: true
+    # compactor:
+    #   enabled: true
+    #   extraFlags:
+    #     - "--compact.concurrency=4"
+    #     - "--delete-delay=30m"
+    #   retentionResolutionRaw: 14d
+    #   retentionResolution5m: 30d
+    #   retentionResolution1h: 90d
+    #   persistence:
+    #     enabled: true
+    #     storageClass: local-hostpath
+    #     size: 15Gi
+    # storegateway:
+    #   enabled: true
+    #   persistence:
+    #     enabled: true
+    #     storageClass: local-hostpath
+    #     size: 1Gi
+    # ruler:
+    #   enabled: true
+    #   alertmanagers:
+    #     - http://alertmanager.monitoring.svc.cluster.local:9093
+    #   clusterName: ${CONFIG_CLUSTER_NAME} # must match with kube-prometheus-stack value `.prometheus.prometheusSpec.externalLabels.cluster`
+    #   config: |-
+    #     groups:
+    #       - name: "PrometheusWatcher"
+    #         rules:
+    #           - alert: "PrometheusDown"
+    #             expr: absent(up{job="prometheus-prometheus"})
+    #   dnsDiscovery:
+    #     enabled: true
+    #   persistence:
+    #     enabled: true
+    #     storageClass: local-hostpath
+    #     size: 512Mi
+    #   resources:
+    #     requests:
+    #       cpu: 23m
+    #       memory: 94M
+    #     limits:
+    #       memory: 113M
+    # metrics:
+    #   enabled: true
+    #   serviceMonitor:
+    #     enabled: true

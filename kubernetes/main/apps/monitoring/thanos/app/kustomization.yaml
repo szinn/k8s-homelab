@@ -4,3 +4,9 @@ kind: Kustomization
 resources:
   - thanos-secrets.yaml
   - helm-release.yaml
+configMapGenerator:
+  - name: thanos-cache-configmap
+    files:
+      - cache.yaml=./config/cache.yaml
+generatorOptions:
+  disableNameSuffixHash: true

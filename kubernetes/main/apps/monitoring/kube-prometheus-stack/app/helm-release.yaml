@@ -212,6 +212,8 @@ spec:
                   storage: 10Gi
         thanos:
           image: quay.io/thanos/thanos:v0.34.1@sha256:567346c3f6ff2927c2c6c0daad977b2213f62d45eca54d48afd19e6deb902181
+          # renovate: depName=quay.io/thanos/thanos datasource=docker
+          version: "0.34.1"
           objectStorageConfig:
             existingSecret:
               name: thanos-s3-secret
