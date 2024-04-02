@@ -68,7 +68,7 @@ spec:
         - --retention.resolution-1h=60d
       persistence:
         enabled: true
-        storageClass: local-hostpath
+        storageClass: openebs-hostpath
         size: 15Gi
     query:
       replicas: 2
@@ -116,7 +116,7 @@ spec:
                     severity: critical
       persistence:
         enabled: true
-        storageClass: local-hostpath
+        storageClass: openebs-hostpath
         size: 15Gi
     storeGateway:
       replicas: 2
@@ -132,75 +132,5 @@ spec:
         configmap.reloader.stakater.com/reload: thanos-cache-configmap
       persistence:
         enabled: true
-        storageClass: local-hostpath
+        storageClass: openebs-hostpath
         size: 15Gi
-
-
-    # image:
-    #   registry: quay.io
-    #   repository: thanos/thanos
-    #   tag: v0.34.1@sha256:567346c3f6ff2927c2c6c0daad977b2213f62d45eca54d48afd19e6deb902181
-    # controller:
-    #   annotations:
-    #     secret.reloader.stakater.com/reload: thanos-secret
-    # existingObjstoreSecret: thanos-s3-secret
-    # query:
-    #   enabled: true
-    #   replicaLabels:
-    #     - __replica__
-    #   dnsDiscovery:
-    #     sidecarsService: prometheus-thanos-discovery
-    #     sidecarsNamespace: monitoring
-    # queryFrontend:
-    #   enabled: true
-    #   ingress:
-    #     enabled: true
-    #     hostname: "thanos.${SECRET_DOMAIN_NAME}"
-    #     ingressClassName: internal
-    # bucketweb:
-    #   enabled: true
-    # compactor:
-    #   enabled: true
-    #   extraFlags:
-    #     - "--compact.concurrency=4"
-    #     - "--delete-delay=30m"
-    #   retentionResolutionRaw: 14d
-    #   retentionResolution5m: 30d
-    #   retentionResolution1h: 90d
-    #   persistence:
-    #     enabled: true
-    #     storageClass: local-hostpath
-    #     size: 15Gi
-    # storegateway:
-    #   enabled: true
-    #   persistence:
-    #     enabled: true
-    #     storageClass: local-hostpath
-    #     size: 1Gi
-    # ruler:
-    #   enabled: true
-    #   alertmanagers:
-    #     - http://alertmanager.monitoring.svc.cluster.local:9093
-    #   clusterName: ${CONFIG_CLUSTER_NAME} # must match with kube-prometheus-stack value `.prometheus.prometheusSpec.externalLabels.cluster`
-    #   config: |-
-    #     groups:
-    #       - name: "PrometheusWatcher"
-    #         rules:
-    #           - alert: "PrometheusDown"
-    #             expr: absent(up{job="prometheus-prometheus"})
-    #   dnsDiscovery:
-    #     enabled: true
-    #   persistence:
-    #     enabled: true
-    #     storageClass: local-hostpath
-    #     size: 512Mi
-    #   resources:
-    #     requests:
-    #       cpu: 23m
-    #       memory: 94M
-    #     limits:
-    #       memory: 113M
-    # metrics:
-    #   enabled: true
-    #   serviceMonitor:
-    #     enabled: true
