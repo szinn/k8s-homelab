@@ -24,6 +24,7 @@ resources:
   - kubernetes-sigs-metrics-server-charts.yaml
   - lwolf-charts.yaml
   - node-feature-discovery-charts.yaml
+  - openebs-charts.yaml
   - piraeus-charts.yaml
   - postfinance-charts.yaml
   - prometheus-community-charts.yaml
