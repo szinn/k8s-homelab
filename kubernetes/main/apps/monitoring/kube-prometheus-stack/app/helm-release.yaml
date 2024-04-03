@@ -216,7 +216,7 @@ spec:
           version: "0.34.1"
           objectStorageConfig:
             existingSecret:
-              name: thanos-s3-secret
+              name: kube-prometheus-stack-secret
               key: objstore.yml
         additionalScrapeConfigs:
           - job_name: minio-job
