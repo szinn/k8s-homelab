@@ -137,14 +137,16 @@ controlPlane:
             maxPods: 150
           nodeIP:
             validSubnets:
-                - 10.12.0.0/24
+                - 10.12.0.0/16
 
     # ETCD configuration
     - |-
       cluster:
         etcd:
           advertisedSubnets:
-            - 10.12.0.0/24
+            - 10.12.0.0/16
+          extraArgs:
+            listen-metrics-urls: http://0.0.0.0:2381
 
     # Cluster configuration
     - |-
@@ -157,13 +159,6 @@ controlPlane:
         scheduler:
           extraArgs:
             bind-address: 0.0.0.0
-
-    # ETCD configuration
-    - |-
-      cluster:
-        etcd:
-          extraArgs:
-            listen-metrics-urls: http://0.0.0.0:2381
 
     # Disable default API server admission plugins.
     - |-

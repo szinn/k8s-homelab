@@ -2,8 +2,8 @@
 autoDirectNodeRoutes: true
 
 cluster:
-  name: "main"
-  id: "1"
+  name: main
+  id: 1
 
 bgp:
   enabled: false
@@ -34,7 +34,7 @@ kubeProxyReplacement: strict
 kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
 k8sServiceHost: localhost
 k8sServicePort: 7445
-ipv4NativeRoutingCIDR: ${CONFIG_MAIN_POD_CIDR}
+ipv4NativeRoutingCIDR: 10.201.0.0/16
 
 loadBalancer:
   algorithm: random

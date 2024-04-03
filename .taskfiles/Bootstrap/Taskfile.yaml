@@ -8,7 +8,10 @@ tasks:
     vars:
       cluster: main
     cmds:
-      - echo "Not implemented yet"
+      - task: :talos:bootstrap
+        vars:
+          cluster: main
+          nodes: k8s-1 k8s-2 k8s-3 k8s-4 k8s-5 k8s-6
 
   staging:
     desc: "Bootstrap staging cluster"

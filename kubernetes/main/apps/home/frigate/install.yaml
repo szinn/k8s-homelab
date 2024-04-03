@@ -23,8 +23,6 @@ spec:
       APP: *app
       VOLSYNC_CLAIM: frigate-config
       VOLSYNC_CAPACITY: 5Gi
-      VOLSYNC_STORAGECLASS: ceph-filesystem
-      VOLSYNC_SNAPSHOTCLASS: csi-ceph-filesystem
   prune: true
   wait: false
   interval: 30m

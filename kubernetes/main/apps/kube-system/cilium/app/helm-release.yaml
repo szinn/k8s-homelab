@@ -34,7 +34,7 @@ spec:
 
   valuesFrom:
     - kind: ConfigMap
-      name: cilium-values
+      name: cilium-helm-values
 
   values:
     bgpControlPlane:
@@ -70,12 +70,10 @@ spec:
             - "hubble.${SECRET_DOMAIN_NAME}"
 
     prometheus:
-      enabled: true
       serviceMonitor:
         enabled: true
 
     operator:
       prometheus:
-        enabled: true
         serviceMonitor:
           enabled: true

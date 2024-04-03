@@ -152,6 +152,20 @@ controlPlane:
           extraArgs:
             feature-gates: GracefulNodeShutdown=true,NewVolumeManagerReconstruction=false
             rotate-server-certificates: true
+          extraConfig:
+            maxPods: 150
+          nodeIP:
+            validSubnets:
+                - 10.11.0.0/16
+
+    # ETCD configuration
+    - |-
+      cluster:
+        etcd:
+          advertisedSubnets:
+            - 10.11.0.0/16
+          extraArgs:
+            listen-metrics-urls: http://0.0.0.0:2381
 
     # Cluster configuration
     - |-
@@ -164,13 +178,6 @@ controlPlane:
         scheduler:
           extraArgs:
             bind-address: 0.0.0.0
-
-    # ETCD configuration
-    - |-
-      cluster:
-        etcd:
-          extraArgs:
-            listen-metrics-urls: http://0.0.0.0:2381
 
     # Disable default API server admission plugins.
     - |-
@@ -207,6 +214,7 @@ controlPlane:
     - &sysctlPatch |-
       machine:
         sysctls:
+          fs.inotify.max_queued_events: "65536"
           fs.inotify.max_user_watches: 1048576
           fs.inotify.max_user_instances: 8192
 

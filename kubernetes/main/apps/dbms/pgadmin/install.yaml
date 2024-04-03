@@ -24,8 +24,6 @@ spec:
       APP_GID: "5050"
       VOLSYNC_CLAIM: pgadmin-config
       VOLSYNC_CAPACITY: 1Gi
-      VOLSYNC_STORAGECLASS: ceph-filesystem
-      VOLSYNC_SNAPSHOTCLASS: csi-ceph-filesystem
   prune: true
   wait: false
   interval: 30m

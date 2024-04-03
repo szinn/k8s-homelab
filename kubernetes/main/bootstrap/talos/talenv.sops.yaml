@@ -1,7 +1,7 @@
-clusterName: staging
+clusterName: main
 clusterEndpointIP: 10.0.5.10
 clusterServiceNets: 10.200.0.0/16
-clusterPodNets: 10.211.0.0/16
+clusterPodNets: 10.201.0.0/16
 vectorAggregatorIP: 10.11.1.4
 sops:
     kms: []
@@ -12,23 +12,23 @@ sops:
         - recipient: age1p28u8xjm5sf7jdavc8xsqtw7lxgscefxs7a5dtqszr2885xeputsh9y64y
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBIUE9INDZrNzczSU9iS1FK
-            WEVxbEY3eVAxM2hXQUl4S3R4TVREd2IvMVNzCjdUK2FKOGZuckpwRjRyeUUvYjNa
-            M2MvL2FkY0VabDVTMUtqSFFuaEVlRUkKLS0tIElyMThpQkNDVHhnMjRGS0kwRUpj
-            ODNCZHhaSGRhYi9kVEd0bnBQdmFNYmcKcyy8KYpcQ+WP6Y7/oUCQzmH4GKpa7M+x
-            pNvu89nJhMoB3I8MLtVgYRgtZlemND+AsgqCHdmfEjTCW2cNHAysjw==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAxRnJVMTc5dUM0S2o4TE5r
+            NExIL0Q1SlBJWmtBN3NtU0NCOGlDODUxL0g4CmN0S1ViOGUxZWUrRnNsZFpkZXFY
+            dXRjaUMwckxLMlNySlFyRkVrN3Vsd00KLS0tIHNHRUZSQjRPR3VtSVpVVWtSekNQ
+            Uk5ESVR6UFRDeVp4MW9SbXFvTUQ0dGMKU3XsA+jMDGVLz+OSR8WU/zXwBE+t28oV
+            zMsalXPJQuu8CGzSK/Xa0YaPn8JKiB6ggLZE+JLPlqAiVK65H52EqQ==
             -----END AGE ENCRYPTED FILE-----
-        - recipient: age1cyqpra4hj22emvvsjyygd3mstyrf8vy0hktmvmv85kxgggqxzfns4pkdhy
+        - recipient: age1pwxsukhcw4j3x0q7x74e5suwmn48qs56ewlz9t2ndftg3mh36ftqfwcn8p
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBKb3ZWb3hKYkVPY0NFWmZU
-            Uk1kUkhvRjg4Mm1SL2NBREQrQzJMUEhQbG4wClM5aFdLM3dqNW5mTTFYZkNUcXQ0
-            R0N3eUc2aXFxbFB3VDhHTUgwQUtJWHMKLS0tIHNjeVJ5cDMvV1FaOHl6QjVkRDhE
-            LzRDVnNsMmFidnNUY0J6b3BicnJObjQKKuPUGgPhglihHl8BmtY4dXsb7Svztkoy
-            thw7vWbxMpKyD8HuHuOcAFRtwMoF2oW+p6SCKq6S4iyVnPfICXch7Q==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA5L0Z1ZzhDNkFKS0RsUWdV
+            MGxKRE4wQzBUUlBEYzJtbEluNDJrMzcxM2xFCktiWmpGbnhaQWkyclpjTzgybm5C
+            Tjl5WWRaQ2NBbzlZbXBPOStmZTZHRGMKLS0tIHMyMWM5b01ic1RoOGFhVnVpMWFu
+            UTF5S3ZMQ2k5QnhqdWxMOElwRG8yUXMKLn1vqmpISgomgwzYd/QeDYuecTdftxGl
+            OBqbD8l1tysKhr27tBVvww+tDXB6dnvi8vJnM+T/FF/4/2UJ74f1Ew==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2023-12-27T17:13:59Z"
-    mac: ENC[AES256_GCM,data:Mbo7Qd4p0tIQgZaHtIiCXfxbvbNoH64y4oYKWwk7/5V5fAN+aBU9k3LsEW8GDaUMcf4mOmmq9a0LxzFh+JNt5AOannZNxIB4z3BfMsqX1KRhbBnMyexdvOqYnAItewXvWUh6DaZ21UR3wykzAf4lYC20M56si8Qtz0cMO1ZjW+o=,iv:na8teYgRuXPdrFIYiMp/xg6umkwnHbeqD41pVjQf0vM=,tag:X0xv53oB+tci+RBGLKIHQQ==,type:str]
+    lastmodified: "2024-04-03T22:52:19Z"
+    mac: ENC[AES256_GCM,data:m5t+Z6z3eYz8FBnTmIR45lPa6z/atvbrsc/OIo3G9C62dzQFU+3Ew4tYRgHXV9K0ok0iRQU0/TQGfc9GyT0AfxAuTdUiSHQYsLchx6UF5y5Mi7/4A98BAilsjDAUuQMnFMO6QL4jssEsW3wiCnr6SLzIE7beRBn8lZLxOBJMKWU=,iv:+up66B2kqHq5qk6Q3/igXT3bb7KFvoxYozu/9Oy22nE=,tag:QtXOWifuA/QcNXQ4sE1s0w==,type:str]
     pgp: []
     encrypted_regex: ((?i)(displayname|email|pass|secret($|[^N])|key|token|^data$|^stringData))
     version: 3.8.1
