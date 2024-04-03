@@ -23,9 +23,7 @@ spec:
       APP_UID: "568"
       APP_GID: "568"
       VOLSYNC_CLAIM: plex-config
-      VOLSYNC_CAPACITY: 80Gi
-      VOLSYNC_STORAGECLASS: ceph-filesystem
-      VOLSYNC_SNAPSHOTCLASS: csi-ceph-filesystem
+      VOLSYNC_CAPACITY: 30Gi
       GROUP: media
       GATUS_SUBDOMAIN: plex
   prune: true
