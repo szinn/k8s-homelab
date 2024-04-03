@@ -25,7 +25,6 @@ spec:
       APP_GID: "568"
       VOLSYNC_CLAIM: home-assistant-config
       VOLSYNC_CAPACITY: 8Gi
-      VOLSYNC_ACCESSMODES: ReadWriteMany
       VOLSYNC_STORAGECLASS: ceph-filesystem
       VOLSYNC_SNAPSHOTCLASS: csi-ceph-filesystem
   prune: true
