@@ -234,7 +234,7 @@ spec:
           - name: Prometheus
             type: prometheus
             access: proxy
-            url: http://thanos-query.monitoring.svc.cluster.local:9090/
+            url: http://thanos-query.monitoring.svc.cluster.local:10902/
             isDefault: false
             jsonData:
               prometheusType: Thanos
