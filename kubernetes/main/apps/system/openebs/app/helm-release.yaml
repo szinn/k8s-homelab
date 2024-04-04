@@ -22,7 +22,6 @@ spec:
       enabled: false
     localprovisioner:
       enabled: true
-      image: quay.io/openebs/provisioner-localpv@sha256:9e45763b9d067bfef4b367b7b29a4d79d477897a8c7f9a16f4839a3a7e4b31a8
       deviceClass:
         enabled: false
       hostpathClass:
