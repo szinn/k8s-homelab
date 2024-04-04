@@ -3,10 +3,9 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: ubuntu-shell
-  namespace: media
 spec:
   terminationGracePeriodSeconds: 5
-  # nodeName: k8s-6
+  nodeName: k8s-6
   containers:
     - name: shell
       image: ubuntu
@@ -15,21 +14,21 @@ spec:
       securityContext:
         privileged: true
       volumeMounts:
-        # - mountPath: /mnt/host_var
-        #   name: host-var
-        - mountPath: /mnt/plex
-          name: plex
+        - mountPath: /mnt/host_var
+          name: host-var
+        # - mountPath: /mnt/plex
+        #   name: plex
       resources:
         requests:
           cpu: 100m
-          memory: 100m
+          memory: 100Mi
         limits:
           cpu: 2000m
           memory: 10Gi
   volumes:
-    # - name: host-var
-    #   hostPath:
-    #     path: /var
-    - name: plex
-      persistentVolumeClaim:
-        claimName: plex-config
+    - name: host-var
+      hostPath:
+        path: /var
+    # - name: plex
+    #   persistentVolumeClaim:
+    #     claimName: plex-config

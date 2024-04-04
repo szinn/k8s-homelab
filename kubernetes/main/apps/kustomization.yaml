@@ -6,13 +6,12 @@ resources:
   - cert-manager
   - kube-system
   - flux-system
+  - networking
+  - security/namespace.yaml
+  - security/external-secrets/install.yaml
   # Step 2
-  # - networking
-  # - security/namespace.yaml
-  # - security/external-secrets/install.yaml
+  - system
   # Step 3
-  # - system
+  - rook-ceph
   # Step 4
-  # - rook-ceph
-  # Step 5
-  # - dbms
+  - dbms

@@ -12,7 +12,6 @@ spec:
     kind: GitRepository
     name: homelab-kubernetes
   interval: 10m
-  timeout: 5m
   decryption:
     provider: sops
     secretRef:

@@ -36,7 +36,7 @@ tasks:
 
   deploy:
     desc: Deploy a cluster
-    cmd: bash infrastructur/setup/deploy-cluster.sh {{.cluster}}
+    cmd: bash infrastructure/setup/deploy-cluster.sh {{.cluster}}
     requires:
       vars:
         - cluster

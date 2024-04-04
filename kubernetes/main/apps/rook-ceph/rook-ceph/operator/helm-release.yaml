@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: rook-ceph
-      version: v1.14.0
+      version: v1.13.7
       sourceRef:
         kind: HelmRepository
         name: rook-ceph-charts
@@ -31,118 +31,10 @@ spec:
     keepHistory: false
   values:
     csi:
-      provisioner:
-        image: registry.k8s.io/sig-storage/csi-provisioner:v4.0.1@sha256:bf5a235b67d8aea00f5b8ec24d384a2480e1017d5458d8a63b361e9eeb1608a9
-      csiAddons:
-        enabled: false
 
       enableLiveness: true
       serviceMonitor:
         enabled: true
-
-      kubeletDirPath: /var/lib/kubelet
-      enableCSIHostNetwork: true
-      pluginTolerations:
-        - effect: "NoExecute"
-          operator: "Exists"
-        - effect: "NoSchedule"
-          operator: "Exists"
-
-      csiRBDProvisionerResource: |
-        - name : csi-provisioner
-          resource:
-            requests:
-              memory: 128Mi
-              cpu: 25m
-            limits:
-              memory: 256Mi
-        - name : csi-resizer
-          resource:
-            requests:
-              memory: 128Mi
-              cpu: 25m
-            limits:
-              memory: 256Mi
-        - name : csi-attacher
-          resource:
-            requests:
-              memory: 128Mi
-              cpu: 25m
-            limits:
-              memory: 256Mi
-        - name : csi-snapshotter
-          resource:
-            requests:
-              memory: 128Mi
-              cpu: 25m
-            limits:
-              memory: 256Mi
-        - name : csi-rbdplugin
-          resource:
-            requests:
-              memory: 512Mi
-              cpu: 50m
-            limits:
-              memory: 1Gi
-        - name : csi-omap-generator
-          resource:
-            requests:
-              memory: 512Mi
-              cpu: 50m
-            limits:
-              memory: 1Gi
-        - name : liveness-prometheus
-          resource:
-            requests:
-              memory: 128Mi
-              cpu: 25m
-            limits:
-              memory: 256Mi
-
-      csiCephFSProvisionerResource: |
-        - name : csi-provisioner
-          resource:
-            requests:
-              memory: 128Mi
-              cpu: 25m
-            limits:
-              memory: 256Mi
-        - name : csi-resizer
-          resource:
-            requests:
-              memory: 128Mi
-              cpu: 25m
-            limits:
-              memory: 256Mi
-        - name : csi-attacher
-          resource:
-            requests:
-              memory: 128Mi
-              cpu: 25m
-            limits:
-              memory: 256Mi
-        - name : csi-snapshotter
-          resource:
-            requests:
-              memory: 128Mi
-              cpu: 25m
-            limits:
-              memory: 256Mi
-        - name : csi-cephfsplugin
-          resource:
-            requests:
-              memory: 512Mi
-              cpu: 50m
-            limits:
-              memory: 1Gi
-        - name : liveness-prometheus
-          resource:
-            requests:
-              memory: 128Mi
-              cpu: 25m
-            limits:
-              memory: 256Mi
-
     monitoring:
       enabled: true
 
@@ -150,7 +42,6 @@ spec:
 
     resources:
       requests:
-        cpu: 109m
-        memory: 204M
-      limits:
-        memory: 453M
+        memory: 128Mi # unchangable
+        cpu: 100m # unchangable
+      limits: {}
