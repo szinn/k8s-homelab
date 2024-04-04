@@ -1,0 +1,17 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - immich-secrets.yaml
+  - immich-config.yaml
+  - immich-pvc.yaml
+  - db
+  - redis
+  - server
+  - microservices
+  # - machine-learning
+labels:
+  - pairs:
+      app.kubernetes.io/name: immich
+      app.kubernetes.io/instance: immich
+      app.kubernetes.io/part-of: immich

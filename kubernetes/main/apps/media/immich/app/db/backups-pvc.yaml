@@ -1,0 +1,34 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: immich-postgres-backups
+spec:
+  storageClassName: immich-postgres-backups
+  capacity:
+    storage: 1Mi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    server: ${SECRET_ATLAS_NFS_SERVER}
+    path: "${SECRET_ATLAS_NFS_ROOTDIR}/backup/dbms"
+  mountOptions:
+    - nfsvers=4.2
+    - nconnect=8
+    - hard
+    - noatime
+    - nodiratime
+    - nolock
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: immich-postgres-backups
+spec:
+  storageClassName: immich-postgres-backups
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Mi
