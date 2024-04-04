@@ -10,8 +10,10 @@ resources:
   - security/namespace.yaml
   - security/external-secrets/install.yaml
   # Step 2
-  - system
+  # - system
   # Step 3
-  - rook-ceph
+  # - rook-ceph
   # Step 4
-  - dbms
+  # - dbms
+  # Step 5
+  # - self-hosted
