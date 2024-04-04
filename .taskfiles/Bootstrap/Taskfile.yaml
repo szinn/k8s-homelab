@@ -32,11 +32,11 @@ tasks:
 
   config:
     desc: Rebuild all cluster configuration
-    cmd: bash infrastructure/setup/build-config.sh
+    cmd: bash .taskfiles/Bootstrap/_scripts/build-config.sh
 
   deploy:
     desc: Deploy a cluster
-    cmd: bash infrastructure/setup/deploy-cluster.sh {{.cluster}}
+    cmd: bash .taskfiles/Bootstrap/_scripts/deploy-cluster.sh {{.cluster}}
     requires:
       vars:
         - cluster
