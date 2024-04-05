@@ -149,7 +149,7 @@ pre-commit auto-update
 
 All values are defined as shell environment variables.
 
-The shell script [setup/build-config.sh](./infrastructure/setup/build-config.sh) is responsible for traversing the whole repo and creating the appropriate YAML files and encrypting them when necessary.
+The task `bootstrap:config` is responsible for traversing the whole repo and creating the appropriate YAML files and encrypting them when necessary.
 With this structure, all files can be checked in to the repo with no risk of leaking secret values. `build-config.sh` will also create a `.sha256` file for each of the `.cfg` files processed.
 This file is used as an optimization so that the YAML files will only be regenerated if the actual values change, which keeps the number of files in an updating PR smaller.
 
@@ -194,7 +194,7 @@ I am also using poor man's backup (PMB) that is based on kopia as well as volsyn
 
 The machines are configured using Talos (see [Getting Started](https://www.talos.dev/v0.14/introduction/getting-started/) for a walkthrough).
 
-The scripts I used for generating the Talos configuration are found in [talos](./infrastructure/talos/main/).
+The tasks I used for generating the Talos configuration are found in `./.taskfiles/Talos`.
 
 The expectation is that at the end of this step, your machines are up and running and the command line tool `kubectl` can be used to interact with the cluster.
 
