@@ -7,7 +7,6 @@ resources:
   - alertmanager-discord/install.yaml
   - gatus/install.yaml
   - grafana/install.yaml
-  # - jaeger/install.yaml
   - kube-prometheus-stack/install.yaml
   - kromgo/install.yaml
   - loki/install.yaml
