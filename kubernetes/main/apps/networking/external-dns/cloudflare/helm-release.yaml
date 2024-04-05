@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: external-dns
-      version: 1.14.3
+      version: 1.14.4
       sourceRef:
         kind: HelmRepository
         name: external-dns-charts
@@ -17,10 +17,11 @@ spec:
       interval: 15m
   maxHistory: 3
   install:
-    createNamespace: true
+    crds: CreateReplace
     remediation:
       retries: 3
   upgrade:
+    crds: CreateReplace
     cleanupOnFail: true
     remediation:
       retries: 3
@@ -44,17 +45,15 @@ spec:
             name: external-dns-cloudflare-secret
             key: api-key
     extraArgs:
+      - --ingress-class=external
       - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
       - --crd-source-kind=DNSEndpoint
       - --cloudflare-proxied
       - --annotation-filter=external-dns.alpha.kubernetes.io/target
     policy: sync
-    sources:
-      - crd
-      - ingress
+    sources: ["crd", "ingress"]
     txtOwnerId: "homelab"
     txtPrefix: "k8s."
-    domainFilters:
-      - "${SECRET_DOMAIN_NAME}"
+    domainFilters: ["${SECRET_DOMAIN_NAME}"]
     serviceMonitor:
       enabled: true
