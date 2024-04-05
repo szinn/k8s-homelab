@@ -10,7 +10,6 @@ resources:
   - cilium-charts.yaml
   - cloudnative-pg-charts.yaml
   - deliveryhero-charts.yaml
-  - democratic-csi-charts.yaml
   - descheduler-charts.yaml
   - dragonfly-charts.yaml
   - dysnix-charts.yaml
