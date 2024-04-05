@@ -40,3 +40,27 @@ tasks:
     requires:
       vars:
         - cluster
+
+  get-certs:
+    desc: Fetch certificates from cluster
+    cmds:
+      - for: { var: certs, split: ' ' }
+        cmd: kubectl --context {{.cluster}} get secrets -n networking {{.ITEM}}-tls -o yaml | grep -v "creationTimestamp:" | grep -v "resourceVersion:" | grep -v " uid:" > kubernetes/{{.cluster}}/apps/{{.ITEM}}-tls.yaml
+    requires:
+      vars:
+        - cluster
+    vars:
+      certs:
+        sh: 'echo {{if eq .cluster "main"}} "tech-wildcard wildcard" {{else}} "wildcard" {{end}}'
+
+  put-certs:
+    desc: Upload certificates to cluster
+    cmds:
+      - for: { var: certs, split: ' ' }
+        cmd: kubectl --context {{.cluster}} apply -f kubernetes/{{.cluster}}/apps/{{.ITEM}}-tls.yaml
+    requires:
+      vars:
+        - cluster
+    vars:
+      certs:
+        sh: 'echo {{if eq .cluster "main"}} "tech-wildcard wildcard" {{else}} "wildcard" {{end}}'
