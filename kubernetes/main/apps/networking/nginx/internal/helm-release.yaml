@@ -28,7 +28,7 @@ spec:
   values:
     fullnameOverride: nginx-internal
     controller:
-      replicaCount: 1
+      replicaCount: 2
       updateStrategy:
         type: RollingUpdate
       allowSnippetAnnotations: true
