@@ -5,4 +5,3 @@ kind: Kustomization
 resources:
   - k8s-homelab.yaml
   - k8s-staging.yaml
-  - tesla-spy.yaml
