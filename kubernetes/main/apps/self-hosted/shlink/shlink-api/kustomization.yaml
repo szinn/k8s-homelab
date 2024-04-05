@@ -5,3 +5,4 @@ kind: Kustomization
 resources:
   - shlink-secrets.yaml
   - helm-release.yaml
+  - ../../../../templates/gatus/external

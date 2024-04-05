@@ -5,3 +5,4 @@ kind: Kustomization
 namespace: networking
 resources:
   - helm-release.yaml
+  - ../../../../templates/gatus/guarded

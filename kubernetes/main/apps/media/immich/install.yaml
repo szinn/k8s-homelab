@@ -25,5 +25,5 @@ spec:
   postBuild:
     substitute:
       APP: immich
-      GROUP: media
+      GATUS_APP: immich
       GATUS_SUBDOMAIN: photos

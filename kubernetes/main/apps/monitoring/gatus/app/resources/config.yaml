@@ -25,13 +25,29 @@ connectivity:
     interval: 1m
 endpoints:
   - name: status
-    group: external
-    url: https://status.$${SECRET_DOMAIN_NAME}
+    group: guarded
+    url: 1.1.1.1
     interval: 1m
-    client:
-      dns-resolver: tcp://1.1.1.1:53
+    ui:
+      hide-hostname: true
+      hide-url: true
+    dns:
+      query-name: "status.$${SECRET_DOMAIN_NAME}"
+      query-type: A
     conditions:
-      - "[STATUS] == 200"
+      - "len([BODY]) == 0"
+    alerts:
+      - type: discord
+        send-on-resolved: true
+  - name: external
+    group: external
+    url: 1.1.1.1
+    interval: 1m
+    dns:
+      query-name: "external.$${SECRET_DOMAIN_NAME}"
+      query-type: A
+    conditions:
+      - "len([BODY]) > 0"
     alerts:
       - type: discord
         send-on-resolved: true

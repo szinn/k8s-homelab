@@ -22,3 +22,8 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 5m
+  postBuild:
+    substitute:
+      GATUS_APP: shlink
+      GATUS_SUBDOMAIN: ln
+      GATUS_PATH: /nix

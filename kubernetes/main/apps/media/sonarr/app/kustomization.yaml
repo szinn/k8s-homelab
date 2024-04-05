@@ -6,4 +6,4 @@ resources:
   - sonarr-secrets.yaml
   - helm-release.yaml
   - ../../../../templates/volsync
-  - ../../../../templates/gatus/cluster
+  - ../../../../templates/gatus/guarded

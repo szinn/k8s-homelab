@@ -19,3 +19,8 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 5m
+  postBuild:
+    substitute:
+      GATUS_APP: kromgo
+      GATUS_SUBDOMAIN: kromgo
+      GATUS_PATH: /-/ready

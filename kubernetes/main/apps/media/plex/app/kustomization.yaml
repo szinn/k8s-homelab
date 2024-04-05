@@ -7,4 +7,4 @@ resources:
   - helm-release.yaml
   - cache-pvc.yaml
   - ../../../../templates/volsync
-  - ../../../../templates/gatus/cluster
+  - ../../../../templates/gatus/guarded

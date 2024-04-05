@@ -24,7 +24,7 @@ spec:
       APP_GID: "568"
       VOLSYNC_CLAIM: sonarr-config
       VOLSYNC_CAPACITY: 2Gi
-      GROUP: media
+      GATUS_APP: sonarr
       GATUS_SUBDOMAIN: sonarr
   prune: true
   wait: false

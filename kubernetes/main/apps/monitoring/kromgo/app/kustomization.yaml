@@ -5,6 +5,7 @@ kind: Kustomization
 namespace: monitoring
 resources:
   - helm-release.yaml
+  - ../../../../templates/gatus/external
 configMapGenerator:
   - name: kromgo-configmap
     files:

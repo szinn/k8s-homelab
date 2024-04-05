@@ -5,3 +5,4 @@ kind: Kustomization
 resources:
   - helm-release.yaml
   - wikijs-secrets.yaml
+  - ../../../../templates/gatus/external

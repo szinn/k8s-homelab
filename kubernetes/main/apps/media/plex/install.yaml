@@ -24,7 +24,7 @@ spec:
       APP_GID: "568"
       VOLSYNC_CLAIM: plex-config
       VOLSYNC_CAPACITY: 30Gi
-      GROUP: media
+      GATUS_APP: plex
       GATUS_SUBDOMAIN: plex
   prune: true
   wait: false

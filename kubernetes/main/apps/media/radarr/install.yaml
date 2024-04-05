@@ -24,7 +24,7 @@ spec:
       APP_GID: "568"
       VOLSYNC_CLAIM: radarr-config
       VOLSYNC_CAPACITY: 4Gi
-      GROUP: media
+      GATUS_APP: radarr
       GATUS_SUBDOMAIN: radarr
   prune: true
   wait: false

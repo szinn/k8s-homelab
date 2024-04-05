@@ -6,4 +6,4 @@ resources:
   - radarr-secrets.yaml
   - helm-release.yaml
   - ../../../../templates/volsync
-  - ../../../../templates/gatus/cluster
+  - ../../../../templates/gatus/guarded

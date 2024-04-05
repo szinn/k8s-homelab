@@ -26,7 +26,7 @@ spec:
   postBuild:
     substitute:
       APP: authentik
-      GROUP: security
+      GATUS_APP: authentik
       GATUS_SUBDOMAIN: sso
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/kustomize.toolkit.fluxcd.io/kustomization_v1.json

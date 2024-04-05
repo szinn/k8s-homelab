@@ -25,6 +25,8 @@ spec:
       APP_GID: "568"
       VOLSYNC_CLAIM: home-assistant-config
       VOLSYNC_CAPACITY: 8Gi
+      GATUS_APP: home-assistant
+      GATUS_SUBDOMAIN: home
   prune: true
   wait: false
   interval: 30m

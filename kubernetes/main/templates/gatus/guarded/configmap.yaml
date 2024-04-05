@@ -2,15 +2,15 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: "gatus-cluster-${GATUS_APP}"
+  name: "gatus-guarded-${GATUS_APP}"
   labels:
     gatus.io/enabled: "true"
 data:
   config.yaml: |
     endpoints:
       - name: "${GATUS_APP}"
-        group: "${GATUS_GROUP:-cluster}"
-        url: 10.0.5.4
+        group: "${GATUS_GROUP:-guarded}"
+        url: 1.1.1.1
         interval: 1m
         ui:
           hide-hostname: true
@@ -18,7 +18,8 @@ data:
         dns:
           query-name: "${GATUS_SUBDOMAIN:-${APP}}.${SECRET_DOMAIN_NAME}"
           query-type: A
-        conditions: ["[DNS_RCODE] == NOERROR"]
+        conditions:
+          - "len([BODY]) == 0"
         alerts:
           - type: discord
             send-on-resolved: true
