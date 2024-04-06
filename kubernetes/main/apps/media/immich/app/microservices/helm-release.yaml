@@ -52,7 +52,7 @@ spec:
           main:
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v1.100.0@sha256:d603fd34d587cbf0c99442bb44da395450157d5eb7dec40d2d1d16f2cfdb988b
+              tag: v1.101.0@sha256:0097562444db38ebd2e5f98e71bd27dc6dd69b7f786207f7d323febbf99b8f93
             command: /bin/sh
             args:
               - ./start-microservices.sh
