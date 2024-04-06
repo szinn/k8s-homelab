@@ -88,7 +88,7 @@ data:
             widget:
               type: pihole
               url: https://pihole.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
-              key: {{HOMEPAGE_VAR_PIHOLE_TOKEN }}
+              key: {{HOMEPAGE_VAR_PIHOLE_TOKEN}}
 
     - Media:
         - Sonarr:
