@@ -29,21 +29,21 @@ spec:
     keepHistory: false
   values:
     fullnameOverride: external-dns-cloudflare
-    deploymentAnnotations:
-      reloader.stakater.com/auto: "true"
+    podAnnotations:
+      secret.reloader.stakater.com/reload: &secret external-dns-cloudflare-secret
     logLevel: debug
     provider: cloudflare
     env:
       - name: CF_API_EMAIL
         valueFrom:
           secretKeyRef:
-            name: external-dns-cloudflare-secret
-            key: email
+            name: *secret
+            key: CF_API_EMAIL
       - name: CF_API_KEY
         valueFrom:
           secretKeyRef:
-            name: external-dns-cloudflare-secret
-            key: api-key
+            name: *secret
+            key: CF_API_KEY
     extraArgs:
       - --ingress-class=external
       - --crd-source-apiversion=externaldns.k8s.io/v1alpha1

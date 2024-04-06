@@ -28,8 +28,8 @@ spec:
     keepHistory: false
   values:
     fullnameOverride: external-dns-bind
-    deploymentAnnotations:
-      reloader.stakater.com/auto: "true"
+    podAnnotations:
+      secret.reloader.stakater.com/reload: &secret external-dns-bind-secret
     provider: rfc2136
     env:
       - name: EXTERNAL_DNS_RFC2136_HOST
@@ -45,12 +45,12 @@ spec:
       - name: EXTERNAL_DNS_RFC2136_TSIG_SECRET_ALG
         valueFrom:
           secretKeyRef:
-            name: external-dns-bind-secret
+            name: *secret
             key: externaldns-algorithm
       - name: EXTERNAL_DNS_RFC2136_TSIG_SECRET
         valueFrom:
           secretKeyRef:
-            name: external-dns-bind-secret
+            name: *secret
             key: externaldns-secret
     policy: sync
     sources: ["ingress", "service"]
