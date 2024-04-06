@@ -1,0 +1,192 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homepage-config
+data:
+  settings.yaml: |
+    title: Homelab
+    # background:
+    #   image: https://raw.githubusercontent.com/joryirving/home-ops/main/.docs/assets/101518784_p0.jpg
+    #   opacity: 20
+    favicon: https://github.com/walkxcode/dashboard-icons/blob/main/png/heimdall.png
+    theme: dark
+    color: slate
+    headerStyle: clean
+    statusStyle: dot
+    useEqualHeights: true
+    quicklaunch:
+      searchDescriptions: true
+      hideInternetSearch: true
+      showSearchSuggestions: true
+      hideVisitURL: true
+    layout:
+      Calendar:
+        style: column
+        icon: mdi-calendar
+        initiallyCollapsed: true
+      Network:
+        style: row
+        columns: 5
+        icon: mdi-network
+      Media:
+        style: row
+        columns: 5
+        icon: mdi-download-circle
+
+  widgets.yaml: |
+    # - logo:
+    #     icon: https://raw.githubusercontent.com/joryirving/home-ops/main/.docs/icons/lds-transparent.png
+    - search:
+        provider: [google]
+        focus: false
+        target: _blank
+    - kubernetes:
+        cluster:
+          cpu: true
+          memory: true
+          show: true
+          showLabel: true
+        nodes:
+          cpu: true
+          memory: true
+          show: false
+          showLabel: true
+    - openmeteo:
+        label: Home
+        latitude: {{HOMEPAGE_VAR_LATITUDE}}
+        longitude: {{HOMEPAGE_VAR_LONGITUDE}}
+        units: metric
+        cache: 5
+    - datetime:
+        text_size: l
+        format:
+          timeStyle: short
+          dateStyle: short
+          hourCycle: h23
+    - unifi_console:
+        url: {{HOMEPAGE_VAR_UNIFI_URL}}
+        username: {{HOMEPAGE_VAR_UNIFI_USERNAME}}
+        password: {{HOMEPAGE_VAR_UNIFI_PASSWORD}}
+
+  services.yaml: |
+    - Network:
+        - Cloudflared:
+            href: https://dash.cloudflare.com/
+            icon: cloudflare-zero-trust.png
+            description: Cloudflared Tunnel Status
+            widget:
+              type: cloudflared
+              accountid: {{HOMEPAGE_VAR_CLOUDFLARED_ACCOUNTID}}
+              tunnelid: {{HOMEPAGE_VAR_CLOUDFLARED_TUNNELID}}
+              key: {{HOMEPAGE_VAR_CLOUDFLARED_API_TOKEN}}
+              fields: ["status"]
+        - PiHole:
+            href: https://pihole.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
+            icon: pihole.png
+            description: PiHole DNS
+            widget:
+              type: pihole
+              url: https://pihole.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
+              key: {{HOMEPAGE_VAR_PIHOLE_TOKEN }}
+
+    - Media:
+        - Sonarr:
+            href: https://sonarr.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            siteMonitor: https://sonarr.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            icon: sonarr.png
+            description: TV Shows
+            widget:
+              type: sonarr
+              url: http://sonarr.media:8989
+              key: {{HOMEPAGE_VAR_SONARR_TOKEN}}
+        - Radarr-4k:
+            href: https://radarr-4k.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            siteMonitor: https://radarr-4k.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            icon: radarr.png
+            description: 4K Movies
+            widget:
+              type: radarr
+              url: http://radarr-4k.media:7878
+              key: {{HOMEPAGE_VAR_RADARR_4K_TOKEN}}
+        - Radarr:
+            href: https://radarr.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            siteMonitor: https://radarr.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            icon: radarr.png
+            description: Movies
+            widget:
+              type: radarr
+              url: http://radarr.media:7878
+              key: {{HOMEPAGE_VAR_RADARR_TOKEN}}
+        - Sabnzbd:
+            href: https://sabnzbd.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            siteMonitor: https://sabnzbd.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            icon: sabnzbd.png
+            description: NZB Downloader
+            widget:
+              type: sabnzbd
+              url: http://sabnzbd.media
+              key: {{HOMEPAGE_VAR_SABNZBD_TOKEN}}
+
+    - Calendar:
+        - Agenda:
+            widget:
+              type: calendar
+              view: agenda # optional - possible values monthly, agenda
+              maxEvents: 5 # optional - defaults to 10
+              integrations: # optional
+                - type: sonarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr>
+                  service_group: Media # group name where widget exists
+                  service_name: Sonarr # service name for that widget
+                - type: radarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr>
+                  service_group: Media # group name where widget exists
+                  service_name: Radarr # service name for that widget
+                - type: radarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr>
+                  service_group: Media # group name where widget exists
+                  service_name: Radarr-4k # service name for that widget
+
+  bookmarks.yaml: |
+    - Communicate:
+        - Discord:
+            - icon: discord.png
+              href: 'https://discord.com/app'
+        - Gmail:
+            - icon: gmail.png
+              href: 'http://gmail.com'
+        - Google Calendar:
+            - icon: google-calendar.png
+              href: 'https://calendar.google.com'
+        - Outlook:
+            - icon: https://raw.githubusercontent.com/joryirving/home-ops/main/.docs/icons/outlook.png
+              href: 'https://outlook.com'
+    - Media Links:
+        - YouTube:
+            - icon: youtube.png
+              href: 'https://youtube.com/feed/subscriptions'
+        - Spotify:
+            - icon: spotify.png
+              href: 'http://open.spotify.com'
+        - Youtube Music:
+            - icon: https://raw.githubusercontent.com/joryirving/home-ops/main/.docs/icons/youtube-music.png
+              href: 'https://music.youtube.com'
+    - Reading:
+        - Beyond:
+            - icon: https://raw.githubusercontent.com/joryirving/home-ops/main/.docs/icons/beyond.png
+              href: 'https://forums.beyond.ca/search.php?do=getnew&contenttype=vBForum_Post'
+        - Western Subaru Club:
+            - icon: https://raw.githubusercontent.com/joryirving/home-ops/main/.docs/icons/wsc.png
+              href: 'http://westernsubaruclub.com/smf/index.php?action=unread'
+        - Reddit:
+            - icon: reddit.png
+              href: 'https://reddit.com'
+    - Git:
+        - kubesearch:
+            - icon: kubernetes-dashboard.png
+              href: 'https://kubesearch.dev/'
+        - home-ops:
+            - icon: github.png
+              href: 'https://github.com/joryirving/home-ops'
+
+  docker.yaml: ""
+  kubernetes.yaml: |
+    mode: cluster
