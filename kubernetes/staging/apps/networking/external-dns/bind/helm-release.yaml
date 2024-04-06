@@ -17,10 +17,11 @@ spec:
         namespace: flux-system
   maxHistory: 2
   install:
-    createNamespace: true
+    crds: CreateReplace
     remediation:
       retries: 3
   upgrade:
+    crds: CreateReplace
     cleanupOnFail: true
     remediation:
       retries: 3
@@ -58,7 +59,6 @@ spec:
       - service
     txtOwnerId: default
     txtPrefix: k8s.${CONFIG_CLUSTER_NAME}.
-    domainFilters:
-      - "${SECRET_DOMAIN_NAME}"
+    domainFilters: ["${SECRET_DOMAIN_NAME}"]
     serviceMonitor:
       enabled: true
