@@ -40,7 +40,7 @@ spec:
           main:
             image:
               repository: docker.io/timberio/vector
-              tag: 0.36.1-alpine@sha256:6e070b786dac861d96c27a86750cbbd51b504b9eb23dc4fbe6b3b277ee9134fd
+              tag: 0.37.0-alpine@sha256:f0645334e82d9bfa45d79899ec1c84ccbd54c1acdce21c8e7797fc15758a197a
             args: ["--config", "/etc/vector/vector.yaml"]
             env:
               PROCFS_ROOT: /host/proc
