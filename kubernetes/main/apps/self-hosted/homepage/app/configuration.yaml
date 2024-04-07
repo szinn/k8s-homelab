@@ -82,8 +82,9 @@ data:
               key: {{HOMEPAGE_VAR_CLOUDFLARED_API_TOKEN}}
               fields: ["status"]
         - PiHole:
-            href: https://pihole.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
-            icon: pihole.png
+            href: https://pihole.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}/admin
+            siteMonitor: https://pihole.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
+            icon: pi-hole.png
             description: PiHole DNS
             widget:
               type: pihole
@@ -91,6 +92,15 @@ data:
               key: {{HOMEPAGE_VAR_PIHOLE_TOKEN}}
 
     - Media:
+        - Overseerr:
+            href: https://overseerr.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            siteMonitor: https://overseerr.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            icon: overseerr.png
+            description: Media Requests
+            widget:
+              type: overseerr
+              url: http://overseerr.media
+              key: {{HOMEPAGE_VAR_OVERSEERR_TOKEN}}
         - Sonarr:
             href: https://sonarr.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
             siteMonitor: https://sonarr.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
@@ -118,6 +128,27 @@ data:
               type: radarr
               url: http://radarr.media:7878
               key: {{HOMEPAGE_VAR_RADARR_TOKEN}}
+        - Lidarr:
+            href: https://lidarr.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            siteMonitor: https://lidarr.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            icon: lidarr.png
+            description: Music
+            widget:
+              type: lidarr
+              url: http://lidarr.media:8686
+              key: {{HOMEPAGE_VAR_LIDARR_TOKEN}}
+        # - Navidrome:
+        #     href: https://music.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+        #     siteMonitor: https://music.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+        #     icon: navidrome.png
+        #     description: Music Library
+        #     widget:
+        #       type: navidrome
+        #       url: http://navidrome.media
+        #       username: {{HOMEPAGE_VAR_NAVIDROME_USERNAME}}
+        #       token: {{HOMEPAGE_VAR_NAVIDROME_TOKEN}}
+        #       salt: {{HOMEPAGE_VAR_NAVIDROME_SALT}}
+
         - Sabnzbd:
             href: https://sabnzbd.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
             siteMonitor: https://sabnzbd.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
@@ -127,7 +158,17 @@ data:
               type: sabnzbd
               url: http://sabnzbd.media
               key: {{HOMEPAGE_VAR_SABNZBD_TOKEN}}
-
+        - qBitTorrent:
+            href: https://qbittorrent.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            siteMonitor: https://qbittorrent.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            icon: qbittorrent.png
+            description: Torrent Downloader
+            widget:
+              type: qbittorrent
+              url: https://qbittorrent.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+              username: {{HOMEPAGE_VAR_QBITTORRENT_USERNAME}}
+              password: {{HOMEPAGE_VAR_QBITTORRENT_PASSWORD}}
+ 
     - Calendar:
         - Agenda:
             widget:
@@ -163,6 +204,9 @@ data:
         - YouTube:
             - icon: youtube.png
               href: 'https://youtube.com/feed/subscriptions'
+        - Navidrome:
+            - icon: navidrome.png
+              href: https://music.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
         - Spotify:
             - icon: spotify.png
               href: 'http://open.spotify.com'

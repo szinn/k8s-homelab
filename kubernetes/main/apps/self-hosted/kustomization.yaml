@@ -6,7 +6,7 @@ resources:
   - namespace.yaml
   - changedetection/install.yaml
   - dashy/install.yaml
-  - homepage/install.yaml
+  # - homepage/install.yaml
   - pdf-tool/install.yaml
   - shlink/install.yaml
   - theme-park/install.yaml
