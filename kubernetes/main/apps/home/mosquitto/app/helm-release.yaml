@@ -51,9 +51,10 @@ spec:
               tag: 2.0.18@sha256:cb3afd02611b0c58b328196ab00de0158322b4c1e014841fb182d2a0ea3a79b9
         pod:
           securityContext:
-            runAsUser: 568 # ${APP_UID}
-            runAsGroup: 568 # ${APP_GID}
-            fsGroup: 568 # ${APP_GID}
+            runAsUser: 2000
+            runAsGroup: 2000
+            runAsNonRoot: true
+            fsGroup: 2000
             fsGroupChangePolicy: OnRootMismatch
     service:
       main:

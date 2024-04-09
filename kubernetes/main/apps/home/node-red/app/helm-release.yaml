@@ -36,9 +36,10 @@ spec:
           reloader.stakater.com/auto: "true"
         pod:
           securityContext:
-            runAsUser: 1000 # ${APP_UID}
-            runAsGroup: 1000 # ${APP_GID}
-            fsGroup: 1000 # ${APP_GID}
+            runAsUser: 1000
+            runAsGroup: 1000
+            runAsNonRoot: true
+            fsGroup: 1000
             fsGroupChangePolicy: "OnRootMismatch"
         containers:
           main:

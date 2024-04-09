@@ -5,5 +5,5 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - pvc
-  - sabnzbd/install.yaml
-  - sonarr/install.yaml
+  # - sabnzbd/install.yaml
+  # - sonarr/install.yaml
