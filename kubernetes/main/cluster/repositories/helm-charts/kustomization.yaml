@@ -30,5 +30,6 @@ resources:
   - prometheus-community-charts.yaml
   - rook-ceph-charts.yaml
   - runix-charts.yaml
+  - spegel-charts.yaml
   - stakater-charts.yaml
   - stevehipwell-charts.yaml
