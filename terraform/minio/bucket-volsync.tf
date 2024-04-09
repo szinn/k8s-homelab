@@ -3,6 +3,6 @@ module "onepassword_minio_bucket_volsync" {
   vault         = "Kubernetes"
   password_item = "volsync"
   providers = {
-    minio = minio.atlas
+    minio = minio
   }
 }

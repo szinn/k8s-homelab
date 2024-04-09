@@ -13,6 +13,7 @@ includes:
   flux: .taskfiles/Flux/Taskfile.yaml
   format: .taskfiles/Format/Taskfile.yaml
   kubernetes: .taskfiles/Kubernetes/Taskfile.yaml
+  minio: .taskfiles/Minio/Taskfile.yaml
   postgres: .taskfiles/Postgres/Taskfile.yaml
   pre-commit: .taskfiles/Pre-commit/Taskfile.yaml
   proxmox: .taskfiles/Proxmox/Taskfile.yaml

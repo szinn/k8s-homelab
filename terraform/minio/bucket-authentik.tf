@@ -3,6 +3,6 @@ module "onepassword_minio_bucket_authentik" {
   vault         = "Kubernetes"
   password_item = "authentik"
   providers = {
-    minio = minio.atlas
+    minio = minio
   }
 }

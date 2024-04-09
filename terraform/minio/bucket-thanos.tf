@@ -3,6 +3,6 @@ module "onepassword_minio_bucket_thanos" {
   vault         = "Kubernetes"
   password_item = "thanos"
   providers = {
-    minio = minio.atlas
+    minio = minio
   }
 }
