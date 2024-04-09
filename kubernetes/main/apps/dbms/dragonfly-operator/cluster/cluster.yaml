@@ -5,7 +5,7 @@ kind: Dragonfly
 metadata:
   name: dragonfly
 spec:
-  image: docker.dragonflydb.io/dragonflydb/dragonfly:v1.16.0@sha256:27f7e10867075007f304d56e636b9dbaa6c871707f967de33308a1d220373fb3
+  image: docker.dragonflydb.io/dragonflydb/dragonfly:v1.16.1@sha256:bf369ee773eb137c787191d41cfba5e9521648b5fc7b31e35c783bee624b63fb
   replicas: 3
   resources:
     requests:
