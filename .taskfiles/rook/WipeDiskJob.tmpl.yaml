@@ -13,7 +13,7 @@ spec:
       nodeName: ${node}
       containers:
         - name: disk-wipe
-          image: ghcr.io/onedr0p/alpine:3.17.3@sha256:999384960b6114496a5e4036e945141c205d064ce23b87326bd3f8d878c5a9d4
+          image: docker.io/library/alpine:latest
           securityContext:
             privileged: true
           resources: {}
