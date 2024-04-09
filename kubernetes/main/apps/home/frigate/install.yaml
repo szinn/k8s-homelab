@@ -21,6 +21,8 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      APP_UID: "2000"
+      APP_GID: "2000"
       VOLSYNC_CLAIM: frigate-config
       VOLSYNC_CAPACITY: 5Gi
   prune: true
