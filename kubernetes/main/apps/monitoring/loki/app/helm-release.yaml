@@ -32,7 +32,6 @@ spec:
     loki:
       podAnnotations:
         secret.reloader.stakater.com/reload: loki-secret
-        config.reloader.stakater.com/reload: loki
       ingester:
         chunk_encoding: snappy
       storage:
@@ -54,6 +53,29 @@ spec:
               prefix: loki_index_
               period: 24h
       structuredConfig:
+        auth_enabled: false
+        server:
+          log_level: debug
+          http_listen_port: 3100
+          grpc_listen_port: 9095
+          grpc_server_max_recv_msg_size: 8388608
+          grpc_server_max_send_msg_size: 8388608
+        limits_config:
+          ingestion_burst_size_mb: 128
+          ingestion_rate_mb: 64
+          max_query_parallelism: 100
+          per_stream_rate_limit: 64M
+          per_stream_rate_limit_burst: 128M
+          reject_old_samples: true
+          reject_old_samples_max_age: 168h
+          retention_period: 30d
+          shard_streams:
+            enabled: true
+          split_queries_by_interval: 1h
+        query_scheduler:
+          max_outstanding_requests_per_tenant: 4096
+        frontend:
+          max_outstanding_per_tenant: 4096
         ruler:
           enable_api: true
           enable_alertmanager_v2: true
@@ -63,34 +85,11 @@ spec:
             local:
               directory: /rules
           rule_path: /rules
-      #   auth_enabled: false
-        server:
-          log_level: debug
-      #     http_listen_port: 3100
-      #     grpc_listen_port: 9095
-      #     grpc_server_max_recv_msg_size: 8388608
-      #     grpc_server_max_send_msg_size: 8388608
-        limits_config:
-          ingestion_burst_size_mb: 128
-          ingestion_rate_mb: 64
-      #     max_query_parallelism: 100
-      #     per_stream_rate_limit: 64M
-      #     per_stream_rate_limit_burst: 128M
-          reject_old_samples: true
-          reject_old_samples_max_age: 168h
-          retention_period: 30d
-      #     shard_streams:
-      #       enabled: true
-          split_queries_by_interval: 1h
-      #   query_scheduler:
-      #     max_outstanding_requests_per_tenant: 4096
-      #   frontend:
-      #     max_outstanding_per_tenant: 4096
-      #   analytics:
-      #     reporting_enabled: false
+        analytics:
+          reporting_enabled: false
     gateway:
       enabled: true
-      # replicas: 3
+      replicas: 3
       image:
         registry: ghcr.io
         repository: nginxinc/nginx-unprivileged
@@ -102,6 +101,9 @@ spec:
       ingress:
         enabled: true
         ingressClassName: internal
+        annotations:
+          nginx.ingress.kubernetes.io/whitelist-source-range: |
+            10.0.0.0/8
         hosts:
           - host: &host "loki.${SECRET_DOMAIN_NAME}"
             paths:
@@ -111,15 +113,17 @@ spec:
           - hosts:
               - *host
     write:
-      replicas: 1
+      replicas: 3
       persistence:
         storageClass: openebs-hostpath
+        size: 20Gi
     read:
-      replicas: 1
+      replicas: 3
     backend:
-      replicas: 1
+      replicas: 3
       persistence:
         storageClass: openebs-hostpath
+        size: 20Gi
     monitoring:
       dashboards:
         annotations:
