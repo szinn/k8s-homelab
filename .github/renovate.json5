@@ -3,6 +3,7 @@
   "extends": [
     "github>szinn/renovate-config",
     ":rebaseStalePrs",
+    ":skipStatusChecks",
     "docker:pinDigests",
     "github>szinn/k8s-homelab//.github/renovate/allowedVersions.json5",
     "github>szinn/k8s-homelab//.github/renovate/autoMerge.json5",
