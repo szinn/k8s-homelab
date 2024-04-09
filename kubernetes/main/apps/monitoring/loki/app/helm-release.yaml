@@ -94,6 +94,14 @@ spec:
         registry: ghcr.io
         repository: nginxinc/nginx-unprivileged
         tag: 1.25-alpine
+      topologySpreadConstraints:
+        - maxSkew: 2
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: loki
+              app.kubernetes.io/component: gateway
       service:
         type: LoadBalancer
         annotations:
