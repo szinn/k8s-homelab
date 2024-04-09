@@ -110,6 +110,18 @@ transforms:
               "ip": .message.SRC
           }
       )
+  parseable_kubernetes_add_labels:
+    type: remap
+    inputs:
+      - kubernetes_remap
+    source: |
+      .app = .custom_app_name
+      .container = .container_name
+      .namespace = .kubernetes.pod_namespace
+      .node = .kubernetes.pod_node_name
+      .cluster = "${CONFIG_CLUSTER_NAME}"
+      del(.custom_app_name)
+      del(.container_name)
 # Sinks
 sinks:
   loki_kubernetes:
@@ -175,3 +187,23 @@ sinks:
     remove_timestamp: true
     labels:
       node: "gateway"
+  parseable_kubernetes:
+    type: http
+    method: post
+    batch:
+      max_bytes: 10485760
+      max_events: 1000
+      timeout_secs: 10
+    compression: gzip
+    inputs:
+      - parseable_kubernetes_add_labels
+    encoding:
+      codec: json
+    uri: 'http://parseable.monitoring.svc.cluster.local:8000/api/v1/ingest'
+    auth:
+      strategy: basic
+      user: parseable
+      password: parseable
+    request:
+      headers:
+        X-P-Stream: kubernetes
