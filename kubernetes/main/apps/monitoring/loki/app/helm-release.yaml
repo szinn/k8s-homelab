@@ -38,12 +38,15 @@ spec:
         memberlist:
           join_members: ["loki-memberlist"]
         limits_config:
-          ingestion_rate_mb: 8
-          ingestion_burst_size_mb: 16
+          ingestion_rate_mb: 64
+          ingestion_burst_size_mb: 128
           reject_old_samples: true
           reject_old_samples_max_age: 168h
           max_query_parallelism: 100
           retention_period: 30d
+          shard_streams:
+            enabled: true
+          split_queries_by_interval: 1h
         query_scheduler:
           max_outstanding_requests_per_tenant: 4096
         frontend:
@@ -76,7 +79,7 @@ spec:
             type: local
             local:
               directory: /rules
-          rule_path: /tmp/scratch
+          rule_path: /rules
           ring:
             kvstore:
               store: memberlist
@@ -86,7 +89,6 @@ spec:
               store: memberlist
         compactor:
           working_directory: /var/loki/boltdb-shipper-compactor
-          shared_store: s3
           compaction_interval: 10m
           retention_enabled: true
           retention_delete_delay: 2h
