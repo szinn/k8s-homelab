@@ -2,6 +2,7 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "github>szinn/renovate-config",
+    ":rebaseStalePrs",
     "docker:pinDigests",
     "github>szinn/k8s-homelab//.github/renovate/allowedVersions.json5",
     "github>szinn/k8s-homelab//.github/renovate/autoMerge.json5",
