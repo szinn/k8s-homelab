@@ -268,14 +268,6 @@ spec:
               sslmode: disable
             version: 1
             editable: true
-          - name: Parseable
-            type: parseable-parseable-datasource
-            access: proxy
-            url: http://parseable.monitoring.svc.cluster.local:8000
-            basicAuth: true
-            basicAuthUser: parseable
-            secureJsonData:
-              basicAuthPassword: parseable
           - name: Redis
             type: redis-datasource
             access: proxy
@@ -311,7 +303,6 @@ spec:
       - vonage-status-panel
       - https://github.com/panodata/panodata-map-panel/releases/download/0.16.0/panodata-map-panel-0.16.0.zip;grafana-worldmap-panel-ng
       - redis-datasource
-      - https://grafana.com/api/plugins/parseable-parseable-datasource/versions/1.1.0/download;parseable-parseable-datasource
     serviceMonitor:
       enabled: true
     serviceAccount:

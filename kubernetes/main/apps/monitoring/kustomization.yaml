@@ -12,7 +12,6 @@ resources:
   - loki/install.yaml
   - miscellaneous
   - node-problem-detector/install.yaml
-  - parseable/install.yaml
   - teslamate/install.yaml
   - thanos/install.yaml
   - unifi-poller/install.yaml
