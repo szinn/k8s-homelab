@@ -37,7 +37,7 @@ spec:
 
     cephClusterSpec:
       cephVersion:
-        image: quay.io/ceph/ceph:v18.2.2@sha256:06ddc3ef5b66f2dcc6d16e41842d33a3d7f497849981b0842672ef9014a96726
+        image: quay.io/ceph/ceph:v18.2.2@sha256:8c1697a0a924bbd625c9f1b33893bbc47b97b8a8c66666a715fe60b353b1d93e
 
       resources:
         mgr:
