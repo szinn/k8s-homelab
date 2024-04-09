@@ -9,3 +9,4 @@ resources:
   # - kubernetes-dashboard/install.yaml
   - metrics-server/install.yaml
   - snapshot-controller/install.yaml
+  - spegel/install.yaml

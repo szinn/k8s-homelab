@@ -24,5 +24,6 @@ resources:
   - postfinance-charts.yaml
   - prometheus-community-charts.yaml
   - rook-ceph-charts.yaml
+  - spegel-charts.yaml
   - stakater-charts.yaml
   - vector-charts.yaml
