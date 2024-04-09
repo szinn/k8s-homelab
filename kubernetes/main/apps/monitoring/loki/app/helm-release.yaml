@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: loki
-      version: 5.47.2
+      version: 6.0.0
       sourceRef:
         kind: HelmRepository
         name: grafana-charts
@@ -38,25 +38,22 @@ spec:
         memberlist:
           join_members: ["loki-memberlist"]
         limits_config:
-          retention_period: 30d
-          enforce_metric_name: false
-          reject_old_samples: true
-          reject_old_samples_max_age: 168h
-          max_cache_freshness_per_query: 10m
-          split_queries_by_interval: 1h
-          max_query_parallelism: 100
           ingestion_rate_mb: 8
           ingestion_burst_size_mb: 16
+          reject_old_samples: true
+          reject_old_samples_max_age: 168h
+          max_query_parallelism: 100
+          retention_period: 30d
         query_scheduler:
           max_outstanding_requests_per_tenant: 4096
         frontend:
           max_outstanding_per_tenant: 4096
         schema_config:
           configs:
-            - from: "2021-08-01"
+            - from: "2024-01-01"
               store: boltdb-shipper
               object_store: s3
-              schema: v11
+              schema: v13
               index:
                 prefix: loki_index_
                 period: 24h
