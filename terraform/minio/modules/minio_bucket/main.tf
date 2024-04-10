@@ -7,20 +7,22 @@ terraform {
 }
 
 resource "minio_s3_bucket" "bucket" {
-  bucket = var.bucket_name
-  acl    = "private"
+  for_each = toset(var.bucket_names)
+  bucket   = each.key
+  acl      = "private"
 }
 
 resource "minio_s3_bucket_policy" "bucket" {
-  bucket = minio_s3_bucket.bucket.bucket
-  policy = <<EOF
+  for_each = toset(var.bucket_names)
+  bucket   = each.key
+  policy   = <<EOF
 {
   "Version": "2012-10-17",
   "Statement": [
     {
       "Effect": "Allow",
       "Principal": {"AWS": ["*"]},
-      "Resource": ["arn:aws:s3:::${minio_s3_bucket.bucket.bucket}"],
+      "Resource": ["arn:aws:s3:::${each.key}"],
       "Action": ["s3:ListBucket"]
     }
   ]
@@ -29,9 +31,9 @@ EOF
 }
 
 resource "minio_iam_user" "user" {
-  name          = var.user_name != null ? var.user_name : var.bucket_name
+  name          = var.user_name
   force_destroy = true
-  secret        = var.user_secret != null ? var.user_secret : null
+  secret        = var.user_secret
 }
 
 resource "minio_iam_policy" "rw_policy" {
@@ -46,8 +48,13 @@ resource "minio_iam_policy" "rw_policy" {
                 "s3:*"
             ],
             "Resource": [
-                "arn:aws:s3:::${minio_s3_bucket.bucket.bucket}",
-                "arn:aws:s3:::${minio_s3_bucket.bucket.bucket}/*"
+                %{for i, bucket in var.bucket_names}
+                "arn:aws:s3:::${bucket}",
+                "arn:aws:s3:::${bucket}/*"
+                %{if i < length(var.bucket_names) - 1}
+                ,
+                %{endif}
+                %{endfor}
             ],
             "Sid": ""
         }
