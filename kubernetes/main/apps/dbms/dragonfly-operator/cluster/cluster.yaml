@@ -7,18 +7,22 @@ metadata:
 spec:
   image: docker.dragonflydb.io/dragonflydb/dragonfly:v1.16.1@sha256:bf369ee773eb137c787191d41cfba5e9521648b5fc7b31e35c783bee624b63fb
   replicas: 3
+  args:
+    - --maxmemory=$(MAX_MEMORY)Mi
+    - --proactor_threads=2
+    - --cluster_mode=emulated
+    - --lock_on_hashtags
+  env:
+    - name: MAX_MEMORY
+      valueFrom:
+        resourceFieldRef:
+          resource: limits.memory
+          divisor: 1Mi
   resources:
     requests:
       cpu: 100m
-      memory: 128Mi
     limits:
-      cpu: 500m
-      memory: 1280Mi
-  args:
-    - --maxmemory=1128Mi
-    - --proactor_threads=4
-    - --cluster_mode=emulated
-    - --lock_on_hashtags
+      memory: 512Mi
   serviceSpec:
     type: LoadBalancer
     annotations:
