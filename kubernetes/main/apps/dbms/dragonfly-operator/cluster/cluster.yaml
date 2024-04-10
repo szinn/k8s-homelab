@@ -15,9 +15,10 @@ spec:
       cpu: 500m
       memory: 1280Mi
   args:
-    - "--maxmemory=1128Mi"
-    - "--proactor_threads=4"
-    - "--cluster_mode=emulated"
+    - --maxmemory=1128Mi
+    - --proactor_threads=4
+    - --cluster_mode=emulated
+    - --lock_on_hashtags
   serviceSpec:
     type: LoadBalancer
     annotations:
