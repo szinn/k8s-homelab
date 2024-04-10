@@ -74,25 +74,6 @@ spec:
         token_url: "https://sso.${SECRET_DOMAIN_NAME}/application/o/token/"
         api_url: "https://sso.${SECRET_DOMAIN_NAME}/application/o/userinfo/"
         role_attribute_path: contains(groups, 'Grafana Admins') && 'Admin' || contains(groups, 'Grafana Editors') && 'Editor' || 'Viewer'
-      # Authelia
-      # auth:
-      #   oauth_auto_login: true
-      #   oauth_allow_insecure_email_lookup: true
-      # auth.generic_oauth:
-      #   enabled: true
-      #   name: Authelia
-      #   icon: signin
-      #   client_id: grafana
-      #   scopes: "openid profile email groups"
-      #   empty_scopes: false
-      #   login_attribute_path: preferred_username
-      #   groups_attribute_path: groups
-      #   name_attribute_path: name
-      #   use_pkce: true
-      # auth.generic_oauth.group_mapping:
-      #   role_attribute_path: |
-      #     contains(groups[*], 'admins') && 'Admin' || contains(groups[*], 'people') && 'Viewer'
-      #   org_id: 1
       auth.basic:
         enabled: false
       auth.anonymous:
@@ -351,16 +332,11 @@ spec:
           datasource: Prometheus
       data:
         cloudnative-pg:
-          url: https://github.com/cloudnative-pg/grafana-dashboards/blob/main/charts/cluster/grafana-dashboard.json
+          url: https://raw.githubusercontent.com/cloudnative-pg/grafana-dashboards/main/charts/cluster/grafana-dashboard.json
           datasource: Prometheus
-        dragonfly:
-          url: https://raw.githubusercontent.com/dragonflydb/dragonfly/main/tools/local/monitoring/grafana/provisioning/dashboards/dashboard.json
-          datasource: Prometheus
-        redis:
-          # renovate: depName="Redis Exporter Quickstart and Dashboard"
-          gnetId: 14091
-          revision: 1
-          datasource: Prometheus
+        # dragonfly:
+        #   url: https://raw.githubusercontent.com/dragonflydb/dragonfly/main/tools/local/monitoring/grafana/provisioning/dashboards/dashboard.json
+        #   datasource: Prometheus
         redis-sentinel:
           # renovate: depName="Redis"
           gnetId: 12776
@@ -456,14 +432,13 @@ spec:
         #   url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/cert-manager/dashboards/cert-manager.json
         #   datasource: Prometheus
         ingress-nginx:
-          url: https://raw.githubusercontent.com/kubernetes/main/ingress-nginx/master/deploy/grafana/dashboards/nginx.json
+          url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/grafana/dashboards/nginx.json
           datasource: Prometheus
         ingress-nginx-request-handling-performance:
-          url: https://raw.githubusercontent.com/kubernetes/main/ingress-nginx/master/deploy/grafana/dashboards/request-handling-performance.json
+          url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/grafana/dashboards/request-handling-performance.json
           datasource: Prometheus
-        # Ref: https://grafana.com/grafana/dashboards/7845
         zfs:
-          # renovate: depName="ZFS"
+        # Ref: https://grafana.com/grafana/dashboards/7845
           gnetId: 7845
           revision: 4
           datasource: Prometheus
