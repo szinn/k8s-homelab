@@ -27,6 +27,7 @@ spec:
     authentik:
       redis:
         host: dragonfly.dbms.svc.cluster.local
+        db: 1
     server:
       initContainers:
         - name: init-db
