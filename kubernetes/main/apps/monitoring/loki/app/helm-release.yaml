@@ -55,7 +55,7 @@ spec:
               period: 24h
       structuredConfig:
         server:
-          log_level: debug
+          log_level: info
           http_listen_port: 3100
           grpc_listen_port: 9095
         limits_config:
