@@ -149,7 +149,7 @@ sinks:
     labels:
       node: "{{ node }}"
       facility: "{{ facility }}"
-      cluster: "${CONFIG_CLUSTER_NAME}"
+      cluster: "${CONFIG_CLUSTER_NAME}:talos"
       namespace: "talos:kernel"
   talos_service:
     type: loki
@@ -166,7 +166,7 @@ sinks:
     labels:
       node: "{{ node }}"
       talos_service: '{{ "talos-service" }}'
-      cluster: "${CONFIG_CLUSTER_NAME}"
+      cluster: "${CONFIG_CLUSTER_NAME}:talos"
       namespace: "talos:service"
   vyos:
     inputs: ["vyos_firewall_geoip_remap", "vyos_logs"]
