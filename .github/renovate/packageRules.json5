@@ -39,7 +39,8 @@
       "matchPackageNames": [
         "ghcr.io/bjw-s/helm/app-template",
         "ghcr.io/cloudnative-pg/postgresql",
-        "ghcr.io/siderolabs/installer"
+        "ghcr.io/siderolabs/installer",
+        "ghcr.io/xenitab/helm-charts/spegel"
       ],
       "pinDigests": false
     },
