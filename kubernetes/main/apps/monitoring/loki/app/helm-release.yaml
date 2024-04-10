@@ -30,6 +30,7 @@ spec:
   values:
     deploymentMode: SimpleScalable
     loki:
+      auth_enabled: false
       podAnnotations:
         secret.reloader.stakater.com/reload: loki-secret
       ingester:
@@ -53,38 +54,24 @@ spec:
               prefix: loki_index_
               period: 24h
       structuredConfig:
-        auth_enabled: false
         server:
           log_level: debug
           http_listen_port: 3100
           grpc_listen_port: 9095
-          grpc_server_max_recv_msg_size: 8388608
-          grpc_server_max_send_msg_size: 8388608
         limits_config:
-          ingestion_burst_size_mb: 128
-          ingestion_rate_mb: 64
-          max_query_parallelism: 100
-          per_stream_rate_limit: 64M
-          per_stream_rate_limit_burst: 128M
-          reject_old_samples: true
-          reject_old_samples_max_age: 168h
           retention_period: 30d
-          shard_streams:
-            enabled: true
-          split_queries_by_interval: 1h
-        query_scheduler:
-          max_outstanding_requests_per_tenant: 4096
         frontend:
-          max_outstanding_per_tenant: 4096
+          query_stats_enabled: true
+        compactor:
+          working_directory: /var/loki/boltdb-shipper-compactor
+          retention_enabled: true
+          delete_request_store: s3
         ruler:
           enable_api: true
           enable_alertmanager_v2: true
           alertmanager_url: http://alertmanager-operated:9093
           storage:
-            type: local
-            local:
-              directory: /rules
-          rule_path: /rules
+            type: s3
         analytics:
           reporting_enabled: false
     gateway:

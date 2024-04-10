@@ -53,6 +53,8 @@ transforms:
       r5 = replace(r4, "10.11.0.20", "k8s-5")
       r6 = replace(r5, "10.11.0.21", "k8s-6")
       .node = r6
+      .message = .msg
+      del(.msg)
   talos_service_transform:
     type: remap
     inputs:
