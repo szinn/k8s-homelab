@@ -63,7 +63,7 @@ spec:
         frontend:
           query_stats_enabled: true
         compactor:
-          working_directory: /var/loki/boltdb-shipper-compactor
+          working_directory: /var/loki/compactor/retention
           retention_enabled: true
           delete_request_store: s3
         ruler:
