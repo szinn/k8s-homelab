@@ -38,32 +38,34 @@ At the bottom of this page, is the bringup process that I follow for this cluste
 
 ## Hardware
 
-| Device                                             | Count | OS Disk Size | Data Disk Size        | RAM  | Operating System |
-| -------------------------------------------------- | ----- | ------------ | --------------------- | ---- | ---------------- |
-| Ryzen 3900 12c24t NAS server                       | 1     | 1TB          | 1TB NVME, 6x16Tb SATA | 64GB | NixOS 23.11      |
-| Raspberry Pi                                       | 1     |              |                       |      | PiHole           |
-| Raspberry Pi                                       | 1     |              |                       |      | OctoPrint        |
-| Raspberry Pi 4B                                    | 1     |              |                       |      | BirdNet          |
-| TESmart 16-port HDMI Switch                        | 1     |              |                       |      |                  |
-| PiKVM                                              | 1     |              |                       |      |                  |
-| Intel NUC11PAHi7 (worker nodes)                    | 3     | 500GB SSD    | 1TB NVMe              | 64GB | Talos            |
-| Beelink MiniPC, Celeron J4125 (controlplane nodes) | 3     | 256GB SSD    |                       | 8GB  | Talos            |
-| Synology 1019+ (NFS server)                        | 1     |              | 5x8TB SATA            |      |                  |
-| VyOS Router                                        | 1     |              |                       |      |                  |
-| USW-Pro-24-PoE                                     | 1     |              |                       |      |                  |
-| USW-Enterprise-8-PoE                               | 2     |              |                       |      |                  |
-| UNVR                                               | 1     |              | 3x4TB SATA            |      |                  |
-| Intel NUC11TNHi7                                   | 1     |              |                       | 64GB | Proxmox          |
-| Intel NUC13 Pro                                    | 1     | 1Tb          |                       | 32GB | NixOS - Hera     |
+| Device                                             | Count | OS Disk Size | Data Disk Size        | RAM  | Operating System  |
+| -------------------------------------------------- | ----- | ------------ | --------------------- | ---- | ----------------  |
+| Ryzen 3900 12c24t NAS server                       | 1     | 1TB          | 1TB NVME, 6x16Tb SATA | 64GB | NixOS 23.11       |
+| Raspberry Pi                                       | 1     |              |                       |      | OctoPrint         |
+| Raspberry Pi 4B                                    | 1     |              |                       |      | BirdNet           |
+| Raspberry Pi 5                                     | 1     |              |                       |      | Raspberry PiOS    |
+| TESmart 16-port HDMI Switch                        | 1     |              |                       |      |                   |
+| PiKVM                                              | 1     |              |                       |      |                   |
+| Intel NUC11PAHi7 (worker nodes)                    | 3     | 500GB SSD    | 1TB NVMe              | 64GB | Talos             |
+| Beelink MiniPC, Celeron J4125 (controlplane nodes) | 3     | 256GB SSD    |                       | 8GB  | Talos             |
+| Synology 1019+ (NFS server)                        | 1     |              | 5x12TB SATA           |      |                   |
+| VyOS Router                                        | 1     |              |                       |      | VyOS + containers |
+| USW-Pro-24-PoE                                     | 1     |              |                       |      |                   |
+| USW-Enterprise-8-PoE                               | 2     |              |                       |      |                   |
+| UNVR                                               | 1     |              | 3x4TB SATA            |      |                   |
+| Intel NUC11TNHi7                                   | 1     |              |                       | 64GB | Proxmox           |
+| Intel NUC13 Pro                                    | 1     | 1Tb          |                       | 32GB | NixOS - Hera      |
 
-The Proxmox Intel NUC runs a 6-node Talos staging cluster where I can try out various patterns before deploying in the main cluster. The Ryzen NAS server is also running a single node K3S cluster.
+The Proxmox Intel NUC runs a 6-node Talos staging cluster where I can try out various patterns before deploying in the main cluster.
 
 The Intel NUC13 (Hera) is a spare NUC that I'm currently using as a NixOS platform with a graphical UI.
 
+The VyOS router is configured from [git](https://github.com/szinn/vyos-config) as well and runs a number of containers that provide fundamental components (DNS, UniFi controller, etc.)
+for the homelab.
+
 ## Kubernetes
 
-The cluster is based on [Talos](https://www.talos.dev/v0.14/introduction/getting-started/) with 3 control-plane nodes running
-on the Beelink MiniPCs and 3 worker nodes running on the Intel NUCs.
+The cluster is based on [Talos](https://www.talos.dev) with 3 control-plane nodes running on the Beelink MiniPCs and 3 worker nodes running on the Intel NUCs.
 
 ### Core Components
 
@@ -84,19 +86,19 @@ Charts and images are tagged in the various YAML files to enable Renovate to wat
 
 ## Network Configuration
 
-The external is connected to the UDMPro with a [Wireguard](https://www.wireguard.com) port forwarded to the router VM and ports 80/443 forwarded to the ingress-nginx IP in the cluster.
+The external is connected to the VyOS router with a [Wireguard](https://www.wireguard.com) port forwarded to the router VM. Inbound services are managed with cloudflared.
 
 The 3 worker nodes and Ryzen server are connected to the 8-port switch with 2.5Gb ethernet. The Unifi components are connected with 10Gb ethernet connections.
 Multiple wired access points are scattered around the house and backyard.
 
-The Kubernetes cluster and IPs are on the 10.40.0.x subnet with VLAN tagging. Pods and services are on the 10.40.x.x and 10.41.x.x subnets respectively.
-The Kubernetes API is accessed via an external [HAProxy](https://www.haproxy.com).
-External machines (PiHole, Synology, etc) are on the main household VLAN subnet. IoT devices are on an isolated 10.0.80.x VLAN. They cannot reach the other VLANs directly but will answer when spoken to.
+The Kubernetes cluster and IPs are on the 10.11.0.x subnet with VLAN tagging.
+The Kubernetes API is accessed via an external [HAProxy](https://www.haproxy.com) running on the VyOS router.
+External machines (Synology, etc) are on the main household VLAN subnet. IoT devices are on an isolated 191.168.1.x VLAN. They cannot reach the other VLANs directly but will answer when spoken to.
 
 Cilium works with the router using BGP to route external IPs to Kubernetes services(e.g., MySQL). Ingress-nginx is used to reverse-proxy services within the cluster.
 
-DNS is managed by CoreDNS in the cluster which then forwards unresolved requests to PiHole which is also running an [unbound](https://docs.pi-hole.net/guides/dns/unbound/) recursive DNS server.
-The PiHole has a local DNS configuration to map names to either IPs (assigned by Ingress-nginx) or CNAME records that map to the ingress-nginx IP.
+DNS is managed by CoreDNS in the cluster which then forwards unresolved requests to DNSdist running on the VyOS router that will forward to either bind (for local home traffic) or
+PiHole which is also running an [unbound](https://docs.pi-hole.net/guides/dns/unbound/) recursive DNS server for external traffic.
 
 The external DNS is managed via [Cloudflare](https://www.cloudflare.com/en-ca/).
 External names are managed by [external-dns](https://github.com/kubernetes-sigs/external-dns) on the cluster and, since my home IP can be changed at any time, DDNS is maintained by the
