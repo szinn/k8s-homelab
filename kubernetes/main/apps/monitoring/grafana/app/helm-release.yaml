@@ -296,7 +296,6 @@ spec:
         labelValue: ""
       dashboards:
         enabled: true
-        labelValue: ""
         label: grafana_dashboard
         folderAnnotation: grafana_folder
         searchNamespace: ALL

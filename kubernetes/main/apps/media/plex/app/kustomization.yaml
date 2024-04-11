@@ -8,3 +8,12 @@ resources:
   - cache-pvc.yaml
   - ../../../../templates/volsync
   - ../../../../templates/gatus/guarded
+configMapGenerator:
+  - name: plex-loki-rules
+    files:
+      - plex.yaml=./resources/lokirule.yaml
+    options:
+      labels:
+        loki_rule: "true"
+generatorOptions:
+  disableNameSuffixHash: true
