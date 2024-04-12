@@ -36,8 +36,7 @@ spec:
             - secretRef:
                 name: *secret
       autoscaling:
-        enabled: true
-        minReplicas: 1
+        enabled: false
       metrics:
         prometheus:
           serviceMonitor:
@@ -53,5 +52,4 @@ spec:
         https: false
     worker:
       autoscaling:
-        enabled: true
-        minReplicas: 1
+        enabled: false
