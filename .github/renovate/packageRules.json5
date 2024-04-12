@@ -40,8 +40,7 @@
         "ghcr.io/bjw-s/helm/app-template",
         "ghcr.io/cloudnative-pg/postgresql",
         "ghcr.io/siderolabs/installer",
-        "ghcr.io/xenitab/helm-charts/spegel",
-        "ghcr.io/goauthentik/helm-charts/authentik"
+        "ghcr.io/spegel-org/helm-charts/spegel"
       ],
       "pinDigests": false
     },
