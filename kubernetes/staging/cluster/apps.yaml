@@ -12,6 +12,8 @@ spec:
     name: homelab-kubernetes
   interval: 10m
   timeout: 5m
+  dependsOn:
+    - name: cluster-repositories
   decryption:
     provider: sops
     secretRef:

@@ -12,6 +12,8 @@ spec:
     kind: GitRepository
     name: homelab-kubernetes
   interval: 10m
+  dependsOn:
+    - name: cluster-repositories
   decryption:
     provider: sops
     secretRef:
