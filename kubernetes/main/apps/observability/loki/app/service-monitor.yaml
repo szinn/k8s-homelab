@@ -1,0 +1,29 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/observability.coreos.com/servicemonitor_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: &app loki
+  labels: &labels
+    app.kubernetes.io/component: read
+    app.kubernetes.io/instance: *app
+    app.kubernetes.io/name: *app
+spec:
+  namespaceSelector:
+    matchNames:
+      - observability
+  selector:
+    matchExpressions:
+      - {key: app.kubernetes.io/component, operator: In, values: [read]}
+      - {key: app.kubernetes.io/instance, operator: In, values: [*app]}
+      - {key: app.kubernetes.io/name, operator: In, values: [*app]}
+      - {key: prometheus.io/service-monitor, operator: NotIn, values: ["false"]}
+
+    matchLabels:
+      <<: *labels
+  endpoints:
+    - port: http-metrics
+      scheme: http
+      path: /metrics
+      interval: 2m
+      scrapeTimeout: 30s

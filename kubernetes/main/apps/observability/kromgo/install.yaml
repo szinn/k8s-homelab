@@ -1,0 +1,26 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: observability-kromgo
+  namespace: flux-system
+spec:
+  targetNamespace: observability
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: &app kromgo
+  path: ./kubernetes/main/apps/observability/kromgo/app
+  sourceRef:
+    kind: GitRepository
+    name: homelab-kubernetes
+  prune: true
+  wait: false
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
+  postBuild:
+    substitute:
+      GATUS_APP: kromgo
+      GATUS_SUBDOMAIN: kromgo
+      GATUS_PATH: /-/ready

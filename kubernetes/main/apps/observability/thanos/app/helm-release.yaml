@@ -1,0 +1,136 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: thanos
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: thanos
+      version: 1.16.3
+      sourceRef:
+        kind: HelmRepository
+        name: stevehipwell-charts
+        namespace: flux-system
+      interval: 15m
+  maxHistory: 3
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  uninstall:
+    keepHistory: false
+  valuesFrom:
+    - targetPath: objstoreConfig.value.config.bucket
+      kind: Secret
+      name: thanos-secret
+      valuesKey: S3_BUCKET
+    - targetPath: objstoreConfig.value.config.endpoint
+      kind: Secret
+      name: thanos-secret
+      valuesKey: S3_HOST
+    - targetPath: objstoreConfig.value.config.region
+      kind: Secret
+      name: thanos-secret
+      valuesKey: S3_REGION
+    - targetPath: objstoreConfig.value.config.access_key
+      kind: Secret
+      name: thanos-secret
+      valuesKey: S3_ACCESS_KEY
+    - targetPath: objstoreConfig.value.config.secret_key
+      kind: Secret
+      name: thanos-secret
+      valuesKey: S3_SECRET_KEY
+  values:
+    objstoreConfig:
+      value:
+        type: s3
+        config:
+          insecure: true
+    additionalEndpoints:
+      - dnssrv+_grpc._tcp.prometheus-thanos-discovery.observability.svc.cluster.local
+    additionalReplicaLabels: ["__replica__"]
+    serviceMonitor:
+      enabled: true
+    compact:
+      enabled: true
+      extraArgs:
+        - --compact.concurrency=4
+        - --delete-delay=30m
+        - --retention.resolution-raw=14d
+        - --retention.resolution-5m=30d
+        - --retention.resolution-1h=60d
+      persistence:
+        enabled: true
+        storageClass: openebs-hostpath
+        size: 15Gi
+    query:
+      replicas: 2
+      extraArgs:
+        - --alert.query-url=http://thanos.${SECRET_DOMAIN_NAME}
+    queryFrontend:
+      enabled: true
+      replicas: 2
+      extraEnv:
+        - name: THANOS_CACHE_CONFIG
+          valueFrom:
+            configMapKeyRef:
+              name: thanos-cache-configmap
+              key: cache.yaml
+      extraArgs:
+        - --query-range.response-cache-config=$(THANOS_CACHE_CONFIG)
+      podAnnotations:
+        configmap.reloader.stakater.com/reload: thanos-cache-configmap
+      ingress:
+        enabled: true
+        ingressClassName: internal
+        hosts:
+          - &queryFrontendhost thanos.${SECRET_DOMAIN_NAME}
+    rule:
+      enabled: true
+      replicas: 2
+      extraArgs: ["--web.prefix-header=X-Forwarded-Prefix"]
+      alertmanagersConfig:
+        value: |-
+          alertmanagers:
+            - api_version: v2
+              static_configs:
+                - dnssrv+_http-web._tcp.alertmanager-operated.observability.svc.cluster.local
+      rules:
+        value: |-
+          groups:
+            - name: PrometheusWatcher
+              rules:
+                - alert: PrometheusDown
+                  annotations:
+                    summary: A Prometheus has disappeared from Prometheus target discovery
+                  expr: absent(up{job="prometheus-prometheus"})
+                  for: 5m
+                  labels:
+                    severity: critical
+      persistence:
+        enabled: true
+        storageClass: openebs-hostpath
+        size: 15Gi
+    storeGateway:
+      replicas: 2
+      extraEnv:
+        - name: THANOS_CACHE_CONFIG
+          valueFrom:
+            configMapKeyRef:
+              name: &configMap thanos-cache-configmap
+              key: cache.yaml
+      extraArgs:
+        - --index-cache.config=$(THANOS_CACHE_CONFIG)
+      podAnnotations:
+        configmap.reloader.stakater.com/reload: thanos-cache-configmap
+      persistence:
+        enabled: true
+        storageClass: openebs-hostpath
+        size: 15Gi

@@ -1,0 +1,19 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: dockerhub-rules
+  namespace: observability
+spec:
+  groups:
+    - name: dockerhub.rules
+      rules:
+        - alert: BootstrapRateLimitRisk
+          annotations:
+            summary: Kubernetes cluster at risk of being rate limited by dockerhub on bootstrap
+          expr: |
+            count(time() - container_last_seen{image=~"(docker.io).*",container!=""} < 30) > 100
+          for: 15m
+          labels:
+            severity: critical

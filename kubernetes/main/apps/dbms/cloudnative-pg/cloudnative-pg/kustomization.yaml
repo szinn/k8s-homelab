@@ -5,5 +5,5 @@ kind: Kustomization
 resources:
   - postgres-superuser-secret.yaml
   - helm-release.yaml
-  - prometheus-rule.yaml
+  - prometheus-rules.yaml
   - service.yaml
