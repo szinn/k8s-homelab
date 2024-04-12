@@ -30,9 +30,12 @@ tasks:
   sync:
     desc: Sync flux-cluster with the Git Repository
     cmds:
-      - flux reconcile source git homelab-kubernetes
-      - flux reconcile kustomization cluster
+      - flux --context {{.cluster}} reconcile source git homelab-kubernetes
+      - flux --context {{.cluster}} reconcile kustomization cluster
     silent: false
+    requires:
+      vars:
+        - cluster
 
   hr-suspend:
     desc: Suspend all Flux HelmReleases
