@@ -6,11 +6,8 @@ resources:
   - immich-secrets.yaml
   - immich-config.yaml
   - immich-pvc.yaml
-  - db
-  - redis
-  - server
-  - microservices
-  # - machine-learning
+  - helm-release.yaml
+  - ../../../../templates/gatus/external
 labels:
   - pairs:
       app.kubernetes.io/name: immich
