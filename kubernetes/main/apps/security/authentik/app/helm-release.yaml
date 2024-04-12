@@ -35,12 +35,10 @@ spec:
           envFrom:
             - secretRef:
                 name: *secret
-      autoscaling:
-        enabled: false
       metrics:
-        prometheus:
-          serviceMonitor:
-            enabled: true
+        enabled: true
+        serviceMonitor:
+          enabled: true
       ingress:
         enabled: true
         ingressClassName: external
@@ -50,6 +48,6 @@ spec:
         hosts:
           - sso.${SECRET_DOMAIN_NAME}
         https: false
-    worker:
-      autoscaling:
-        enabled: false
+    prometheus:
+      rules:
+        enabled: true

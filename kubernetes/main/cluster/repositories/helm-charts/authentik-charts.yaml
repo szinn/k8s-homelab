@@ -6,6 +6,6 @@ metadata:
   name: authentik-charts
   namespace: flux-system
 spec:
+  type: oci
   interval: 30m
-  url: https://charts.goauthentik.io
-  timeout: 3m
+  url: oci://ghcr.io/goauthentik/helm-charts/authentik
