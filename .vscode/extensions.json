@@ -1,6 +1,5 @@
 {
     "recommendations": [
-        "oderwat.indent-rainbow",
         "signageos.signageos-vscode-sops"
     ]
 }

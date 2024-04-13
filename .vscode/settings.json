@@ -2,7 +2,8 @@
   "discord.enabled": true,
   "files.associations": {
     "*.json5": "jsonc",
-    "**/terraform/**/*.tf": "terraform"
+    "kubernetes/**/*.sops.toml": "plaintext",
+    "terraform/**/*.tf": "terraform"
   },
   "files.exclude": {
     ".direnv/": true,
