@@ -36,7 +36,7 @@ spec:
           main:
             image:
               repository: ghcr.io/onedr0p/intel-gpu-exporter
-              tag: rolling@sha256:4a4d6232d76095204f7bd54366216032d507bc70cf7aa66a9c5fe1a223fc6902
+              tag: rolling@sha256:724671c249e494fcaeacf67b23149da440cf3191b12e9f8481c826496d742ea8
             securityContext:
               privileged: true
             resources:
