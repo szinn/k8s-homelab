@@ -5,6 +5,8 @@ kind: Dragonfly
 metadata:
   name: dragonfly
 spec:
+  labels:
+    dragonflydb.io/cluster: dragonfly
   image: docker.dragonflydb.io/dragonflydb/dragonfly:v1.17.0@sha256:7f1a470b358a3edf064b889df797a952223497f70e59b57f78edf4e018461bd6
   replicas: 3
   args:
@@ -21,6 +23,7 @@ spec:
   resources:
     requests:
       cpu: 100m
+      memory: 128Mi
     limits:
       memory: 512Mi
   serviceSpec:
