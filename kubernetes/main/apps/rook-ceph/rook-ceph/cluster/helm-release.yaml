@@ -39,7 +39,7 @@ spec:
       osd_class_update_on_start = false
     cephClusterSpec:
       cephVersion:
-        image: quay.io/ceph/ceph:v18.2.2@sha256:8c1697a0a924bbd625c9f1b33893bbc47b97b8a8c66666a715fe60b353b1d93e
+        image: quay.io/ceph/ceph:v18.2.2@sha256:75e33696cc6bd68b0c1527ff8580471dd8c4ff3f6c35b66fa2a0d9c97263895b
 
       resources:
         mgr:
