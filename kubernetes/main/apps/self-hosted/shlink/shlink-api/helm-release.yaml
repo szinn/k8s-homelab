@@ -52,7 +52,7 @@ spec:
           main:
             image:
               repository: ghcr.io/shlinkio/shlink
-              tag: 4.0.3@sha256:efa6992d1c1fdf8829790c52a8f494ce056dd654d57d2b3c894b4a4c6ca11537
+              tag: 4.1.0@sha256:8d10f298eef0b3e4c649572c671c873f2bbb800c733717fe52b66dc5cfe0526d
             env:
               DB_DRIVER: postgres
               DEFAULT_DOMAIN: &host "ln.${SECRET_DOMAIN_NAME}"
