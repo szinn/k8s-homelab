@@ -47,7 +47,7 @@ spec:
           main:
             image:
               repository: ghcr.io/shlinkio/shlink-web-client
-              tag: 4.1.1@sha256:11706de28d9ed9eb65bfa897f042a3b997f79ceed64e9410903f99d88450136b
+              tag: 4.1.2@sha256:bd0dad6321220398fecbc7cfb2eb438c32f466747d7a39e51cccf3747b6f3e03
             env:
               SHLINK_SERVER_URL: "https://ln.${SECRET_DOMAIN_NAME}"
             envFrom:
