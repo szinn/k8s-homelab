@@ -14,7 +14,8 @@ data:
     color: slate
     headerStyle: clean
     statusStyle: dot
-    useEqualHeights: true
+    useEqualHeights: false
+    fiveColumns: true
     quicklaunch:
       searchDescriptions: true
       hideInternetSearch: true
@@ -24,13 +25,21 @@ data:
       Calendar:
         style: column
         icon: mdi-calendar
-        initiallyCollapsed: true
-      Network:
-        style: row
+        initiallyCollapsed: false
+      Administration:
+        style: column
         columns: 5
         icon: mdi-network
+      Monitoring:
+        style: column
+        columns: 5
+        icon: grafana.png
+      Storage:
+        style: column
+        columns: 5
+        icon: synology.png
       Media:
-        style: row
+        style: column
         columns: 5
         icon: mdi-download-circle
 
@@ -41,36 +50,66 @@ data:
         provider: [google]
         focus: false
         target: _blank
-    - kubernetes:
-        cluster:
-          cpu: true
-          memory: true
-          show: true
-          showLabel: true
-        nodes:
-          cpu: true
-          memory: true
-          show: false
-          showLabel: true
+    # - kubernetes:
+    #     cluster:
+    #       cpu: true
+    #       memory: true
+    #       show: true
+    #       showLabel: true
+    #     nodes:
+    #       cpu: true
+    #       memory: true
+    #       show: false
+    #       showLabel: true
     - openmeteo:
         label: Home
         latitude: {{HOMEPAGE_VAR_LATITUDE}}
         longitude: {{HOMEPAGE_VAR_LONGITUDE}}
         units: metric
         cache: 5
-    - datetime:
-        text_size: l
-        format:
-          timeStyle: short
-          dateStyle: short
-          hourCycle: h23
+    # - datetime:
+    #     text_size: l
+    #     format:
+    #       timeStyle: short
+    #       dateStyle: short
+    #       hourCycle: h23
     - unifi_console:
         url: {{HOMEPAGE_VAR_UNIFI_URL}}
         username: {{HOMEPAGE_VAR_UNIFI_USERNAME}}
         password: {{HOMEPAGE_VAR_UNIFI_PASSWORD}}
 
   services.yaml: |
-    - Network:
+    - Administration:
+        - Proxmox:
+            icon: proxmox.png
+            href: https://ares.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:8006
+        - KVM:
+            icon: pikvm.png
+            href: https://pikvm.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
+        - PiHole:
+            href: https://pihole.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}/admin
+            siteMonitor: https://pihole.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
+            icon: pi-hole.png
+            description: PiHole DNS
+            widget:
+              type: pihole
+              url: https://pihole.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
+              key: {{HOMEPAGE_VAR_PIHOLE_TOKEN}}
+        - Authentik:
+            icon: authentik.png
+            href: https://sso.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+        - Mailu:
+            icon: mailu.png
+            href: https://{{HOMEPAGE_VAR_MAILU}}/admin
+        - DMARC Reports:
+            icon: mailinabox.png
+            href: https://dmarc-report.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+        - Echo Server:
+            icon: babybuddy.png
+            href: 'https://echo-server.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}'
+        - Who Am I:
+            icon: ward.png
+            href: 'https://whoami.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}'
         - Cloudflared:
             href: https://dash.cloudflare.com/
             icon: cloudflare-zero-trust.png
@@ -81,15 +120,47 @@ data:
               tunnelid: {{HOMEPAGE_VAR_CLOUDFLARED_TUNNELID}}
               key: {{HOMEPAGE_VAR_CLOUDFLARED_API_TOKEN}}
               fields: ["status"]
-        - PiHole:
-            href: https://pihole.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}/admin
-            siteMonitor: https://pihole.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
-            icon: pi-hole.png
-            description: PiHole DNS
-            widget:
-              type: pihole
-              url: https://pihole.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
-              key: {{HOMEPAGE_VAR_PIHOLE_TOKEN}}
+    - Monitoring:
+        - Grafana:
+            href: https://grafana.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            icon: grafana.png
+        - Alert Manager:
+            href: https://alert-manager.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            icon: alertmanager.png
+        - Prometheus:
+            href: https://prometheus.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}/alerts
+            icon: prometheus.png
+        - Thanos:
+            href: https://thanos.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}/alerts
+            icon: thanos.png
+        - Hubble:
+            href: https://hubble.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            icon: n8n.png
+        - Gatus (Gateway):
+            href: https://gatus-gateway.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
+            icon: gatus.png
+        - Gatus (Cluster):
+            href: https://status.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            icon: gatus.png
+        - Change Detection:
+            href: https://changedetection.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            icon: changedetection-io.png
+        - Router Traffic:
+            href: https://gateway.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:8685
+            icon: router.png
+    - Storage:
+        - Rook:
+            href: https://rook.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            icon: rook.png
+        - Hades:
+            href: https://hades.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
+            icon: synology-dsm.png
+        - Minio:
+            href: https://minio.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            icon: minio.png
+        - pgAdmin:
+            href: https://pgadmin.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            icon: pgadmin.png
 
     - Media:
         - Overseerr:
@@ -156,7 +227,7 @@ data:
             description: NZB Downloader
             widget:
               type: sabnzbd
-              url: http://sabnzbd.media
+              url: http://sabnzbd.media:8080
               key: {{HOMEPAGE_VAR_SABNZBD_TOKEN}}
         - qBitTorrent:
             href: https://qbittorrent.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
@@ -187,6 +258,28 @@ data:
                   service_name: Radarr-4k # service name for that widget
 
   bookmarks.yaml: |
+    # - Administration Links:
+    #     - Proxmox:
+    #         - icon: proxmox.png
+    #           href: https://ares.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:8006
+    #     - KVM:
+    #         - icon: pikvm.png
+    #           href: https://pikvm.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
+    #     - Authentik:
+    #         - icon: authentik.png
+    #           href: https://sso.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+    #     - Mailu:
+    #         - icon: mailu.png
+    #           href: https://{{HOMEPAGE_VAR_MAILU}}/admin
+    #     - DMARC Reports:
+    #         - icon: mailinabox.png
+    #           href: https://dmarc-report.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+    #     - Echo Server:
+    #         - icon: babybuddy.png
+    #           href: 'https://echo-server.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}'
+    #     - Who Am I:
+    #         - icon: ward.png
+    #           href: 'https://whoami.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}'
     - Communicate:
         - Discord:
             - icon: discord.png
