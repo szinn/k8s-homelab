@@ -395,7 +395,7 @@ spec:
           datasource: Prometheus
       system:
         cert-manager:
-          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/cert-manager/dashboards/cert-manager.json
+          url: https://raw.githubusercontent.com/szinn/k8s-homelab/main/kubernetes/main/apps/cert-manager/cert-manager/app/cert-manager-dashboard.json
           datasource: Prometheus
         speedtest-exporter-hub:
           # renovate: depName="Speedtest-Exporter Dashboard"
