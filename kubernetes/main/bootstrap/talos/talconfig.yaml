@@ -3,7 +3,7 @@ clusterName: main
 # renovate: depName=ghcr.io/siderolabs/installer datasource=docker extractVersion=^(?<version>.*)$
 talosVersion: v1.6.7
 # renovate: depName=kubernetes/kubernetes datasource=github-releases extractVersion=^v(?<version>.*)$
-kubernetesVersion: v1.29.4
+kubernetesVersion: v1.30.0
 endpoint: https://main.${SECRET_TECH_DOMAIN_NAME}:6443
 
 cniConfig:
