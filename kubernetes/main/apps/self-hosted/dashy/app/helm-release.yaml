@@ -92,7 +92,8 @@ spec:
         advancedMounts:
           main:
             main:
-              - path: /app/public
+              - path: /app/public/conf.yml
+                subPath: conf.yml
             code-server:
               - path: /config
       temp:
