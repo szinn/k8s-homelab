@@ -23,7 +23,7 @@ spec:
   timeout: 5m
   postBuild:
     substitute:
-      CERT_SECRET_NAME: wildcard-tls
+      CERT_NAME: wildcard
       CERT_TARGET_NAMESPACES: '["cert-manager","networking"]'
       CERT_DOMAIN_NAME: ${SECRET_DOMAIN_NAME}
 ---
@@ -51,7 +51,7 @@ spec:
   timeout: 5m
   postBuild:
     substitute:
-      CERT_SECRET_NAME: tech-wildcard-tls
+      CERT_NAME: tech-wildcard
       CERT_TARGET_NAMESPACES: '["cert-manager"]'
       CERT_DOMAIN_NAME: ${SECRET_TECH_DOMAIN_NAME}
 ---
