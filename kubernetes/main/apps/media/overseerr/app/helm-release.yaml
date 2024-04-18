@@ -72,3 +72,7 @@ spec:
           main:
             main:
               - path: /app/config
+      logs:
+        type: emptyDir
+        globalMounts:
+          - path: /app/config/logs

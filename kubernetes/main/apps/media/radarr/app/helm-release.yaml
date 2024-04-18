@@ -110,6 +110,10 @@ spec:
           main:
             main:
               - path: /config
+      logs:
+        type: emptyDir
+        globalMounts:
+          - path: /config/logs
       media:
         existingClaim: media-datastore
         globalMounts:

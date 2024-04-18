@@ -113,6 +113,10 @@ spec:
           main:
             main:
               - path: /config
+      logs:
+        type: emptyDir
+        globalMounts:
+          - path: /config/logs
       downloads:
         existingClaim: downloads
         globalMounts:
