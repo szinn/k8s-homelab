@@ -50,7 +50,7 @@ spec:
           main:
             image:
               repository: ghcr.io/onedr0p/plex
-              tag: 1.40.1.8227-c0dd5a73e@sha256:a60bc6352543b4453b117a8f2b89549e458f3ed8960206d2f3501756b6beb519
+              tag: 1.40.2.8395-c67dce28e@sha256:a2a3149c1326e7777bfe9def135c687d884652f78d34e92264b0dab765908215
             env:
               TZ: "${CONFIG_TIMEZONE}"
               ADVERTISE_IP: "http://${CONFIG_MAIN_SVC_PLEX_ADDR}:32400,https://{{ .Release.Name }}.${SECRET_DOMAIN_NAME}:443"
