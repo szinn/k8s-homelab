@@ -42,7 +42,7 @@ spec:
           main:
             image:
               repository: ghcr.io/onedr0p/theme-park
-              tag: 1.16.2@sha256:ee95e4b964109f1582a7f5427458d98aba429809f2b7069b964dadcd77d2ce66
+              tag: 1.16.2@sha256:6c780d6a9048a2f1361bff20490315b340e78f0b064b943a57fccfd2fcbaf274
             resources:
               requests:
                 cpu: 5m
