@@ -35,7 +35,7 @@ spec:
           main:
             image:
               repository: ghcr.io/lissy93/dashy
-              tag: 2.1.2@sha256:3826f7300f1b476815c5af9071fc7172f4233178e9b46dbc5a846fcc5748a3a1
+              tag: 3.0.0@sha256:ee064a7a0ae7f480523df95cf87c7a3200911aa961b6c19237a13acf6347f981
             env:
               TZ: ${CONFIG_TIMEZONE}
               UID: ${APP_UID}
@@ -54,16 +54,19 @@ spec:
               - --extensions-dir
               - "/tmp/.vscode"
               - --port
-              - "8080"
+              - "8081"
               - "/config"
     service:
       main:
         controller: main
         ports:
           http:
-            port: 80
-          code-server:
             port: 8080
+      code-server:
+        controller: main
+        ports:
+          http:
+            port: 8081
     ingress:
       main:
         enabled: true
@@ -83,8 +86,8 @@ spec:
             paths:
               - path: /
                 service:
-                  identifier: main
-                  port: code-server
+                  identifier: code-server
+                  port: http
     persistence:
       config:
         enabled: true
@@ -92,8 +95,7 @@ spec:
         advancedMounts:
           main:
             main:
-              - path: /app/public/conf.yml
-                subPath: conf.yml
+              - path: /app/user-data
             code-server:
               - path: /config
       temp:
