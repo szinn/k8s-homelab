@@ -5,4 +5,4 @@ metadata:
   name: main-pool
 spec:
   cidrs:
-    - cidr: ${CONFIG_STAGING_BGP_POOL_CIDR}
+    - cidr: ${CONFIG_STAGING_L2_POOL_CIDR}
