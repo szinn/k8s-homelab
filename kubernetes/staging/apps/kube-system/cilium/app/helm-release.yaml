@@ -36,44 +36,50 @@ spec:
       name: cilium-helm-values
 
   values:
-    bgpControlPlane:
-      enabled: true
-    bgp:
-      enabled: false
-      announce:
-        loadbalancerIP: true
-        podCIDR: false
-
-    loadBalancer:
-      algorithm: maglev
-      mode: dsr
-
     hubble:
+      enabled: true
       metrics:
-        serviceMonitor:
-          enabled: true
-
+        enabled:
+          - dns:query;ignoreAAAA
+          - drop
+          - tcp
+          - flow
+          - port-distribution
+          - icmp
+          - http
       relay:
+        enabled: true
+        rollOutPods: true
         prometheus:
           serviceMonitor:
             enabled: true
-
       ui:
+        enabled: true
+        rollOutPods: true
         ingress:
           enabled: true
+          className: nginx
           annotations:
-            kubernetes.io/ingress.class: "nginx"
-            ingress.home.arpa/type: "internal"
+            kubernetes.io/ingress.class: nginx
+            ingress.home.arpa/type: internal
             nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
             nginx.ingress.kubernetes.io/whitelist-source-range: 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
-          hosts:
-            - "hubble.${SECRET_DOMAIN_NAME}"
-
-    prometheus:
-      serviceMonitor:
-        enabled: true
-
+          hosts: ["hubble.${SECRET_DOMAIN_NAME}"]
     operator:
       prometheus:
+        enabled: false
         serviceMonitor:
-          enabled: true
+          enabled: false
+      dashboards:
+        enabled: false
+        annotations:
+          grafana_folder: Cilium
+    prometheus:
+      enabled: false
+      serviceMonitor:
+        enabled: false
+        trustCRDsExist: true
+    dashboards:
+      enabled: false
+      annotations:
+        grafana_folder: Cilium
