@@ -1,46 +1,52 @@
 ---
 autoDirectNodeRoutes: true
 
+bandwidthManager:
+  enabled: true
+  bbr: true
+
+bpf:
+  masquerade: true
+  tproxy: true
+
+cgroup:
+  automount:
+    enabled: false
+  hostRoot: /sys/fs/cgroup
+
 cluster:
   name: main
   id: 1
 
-bgp:
-  enabled: false
-  announce:
-    loadbalancerIP: true
-    podCIDR: false
-
-securityContext:
-  privileged: true
-  capabilities:
-    ciliumAgent: "{CHOWN,KILL,NET_ADMIN,NET_RAW,IPC_LOCK,SYS_ADMIN,SYS_RESOURCE,DAC_OVERRIDE,FOWNER,SETGID,SETUID}"
-    cleanCiliumState: "{NET_ADMIN,SYS_ADMIN,SYS_RESOURCE}"
-cgroup:
-  autoMount:
-    enabled: false
-  hostRoot: /sys/fs/cgroup
-
 containerRuntime:
   integration: containerd
+
+enableRuntimeDeviceDetection: true
 
 endpointRoutes:
   enabled: true
 
+hubble:
+  enabled: false
+
 ipam:
   mode: kubernetes
 
-kubeProxyReplacement: strict
-kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
-k8sServiceHost: localhost
-k8sServicePort: 7445
 ipv4NativeRoutingCIDR: 10.201.0.0/16
 
-loadBalancer:
-  algorithm: random
-  mode: snat
+k8sServiceHost: 127.0.0.1
+k8sServicePort: 7445
+kubeProxyReplacement: strict
+kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
 
-localRedirectPolicy: false
+l2announcements:
+  enabled: true
+
+loadBalancer:
+  algorithm: maglev
+  mode: dsr
+
+localRedirectPolicy: true
 
 operator:
   enabled: true
@@ -50,22 +56,8 @@ rollOutCiliumPods: true
 
 routingMode: native
 
-hubble:
-  enabled: true
-  metrics:
-    enabled:
-      - dns:query;ignoreAAAA
-      - drop
-      - tcp
-      - flow
-      - port-distribution
-      - icmp
-      - http
-  relay:
-    enabled: true
-    rollOutPods: true
-  ui:
-    enabled: true
-    rollOutPods: true
-    ingress:
-      enabled: false
+securityContext:
+  privileged: true
+  capabilities:
+    ciliumAgent: "{CHOWN,KILL,NET_ADMIN,NET_RAW,IPC_LOCK,SYS_ADMIN,SYS_RESOURCE,DAC_OVERRIDE,FOWNER,SETGID,SETUID}"
+    cleanCiliumState: "{NET_ADMIN,SYS_ADMIN,SYS_RESOURCE}"

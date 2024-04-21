@@ -37,28 +37,29 @@ spec:
       name: cilium-helm-values
 
   values:
-    bgpControlPlane:
-      enabled: true
-    bgp:
-      enabled: false
-      announce:
-        loadbalancerIP: true
-        podCIDR: false
-
-    loadBalancer:
-      algorithm: maglev
-      mode: dsr
-
     hubble:
+      enabled: true
       metrics:
+        enabled:
+          - dns:query;ignoreAAAA
+          - drop
+          - tcp
+          - flow
+          - port-distribution
+          - icmp
+          - http
         serviceMonitor:
           enabled: true
-
+        dashboards:
+          enabled: false
+          annotations:
+            grafana_folder: Cilium
       relay:
+        enabled: true
+        rollOutPods: true
         prometheus:
           serviceMonitor:
             enabled: true
-
       ui:
         ingress:
           enabled: true
@@ -69,11 +70,22 @@ spec:
           hosts:
             - "hubble.${SECRET_DOMAIN_NAME}"
 
-    prometheus:
-      serviceMonitor:
-        enabled: true
-
     operator:
       prometheus:
+        enabled: true
         serviceMonitor:
           enabled: true
+      dashboards:
+        enabled: false
+        annotations:
+          grafana_folder: Cilium
+
+    prometheus:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+        trustCRDsExist: true
+    dashboards:
+      enabled: false
+      annotations:
+        grafana_folder: Cilium
