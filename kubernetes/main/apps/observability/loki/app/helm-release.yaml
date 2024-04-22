@@ -69,7 +69,7 @@ spec:
         ruler:
           enable_api: true
           enable_alertmanager_v2: true
-          alertmanager_url: http://alertmanager-operated:9093
+          alertmanager_url: http://alertmanager-operated.ovservability.svc.cluster.local:9093
           storage:
             type: local
             local:
@@ -79,7 +79,7 @@ spec:
           reporting_enabled: false
     gateway:
       enabled: true
-      replicas: 2
+      replicas: 3
       image:
         registry: ghcr.io
         repository: nginxinc/nginx-unprivileged
@@ -99,18 +99,15 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
-        tls:
-          - hosts:
-              - *host
     write:
-      replicas: 2
+      replicas: 3
       persistence:
         storageClass: openebs-hostpath
         size: 20Gi
     read:
-      replicas: 2
+      replicas: 3
     backend:
-      replicas: 2
+      replicas: 3
       persistence:
         storageClass: openebs-hostpath
         size: 20Gi

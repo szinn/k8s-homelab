@@ -120,12 +120,12 @@ sinks:
     type: loki
     inputs:
       - kubernetes_remap
-    endpoint: http://loki-gateway:80
+    endpoint: http://loki-gateway.observability.svc.cluster.local
     encoding:
       codec: json
-    batch:
-      max_bytes: 524288
-    out_of_order_action: rewrite_timestamp
+    # batch:
+    #   max_bytes: 524288
+    out_of_order_action: accept
     remove_label_fields: true
     remove_timestamp: true
     labels:
@@ -143,9 +143,9 @@ sinks:
       codec: json
       except_fields:
         - __host
-    batch:
-      max_bytes: 524288
-    out_of_order_action: rewrite_timestamp
+    # batch:
+    #   max_bytes: 524288
+    out_of_order_action: accept
     labels:
       node: "{{ node }}"
       facility: "{{ facility }}"
@@ -155,14 +155,14 @@ sinks:
     type: loki
     inputs:
       - talos_service_transform
-    endpoint: http://loki-gateway:80
+    endpoint: http://loki-gateway.observability.svc.cluster.local
     encoding:
       codec: json
       except_fields:
         - __host
-    batch:
-      max_bytes: 524288
-    out_of_order_action: rewrite_timestamp
+    # batch:
+    #   max_bytes: 524288
+    out_of_order_action: accept
     labels:
       node: "{{ node }}"
       talos_service: '{{ "talos-service" }}'
@@ -171,7 +171,7 @@ sinks:
   vyos:
     inputs: ["vyos_firewall_geoip_remap", "vyos_logs"]
     type: loki
-    endpoint: http://loki-gateway:80
+    endpoint: http://loki-gateway.observability.svc.cluster.local
     encoding:
       codec: json
     out_of_order_action: accept
