@@ -170,7 +170,7 @@ data:
             description: Media Requests
             widget:
               type: overseerr
-              url: http://overseerr.media
+              url: http://overseerr.media.svc.cluster.local
               key: {{HOMEPAGE_VAR_OVERSEERR_TOKEN}}
         - Sonarr:
             href: https://sonarr.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
@@ -179,7 +179,7 @@ data:
             description: TV Shows
             widget:
               type: sonarr
-              url: http://sonarr.media:8989
+              url: http://sonarr.media.svc.cluster.local:8989
               key: {{HOMEPAGE_VAR_SONARR_TOKEN}}
         - Radarr-4k:
             href: https://radarr-4k.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
@@ -188,7 +188,7 @@ data:
             description: 4K Movies
             widget:
               type: radarr
-              url: http://radarr-4k.media:7878
+              url: http://radarr-4k.media.svc.cluster.local:7878
               key: {{HOMEPAGE_VAR_RADARR_4K_TOKEN}}
         - Radarr:
             href: https://radarr.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
@@ -197,7 +197,7 @@ data:
             description: Movies
             widget:
               type: radarr
-              url: http://radarr.media:7878
+              url: http://radarr.media.svc.cluster.local:7878
               key: {{HOMEPAGE_VAR_RADARR_TOKEN}}
         - Lidarr:
             href: https://lidarr.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
@@ -206,7 +206,7 @@ data:
             description: Music
             widget:
               type: lidarr
-              url: http://lidarr.media:8686
+              url: http://lidarr.media.svc.cluster.local:8686
               key: {{HOMEPAGE_VAR_LIDARR_TOKEN}}
         # - Navidrome:
         #     href: https://music.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
@@ -215,7 +215,7 @@ data:
         #     description: Music Library
         #     widget:
         #       type: navidrome
-        #       url: http://navidrome.media
+        #       url: http://navidrome.media.svc.cluster.local
         #       username: {{HOMEPAGE_VAR_NAVIDROME_USERNAME}}
         #       token: {{HOMEPAGE_VAR_NAVIDROME_TOKEN}}
         #       salt: {{HOMEPAGE_VAR_NAVIDROME_SALT}}
@@ -227,7 +227,7 @@ data:
             description: NZB Downloader
             widget:
               type: sabnzbd
-              url: http://sabnzbd.media:8080
+              url: http://sabnzbd.media.svc.cluster.local:8080
               key: {{HOMEPAGE_VAR_SABNZBD_TOKEN}}
         - qBitTorrent:
             href: https://qbittorrent.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
