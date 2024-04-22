@@ -49,7 +49,7 @@ spec:
               TZ: ${CONFIG_TIMEZONE}
               APP_URL: "https://wiki.${SECRET_DOMAIN_NAME}"
               DB_TYPE: postgres
-              DB_HOST: postgres-rw.dbms
+              DB_HOST: postgres-rw.dbms.svc.cluster.local
               DB_PORT: 5432
               DB_NAME: wikijs
               DB_USER: wikijs

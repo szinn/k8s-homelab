@@ -260,7 +260,7 @@ spec:
           #   honor_timestamps: true
           #   static_configs:
           #     - targets:
-          #         - dragonfly.dbms:6379
+          #         - dragonfly.dbms.svc.cluster.local:6379
 
     grafana:
       enabled: false
