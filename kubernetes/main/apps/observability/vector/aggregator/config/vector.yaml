@@ -123,8 +123,8 @@ sinks:
     endpoint: http://loki-gateway.observability.svc.cluster.local
     encoding:
       codec: json
-    # batch:
-    #   max_bytes: 524288
+    batch:
+      max_bytes: 524288
     out_of_order_action: accept
     remove_label_fields: true
     remove_timestamp: true
@@ -143,8 +143,8 @@ sinks:
       codec: json
       except_fields:
         - __host
-    # batch:
-    #   max_bytes: 524288
+    batch:
+      max_bytes: 524288
     out_of_order_action: accept
     labels:
       node: "{{ node }}"
@@ -160,8 +160,8 @@ sinks:
       codec: json
       except_fields:
         - __host
-    # batch:
-    #   max_bytes: 524288
+    batch:
+      max_bytes: 524288
     out_of_order_action: accept
     labels:
       node: "{{ node }}"

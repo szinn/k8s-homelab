@@ -17,5 +17,5 @@ sinks:
     type: vector
     inputs:
       - kubernetes_logs
-    address: "vector-aggregator.observability:6000"
+    address: "vector-aggregator.observability.svc.cluster.local:6000"
     version: "2"

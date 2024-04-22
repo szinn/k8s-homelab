@@ -69,7 +69,7 @@ spec:
         ruler:
           enable_api: true
           enable_alertmanager_v2: true
-          alertmanager_url: http://alertmanager-operated.ovservability.svc.cluster.local:9093
+          alertmanager_url: http://alertmanager-operated.observability.svc.cluster.local:9093
           storage:
             type: local
             local:
@@ -80,6 +80,11 @@ spec:
     gateway:
       enabled: true
       replicas: 3
+      deploymentStrategy:
+        type: RollingUpdate
+        rollingUpdate:
+          maxUnavailable: 50%
+          maxSurge: 50%
       image:
         registry: ghcr.io
         repository: nginxinc/nginx-unprivileged
@@ -106,6 +111,11 @@ spec:
         size: 20Gi
     read:
       replicas: 3
+      deploymentStrategy:
+        type: RollingUpdate
+        rollingUpdate:
+          maxUnavailable: 50%
+          maxSurge: 50%
     backend:
       replicas: 3
       persistence:

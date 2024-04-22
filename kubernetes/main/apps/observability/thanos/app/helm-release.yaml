@@ -73,7 +73,7 @@ spec:
     query:
       replicas: 2
       extraArgs:
-        - --alert.query-url=http://thanos.${SECRET_DOMAIN_NAME}
+        - --alert.query-url=https://thanos.${SECRET_DOMAIN_NAME}
     queryFrontend:
       enabled: true
       replicas: 2

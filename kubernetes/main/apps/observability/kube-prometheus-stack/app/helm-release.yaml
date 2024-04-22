@@ -127,7 +127,7 @@ spec:
           - name: "null"
           - name: "discord"
             webhook_configs:
-              - url: "http://alertmanager-discord:9094"
+              - url: "http://alertmanager-discord.observability.svc.cluster.local:9094"
         inhibit_rules:
           - source_matchers: ["severity = 'critical'"]
             target_matchers: ["severity = 'warning'"]
