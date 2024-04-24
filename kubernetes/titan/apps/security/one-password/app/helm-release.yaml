@@ -1,0 +1,34 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: one-password-connect
+  namespace: security
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: connect
+      version: 1.15.0
+      sourceRef:
+        kind: HelmRepository
+        name: one-password-charts
+        namespace: flux-system
+      interval: 15m
+  maxHistory: 3
+  install:
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    connect:
+      annotations:
+        secret.reloader.stakater.com/reload: op-credentials
+      api:
+        httpPort: 8438
+      serviceType: LoadBalancer
+      serviceAnnotations:
+        io.cilium/lb-ipam-ips: ${CONFIG_TITAN_SVC_ONEPASSWORD_CONNECT_ADDR}
