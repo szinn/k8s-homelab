@@ -102,9 +102,9 @@ tasks:
     cmds:
       - echo {{.KUBECONFIG}}
       - kubectl config view
-      - until kubectl --context {{.cluster}} wait --for=condition=Ready nodes --all --timeout=10m; do sleep 10; done
+      - until kubectl --context {{.cluster}} wait --for=condition=Ready=False nodes --all --timeout=10m; do sleep 10; done
       - helmfile --quiet --kube-context {{.cluster}} --file {{.KUBERNETES_DIR}}/{{.cluster}}/bootstrap/talos/apps/helmfile.yaml apply --skip-diff-on-install --suppress-diff
-      - until kubectl --context {{.cluster}} wait --for=condition=Ready nodes --all --timeout=10m; do sleep 10; done
+      - until kubectl --context {{.cluster}} wait --for=condition=Ready=True nodes --all --timeout=10m; do sleep 10; done
     requires:
       vars:
         - cluster

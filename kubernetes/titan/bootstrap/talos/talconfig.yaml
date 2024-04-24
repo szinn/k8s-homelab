@@ -6,6 +6,9 @@ talosVersion: v1.6.7
 kubernetesVersion: v1.29.4
 endpoint: https://titan.${SECRET_TECH_DOMAIN_NAME}:6443
 
+cniConfig:
+  name: none
+
 additionalApiServerCertSans: &san
   - ${clusterEndpointIP}
   - titan.${SECRET_TECH_DOMAIN_NAME}
@@ -28,34 +31,29 @@ nodes:
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "de:ca:ff:00:00:80"
+          driver: virtio_net
         dhcp: true
         mtu: 1500
-        # vlans:
-        #   - &vlan20
-        #     vlanId: 20
-        #     mtu: 1500
-        #     dhcp: false
-        #     addresses:
-        #       - 10.20.0.0/24
-        #     routes:
-        #       - network: 0.0.0.0/0
-        #         gateway: 10.20.0.1
-        #   - &vlan98
-        #     vlanId: 98
-        #     mtu: 1500
-        #     dhcp: false
-        #     addresses:
-        #       - 192.168.1.0/24
-        #   - &vlan99
-        #     vlanId: 99
-        #     mtu: 1500
-        #     dhcp: false
-        #     addresses:
-        #       - 192.168.2.0/24
+        vlans:
+          - vlanId: 20
+            mtu: 1500
+            dhcp: true
+            dhcpOptions:
+              routeMetric: 4096
+          - vlanId: 98
+            mtu: 1500
+            dhcp: true
+            dhcpOptions:
+              routeMetric: 4097
+          - vlanId: 99
+            mtu: 1500
+            dhcp: true
+            dhcpOptions:
+              routeMetric: 4098
 
 controlPlane:
   patches:
-    # Disable s=earch domain everywhere
+    # Disable search domain everywhere
     - &disableSearchDomainPatch |-
       machine:
         network:
@@ -88,8 +86,8 @@ controlPlane:
         kubelet:
           extraArgs:
             rotate-server-certificates: true
-          extraConfig:
-            maxPods: 150
+          # extraConfig:
+          #   maxPods: 150
           nodeIP:
             validSubnets:
                 - 10.0.0.0/16
@@ -100,18 +98,20 @@ controlPlane:
         etcd:
           advertisedSubnets:
             - 10.0.0.0/16
-          extraArgs:
-            listen-metrics-urls: http://0.0.0.0:2381
+          # extraArgs:
+          #   listen-metrics-urls: http://0.0.0.0:2381
 
     # Cluster configuration
     - |-
       cluster:
-        controllerManager:
-          extraArgs:
-            bind-address: 0.0.0.0
-        scheduler:
-          extraArgs:
-            bind-address: 0.0.0.0
+        # controllerManager:
+        #   extraArgs:
+        #     bind-address: 0.0.0.0
+        proxy:
+          disabled: true
+        # scheduler:
+        #   extraArgs:
+        #     bind-address: 0.0.0.0
 
     # Disable default API server admission plugins.
     - |-
@@ -160,14 +160,3 @@ controlPlane:
             - ip: ${clusterEndpointIP}
               aliases:
                 - titan.${SECRET_TECH_DOMAIN_NAME}
-
-worker:
-  patches:
-    # - *customTalosPatch
-    # - *loggingPatch
-    - *disableSearchDomainPatch
-    - *ntpPatch
-    - *kubePrismPatch
-    - *containerdPatch
-    - *sysctlPatch
-    - *staticHostEntriesPatch
