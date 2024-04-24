@@ -18,11 +18,11 @@
       "additionalBranchPrefix": "staging-"
     },
     {
-      "description": "Separate PRs for nas cluster",
+      "description": "Separate PRs for titan cluster",
       "matchFileNames": [
-        "**/kubernetes/nas/**"
+        "**/kubernetes/titan/**"
       ],
-      "additionalBranchPrefix": "nas-"
+      "additionalBranchPrefix": "titan-"
     }
   ]
 }

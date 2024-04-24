@@ -1,0 +1,173 @@
+---
+clusterName: titan
+# renovate: depName=ghcr.io/siderolabs/installer datasource=docker extractVersion=^(?<version>.*)$
+talosVersion: v1.6.7
+# renovate: depName=kubernetes/kubernetes datasource=github-releases extractVersion=^v(?<version>.*)$
+kubernetesVersion: v1.29.4
+endpoint: https://titan.${SECRET_TECH_DOMAIN_NAME}:6443
+
+additionalApiServerCertSans: &san
+  - ${clusterEndpointIP}
+  - titan.${SECRET_TECH_DOMAIN_NAME}
+  - "127.0.0.1"
+
+additionalMachineCertSans: *san
+
+domain: cluster.local
+
+clusterSvcNets:
+  - ${clusterServiceNets}
+clusterPodNets:
+  - ${clusterPodNets}
+
+nodes:
+  - hostname: titan.${SECRET_TECH_DOMAIN_NAME}
+    ipAddress: 10.0.0.128
+    controlPlane: true
+    installDisk: /dev/sda
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "de:ca:ff:00:00:80"
+        dhcp: true
+        mtu: 1500
+        # vlans:
+        #   - &vlan20
+        #     vlanId: 20
+        #     mtu: 1500
+        #     dhcp: false
+        #     addresses:
+        #       - 10.20.0.0/24
+        #     routes:
+        #       - network: 0.0.0.0/0
+        #         gateway: 10.20.0.1
+        #   - &vlan98
+        #     vlanId: 98
+        #     mtu: 1500
+        #     dhcp: false
+        #     addresses:
+        #       - 192.168.1.0/24
+        #   - &vlan99
+        #     vlanId: 99
+        #     mtu: 1500
+        #     dhcp: false
+        #     addresses:
+        #       - 192.168.2.0/24
+
+controlPlane:
+  patches:
+    # Disable s=earch domain everywhere
+    - &disableSearchDomainPatch |-
+      machine:
+        network:
+          disableSearchDomain: true
+
+    # Configure NTP
+    - &ntpPatch |-
+      machine:
+        time:
+          disabled: false
+          servers:
+            - 10.0.0.1
+
+    # Enable KubePrism
+    - &kubePrismPatch |-
+      machine:
+        features:
+          kubePrism:
+            enabled: true
+            port: 7445
+
+    # Cluster configuration
+    - |-
+      cluster:
+        allowSchedulingOnMasters: true
+
+    # Configure kubelet
+    - &kubeletPatch |-
+      machine:
+        kubelet:
+          extraArgs:
+            rotate-server-certificates: true
+          extraConfig:
+            maxPods: 150
+          nodeIP:
+            validSubnets:
+                - 10.0.0.0/16
+
+    # ETCD configuration
+    - |-
+      cluster:
+        etcd:
+          advertisedSubnets:
+            - 10.0.0.0/16
+          extraArgs:
+            listen-metrics-urls: http://0.0.0.0:2381
+
+    # Cluster configuration
+    - |-
+      cluster:
+        controllerManager:
+          extraArgs:
+            bind-address: 0.0.0.0
+        scheduler:
+          extraArgs:
+            bind-address: 0.0.0.0
+
+    # Disable default API server admission plugins.
+    - |-
+      - op: remove
+        path: /cluster/apiServer/admissionControl
+
+    # Enable K8s Talos API Access
+    - |-
+      machine:
+        features:
+          kubernetesTalosAPIAccess:
+            enabled: true
+            allowedRoles:
+              - os:admin
+            allowedKubernetesNamespaces:
+              - kube-system
+
+    # Configure containerd
+    - &containerdPatch |-
+      machine:
+        files:
+          - op: create
+            path: /etc/cri/conf.d/20-customization.part
+            content: |-
+              [plugins."io.containerd.grpc.v1.cri"]
+                enable_unprivileged_ports = true
+                enable_unprivileged_icmp = true
+              [plugins."io.containerd.grpc.v1.cri".containerd]
+                discard_unpacked_layers = false
+              [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
+                discard_unpacked_layers = false
+
+    # Custom sysctl settings
+    - &sysctlPatch |-
+      machine:
+        sysctls:
+          fs.inotify.max_queued_events: "65536"
+          fs.inotify.max_user_watches: 1048576
+          fs.inotify.max_user_instances: 8192
+
+    # Static host entries
+    - &staticHostEntriesPatch |-
+      machine:
+        network:
+          extraHostEntries:
+            - ip: ${clusterEndpointIP}
+              aliases:
+                - titan.${SECRET_TECH_DOMAIN_NAME}
+
+worker:
+  patches:
+    # - *customTalosPatch
+    # - *loggingPatch
+    - *disableSearchDomainPatch
+    - *ntpPatch
+    - *kubePrismPatch
+    - *containerdPatch
+    - *sysctlPatch
+    - *staticHostEntriesPatch

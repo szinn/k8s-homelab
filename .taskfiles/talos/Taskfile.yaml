@@ -82,6 +82,8 @@ tasks:
       Args:
         cluster: Cluster to run command against (required)
     cmd: until talosctl --talosconfig {{.KUBERNETES_DIR}}/{{.cluster}}/talosconfig --context {{.cluster}} --nodes {{.controller}} bootstrap; do sleep 10; done
+    env:
+      TALOSCONFIG: "{{.KUBERNETES_DIR}}/{{.cluster}}/talosconfig" 
     vars:
       controller:
         sh: talosctl --talosconfig {{.KUBERNETES_DIR}}/{{.cluster}}/talosconfig --context {{.cluster}} config info --output json | jq --raw-output '.endpoints[0]'
@@ -90,7 +92,7 @@ tasks:
         - cluster
     preconditions:
       - test -f {{.KUBERNETES_DIR}}/{{.cluster}}/talosconfig
-      - talosctl --context {{.cluster}} config info >/dev/null 2>&1
+      - talosctl --talosconfig {{.KUBERNETES_DIR}}/{{.cluster}}/talosconfig --context {{.cluster}} config info >/dev/null 2>&1
 
   bootstrap-core:
     desc: Bootstrap core apps needed for Talos
@@ -100,7 +102,7 @@ tasks:
     cmds:
       - echo {{.KUBECONFIG}}
       - kubectl config view
-      - until kubectl --context {{.cluster}} wait --for=condition=Ready=False nodes --all --timeout=10m; do sleep 10; done
+      - until kubectl --context {{.cluster}} wait --for=condition=Ready nodes --all --timeout=10m; do sleep 10; done
       - helmfile --quiet --kube-context {{.cluster}} --file {{.KUBERNETES_DIR}}/{{.cluster}}/bootstrap/talos/apps/helmfile.yaml apply --skip-diff-on-install --suppress-diff
       - until kubectl --context {{.cluster}} wait --for=condition=Ready nodes --all --timeout=10m; do sleep 10; done
     requires:
@@ -108,7 +110,7 @@ tasks:
         - cluster
     preconditions:
       - test -f {{.KUBERNETES_DIR}}/{{.cluster}}/talosconfig
-      - talosctl --context {{.cluster}} config info >/dev/null 2>&1
+      - talosctl --talosconfig {{.KUBERNETES_DIR}}/{{.cluster}}/talosconfig --context {{.cluster}} config info >/dev/null 2>&1
       - test -f {{.KUBERNETES_DIR}}/{{.cluster}}/bootstrap/talos/apps/helmfile.yaml
 
   fetch-kubeconfig:
@@ -136,13 +138,13 @@ tasks:
           {{.KUBERNETES_DIR}}/{{.cluster}}
     vars:
       controller:
-        sh: talosctl --context {{.cluster}} config info --output json | jq --raw-output '.endpoints[0]'
+        sh: talosctl --talosconfig {{.KUBERNETES_DIR}}/{{.cluster}}/talosconfig --context {{.cluster}} config info --output json | jq --raw-output '.endpoints[0]'
     requires:
       vars:
         - cluster
     preconditions:
       - test -f {{.KUBERNETES_DIR}}/{{.cluster}}/talosconfig
-      - talosctl --context {{.cluster}} config info >/dev/null 2>&1
+      - talosctl --talosconfig {{.KUBERNETES_DIR}}/{{.cluster}}/talosconfig --context {{.cluster}} config info >/dev/null 2>&1
 
   rolling-upgrade:
     desc: Upgrade all Talos nodes
@@ -177,7 +179,7 @@ tasks:
         - cluster
     preconditions:
       - test -f {{.KUBERNETES_DIR}}/{{.cluster}}/talosconfig
-      - talosctl --context {{.cluster}} config info >/dev/null 2>&1
+      - talosctl --talosconfig {{.KUBERNETES_DIR}}/{{.cluster}}/talosconfig --context {{.cluster}} config info >/dev/null 2>&1
       # - talosctl --context {{.cluster}} --nodes {{.nodes}} get machineconfig >/dev/null 2>&1
 
   # task talos:upgrade cluster=main node=k8s-1
@@ -227,7 +229,7 @@ tasks:
     cmds:
       - echo "Upgrading k8s on cluster {{.cluster}} to {{.KUBERNETES_VERSION}} via node {{.CONTROLPLANE_NODE}}"
       - read -p "Press any key to resume ..."
-      - talosctl --context {{.cluster}} upgrade-k8s -n {{.CONTROLPLANE_NODE}} --to {{.KUBERNETES_VERSION}}
+      - talosctl --talosconfig {{.KUBERNETES_DIR}}/{{.cluster}}/talosconfig --context {{.cluster}} upgrade-k8s -n {{.CONTROLPLANE_NODE}} --to {{.KUBERNETES_VERSION}}
     vars:
       KUBERNETES_VERSION:
         sh: |

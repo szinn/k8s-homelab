@@ -1,0 +1,17 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  # Step 1
+  - cert-manager
+  - kube-system
+  # Step 2
+  # - networking
+  # - security/namespace.yaml
+  # - security/external-secrets/install.yaml
+  # - wildcard-tls.yaml
+  # Step 3
+  # - rook-ceph
+  # Step 4
+  # - dbms
