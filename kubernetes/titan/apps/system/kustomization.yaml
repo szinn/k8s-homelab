@@ -1,0 +1,9 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - namespace.yaml
+  - k8s-ycl/install.yaml
+  - openebs/install.yaml
+  - reloader/install.yaml

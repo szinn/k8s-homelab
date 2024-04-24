@@ -11,7 +11,3 @@ resources:
   # - security/namespace.yaml
   # - security/external-secrets/install.yaml
   # - wildcard-tls.yaml
-  # Step 3
-  # - rook-ceph
-  # Step 4
-  # - dbms

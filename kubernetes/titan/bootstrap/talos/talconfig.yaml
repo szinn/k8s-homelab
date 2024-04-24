@@ -28,6 +28,10 @@ nodes:
     ipAddress: 10.0.0.128
     controlPlane: true
     installDisk: /dev/sda
+    machineDisks:
+      - device: /dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi1
+        partitions:
+          - mountpoint: /var/mnt/ssd
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "de:ca:ff:00:00:80"
