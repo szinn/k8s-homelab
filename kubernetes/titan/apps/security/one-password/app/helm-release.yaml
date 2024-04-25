@@ -31,4 +31,11 @@ spec:
         httpPort: 8438
       serviceType: LoadBalancer
       serviceAnnotations:
-        io.cilium/lb-ipam-ips: ${CONFIG_TITAN_SVC_ONEPASSWORD_CONNECT_ADDR}
+        io.cilium/lb-ipam-ips: ${CONFIG_SVC_ONEPASSWORD_CONNECT_ADDR}
+        external-dns.alpha.kubernetes.io/hostname: "onepassword-zzz.${SECRET_DOMAIN_NAME}"
+      # ingress:
+      #   enabled: true
+      #   ingressclassName: internal
+      #   pathType: Prefix
+      #   hosts:
+      #     - host: "onepassword-xyz.${SECRET_DOMAIN_NAME}"

@@ -24,7 +24,7 @@ spec:
   postBuild:
     substitute:
       CERT_NAME: wildcard
-      CERT_TARGET_NAMESPACES: '["cert-manager"]'
+      CERT_TARGET_NAMESPACES: '["cert-manager","networking"]'
       CERT_DOMAIN_NAME: ${SECRET_DOMAIN_NAME}
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/kustomize.toolkit.fluxcd.io/kustomization_v1.json
