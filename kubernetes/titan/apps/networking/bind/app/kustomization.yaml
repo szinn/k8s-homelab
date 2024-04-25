@@ -1,0 +1,20 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - bind-secret.yaml
+  - helm-release.yaml
+configMapGenerator:
+  - name: bind-named-conf
+    files:
+      - named.conf=./config/named.conf
+  - name: bind-zones
+    files:
+      - db.1.168.192.in-addr.arpa=./config/zones/db.1.168.192.in-addr.arpa
+      - db.10.in-addr.arpa=./config/zones/db.10.in-addr.arpa
+      - db.test.zinn.ca=./config/zones/db.test.zinn.ca
+      - db.zinn.ca=./config/zones/db.zinn.ca
+      - db.zinn.tech=./config/zones/db.zinn.tech
+generatorOptions:
+  disableNameSuffixHash: true

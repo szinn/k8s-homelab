@@ -1,0 +1,73 @@
+; Make sure to update the epoch time in the SOA records so coreDNS picks up the changes automatically
+; https://www.epochconverter.com/
+
+; SOA Records
+$TTL 3600
+$ORIGIN 10.in-addr.arpa.
+@ 3600 IN SOA 10.in-addr.arpa. gateway.zinn.tech. (
+  2024042501         ; serial number (epoch timestamp)
+  7200               ; refresh period
+  3600               ; retry period
+  1209600            ; expire time
+  3600               ; minimum ttl
+)
+
+; NS Records
+@                          IN  NS ns.zinn.tech.
+
+; Reset origin
+$ORIGIN in-addr.arpa.
+
+; LAN
+32.0.0.10.in-addr.arpa.  IN  PTR  zeus.zinn.tech.
+128.0.0.10.in-addr.arpa.    IN  PTR titan.zinn.tech.
+
+; SERVICES
+2.5.0.10   IN  PTR  styx.zinn.tech.
+4.5.0.10   IN  PTR  ns.zinn.tech.
+5.5.0.10   IN  PTR  gatus-gateway.zinn.tech.
+6.5.0.10   IN  PTR  onepassword-connect.zinn.tech.
+10.5.0.10  IN  PTR  main.zinn.tech.
+11.5.0.10  IN  PTR  staging.zinn.tech.
+
+; SERVERS
+2.0.10.10  IN  PTR  ragnar.zinn.tech.
+3.0.10.10  IN  PTR  hades.zinn.tech.
+4.0.10.10  IN  PTR  ares.zinn.tech.
+5.0.10.10  IN  PTR  pikvm.zinn.tech.
+6.0.10.10  IN  PTR  pione.zinn.tech.
+7.0.10.10  IN  PTR  artemis.zinn.tech.
+8.0.10.10  IN  PTR  hera.zinn.tech.
+9.0.10.10  IN  PTR  apollo.zinn.tech.
+
+; CLUSTERS
+16.0.11.10  IN  PTR  k8s-1.zinn.tech.
+17.0.11.10  IN  PTR  k8s-2.zinn.tech.
+18.0.11.10  IN  PTR  k8s-3.zinn.tech.
+19.0.11.10  IN  PTR  k8s-4.zinn.tech.
+20.0.11.10  IN  PTR  k8s-5.zinn.tech.
+21.0.11.10  IN  PTR  k8s-6.zinn.tech.
+16.0.12.10  IN  PTR  stage-1.zinn.tech.
+17.0.12.10  IN  PTR  stage-2.zinn.tech.
+18.0.12.10  IN  PTR  stage-3.zinn.tech.
+19.0.12.10  IN  PTR  stage-4.zinn.tech.
+20.0.12.10  IN  PTR  stage-5.zinn.tech.
+21.0.12.10  IN  PTR  stage-6.zinn.tech.
+
+; TRUSTED
+16.0.20.10  IN  PTR  scotte-iphone.zinn.tech.
+18.0.20.10  IN  PTR  scotte-ipad.zinn.tech.
+19.0.20.10  IN  PTR  odin.zinn.tech.
+20.0.20.10  IN  PTR  odin-wifi.zinn.tech.
+24.0.20.10  IN  PTR  mnixvm.zinn.tech.
+25.0.20.10  IN  PTR  macvm.zinn.tech.
+26.0.20.10  IN  PTR  nixvm.zinn.tech.
+27.0.20.10  IN  PTR  athena.zinn.tech.
+28.0.20.10  IN  PTR  win11.zinn.tech.
+29.0.20.10  IN  PTR  usbc1.zinn.tech.
+30.0.20.10  IN  PTR  usbc2.zinn.tech.
+31.0.20.10  IN  PTR  block.zinn.tech.
+32.0.20.10  IN  PTR  sophie-iphone.zinn.tech.
+34.0.20.10  IN  PTR  sophie-ipad.zinn.tech.
+35.0.20.10  IN  PTR  sophie-desktop.zinn.tech.
+36.0.20.10  IN  PTR  sophie-desktop-wifi.zinn.tech.
