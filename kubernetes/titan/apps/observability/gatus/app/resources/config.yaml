@@ -1,0 +1,193 @@
+web:
+  port: 8080
+
+storage:
+  type: memory
+
+metrics: true
+
+ui:
+  title: Home Status | Gatus
+  header: Home Status
+
+alerting:
+  discord:
+    webhook-url: "${DISCORD_WEBHOOK_URL}"
+
+endpoints:
+  # DNS
+  - name: external-dns
+    group: DNS
+    url: 10.0.5.4
+    dns:
+      query-name: "google.com"
+      query-type: "A"
+    conditions: ["[DNS_RCODE] == NOERROR"]
+    alerts:
+      - type: discord
+        description: "External DNS: Cannot reach google.com"
+        send-on-resolved: true
+  - name: internal-dns
+    group: DNS
+    url: 10.0.5.4
+    dns:
+      query-name: "gateway.zinn.tech"
+      query-type: "A"
+    conditions: ["[BODY] == 10.0.0.1", "[DNS_RCODE] == NOERROR"]
+    alerts:
+      - type: discord
+        description: "Internal DNS: Cannot reach gateway"
+        send-on-resolved: true
+
+  # Servers
+  - name: Homelab
+    group: Servers
+    url: icmp://echo-server.zinn.ca
+    client:
+      dns-resolver: udp://1.1.1.1:53
+    conditions: ["[CONNECTED] == true"]
+    alerts:
+      - type: discord
+        description: "Homelab down"
+        send-on-resolved: true
+  - name: Ragnar
+    group: Servers
+    url: icmp://10.10.0.2
+    conditions: ["[CONNECTED] == true"]
+    alerts:
+      - type: discord
+        description: "Ragnar down"
+        send-on-resolved: true
+  - name: Hades
+    group: Servers
+    url: icmp://10.10.0.3
+    conditions: ["[CONNECTED] == true"]
+    alerts:
+      - type: discord
+        description: "Hades down"
+        send-on-resolved: true
+  - name: Ares
+    group: Servers
+    url: icmp://10.10.0.4
+    conditions: ["[CONNECTED] == true"]
+    alerts:
+      - type: discord
+        description: "Ares down"
+        send-on-resolved: true
+  - name: PiKVM
+    group: Servers
+    url: icmp://10.10.0.5
+    conditions: ["[CONNECTED] == true"]
+    alerts:
+      - type: discord
+        description: "PiKVM down"
+        send-on-resolved: true
+  - name: Artemis
+    group: Servers
+    url: icmp://10.10.0.7
+    conditions: ["[CONNECTED] == true"]
+    alerts:
+      - type: discord
+        description: "Artemis down"
+        send-on-resolved: true
+  - name: Hera
+    group: Servers
+    url: icmp://10.10.0.8
+    conditions: ["[CONNECTED] == true"]
+    alerts:
+      - type: discord
+        description: "Hera down"
+        send-on-resolved: true
+  - name: Apollo
+    group: Servers
+    url: icmp://10.10.0.9
+    conditions: ["[CONNECTED] == true"]
+    alerts:
+      - type: discord
+        description: "Apollo down"
+        send-on-resolved: true
+  - name: UNVR
+    group: Servers
+    url: icmp://10.0.0.32
+    conditions: ["[CONNECTED] == true"]
+    alerts:
+      - type: discord
+        description: "UNVR down"
+        send-on-resolved: true
+
+    # k8s Cluster
+  - name: k8s-1
+    group: Kubernetes
+    url: icmp://10.11.0.16
+    conditions: ["[CONNECTED] == true"]
+    alerts:
+      - type: discord
+        description: "k8s-1 down"
+        send-on-resolved: true
+  - name: k8s-2
+    group: Kubernetes
+    url: icmp://10.11.0.17
+    conditions: ["[CONNECTED] == true"]
+    alerts:
+      - type: discord
+        description: "k8s-2 down"
+        send-on-resolved: true
+  - name: k8s-3
+    group: Kubernetes
+    url: icmp://10.11.0.18
+    conditions: ["[CONNECTED] == true"]
+    alerts:
+      - type: discord
+        description: "k8s-3 down"
+        send-on-resolved: true
+  - name: k8s-4
+    group: Kubernetes
+    url: icmp://10.11.0.19
+    conditions: ["[CONNECTED] == true"]
+    alerts:
+      - type: discord
+        description: "k8s-4 down"
+        send-on-resolved: true
+  - name: k8s-5
+    group: Kubernetes
+    url: icmp://10.11.0.20
+    conditions: ["[CONNECTED] == true"]
+    alerts:
+      - type: discord
+        description: "k8s-5 down"
+        send-on-resolved: true
+  - name: k8s-6
+    group: Kubernetes
+    url: icmp://10.11.0.21
+    conditions: ["[CONNECTED] == true"]
+    alerts:
+      - type: discord
+        description: "k8s-6 down"
+        send-on-resolved: true
+
+  # IoT
+  - name: TESmart
+    group: IoT
+    url: icmp://192.168.1.10
+    conditions: ["[CONNECTED] == true"]
+    alerts:
+      - type: discord
+        description: "TESmart down"
+        send-on-resolved: true
+  - name: Ecobee
+    group: IoT
+    url: icmp://192.168.1.49
+    conditions: ["[CONNECTED] == true"]
+    alerts:
+      - type: discord
+        description: "Ecobee down"
+        failure-threshold: 10
+        send-on-resolved: true
+  - name: Philips Hue
+    group: IoT
+    url: icmp://192.168.1.51
+    conditions: ["[CONNECTED] == true"]
+    alerts:
+      - type: discord
+        description: "Philips hue down"
+        send-on-reso ved: true
