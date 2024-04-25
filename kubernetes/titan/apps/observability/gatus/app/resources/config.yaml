@@ -12,7 +12,12 @@ ui:
 
 alerting:
   discord:
-    webhook-url: "${DISCORD_WEBHOOK_URL}"
+    webhook-url: "$${DISCORD_WEBHOOK_URL}"
+    default-alert:
+      description: health-check failed
+      send-on-resolved: true
+      failure-threshold: 5
+      success-threshold: 2
 
 endpoints:
   # DNS
@@ -26,7 +31,6 @@ endpoints:
     alerts:
       - type: discord
         description: "External DNS: Cannot reach google.com"
-        send-on-resolved: true
   - name: internal-dns
     group: DNS
     url: 10.0.5.4
@@ -37,7 +41,6 @@ endpoints:
     alerts:
       - type: discord
         description: "Internal DNS: Cannot reach gateway"
-        send-on-resolved: true
 
   # Servers
   - name: Homelab
@@ -49,7 +52,6 @@ endpoints:
     alerts:
       - type: discord
         description: "Homelab down"
-        send-on-resolved: true
   - name: Ragnar
     group: Servers
     url: icmp://10.10.0.2
@@ -57,7 +59,6 @@ endpoints:
     alerts:
       - type: discord
         description: "Ragnar down"
-        send-on-resolved: true
   - name: Hades
     group: Servers
     url: icmp://10.10.0.3
@@ -65,7 +66,6 @@ endpoints:
     alerts:
       - type: discord
         description: "Hades down"
-        send-on-resolved: true
   - name: Ares
     group: Servers
     url: icmp://10.10.0.4
@@ -73,7 +73,6 @@ endpoints:
     alerts:
       - type: discord
         description: "Ares down"
-        send-on-resolved: true
   - name: PiKVM
     group: Servers
     url: icmp://10.10.0.5
@@ -81,7 +80,6 @@ endpoints:
     alerts:
       - type: discord
         description: "PiKVM down"
-        send-on-resolved: true
   - name: Artemis
     group: Servers
     url: icmp://10.10.0.7
@@ -89,7 +87,6 @@ endpoints:
     alerts:
       - type: discord
         description: "Artemis down"
-        send-on-resolved: true
   - name: Hera
     group: Servers
     url: icmp://10.10.0.8
@@ -97,7 +94,6 @@ endpoints:
     alerts:
       - type: discord
         description: "Hera down"
-        send-on-resolved: true
   - name: Apollo
     group: Servers
     url: icmp://10.10.0.9
@@ -105,7 +101,6 @@ endpoints:
     alerts:
       - type: discord
         description: "Apollo down"
-        send-on-resolved: true
   - name: UNVR
     group: Servers
     url: icmp://10.0.0.32
@@ -113,7 +108,6 @@ endpoints:
     alerts:
       - type: discord
         description: "UNVR down"
-        send-on-resolved: true
 
     # k8s Cluster
   - name: k8s-1
@@ -123,7 +117,6 @@ endpoints:
     alerts:
       - type: discord
         description: "k8s-1 down"
-        send-on-resolved: true
   - name: k8s-2
     group: Kubernetes
     url: icmp://10.11.0.17
@@ -131,7 +124,6 @@ endpoints:
     alerts:
       - type: discord
         description: "k8s-2 down"
-        send-on-resolved: true
   - name: k8s-3
     group: Kubernetes
     url: icmp://10.11.0.18
@@ -139,7 +131,6 @@ endpoints:
     alerts:
       - type: discord
         description: "k8s-3 down"
-        send-on-resolved: true
   - name: k8s-4
     group: Kubernetes
     url: icmp://10.11.0.19
@@ -147,7 +138,6 @@ endpoints:
     alerts:
       - type: discord
         description: "k8s-4 down"
-        send-on-resolved: true
   - name: k8s-5
     group: Kubernetes
     url: icmp://10.11.0.20
@@ -155,7 +145,6 @@ endpoints:
     alerts:
       - type: discord
         description: "k8s-5 down"
-        send-on-resolved: true
   - name: k8s-6
     group: Kubernetes
     url: icmp://10.11.0.21
@@ -163,7 +152,6 @@ endpoints:
     alerts:
       - type: discord
         description: "k8s-6 down"
-        send-on-resolved: true
 
   # IoT
   - name: TESmart
@@ -173,7 +161,6 @@ endpoints:
     alerts:
       - type: discord
         description: "TESmart down"
-        send-on-resolved: true
   - name: Ecobee
     group: IoT
     url: icmp://192.168.1.49
@@ -182,7 +169,6 @@ endpoints:
       - type: discord
         description: "Ecobee down"
         failure-threshold: 10
-        send-on-resolved: true
   - name: Philips Hue
     group: IoT
     url: icmp://192.168.1.51
@@ -190,4 +176,3 @@ endpoints:
     alerts:
       - type: discord
         description: "Philips hue down"
-        send-on-reso ved: true
