@@ -1,5 +1,0 @@
----
-providerRegex: |
-  ^(titan)$
-
-bypassDnsResolution: true

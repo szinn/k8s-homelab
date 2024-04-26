@@ -24,10 +24,6 @@
   color: "72ccf3"
   description: >-
     Changes made in the staging cluster
-- name: cluster/titan
-  color: "72ccf3"
-  description: >-
-    Changes made in the titan cluster
 # Renovate
 - name: renovate/container
   color: "ffc300"

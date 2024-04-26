@@ -5,7 +5,7 @@ vars:
   KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
 
 env:
-  KUBECONFIG: "{{.KUBERNETES_DIR}}/main/kubeconfig:{{.KUBERNETES_DIR}}/staging/kubeconfig:{{.KUBERNETES_DIR}}/titan/kubeconfig"
+  KUBECONFIG: "{{.KUBERNETES_DIR}}/main/kubeconfig:{{.KUBERNETES_DIR}}/staging/kubeconfig"
 
 includes:
   authentik: .taskfiles/Authentik/Taskfile.yaml

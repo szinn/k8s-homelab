@@ -16,13 +16,6 @@
         "**/infrastructure/talos/staging/**"
       ],
       "additionalBranchPrefix": "staging-"
-    },
-    {
-      "description": "Separate PRs for titan cluster",
-      "matchFileNames": [
-        "**/kubernetes/titan/**"
-      ],
-      "additionalBranchPrefix": "titan-"
     }
   ]
 }

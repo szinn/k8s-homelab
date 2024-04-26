@@ -16,7 +16,6 @@
     "hack": "Tools",
     "kubernetes": "Cluster",
     "kubernetes/main": "cluster",
-    "kubernetes/titan": "cluster",
     "kubernetes/staging": "cluster",
     "cert-manager": "guard",
     "dbms": "database",

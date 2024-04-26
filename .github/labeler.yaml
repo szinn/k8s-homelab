@@ -19,6 +19,3 @@ cluster/main:
 cluster/staging:
   - changed-files:
       - any-glob-to-any-file: "kubernetes/staging/**/*"
-cluster/titan:
-  - changed-files:
-      - any-glob-to-any-file: "kubernetes/titan/**/*"

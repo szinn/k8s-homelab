@@ -23,18 +23,6 @@ tasks:
           nodes: stage-1 stage-2 stage-3 stage-4 stage-5 stage-6
       - task: :proxmox:unmount-staging-cdrom
 
-  titan:
-    desc: "Bootstrap titan cluster"
-    vars:
-      cluster: titan
-    cmds:
-      - task: :proxmox:reset-titan
-      - task: :talos:bootstrap
-        vars:
-          cluster: titan
-          nodes: titan
-      - task: :proxmox:unmount-titan-cdrom
-
   config:
     desc: Rebuild all cluster configuration
     cmd: bash .taskfiles/Bootstrap/_scripts/build-config.sh
