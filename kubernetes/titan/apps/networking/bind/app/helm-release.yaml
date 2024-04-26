@@ -25,7 +25,7 @@ spec:
           main:
             image:
               repository: docker.io/internetsystemsconsortium/bind9
-              tag: 9.19
+              tag: 9.19@sha256:5037e85fc032d16b494dff69a5b732735a1d5e8ffaf383d487421e057fd92d0d
             command:
               - /usr/sbin/named
             args:
