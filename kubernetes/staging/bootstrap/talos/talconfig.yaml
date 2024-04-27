@@ -11,6 +11,7 @@ cniConfig:
 
 additionalApiServerCertSans: &san
   - ${clusterEndpointIP}
+  - 10.0.5.11
   - staging.${SECRET_TECH_DOMAIN_NAME}
   - "127.0.0.1"
 
@@ -33,6 +34,8 @@ nodes:
           hardwareAddr: "de:ca:ff:10:12:10"
         dhcp: true
         mtu: 1500
+        vip:
+          ip: ${clusterEndpointIP}
   - hostname: stage-2.${SECRET_TECH_DOMAIN_NAME}
     ipAddress: 10.12.0.17
     controlPlane: true
@@ -42,6 +45,8 @@ nodes:
           hardwareAddr: "de:ca:ff:10:12:11"
         dhcp: true
         mtu: 1500
+        vip:
+          ip: ${clusterEndpointIP}
   - hostname: stage-3.${SECRET_TECH_DOMAIN_NAME}
     ipAddress: 10.12.0.18
     controlPlane: true
@@ -51,6 +56,8 @@ nodes:
           hardwareAddr: "de:ca:ff:10:12:12"
         dhcp: true
         mtu: 1500
+        vip:
+          ip: ${clusterEndpointIP}
   - hostname: stage-4.${SECRET_TECH_DOMAIN_NAME}
     ipAddress: 10.12.0.19
     controlPlane: false

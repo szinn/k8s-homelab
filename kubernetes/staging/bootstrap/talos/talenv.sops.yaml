@@ -1,5 +1,5 @@
 clusterName: staging
-clusterEndpointIP: 10.0.5.11
+clusterEndpointIP: 10.12.0.15
 clusterServiceNets: 10.210.0.0/16
 clusterPodNets: 10.211.0.0/16
 vectorAggregatorIP: 10.12.1.4
@@ -27,8 +27,8 @@ sops:
             LzRDVnNsMmFidnNUY0J6b3BicnJObjQKKuPUGgPhglihHl8BmtY4dXsb7Svztkoy
             thw7vWbxMpKyD8HuHuOcAFRtwMoF2oW+p6SCKq6S4iyVnPfICXch7Q==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2023-12-27T14:55:29Z"
-    mac: ENC[AES256_GCM,data:5opEn7Ct4aO+SQb7RqbMnWQGohds5UzSHeFj4aSmaAmUabTmmUHfGrikgCzrROO++q3GqO3lJorhWF/dxQW3+sVNNLmrLNY8zOkBuH0duIaQ6B6ms9IN2q1U9xKR/jaeccKnVTyOEkueZ/S8QVACM+GSNqgf5BBUXZQTPy+9AfA=,iv:ppAON+6y+C1aY3OBEhHV/ited8KGels6uhqMXyTYOgo=,tag:rYHM+6jPkmFbhYX4eYbblw==,type:str]
+    lastmodified: "2024-04-27T00:26:08Z"
+    mac: ENC[AES256_GCM,data:tUIPBXz7zYRzvb/ER39765FNiKZgiLy5g/TkjAyDPuShDMH2LanbS29Pxh1JrjZdO0rP5KncTlZ6dq+9VJ5XIAulSn6EXmH2UWo3638npHWKeu7Cyac1c76eBkiy+Np+7S8acs9h2cKZOKgZuNBCXaCOwe4bXTozUkNPwuHAV/c=,iv:X55CJU2Cslq/zXRsGbKetW2kEIZNDAie9UsqnKipR98=,tag:tcH8rkVBqE1opGz7CIrghw==,type:str]
     pgp: []
     encrypted_regex: ((?i)(displayname|email|pass|secret($|[^N])|key|token|^data$|^stringData))
     version: 3.8.1
