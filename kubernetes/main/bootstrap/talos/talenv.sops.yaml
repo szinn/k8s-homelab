@@ -1,5 +1,5 @@
 clusterName: main
-clusterEndpointIP: 10.0.5.10
+clusterEndpointIP: 10.11.0.15
 clusterServiceNets: 10.200.0.0/16
 clusterPodNets: 10.201.0.0/16
 vectorAggregatorIP: 10.11.1.4
@@ -27,8 +27,8 @@ sops:
             UTF5S3ZMQ2k5QnhqdWxMOElwRG8yUXMKLn1vqmpISgomgwzYd/QeDYuecTdftxGl
             OBqbD8l1tysKhr27tBVvww+tDXB6dnvi8vJnM+T/FF/4/2UJ74f1Ew==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2024-04-03T22:52:19Z"
-    mac: ENC[AES256_GCM,data:m5t+Z6z3eYz8FBnTmIR45lPa6z/atvbrsc/OIo3G9C62dzQFU+3Ew4tYRgHXV9K0ok0iRQU0/TQGfc9GyT0AfxAuTdUiSHQYsLchx6UF5y5Mi7/4A98BAilsjDAUuQMnFMO6QL4jssEsW3wiCnr6SLzIE7beRBn8lZLxOBJMKWU=,iv:+up66B2kqHq5qk6Q3/igXT3bb7KFvoxYozu/9Oy22nE=,tag:QtXOWifuA/QcNXQ4sE1s0w==,type:str]
+    lastmodified: "2024-04-27T12:25:26Z"
+    mac: ENC[AES256_GCM,data:ezuHGTkRFjNfvUw1CpwE47J1Nin3FiwKfaqcsN/KML7VvKbqdxcYuBDGxg3JQCsNr+6kc9H6lvzLPEmoA9hpNRt0cB6kZv3/dpYy5RPJFuoQLXB8mFSHrh/lwkkSoqVKUvza79gKBItb+WdvKvtY2ovCSW9EZPog1VZIl82C50U=,iv:hfxvZxx0rIRf/Ig6xGqSX5s1lKjU0hCX9aRhLXh+nu0=,tag:4TjlSzNBuRsG3wa/FLNWpg==,type:str]
     pgp: []
     encrypted_regex: ((?i)(displayname|email|pass|secret($|[^N])|key|token|^data$|^stringData))
     version: 3.8.1

@@ -13,6 +13,7 @@ additionalApiServerCertSans: &san
   - ${clusterEndpointIP}
   - main.${SECRET_TECH_DOMAIN_NAME}
   - "127.0.0.1"
+  - "10.0.0.8"
 
 additionalMachineCertSans: *san
 
@@ -27,32 +28,41 @@ nodes:
   - hostname: k8s-1.${SECRET_TECH_DOMAIN_NAME}
     ipAddress: 10.11.0.16
     controlPlane: true
-    installDiskSelector:
-      busPath: /pci0000:00/0000:00:12.0/ata2/host1/target1:0:0/1:0:0:0/
+    installDisk: /dev/sda
     networkInterfaces:
-      - interface: eth0
+      - deviceSelector:
+          hardwareAddr: 7c:83:34:b1:82:d7
+          driver: r8169
         mtu: 1500
         dhcp: true
+        vip:
+          ip: ${clusterEndpointIP}
 
   - hostname: k8s-2.${SECRET_TECH_DOMAIN_NAME}
     ipAddress: 10.11.0.17
     controlPlane: true
-    installDiskSelector:
-      busPath: /pci0000:00/0000:00:12.0/ata2/host1/target1:0:0/1:0:0:0/
+    installDisk: /dev/sda
     networkInterfaces:
-      - interface: eth0
+      - deviceSelector:
+          hardwareAddr: 7c:83:34:b1:fe:32
+          driver: r8169
         mtu: 1500
         dhcp: true
+        vip:
+          ip: ${clusterEndpointIP}
 
   - hostname: k8s-3.${SECRET_TECH_DOMAIN_NAME}
     ipAddress: 10.11.0.18
     controlPlane: true
-    installDiskSelector:
-      busPath: /pci0000:00/0000:00:12.0/ata2/host1/target1:0:0/1:0:0:0/
+    installDisk: /dev/sda
     networkInterfaces:
-      - interface: eth0
+      - deviceSelector:
+          hardwareAddr: 7c:83:34:b1:7b:8b
+          driver: r8169
         mtu: 1500
         dhcp: true
+        vip:
+          ip: ${clusterEndpointIP}
 
   - hostname: k8s-4.${SECRET_TECH_DOMAIN_NAME}
     ipAddress: 10.11.0.19
@@ -64,7 +74,9 @@ nodes:
         partitions:
           - mountpoint: /var/mnt/ssd
     networkInterfaces:
-      - interface: eth0
+      - deviceSelector:
+          hardwareAddr: 1c:69:7a:a5:63:05
+          driver: igc
         mtu: 1500
         dhcp: true
 
@@ -78,7 +90,9 @@ nodes:
         partitions:
           - mountpoint: /var/mnt/ssd
     networkInterfaces:
-      - interface: eth0
+      - deviceSelector:
+          hardwareAddr: 1c:69:7a:a5:a4:a7
+          driver: igc
         mtu: 1500
         dhcp: true
 
@@ -92,7 +106,9 @@ nodes:
         partitions:
           - mountpoint: /var/mnt/ssd
     networkInterfaces:
-      - interface: eth0
+      - deviceSelector:
+          hardwareAddr: 1c:69:7a:a5:c1:19
+          driver: igc
         mtu: 1500
         dhcp: true
 
@@ -125,17 +141,7 @@ controlPlane:
         time:
           disabled: false
           servers:
-            - 10.11.0.1
-
-    # # Enable cluster discovery
-    # - &discoveryPatch |-
-    #   cluster:
-    #     discovery:
-    #       registries:
-    #         kubernetes:
-    #           disabled: false
-    #         service:
-    #           disabled: false
+            - 10.0.0.8
 
     # Enable KubePrism
     - &kubePrismPatch |-
@@ -257,11 +263,3 @@ worker:
                 - rbind
                 - rshared
                 - rw
-
-    # Graphics extensions
-    # - i915-ucode
-    # - intel-ucode
-    # - |-
-    #   machine:
-    #     install:
-    #       image: factory.talos.dev/installer/97bf8e92fc6bba0f03928b859c08295d7615737b29db06a97be51dc63004e403:v1.6.1
