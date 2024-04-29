@@ -30,7 +30,8 @@ nodes:
     installDisk: /dev/sda
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "de:ca:ff:10:12:10"
+          hardwareAddr: de:ca:ff:10:12:10
+          driver: virtio_net
         dhcp: true
         mtu: 1500
         vip:
@@ -41,7 +42,8 @@ nodes:
     installDisk: /dev/sda
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "de:ca:ff:10:12:11"
+          hardwareAddr: de:ca:ff:10:12:11
+          driver: virtio_net
         dhcp: true
         mtu: 1500
         vip:
@@ -52,7 +54,8 @@ nodes:
     installDisk: /dev/sda
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "de:ca:ff:10:12:12"
+          hardwareAddr: de:ca:ff:10:12:12
+          driver: virtio_net
         dhcp: true
         mtu: 1500
         vip:
@@ -63,7 +66,8 @@ nodes:
     installDisk: /dev/sda
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "de:ca:ff:10:12:13"
+          hardwareAddr: de:ca:ff:10:12:13
+          driver: virtio_net
         dhcp: true
         mtu: 1500
   - hostname: stage-5.${SECRET_TECH_DOMAIN_NAME}
@@ -72,7 +76,8 @@ nodes:
     installDisk: /dev/sda
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "de:ca:ff:10:12:14"
+          hardwareAddr: de:ca:ff:10:12:14
+          driver: virtio_net
         dhcp: true
         mtu: 1500
   - hostname: stage-6.${SECRET_TECH_DOMAIN_NAME}
@@ -81,7 +86,8 @@ nodes:
     installDisk: /dev/sda
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "de:ca:ff:10:12:15"
+          hardwareAddr: de:ca:ff:10:12:15
+          driver: virtio_net
         dhcp: true
         mtu: 1500
 controlPlane:
@@ -113,7 +119,7 @@ controlPlane:
         time:
           disabled: false
           servers:
-            - 10.12.0.1
+            - 10.0.0.8
 
     # - &discoveryPatch |-
     #   cluster:
