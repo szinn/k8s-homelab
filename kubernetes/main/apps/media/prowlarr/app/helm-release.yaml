@@ -17,12 +17,12 @@ spec:
       interval: 15m
   maxHistory: 3
   install:
-    createNamespace: true
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
   uninstall:
     keepHistory: false
@@ -31,29 +31,27 @@ spec:
       main:
         annotations:
           reloader.stakater.com/auto: "true"
-        pod:
-          securityContext:
-            runAsUser: 2000
-            runAsGroup: 2000
-            runAsNonRoot: true
-            fsGroup: 2000
-            fsGroupChangePolicy: OnRootMismatch
-        containers:
-          main:
+        initContainers:
+          init-db:
             image:
-              repository: ghcr.io/onedr0p/prowlarr-nightly
-              tag: 1.17.1.4468@sha256:7e82172353b92583373a48911c12d5ad8271e26827d03366b65259ee0e27fbe2
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16
+            envFrom: &envFrom
+              - secretRef:
+                  name: prowlarr-secret
+        containers:
+          app:
+            image:
+              repository: ghcr.io/onedr0p/prowlarr-develop
+              tag: 1.17.0.4448@sha256:66e786d023cf94a7005b9a9effde9e7e4557e799b3f00cfb7b084f81ba15082c
             env:
               TZ: ${CONFIG_TIMEZONE}
               PROWLARR__INSTANCE_NAME: Prowlarr
               PROWLARR__PORT: &port 9696
-              PROWLARR__BRANCH: nightly
               PROWLARR__LOG_LEVEL: info
               PROWLARR__AUTHENTICATION_METHOD: External
               PROWLARR__THEME: dark
-            envFrom:
-              - secretRef:
-                  name: prowlarr-secret
+            envFrom: *envFrom
             probes:
               liveness: &probes
                 enabled: true
@@ -69,14 +67,26 @@ spec:
               readiness: *probes
               startup:
                 enabled: false
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 2000
+        runAsGroup: 2000
+        fsGroup: 2000
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: { type: RuntimeDefault }
     service:
-      main:
+      app:
         controller: main
         ports:
           http:
             port: *port
     ingress:
-      main:
+      app:
         enabled: true
         className: internal
         hosts:
@@ -84,22 +94,10 @@ spec:
             paths:
               - path: /
                 service:
-                  identifier: main
+                  identifier: app
                   port: http
     persistence:
       config:
-        enabled: true
-        existingClaim: "${VOLSYNC_CLAIM}"
-        advancedMounts:
-          main:
-            main:
-              - path: /config
-      logs:
         type: emptyDir
-        globalMounts:
-          - path: /config/logs
-      backup:
-        existingClaim: media-backups
-        globalMounts:
-          - path: /backups
-            subPath: prowlarr
+      tmp:
+        type: emptyDir

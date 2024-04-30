@@ -5,4 +5,4 @@ kind: Kustomization
 resources:
   - prowlarr-secrets.yaml
   - helm-release.yaml
-  - ../../../../templates/volsync
+  - ../../../../templates/gatus/guarded

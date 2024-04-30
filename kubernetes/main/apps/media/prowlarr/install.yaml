@@ -15,15 +15,12 @@ spec:
     kind: GitRepository
     name: homelab-kubernetes
   dependsOn:
+    - name: dbms-cloudnative-pg
     - name: security-external-secrets-stores
-    - name: system-volsync
   postBuild:
     substitute:
-      APP: *app
-      APP_UID: "2000"
-      APP_GID: "2000"
-      VOLSYNC_CLAIM: prowlarr-config
-      VOLSYNC_CAPACITY: 2Gi
+      GATUS_APP: *app
+      GATUS_SUBDOMAIN: prowlarr
   prune: true
   wait: false
   interval: 30m
