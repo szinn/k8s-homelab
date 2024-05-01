@@ -12,8 +12,8 @@ cniConfig:
 additionalApiServerCertSans: &san
   - ${clusterEndpointIP}
   - main.${SECRET_TECH_DOMAIN_NAME}
-  - "127.0.0.1"
-  - "10.0.0.8"
+  - 127.0.0.1
+  - 10.0.0.7
 
 additionalMachineCertSans: *san
 
@@ -141,7 +141,7 @@ controlPlane:
         time:
           disabled: false
           servers:
-            - 10.0.0.8
+            - 10.0.0.7
 
     # Enable KubePrism
     - &kubePrismPatch |-
