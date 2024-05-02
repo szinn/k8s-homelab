@@ -95,9 +95,9 @@ tasks:
       ip: "{{index .MATCH 2}}"
     cmds:
       - cmd: |
-          ssh ares -- qm create {{.prefix}}{{.vmid}} \
-            --name {{.cluster}}-{{.vmid}} \
-            --description {{.cluster}}-{{.vmid}} \
+          ssh ares -- qm create {{.VMID_PREFIX}}{{.vmid}} \
+            --name stage-{{.vmid}} \
+            --description stage-{{.vmid}} \
             --ide0 local:iso/metal-amd64.iso,media=cdrom \
             --boot 'order=ide0\;scsi0' \
             --memory 4096 \

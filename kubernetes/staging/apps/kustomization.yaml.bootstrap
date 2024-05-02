@@ -6,12 +6,10 @@ resources:
   # Step 1
   - cert-manager
   - kube-system
+  - networking
+  - security
+  - system
   # Step 2
-  # - networking
-  # - security/namespace.yaml
-  # - security/external-secrets/install.yaml
-  # - wildcard-tls.yaml
+  - rook-ceph
   # Step 3
-  # - rook-ceph
-  # Step 4
-  # - dbms
+  - dbms
