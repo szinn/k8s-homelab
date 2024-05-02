@@ -35,7 +35,7 @@ spec:
           main:
             image:
               repository: ghcr.io/lissy93/dashy
-              tag: 3.0.1@sha256:a351af50ef52cb2ddc62d416e6dea366d8c922633b9aece590824683f9564c35
+              tag: 3.0.1@sha256:509ed71ee52052277a9e648ace636de339b876a67edd51c6d711b4f3911862e3
             env:
               TZ: ${CONFIG_TIMEZONE}
               UID: ${APP_UID}
