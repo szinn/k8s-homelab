@@ -80,9 +80,6 @@ spec:
             enabled: true
             port: 6002
             protocol: UDP
-          vyos:
-            enabled: true
-            port: 6003
     persistence:
       config:
         enabled: true

@@ -397,13 +397,6 @@ spec:
         cert-manager:
           url: https://raw.githubusercontent.com/szinn/k8s-homelab/main/kubernetes/main/apps/cert-manager/cert-manager/app/cert-manager-dashboard.json
           datasource: Prometheus
-        speedtest-exporter-hub:
-          # renovate: depName="Speedtest-Exporter Dashboard"
-          gnetId: 13665
-          revision: 4
-          datasource:
-            - name: DS_PROMETHEUS
-              value: Prometheus
         1-node-exporter:
           url: https://grafana.com/api/dashboards/11074/revisions/9/download
           datasource: Prometheus
