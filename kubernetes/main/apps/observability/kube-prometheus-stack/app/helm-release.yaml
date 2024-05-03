@@ -240,6 +240,13 @@ spec:
             static_configs:
               - targets:
                   - "ragnar.${SECRET_TECH_DOMAIN_NAME}:9633"
+          - job_name: blocky
+            scrape_interval: 1m
+            scrape_timeout: 10s
+            honor_timestamps: true
+            static_configs:
+              - targets:
+                  - "titan.${SECRET_TECH_DOMAIN_NAME}:4000"
           # - job_name: dragonfly
           #   scrape_interval: 1m
           #   scrape_timeout: 10s
