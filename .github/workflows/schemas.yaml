@@ -29,7 +29,7 @@ jobs:
         shell: bash
         run: |
           sudo apt-get -qq update && \
-          sudo apt-get -qq install --no-install-recommends -y curl unzip
+          sudo apt-get -qq install --no-install-recommends -y curl unzip git
 
       - name: Setup Flux CLI
         uses: fluxcd/flux2/action@main
@@ -52,6 +52,18 @@ jobs:
         with:
           encodedString: ${{ secrets.KUBECONFIG }}
           fileName: kubeconfig
+
+      - name: Generate Token
+        uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: "${{ secrets.BOT_APP_ID }}"
+          private-key: "${{ secrets.BOT_APP_PRIVATE_KEY }}"
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: "${{ steps.app-token.outputs.token }}"
 
       - name: Download and run crd-extractor
         env:
