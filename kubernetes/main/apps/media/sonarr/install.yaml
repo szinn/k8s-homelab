@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: &app sonarr
-  path: ./kubernetes/main/apps/media/sonarr
+  path: ./kubernetes/main/apps/media/sonarr/app
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes
@@ -24,6 +24,7 @@ spec:
       APP_GID: "2000"
       VOLSYNC_CLAIM: sonarr-config
       VOLSYNC_CAPACITY: 2Gi
+      VOLSYNC_CACHE_STORAGECLASS: ceph-block
       GATUS_APP: sonarr
       GATUS_SUBDOMAIN: sonarr
   prune: true
