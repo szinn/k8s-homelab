@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: &app radarr
-  path: ./kubernetes/main/apps/media/radarr
+  path: ./kubernetes/main/apps/media/radarr/app
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes
