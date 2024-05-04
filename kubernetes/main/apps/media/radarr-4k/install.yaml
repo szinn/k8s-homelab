@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: &app radarr-4k
-  path: ./kubernetes/main/apps/media/radarr-4k
+  path: ./kubernetes/main/apps/media/radarr-4k/app
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes
@@ -19,11 +19,6 @@ spec:
     - name: system-volsync
   postBuild:
     substitute:
-      APP: *app
-      APP_UID: "2000"
-      APP_GID: "2000"
-      VOLSYNC_CLAIM: radarr-4k-config
-      VOLSYNC_CAPACITY: 2Gi
       GATUS_APP: radarr-4k
       GATUS_SUBDOMAIN: radarr-4k
   prune: true

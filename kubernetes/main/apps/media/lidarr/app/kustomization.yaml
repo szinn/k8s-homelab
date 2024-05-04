@@ -5,4 +5,5 @@ kind: Kustomization
 resources:
   - lidarr-secrets.yaml
   - helm-release.yaml
-  - ../../../../templates/volsync
+  - pvc.yaml
+  - ../../../../templates/gatus/guarded

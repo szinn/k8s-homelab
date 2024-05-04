@@ -17,64 +17,77 @@ spec:
       interval: 15m
   maxHistory: 3
   install:
-    createNamespace: true
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
   uninstall:
     keepHistory: false
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 2000
+        runAsGroup: 2000
+        fsGroup: 2000
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: { type: RuntimeDefault }
     controllers:
-      main:
+      lidarr:
         annotations:
           reloader.stakater.com/auto: "true"
-        pod:
-          securityContext:
-            runAsUser: 2000
-            runAsGroup: 2000
-            runAsNonRoot: true
-            fsGroup: 2000
-            fsGroupChangePolicy: OnRootMismatch
-        containers:
-          main:
+        initContainers:
+          init-db:
             image:
-              repository: ghcr.io/onedr0p/lidarr
-              tag: 2.2.5.4141@sha256:3418434f581f3437e88828a413f8b0fef70e9906fc13965be7a10ab3cc89ebc9
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16@sha256:3436dfbbc2799332a01361e007e3b408d016cfc235261e1caccc65e6edadf516
+            envFrom: &envFrom
+              - secretRef:
+                  name: lidarr-secret
+        containers:
+          app:
+            image:
+              repository: ghcr.io/onedr0p/lidarr-develop
+              tag: 2.3.0.4159
             env:
               TZ: ${CONFIG_TIMEZONE}
+              LIDARR__INSTANCE_NAME: Lidarr
+              LIDARR__PORT: &port 8686
               LIDARR__LOG_LEVEL: info
+              LIDARR__AUTHENTICATION_METHOD: External
+              LIDARR__AUTHENTICATION_REQUIRED: DisabledForLocalAddresses
               LIDARR__THEME: dark
             envFrom:
               - secretRef:
                   name: lidarr-secret
             probes:
-              liveness:
+              liveness: &probes
                 enabled: true
                 custom: true
                 spec:
-                  exec:
-                    command:
-                      - /usr/bin/env
-                      - bash
-                      - -c
-                      - curl --fail localhost:8686/api/v1/system/status?apiKey=`IFS=\> && while
-                        read -d \< E C; do if [[ $E = "ApiKey" ]]; then echo $C; fi; done < /config/config.xml`
-                  failureThreshold: 5
-                  initialDelaySeconds: 60
+                  httpGet:
+                    path: /ping
+                    port: *port
+                  initialDelaySeconds: 0
                   periodSeconds: 10
-                  successThreshold: 1
-                  timeoutSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
     service:
-      main:
-        controller: main
+      app:
+        controller: lidarr
         ports:
           http:
             port: 8686
     ingress:
-      main:
+      app:
         enabled: true
         className: internal
         hosts:
@@ -82,16 +95,13 @@ spec:
             paths:
               - path: /
                 service:
-                  identifier: main
+                  identifier: app
                   port: http
     persistence:
       config:
-        enabled: true
-        existingClaim: "${VOLSYNC_CLAIM}"
-        advancedMounts:
-          main:
-            main:
-              - path: /config
+        existingClaim: lidarr-config
+      tmp:
+        type: emptyDir
       logs:
         type: emptyDir
         globalMounts:
@@ -107,5 +117,5 @@ spec:
       backup:
         existingClaim: media-backups
         globalMounts:
-          - path: /backups
+          - path: /config/Backups
             subPath: lidarr
