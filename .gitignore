@@ -1,7 +1,8 @@
-**/.terraform/*
-**/terraform.tfstate*
 .decrypted*
-**/talosconfig*
+.venv
+**/.terraform/*
 **/kubeconfig*
-**/wildcard-tls.yaml
+**/talosconfig*
 **/tech-wildcard-tls.yaml
+**/terraform.tfstate*
+**/wildcard-tls.yaml

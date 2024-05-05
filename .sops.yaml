@@ -5,6 +5,10 @@ keys:
   - &staging age1cyqpra4hj22emvvsjyygd3mstyrf8vy0hktmvmv85kxgggqxzfns4pkdhy
 
 creation_rules:
+  - path_regex: ansible/.*\.sops\.ya?ml
+    key_groups:
+      - age:
+          - *scotte
   - path_regex: kubernetes/main/.*\.ya?ml
     encrypted_regex: "((?i)(displayname|email|pass|secret($|[^N])|key|token|^data$|^stringData))"
     key_groups:

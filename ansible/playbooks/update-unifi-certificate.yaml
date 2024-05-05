@@ -1,0 +1,23 @@
+- name: Update UniFi Certificate
+  hosts: styx zeus
+  tasks:
+    - name: Copy certificate
+      copy:
+        src: ../files/certificates/certificate.crt
+        dest: /data/unifi-core/config/unifi-core.crt
+        owner: root
+        group: root
+        mode: u+rw,g-wx,o-wx
+    - name: Copy certificate key
+      copy:
+        src: ../files/certificates/certificate.key
+        dest: /data/unifi-core/config/unifi-core.key
+        owner: root
+        group: root
+        mode: u+rw,g-wx,o-wx
+    - name: Restart UnifiOS
+      ansible.builtin.systemd:
+        name: "unifi-core"
+        state: restarted
+        enabled: true
+        daemon_reload: true

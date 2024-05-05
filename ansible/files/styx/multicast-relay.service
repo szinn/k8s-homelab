@@ -1,0 +1,12 @@
+[Unit]
+Description=Multicast Relay
+After=network-online.target
+
+[Service]
+ExecStart=/usr/bin/python3 /tmp/multicast-relay.py --interfaces br20 br98 br99
+ExecStartPre=/usr/bin/curl -o /tmp/multicast-relay.py https://raw.githubusercontent.com/alsmith/multicast-relay/master/multicast-relay.py
+Type=oneshot
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,40 @@
+---
+version: "3"
+
+vars:
+  PYTHON_BIN: python3
+
+env:
+  ANSIBLE_CONFIG: "{{.ANSIBLE_DIR}}/ansible.cfg"
+  VIRTUAL_ENV: "{{.ROOT_DIR}}/.venv"
+  ANSIBLE_COLLECTIONS_PATH: "{{.ROOT_DIR}}/.venv/galaxy"
+  ANSIBLE_ROLES_PATH: "{{.ROOT_DIR}}/.venv/galaxy/ansible_roles"
+  ANSIBLE_INVENTORY: "{{.ANSIBLE_DIR}}/inventory"
+  ANSIBLE_VARS_ENABLED: "host_group_vars,community.sops.sops"
+
+tasks:
+  setup:
+    desc: Configure the ansible environment
+    cmds:
+      - true && {{.PYTHON_BIN}} -m venv {{.ROOT_DIR}}/.venv
+      - .venv/bin/ansible-galaxy collection install -r "{{.ANSIBLE_DIR}}/requirements.yaml"
+
+  fetch-certificate:
+    desc: Fetch domain certificate from cluster
+    cmd: "{{.ANSIBLE_DIR}}/scripts/fetch-certificate.sh {{.ANSIBLE_DIR}}/files/certificates"
+
+  update-certificates:
+    desc: Update machines with certificates
+    cmds:
+      - ansible-playbook "{{.ANSIBLE_DIR}}/playbooks/update-proxmox-certificate.yaml"
+      - ansible-playbook "{{.ANSIBLE_DIR}}/playbooks/update-pikvm-certificate.yaml"
+      - ansible-playbook "{{.ANSIBLE_DIR}}/playbooks/update-unifi-certificate.yaml"
+      - ansible-playbook "{{.ANSIBLE_DIR}}/playbooks/update-octopi-certificate.yaml"
+
+  update-pikvm:
+    desc: Update PiKVM configuration
+    cmd: ansible-playbook "{{.ANSIBLE_DIR}}/playbooks/update-pikvm-configuration.yaml"
+
+  update-udmse:
+    desc: Update UniFi UDM-SE configuration
+    cmd: ansible-playbook "{{.ANSIBLE_DIR}}/playbooks/update-udmse-configuration.yaml"

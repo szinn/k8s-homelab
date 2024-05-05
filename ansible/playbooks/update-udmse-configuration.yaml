@@ -1,0 +1,16 @@
+- name: Update Styx Configuration
+  hosts: styx
+  tasks:
+    - name: Copy multicast-relay.service
+      copy:
+        src: ../files/styx/multicast-relay.service
+        dest: /etc/systemd/system/multicast-relay.service
+        owner: root
+        group: root
+        mode: u+rw,g-wx,o-wx
+    - name: Restart multicast-relay
+      ansible.builtin.systemd:
+        name: "multicast-relay"
+        state: restarted
+        enabled: true
+        daemon_reload: true

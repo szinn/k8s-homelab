@@ -2,29 +2,30 @@
 version: "3"
 
 vars:
+  ANSIBLE_DIR: "{{.ROOT_DIR}}/ansible"
   KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
 
 env:
   KUBECONFIG: "{{.KUBERNETES_DIR}}/main/kubeconfig:{{.KUBERNETES_DIR}}/staging/kubeconfig"
 
 includes:
-  authentik: .taskfiles/Authentik/Taskfile.yaml
-  bootstrap: .taskfiles/Bootstrap/Taskfile.yaml
-  flux: .taskfiles/Flux/Taskfile.yaml
-  format: .taskfiles/Format/Taskfile.yaml
-  kubernetes: .taskfiles/Kubernetes/Taskfile.yaml
-  minio: .taskfiles/Minio/Taskfile.yaml
-  postgres: .taskfiles/Postgres/Taskfile.yaml
-  pre-commit: .taskfiles/Pre-commit/Taskfile.yaml
-  proxmox: .taskfiles/Proxmox/Taskfile.yaml
-  rook: .taskfiles/Rook/Taskfile.yaml
-  secrets: .taskfiles/Secrets/Taskfile.yaml
-  sops: .taskfiles/Sops/Taskfile.yaml
-  talos: .taskfiles/Talos/Taskfile.yaml
-  volsync: .taskfiles/Volsync/Taskfile.yaml
+  ansible: .taskfiles/Ansible
+  authentik: .taskfiles/Authentik
+  bootstrap: .taskfiles/Bootstrap
+  flux: .taskfiles/Flux
+  format: .taskfiles/Format
+  kubernetes: .taskfiles/Kubernetes
+  minio: .taskfiles/Minio
+  postgres: .taskfiles/Postgres
+  pre-commit: .taskfiles/Pre-commit
+  proxmox: .taskfiles/Proxmox
+  rook: .taskfiles/Rook
+  secrets: .taskfiles/Secrets
+  sops: .taskfiles/Sops
+  talos: .taskfiles/Talos
+  volsync: .taskfiles/Volsync
 
 tasks:
   default:
     silent: true
-    cmds:
-      - task -l
+    cmd: task -l

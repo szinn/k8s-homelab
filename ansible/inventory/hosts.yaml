@@ -1,0 +1,27 @@
+ares:
+  hosts:
+    ares.zinn.tech:
+      ansible_host: ares.zinn.tech
+      ansible_user: root
+pikvm:
+  hosts:
+    pikvm.zinn.tech:
+      ansible_host: pikvm.zinn.tech
+      ansible_user: root
+zeus:
+  hosts:
+    zeus.zinn.tech:
+      ansible_host: zeus.zinn.tech
+      ansible_user: root
+      executable: /bin/sh
+styx:
+  hosts:
+    styx.zinn.tech:
+      ansible_host: styx.zinn.tech
+      ansible_user: root
+      executable: /bin/sh
+octo:
+  hosts:
+    octo.zinn.tech:
+      ansible_host: octo.zinn.tech
+      ansible_user: pi
