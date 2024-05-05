@@ -83,13 +83,13 @@ spec:
       enabled: true
       endpoints: *cp
     kubeStateMetrics:
-      enabled: true
-    kube-state-metrics:
-      fullnameOverride: kube-state-metrics
-      metricLabelsAllowlist:
-        - pods=[*]
-        - deployments=[*]
-        - persistentvolumeclaims=[*]
+      enabled: false
+    # kube-state-metrics:
+    #   fullnameOverride: kube-state-metrics
+    #   metricLabelsAllowlist:
+    #     - pods=[*]
+    #     - deployments=[*]
+    #     - persistentvolumeclaims=[*]
       prometheus:
         monitor:
           enabled: true
