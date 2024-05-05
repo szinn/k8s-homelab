@@ -27,17 +27,18 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 2000
+        runAsGroup: 2000
+        runAsNonRoot: true
+        fsGroup: 2000
+        fsGroupChangePolicy: OnRootMismatch
     controllers:
-      main:
+      radarr:
         annotations:
           reloader.stakater.com/auto: "true"
         pod:
-          securityContext:
-            runAsUser: 2000
-            runAsGroup: 2000
-            runAsNonRoot: true
-            fsGroup: 2000
-            fsGroupChangePolicy: OnRootMismatch
           affinity:
             podAntiAffinity:
               preferredDuringSchedulingIgnoredDuringExecution:
@@ -51,11 +52,19 @@ spec:
                             - sabnzbd
                             - radarr-4k
                     topologyKey: kubernetes.io/hostname
-        containers:
-          main:
+        initContainers:
+          init-db:
             image:
-              repository: ghcr.io/onedr0p/radarr
-              tag: 5.4.6.8723@sha256:3198f09197697a4d57f995650ebf34b57b2fdbb991dac1611ad8356d9e8bda8e
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16@sha256:3436dfbbc2799332a01361e007e3b408d016cfc235261e1caccc65e6edadf516
+            envFrom: &envFrom
+              - secretRef:
+                  name: radarr-secret
+        containers:
+          app:
+            image:
+              repository: ghcr.io/onedr0p/radarr-develop
+              tag: 5.5.1.8747@sha256:4ae36e5329fa90aa95e180a9abad4856e147500f65cf7262a193f08a2480a136
             env:
               TZ: ${CONFIG_TIMEZONE}
               RADARR__INSTANCE_NAME: Radarr
@@ -65,34 +74,32 @@ spec:
               RADARR__APPLICATION_URL: "https://radarr.${SECRET_DOMAIN_NAME}"
               RADARR__LOG_LEVEL: info
               RADARR__THEME: dark
-            envFrom:
-              - secretRef:
-                  name: radarr-secret
+            envFrom: *envFrom
             probes:
-              liveness:
+              liveness: &probes
                 enabled: true
                 custom: true
                 spec:
-                  exec:
-                    command:
-                      - /usr/bin/env
-                      - bash
-                      - -c
-                      - curl --fail localhost:7878/api/v3/system/status?apiKey=`IFS=\> && while
-                        read -d \< E C; do if [[ $E = "ApiKey" ]]; then echo $C; fi; done < /config/config.xml`
-                  failureThreshold: 5
-                  initialDelaySeconds: 60
+                  httpGet:
+                    path: /ping
+                    port: *port
+                  initialDelaySeconds: 0
                   periodSeconds: 10
-                  successThreshold: 1
-                  timeoutSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
     service:
-      main:
-        controller: main
+      app:
+        controller: radarr
         ports:
           http:
             port: 7878
     ingress:
-      main:
+      app:
         enabled: true
         className: internal
         hosts:
@@ -100,16 +107,11 @@ spec:
             paths:
               - path: /
                 service:
-                  identifier: main
+                  identifier: app
                   port: http
     persistence:
       config:
-        enabled: true
-        existingClaim: "${VOLSYNC_CLAIM}"
-        advancedMounts:
-          main:
-            main:
-              - path: /config
+        existingClaim: radarr-config
       logs:
         type: emptyDir
         globalMounts:
@@ -125,5 +127,7 @@ spec:
       backup:
         existingClaim: media-backups
         globalMounts:
-          - path: /backups
+          - path: /config/Backups
             subPath: radarr
+      tmp:
+        type: emptyDir

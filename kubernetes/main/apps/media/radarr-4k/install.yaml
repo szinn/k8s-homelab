@@ -15,8 +15,8 @@ spec:
     kind: GitRepository
     name: homelab-kubernetes
   dependsOn:
+    - name: dbms-cloudnative-pg
     - name: security-external-secrets-stores
-    - name: system-volsync
   postBuild:
     substitute:
       GATUS_APP: radarr-4k

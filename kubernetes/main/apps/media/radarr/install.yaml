@@ -15,15 +15,10 @@ spec:
     kind: GitRepository
     name: homelab-kubernetes
   dependsOn:
+    - name: dbms-cloudnative-pg
     - name: security-external-secrets-stores
-    - name: system-volsync
   postBuild:
     substitute:
-      APP: *app
-      APP_UID: "2000"
-      APP_GID: "2000"
-      VOLSYNC_CLAIM: radarr-config
-      VOLSYNC_CAPACITY: 4Gi
       GATUS_APP: radarr
       GATUS_SUBDOMAIN: radarr
   prune: true
