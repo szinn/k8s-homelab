@@ -4,10 +4,6 @@ api:
   enabled: true
   address: 0.0.0.0:8686
 # Sources
-enrichment_tables:
-  mmdb:
-    type: geoip
-    path: /usr/share/GeoIP/GeoLite2-City.mmdb
 sources:
   kubernetes_logs:
     address: 0.0.0.0:6000

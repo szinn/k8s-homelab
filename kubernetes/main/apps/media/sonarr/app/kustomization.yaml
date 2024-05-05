@@ -5,5 +5,5 @@ kind: Kustomization
 resources:
   - sonarr-secrets.yaml
   - helm-release.yaml
-  - ../../../../templates/volsync
+  - pvc.yaml
   - ../../../../templates/gatus/guarded

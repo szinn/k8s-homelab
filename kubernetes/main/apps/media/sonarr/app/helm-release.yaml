@@ -27,17 +27,18 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 2000
+        runAsGroup: 2000
+        runAsNonRoot: true
+        fsGroup: 2000
+        fsGroupChangePolicy: OnRootMismatch
     controllers:
-      main:
+      sonarr:
         annotations:
           reloader.stakater.com/auto: "true"
         pod:
-          securityContext:
-            runAsUser: 2000
-            runAsGroup: 2000
-            runAsNonRoot: true
-            fsGroup: 2000
-            fsGroupChangePolicy: OnRootMismatch
           affinity:
             podAntiAffinity:
               preferredDuringSchedulingIgnoredDuringExecution:
@@ -50,48 +51,54 @@ spec:
                           values:
                             - sabnzbd
                     topologyKey: kubernetes.io/hostname
-        containers:
-          main:
+        initContainers:
+          init-db:
             image:
-              repository: ghcr.io/onedr0p/sonarr
-              tag: 4.0.4.1491@sha256:9c78b3a37af6e814062e4a631c25ad181c800ae11d21acdfd26c843da9e4a42e
-            env:
-              TZ: ${CONFIG_TIMEZONE}
-              SONARR__INSTANCE_NAME: Sonarr
-              SONARR__PORT: &port 8989
-              SONARR__AUTHENTICATION_METHOD: External
-              SONARR__AUTHENTICATION_REQUIRED: DisabledForLocalAddresses
-              SONARR__APPLICATION_URL: "https://sonarr.${SECRET_DOMAIN_NAME}"
-              SONARR__LOG_LEVEL: info
-              SONARR__THEME: dark
-            envFrom:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16@sha256:3436dfbbc2799332a01361e007e3b408d016cfc235261e1caccc65e6edadf516
+            envFrom: &envFrom
               - secretRef:
                   name: sonarr-secret
+        containers:
+          app:
+            image:
+              repository: ghcr.io/onedr0p/sonarr-develop
+              tag: 4.0.4.1572@sha256:d81502f65a47f88525c90a9eb933e5f92bb608b1910f0c63aeff5c723340be97
+            env:
+              TZ: ${CONFIG_TIMEZONE}
+              SONARR__APP__INSTANCENAME: Sonarr
+              SONARR__APP__THEME: dark
+              SONARR__AUTH__METHOD: External
+              SONARR__AUTH__REQUIRED: DisabledForLocalAddresses
+              SONARR__LOG__LEVEL: info
+              SONARR__SERVER__PORT: &port 8989
+              SONARR__UPDATE__BRANCH: develop
+            envFrom: *envFrom
             probes:
-              liveness:
+              liveness: &probes
                 enabled: true
                 custom: true
                 spec:
-                  exec:
-                    command:
-                      - /usr/bin/env
-                      - bash
-                      - -c
-                      - curl --fail localhost:8989/api/v3/system/status?apiKey=`IFS=\> && while
-                        read -d \< E C; do if [[ $E = "ApiKey" ]]; then echo $C; fi; done < /config/config.xml`
-                  failureThreshold: 5
-                  initialDelaySeconds: 60
+                  httpGet:
+                    path: /ping
+                    port: *port
+                  initialDelaySeconds: 0
                   periodSeconds: 10
-                  successThreshold: 1
-                  timeoutSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
     service:
-      main:
-        controller: main
+      app:
+        controller: sonarr
         ports:
           http:
-            port: 8989
+            port: *port
     ingress:
-      main:
+      app:
         enabled: true
         className: internal
         hosts:
@@ -99,16 +106,11 @@ spec:
             paths:
               - path: /
                 service:
-                  identifier: main
+                  identifier: app
                   port: http
     persistence:
       config:
-        enabled: true
-        existingClaim: "${VOLSYNC_CLAIM}"
-        advancedMounts:
-          main:
-            main:
-              - path: /config
+        existingClaim: sonarr-config
       logs:
         type: emptyDir
         globalMounts:
@@ -124,5 +126,7 @@ spec:
       backup:
         existingClaim: media-backups
         globalMounts:
-          - path: /backups
+          - path: /config/Backups
             subPath: sonarr
+      tmp:
+        type: emptyDir
