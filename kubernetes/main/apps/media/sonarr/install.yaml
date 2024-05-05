@@ -24,7 +24,6 @@ spec:
       APP_GID: "2000"
       VOLSYNC_CLAIM: sonarr-config
       VOLSYNC_CAPACITY: 2Gi
-      VOLSYNC_CACHE_STORAGECLASS: ceph-block
       GATUS_APP: sonarr
       GATUS_SUBDOMAIN: sonarr
   prune: true

@@ -23,7 +23,6 @@ spec:
       APP_GID: "2000"
       VOLSYNC_CLAIM: openbooks-config
       VOLSYNC_CAPACITY: 2Gi
-      VOLSYNC_CACHE_STORAGECLASS: ceph-block
   prune: true
   wait: false
   interval: 30m
