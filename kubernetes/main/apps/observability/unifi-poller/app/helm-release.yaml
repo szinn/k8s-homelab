@@ -27,12 +27,18 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534
+        runAsGroup: 65534
+        seccompProfile: { type: RuntimeDefault }
     controllers:
-      main:
+      unpoller:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          main:
+          app:
             image:
               repository: docker.io/golift/unifi-poller
               tag: v2.11.2@sha256:73b39c0b3b8fa92aa82a7613d3486253ffbd8c057833b4621402a268159bf2a2
@@ -48,14 +54,28 @@ spec:
             envFrom:
               - secretRef:
                   name: unifi-poller-secret
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 128Mi
     service:
-      main:
-        controller: main
+      app:
+        controller: unpoller
         ports:
           http:
             port: 9130
     serviceMonitor:
-      main:
+      app:
         serviceName: unifi-poller
         enabled: true
         endpoints:
@@ -63,4 +83,4 @@ spec:
             scheme: http
             path: /metrics
             interval: 2m
-            scrapeTimeout: 30s
+            scrapeTimeout: 10s
