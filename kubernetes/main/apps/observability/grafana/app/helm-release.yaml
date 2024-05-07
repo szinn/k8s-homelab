@@ -212,7 +212,14 @@ spec:
           - name: Alertmanager
             orgId: 1
         datasources:
-          - name: Prometheus
+          - access: proxy
+            name: Prometheus
+            type: prometheus
+            url: http://vmselect-victoria-metrics.observability.svc.cluster.local:8481/select/0/prometheus
+            isDefault: false
+            jsonData:
+              prometheusType: Prometheus
+          - name: Original Prometheus
             type: prometheus
             access: proxy
             url: http://thanos-query.observability.svc.cluster.local:10902/

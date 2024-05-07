@@ -1,0 +1,264 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: victoria-metrics
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: victoria-metrics-k8s-stack
+      version: 0.21.3
+      sourceRef:
+        kind: HelmRepository
+        name: victoria-metrics-charts
+        namespace: flux-system
+  values:
+    fullnameOverride: victoria-metrics
+
+    # VM Operator deployment
+    victoria-metrics-operator:
+      enabled: true
+      operator:
+        disable_prometheus_converter: false # Ensure we keep enabled the converter to sync prom rules to VM rules
+        enable_converter_ownership: true # Required to allow VM to remove VM rules it imports if a prometheus rule is deleted
+
+    # Main VM Cluster in HA mode.
+    vmcluster:
+      enabled: true
+      spec:
+        # Duration to keep metrics
+        retentionPeriod: "2" # this is months unless a character prefix is added (1d, 1w, etc)
+        extraArgs:
+          dedup.minScrapeInterval: 30s
+        replicationFactor: 3
+        # Storage backend
+        vmstorage:
+          replicaCount: 3
+          # required for HA vmagents
+          resources:
+            requests:
+              cpu: 100m
+              memory: 512Mi
+            limits:
+              cpu: 500m
+              memory: 1536Mi
+          topologySpreadConstraints:
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: vmstorage
+          extraArgs:
+            dedup.minScrapeInterval: 30s
+          storage:
+            volumeClaimTemplate:
+              spec:
+                storageClassName: openebs-hostpath
+                resources:
+                  requests:
+                    storage: 10Gi
+        # Query backend
+        vmselect:
+          replicaCount: 2 # HA
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 750m
+              memory: 256Mi
+          topologySpreadConstraints:
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: vmselect
+          cacheMountPath: /select-cache
+          extraArgs:
+            dedup.minScrapeInterval: 30s
+            search.minStalenessInterval: 5m
+            vmalert.proxyURL: http://vmalert-victoria-metrics:8080
+          storage:
+            volumeClaimTemplate:
+              spec:
+                storageClassName: openebs-hostpath
+                resources:
+                  requests:
+                    storage: 2Gi
+        # Data ingestion backend
+        vminsert:
+          replicaCount: 2 # HA
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+          topologySpreadConstraints:
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: vminsert
+          extraArgs:
+            maxLabelsPerTimeseries: "90" # More needed if you are scraping a LOT of stuff and having issues
+
+    # VM Alerting (however, this just watches & passes alerts to alertmanager)
+    vmalert:
+      enabled: true
+      spec:
+        replicaCount: 2
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            cpu: 150m
+            memory: 256Mi
+        topologySpreadConstraints:
+          - maxSkew: 1
+            topologyKey: kubernetes.io/hostname
+            whenUnsatisfiable: DoNotSchedule
+            labelSelector:
+              matchLabels:
+                app.kubernetes.io/name: vmalert
+        extraArgs:
+          external.url: https://vmalert.${SECRET_DOMAIN_NAME}
+        notifiers:
+          - url: http://alertmanager.observability.svc.cluster.local:9093
+      ingress:
+        enabled: true
+        ingressClassName: internal
+        hosts:
+          - vmalert.${SECRET_DOMAIN_NAME}
+
+    # VM Data scraping
+    vmagent:
+      enabled: true
+      spec:
+        replicaCount: 1
+        shardCount: 2
+        scrapeInterval: 30s
+        resources:
+          requests:
+            cpu: 50m
+            memory: 256Mi
+          limits:
+            cpu: 400m
+            memory: 512Mi
+        topologySpreadConstraints:
+          - maxSkew: 1
+            topologyKey: kubernetes.io/hostname
+            whenUnsatisfiable: DoNotSchedule
+            labelSelector:
+              matchLabels:
+                app.kubernetes.io/name: vmagent
+        additionalScrapeConfigs:
+          name: vm-additional-scrape-configs
+          key: prometheus-additional.yaml
+      ingress:
+        enabled: true
+        ingressClassName: internal
+        hosts:
+          - vmagent.${SECRET_DOMAIN_NAME}
+
+    # Single-binary vm cluster alternative (liteweight, non-HA)
+    vmsingle:
+      enabled: false
+
+    # Extra slack templates
+    monzoTemplate:
+      enabled: false
+
+    # Scrape configs
+    kubelet:
+      enabled: true
+      spec:
+        interval: 30s
+        # drop high cardinality label and useless metrics for cadvisor and kubelet
+        metricRelabelConfigs:
+          - action: labeldrop
+            regex: (uid|pod_uid|id)
+          - action: labeldrop
+            regex: (name)
+          - action: drop
+            source_labels: [__name__]
+            regex: (rest_client_request_duration_seconds_bucket|rest_client_request_duration_seconds_sum|rest_client_request_duration_seconds_count)
+          - action: drop
+            source_labels: [__name__]
+            regex: (container_tasks_state|container_memory_failures_total)
+          - action: drop
+            source_labels: [__name__]
+            regex: (container_blkio_device_usage_total)
+          - action: drop
+            source_labels: [__name__]
+            regex: (prober_probe_duration_seconds_bucket)
+        relabelConfigs:
+          - action: labelmap
+            regex: __meta_kubernetes_node_label_(.+)
+          - sourceLabels: [__metrics_path__]
+            targetLabel: metrics_path
+          - targetLabel: "job"
+            replacement: "kubelet"
+    kubeApiServer:
+      enabled: false
+    kubeControllerManager:
+      enabled: false
+    kubeScheduler:
+      enabled: false
+    kubeEtcd:
+      enabled: false
+
+    # Enable deployment of kube-state-metrics
+    kube-state-metrics:
+      enabled: false
+
+    # Enable deployment of prometheus-node-exporter
+    prometheus-node-exporter:
+      enabled: false
+
+    # Enable deployment of grafana
+    defaultDashboardsEnabled: false
+    grafana:
+      enabled: false
+
+    # Enable deployment of alertmanager
+    alertmanager:
+      enabled: false
+
+    # Prepared sets of default rules
+    # Adjust to what scraping functions you have enabled
+    # i.e. if you dont have kubeapisever setup & enabled, disable
+    #   the kubeApiserver rules below
+    defaultRules:
+      create: true
+      rules:
+        etcd: false
+        general: true
+        k8s: true
+        kubeApiserver: true
+        kubeApiserverAvailability: true
+        kubeApiserverBurnrate: true
+        kubeApiserverHistogram: true
+        kubeApiserverSlos: true
+        kubelet: true
+        kubePrometheusGeneral: true
+        kubePrometheusNodeRecording: true
+        kubernetesApps: true
+        kubernetesResources: true
+        kubernetesStorage: true
+        kubernetesSystem: true
+        kubeScheduler: false
+        kubeStateMetrics: true
+        network: true
+        node: true
+        vmagent: true
+        vmsingle: false
+        vmhealth: true
+        alertmanager: false

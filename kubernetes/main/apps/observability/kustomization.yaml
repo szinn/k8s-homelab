@@ -19,3 +19,4 @@ resources:
   - thanos/install.yaml
   - unifi-poller/install.yaml
   - vector/install.yaml
+  - victoria-metrics/install.yaml

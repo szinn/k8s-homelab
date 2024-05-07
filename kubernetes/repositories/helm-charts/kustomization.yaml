@@ -34,3 +34,4 @@ resources:
   - spegel-charts.yaml
   - stakater-charts.yaml
   - stevehipwell-charts.yaml
+  - victoria-metrics-charts.yaml
