@@ -58,6 +58,8 @@ spec:
         nodeExporterRecording: true
         prometheus: true
         prometheusOperator: true
+    alertmanager:
+      enabled: false
     kubeControllerManager:
       enabled: true
       endpoints: &cp
@@ -100,48 +102,6 @@ spec:
               sourceLabels:
                 - __meta_kubernetes_pod_node_name
               targetLabel: kubernetes_node
-    alertmanager:
-      ingress:
-        enabled: true
-        ingressClassName: internal
-        hosts:
-          - "alerts.${SECRET_DOMAIN_NAME}"
-        path: /
-        pathType: Prefix
-      config:
-        global:
-          resolve_timeout: 5m
-        route:
-          group_by: ["alertname", "job"]
-          group_wait: 30s
-          group_interval: 5m
-          repeat_interval: 6h
-          receiver: "discord"
-          routes:
-            - receiver: "null"
-              matchers:
-                - alertname =~ "InfoInhibitor|Watchdog|CPUThrottlingHigh"
-              continue: false
-            - receiver: "discord"
-        receivers:
-          - name: "null"
-          - name: "discord"
-            webhook_configs:
-              - url: "http://alertmanager-discord.observability.svc.cluster.local:9094"
-        inhibit_rules:
-          - source_matchers: ["severity = 'critical'"]
-            target_matchers: ["severity = 'warning'"]
-            equal: ["alertname", "namespace"]
-        templates:
-          - /etc/alertmanager/config/*.tmpl
-      alertmanagerSpec:
-        storage:
-          volumeClaimTemplate:
-            spec:
-              storageClassName: openebs-hostpath
-              resources:
-                requests:
-                  storage: 1Gi
     prometheus-node-exporter:
       fullnameOverride: node-exporter
       prometheus:
@@ -210,6 +170,12 @@ spec:
               resources:
                 requests:
                   storage: 10Gi
+        alertingEndpoints:
+          - name: alertmanager
+            namespace: observability
+            port: http
+            pathPrefix: "/"
+            apiVersion: v2
         thanos:
           image: quay.io/thanos/thanos:v0.35.0@sha256:fa1d28718df00b68d6ad85d7c7d4703bd9f59e5cd8be8da6540ea398cf701a1f
           # renovate: depName=quay.io/thanos/thanos datasource=docker
