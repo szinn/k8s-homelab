@@ -185,15 +185,15 @@ spec:
             allowUiUpdates: true
             options:
               path: /var/lib/grafana/dashboards/teslamate
-          - name: "thanos`"
-            orgId: 1
-            folder: "Thanos"
-            type: file
-            disableDeletion: false
-            editable: true
-            allowUiUpdates: true
-            options:
-              path: /var/lib/grafana/dashboards/thanos
+          # - name: "thanos`"
+          #   orgId: 1
+          #   folder: "Thanos"
+          #   type: file
+          #   disableDeletion: false
+          #   editable: true
+          #   allowUiUpdates: true
+          #   options:
+          #     path: /var/lib/grafana/dashboards/thanos
           - name: "unifi"
             orgId: 1
             folder: "Unifi"
@@ -219,14 +219,14 @@ spec:
             isDefault: false
             jsonData:
               prometheusType: Prometheus
-          - name: Original Prometheus
-            type: prometheus
-            access: proxy
-            url: http://thanos-query.observability.svc.cluster.local:10902/
-            isDefault: false
-            jsonData:
-              prometheusType: Thanos
-              timeInterval: 1m
+          # - name: Original Prometheus
+          #   type: prometheus
+          #   access: proxy
+          #   url: http://thanos-query.observability.svc.cluster.local:10902/
+          #   isDefault: false
+          #   jsonData:
+          #     prometheusType: Thanos
+          #     timeInterval: 1m
           - name: Loki
             type: loki
             access: proxy
@@ -505,34 +505,34 @@ spec:
         visited:
           url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/visited.json
           datasource: TeslaMate
-      thanos:
-        thanos-bucket-replicate-dashboard:
-          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/bucket-replicate.json
-          datasource: Prometheus
-        thanos-compact-dashboard:
-          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/compact.json
-          datasource: Prometheus
-        thanos-overview-dashboard:
-          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/overview.json
-          datasource: Prometheus
-        thanos-query-dashboard:
-          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/query.json
-          datasource: Prometheus
-        thanos-query-frontend-dashboard:
-          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/query-frontend.json
-          datasource: Prometheus
-        thanos-receive-dashboard:
-          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/receive.json
-          datasource: Prometheus
-        thanos-rule-dashboard:
-          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/rule.json
-          datasource: Prometheus
-        thanos-sidecar-dashboard:
-          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/sidecar.json
-          datasource: Prometheus
-        thanos-store-dashboard:
-          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/store.json
-          datasource: Prometheus
+      # thanos:
+      #   thanos-bucket-replicate-dashboard:
+      #     url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/bucket-replicate.json
+      #     datasource: Prometheus
+      #   thanos-compact-dashboard:
+      #     url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/compact.json
+      #     datasource: Prometheus
+      #   thanos-overview-dashboard:
+      #     url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/overview.json
+      #     datasource: Prometheus
+      #   thanos-query-dashboard:
+      #     url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/query.json
+      #     datasource: Prometheus
+      #   thanos-query-frontend-dashboard:
+      #     url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/query-frontend.json
+      #     datasource: Prometheus
+      #   thanos-receive-dashboard:
+      #     url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/receive.json
+      #     datasource: Prometheus
+      #   thanos-rule-dashboard:
+      #     url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/rule.json
+      #     datasource: Prometheus
+      #   thanos-sidecar-dashboard:
+      #     url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/sidecar.json
+      #     datasource: Prometheus
+      #   thanos-store-dashboard:
+      #     url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/store.json
+      #     datasource: Prometheus
       unifi:
         unifi-client-insights:
           # renovate: depName="UniFi-Poller: Client Insights - Prometheus"

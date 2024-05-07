@@ -8,8 +8,8 @@ resources:
   - alertmanager-discord/install.yaml
   - gatus/install.yaml
   - grafana/install.yaml
-  - kube-prometheus-stack/install.yaml
   - kromgo/install.yaml
+  # - kube-prometheus-stack/install.yaml
   - kube-state-metrics/install.yaml
   - loki/install.yaml
   - miscellaneous
@@ -17,7 +17,7 @@ resources:
   - node-problem-detector/install.yaml
   - prometheus-operator/install.yaml
   - teslamate/install.yaml
-  - thanos/install.yaml
+  # - thanos/install.yaml
   - unifi-poller/install.yaml
   - vector/install.yaml
   - victoria-metrics/install.yaml
