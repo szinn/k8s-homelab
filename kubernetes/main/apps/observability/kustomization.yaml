@@ -13,6 +13,7 @@ resources:
   - kube-state-metrics/install.yaml
   - loki/install.yaml
   - miscellaneous
+  - node-exporter/install.yaml
   - node-problem-detector/install.yaml
   - prometheus-operator/install.yaml
   - teslamate/install.yaml
