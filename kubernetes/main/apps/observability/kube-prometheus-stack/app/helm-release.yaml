@@ -30,7 +30,7 @@ spec:
   values:
     fullnameOverride: prometheus
     crds:
-      enabled: true
+      enabled: false
     defaultRules:
       create: true
       rules:
