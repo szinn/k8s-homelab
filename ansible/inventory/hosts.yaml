@@ -25,3 +25,7 @@ octo:
     octo.zinn.tech:
       ansible_host: octo.zinn.tech
       ansible_user: pi
+titan:
+  hosts:
+    titan.zinn.tech:
+      ansible_user: scotte

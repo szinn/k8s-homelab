@@ -1,0 +1,28 @@
+- name: Update Gatus Certificate
+  hosts: "titan"
+  remote_user: root
+  become: yes
+  tasks:
+    - name: Create directory
+      file:
+        path: /var/gatus
+        state: directory
+        owner: gatus
+        group: gatus
+    - name: Copy certificate
+      copy:
+        src: ../files/certificates/certificate.crt
+        dest: /var/gatus/certificate.crt
+        owner: gatus
+        group: gatus
+        mode: u+rw,g-wx,o-wx
+    - name: Copy certificate key
+      copy:
+        src: ../files/certificates/certificate.key
+        dest: /var/gatus/certificate.key
+        owner: gatus
+        group: gatus
+        mode: u+rw,g-wx,o-wx
+    - name: restart gatus
+      shell:
+        cmd: systemctl restart gatus
