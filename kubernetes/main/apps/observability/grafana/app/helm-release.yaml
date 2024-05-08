@@ -202,6 +202,14 @@ spec:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/unifi
+          - name: victoriametrics
+            disableDeletion: false
+            editable: true
+            folder: "VictoriaMetrics"
+            options:
+              path: /var/lib/grafana/dashboards/victoria-metrics
+            orgId: 1
+            type: file
     datasources:
       datasources.yaml:
         apiVersion: 1
@@ -554,3 +562,32 @@ spec:
           gnetId: 11312
           revision: 9
           datasource: Prometheus
+      victoriametrics:
+        vm-cluster:
+          # renovate: dashboardName="VictoriaMetrics - cluster"
+          gnetId: 11176
+          revision: 36
+          datasource:
+            - name: "DS_PROMETHEUS"
+              value: Prometheus
+        vm-operator:
+          # renovate: dashboardName="VictoriaMetrics - operator"
+          gnetId: 17869
+          revision: 2
+          datasource:
+            - name: "DS_PROMETHEUS"
+              value: Prometheus
+        vm-vmalert:
+          # renovate: dashboardName="VictoriaMetrics - vmalert"
+          gnetId: 14950
+          revision: 10
+          datasource:
+            - name: "DS_PROMETHEUS"
+              value: Prometheus
+        vm-vmagent:
+          # renovate: dashboardName="VictoriaMetrics - vmagent"
+          gnetId: 12683
+          revision: 17
+          datasource:
+            - name: "DS_PROMETHEUS"
+              value: Prometheus
