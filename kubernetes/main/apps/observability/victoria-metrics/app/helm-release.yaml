@@ -150,6 +150,7 @@ spec:
         replicaCount: 1
         shardCount: 2
         scrapeInterval: 30s
+        externalLabels:
         resources:
           requests:
             cpu: 50m
