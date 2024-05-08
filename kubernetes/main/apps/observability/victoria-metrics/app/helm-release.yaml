@@ -27,6 +27,11 @@ spec:
     # Main VM Cluster in HA mode.
     vmcluster:
       enabled: true
+      ingress:
+        select:
+          enabled: true
+          hosts:
+            - vmselect.${SECRET_DOMAIN_NAME}
       spec:
         # Duration to keep metrics
         retentionPeriod: "2" # this is months unless a character prefix is added (1d, 1w, etc)
