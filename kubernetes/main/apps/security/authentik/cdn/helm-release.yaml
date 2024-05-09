@@ -35,7 +35,7 @@ spec:
           main:
             image:
               repository: ghcr.io/szinn/s3-cdn
-              tag: 0.3.0@sha256:ad13c637ed480875d6379c56bd87e500b90ca96e449271b5a7a16a5f4345174f
+              tag: 0.4.1@sha256:f1f5dc9828cc42280c0ed465dbdcbd93b2777e27d49036e0830d1fd5be3be738
               pullPolicy: Always
             args:
               - server
