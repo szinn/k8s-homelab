@@ -1,6 +1,7 @@
 [Unit]
 Description=Multicast Relay
-After=network-online.target
+Wants=multi-user.target
+After=multi-user.target
 
 [Service]
 ExecStart=/usr/bin/python3 /tmp/multicast-relay.py --interfaces br20 br98 br99
