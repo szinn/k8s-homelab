@@ -35,7 +35,7 @@ spec:
           main:
             image:
               repository: quay.io/devtron/discord-alertmanager
-              tag: ceceb475-65-352
+              tag: ceceb475-65-352@sha256:03586419ca31b3b3f0e3dbc9399f7f7cf1dc905ec7018967e34e78b7339ad21b
               # repository: docker.io/rogerrum/alertmanager-discord
               # tag: 1.0.6@sha256:cfa615f24b7ec778ad0841c69527f798e713dfcadb7d7964dbe5b1821c767ebb
             env:
