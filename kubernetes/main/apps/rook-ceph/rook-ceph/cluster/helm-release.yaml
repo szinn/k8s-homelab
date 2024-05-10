@@ -102,13 +102,13 @@ spec:
         nodes:
           - name: "k8s-4"
             devices:
-              - name: "nvme0n1"
+              - name: "/dev/disk/by-id/nvme-Samsung_SSD_980_PRO_1TB_S5P2NS0RB31561F"
           - name: "k8s-5"
             devices:
-              - name: "nvme0n1"
+              - name: "/dev/disk/by-id/nvme-Samsung_SSD_980_PRO_1TB_S5P2NJ0RB00690R"
           - name: "k8s-6"
             devices:
-              - name: "nvme0n1"
+              - name: "/dev/disk/by-id/nvme-Samsung_SSD_980_PRO_1TB_S5P2NJ0RB00744X"
 
     ingress:
       dashboard:

@@ -37,7 +37,7 @@ tasks:
       - task: wipe-disk
         vars:
           node: "{{.node}}"
-          ceph_disk: "/dev/nvme0n1"
+          ceph_disk: "/dev/nvme1n1"
       - task: wipe-data
         vars:
           node: "{{.node}}"
@@ -50,7 +50,7 @@ tasks:
       - task: wipe-disk
         vars:
           node: "{{.node}}"
-          ceph_disk: "/dev/nvme0n1"
+          ceph_disk: "/dev/nvme1n1"
       - task: wipe-data
         vars:
           node: "{{.node}}"
@@ -63,7 +63,7 @@ tasks:
       - task: wipe-disk
         vars:
           node: "{{.node}}"
-          ceph_disk: "/dev/nvme0n1"
+          ceph_disk: "/dev/nvme1n1"
       - task: wipe-data
         vars:
           node: "{{.node}}"
@@ -73,7 +73,6 @@ tasks:
   wipe-disk:
     desc: Wipe all remnants of rook-ceph from a given disk (ex. task rook:wipe-disk node=k8s-4 ceph_disk="/dev/nvme0n1")
     silent: true
-    internal: true
     cmds:
       - envsubst < <(cat {{.wipeRookDiskJobTemplate}}) | kubectl apply -f -
       - bash {{.waitForJobScript}} {{.jobName}} default
@@ -93,7 +92,6 @@ tasks:
   wipe-data:
     desc: Wipe all remnants of rook-ceph from a given disk (ex. task rook:wipe-data node=k8s-4)
     silent: true
-    internal: true
     cmds:
       - envsubst < <(cat {{.wipeRookDataJobTemplate}}) | kubectl apply -f -
       - bash {{.waitForJobScript}} {{.jobName}} default
