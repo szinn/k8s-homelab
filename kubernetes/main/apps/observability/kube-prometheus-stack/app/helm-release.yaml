@@ -112,10 +112,6 @@ spec:
             sourceLabels: ["__name__"]
             regex: prober_probe_duration_seconds_bucket
         metricRelabelings:
-          - action: replace
-            sourceLabels:
-              - node
-            targetLabel: instance
           # Drop high-cardinality labels.
           - action: labeldrop
             regex: (uid|id|name|pod_uid|interface)

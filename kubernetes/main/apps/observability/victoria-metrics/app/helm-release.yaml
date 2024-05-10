@@ -14,6 +14,16 @@ spec:
         kind: HelmRepository
         name: victoria-metrics-charts
         namespace: flux-system
+  maxHistory: 3
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
   values:
     fullnameOverride: victoria-metrics
 
@@ -185,7 +195,7 @@ spec:
 
     # Scrape configs
     kubelet:
-      enabled: true
+      enabled: false
       spec:
         interval: 30s
         # drop high cardinality label and useless metrics for cadvisor and kubelet
