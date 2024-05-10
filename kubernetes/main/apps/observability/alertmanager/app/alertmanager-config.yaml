@@ -1,0 +1,76 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/monitoring.coreos.com/alertmanagerconfig_v1alpha1.json
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: cluster
+spec:
+  route:
+    groupBy: ["alertname", "job"]
+    groupInterval: 10m
+    groupWait: 1m
+    receiver: "null"
+    repeatInterval: 1h
+    routes:
+      - receiver: "null"
+        matchers:
+          - alertname =~ "InfoInhibitor|Watchdog|CPUThrottlingHigh"
+        continue: false
+      - receiver: discord
+        matchers: 
+          - severity =~ "critical|warning"
+        continue: true
+
+  receivers:
+  - name: "null"
+  - name: discord
+    discordConfigs:
+      - sendResolved: true
+        apiURL:
+          name: alertmanager-secrets
+          key: discord-webhook-url
+        # yoinked below from onedr0p, blame him if something doesn't work
+        title: >-
+          {{ .GroupLabels.alertname }} - {{ .GroupLabels.namespace }}
+          {{- if ne .CommonLabels.severity "" }} ({{ .CommonLabels.severity}}){{- end }}
+          ({{ .GroupLabels.cluster }})
+          [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}]
+        message: |-
+          {{- $root := . }}
+          {{- $rm := stringSlice "instance" "kubernetes_node" "endpoint" "prometheus" "service" "cluster" "container" "job" "severity" }}
+          {{- $common := ( ( .CommonLabels.Remove $root.GroupLabels.Names ).Remove $rm ) }}
+          {{- if gt (len $common.SortedPairs) 0 }}
+          ## Common Labels
+          {{- range $common.SortedPairs }}
+          > {{ .Name }}: `{{ .Value }}`
+          {{- end }}
+          {{- end }}
+          ## Alerts
+          {{- range .Alerts }}
+            {{- if ne .Annotations.description "" }}
+          - **{{ .Annotations.description }}** [{{ .Fingerprint }}]({{ .GeneratorURL }})
+            {{- else if ne .Annotations.summary "" }}
+          - **{{ .Annotations.summary }}** [{{ .Fingerprint }}]({{ .GeneratorURL }})
+            {{- else if ne .Annotations.message "" }}
+          - **{{ .Annotations.message }}** [{{ .Fingerprint }}]({{ .GeneratorURL }})
+            {{- else }}
+          - **Alert description not available** [{{ .Fingerprint }}]({{ .GeneratorURL }})
+            {{- end }}
+            {{- $uniq := ( ( .Labels.Remove $root.GroupLabels.Names ).Remove $root.CommonLabels.Names ) }}
+            {{- if gt (len $uniq.SortedPairs) 0 }}
+              {{- range $uniq.SortedPairs }}
+          > {{ .Name }}: `{{ .Value }}`
+              {{- end }}
+            {{- end }}
+          {{- end }}
+  inhibitRules:
+    - sourceMatch: [{name: severity, value: critical, matchType: =}]
+      targetMatch: [{ name: severity, value: warning|info, matchType: =~ }]
+      equal: ["namespace", "alertname"]
+    - sourceMatch: [{name: severity, value: warning, matchType: =}]
+      targetMatch: [{ name: severity, value: info, matchType: = }]
+      equal: ["namespace", "alertname"]
+    - sourceMatch: [{name: alertname, value: InfoInhibitor, matchType: =}]
+      targetMatch: [{ name: severity, value: info, matchType: = }]
+      equal: ["namespace"]
+    - targetMatch: [{ name: alertname, value: InfoInhibitor, matchType: = }]

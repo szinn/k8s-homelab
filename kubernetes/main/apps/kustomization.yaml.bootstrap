@@ -4,9 +4,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   # Step 1
-  - observability/namespace.yaml
-  - observability/prometheus-operator/install.yaml
-  # Step 2
   - cert-manager
   - kube-system
   - flux-system
@@ -14,9 +11,9 @@ resources:
   - security/namespace.yaml
   - security/external-secrets/install.yaml
   - system
-  # Step 3
+  # Step 2
   # - rook-ceph
-  # Step 4
+  # Step 3
   # - dbms
-  # Step 5
+  # Step 4
   # - self-hosted

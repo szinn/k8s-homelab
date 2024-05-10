@@ -1,0 +1,216 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: kube-prometheus-stack
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: kube-prometheus-stack
+      version: 58.5.0
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus-community-charts
+        namespace: flux-system
+      interval: 15m
+  maxHistory: 3
+  install:
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    fullnameOverride: prometheus
+    crds:
+      enabled: false
+    defaultRules:
+      create: true
+      rules:
+        alertmanager: true
+        etcd: true
+        configReloaders: true
+        general: true
+        k8s: true
+        kubeApiserver: true
+        kubeApiserverAvailability: true
+        kubeApiserverSlos: true
+        kubelet: true
+        kubeProxy: false
+        kubePrometheusGeneral: true
+        kubePrometheusNodeRecording: true
+        kubernetesApps: true
+        kubernetesResources: true
+        kubernetesStorage: true
+        kubernetesSystem: true
+        kubeScheduler: false
+        kubeStateMetrics: true
+        network: true
+        node: true
+        nodeExporterAlerting: true
+        nodeExporterRecording: true
+        prometheus: true
+        prometheusOperator: true
+    alertmanager:
+      enabled: false
+    kubeControllerManager:
+      enabled: true
+      endpoints: &cp
+        - 10.11.0.16
+        - 10.11.0.17
+        - 10.11.0.18
+    kubeEtcd:
+      enabled: false
+    kubelet:
+      enabled: true
+      serviceMonitor:
+        metricRelabelings:
+          - action: replace
+            sourceLabels:
+              - node
+            targetLabel: instance
+    kubeApiServer:
+      enabled: true
+      endpoints: *cp
+    kubeProxy:
+      enabled: false
+    kubeScheduler:
+      enabled: true
+      endpoints: *cp
+    kubeStateMetrics:
+      enabled: false
+      prometheus:
+        monitor:
+          enabled: true
+          relabelings:
+            - action: replace
+              regex: (.*)
+              replacement: $1
+              sourceLabels:
+                - __meta_kubernetes_pod_node_name
+              targetLabel: kubernetes_node
+    prometheusOperator:
+      resources:
+        requests:
+          cpu: 35m
+          memory: 273M
+        limits:
+          memory: 326M
+      prometheusConfigReloader:
+        resources:
+          requests:
+            cpu: 11m
+            memory: 32M
+          limits:
+            memory: 32M
+      serviceMonitor:
+        sampleLimit: 0
+    prometheus:
+      ingress:
+        enabled: true
+        ingressClassName: internal
+        hosts:
+          - "prometheus.${SECRET_DOMAIN_NAME}"
+        path: /
+        pathType: Prefix
+      thanosService:
+        enabled: true
+      thanosServiceMonitor:
+        enabled: true
+      prometheusSpec:
+        replicas: 1
+        replicaExternalLabelName: "__replica__"
+        externalLabels:
+          cluster: ${CONFIG_CLUSTER_NAME}
+        scrapeInterval: 1m
+        podAntiAffinity: hard
+        ruleSelectorNilUsesHelmValues: false
+        serviceMonitorSelectorNilUsesHelmValues: false
+        podMonitorSelectorNilUsesHelmValues: false
+        probeSelectorNilUsesHelmValues: false
+        enableAdminAPI: true
+        walCompression: true
+        retention: 2d
+        retentionSize: "6GB"
+        ruleSelector: {}
+        ruleNamespaceSelector: {}
+        serviceMonitorSelector: {}
+        serviceMonitorNamespaceSelector: {}
+        podMonitorSelector: {}
+        podMonitorNamespaceSelector: {}
+        storageSpec:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: openebs-hostpath
+              resources:
+                requests:
+                  storage: 10Gi
+        alertingEndpoints:
+          - name: alertmanager
+            namespace: observability
+            port: http
+            pathPrefix: "/"
+            apiVersion: v2
+        thanos:
+          image: quay.io/thanos/thanos:v0.35.0@sha256:fa1d28718df00b68d6ad85d7c7d4703bd9f59e5cd8be8da6540ea398cf701a1f
+          # renovate: depName=quay.io/thanos/thanos datasource=docker
+          version: "0.34.1"
+          objectStorageConfig:
+            existingSecret:
+              name: kube-prometheus-stack-secret
+              key: objstore.yml
+        additionalScrapeConfigs:
+          - job_name: minio-job
+            metrics_path: /minio/v2/metrics/cluster
+            scheme: http
+            static_configs:
+              - targets:
+                  - atlas.${SECRET_TECH_DOMAIN_NAME}:9000
+          - job_name: node-exporter
+            scrape_interval: 1m
+            scrape_timeout: 10s
+            honor_timestamps: true
+            static_configs:
+              - targets:
+                  - "ragnar.${SECRET_TECH_DOMAIN_NAME}:9100"
+                  - "titan.${SECRET_TECH_DOMAIN_NAME}:9100"
+          # - job_name: smartctl-exporter
+          #   scrape_interval: 1m
+          #   scrape_timeout: 10s
+          #   honor_timestamps: true
+          #   static_configs:
+          #     - targets:
+          #         - "ragnar.${SECRET_TECH_DOMAIN_NAME}:9633"
+          - job_name: blocky
+            scrape_interval: 1m
+            scrape_timeout: 10s
+            honor_timestamps: true
+            static_configs:
+              - targets:
+                  - "titan.${SECRET_TECH_DOMAIN_NAME}:4000"
+          # - job_name: dragonfly
+          #   scrape_interval: 1m
+          #   scrape_timeout: 10s
+          #   honor_timestamps: true
+          #   static_configs:
+          #     - targets:
+          #         - dragonfly.dbms.svc.cluster.local:6379
+
+    grafana:
+      enabled: false
+      forceDeployDashboards: true
+      sidecar:
+        dashboards:
+          annotations:
+            grafana_folder: Prometheus
+    nodeExporter:
+      enabled: true
+    serviceMonitor:
+      scrapeTimeout: 60s

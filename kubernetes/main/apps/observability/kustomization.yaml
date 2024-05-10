@@ -4,18 +4,18 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - namespace.yaml
-  - alertmanager/install.yaml
-  - alertmanager-discord/install.yaml
+  # - alertmanager/install.yaml
+  # - alertmanager-discord/install.yaml
   - gatus/install.yaml
   - grafana/install.yaml
   - kromgo/install.yaml
-  # - kube-prometheus-stack/install.yaml
-  - kube-state-metrics/install.yaml
+  - kube-prometheus-stack/install.yaml
+  # - kube-state-metrics/install.yaml
   - loki/install.yaml
   - miscellaneous
-  - node-exporter/install.yaml
+  # - node-exporter/install.yaml
   - node-problem-detector/install.yaml
-  - prometheus-operator/install.yaml
+  # - prometheus-operator/install.yaml
   - teslamate/install.yaml
   # - thanos/install.yaml
   - unifi-poller/install.yaml

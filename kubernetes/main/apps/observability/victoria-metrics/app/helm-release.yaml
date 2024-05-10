@@ -136,7 +136,7 @@ spec:
         extraArgs:
           external.url: https://vmalert.${SECRET_DOMAIN_NAME}
         notifiers:
-          - url: http://alertmanager.observability.svc.cluster.local:9093
+          - url: http://alertmanager-operated.observability.svc.cluster.local:9093
       ingress:
         enabled: true
         ingressClassName: internal
@@ -149,15 +149,16 @@ spec:
       spec:
         replicaCount: 1
         shardCount: 2
-        scrapeInterval: 30s
+        scrapeInterval: 60s
         externalLabels:
+          cluster: main
         resources:
           requests:
-            cpu: 50m
+            cpu: 300m
             memory: 256Mi
           limits:
-            cpu: 400m
-            memory: 512Mi
+            cpu: 1
+            memory: 2Gi
         topologySpreadConstraints:
           - maxSkew: 1
             topologyKey: kubernetes.io/hostname
