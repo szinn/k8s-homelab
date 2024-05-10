@@ -4,6 +4,7 @@ version: "3"
 
 vars:
   dropDatabases: "{{.ROOT_DIR}}/.taskfiles/Postgres/drop_databases.sql"
+  
 
 tasks:
   maintenance-main:
@@ -29,44 +30,9 @@ tasks:
       vars:
         - command
 
-  down:
-    desc: Scale down all services that use Postgresql
+  restore_dmarc:
+    desc: Restore dmarc database
     cmds:
-      - task: _down
-        vars:
-          NAMESPACE: home
-          HELMRELEASE: home-assistant
-          KUSTOMIZATION: home-home-assistant
-          TYPE: statefulset
-          NAME: home-assistant
-      - task: _down
-        vars:
-          NAMESPACE: media
-          HELMRELEASE: immich-server
-          KUSTOMIZATION: media-immich
-          TYPE: deployment
-          NAME: immich-server
-      - task: _down
-        vars:
-          NAMESPACE: monitoring
-          HELMRELEASE: grafana
-          KUSTOMIZATION: monitoring-grafana
-          TYPE: deployment
-          NAME: grafana
-      - task: _down
-        vars:
-          NAMESPACE: monitoring
-          HELMRELEASE: teslamate
-          KUSTOMIZATION: monitoring-teslamate
-          TYPE: deployment
-          NAME: teslamate
-      - task: _down
-        vars:
-          NAMESPACE: security
-          HELMRELEASE: authelia
-          KUSTOMIZATION: security-authelia
-          TYPE: deployment
-          NAME: authelia
       - task: _down
         vars:
           NAMESPACE: security
@@ -74,87 +40,125 @@ tasks:
           KUSTOMIZATION: security-dmarc-report
           TYPE: statefulset
           NAME: dmarc-report
-      - task: _down
+      - echo "DROP DATABASE IF EXISTS dmarc;" | psql
+      - task: _restore_db
+        vars:
+          DATABASE: dmarc
+      - task: _up
         vars:
           NAMESPACE: security
-          HELMRELEASE: lldap
-          KUSTOMIZATION: security-lldap
+          HELMRELEASE: dmarc-report
+          KUSTOMIZATION: security-dmarc-report
+          TYPE: statefulset
+          NAME: dmarc-report
+          REPLICAS: 1
+
+  restore_lidarr:
+    desc: Restore lidarr database
+    cmds:
+      - task: _down
+        vars:
+          NAMESPACE: media
+          HELMRELEASE: lidarr
+          KUSTOMIZATION: media-lidarr
           TYPE: deployment
-          NAME: lldap
+          NAME: lidarr
+      - echo "DROP DATABASE IF EXISTS lidarr_main;" | psql
+      - task: _restore_db
+        vars:
+          DATABASE: lidarr_main
+      - task: _up
+        vars:
+          NAMESPACE: media
+          HELMRELEASE: lidarr
+          KUSTOMIZATION: media-lidarr
+          TYPE: deployment
+          NAME: lidarr
+          REPLICAS: 1
+
+  restore_prowlarr:
+    desc: Restore prowlarr database
+    cmds:
+      - task: _down
+        vars:
+          NAMESPACE: media
+          HELMRELEASE: prowlarr
+          KUSTOMIZATION: media-prowlarr
+          TYPE: deployment
+          NAME: prowlarr
+      - echo "DROP DATABASE IF EXISTS prowlarr_main;" | psql
+      - task: _restore_db
+        vars:
+          DATABASE: prowlarr_main
+      - task: _up
+        vars:
+          NAMESPACE: media
+          HELMRELEASE: prowlarr
+          KUSTOMIZATION: media-prowlarr
+          TYPE: deployment
+          NAME: prowlarr
+          REPLICAS: 1
+
+  restore_radarr_4k:
+    desc: Restore radarr-4k database
+    cmds:
+      - task: _down
+        vars:
+          NAMESPACE: media
+          HELMRELEASE: radarr-4k
+          KUSTOMIZATION: media-radarr-4k
+          TYPE: deployment
+          NAME: radarr-4k
+      - echo "DROP DATABASE IF EXISTS radarr_4k_main;" | psql
+      - task: _restore_db
+        vars:
+          DATABASE: radarr_4k_main
+      - task: _up
+        vars:
+          NAMESPACE: media
+          HELMRELEASE: radarr-4k
+          KUSTOMIZATION: media-radarr-4k
+          TYPE: deployment
+          NAME: radarr-4k
+          REPLICAS: 1
+
+  restore_radarr:
+    desc: Restore radarr database
+    cmds:
+      - task: _down
+        vars:
+          NAMESPACE: media
+          HELMRELEASE: radarr
+          KUSTOMIZATION: media-radarr
+          TYPE: deployment
+          NAME: radarr
+      - echo "DROP DATABASE IF EXISTS radarr_main;" | psql
+      - task: _restore_db
+        vars:
+          DATABASE: radarr_main
+      - task: _up
+        vars:
+          NAMESPACE: media
+          HELMRELEASE: radarr
+          KUSTOMIZATION: media-radarr
+          TYPE: deployment
+          NAME: radarr
+          REPLICAS: 1
+
+  restore_shlink:
+    desc: Restore shlink database
+    cmds:
       - task: _down
         vars:
           NAMESPACE: self-hosted
           HELMRELEASE: shlink-api
-          KUSTOMIZATION: security-shlink
+          KUSTOMIZATION: self-hosted-shlink
           TYPE: deployment
           NAME: shlink-api
-      - task: _down
+      - echo "DROP DATABASE IF EXISTS shlink;" | psql
+      - task: _restore_db
         vars:
-          NAMESPACE: self-hosted
-          HELMRELEASE: wikijs
-          KUSTOMIZATION: security-wikijs
-          TYPE: deployment
-          NAME: wikijs
-
-  up:
-    desc: Scale down all services that use Postgresql
-    cmds:
-      - task: _up
-        vars:
-          NAMESPACE: home
-          HELMRELEASE: home-assistant
-          KUSTOMIZATION: home-home-assistant
-          TYPE: statefulset
-          NAME: home-assistant
-          REPLICAS: 1
-      - task: _up
-        vars:
-          NAMESPACE: media
-          HELMRELEASE: immich-server
-          KUSTOMIZATION: media-immich
-          TYPE: deployment
-          NAME: immich-server
-          REPLICAS: 1
-      - task: _up
-        vars:
-          NAMESPACE: monitoring
-          HELMRELEASE: grafana
-          KUSTOMIZATION: monitoring-grafana
-          TYPE: deployment
-          NAME: grafana
-          REPLICAS: 1
-      - task: _up
-        vars:
-          NAMESPACE: monitoring
-          HELMRELEASE: teslamate
-          KUSTOMIZATION: monitoring-teslamate
-          TYPE: deployment
-          NAME: teslamate
-          REPLICAS: 1
-      - task: _up
-        vars:
-          NAMESPACE: security
-          HELMRELEASE: authelia
-          KUSTOMIZATION: security-authelia
-          TYPE: deployment
-          NAME: authelia
-          REPLICAS: 1
-      - task: _up
-        vars:
-          NAMESPACE: security
-          HELMRELEASE: dmarc-report
-          KUSTOMIZATION: security-dmarc-report
-          TYPE: statefulset
-          NAME: dmarc-report
-          REPLICAS: 1
-      - task: _up
-        vars:
-          NAMESPACE: security
-          HELMRELEASE: lldap
-          KUSTOMIZATION: security-lldap
-          TYPE: deployment
-          NAME: lldap
-          REPLICAS: 1
+          DATABASE: shlink
       - task: _up
         vars:
           NAMESPACE: self-hosted
@@ -163,6 +167,67 @@ tasks:
           TYPE: deployment
           NAME: shlink-api
           REPLICAS: 1
+
+  restore_sonarr:
+    desc: Restore sonarr database
+    cmds:
+      - task: _down
+        vars:
+          NAMESPACE: media
+          HELMRELEASE: sonarr
+          KUSTOMIZATION: media-sonarr
+          TYPE: deployment
+          NAME: sonarr
+      - echo "DROP DATABASE IF EXISTS sonarr_main;" | psql
+      - task: _restore_db
+        vars:
+          DATABASE: sonarr_main
+      - task: _up
+        vars:
+          NAMESPACE: media
+          HELMRELEASE: sonarr
+          KUSTOMIZATION: media-sonarr
+          TYPE: deployment
+          NAME: sonarr
+          REPLICAS: 1
+
+  restore_teslamate:
+    desc: Restore teslamate database
+    cmds:
+      - task: _down
+        vars:
+          NAMESPACE: observability
+          HELMRELEASE: teslamate
+          KUSTOMIZATION: observability-teslamate
+          TYPE: deployment
+          NAME: teslamate
+      - echo "DROP DATABASE IF EXISTS teslamate;" | psql
+      - task: _restore_db
+        vars:
+          DATABASE: teslamate
+      - task: _up
+        vars:
+          NAMESPACE: observability
+          HELMRELEASE: teslamate
+          KUSTOMIZATION: observability-teslamate
+          TYPE: deployment
+          NAME: teslamate
+          REPLICAS: 1
+
+  restore_wikijs:
+    desc: Restore wikijs database
+    cmds:
+      - task: _down
+        vars:
+          NAMESPACE: self-hosted
+          HELMRELEASE: wikijs
+          KUSTOMIZATION: self-hosted-wikijs
+          TYPE: deployment
+          NAME: wikijs
+      - echo "DROP DATABASE IF EXISTS wikijs;" | psql
+      - task: _restore_db
+        vars:
+          DATABASE: wikijs
       - task: _up
         vars:
           NAMESPACE: self-hosted
@@ -171,29 +236,6 @@ tasks:
           TYPE: deployment
           NAME: wikijs
           REPLICAS: 1
-
-  restore:
-    desc: Restore databases
-    cmds:
-      - psql < {{.dropDatabases}}
-      - task: _restore_db
-        vars:
-          DATABASE: dmarc
-      - task: _restore_db
-        vars:
-          DATABASE: immich
-      - task: _restore_db
-        vars:
-          DATABASE: lldap
-      - task: _restore_db
-        vars:
-          DATABASE: shlink
-      - task: _restore_db
-        vars:
-          DATABASE: teslamate
-      - task: _restore_db
-        vars:
-          DATABASE: wikijs
 
   _down:
     desc: Bring a service down
