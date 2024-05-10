@@ -67,8 +67,7 @@ nodes:
   - hostname: k8s-4.${SECRET_TECH_DOMAIN_NAME}
     ipAddress: 10.11.0.19
     controlPlane: false
-    installDiskSelector:
-      busPath: /pci0000:00/0000:00:17.0/ata1/host0/target0:0:0/0:0:0:0/
+    installDisk: /dev/sda
     machineDisks:
       - device: /dev/disk/by-id/nvme-PCIe_SSD_9435070301DE01033512
         partitions:
@@ -83,8 +82,7 @@ nodes:
   - hostname: k8s-5.${SECRET_TECH_DOMAIN_NAME}
     ipAddress: 10.11.0.20
     controlPlane: false
-    installDiskSelector:
-      busPath: /pci0000:00/0000:00:17.0/ata1/host0/target0:0:0/0:0:0:0/
+    installDisk: /dev/sda
     machineDisks:
       - device: /dev/disk/by-id/nvme-PCIe_SSD_D6EB0703018201033336
         partitions:
@@ -99,8 +97,7 @@ nodes:
   - hostname: k8s-6.${SECRET_TECH_DOMAIN_NAME}
     ipAddress: 10.11.0.21
     controlPlane: false
-    installDiskSelector:
-      busPath: /pci0000:00/0000:00:17.0/ata1/host0/target0:0:0/0:0:0:0/
+    installDisk: /dev/sda
     machineDisks:
       - device: /dev/disk/by-id/nvme-PCIe_SSD_0546070401F302575079
         partitions:

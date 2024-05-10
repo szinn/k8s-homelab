@@ -2,14 +2,14 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: ubuntu-shell
+  name: alpine-shell
   namespace: default
 spec:
   terminationGracePeriodSeconds: 5
-  # nodeName: k8s-4
+  nodeName: k8s-4
   containers:
     - name: shell
-      image: ubuntu
+      image: docker.io/library/alpine:latest
       tty: true
       stdin: true
       securityContext:

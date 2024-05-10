@@ -6,6 +6,15 @@ vars:
   TALOS_SCRIPTS_DIR: "{{.ROOT_DIR}}/.taskfiles/Talos/scripts"
 
 tasks:
+  gen-secrets:
+    desc: "Generate cluster secrets"
+    cmds:
+      - talhelper gensecret > kubernetes/{{.cluster}}/bootstrap/talos/talsecret.sops.yaml
+      - sops -e -i kubernetes/{{.cluster}}/bootstrap/talos/talsecret.sops.yaml
+    requires:
+      vars:
+        - cluster
+
   bootstrap:
     desc: Bootstrap the cluster
     summary: |

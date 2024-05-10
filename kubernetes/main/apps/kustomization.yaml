@@ -12,7 +12,7 @@ resources:
   - security/external-secrets/install.yaml
   - system
   # Step 2
-  # - rook-ceph
+  - rook-ceph
   # Step 3
   # - dbms
   # Step 4

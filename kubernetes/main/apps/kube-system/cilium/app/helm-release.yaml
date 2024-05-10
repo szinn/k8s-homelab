@@ -61,6 +61,8 @@ spec:
           serviceMonitor:
             enabled: true
       ui:
+        enabled: true
+        rollOutPods: true
         ingress:
           enabled: true
           className: internal
