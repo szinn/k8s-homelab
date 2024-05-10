@@ -13,9 +13,10 @@ spec:
     repeatInterval: 5m
     routes:
       - receiver: "null"
-        matchers: [{name: alertname, value: InfoInhibitor|Watchdog|CPUThrottlingHigh, matchType: =}]
+        matchers: [{name: alertname, value: InfoInhibitor|Watchdog|CPUThrottlingHigh, matchType: =~}]
       - receiver: discord
         matchers: [{name: severity, value: critical|warning, matchType: =~}]
+        continue: true
   receivers:
     - name: "null"
     - name: discord
