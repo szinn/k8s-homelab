@@ -34,7 +34,7 @@ spec:
             - vmselect.${SECRET_DOMAIN_NAME}
       spec:
         # Duration to keep metrics
-        retentionPeriod: "2" # this is months unless a character prefix is added (1d, 1w, etc)
+        retentionPeriod: 90d # this is months unless a character prefix is added (1d, 1w, etc)
         extraArgs:
           dedup.minScrapeInterval: 30s
         replicationFactor: 3
