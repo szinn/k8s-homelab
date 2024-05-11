@@ -5,7 +5,7 @@ name: "Build blacklist"
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 0 * * 6"
+    - cron: "0 0 * * *"
 
 jobs:
   blacklist:
