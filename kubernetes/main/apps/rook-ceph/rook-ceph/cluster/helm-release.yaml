@@ -92,7 +92,7 @@ spec:
         enabled: true
         urlPrefix: /
         ssl: false
-        prometheusEndpoint: http://vmselect-victoria-metrics.observability.svc.cluster.local:8481/select/0/prometheus
+        prometheusEndpoint: http://vmsingle-stack.observability.svc.cluster.local:8429
 
       storage:
         useAllNodes: false

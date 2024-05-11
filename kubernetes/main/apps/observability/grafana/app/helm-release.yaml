@@ -220,13 +220,13 @@ spec:
           - name: Alertmanager
             orgId: 1
         datasources:
-          - access: proxy
-            name: Prometheus
+          - name: Prometheus
             type: prometheus
-            url: http://vmselect-victoria-metrics.observability.svc.cluster.local:8481/select/0/prometheus
+            url: http://vmsingle-stack.observability.svc.cluster.local:8429
             isDefault: false
             jsonData:
               prometheusType: Prometheus
+              timeInterval: 60s
           # - name: Original Prometheus
           #   type: prometheus
           #   access: proxy
@@ -563,10 +563,22 @@ spec:
           revision: 9
           datasource: Prometheus
       victoriametrics:
-        vm-cluster:
-          # renovate: dashboardName="VictoriaMetrics - cluster"
-          gnetId: 11176
-          revision: 36
+        prometheus:
+          # renovate: depName="Prometheus"
+          gnetId: 19105
+          revision: 3
+          datasource: Prometheus
+        vm-agent:
+          # renovate: dashboardName="VictoriaMetrics - vmagent"
+          gnetId: 12683
+          revision: 17
+          datasource:
+            - name: "DS_PROMETHEUS"
+              value: Prometheus
+        vm-alert:
+          # renovate: dashboardName="VictoriaMetrics - vmalert"
+          gnetId: 14950
+          revision: 10
           datasource:
             - name: "DS_PROMETHEUS"
               value: Prometheus
@@ -577,17 +589,8 @@ spec:
           datasource:
             - name: "DS_PROMETHEUS"
               value: Prometheus
-        vm-vmalert:
-          # renovate: dashboardName="VictoriaMetrics - vmalert"
-          gnetId: 14950
-          revision: 10
-          datasource:
-            - name: "DS_PROMETHEUS"
-              value: Prometheus
-        vm-vmagent:
-          # renovate: dashboardName="VictoriaMetrics - vmagent"
-          gnetId: 12683
-          revision: 17
-          datasource:
-            - name: "DS_PROMETHEUS"
-              value: Prometheus
+        vm-single:
+          # renovate: depName="VictoriaMetrics - single-node"
+          gnetId: 10229
+          revision: 35
+          datasource: Prometheus

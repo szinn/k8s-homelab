@@ -1,0 +1,33 @@
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMSingle
+metadata:
+  name: stack
+spec:
+  image:
+    tag: v1.100.1
+  extraArgs:
+    dedup.minScrapeInterval: 10s
+    maxLabelsPerTimeseries: "40"
+    search.minStalenessInterval: 5m
+    vmalert.proxyURL: http://vmalert-stack.observability.svc:8080
+  replicaCount: 1
+  # -- Data retention period. Possible units character: h(ours), d(ays), w(eeks), y(ears), if no unit character specified - month. The minimum retention period is 24h. See these [docs](https://docs.victoriametrics.com/single-server-victoriametrics/#retention)
+  retentionPeriod: "6"
+  storage:
+    accessModes: [ReadWriteOnce]
+    # dataSourceRef:
+    #   apiGroup: volsync.backube
+    #   kind: ReplicationDestination
+    #   name: victoria-vmsingle-bootstrap
+    resources:
+      requests:
+        storage: 20Gi
+    storageClassName: openebs-hostpath
+  resources: # TODO: refine
+    requests:
+      cpu: 200m
+      memory: 1Gi
+    limits:
+      cpu: 1
+      memory: 2Gi

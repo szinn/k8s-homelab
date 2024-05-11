@@ -1,0 +1,36 @@
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMAlert
+metadata:
+  name: stack
+spec:
+  image:
+    tag: v1.100.1
+  datasource:
+    url: http://vmsingle-stack.observability.svc:8429
+  evaluationInterval: 1m
+  externalLabels:
+    cluster: talos-dev
+  notifiers:
+    - url: http://alertmanager-operated.observability.svc:9093
+  remoteRead:
+    url: http://vmsingle-stack.observability.svc:8429
+  remoteWrite:
+    url: http://vmagent-stack.observability.svc:8429
+  replicaCount: 1
+  resources:
+    requests:
+      cpu: 20m
+      memory: 64Mi
+    limits:
+      cpu: 1
+      memory: 1Gi
+  selectAllByDefault: true
+  # topologySpreadConstraints:
+  #   - maxSkew: 1
+  #     topologyKey: kubernetes.io/hostname
+  #     whenUnsatisfiable: DoNotSchedule
+  #     labelSelector:
+  #       matchLabels:
+  #         app.kubernetes.io/name: vmalert
+  #         app.kubernetes.io/instance: victoria
