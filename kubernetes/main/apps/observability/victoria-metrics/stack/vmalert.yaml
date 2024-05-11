@@ -5,6 +5,7 @@ metadata:
   name: stack
 spec:
   image:
+    repository: victoriametrics/vmalert
     tag: v1.100.1
   datasource:
     url: http://vmsingle-stack.observability.svc:8429
