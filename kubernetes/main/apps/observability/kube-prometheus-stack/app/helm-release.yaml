@@ -141,6 +141,22 @@ spec:
 
     prometheus-node-exporter:
       fullnameOverride: node-exporter
+      prometheus:
+        monitor:
+          enabled: true
+          relabelings:
+            - action: replace
+              regex: (.*)
+              replacement: $1
+              sourceLabels:
+                - __meta_kubernetes_pod_node_name
+              targetLabel: kubernetes_node
+            - action: replace
+              regex: (.*)
+              replacement: $1.${SECRET_TECH_DOMAIN_NAME}:9100
+              sourceLabels:
+                - kubernetes_node
+              targetLabel: instance
 
     prometheusOperator:
       fullnameOverride: prometheus-operator
