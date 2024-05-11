@@ -10,7 +10,7 @@ spec:
     url: http://vmsingle-stack.observability.svc:8429
   evaluationInterval: 1m
   externalLabels:
-    cluster: talos-dev
+    cluster: main
   notifiers:
     - url: http://alertmanager-operated.observability.svc:9093
   remoteRead:

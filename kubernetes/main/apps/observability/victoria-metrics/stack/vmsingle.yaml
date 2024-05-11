@@ -7,7 +7,7 @@ spec:
   image:
     tag: v1.100.1
   extraArgs:
-    dedup.minScrapeInterval: 10s
+    dedup.minScrapeInterval: 60s
     maxLabelsPerTimeseries: "40"
     search.minStalenessInterval: 5m
     vmalert.proxyURL: http://vmalert-stack.observability.svc:8080

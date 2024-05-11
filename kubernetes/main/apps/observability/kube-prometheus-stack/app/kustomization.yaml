@@ -6,6 +6,7 @@ resources:
   - alertmanager-config.yaml
   - alertmanager-secrets.yaml
   - helm-release.yaml
+  - node-exporter-scrape.yaml
 configMapGenerator:
   - name: kube-state-metrics-config
     files:

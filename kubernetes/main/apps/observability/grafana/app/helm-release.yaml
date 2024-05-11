@@ -351,6 +351,13 @@ spec:
         # dragonfly:
         #   url: https://raw.githubusercontent.com/dragonflydb/dragonfly/main/tools/local/monitoring/grafana/provisioning/dashboards/dashboard.json
         #   datasource: Prometheus
+        minio:
+          # renovate: depName="MinIO Dashboard"
+          gnetId: 13502
+          revision: 26
+          datasource:
+            - name: "DS_PROMETHEUS"
+              value: Prometheus
         redis-sentinel:
           # renovate: depName="Redis"
           gnetId: 12776
@@ -453,6 +460,13 @@ spec:
         ingress-nginx-request-handling-performance:
           url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/grafana/dashboards/request-handling-performance.json
           datasource: Prometheus
+        spegel:
+          # renovate: dashboardName="Spegel"
+          gnetId: 18089
+          revision: 1
+          datasource:
+            - name: DS_PROMETHEUS
+              value: Prometheus
         zfs:
         # Ref: https://grafana.com/grafana/dashboards/7845
           gnetId: 7845
