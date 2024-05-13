@@ -2,10 +2,6 @@
 # yaml-language-server: $schema=https://taskfile.dev/schema.json
 version: "3"
 
-vars:
-  dropDatabases: "{{.ROOT_DIR}}/.taskfiles/Postgres/drop_databases.sql"
-  
-
 tasks:
   maintenance-main:
     desc: Set/unset maintenance mode on main cluster
@@ -38,9 +34,7 @@ tasks:
           NAMESPACE: security
           HELMRELEASE: dmarc-report
           KUSTOMIZATION: security-dmarc-report
-          TYPE: statefulset
-          NAME: dmarc-report
-      - echo "DROP DATABASE IF EXISTS dmarc;" | psql
+          SERVICES: statefulset/dmarc-report
       - task: _restore_db
         vars:
           DATABASE: dmarc
@@ -49,8 +43,7 @@ tasks:
           NAMESPACE: security
           HELMRELEASE: dmarc-report
           KUSTOMIZATION: security-dmarc-report
-          TYPE: statefulset
-          NAME: dmarc-report
+          SERVICES: statefulset/dmarc-report
           REPLICAS: 1
 
   restore_lidarr:
@@ -61,9 +54,7 @@ tasks:
           NAMESPACE: media
           HELMRELEASE: lidarr
           KUSTOMIZATION: media-lidarr
-          TYPE: deployment
-          NAME: lidarr
-      - echo "DROP DATABASE IF EXISTS lidarr_main;" | psql
+          SERVICES: deployment/lidarr
       - task: _restore_db
         vars:
           DATABASE: lidarr_main
@@ -72,8 +63,7 @@ tasks:
           NAMESPACE: media
           HELMRELEASE: lidarr
           KUSTOMIZATION: media-lidarr
-          TYPE: deployment
-          NAME: lidarr
+          SERVICES: deployment/lidarr
           REPLICAS: 1
 
   restore_prowlarr:
@@ -84,9 +74,7 @@ tasks:
           NAMESPACE: media
           HELMRELEASE: prowlarr
           KUSTOMIZATION: media-prowlarr
-          TYPE: deployment
-          NAME: prowlarr
-      - echo "DROP DATABASE IF EXISTS prowlarr_main;" | psql
+          SERVICES: deployment/prowlarr
       - task: _restore_db
         vars:
           DATABASE: prowlarr_main
@@ -95,8 +83,7 @@ tasks:
           NAMESPACE: media
           HELMRELEASE: prowlarr
           KUSTOMIZATION: media-prowlarr
-          TYPE: deployment
-          NAME: prowlarr
+          SERVICES: deployment/prowlarr
           REPLICAS: 1
 
   restore_radarr_4k:
@@ -107,9 +94,7 @@ tasks:
           NAMESPACE: media
           HELMRELEASE: radarr-4k
           KUSTOMIZATION: media-radarr-4k
-          TYPE: deployment
-          NAME: radarr-4k
-      - echo "DROP DATABASE IF EXISTS radarr_4k_main;" | psql
+          SERVICES: deployment/radarr-4k
       - task: _restore_db
         vars:
           DATABASE: radarr_4k_main
@@ -118,8 +103,7 @@ tasks:
           NAMESPACE: media
           HELMRELEASE: radarr-4k
           KUSTOMIZATION: media-radarr-4k
-          TYPE: deployment
-          NAME: radarr-4k
+          SERVICES: deployment/radarr-4k
           REPLICAS: 1
 
   restore_radarr:
@@ -130,9 +114,7 @@ tasks:
           NAMESPACE: media
           HELMRELEASE: radarr
           KUSTOMIZATION: media-radarr
-          TYPE: deployment
-          NAME: radarr
-      - echo "DROP DATABASE IF EXISTS radarr_main;" | psql
+          SERVICES: deployment/radarr
       - task: _restore_db
         vars:
           DATABASE: radarr_main
@@ -141,8 +123,7 @@ tasks:
           NAMESPACE: media
           HELMRELEASE: radarr
           KUSTOMIZATION: media-radarr
-          TYPE: deployment
-          NAME: radarr
+          SERVICES: deployment/radarr
           REPLICAS: 1
 
   restore_shlink:
@@ -153,9 +134,7 @@ tasks:
           NAMESPACE: self-hosted
           HELMRELEASE: shlink-api
           KUSTOMIZATION: self-hosted-shlink
-          TYPE: deployment
-          NAME: shlink-api
-      - echo "DROP DATABASE IF EXISTS shlink;" | psql
+          SERVICES: deployment/shlink-api
       - task: _restore_db
         vars:
           DATABASE: shlink
@@ -164,8 +143,7 @@ tasks:
           NAMESPACE: self-hosted
           HELMRELEASE: shlink-api
           KUSTOMIZATION: self-hosted-shlink
-          TYPE: deployment
-          NAME: shlink-api
+          SERVICES: deployment/shlink-api
           REPLICAS: 1
 
   restore_sonarr:
@@ -176,9 +154,7 @@ tasks:
           NAMESPACE: media
           HELMRELEASE: sonarr
           KUSTOMIZATION: media-sonarr
-          TYPE: deployment
-          NAME: sonarr
-      - echo "DROP DATABASE IF EXISTS sonarr_main;" | psql
+          SERVICES: deployment/sonarr
       - task: _restore_db
         vars:
           DATABASE: sonarr_main
@@ -187,8 +163,7 @@ tasks:
           NAMESPACE: media
           HELMRELEASE: sonarr
           KUSTOMIZATION: media-sonarr
-          TYPE: deployment
-          NAME: sonarr
+          SERVICES: deployment/sonarr
           REPLICAS: 1
 
   restore_teslamate:
@@ -199,9 +174,7 @@ tasks:
           NAMESPACE: observability
           HELMRELEASE: teslamate
           KUSTOMIZATION: observability-teslamate
-          TYPE: deployment
-          NAME: teslamate
-      - echo "DROP DATABASE IF EXISTS teslamate;" | psql
+          SERVICES: deployment/teslamate
       - task: _restore_db
         vars:
           DATABASE: teslamate
@@ -210,8 +183,7 @@ tasks:
           NAMESPACE: observability
           HELMRELEASE: teslamate
           KUSTOMIZATION: observability-teslamate
-          TYPE: deployment
-          NAME: teslamate
+          SERVICES: deployment/teslamate
           REPLICAS: 1
 
   restore_wikijs:
@@ -222,9 +194,7 @@ tasks:
           NAMESPACE: self-hosted
           HELMRELEASE: wikijs
           KUSTOMIZATION: self-hosted-wikijs
-          TYPE: deployment
-          NAME: wikijs
-      - echo "DROP DATABASE IF EXISTS wikijs;" | psql
+          SERVICES: deployment/wikijs
       - task: _restore_db
         vars:
           DATABASE: wikijs
@@ -233,8 +203,28 @@ tasks:
           NAMESPACE: self-hosted
           HELMRELEASE: wikijs
           KUSTOMIZATION: self-hosted-wikijs
-          TYPE: deployment
-          NAME: wikijs
+          SERVICES: deployment/wikijs
+          REPLICAS: 1
+
+  restore_immich:
+    desc: Restore immich database
+    cmds:
+      - task: _down
+        vars:
+          NAMESPACE: media
+          HELMRELEASE: immich
+          KUSTOMIZATION: media-immich
+          SERVICES: deployment/immich-server deployment/immich-microservices
+      - cp {{.DBBACKUP}}/last/immich-latest.sql.gz /tmp
+      - gzip -d /tmp/immich-latest.sql.gz
+      - cat /tmp/immich-latest.sql | sed "s/SELECT pg_catalog.set_config('search_path', '', false);/SELECT pg_catalog.set_config('search_path', 'public, pg_catalog', true);/g" | psql -h immich.{{.SECRET_BASE_DOMAIN_NAME}}
+      - rm /tmp/immich-latest.sql
+      - task: _up
+        vars:
+          NAMESPACE: media
+          HELMRELEASE: immich
+          KUSTOMIZATION: media-immich
+          SERVICES: deployment/immich-server deployment/immich-microservices
           REPLICAS: 1
 
   _down:
@@ -242,19 +232,24 @@ tasks:
     cmds:
       - flux suspend helmrelease -n {{.NAMESPACE}} {{.HELMRELEASE}}
       - flux suspend kustomization {{.KUSTOMIZATION}}
-      - kubectl scale --replicas=0 -n {{.NAMESPACE}} {{.TYPE}}/{{.NAME}}
+      - for: {var: SERVICES}
+        cmd: kubectl scale --replicas=0 -n {{.NAMESPACE}} {{.ITEM}}
 
   _up:
     desc: Bring a service up
     cmds:
-      - kubectl scale --replicas={{.REPLICAS}} -n {{.NAMESPACE}} {{.TYPE}}/{{.NAME}}
+      - for: {var: SERVICES}
+        cmd: kubectl scale --replicas={{.REPLICAS}} -n {{.NAMESPACE}} {{.ITEM}}
       - flux resume helmrelease -n {{.NAMESPACE}} {{.HELMRELEASE}}
       - flux resume kustomization {{.KUSTOMIZATION}}
 
   _restore_db:
+    prompt: Ready to restore database {{.DATABASE}}?
     desc: Restore a database
     cmds:
       - cp {{.DBBACKUP}}/last/{{.DATABASE}}-latest.sql.gz /tmp
       - gzip -d /tmp/{{.DATABASE}}-latest.sql.gz
-      - psql < /tmp/{{.DATABASE}}-latest.sql
+      - psql -h {{.database}} < /tmp/{{.DATABASE}}-latest.sql
       - rm /tmp/{{.DATABASE}}-latest.sql
+    vars:
+      database: '{{.DATABASE | default "postgres.${SECRET_DOMAIN_NAME}"}}'
