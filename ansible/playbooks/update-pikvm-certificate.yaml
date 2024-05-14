@@ -1,5 +1,5 @@
 - name: Update PiKVM Certificate
-  hosts: "kvm"
+  hosts: pikvm
   remote_user: root
   become: yes
   tasks:
