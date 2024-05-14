@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: victoria-metrics-operator
-      version: 0.31.1
+      version: 0.31.2
       sourceRef:
         kind: HelmRepository
         name: victoria-metrics-charts
