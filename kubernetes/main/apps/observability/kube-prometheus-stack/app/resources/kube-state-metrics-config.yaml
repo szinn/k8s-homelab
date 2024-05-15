@@ -49,7 +49,7 @@ kube-state-metrics:
                   source_name: [ spec, sourceRef, name ]
           - groupVersionKind:
               group: helm.toolkit.fluxcd.io
-              version: v2beta2
+              version: v2
               kind: HelmRelease
             metricNamePrefix: gotk
             metrics:
@@ -108,7 +108,7 @@ kube-state-metrics:
                   bucket_name: [ spec, bucketName ]
           - groupVersionKind:
               group: source.toolkit.fluxcd.io
-              version: v1beta2
+              version: v1
               kind: HelmRepository
             metricNamePrefix: gotk
             metrics:
@@ -127,7 +127,7 @@ kube-state-metrics:
                   url: [ spec, url ]
           - groupVersionKind:
               group: source.toolkit.fluxcd.io
-              version: v1beta2
+              version: v1
               kind: HelmChart
             metricNamePrefix: gotk
             metrics:
@@ -252,7 +252,7 @@ kube-state-metrics:
                   source_name: [ spec, imageRepositoryRef, name ]
           - groupVersionKind:
               group: image.toolkit.fluxcd.io
-              version: v1beta1
+              version: v1beta2
               kind: ImageUpdateAutomation
             metricNamePrefix: gotk
             metrics:
