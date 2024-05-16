@@ -205,5 +205,5 @@ kvmd:
         - ["#Ragnar", server7_led, server7_switch|Switch]
         - ["#Ares", server8_led, server8_switch|Switch]
         - ["#Artemis", server9_led, server9_switch|Switch]
-        - ["#Hera", server10_led, server10_switch|Switch]
         - ["#Apollo", server11_led, server11_switch|Switch]
+        - ["#Hera", server12_led, server12_switch|Switch]
