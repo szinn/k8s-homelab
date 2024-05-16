@@ -53,7 +53,7 @@ spec:
           main:
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v1.104.0@sha256:ac459accdc93977e559da70beddb01a9736e98e8350f12381589a5bec91197bc
+              tag: v1.105.1@sha256:658b40420d7a39d6eb34c797cec8d36ff315f5adb168301aaf27dc4eafc8e228
             command: /bin/sh
             args:
               - ./start-server.sh
@@ -81,7 +81,7 @@ spec:
           main:
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v1.104.0@sha256:ac459accdc93977e559da70beddb01a9736e98e8350f12381589a5bec91197bc
+              tag: v1.105.1@sha256:658b40420d7a39d6eb34c797cec8d36ff315f5adb168301aaf27dc4eafc8e228
             command: /bin/sh
             args:
               - ./start-microservices.sh
@@ -107,7 +107,7 @@ spec:
           main:
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
-              tag: v1.104.0@sha256:0dd0066f47c91fc69e4a9c4f3e70a7805d84d60e8eb5ffd7ec9c264e8d82cb70
+              tag: v1.105.1@sha256:2e2736ba2f2270485c0b6fa33eee66ea0b2279b70b92ea838a015c4d5289c9f0
             envFrom:
               - secretRef:
                   name: immich-secret
