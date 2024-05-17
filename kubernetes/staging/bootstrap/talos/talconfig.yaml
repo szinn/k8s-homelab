@@ -107,28 +107,11 @@ controlPlane:
     #         - endpoint: udp://${CONFIG_STAGING_SVC_VECTOR_AGGREGATOR_ADDR}:6002/
     #           format: json_lines
 
-    # Disable s=earch domain everywhere
+    # Disable search domain everywhere
     - &disableSearchDomainPatch |-
       machine:
         network:
           disableSearchDomain: true
-
-    # Configure NTP
-    - &ntpPatch |-
-      machine:
-        time:
-          disabled: false
-          servers:
-            - 10.0.0.7
-
-    # - &discoveryPatch |-
-    #   cluster:
-    #     discovery:
-    #       registries:
-    #         kubernetes:
-    #           disabled: false
-    #         service:
-    #           disabled: false
 
     # Enable KubePrism
     - &kubePrismPatch |-
@@ -148,28 +131,28 @@ controlPlane:
             maxPods: 150
           nodeIP:
             validSubnets:
-                - 10.12.0.0/24
+                - 10.12.0.0/16
 
     # ETCD configuration
     - |-
       cluster:
         etcd:
           advertisedSubnets:
-            - 10.12.0.0/24
-          extraArgs:
-            listen-metrics-urls: http://0.0.0.0:2381
+            - 10.12.0.0/16
+          # extraArgs:
+          #   listen-metrics-urls: http://0.0.0.0:2381
 
     # Cluster configuration
     - |-
       cluster:
-        controllerManager:
-          extraArgs:
-            bind-address: 0.0.0.0
+        # controllerManager:
+        #   extraArgs:
+        #     bind-address: 0.0.0.0
         proxy:
           disabled: true
-        scheduler:
-          extraArgs:
-            bind-address: 0.0.0.0
+        # scheduler:
+        #   extraArgs:
+        #     bind-address: 0.0.0.0
 
     # Disable default API server admission plugins.
     - |-
@@ -224,7 +207,6 @@ worker:
     # - *customTalosPatch
     # - *loggingPatch
     - *disableSearchDomainPatch
-    - *ntpPatch
     - *kubePrismPatch
     - *containerdPatch
     - *sysctlPatch
