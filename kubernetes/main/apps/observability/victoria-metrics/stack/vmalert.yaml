@@ -12,6 +12,8 @@ spec:
   evaluationInterval: 1m
   externalLabels:
     cluster: main
+  extraArgs:
+    external.url: https://vm-single.${SECRET_DOMAIN_NAME}
   notifiers:
     - url: http://alertmanager-operated.observability.svc:9093
   remoteRead:
