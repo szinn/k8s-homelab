@@ -38,28 +38,30 @@ At the bottom of this page, is the bringup process that I follow for this cluste
 
 ## Hardware
 
-| Device                                             | Count | OS Disk Size | Data Disk Size        | RAM  | Operating System   |
-| -------------------------------------------------- | ----- | ------------ | --------------------- | ---- | ----------------   |
-| Ryzen 3900 12c24t NAS server                       | 1     | 1TB          | 1TB NVME, 6x16Tb SATA | 64GB | NixOS 23.11        |
-| Raspberry Pi                                       | 1     |              |                       |      | OctoPrint          |
-| Raspberry Pi 4B                                    | 1     |              |                       |      | BirdNet            |
-| Raspberry Pi 5                                     | 1     |              |                       |      | Raspberry PiOS     |
-| TESmart 16-port HDMI Switch                        | 1     |              |                       |      |                    |
-| PiKVM                                              | 1     |              |                       |      |                    |
-| Intel NUC11PAHi7 (worker nodes)                    | 3     | 500GB SSD    | 1TB NVMe              | 64GB | Talos              |
-| Beelink MiniPC, Celeron J4125 (controlplane nodes) | 3     | 256GB SSD    |                       | 8GB  | Talos              |
-| Synology 1019+ (NFS server)                        | 1     |              | 5x12TB SATA           |      |                    |
-| UniFi UDM SE                                       | 1     |              |                       |      |                    |
-| USW-Pro-24-PoE                                     | 1     |              |                       |      |                    |
-| USW-Aggregation                                    |       |              |                       |      |                    |
-| USW-Enterprise-8-PoE                               | 2     |              |                       |      |                    |
-| USW-Flex XG                                        | 1     |              |                       |      | Desktop Hub        |
-| USW-Flex                                           | 1     |              |                       |      | Outside Camera Hub |
-| UNVR                                               | 1     |              | 3x4TB SATA            |      |                    |
-| USP-PDU Pro                                        | 2     |              |                       |      |                    |
-| 6-port NUC                                         | 1     | 512GB SSD    |                       | 32GB | NixOS - Titan      |
-| Intel NUC11TNHi7                                   | 1     |              |                       | 64GB | Proxmox            |
-| Intel NUC13 Pro                                    | 1     | 1Tb          |                       | 32GB | NixOS - Hera       |
+| Device                                             | Count | OS Disk Size | Data Disk Size        | RAM  | Operating System     |
+| -------------------------------------------------- | ----- | ------------ | --------------------- | ---- | -------------------- |
+| Ryzen 3900 12c24t NAS server                       | 1     | 1TB          | 1TB NVME, 6x16Tb SATA | 64GB | NixOS 23.11 - Ragnar |
+| Raspberry Pi                                       | 1     |              |                       |      | OctoPrint            |
+| Raspberry Pi 4B                                    | 1     |              |                       |      | BirdNet              |
+| Raspberry Pi 5                                     | 1     |              |                       |      | Raspberry PiOS       |
+| TESmart 16-port HDMI Switch                        | 1     |              |                       |      |                      |
+| PiKVM                                              | 1     |              |                       |      |                      |
+| Intel NUC11PAHi7 (worker nodes)                    | 3     | 500GB SSD    | 1TB NVMe              | 64GB | Talos                |
+| Beelink MiniPC, Celeron J4125 (controlplane nodes) | 3     | 256GB SSD    |                       | 8GB  | Talos                |
+| Synology 1019+ (NFS server)                        | 1     |              | 5x12TB SATA           |      |                      |  
+| UniFi UDM SE                                       | 1     |              |                       |      |                      |
+| USW-Pro-24-PoE                                     | 1     |              |                       |      |                      |
+| USW-Aggregation                                    |       |              |                       |      |                      |
+| USW-Enterprise-8-PoE                               | 2     |              |                       |      |                      |
+| USW-Flex XG                                        | 1     |              |                       |      | Desktop Hub          |
+| USW-Flex                                           | 1     |              |                       |      | Outside Camera Hub   |
+| UNVR                                               | 1     |              | 3x4TB SATA            |      |                      |
+| USP-PDU Pro                                        | 2     |              |                       |      |                      |
+| 6-port NUC                                         | 1     | 512GB SSD    |                       | 32GB | NixOS - Titan        |
+| Intel NUC11TNHi7                                   | 1     | 1Tb          |                       | 64GB | Proxmox              |
+| Intel NUC13 Pro                                    | 1     | 1Tb          |                       | 32GB | NixOS - Hera         |
+| UVC G4 Doorbell                                    | 1     |              |                       |      | Front Door Camera    |
+| UVC G4 Pro                                         | 3     |              |                       |      | Additional Cameras   |
 
 The Proxmox Intel NUC runs a 6-node Talos staging cluster where I can try out various patterns before deploying in the main cluster.
 
