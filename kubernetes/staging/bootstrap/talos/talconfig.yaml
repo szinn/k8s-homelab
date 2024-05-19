@@ -34,8 +34,6 @@ nodes:
           driver: virtio_net
         dhcp: true
         mtu: 1500
-        vip:
-          ip: ${clusterEndpointIP}
   - hostname: stage-2.${SECRET_TECH_DOMAIN_NAME}
     ipAddress: 10.12.0.17
     controlPlane: true
@@ -46,8 +44,6 @@ nodes:
           driver: virtio_net
         dhcp: true
         mtu: 1500
-        vip:
-          ip: ${clusterEndpointIP}
   - hostname: stage-3.${SECRET_TECH_DOMAIN_NAME}
     ipAddress: 10.12.0.18
     controlPlane: true
@@ -58,8 +54,6 @@ nodes:
           driver: virtio_net
         dhcp: true
         mtu: 1500
-        vip:
-          ip: ${clusterEndpointIP}
   - hostname: stage-4.${SECRET_TECH_DOMAIN_NAME}
     ipAddress: 10.12.0.19
     controlPlane: false

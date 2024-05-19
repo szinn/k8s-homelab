@@ -13,7 +13,6 @@ additionalApiServerCertSans: &san
   - ${clusterEndpointIP}
   - main.${SECRET_TECH_DOMAIN_NAME}
   - 127.0.0.1
-  - 10.0.0.7
 
 additionalMachineCertSans: *san
 
@@ -35,8 +34,6 @@ nodes:
           driver: r8169
         mtu: 1500
         dhcp: true
-        vip:
-          ip: ${clusterEndpointIP}
 
   - hostname: k8s-2.${SECRET_TECH_DOMAIN_NAME}
     ipAddress: 10.11.0.17
@@ -48,8 +45,6 @@ nodes:
           driver: r8169
         mtu: 1500
         dhcp: true
-        vip:
-          ip: ${clusterEndpointIP}
 
   - hostname: k8s-3.${SECRET_TECH_DOMAIN_NAME}
     ipAddress: 10.11.0.18
@@ -61,8 +56,6 @@ nodes:
           driver: r8169
         mtu: 1500
         dhcp: true
-        vip:
-          ip: ${clusterEndpointIP}
 
   - hostname: k8s-4.${SECRET_TECH_DOMAIN_NAME}
     ipAddress: 10.11.0.19
