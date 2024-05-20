@@ -44,7 +44,7 @@ spec:
           main:
             image:
               repository: teslamate/teslamate
-              tag: 1.28.5@sha256:aa3f37ecccc7ea77fa1e259391c8f2a05533e208228a42ebb4dbe560828db057
+              tag: 1.29.1@sha256:7c833ef13585b46339b778bb974fa6ea0f908cb7b9d1a62b41aef694bfdb9ca0
             env:
               TZ: ${CONFIG_TIMEZONE}
               DISABLE_MQTT: "true"
