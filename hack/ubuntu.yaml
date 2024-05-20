@@ -6,7 +6,7 @@ metadata:
   namespace: default
 spec:
   terminationGracePeriodSeconds: 5
-  nodeName: k8s-5
+  # nodeName: k8s-5
   containers:
     - name: shell
       image: ubuntu

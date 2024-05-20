@@ -107,6 +107,14 @@ controlPlane:
         network:
           disableSearchDomain: true
 
+    # Configure NTP
+    - &ntpPatch |-
+      machine:
+        time:
+          disabled: false
+          servers:
+            - 10.0.0.7
+
     # Enable KubePrism
     - &kubePrismPatch |-
       machine:
@@ -201,6 +209,7 @@ worker:
     # - *customTalosPatch
     # - *loggingPatch
     - *disableSearchDomainPatch
+    - *ntpPatch
     - *kubePrismPatch
     - *containerdPatch
     - *sysctlPatch
