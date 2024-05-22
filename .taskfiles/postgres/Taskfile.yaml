@@ -217,7 +217,7 @@ tasks:
           SERVICES: deployment/immich-server deployment/immich-microservices
       - cp {{.DBBACKUP}}/last/immich-latest.sql.gz /tmp
       - gzip -d /tmp/immich-latest.sql.gz
-      - cat /tmp/immich-latest.sql | sed "s/SELECT pg_catalog.set_config('search_path', '', false);/SELECT pg_catalog.set_config('search_path', 'public, pg_catalog', true);/g" | psql -h immich.{{.SECRET_BASE_DOMAIN_NAME}}
+      - task: _restore_immich_db
       - rm /tmp/immich-latest.sql
       - task: _up
         vars:
@@ -226,6 +226,12 @@ tasks:
           KUSTOMIZATION: media-immich
           SERVICES: deployment/immich-server deployment/immich-microservices
           REPLICAS: 1
+
+  _restore_immich_db:
+    prompt: Ready to restore database {{.DATABASE}}?
+    desc: Restore a database
+    cmds:
+      - cat /tmp/immich-latest.sql | sed "s/SELECT pg_catalog.set_config('search_path', '', false);/SELECT pg_catalog.set_config('search_path', 'public, pg_catalog', true);/g" | psql -h immich.{{.SECRET_BASE_DOMAIN_NAME}}
 
   _down:
     desc: Bring a service down
@@ -249,7 +255,5 @@ tasks:
     cmds:
       - cp {{.DBBACKUP}}/last/{{.DATABASE}}-latest.sql.gz /tmp
       - gzip -d /tmp/{{.DATABASE}}-latest.sql.gz
-      - psql -h {{.database}} < /tmp/{{.DATABASE}}-latest.sql
+      - psql < /tmp/{{.DATABASE}}-latest.sql
       - rm /tmp/{{.DATABASE}}-latest.sql
-    vars:
-      database: '{{.DATABASE | default "postgres.${SECRET_DOMAIN_NAME}"}}'
