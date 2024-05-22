@@ -45,28 +45,3 @@ spec:
                 name: *app
                 port:
                   number: 9001
----
-# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/external-secrets.io/externalsecret_v1beta1.json
-apiVersion: external-secrets.io/v1beta1
-kind: ExternalSecret
-metadata:
-  name: minio-scrape-secret
-spec:
-  secretStoreRef:
-    kind: ClusterSecretStore
-    name: onepassword-connect
-  target:
-    name: minio-scrape-secret
-    creationPolicy: Owner
-    deletionPolicy: "Delete"
-    template:
-      engineVersion: v2
-      data:
-        bearer-token: "{{ .minio_PROMETHEUS_TOKEN }}" 
-  dataFrom:
-    - extract:
-        key: minio-ragnar
-      rewrite:
-        - regexp:
-            source: "(.*)"
-            target: "minio_$1"
