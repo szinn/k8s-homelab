@@ -31,7 +31,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: &app kube-prometheus-stack
-  path: ./kubernetes/main/apps/observability/kube-prometheus-stack/app
+  path: ./kubernetes/main/apps/observability/kube-prometheus-stack/config
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes

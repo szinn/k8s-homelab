@@ -70,23 +70,3 @@ spec:
         - regexp:
             source: "(.*)"
             target: "minio_$1"
----
-# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/monitoring.coreos.com/scrapeconfig_v1alpha1.json
-apiVersion: monitoring.coreos.com/v1alpha1
-kind: ScrapeConfig
-metadata:
-  name: minio-scrape
-spec:
-  staticConfigs:
-    - targets: ['atlas.${SECRET_TECH_DOMAIN_NAME}:9000']
-  metricsPath: /minio/v2/metrics/cluster
-  scheme: HTTP
-  authorization:
-    type: Bearer
-    credentials:
-      name: minio-scrape-secret
-      key: bearer-token
-  relabelings:
-    - action: replace
-      targetLabel: job
-      replacement: minio
