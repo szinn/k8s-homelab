@@ -39,6 +39,14 @@ spec:
       cephVersion:
         image: quay.io/ceph/ceph:v18.2.2@sha256:257b3f5140c11b51fd710ffdad6213ed53d74146f464a51717262d156daef553
 
+      mgr:
+        modules:
+          - name: pg_autoscaler
+            enabled: true
+      network:
+        provider: host
+        connections:
+          requireMsgr2: true
       resources:
         mgr:
           requests:
@@ -184,42 +192,42 @@ spec:
       isDefault: false
       deletionPolicy: Delete
 
-    cephObjectStores:
-      - name: ceph-objectstore
-        spec:
-          metadataPool:
-            failureDomain: host
-            replicated:
-              size: 3
-          dataPool:
-            failureDomain: host
-            erasureCoded:
-              dataChunks: 2
-              codingChunks: 1
-          preservePoolsOnDelete: true
-          gateway:
-            port: 80
-            resources:
-              requests:
-                cpu: 100m
-                memory: 128M
-              limits:
-                memory: 2Gi
-            instances: 1
-          healthCheck:
-            bucket:
-              interval: 60s
-        storageClass:
-          enabled: true
-          name: ceph-bucket
-          reclaimPolicy: Delete
-          parameters:
-            region: us-east-1
-        ingress:
-          enabled: true
-          ingressClassName: nginx
-          annotations:
-            ingress.home.arpa/type: internal
-          host:
-            name: s3-rook.${SECRET_DOMAIN_NAME}
-            path: /
+    # cephObjectStores:
+    #   - name: ceph-objectstore
+    #     spec:
+    #       metadataPool:
+    #         failureDomain: host
+    #         replicated:
+    #           size: 3
+    #       dataPool:
+    #         failureDomain: host
+    #         erasureCoded:
+    #           dataChunks: 2
+    #           codingChunks: 1
+    #       preservePoolsOnDelete: true
+    #       gateway:
+    #         port: 80
+    #         resources:
+    #           requests:
+    #             cpu: 100m
+    #             memory: 128M
+    #           limits:
+    #             memory: 2Gi
+    #         instances: 1
+    #       healthCheck:
+    #         bucket:
+    #           interval: 60s
+    #     storageClass:
+    #       enabled: true
+    #       name: ceph-bucket
+    #       reclaimPolicy: Delete
+    #       parameters:
+    #         region: us-east-1
+    #     ingress:
+    #       enabled: true
+    #       ingressClassName: nginx
+    #       annotations:
+    #         ingress.home.arpa/type: internal
+    #       host:
+    #         name: s3-rook.${SECRET_DOMAIN_NAME}
+    #         path: /
