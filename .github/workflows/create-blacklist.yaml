@@ -23,6 +23,7 @@ jobs:
         run: |
           HOSTS_FILE="/tmp/hosts.blacklist"
           destination="hosts.blacklist"
+          destination_adguard="hosts-adguard.blacklist"
           HOSTS_FILES="$HOSTS_FILE.d"
 
           mkdir -p "${HOSTS_FILES}"
@@ -84,14 +85,15 @@ jobs:
           -e '/^.com$/d' \
           -e '/^localhost$/d' \
           -e '/^MalvertisinglistbyDisconnect$/d' \
-          -e '/^$/d' \
-          -e 's/^/0.0.0.0 /g' | \
+          -e '/^$/d' | \
           awk '!a[$0]++' | sort -u > "${HOSTS_FILE}"
+
+          cat "${HOSTS_FILE}" | sed -e 's/^/0.0.0.0 /g' > "${destination}"
+          cat "${HOSTS_FILE}" | sed -e 's/^/||/g' > "${destination_adguard}"
 
           rm -rf "${HOSTS_FILES}"
 
-          mv "${HOSTS_FILE}" "${destination}"
-          ls -l ${destination}
+          ls -l ${destination} ${destination_adguard}
 
       - name: Upload blacklist
         uses: svenstaro/upload-release-action@04733e069f2d7f7f0b4aebc4fbdbce8613b03ccd # v2
@@ -103,3 +105,14 @@ jobs:
           tag: pi-hole
           overwrite: true
           body: "Current blacklisted sites"
+
+      - name: Upload adguard blacklist
+        uses: svenstaro/upload-release-action@04733e069f2d7f7f0b4aebc4fbdbce8613b03ccd # v2
+        with:
+          release_name: "AdGuard Blacklist"
+          repo_token: ${{ steps.app-token.outputs.token }}
+          file: hosts-adguard.blacklist
+          asset_name: hosts-adguard.blacklist
+          tag: adguard
+          overwrite: true
+          body: "Current AdGuard blacklisted sites"
