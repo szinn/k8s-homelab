@@ -41,16 +41,6 @@ spec:
       cephVersion:
         image: quay.io/ceph/ceph:v18.2.2@sha256:257b3f5140c11b51fd710ffdad6213ed53d74146f464a51717262d156daef553
 
-      mgr:
-        modules:
-          - name: pg_autoscaler
-            enabled: true
-
-      network:
-        provider: host
-        connections:
-          requireMsgr2: true
-
       resources:
         mgr:
           requests:
