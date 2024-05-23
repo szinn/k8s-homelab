@@ -6,4 +6,3 @@ metadata:
     volsync.backube/privileged-movers: "true"
   labels:
     kustomize.toolkit.fluxcd.io/prune: disabled
-    goldilocks.fairwinds.com/enabled: "true"
