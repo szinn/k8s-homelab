@@ -41,7 +41,8 @@
         "ghcr.io/cloudnative-pg/postgresql",
         "ghcr.io/siderolabs/installer",
         "ghcr.io/spegel-org/helm-charts/spegel",
-        "ghcr.io/fluxcd/flux-manifests"
+        "ghcr.io/fluxcd/flux-manifests",
+        "ghcr.io/siderolabs/kubelet"
       ],
       "pinDigests": false
     },
