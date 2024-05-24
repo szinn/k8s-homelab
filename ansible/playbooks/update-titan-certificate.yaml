@@ -3,20 +3,20 @@
   remote_user: root
   become: yes
   tasks:
-    - name: Create directory
+    - name: Create directory (gatus)
       file:
         path: /persist/var/lib/gatus
         state: directory
         owner: gatus
         group: gatus
-    - name: Copy certificate
+    - name: Copy certificate (gatus)
       copy:
         src: ../files/certificates/certificate.crt
         dest: /persist/var/lib/gatus/certificate.crt
         owner: gatus
         group: gatus
         mode: u+rw,g-wx,o-wx
-    - name: Copy certificate key
+    - name: Copy certificate key (gatus)
       copy:
         src: ../files/certificates/certificate.key
         dest: /persist/var/lib/gatus/certificate.key

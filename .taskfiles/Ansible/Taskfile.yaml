@@ -26,10 +26,10 @@ tasks:
   update-certificates:
     desc: Update machines with certificates
     cmds:
-      - ansible-playbook "{{.ANSIBLE_DIR}}/playbooks/update-gatus-certificate.yaml"
       - ansible-playbook "{{.ANSIBLE_DIR}}/playbooks/update-octopi-certificate.yaml"
       - ansible-playbook "{{.ANSIBLE_DIR}}/playbooks/update-pikvm-certificate.yaml"
       - ansible-playbook "{{.ANSIBLE_DIR}}/playbooks/update-proxmox-certificate.yaml"
+      - ansible-playbook "{{.ANSIBLE_DIR}}/playbooks/update-titan-certificate.yaml"
       - ansible-playbook "{{.ANSIBLE_DIR}}/playbooks/update-unifi-certificate.yaml"
 
   update-pikvm:
