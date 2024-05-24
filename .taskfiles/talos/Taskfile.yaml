@@ -92,7 +92,7 @@ tasks:
         cluster: Cluster to run command against (required)
     cmd: until talosctl --talosconfig {{.KUBERNETES_DIR}}/{{.cluster}}/talosconfig --context {{.cluster}} --nodes {{.controller}} bootstrap; do sleep 10; done
     env:
-      TALOSCONFIG: "{{.KUBERNETES_DIR}}/{{.cluster}}/talosconfig" 
+      TALOSCONFIG: "{{.KUBERNETES_DIR}}/{{.cluster}}/talosconfig"
     vars:
       controller:
         sh: talosctl --talosconfig {{.KUBERNETES_DIR}}/{{.cluster}}/talosconfig --context {{.cluster}} config info --output json | jq --raw-output '.endpoints[0]'

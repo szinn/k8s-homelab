@@ -31,7 +31,6 @@ spec:
     keepHistory: false
   values:
     csi:
-
       enableLiveness: true
       serviceMonitor:
         enabled: true

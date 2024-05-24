@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name:  nginx-internal
+  name: nginx-internal
 spec:
   interval: 15m
   chart:

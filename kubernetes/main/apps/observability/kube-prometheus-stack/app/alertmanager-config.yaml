@@ -13,7 +13,14 @@ spec:
     repeatInterval: 5m
     routes:
       - receiver: "null"
-        matchers: [{name: alertname, value: InfoInhibitor|Watchdog|CPUThrottlingHigh, matchType: =~}]
+        matchers:
+          [
+            {
+              name: alertname,
+              value: InfoInhibitor|Watchdog|CPUThrottlingHigh,
+              matchType: =~
+            }
+          ]
       - receiver: discord
         matchers: [{name: severity, value: critical|warning, matchType: =~}]
         continue: true
@@ -61,12 +68,12 @@ spec:
             {{- end }}
   inhibitRules:
     - sourceMatch: [{name: severity, value: critical, matchType: =}]
-      targetMatch: [{ name: severity, value: warning|info, matchType: =~ }]
+      targetMatch: [{name: severity, value: warning|info, matchType: =~}]
       equal: ["namespace", "alertname"]
     - sourceMatch: [{name: severity, value: warning, matchType: =}]
-      targetMatch: [{ name: severity, value: info, matchType: = }]
+      targetMatch: [{name: severity, value: info, matchType: =}]
       equal: ["namespace", "alertname"]
     - sourceMatch: [{name: alertname, value: InfoInhibitor, matchType: =}]
-      targetMatch: [{ name: severity, value: info, matchType: = }]
+      targetMatch: [{name: severity, value: info, matchType: =}]
       equal: ["namespace"]
-    - targetMatch: [{ name: alertname, value: InfoInhibitor, matchType: = }]
+    - targetMatch: [{name: alertname, value: InfoInhibitor, matchType: =}]

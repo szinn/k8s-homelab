@@ -15,10 +15,10 @@ spec:
       securityContext:
         privileged: true
       # volumeMounts:
-        # - mountPath: /mnt/host_var
-        #   name: host-var
-        # - mountPath: /config
-        #   name: config
+      # - mountPath: /mnt/host_var
+      #   name: host-var
+      # - mountPath: /config
+      #   name: config
       resources:
         requests:
           cpu: 100m
@@ -27,9 +27,9 @@ spec:
           cpu: 2000m
           memory: 10Gi
   # volumes:
-    # - name: host-var
-    #   hostPath:
-    #     path: /var
-    # - name: config
-    #   persistentVolumeClaim:
-    #     claimName: frigate-config
+  # - name: host-var
+  #   hostPath:
+  #     path: /var
+  # - name: config
+  #   persistentVolumeClaim:
+  #     claimName: frigate-config

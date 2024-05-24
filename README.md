@@ -48,7 +48,7 @@ At the bottom of this page, is the bringup process that I follow for this cluste
 | PiKVM                                              | 1     |              |                       |      |                      |
 | Intel NUC11PAHi7 (worker nodes)                    | 3     | 500GB SSD    | 1TB NVMe              | 64GB | Talos                |
 | Beelink MiniPC, Celeron J4125 (controlplane nodes) | 3     | 256GB SSD    |                       | 8GB  | Talos                |
-| Synology 1019+ (NFS server)                        | 1     |              | 5x12TB SATA           |      |                      |  
+| Synology 1019+ (NFS server)                        | 1     |              | 5x12TB SATA           |      |                      |
 | UniFi UDM SE                                       | 1     |              |                       |      |                      |
 | USW-Pro-24-PoE                                     | 1     |              |                       |      |                      |
 | USW-Aggregation                                    |       |              |                       |      |                      |

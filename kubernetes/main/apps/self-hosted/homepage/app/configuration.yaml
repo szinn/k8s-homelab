@@ -239,7 +239,7 @@ data:
               url: https://qbittorrent.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
               username: {{HOMEPAGE_VAR_QBITTORRENT_USERNAME}}
               password: {{HOMEPAGE_VAR_QBITTORRENT_PASSWORD}}
- 
+
     - Calendar:
         - Agenda:
             widget:

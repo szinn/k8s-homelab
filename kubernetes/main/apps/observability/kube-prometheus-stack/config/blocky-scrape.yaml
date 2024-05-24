@@ -6,7 +6,7 @@ metadata:
   name: blocky-scrape
 spec:
   staticConfigs:
-    - targets: ['titan.${SECRET_TECH_DOMAIN_NAME}:4000']
+    - targets: ["titan.${SECRET_TECH_DOMAIN_NAME}:4000"]
   metricsPath: /metrics
   scheme: HTTP
   relabelings:
