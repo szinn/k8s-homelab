@@ -22,32 +22,9 @@ spec:
     remediation:
       retries: 3
   values:
-    serviceAccount:
-      create: false
-      name: dragonfly-operator-controller-manager
     controllers:
       dragonfly-operator:
         containers:
-          rbac-proxy:
-            image:
-              repository: gcr.io/kubebuilder/kube-rbac-proxy
-              tag: v0.16.0@sha256:771a9a173e033a3ad8b46f5c00a7036eaa88c8d8d1fbd89217325168998113ea
-            args:
-              - "--secure-listen-address=0.0.0.0:8443"
-              - "--upstream=http://127.0.0.1:8080/"
-              - "--logtostderr=true"
-              - "--v=0"
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: {drop: ["ALL"]}
-            resources:
-              requests:
-                cpu: 5m
-                memory: 64Mi
-              limits:
-                cpu: 500m
-                memory: 128Mi
           app:
             image:
               repository: docker.dragonflydb.io/dragonflydb/operator
@@ -55,7 +32,6 @@ spec:
             args:
               - "--health-probe-bind-address=:8081"
               - "--metrics-bind-address=127.0.0.1:8080"
-              - "--leader-elect"
             command:
               - "/manager"
             securityContext:
@@ -110,3 +86,15 @@ spec:
         ports:
           http:
             port: *port
+    serviceAccount:
+      create: true
+      name: *app
+    serviceMonitor:
+      app:
+        serviceName: *app
+        endpoints:
+          - port: metrics
+            scheme: http
+            path: /metrics
+            interval: 1m
+            scrapeTimeout: 10s
