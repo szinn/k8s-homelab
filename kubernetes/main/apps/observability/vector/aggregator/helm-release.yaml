@@ -80,6 +80,9 @@ spec:
             enabled: true
             port: 6002
             protocol: UDP
+          titan:
+            enabled: true
+            port: 6003
     persistence:
       config:
         enabled: true

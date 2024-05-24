@@ -25,6 +25,10 @@ sources:
     decoding:
       codec: json
     host_key: __host
+  titan_logs:
+    address: 0.0.0.0:6003
+    type: vector
+    version: "2"
 # Transformas
 transforms:
   kubernetes_remap:
@@ -116,3 +120,17 @@ sinks:
       talos_service: '{{ "talos-service" }}'
       cluster: "${CONFIG_CLUSTER_NAME}:talos"
       namespace: "talos:service"
+  titan:
+    type: loki
+    inputs:
+      - titan_logs
+    endpoint: http://loki-gateway.observability.svc.cluster.local
+    encoding:
+      codec: json
+    batch:
+      max_bytes: 524288
+    out_of_order_action: accept
+    remove_label_fields: true
+    remove_timestamp: true
+    labels:
+      node: "titan"
