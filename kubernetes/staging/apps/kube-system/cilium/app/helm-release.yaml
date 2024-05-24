@@ -37,7 +37,7 @@ spec:
 
   values:
     hubble:
-      enabled: true
+      enabled: false
       metrics:
         enabled:
           - dns:query;ignoreAAAA
@@ -48,16 +48,16 @@ spec:
           - icmp
           - http
       relay:
-        enabled: true
+        enabled: false
         rollOutPods: true
         prometheus:
           serviceMonitor:
             enabled: true
       ui:
-        enabled: true
+        enabled: false
         rollOutPods: true
         ingress:
-          enabled: true
+          enabled: false
           className: nginx
           annotations:
             kubernetes.io/ingress.class: nginx

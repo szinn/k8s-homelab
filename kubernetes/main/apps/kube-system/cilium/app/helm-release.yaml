@@ -38,7 +38,7 @@ spec:
 
   values:
     hubble:
-      enabled: true
+      enabled: false
       metrics:
         enabled:
           - dns:query;ignoreAAAA
@@ -55,13 +55,13 @@ spec:
           annotations:
             grafana_folder: Cilium
       relay:
-        enabled: true
+        enabled: false
         rollOutPods: true
         prometheus:
           serviceMonitor:
             enabled: true
       ui:
-        enabled: true
+        enabled: false
         rollOutPods: true
         ingress:
           enabled: true
