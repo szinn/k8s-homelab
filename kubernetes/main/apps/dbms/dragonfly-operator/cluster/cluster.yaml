@@ -31,3 +31,10 @@ spec:
     annotations:
       io.cilium/lb-ipam-ips: ${CONFIG_MAIN_SVC_REDIS_ADDR}
       external-dns.alpha.kubernetes.io/hostname: redis.${SECRET_DOMAIN_NAME}
+  topologySpreadConstraints:
+    - maxSkew: 1
+      topologyKey: "kubernetes.io/hostname"
+      whenUnsatisfiable: "DoNotSchedule"
+      labelSelector:
+        matchLabels:
+          app.kubernetes.io/part-of: dragonfly
