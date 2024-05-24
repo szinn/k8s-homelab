@@ -1,0 +1,21 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: observability-prometheus-operator-crds
+  namespace: flux-system
+spec:
+  targetNamespace: observability
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: prometheus-operator-crds
+  path: ./kubernetes/main/apps/observability/prometheus-operator-crds/app
+  sourceRef:
+    kind: GitRepository
+    name: homelab-kubernetes
+  prune: false # never should be deleted
+  wait: false
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m

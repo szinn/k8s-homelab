@@ -16,20 +16,25 @@ spec:
         name: prometheus-community-charts
         namespace: flux-system
   install:
-    crds: CreateReplace
+    crds: Skip
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
-    crds: CreateReplace
+    crds: Skip
     remediation:
       retries: 3
+  dependsOn:
+    - name: prometheus-operator-crds
+      namespace: observability
   valuesFrom:
     - kind: ConfigMap
       name: kube-state-metrics-config
       valuesKey: kube-state-metrics-config.yaml
   values:
     nameOverride: *app
+    crds:
+      enabled: false
     cleanPrometheusOperatorObjectNames: true
 
     alertmanager:
