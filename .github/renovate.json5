@@ -13,7 +13,9 @@
     "github>szinn/k8s-homelab//.github/renovate/packageRules.json5"
   ],
   "ignorePaths": [
+    "kubernetes/main/apps/flux-system/add-ons/monitoring/prometheus-rules.yaml",
     "kubernetes/main/apps/media/recyclarr/app/config/recyclarr.yaml",
+    "kubernetes/staging/apps/rook-ceph/rook-ceph/add-ons/rules.yaml",
     "kubernetes/staging/cluster/repositories/**",
     "**/archive/**",
     "**/*.sops.*"
