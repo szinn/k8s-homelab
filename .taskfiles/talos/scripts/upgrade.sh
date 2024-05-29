@@ -21,11 +21,11 @@ fi
 
 echo "Upgrade required"
 
-echo "Waiting for all jobs to complete before upgrading Talos ..."
-until kubectl --context "$CLUSTER" wait --timeout=5m --for=condition=Complete jobs --all --all-namespaces; do
-  echo "Waiting for jobs to complete ..."
-  sleep 10
-done
+# echo "Waiting for all jobs to complete before upgrading Talos ..."
+# until kubectl --context "$CLUSTER" wait --timeout=5m --for=condition=Complete jobs --all --all-namespaces; do
+#   echo "Waiting for jobs to complete ..."
+#   sleep 10
+# done
 
 if [ "$ROLLOUT" != "true" ]; then
   echo "Suspending Flux Kustomizations ..."

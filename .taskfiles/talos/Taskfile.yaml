@@ -162,18 +162,18 @@ tasks:
         cluster: Cluster to run command against (required)
     cmds:
       - flux --context {{.cluster}} suspend kustomization --all
-      - task: :postgres:maintenance-{{.cluster}}
-        vars:
-          command: set
+      # - task: :postgres:maintenance-{{.cluster}}
+      #   vars:
+      #     command: set
       - for: {var: nodes}
         task: upgrade
         vars:
           cluster: "{{.cluster}}"
           node: "{{.ITEM}}"
           rollout: "true"
-      - task: :postgres:maintenance-{{.cluster}}
-        vars:
-          command: unset
+      # - task: :postgres:maintenance-{{.cluster}}
+      #   vars:
+      #     command: unset
       - flux --context {{.cluster}} resume kustomization --all
       - task: :kubernetes:delete-failed-pods
         vars:
