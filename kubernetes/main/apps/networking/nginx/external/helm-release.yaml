@@ -56,6 +56,7 @@ spec:
         client-header-timeout: 120
         enable-brotli: "true"
         enable-ocsp: "true"
+        force-ssl-redirect: "true"
         enable-real-ip: "true"
         hide-headers: Server,X-Powered-By
         hsts-max-age: 31449600
