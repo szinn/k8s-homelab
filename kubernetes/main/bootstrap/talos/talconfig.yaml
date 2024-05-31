@@ -103,6 +103,13 @@ nodes:
         dhcp: true
 
 controlPlane:
+  schematic:
+    customization:
+      systemExtensions:
+        officialExtensions:
+          - siderolabs/intel-ucode
+          - siderolabs/i915-ucode
+
   patches:
     # Custom Talos installer patch
     - &customTalosPatch |-
