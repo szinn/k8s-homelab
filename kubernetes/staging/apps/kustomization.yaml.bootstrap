@@ -10,6 +10,6 @@ resources:
   - security
   - system
   # Step 2
-  - rook-ceph
+  # - rook-ceph
   # Step 3
-  - dbms
+  # - dbms

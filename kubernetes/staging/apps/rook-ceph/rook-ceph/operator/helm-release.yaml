@@ -38,7 +38,7 @@ spec:
       serviceMonitor:
         enabled: false
     monitoring:
-      enabled: false
+      enabled: true
     resources:
       requests:
         cpu: 109m
