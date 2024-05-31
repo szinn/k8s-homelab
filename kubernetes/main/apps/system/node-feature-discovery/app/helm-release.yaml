@@ -29,18 +29,10 @@ spec:
     keepHistory: false
   values:
     worker:
-      resources:
-        requests:
-          cpu: 15m
-          memory: 64M
-        limits:
-          memory: 64M
-      annotations:
-        configmap.reloader.stakater.com/reload: "node-feature-discovery-worker-conf"
       config:
         core:
-          sources: ["custom", "pci", "usb"]
-        sources:
-          usb:
-            deviceClassWhitelist: ["02", "03", "0e", "ef", "fe", "ff"]
-            deviceLabelFields: ["class", "vendor", "device"]
+          sources: ["pci", "system", "usb"]
+      tolerations:
+        - key: node-role.kubernetes.io/control-plane
+          operator: Exists
+          effect: NoSchedule
