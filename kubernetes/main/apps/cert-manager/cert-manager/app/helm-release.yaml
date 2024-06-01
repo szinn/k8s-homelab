@@ -17,7 +17,6 @@ spec:
       interval: 15m
   maxHistory: 3
   install:
-    createNamespace: false
     crds: CreateReplace
     remediation:
       retries: 3

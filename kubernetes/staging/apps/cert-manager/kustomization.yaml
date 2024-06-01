@@ -5,3 +5,4 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - cert-manager/install.yaml
+  - certificates/install.yaml

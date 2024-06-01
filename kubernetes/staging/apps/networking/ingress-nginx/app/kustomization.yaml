@@ -5,4 +5,3 @@ kind: Kustomization
 namespace: networking
 resources:
   - helm-release.yaml
-  - wildcard-certificate.yaml

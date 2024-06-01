@@ -9,7 +9,7 @@ spec:
   targetNamespace: cert-manager
   commonMetadata:
     labels:
-      app.kubernetes.io/name: &app cert-manager
+      app.kubernetes.io/name: cert-manager
   path: ./kubernetes/main/apps/cert-manager/cert-manager/app
   sourceRef:
     kind: GitRepository
@@ -30,7 +30,7 @@ spec:
   targetNamespace: cert-manager
   commonMetadata:
     labels:
-      app.kubernetes.io/name: &app cert-manager
+      app.kubernetes.io/name: cert-manager
   path: ./kubernetes/main/apps/cert-manager/cert-manager/issuers
   sourceRef:
     kind: GitRepository
