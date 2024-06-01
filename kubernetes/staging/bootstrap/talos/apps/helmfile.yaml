@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/helmfile.json
+# yaml-language-server: $schema=https://json.schemastore.org/helmfile
 helmDefaults:
   wait: true
   waitForJobs: true
