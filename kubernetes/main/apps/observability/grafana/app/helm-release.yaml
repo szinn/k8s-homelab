@@ -556,24 +556,29 @@ spec:
       #     url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/store.json
       #     datasource: Prometheus
       unifi:
-        unifi-client-insights:
-          # renovate: depName="UniFi-Poller: Client Insights - Prometheus"
-          gnetId: 11315
-          revision: 9
-          datasource: Prometheus
+        # unifi-client-dpi:
+        #   # renovate: depName="UniFi-Poller: Client DPI - Prometheus"
+        #   gnetId: 11310
+        #   revision: 5
+        #   datasource: Prometheus
         unifi-network-sites:
           # renovate: depName="UniFi-Poller: Network Sites - Prometheus"
           gnetId: 11311
           revision: 5
+          datasource: Prometheus
+        unifi-usw-insights:
+          # renovate: depName="UniFi-Poller: USW Insights - Prometheus"
+          gnetId: 11312
+          revision: 9
           datasource: Prometheus
         unifi-uap-insights:
           # renovate: depName="UniFi-Poller: UAP Insights - Prometheus"
           gnetId: 11314
           revision: 10
           datasource: Prometheus
-        unifi-usw-insights:
-          # renovate: depName="UniFi-Poller: USW Insights - Prometheus"
-          gnetId: 11312
+        unifi-client-insights:
+          # renovate: depName="UniFi-Poller: Client Insights - Prometheus"
+          gnetId: 11315
           revision: 9
           datasource: Prometheus
       victoriametrics:
