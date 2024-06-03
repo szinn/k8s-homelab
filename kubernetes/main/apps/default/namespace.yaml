@@ -2,8 +2,9 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: cert-manager
+  name: default
   annotations:
+    volsync.backube/privileged-movers: "true"
     kustomize.toolkit.fluxcd.io/prune: disabled
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/notification.toolkit.fluxcd.io/provider_v1beta3.json
@@ -11,7 +12,7 @@ apiVersion: notification.toolkit.fluxcd.io/v1beta3
 kind: Provider
 metadata:
   name: alert-manager
-  namespace: cert-manager
+  namespace: default
 spec:
   type: alertmanager
   address: http://alertmanager-operated.observability.svc.cluster.local:9093/api/v2/alerts/
@@ -21,7 +22,7 @@ apiVersion: notification.toolkit.fluxcd.io/v1beta3
 kind: Alert
 metadata:
   name: alert-manager
-  namespace: cert-manager
+  namespace: default
 spec:
   providerRef:
     name: alert-manager
