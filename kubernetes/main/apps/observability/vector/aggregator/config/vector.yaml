@@ -75,8 +75,12 @@ sinks:
     endpoint: http://loki-gateway.observability.svc.cluster.local
     encoding:
       codec: json
+    buffer:
+      max_events: 5000
     batch:
-      max_bytes: 524288
+      max_bytes: 1024000
+      max_events: 50000
+      timeout_secs: 5
     out_of_order_action: accept
     remove_label_fields: true
     remove_timestamp: true

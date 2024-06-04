@@ -59,6 +59,12 @@ spec:
           http_listen_port: 3100
           grpc_listen_port: 9095
         limits_config:
+          ingestion_burst_size_mb: 128
+          ingestion_rate_mb: 64
+          per_stream_rate_limit: 64M
+          per_stream_rate_limit_burst: 128M
+          reject_old_samples: true
+          reject_old_samples_max_age: 168h
           retention_period: 30d
         frontend:
           query_stats_enabled: true
