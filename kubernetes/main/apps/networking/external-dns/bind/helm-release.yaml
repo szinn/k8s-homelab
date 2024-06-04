@@ -53,6 +53,9 @@ spec:
           secretKeyRef:
             name: *secret
             key: externaldns-secret
+    extraArgs:
+      - --ignore-ingress-tls-spec
+      - --ingress-class=internal
     policy: sync
     sources: ["ingress", "service"]
     txtOwnerId: default
