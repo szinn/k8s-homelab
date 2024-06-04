@@ -1,18 +1,43 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: networking-external-dns-bind
+  name: networking-external-dns-unifi
   namespace: flux-system
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: "./kubernetes/staging/apps/networking/external-dns/bind"
+  targetNamespace: networking
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: &app external-dns-unifi
+  path: ./kubernetes/staging/apps/networking/external-dns/unifi
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes
+  dependsOn:
+    - name: security-external-secrets-stores
   prune: true
-  wait: true
-  interval: 10m
+  wait: false
+  interval: 30m
   retryInterval: 1m
-  timeout: 3m
+  timeout: 5m
+# ---
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: networking-external-dns-bind
+#   namespace: flux-system
+#   labels:
+#     substitution.flux.home.arpa/enabled: "true"
+# spec:
+#   path: "./kubernetes/staging/apps/networking/external-dns/bind"
+#   sourceRef:
+#     kind: GitRepository
+#     name: homelab-kubernetes
+#   prune: true
+#   wait: true
+#   interval: 10m
+#   retryInterval: 1m
+#   timeout: 3m
