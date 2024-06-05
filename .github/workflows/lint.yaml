@@ -18,12 +18,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4
         with:
           fetch-depth: 0
 
       - name: Generate Token
-        uses: actions/create-github-app-token@v1
+        uses: actions/create-github-app-token@c8f55efbd427e7465d6da1106e7979bc8aaee856 # v1
         if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
         id: app-token
         with:
@@ -31,7 +31,7 @@ jobs:
           private-key: ${{ secrets.BOT_APP_PRIVATE_KEY }}
 
       - name: MegaLinter
-        uses: oxsecurity/megalinter/flavors/terraform@v7.12.0
+        uses: oxsecurity/megalinter/flavors/terraform@5199c6377b4cb7faff749a1971636f3343db9fe6 # v7.12.0
         env:
           GITHUB_TOKEN: "${{ steps.app-token.outputs.token }}"
           PRINT_ALPACA: false
