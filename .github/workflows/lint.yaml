@@ -1,0 +1,68 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: Lint
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.ref }}-${{ github.workflow }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Generate Token
+        uses: actions/create-github-app-token@v1
+        if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+        id: app-token
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_APP_PRIVATE_KEY }}
+
+      - name: MegaLinter
+        uses: oxsecurity/megalinter/flavors/terraform@v7.12.0
+        env:
+          GITHUB_TOKEN: "${{ steps.app-token.outputs.token }}"
+          PRINT_ALPACA: false
+          VALIDATE_ALL_CODEBASE: ${{ github.event_name == 'workflow_dispatch' }}
+          ENABLE_LINTERS: |-
+            ${{
+              join(
+                fromJSON('
+                  [
+                    "ACTION_ACTIONLINT",
+                    "ANSIBLE_ANSIBLE_LINT",
+                    "COPYPASTE_JSCPD",
+                    "MARKDOWN_MARKDOWNLINT",
+                    "PYTHON_FLAKE8",
+                    "PYTHON_PYLINT",
+                    "REPOSITORY_GIT_DIFF",
+                    "REPOSITORY_SECRETLINT",
+                    "TERRAFORM_TERRAFORM_FMT",
+                    "YAML_PRETTIER",
+                    "YAML_YAMLLINT"
+                  ]
+                '),
+                ','
+              )
+            }}
+          ACTION_ACTIONLINT_CONFIG_FILE: .ci/actionlint/actionlint.yml
+          ANSIBLE_ANSIBLE_LINT_ARGUMENTS: "-c .ci/ansible-lint/.ansible-lint ansible"
+          COPYPASTE_JSCPD_CONFIG_FILE: .ci/jscpd/jscpd.json
+          MARKDOWN_MARKDOWNLINT_CONFIG_FILE: .ci/markdownlint/markdownlint.config.yaml
+          MARKDOWN_MARKDOWNLINT_RULES_PATH: .ci/markdownlint/
+          PYTHON_FLAKE8_CONFIG_FILE: .ci/flake8/.flake8
+          YAML_YAMLLINT_CONFIG_FILE: .ci/yamllint/.yamllint.yaml
+          YAML_PRETTIER_CONFIG_FILE: .ci/prettier/.prettierrc.yaml
+          YAML_PRETTIER_ARGUMENTS: --ignore-path .ci/prettier/.prettierignore

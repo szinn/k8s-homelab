@@ -62,7 +62,7 @@ jobs:
                   --json number \
                   | jq --raw-output '.[0].number' \
           )
-          echo "issue-number=${issue_number}" >> $GITHUB_OUTPUT
+          echo "issue-number=${issue_number}" >> "${GITHUB_OUTPUT}"
           echo "${issue_number}"
 
       - name: Create or Update Issue

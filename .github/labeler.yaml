@@ -7,7 +7,7 @@ area/hack:
       - any-glob-to-any-file: "hack/**/*"
 area/infrastructure:
   - changed-files:
-      - any-glob-to-any-file: "infrastructure/**/*"
+      - any-glob-to-any-file: "terraform/**/*"
 area/taskfile:
   - changed-files:
       - any-glob-to-any-file:

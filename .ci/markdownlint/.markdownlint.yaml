@@ -1,6 +1,5 @@
 ---
 default: true
-"no-inline-html": {"allowed_elements": ["h1", "div", "img"]}
 
 # MD013/line-length - Line length
 MD013:
@@ -16,9 +15,13 @@ MD013:
   tables: true
   # Include headings
   headings: true
-  # Include headings
-  headers: true
   # Strict length checking
   strict: false
   # Stern length checking
   stern: false
+
+MD033:
+  allowed_elements:
+    - h1
+    - div
+    - img

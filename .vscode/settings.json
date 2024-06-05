@@ -33,12 +33,17 @@
     "setup": "import",
     "config": "environment"
   },
-  "prettier.configPath": ".github/linters/prettier/.prettierrc.yaml",
-  "prettier.ignorePath": ".prettierignore",
+  "prettier.configPath": ".ci/prettier/.prettierrc.yaml",
+  "prettier.ignorePath": ".ci/prettier/.prettierignore",
   "yaml.schemas": {
     "Kubernetes": "kubernetes/*.yaml",
     "https://json.schemastore.org/kustomization.json": "file:///Users/scotte/Development/k8s-homelab/kubernetes/apps/tekton/tasks/kustomization.yaml"
   },
   "yaml.customTags": ["!env_var"],
-  "explorer.autoReveal": false
+  "explorer.autoReveal": false,
+  "markdownlint.config": {
+    "MD033": false,
+    "MD041": false,    
+    "MD045": false
+  }
 }

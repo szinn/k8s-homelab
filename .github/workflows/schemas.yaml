@@ -70,10 +70,10 @@ jobs:
           KUBECONFIG: "${{ steps.kubeconfig.outputs.filePath }}"
         shell: bash
         run: |
-          curl -fsSL -o $GITHUB_WORKSPACE/crd-extractor.sh \
+          curl -fsSL -o "${GITHUB_WORKSPACE}/crd-extractor.sh" \
               https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/Utilities/crd-extractor.sh
-          chmod +x $GITHUB_WORKSPACE/crd-extractor.sh
-          bash $GITHUB_WORKSPACE/crd-extractor.sh
+          chmod +x "${GITHUB_WORKSPACE}/crd-extractor.sh"
+          bash "${GITHUB_WORKSPACE}/crd-extractor.sh"
 
       - name: Login to GHCR
         uses: docker/login-action@0d4c9c5ea7693da7b068278f7b52bda2a190a446 # v3
@@ -84,7 +84,7 @@ jobs:
 
       - name: Publish schemas as OCI
         run: |
-          flux push artifact $OCI_REPO:$(git rev-parse --short HEAD) \
+          flux push artifact "${OCI_REPO}:$(git rev-parse --short HEAD)" \
               --path="/home/runner/.datree/crdSchemas" \
               --source="${{ github.repositoryUrl }}" \
               --revision="main"
@@ -127,7 +127,7 @@ jobs:
       - name: Pull schemas as OCI
         run: |
           mkdir -p /home/runner/crdSchemas
-          flux pull artifact $OCI_REPO:$(git rev-parse --short HEAD) --output /home/runner/crdSchemas
+          flux pull artifact "${OCI_REPO}:$(git rev-parse --short HEAD)" --output /home/runner/crdSchemas
 
       - name: Write nginx-unprivileged Dockerfile
         run: |

@@ -13,7 +13,7 @@ tasks:
     cmds:
       - >-
         prettier
-        --config '.github/linters/prettier/.prettierrc.yaml'
+        --config '.ci/prettier/.prettierrc.yaml'
         --list-different
         --ignore-unknown
         --parser=markdown
@@ -25,7 +25,7 @@ tasks:
     cmds:
       - >-
         prettier
-        --config '.github/linters/prettier/.prettierrc.yaml'
+        --config '.ci/prettier/.prettierrc.yaml'
         --list-different
         --ignore-unknown
         --parser=yaml

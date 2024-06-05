@@ -1,5 +1,0 @@
-.vscode
-**/*.sops.*
-archive/
-**/.terraform/*
-infrastructure/talos/**/charts

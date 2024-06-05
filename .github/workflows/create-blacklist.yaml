@@ -24,15 +24,15 @@ jobs:
           HOSTS_FILE="/tmp/hosts.blacklist"
           destination="hosts.blacklist"
           destination_adguard="hosts-adguard.blacklist"
-          HOSTS_FILES="$HOSTS_FILE.d"
+          HOSTS_FILES="${HOSTS_FILE}.d"
 
           mkdir -p "${HOSTS_FILES}"
           download() {
-          echo "download($1)"
-          curl \
-              --location --max-redirs 3 \
-              --max-time 20 --retry 3 --retry-delay 0 --retry-max-time 60 \
-              "$1" > "$(mktemp "${HOSTS_FILES}"/XXXXXX)"
+            echo "download($1)"
+            curl \
+                --location --max-redirs 3 \
+                --max-time 20 --retry 3 --retry-delay 0 --retry-max-time 60 \
+                "$1" > "$(mktemp "${HOSTS_FILES}"/XXXXXX)"
           }
 
           # https://firebog.net/
@@ -88,8 +88,8 @@ jobs:
           -e '/^$/d' | \
           awk '!a[$0]++' | sort -u > "${HOSTS_FILE}"
 
-          cat "${HOSTS_FILE}" | sed -e 's/^/0.0.0.0 /g' > "${destination}"
-          cat "${HOSTS_FILE}" | sed -e 's/^/||/g' -e 's/$/^/g' > "${destination_adguard}"
+          sed -e 's/^/0.0.0.0 /g' <"${HOSTS_FILE}" >"${destination}"
+          sed -e 's/^/||/g' -e 's/$/^/g' <"${HOSTS_FILE}" >"${destination_adguard}"
 
           rm -rf "${HOSTS_FILES}"
 
