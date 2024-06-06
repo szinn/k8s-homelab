@@ -86,15 +86,13 @@ data:
         - KVM:
             icon: pikvm.png
             href: https://pikvm.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
-        - PiHole:
-            href: https://pihole.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}/admin
-            siteMonitor: https://pihole.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
-            icon: pi-hole.png
-            description: PiHole DNS
+        - AdGuard Home:
+            href: https://adguard.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
             widget:
-              type: pihole
-              url: https://pihole.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
-              key: {{HOMEPAGE_VAR_PIHOLE_TOKEN}}
+              type: adguard
+              url: https://adguard.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+              username: {{HOMEPAGE_VAR_ADGUARD_USERNAME}}
+              password: {{HOMEPAGE_VAR_ADGUARD_PASSWORD}}
         - Authentik:
             icon: authentik.png
             href: https://sso.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
@@ -161,6 +159,9 @@ data:
         - pgAdmin:
             href: https://pgadmin.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
             icon: pgadmin.png
+        - Staging Rook:
+            href: https://rook.test.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            icon: rook.png
 
     - Media:
         - Overseerr:
@@ -258,28 +259,6 @@ data:
                   service_name: Radarr-4k # service name for that widget
 
   bookmarks.yaml: |
-    # - Administration Links:
-    #     - Proxmox:
-    #         - icon: proxmox.png
-    #           href: https://ares.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:8006
-    #     - KVM:
-    #         - icon: pikvm.png
-    #           href: https://pikvm.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
-    #     - Authentik:
-    #         - icon: authentik.png
-    #           href: https://sso.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-    #     - Mailu:
-    #         - icon: mailu.png
-    #           href: https://{{HOMEPAGE_VAR_MAILU}}/admin
-    #     - DMARC Reports:
-    #         - icon: mailinabox.png
-    #           href: https://dmarc-report.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-    #     - Echo Server:
-    #         - icon: babybuddy.png
-    #           href: 'https://echo-server.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}'
-    #     - Who Am I:
-    #         - icon: ward.png
-    #           href: 'https://whoami.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}'
     - Communicate:
         - Discord:
             - icon: discord.png
@@ -290,9 +269,6 @@ data:
         - Google Calendar:
             - icon: google-calendar.png
               href: 'https://calendar.google.com'
-        - Outlook:
-            - icon: https://raw.githubusercontent.com/joryirving/home-ops/main/.docs/icons/outlook.png
-              href: 'https://outlook.com'
     - Media Links:
         - YouTube:
             - icon: youtube.png
@@ -303,27 +279,15 @@ data:
         - Spotify:
             - icon: spotify.png
               href: 'http://open.spotify.com'
-        - Youtube Music:
-            - icon: https://raw.githubusercontent.com/joryirving/home-ops/main/.docs/icons/youtube-music.png
-              href: 'https://music.youtube.com'
-    - Reading:
-        - Beyond:
-            - icon: https://raw.githubusercontent.com/joryirving/home-ops/main/.docs/icons/beyond.png
-              href: 'https://forums.beyond.ca/search.php?do=getnew&contenttype=vBForum_Post'
-        - Western Subaru Club:
-            - icon: https://raw.githubusercontent.com/joryirving/home-ops/main/.docs/icons/wsc.png
-              href: 'http://westernsubaruclub.com/smf/index.php?action=unread'
-        - Reddit:
-            - icon: reddit.png
-              href: 'https://reddit.com'
     - Git:
         - kubesearch:
             - icon: kubernetes-dashboard.png
               href: 'https://kubesearch.dev/'
         - home-ops:
             - icon: github.png
-              href: 'https://github.com/joryirving/home-ops'
+              href: 'https://github.com/szinn/k8s-homelab'
 
   docker.yaml: ""
+
   kubernetes.yaml: |
     mode: cluster
