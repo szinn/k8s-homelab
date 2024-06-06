@@ -27,28 +27,33 @@ spec:
     keepHistory: false
   values:
     fullnameOverride: nginx-external
+
     controller:
-      replicaCount: 1
+      replicaCount: 2
       updateStrategy:
         type: RollingUpdate
       allowSnippetAnnotations: true
       enableAnnotationValidations: true
+
       service:
         enabled: true
         type: LoadBalancer
         annotations:
           io.cilium/lb-ipam-ips: ${CONFIG_MAIN_SVC_INGRESS_EXTERNAL_ADDR}
           external-dns.alpha.kubernetes.io/hostname: "external.${SECRET_DOMAIN_NAME}"
+
       ingressClassResource:
         name: external
         default: false
         controllerValue: k8s.io/external
+
       admissionWebhooks:
         objectSelector:
           matchExpressions:
             - key: ingress-class
               operator: In
               values: ["external"]
+
       config:
         block-user-agents: "GPTBot,~*GPTBot*,ChatGPT-User,~*ChatGPT-User*,Google-Extended,~*Google-Extended*,CCBot,~*CCBot*,Omgilibot,~*Omgilibot*,FacebookBot,~*FacebookBot*" # taken from https://github.com/superseriousbusiness/gotosocial/blob/main/internal/web/robots.go
         client-body-buffer-size: 100M
@@ -75,6 +80,7 @@ spec:
         proxy-buffer-size: 16k
         ssl-protocols: TLSv1.3 TLSv1.2
         use-forwarded-headers: "true"
+
       metrics:
         enabled: true
         serviceMonitor:
@@ -82,8 +88,10 @@ spec:
           namespace: networking
           namespaceSelector:
             any: true
+
       extraArgs:
         default-ssl-certificate: "networking/wildcard-tls"
+
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
@@ -93,10 +101,12 @@ spec:
               app.kubernetes.io/name: ingress-nginx
               app.kubernetes.io/instance: nginx-external
               app.kubernetes.io/component: controller
+
       resources:
         requests:
           cpu: 100m
         limits:
           memory: 500Mi
+
     defaultBackend:
       enabled: false
