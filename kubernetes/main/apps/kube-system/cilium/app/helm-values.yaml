@@ -18,9 +18,6 @@ cluster:
   name: main
   id: 1
 
-containerRuntime:
-  integration: containerd
-
 enableRuntimeDeviceDetection: true
 
 endpointRoutes:
