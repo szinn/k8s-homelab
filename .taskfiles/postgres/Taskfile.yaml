@@ -214,7 +214,7 @@ tasks:
           NAMESPACE: media
           HELMRELEASE: immich
           KUSTOMIZATION: media-immich
-          SERVICES: deployment/immich-server deployment/immich-microservices
+          SERVICES: deployment/immich-server
       - cp {{.DBBACKUP}}/last/immich-latest.sql.gz /tmp
       - gzip -d /tmp/immich-latest.sql.gz
       - task: _restore_immich_db
@@ -224,7 +224,7 @@ tasks:
           NAMESPACE: media
           HELMRELEASE: immich
           KUSTOMIZATION: media-immich
-          SERVICES: deployment/immich-server deployment/immich-microservices
+          SERVICES: deployment/immich-server
           REPLICAS: 1
 
   _restore_immich_db:
