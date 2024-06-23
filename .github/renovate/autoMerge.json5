@@ -19,6 +19,7 @@
       "description": "Auto merge KPS minors and patches",
       "matchDatasources": ["docker", "helm"],
       "automerge": true,
+      "automergeType": "branch",
       "matchUpdateTypes": ["minor", "patch"],
       "matchDepNames": ["kube-prometheus-stack"],
       "ignoreTests": true
