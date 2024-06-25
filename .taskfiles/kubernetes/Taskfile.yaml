@@ -78,3 +78,13 @@ tasks:
         EOF
       - kubectl -n $NAMESPACE wait --for=condition=ready pod -l volume=$VOLUME
       - kubectl -n $NAMESPACE exec (kubectl get pod -n $NAMESPACE -l volume=$VOLUME -o name) -it debug -- /bin/sh
+
+  restart-loki:
+    desc: Restart loki deployment
+    cmds:
+      - kubectl --context main rollout restart deployment -n observability loki-gateway
+      - kubectl --context main rollout restart deployment -n observability loki-read
+      - kubectl --context main rollout restart statefulset -n observability loki-backend
+      - kubectl --context main rollout restart statefulset -n observability loki-chunks-cache
+      - kubectl --context main rollout restart statefulset -n observability loki-results-cache
+      - kubectl --context main rollout restart statefulset -n observability loki-write
