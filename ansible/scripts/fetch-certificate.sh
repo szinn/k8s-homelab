@@ -1,7 +1,7 @@
 #!/bin/zsh
 OUTPUT_DIR=$1
 TLS_CERT="tech-wildcard-tls"
-TLS_NAMESPACE="cert-manager"
+TLS_NAMESPACE="networking"
 
 if [[ ! -e $OUTPUT_DIR/certificate-tls.json ]]; then
   touch $OUTPUT_DIR/certificate-tls.json

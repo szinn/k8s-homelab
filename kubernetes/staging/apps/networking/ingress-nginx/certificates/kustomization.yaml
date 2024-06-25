@@ -3,5 +3,4 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - certificate.yaml
-  - push-secret.yaml
+  - wildcard-certificate.yaml
