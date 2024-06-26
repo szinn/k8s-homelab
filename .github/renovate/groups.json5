@@ -113,6 +113,18 @@
         "commitMessageTopic": "{{{groupName}}} group"
       },
       "separateMinorPatch": false
+    },
+    {
+      "description": "Dragonfly Operator",
+      "groupName": "DragonflyOperator",
+      "matchPackagePatterns": [
+        "docker.dragonflydb.io/dragonflydb/operator",
+        "dragonflydb/dragonfly-operator"
+      ],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
+      "separateMinorPatch": false
     }
   ]
 }
