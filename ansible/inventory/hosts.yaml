@@ -20,10 +20,10 @@ styx:
       ansible_host: styx.zinn.tech
       ansible_user: root
       executable: /bin/sh
-octo:
+octopi:
   hosts:
-    octo.zinn.tech:
-      ansible_host: octo.zinn.tech
+    octopi.zinn.tech:
+      ansible_host: octopi.zinn.tech
       ansible_user: pi
 titan:
   hosts:

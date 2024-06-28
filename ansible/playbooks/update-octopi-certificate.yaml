@@ -1,6 +1,6 @@
 ---
 - name: Update OctoPi Certificate
-  hosts: octo
+  hosts: octopi
   remote_user: pi
   become: yes
   tasks:
