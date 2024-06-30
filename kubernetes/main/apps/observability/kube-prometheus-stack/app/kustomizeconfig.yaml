@@ -1,3 +1,4 @@
+---
 nameReference:
   - kind: ConfigMap
     version: v1

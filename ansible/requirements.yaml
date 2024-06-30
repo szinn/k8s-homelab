@@ -1,3 +1,4 @@
+---
 # ansible-galaxy collection install -r requirements.yaml
 collections:
   - name: ansible.posix

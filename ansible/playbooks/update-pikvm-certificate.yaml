@@ -1,7 +1,7 @@
 - name: Update PiKVM Certificate
   hosts: pikvm
   remote_user: root
-  become: yes
+  become: true
   tasks:
     - name: read-write access
       shell:

@@ -1,7 +1,7 @@
 - name: Update Gatus Certificate
   hosts: titan
   remote_user: root
-  become: yes
+  become: true
   tasks:
     - name: Create directory (gatus)
       file:

@@ -475,7 +475,7 @@ spec:
             - name: DS_PROMETHEUS
               value: Prometheus
             - name: VAR_REPLICATIONDESTNAME
-              value: '.*-bootstrap'
+              value: ".*-bootstrap"
         zfs:
           # Ref: https://grafana.com/grafana/dashboards/7845
           gnetId: 7845

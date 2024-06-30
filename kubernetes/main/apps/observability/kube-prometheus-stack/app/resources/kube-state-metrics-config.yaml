@@ -1,3 +1,4 @@
+---
 kube-state-metrics:
   fullnameOverride: kube-state-metrics
   rbac:

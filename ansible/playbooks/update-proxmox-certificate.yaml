@@ -1,7 +1,7 @@
 - name: Update Proxmox Certificate
   hosts: "ares"
   remote_user: root
-  become: yes
+  become: true
   tasks:
     - name: Copy certificate
       copy:

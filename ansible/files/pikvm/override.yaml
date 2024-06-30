@@ -1,3 +1,4 @@
+---
 ####################################################################
 #                                                                  #
 # Override Pi-KVM system settings. This file uses the YAML syntax. #
@@ -13,17 +14,17 @@
 #########
 # Wrong #
 #########
-#kvmd:
+# kvmd:
 #    gpio:
 #        drivers: ...
-#kvmd:
+# kvmd:
 #    gpio:
 #        scheme: ...
 #
 ###########
 # Correct #
 ###########
-#kvmd:
+# kvmd:
 #    gpio:
 #        drivers: ...
 #        scheme: ...
@@ -31,7 +32,7 @@
 ###########
 # Example #
 ###########
-#vnc:
+# vnc:
 #    # See https://github.com/pikvm/pikvm/blob/master/pages/vnc.md
 #    keymap: /usr/share/kvmd/keymaps/ru # Set russian keymap
 #    auth:

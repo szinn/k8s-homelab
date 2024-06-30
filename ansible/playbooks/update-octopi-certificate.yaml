@@ -2,7 +2,7 @@
 - name: Update OctoPi Certificate
   hosts: octopi
   remote_user: pi
-  become: yes
+  become: true
   tasks:
     - name: Copy tls certificate
       copy:
