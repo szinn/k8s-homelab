@@ -12,7 +12,7 @@ spec:
       restartPolicy: OnFailure
       containers:
         - name: unlock-minio
-          image: docker.io/restic/restic:0.16.2@sha256:97da927874987a197b457738fdaf0069bdbf3d2cf4feaa4fb8f91baa1df237c8
+          image: docker.io/restic/restic:0.16.5@sha256:157243d77bc38be75a7b62b0c00453683251310eca414b9389ae3d49ea426c16
           args:
             - unlock
             - --remove-all
