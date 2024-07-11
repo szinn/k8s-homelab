@@ -49,13 +49,15 @@ spec:
         controller: main
         type: LoadBalancer
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: go-hello.${SECRET_DOMAIN_NAME}
+          external-dns.alpha.kubernetes.io/hostname: go-hello.grpc.${SECRET_DOMAIN_NAME}
           io.cilium/lb-ipam-ips: ${CONFIG_STAGING_SVC_GO_HELLO}
         ports:
           http:
             port: 8080
           grpc:
             port: 6952
+            nodePort: 6952
+            protocol: TCP
     ingress:
       main:
         enabled: true
