@@ -3,7 +3,7 @@ clusterName: staging
 # renovate: depName=ghcr.io/siderolabs/installer datasource=docker
 talosVersion: v1.7.5
 # renovate: depName=ghcr.io/siderolabs/kubelet datasource=docker
-kubernetesVersion: v1.30.2
+kubernetesVersion: v1.30.3
 endpoint: https://staging.${SECRET_TECH_DOMAIN_NAME}:6443
 
 cniConfig:
