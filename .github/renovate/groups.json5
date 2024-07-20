@@ -125,6 +125,17 @@
         "commitMessageTopic": "{{{groupName}}} group"
       },
       "separateMinorPatch": false
+    },
+    {
+      "description": "Victoria Metrics",
+      "groupName": "VictoriaMetrics",
+      "matchPackagePatterns": [
+        "victoriametrics/"
+      ],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
+      "separateMinorPatch": false
     }
   ]
 }
