@@ -52,7 +52,7 @@ tasks:
         spec:
           containers:
             - name: debug
-              image: docker.io/library/alpine:3.20@sha256:b89d9c93e9ed3597455c90a0b88a8bbb5cb7188438f70953fede212a0c4394e0
+              image: docker.io/library/alpine:3.20@sha256:635b0946b3e7026ee435820c93e8af32065a69fa9fa0fe7e0872b0156f38c8d9
               command: ["/bin/sh"]
               tty: true
               lifecycle:
