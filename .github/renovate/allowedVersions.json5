@@ -5,6 +5,11 @@
       "matchDatasources": ["docker"],
       "matchPackagePatterns": ["cloudnative-pg/postgresql"],
       "allowedVersions": "<17"
+    },
+    {
+      "matchDatasources": ["docker"],
+      "matchPackagePatterns": ["quay.io/ceph/ceph"],
+      "allowedVersions": "<v19"
     }
   ]
 }
