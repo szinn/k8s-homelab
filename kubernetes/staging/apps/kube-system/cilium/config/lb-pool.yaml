@@ -4,5 +4,5 @@ kind: CiliumLoadBalancerIPPool
 metadata:
   name: main-pool
 spec:
-  cidrs:
+  blocks:
     - cidr: ${CONFIG_STAGING_L2_POOL_CIDR}

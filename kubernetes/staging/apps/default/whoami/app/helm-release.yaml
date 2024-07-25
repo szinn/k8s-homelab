@@ -44,8 +44,6 @@ spec:
       main:
         enabled: true
         className: "nginx"
-        annotations:
-          ingress.home.arpa/type: "internal"
         hosts:
           - host: "{{ .Release.Name }}.${SECRET_DOMAIN_NAME}"
             paths:
