@@ -23,6 +23,9 @@ enableRuntimeDeviceDetection: true
 endpointRoutes:
   enabled: true
 
+envoy:
+  enabled: false
+
 hubble:
   enabled: false
 
