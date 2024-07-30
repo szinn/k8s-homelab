@@ -28,7 +28,7 @@ sonarr:
           allowed: true
           until_quality: Bluray-1080p
           until_score: 10000
-        min_format_score: 0
+        min_format_score: 10
         quality_sort: top
         qualities:
           - name: Bluray-1080p
@@ -58,7 +58,7 @@ sonarr:
           allowed: true
           until_quality: Web-720p
           until_score: 10000
-        min_format_score: 0
+        min_format_score: 10
         quality_sort: top
         qualities:
           - name: Web-720p
@@ -118,7 +118,7 @@ sonarr:
           - e1a997ddb54e3ecbfe06341ad323c458 # Obfuscated
           - 06d66ab109d4d2eddb2794d21526d140 # Retags
           - 47435ece6b99a0b477caf360e79ba0bb # x265 (HD)
-        quality_profiles:
+        assign_scores_to:
           - name: Web 1080p
           - name: Web 720p
 
@@ -138,8 +138,8 @@ radarr:
         upgrade:
           allowed: true
           until_quality: Remux-1080p
-          until_score: 0
-        min_format_score: 0
+          until_score: 10000
+        min_format_score: 10
         quality_sort: top
         qualities:
           - name: Remux-1080p
@@ -152,9 +152,8 @@ radarr:
     custom_formats:
       - trash_ids:
           - ff5bc9e8ce91d46c997ca3ac6994d6f8 # UHD FraMeSToR (set to 0, 1 or 3200)
-        quality_profiles:
+        assign_scores_to:
           - name: HD-1080p
-            score: 1
       - trash_ids:
           - 496f355514737f7d83bf7aa4d24f8169 # TrueHD Atmos
           - 2f22d89048b01681dde8afe203bf2e95 # DTS X
@@ -201,12 +200,12 @@ radarr:
           - 7357cf5161efbf8c4d5d0c30b4815ee2 # Obfuscated
           - ae9b7c9ebde1f3bd336a8cbd1ec4c5e5 # No-RlsGroup removed do avoid multiple downloads
           - dc98083864ea246d05a42df0d05f81cc # x265 (720/1080p)
-        quality_profiles:
+        assign_scores_to:
           - name: HD-1080p
       - trash_ids:
           - 4b900e171accbfb172729b63323ea8ca # Optional: Multi
           - 923b6abef9b17f937fab56cfcf89e1f1 # Optional: DV (WEBDL) without fallback to HDR, set to manual score 0 or -10000
-        quality_profiles:
+        assign_scores_to:
           - name: HD-1080p
 
   radarr_4k:
@@ -239,9 +238,8 @@ radarr:
     custom_formats:
       - trash_ids:
           - ff5bc9e8ce91d46c997ca3ac6994d6f8 # UHD FraMeSToR (set to 0, 1 or 3200)
-        quality_profiles:
+        assign_scores_to:
           - name: Ultra-HD
-            score: 1
       - trash_ids:
           - 496f355514737f7d83bf7aa4d24f8169 # TrueHD Atmos
           - 2f22d89048b01681dde8afe203bf2e95 # DTS X
@@ -288,11 +286,10 @@ radarr:
           - 7357cf5161efbf8c4d5d0c30b4815ee2 # Obfuscated
           - ae9b7c9ebde1f3bd336a8cbd1ec4c5e5 # No-RlsGroup removed do avoid multiple downloads
           - dc98083864ea246d05a42df0d05f81cc # x265 (720/1080p)
-        quality_profiles:
+        assign_scores_to:
           - name: Ultra-HD
       - trash_ids:
           - 4b900e171accbfb172729b63323ea8ca # Optional: Multi
           - 923b6abef9b17f937fab56cfcf89e1f1 # Optional: DV (WEBDL) without fallback to HDR, set to manual score 0 or -10000
-        quality_profiles:
+        assign_scores_to:
           - name: Ultra-HD
-            score: 0
