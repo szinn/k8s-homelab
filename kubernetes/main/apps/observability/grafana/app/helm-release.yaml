@@ -468,9 +468,9 @@ spec:
             - name: DS_PROMETHEUS
               value: Prometheus
         volsync:
-          # removate: depName="VolSync Dashboard"
+          # renovate: depName="VolSync Dashboard"
           gnetId: 21356
-          revision: 2
+          revision: 3
           datasource:
             - name: DS_PROMETHEUS
               value: Prometheus
