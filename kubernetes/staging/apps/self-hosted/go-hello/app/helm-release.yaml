@@ -36,7 +36,7 @@ spec:
           main:
             image:
               repository: ghcr.io/szinn/go-hello
-              tag: main@sha256:229ca49a028ebd88cc9e6a612b5d5483c4bf6b26dff9019711fc6e993555e6f7
+              tag: main@sha256:b9137adb23da1a2d4e82c0a0031c8c892d94eb153ec3a88453daac202b97d03c
               pullPolicy: Always
             env:
               LOG_LEVEL: Debug
