@@ -76,8 +76,8 @@ radarr:
 
     include:
       - template: radarr-quality-definition-sqp-streaming
-      - template: radarr-quality-profile-sqp-1-2160p-default
       - template: radarr-custom-formats-sqp-1-2160p
+      - template: radarr-quality-profile-sqp-1-2160p-4k-only-imax-e
 
     quality_profiles:
       - name: SQP-1 (2160p)
