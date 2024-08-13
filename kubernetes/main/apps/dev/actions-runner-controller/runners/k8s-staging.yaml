@@ -34,7 +34,7 @@ spec:
       spec:
         containers:
           - name: runner
-            image: ghcr.io/actions/actions-runner:2.319.0@sha256:3bee2ec62f586beb76013d462df84d3dafc7dff94fe4ac731bcf3157c3a324f3
+            image: ghcr.io/actions/actions-runner:2.319.1@sha256:30a523019a27c97da3f2145252dad9478b7427a8b484a0c775f3a8605d84d35d
             command: ["/home/runner/run.sh"]
             volumeMounts:
               - name: cache-volume
