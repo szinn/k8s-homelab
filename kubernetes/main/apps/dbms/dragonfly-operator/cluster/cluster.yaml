@@ -7,7 +7,7 @@ metadata:
 spec:
   labels:
     dragonflydb.io/cluster: dragonfly
-  image: docker.dragonflydb.io/dragonflydb/dragonfly:v1.21.1@sha256:06cef3a4d5e5810197cbd410baa23adecb1b1d171f57f9752f7957bcc061f8e1
+  image: docker.dragonflydb.io/dragonflydb/dragonfly:v1.21.2@sha256:4a253dffa1f0416c454a758dcbaa86c29c4065aba44b5240fa25e55c5d89baf3
   replicas: 3
   args:
     - --maxmemory=$(MAX_MEMORY)Mi
