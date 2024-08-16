@@ -37,7 +37,10 @@ spec:
               tag: v0.4.0@sha256:526c7b84d290bcfc484a981a02a23e39210a97bb60f048fa26e55e34fe2a0478
             env:
               PROMETHEUS_URL: http://vmsingle-stack.observability.svc.cluster.local:8429/
-              PORT: &port 8080
+              SERVER_HOST: 0.0.0.0
+              SERVER_PORT: &port 8080
+              HEALTH_HOST: 0.0.0.0
+              HEALTH_PORT: &hport 8888
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -48,13 +51,16 @@ spec:
               requests:
                 <<: *resources
                 cpu: 10m
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /healthz
+                    port: *hport
+              readiness: *probes
         pod:
-          securityContext:
-            runAsUser: 2000
-            runAsGroup: 2000
-            runAsNonRoot: true
-            fsGroup: 2000
-            fsGroupChangePolicy: OnRootMismatch
           topologySpreadConstraints:
             - maxSkew: 1
               topologyKey: kubernetes.io/hostname
@@ -67,7 +73,10 @@ spec:
         controller: main
         ports:
           http:
+            primary: true
             port: *port
+          health:
+            port: *hport
     ingress:
       main:
         enabled: true

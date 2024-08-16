@@ -23,4 +23,4 @@ spec:
     substitute:
       GATUS_APP: kromgo
       GATUS_SUBDOMAIN: kromgo
-      GATUS_PATH: /-/ready
+      GATUS_PATH: /cluster_node_count
