@@ -24,16 +24,27 @@ spec:
           main:
             image:
               repository: ghcr.io/mendhak/http-https-echo
-              tag: 33@sha256:17f45542b4442474f4b68bf6e97f9a321b2c0fe95c5126c429fe49d911b07eb3
+              tag: 34
             env:
               HTTP_PORT: &port 8080
               LOG_WITHOUT_NEWLINE: "true"
               LOG_IGNORE_PATH: "/healthz"
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
             resources:
               requests:
                 cpu: 5m
+                memory: 64M
               limits:
-                memory: 30M
+                memory: 64M
 
     service:
       main:
