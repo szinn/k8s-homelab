@@ -31,7 +31,7 @@ jobs:
           private-key: ${{ secrets.BOT_APP_PRIVATE_KEY }}
 
       - name: MegaLinter
-        uses: oxsecurity/megalinter/flavors/terraform@bacb5f8674e3730b904ca4d20c8bd477bc51b1a7 # v7.13.0
+        uses: oxsecurity/megalinter/flavors/terraform@c217fe8f7bc9207062a084e989bd97efd56e7b9a # v8.0.0
         env:
           GITHUB_TOKEN: "${{ steps.app-token.outputs.token }}"
           PRINT_ALPACA: false
