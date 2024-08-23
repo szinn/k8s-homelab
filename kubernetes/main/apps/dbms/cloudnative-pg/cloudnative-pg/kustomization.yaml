@@ -6,4 +6,3 @@ resources:
   - postgres-superuser-secret.yaml
   - helm-release.yaml
   - prometheus-rules.yaml
-  - service.yaml
