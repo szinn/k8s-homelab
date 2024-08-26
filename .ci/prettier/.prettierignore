@@ -1,5 +1,6 @@
 .direnv
 .private
+.venv
 .vscode
 *.sops.*
 ansible/roles/xanmanning.k3s/

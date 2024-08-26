@@ -14,6 +14,7 @@ tasks:
       - >-
         prettier
         --config '.ci/prettier/.prettierrc.yaml'
+        --ignore-path '.ci/prettier/.prettierignore'
         --list-different
         --ignore-unknown
         --parser=markdown
@@ -26,6 +27,7 @@ tasks:
       - >-
         prettier
         --config '.ci/prettier/.prettierrc.yaml'
+        --ignore-path '.ci/prettier/.prettierignore'
         --list-different
         --ignore-unknown
         --parser=yaml
