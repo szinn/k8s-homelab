@@ -23,7 +23,7 @@ resource "authentik_group" "applications" {
 }
 
 module "onepassword_scotte" {
-  source = "github.com/bjw-s/terraform-1password-item?ref=main"
+  source = "github.com/bernd-schorgers/terraform-1password-item?ref=main"
   vault  = "Kubernetes"
   item   = "scotte-credentials"
 }
@@ -46,7 +46,7 @@ resource "authentik_user" "scotte" {
 }
 
 module "onepassword_sophie" {
-  source = "github.com/bjw-s/terraform-1password-item?ref=main"
+  source = "github.com/bernd-schorgers/terraform-1password-item?ref=main"
   vault  = "Kubernetes"
   item   = "sophie-credentials"
 }

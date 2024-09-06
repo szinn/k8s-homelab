@@ -3,9 +3,9 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
 metadata:
-  name: bjw-s-charts
+  name: bernd-schorgers-charts
   namespace: flux-system
 spec:
   type: oci
   interval: 30m
-  url: oci://ghcr.io/bjw-s/helm
+  url: oci://ghcr.io/bernd-schorgers/helm

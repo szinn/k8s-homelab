@@ -13,7 +13,7 @@ spec:
       interval: 30m
       sourceRef:
         kind: HelmRepository
-        name: bjw-s-charts
+        name: bernd-schorgers-charts
         namespace: flux-system
   values:
     controllers:
@@ -22,5 +22,5 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/bjw-s/k8s-ycl
+              repository: ghcr.io/bernd-schorgers/k8s-ycl
               tag: v0.3.0@sha256:149c97a0a8e27da13cdf8d95ab5926f728b971375f14be420b5dc798b584f931

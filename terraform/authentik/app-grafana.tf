@@ -1,5 +1,5 @@
 module "onepassword_grafana" {
-  source = "github.com/bjw-s/terraform-1password-item?ref=main"
+  source = "github.com/bernd-schorgers/terraform-1password-item?ref=main"
   vault  = "Kubernetes"
   item   = "grafana"
 }
