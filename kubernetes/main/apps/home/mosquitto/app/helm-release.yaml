@@ -37,7 +37,7 @@ spec:
           init-config:
             image:
               repository: public.ecr.aws/docker/library/eclipse-mosquitto
-              tag: 2.0.18@sha256:77b9bfa245eca20c3e9609de0500ae8eddb98bf5a67351ec86abe3bb7ffc0087
+              tag: 2.0.18@sha256:bf778f6dd52e69af25402ab3312bc1bd35ea2ffc3b03213894b0b4090478d80e
               pullPolicy: IfNotPresent
             command: ["/bin/sh", "-c"]
             args:
@@ -48,7 +48,7 @@ spec:
           main:
             image:
               repository: public.ecr.aws/docker/library/eclipse-mosquitto
-              tag: 2.0.18@sha256:77b9bfa245eca20c3e9609de0500ae8eddb98bf5a67351ec86abe3bb7ffc0087
+              tag: 2.0.18@sha256:bf778f6dd52e69af25402ab3312bc1bd35ea2ffc3b03213894b0b4090478d80e
         pod:
           securityContext:
             runAsUser: 2000
