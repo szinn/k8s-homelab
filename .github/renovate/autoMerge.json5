@@ -11,7 +11,7 @@
       "matchPackagePatterns": [
         "ghcr.io/szinn",
         "ghcr.io/onedr0p",
-        "ghcr.io/bernd-schorgers",
+        "ghcr.io/bjw-s",
         "public.ecr.aws/docker/library/redis"
       ]
     },

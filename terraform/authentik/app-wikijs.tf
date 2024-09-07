@@ -1,5 +1,5 @@
 module "onepassword_wikijs" {
-  source = "github.com/bernd-schorgers/terraform-1password-item?ref=main"
+  source = "github.com/bjw-s/terraform-1password-item?ref=main"
   vault  = "Kubernetes"
   item   = "wikijs"
 }

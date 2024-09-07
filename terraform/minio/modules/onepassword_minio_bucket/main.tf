@@ -1,5 +1,5 @@
 module "onepassword_item" {
-  source = "github.com/bernd-schorgers/terraform-1password-item?ref=main"
+  source = "github.com/bjw-s/terraform-1password-item?ref=main"
   vault  = var.vault
   item   = var.password_item
 }
