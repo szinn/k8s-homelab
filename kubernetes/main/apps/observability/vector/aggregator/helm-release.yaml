@@ -57,7 +57,7 @@ spec:
           main:
             image:
               repository: docker.io/timberio/vector
-              tag: 0.40.1-alpine@sha256:a29c5e3eeea49ea0a927d598f7e88624ff18ebd35df827772a337c96684c9ce5
+              tag: 0.40.2-alpine@sha256:8578ccbfa1c3b533f4be17c76658a3b789d6fbe5e250c89f191802a5a9634988
             args: ["--config", "/etc/vector/vector.yaml"]
     service:
       main:
