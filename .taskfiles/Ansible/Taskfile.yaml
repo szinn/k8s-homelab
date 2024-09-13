@@ -32,6 +32,11 @@ tasks:
       - ansible-playbook "{{.ANSIBLE_DIR}}/playbooks/update-titan-certificate.yaml"
       - ansible-playbook "{{.ANSIBLE_DIR}}/playbooks/update-unifi-certificate.yaml"
 
+  update-titan:
+    desc: Update titan with certificates
+    cmds:
+      - ansible-playbook "{{.ANSIBLE_DIR}}/playbooks/update-titan-certificate.yaml"
+
   update-pikvm:
     desc: Update PiKVM configuration
     cmd: ansible-playbook "{{.ANSIBLE_DIR}}/playbooks/update-pikvm-configuration.yaml"
