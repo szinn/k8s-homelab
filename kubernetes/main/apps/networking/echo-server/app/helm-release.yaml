@@ -54,16 +54,16 @@ spec:
             port: *port
 
     ingress:
-      main:
-        enabled: true
-        className: internal
-        hosts:
-          - host: "{{ .Release.Name }}.${SECRET_DOMAIN_NAME}"
-            paths:
-              - path: /
-                service:
-                  identifier: main
-                  port: http
+      # main:
+      #   enabled: true
+      #   className: internal
+      #   hosts:
+      #     - host: "{{ .Release.Name }}.${SECRET_DOMAIN_NAME}"
+      #       paths:
+      #         - path: /
+      #           service:
+      #             identifier: main
+      #             port: http
       external:
         enabled: true
         className: external
