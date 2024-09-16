@@ -42,7 +42,7 @@ spec:
           main:
             image:
               repository: ghcr.io/bjw-s/calibre-web
-              tag: 0.6.23@sha256:eeb6ff160ef756f2f94173204f2bc7ca7c57af5ad915021f9044ea2f99822654
+              tag: 0.6.23@sha256:55bce09e19e3960ee4c2dabd9d1a53e6b68493cb24e0603b322b42b48f66c3f7
             env:
               TZ: ${CONFIG_TIMEZONE}
               CACHE_DIR: /cache
