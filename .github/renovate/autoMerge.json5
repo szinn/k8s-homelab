@@ -12,6 +12,7 @@
         "ghcr.io/szinn",
         "ghcr.io/onedr0p",
         "ghcr.io/bjw-s",
+        "ghcr.io/bjw-s-labs",
         "public.ecr.aws/docker/library/redis"
       ]
     },
