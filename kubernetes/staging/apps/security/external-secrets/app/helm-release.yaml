@@ -25,17 +25,23 @@ spec:
     remediation:
       retries: 3
   values:
+    image:
+      repository: ghcr.io/external-secrets/external-secrets
     installCRDs: true
     replicaCount: 1
     leaderElect: true
     serviceMonitor:
-      enabled: true
+      enabled: false
       interval: 1m
-    webhook:
-      serviceMonitor:
-        enabled: true
-        interval: 1m
     certController:
+      image:
+        repository: ghcr.io/external-secrets/external-secrets
       serviceMonitor:
-        enabled: true
+        enabled: false
+        interval: 1m
+    webhook:
+      image:
+        repository: ghcr.io/external-secrets/external-secrets
+      serviceMonitor:
+        enabled: false
         interval: 1m

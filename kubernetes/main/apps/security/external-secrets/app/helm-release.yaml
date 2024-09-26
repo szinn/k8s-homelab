@@ -27,17 +27,23 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    image:
+      repository: ghcr.io/external-secrets/external-secrets
     installCRDs: true
     replicaCount: 1
     leaderElect: true
     serviceMonitor:
       enabled: true
       interval: 1m
-    webhook:
+    certController:
+      image:
+        repository: ghcr.io/external-secrets/external-secrets
       serviceMonitor:
         enabled: true
         interval: 1m
-    certController:
+    webhook:
+      image:
+        repository: ghcr.io/external-secrets/external-secrets
       serviceMonitor:
         enabled: true
         interval: 1m
