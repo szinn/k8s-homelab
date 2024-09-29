@@ -47,17 +47,31 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/onedr0p/kubanetics
-              tag: 2024.9.3@sha256:c07f6fdbb9678ffad97c0417d5cfae0a79f9627c10984512a798b18fceb8560c
-            env:
-              SCRIPT_NAME: fstrim.sh
+              repository: docker.io/library/alpine
+              tag: "3.20"
+            command:
+              - "/bin/sh"
+              - "-c"
+            args:
+              - |
+                nsenter --mount=/host/proc/$(pidof /usr/local/bin/kubelet)/ns/mnt --net=/host/proc/$(pidof /usr/local/bin/kubelet)/ns/net -- sh -c "cat /proc/self/mountinfo | grep -v kubelet | grep -v tmpfs | grep -v overlay > /tmp/fs.txt"
+                nsenter --mount=/host/proc/$(pidof /usr/local/bin/kubelet)/ns/mnt --net=/host/proc/$(pidof /usr/local/bin/kubelet)/ns/net -- sh -c "fstrim -v --quiet-unsupported -I /tmp/fs.txt"
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+              startup:
+                enabled: false
             resources:
               requests:
                 cpu: 25m
+                memory: 128Mi
               limits:
                 memory: 128Mi
             securityContext:
               privileged: true
+
         pod:
           hostNetwork: true
           hostPID: true
