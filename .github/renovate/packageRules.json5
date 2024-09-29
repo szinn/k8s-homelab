@@ -30,7 +30,8 @@
         "ghcr.io/siderolabs/installer",
         "ghcr.io/fluxcd/flux-manifests",
         "ghcr.io/siderolabs/kubelet",
-        "ghcr.io/stakater/charts/reloader"
+        "ghcr.io/stakater/charts/reloader",
+        "ghcr.io/siderolabs/talosctl"
       ],
       "pinDigests": false
     },
