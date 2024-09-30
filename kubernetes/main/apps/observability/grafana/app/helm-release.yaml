@@ -387,17 +387,17 @@ spec:
         global:
           # renovate: depName="Kubernetes / Views / Global"
           gnetId: 15757
-          revision: 40
+          revision: 41
           datasource: Prometheus
         namespaces:
           # renovate: depName="Kubernetes / Views / Namespaces"
           gnetId: 15758
-          revision: 36
+          revision: 37
           datasource: Prometheus
         nodes:
           # renovate: depName="Kubernetes / Views / Nodes"
           gnetId: 15759
-          revision: 30
+          revision: 31
           datasource: Prometheus
         pods:
           # renovate: depName="Kubernetes / Views / Pods"
@@ -594,7 +594,7 @@ spec:
         prometheus:
           # renovate: depName="Prometheus"
           gnetId: 19105
-          revision: 3
+          revision: 4
           datasource: Prometheus
         vm-agent:
           # renovate: dashboardName="VictoriaMetrics - vmagent"
