@@ -16,9 +16,7 @@ spec:
     name: homelab-kubernetes
   prune: true
   wait: true
-  interval: 30m
-  retryInterval: 1m
-  timeout: 5m
+  interval: 10m
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -39,9 +37,7 @@ spec:
     - name: rook-ceph-operator
   prune: true
   wait: false
-  interval: 30m
-  retryInterval: 1m
-  timeout: 30m
+  interval: 10m
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -62,6 +58,4 @@ spec:
     - name: rook-ceph-operator
   prune: true
   wait: false
-  interval: 30m
-  retryInterval: 1m
-  timeout: 30m
+  interval: 10m

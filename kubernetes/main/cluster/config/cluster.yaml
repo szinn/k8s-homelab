@@ -6,7 +6,7 @@ metadata:
   name: homelab-kubernetes
   namespace: flux-system
 spec:
-  interval: 30m
+  interval: 10m
   # https://github.com/k8s-at-home/template-cluster-k3s/issues/324
   url: https://github.com/szinn/k8s-homelab.git
   ref:
@@ -25,7 +25,7 @@ metadata:
   name: cluster
   namespace: flux-system
 spec:
-  interval: 30m
+  interval: 10m
   path: ./kubernetes/main/cluster
   prune: true
   wait: false
@@ -50,7 +50,7 @@ metadata:
   name: cluster-repositories
   namespace: flux-system
 spec:
-  interval: 30m
+  interval: 10m
   path: ./kubernetes/repositories
   prune: true
   wait: false

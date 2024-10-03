@@ -20,9 +20,7 @@ spec:
     - name: cert-manager
   prune: true
   wait: false
-  interval: 30m
-  retryInterval: 1m
-  timeout: 5m
+  interval: 10m
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
@@ -38,6 +36,4 @@ spec:
     name: homelab-kubernetes
   prune: true
   wait: false
-  interval: 30m
-  retryInterval: 1m
-  timeout: 3m
+  interval: 10m

@@ -15,6 +15,4 @@ spec:
     - name: security-external-secrets-stores
   prune: true
   wait: false
-  interval: 30m
-  retryInterval: 2m
-  timeout: 1m
+  interval: 10m

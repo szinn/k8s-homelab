@@ -18,9 +18,7 @@ spec:
     - name: security-external-secrets-stores
   prune: true
   wait: true
-  interval: 30m
-  retryInterval: 1m
-  timeout: 5m
+  interval: 0m
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -41,9 +39,7 @@ spec:
     - name: dbms-cloudnative-pg
   prune: true
   wait: false
-  interval: 30m
-  retryInterval: 1m
-  timeout: 15m
+  interval: 0m
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -62,6 +58,4 @@ spec:
     name: homelab-kubernetes
   prune: true
   wait: false
-  interval: 30m
-  retryInterval: 1m
-  timeout: 5m
+  interval: 0m
