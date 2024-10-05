@@ -29,5 +29,6 @@ spec:
     image:
       repository: ghcr.io/deedee-ops/spegel
       tag: 0.0.24
+      digest: ""
     serviceMonitor:
       enabled: true
