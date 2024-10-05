@@ -49,7 +49,7 @@ spec:
         controller: main
         type: LoadBalancer
         annotations:
-          io.cilium/lb-ipam-ips: ${CONFIG_MAIN_SVC_BONOB_ADDR}
+          lbipam.cilium.io/ips: ${CONFIG_MAIN_SVC_BONOB_ADDR}
         ports:
           http:
             port: 4534

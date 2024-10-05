@@ -50,7 +50,7 @@ spec:
         type: LoadBalancer
         annotations:
           external-dns.alpha.kubernetes.io/hostname: go-hello.grpc.${SECRET_DOMAIN_NAME}
-          io.cilium/lb-ipam-ips: ${CONFIG_STAGING_SVC_GO_HELLO}
+          lbipam.cilium.io/ips: ${CONFIG_STAGING_SVC_GO_HELLO}
         ports:
           http:
             port: 8080

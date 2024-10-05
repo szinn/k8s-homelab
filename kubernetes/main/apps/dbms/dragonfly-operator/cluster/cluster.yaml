@@ -29,7 +29,7 @@ spec:
   serviceSpec:
     type: LoadBalancer
     annotations:
-      io.cilium/lb-ipam-ips: ${CONFIG_MAIN_SVC_REDIS_ADDR}
+      lbipam.cilium.io/ips: ${CONFIG_MAIN_SVC_REDIS_ADDR}
       external-dns.alpha.kubernetes.io/hostname: redis.${SECRET_DOMAIN_NAME}
   topologySpreadConstraints:
     - maxSkew: 1

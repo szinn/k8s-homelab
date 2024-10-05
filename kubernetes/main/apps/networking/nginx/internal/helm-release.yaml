@@ -39,7 +39,7 @@ spec:
         enabled: true
         type: LoadBalancer
         annotations:
-          io.cilium/lb-ipam-ips: ${CONFIG_MAIN_SVC_INGRESS_INTERNAL_ADDR}
+          lbipam.cilium.io/ips: ${CONFIG_MAIN_SVC_INGRESS_INTERNAL_ADDR}
           external-dns.alpha.kubernetes.io/hostname: "internal.${SECRET_DOMAIN_NAME}"
 
       ingressClassResource:

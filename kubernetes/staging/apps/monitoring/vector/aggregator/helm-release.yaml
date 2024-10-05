@@ -31,7 +31,7 @@ spec:
     service:
       enabled: true
       annotations:
-        io.cilium/lb-ipam-ips: ${CONFIG_STAGING_SVC_VECTOR_AGGREGATOR_ADDR}
+        lbipam.cilium.io/ips: ${CONFIG_STAGING_SVC_VECTOR_AGGREGATOR_ADDR}
       type: LoadBalancer
     customConfig:
       data_dir: /vector-data-dir
