@@ -35,7 +35,7 @@ spec:
           init-db:
             image:
               repository: ghcr.io/onedr0p/postgres-init
-              tag: 16.3@sha256:9cc2856e3bd5e6100dca9123aae7b6dc9c2f8b7d5a0eab00aad0c2fed5355c93
+              tag: 16.3@sha256:9c136223fb4e05b0ca24e2350c2dc45843110d0e1d09615c52c9a037628c09fa
             envFrom:
               - secretRef:
                   name: wikijs-secret
