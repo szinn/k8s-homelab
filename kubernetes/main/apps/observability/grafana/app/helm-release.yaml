@@ -599,21 +599,21 @@ spec:
         vm-agent:
           # renovate: dashboardName="VictoriaMetrics - vmagent"
           gnetId: 12683
-          revision: 17
+          revision: 20
           datasource:
             - name: "DS_PROMETHEUS"
               value: Prometheus
         vm-alert:
           # renovate: dashboardName="VictoriaMetrics - vmalert"
           gnetId: 14950
-          revision: 10
+          revision: 12
           datasource:
             - name: "DS_PROMETHEUS"
               value: Prometheus
         vm-operator:
           # renovate: dashboardName="VictoriaMetrics - operator"
           gnetId: 17869
-          revision: 2
+          revision: 3
           datasource:
             - name: "DS_PROMETHEUS"
               value: Prometheus
