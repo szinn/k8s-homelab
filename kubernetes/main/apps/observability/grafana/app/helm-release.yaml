@@ -402,7 +402,7 @@ spec:
         pods:
           # renovate: dashboardName="Kubernetes / Views / Pods"
           gnetId: 15760
-          revision: 21
+          revision: 32
           datasource: Prometheus
         volumes:
           # renovate: dashboardName="K8s / Storage / Volumes / Cluster"
