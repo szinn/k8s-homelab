@@ -320,17 +320,17 @@ spec:
     dashboards:
       ceph:
         ceph-cluster:
-          # renovate: depName="Ceph Cluster"
+          # renovate: dashboardName="Ceph Cluster"
           gnetId: 2842
           revision: 18
           datasource: Prometheus
         ceph-osd:
-          # renovate: depName="Ceph - OSD (Single)"
+          # renovate: dashboardName="Ceph - OSD (Single)"
           gnetId: 5336
           revision: 9
           datasource: Prometheus
         ceph-pools:
-          # renovate: depName="Ceph - Pools"
+          # renovate: dashboardName="Ceph - Pools"
           gnetId: 5342
           revision: 9
           datasource: Prometheus
@@ -352,14 +352,14 @@ spec:
         #   url: https://raw.githubusercontent.com/dragonflydb/dragonfly/main/tools/local/monitoring/grafana/provisioning/dashboards/dashboard.json
         #   datasource: Prometheus
         minio:
-          # renovate: depName="MinIO Dashboard"
+          # renovate: dashboardName="MinIO Dashboard"
           gnetId: 13502
           revision: 26
           datasource:
             - name: "DS_PROMETHEUS"
               value: Prometheus
         redis-sentinel:
-          # renovate: depName="Redis"
+          # renovate: dashboardName="Redis"
           gnetId: 12776
           revision: 2
           datasource: Redis
@@ -375,43 +375,43 @@ spec:
           datasource: Prometheus
       kubernetes:
         api-server:
-          # renovate: depName="Kubernetes / System / API Server"
+          # renovate: dashboardName="Kubernetes / System / API Server"
           gnetId: 15761
           revision: 17
           datasource: Prometheus
         coredns:
-          # renovate: depName="Kubernetes / System / CoreDNS"
+          # renovate: dashboardName="Kubernetes / System / CoreDNS"
           gnetId: 15762
           revision: 18
           datasource: Prometheus
         global:
-          # renovate: depName="Kubernetes / Views / Global"
+          # renovate: dashboardName="Kubernetes / Views / Global"
           gnetId: 15757
           revision: 42
           datasource: Prometheus
         namespaces:
-          # renovate: depName="Kubernetes / Views / Namespaces"
+          # renovate: dashboardName="Kubernetes / Views / Namespaces"
           gnetId: 15758
           revision: 38
           datasource: Prometheus
         nodes:
-          # renovate: depName="Kubernetes / Views / Nodes"
+          # renovate: dashboardName="Kubernetes / Views / Nodes"
           gnetId: 15759
           revision: 32
           datasource: Prometheus
         pods:
-          # renovate: depName="Kubernetes / Views / Pods"
+          # renovate: dashboardName="Kubernetes / Views / Pods"
           gNetId: 15760
           revision: 21
           datasource: Prometheus
         volumes:
-          # renovate: depName="K8s / Storage / Volumes / Cluster"
+          # renovate: dashboardName="K8s / Storage / Volumes / Cluster"
           gnetId: 11454
           revision: 14
           datasource: Prometheus
       loki:
         loki-metrics:
-          # renovate: depName="Loki2.0 Global Metrics"
+          # renovate: dashboardName="Loki2.0 Global Metrics"
           gnetId: 13407
           revision: 1
           datasource: Prometheus
@@ -420,7 +420,7 @@ spec:
           url: https://grafana.com/api/dashboards/11074/revisions/9/download
           datasource: Prometheus
         # blocky:
-        #   # renovate: depName="blocky"
+        #   # renovate: dashboardName="blocky"
         #   gnetId: 13768
         #   revision: 3
         #   datasource:
@@ -432,14 +432,14 @@ spec:
           url: https://raw.githubusercontent.com/szinn/k8s-homelab/main/kubernetes/main/apps/cert-manager/cert-manager/app/cert-manager-dashboard.json
           datasource: Prometheus
         cloudflared:
-          # renovate: depName="Cloudflare Tunnels (cloudflared)"
+          # renovate: dashboardName="Cloudflare Tunnels (cloudflared)"
           gnetId: 17457
           revision: 6
           datasource:
             - name: DS_PROMETHEUS
               value: Prometheus
         external-dns:
-          # renovate: depName="External-dns"
+          # renovate: dashboardName="External-dns"
           gnetId: 15038
           revision: 3
           datasource: Prometheus
@@ -447,7 +447,7 @@ spec:
           url: https://raw.githubusercontent.com/external-secrets/external-secrets/main/docs/snippets/dashboard.json
           datasource: Prometheus
         node-exporter-full:
-          # renovate: depName="Node Exporter Full"
+          # renovate: dashboardName="Node Exporter Full"
           gnetId: 1860
           revision: 37
           datasource: Prometheus
@@ -461,14 +461,14 @@ spec:
           url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/grafana/dashboards/request-handling-performance.json
           datasource: Prometheus
         spegel:
-          # renovate: depName="Spegel"
+          # renovate: dashboardName="Spegel"
           gnetId: 18089
           revision: 1
           datasource:
             - name: DS_PROMETHEUS
               value: Prometheus
         volsync:
-          # renovate: depName="VolSync Dashboard"
+          # renovate: dashboardName="VolSync Dashboard"
           gnetId: 21356
           revision: 3
           datasource:
@@ -566,33 +566,33 @@ spec:
       #     datasource: Prometheus
       unifi:
         # unifi-client-dpi:
-        #   # renovate: depName="UniFi-Poller: Client DPI - Prometheus"
+        #   # renovate: dashboardName="UniFi-Poller: Client DPI - Prometheus"
         #   gnetId: 11310
         #   revision: 5
         #   datasource: Prometheus
         unifi-network-sites:
-          # renovate: depName="UniFi-Poller: Network Sites - Prometheus"
+          # renovate: dashboardName="UniFi-Poller: Network Sites - Prometheus"
           gnetId: 11311
           revision: 5
           datasource: Prometheus
         unifi-usw-insights:
-          # renovate: depName="UniFi-Poller: USW Insights - Prometheus"
+          # renovate: dashboardName="UniFi-Poller: USW Insights - Prometheus"
           gnetId: 11312
           revision: 9
           datasource: Prometheus
         unifi-uap-insights:
-          # renovate: depName="UniFi-Poller: UAP Insights - Prometheus"
+          # renovate: dashboardName="UniFi-Poller: UAP Insights - Prometheus"
           gnetId: 11314
           revision: 10
           datasource: Prometheus
         unifi-client-insights:
-          # renovate: depName="UniFi-Poller: Client Insights - Prometheus"
+          # renovate: dashboardName="UniFi-Poller: Client Insights - Prometheus"
           gnetId: 11315
           revision: 9
           datasource: Prometheus
       victoriametrics:
         prometheus:
-          # renovate: depName="Prometheus"
+          # renovate: dashboardName="Prometheus"
           gnetId: 19105
           revision: 5
           datasource: Prometheus
@@ -618,7 +618,7 @@ spec:
             - name: "DS_PROMETHEUS"
               value: Prometheus
         vm-single:
-          # renovate: depName="VictoriaMetrics - single-node"
+          # renovate: dashboardName="VictoriaMetrics - single-node"
           gnetId: 10229
           revision: 36
           datasource: Prometheus
