@@ -47,7 +47,7 @@ spec:
     ingress:
       main:
         enabled: true
-        className: internal
+        className: internal-nginx
         annotations:
           nginx.ingress.kubernetes.io/proxy-body-size: 1000M
           nginx.ingress.kubernetes.io/auth-url: http://ak-outpost-internal.security.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx

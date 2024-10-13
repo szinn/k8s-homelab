@@ -33,7 +33,7 @@ metadata:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
 spec:
-  ingressClassName: internal
+  ingressClassName: internal-nginx
   rules:
     - host: adguard.${SECRET_DOMAIN_NAME}
       http:

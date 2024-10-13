@@ -110,7 +110,7 @@ spec:
             scrapeTimeout: 10s
     ingress:
       app:
-        className: internal
+        className: internal-nginx
         hosts:
           - host: status.${SECRET_DOMAIN_NAME}
             paths:

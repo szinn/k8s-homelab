@@ -277,7 +277,7 @@ spec:
             editable: true
     ingress:
       enabled: true
-      ingressClassName: internal
+      ingressClassName: internal-nginx
       hosts:
         - "grafana.${SECRET_DOMAIN_NAME}"
       path: /

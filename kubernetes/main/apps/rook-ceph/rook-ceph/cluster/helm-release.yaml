@@ -112,7 +112,7 @@ spec:
 
     ingress:
       dashboard:
-        ingressClassName: internal
+        ingressClassName: internal-nginx
         host:
           name: "rook.${SECRET_DOMAIN_NAME}"
           path: "/"
@@ -229,7 +229,7 @@ spec:
       #       region: us-east-1
       #   ingress:
       #     enabled: true
-      #     ingressClassName: internal
+      #     ingressClassName: internal-nginx
       #     host:
       #       name: s3-rook.${SECRET_DOMAIN_NAME}
       #       path: /

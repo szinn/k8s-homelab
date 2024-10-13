@@ -69,7 +69,7 @@ spec:
     ingress:
       main:
         enabled: true
-        className: internal
+        className: internal-nginx
         annotations:
           nginx.ingress.kubernetes.io/configuration-snippet: |
             proxy_hide_header "x-webkit-csp";

@@ -87,7 +87,7 @@ spec:
 
     ingress:
       app:
-        className: internal
+        className: internal-nginx
         hosts:
           - host: files.${SECRET_DOMAIN_NAME}
             paths:

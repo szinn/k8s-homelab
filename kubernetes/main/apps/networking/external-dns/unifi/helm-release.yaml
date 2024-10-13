@@ -62,7 +62,7 @@ spec:
           timeoutSeconds: 5
     extraArgs:
       - --ignore-ingress-tls-spec
-      - --ingress-class=internal
+      - --ingress-class=internal-nginx
     policy: sync
     sources: ["ingress", "service"]
     txtOwnerId: ${CONFIG_CLUSTER_NAME}

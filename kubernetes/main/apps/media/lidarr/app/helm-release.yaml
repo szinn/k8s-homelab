@@ -89,7 +89,7 @@ spec:
     ingress:
       app:
         enabled: true
-        className: internal
+        className: internal-nginx
         hosts:
           - host: "{{ .Release.Name }}.${SECRET_DOMAIN_NAME}"
             paths:

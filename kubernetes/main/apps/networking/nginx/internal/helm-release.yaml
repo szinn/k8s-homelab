@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: nginx-internal
+  name: nginx-internal-nginx
 spec:
   interval: 15m
   chart:
@@ -42,17 +42,20 @@ spec:
           lbipam.cilium.io/ips: ${CONFIG_MAIN_SVC_INGRESS_INTERNAL_ADDR}
           external-dns.alpha.kubernetes.io/hostname: "internal.${SECRET_DOMAIN_NAME}"
 
+      publishService:
+        enabled: true
+
       ingressClassResource:
-        name: internal
+        name: internal-nginx
         default: true
-        controllerValue: k8s.io/internal
+        controllerValue: k8s.io/ingress-nginx-internal
 
       admissionWebhooks:
         objectSelector:
           matchExpressions:
             - key: ingress-class
               operator: In
-              values: ["internal"]
+              values: ["internal-nginx"]
 
       config:
         block-user-agents: "AdsBot-Google,Amazonbot,anthropic-ai,Applebot-Extended,Bytespider,CCBot,ChatGPT-User,ClaudeBot,Claude-Web,cohere-ai,Diffbot,FacebookBot,FriendlyCrawler,Google-Extended,GoogleOther,GPTBot,img2dataset,omgili,omgilibot,peer39_crawler,peer39_crawler/1.0,PerplexityBot,YouBot," # taken from https://github.com/ai-robots-txt/ai.robots.txt
@@ -98,14 +101,15 @@ spec:
           labelSelector:
             matchLabels:
               app.kubernetes.io/name: ingress-nginx
-              app.kubernetes.io/instance: nginx-internal
+              app.kubernetes.io/instance: nginx-internal-nginx
               app.kubernetes.io/component: controller
 
       resources:
         requests:
           cpu: 100m
+          memory: 768Mi
         limits:
-          memory: 500Mi
+          memory: 768Mi
 
     defaultBackend:
       enabled: false
