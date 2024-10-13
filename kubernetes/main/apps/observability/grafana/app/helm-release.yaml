@@ -377,7 +377,7 @@ spec:
         api-server:
           # renovate: dashboardName="Kubernetes / System / API Server"
           gnetId: 15761
-          revision: 17
+          revision: 18
           datasource: Prometheus
         coredns:
           # renovate: dashboardName="Kubernetes / System / CoreDNS"
@@ -392,7 +392,7 @@ spec:
         namespaces:
           # renovate: dashboardName="Kubernetes / Views / Namespaces"
           gnetId: 15758
-          revision: 38
+          revision: 39
           datasource: Prometheus
         nodes:
           # renovate: dashboardName="Kubernetes / Views / Nodes"
