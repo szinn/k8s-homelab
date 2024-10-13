@@ -50,8 +50,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/onedr0p/lidarr-develop
-              tag: 2.5.2.4316@sha256:6b1b51ca85dad4f0376b6f86df4cb24d1d6c621ba9d47c1bde26cdb940f2aeb6
+              repository: ghcr.io/szinn/lidarr-develop
+              tag: 2.6.4.4402
             env:
               TZ: ${CONFIG_TIMEZONE}
               LIDARR__INSTANCE_NAME: Lidarr
