@@ -17,7 +17,7 @@ module "hades" {
 
   authentication_flow_id = authentik_flow.authentication.uuid
   authorization_flow_id  = data.authentik_flow.default-provider-authorization-implicit-consent.id
-  property_mappings      = data.authentik_scope_mapping.oauth2.ids
+  property_mappings      = data.authentik_property_mapping_provider_scope.oauth2.ids
 
   redirect_uris = [module.onepassword_hades.fields.AUTHENTIK_REDIRECT_URL]
 

@@ -29,7 +29,7 @@ resource "authentik_outpost" "internal" {
     "kubernetes_json_patches"        = null
     "kubernetes_service_type"        = "ClusterIP"
     "kubernetes_image_pull_secrets"  = []
-    "kubernetes_ingress_class_name"  = "internal"
+    "kubernetes_ingress_class_name"  = "internal-nginx"
     "kubernetes_disabled_components" = []
     "kubernetes_ingress_annotations" = {}
     "kubernetes_ingress_secret_name" = "authentik-outpost-tls"
@@ -55,7 +55,7 @@ resource "authentik_outpost" "external" {
     "kubernetes_json_patches"        = null
     "kubernetes_service_type"        = "ClusterIP"
     "kubernetes_image_pull_secrets"  = []
-    "kubernetes_ingress_class_name"  = "external"
+    "kubernetes_ingress_class_name"  = "external-nginx"
     "kubernetes_disabled_components" = []
     "kubernetes_ingress_annotations" = {
       "external-dns/is-public" : "true"

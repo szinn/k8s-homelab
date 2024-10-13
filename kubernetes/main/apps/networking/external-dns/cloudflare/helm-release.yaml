@@ -46,7 +46,7 @@ spec:
             name: *secret
             key: CF_API_KEY
     extraArgs:
-      - --ingress-class=external
+      - --ingress-class=external-nginx
       - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
       - --crd-source-kind=DNSEndpoint
       - --cloudflare-proxied
