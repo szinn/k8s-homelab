@@ -94,7 +94,7 @@ spec:
       image:
         registry: ghcr.io
         repository: nginxinc/nginx-unprivileged
-        tag: 1.27-alpine@sha256:cf998f0d01644f219ba93374491336bad1b6c964ac975d3e19d2ea81dd8dc526
+        tag: 1.27-alpine@sha256:3377b22632f51119f888919903f0e90bd4d921cef72d2fdd72600b087f783e3e
       service:
         type: LoadBalancer
         annotations:
