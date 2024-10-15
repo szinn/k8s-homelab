@@ -97,7 +97,7 @@ spec:
         controller: server
         ports:
           http:
-            port: 3001
+            port: 2283
       machine-learning:
         controller: machine-learning
         ports:
