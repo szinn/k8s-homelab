@@ -6,7 +6,7 @@ metadata:
 spec:
   image:
     repository: victoriametrics/victoria-metrics
-    tag: v1.105.0@sha256:0c97b37acbf3b7a4df254cd93ceebcb2edfc86184c54b8727b6080b16c43665b
+    tag: v1.105.0@sha256:92497b12763df462897af62a492eee7a0e2e71b9d4769c24f1d5d645d00d4e94
   extraArgs:
     dedup.minScrapeInterval: 60s
     maxLabelsPerTimeseries: "40"
