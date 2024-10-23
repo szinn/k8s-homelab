@@ -34,7 +34,7 @@ jobs:
           configuration-path: .github/labeler.yaml
 
       - name: Label Size
-        uses: pascalgn/size-label-action@be08a2d5f857dc99c5b9426cdb5a8ea1aa7f0399 # v0.5.4
+        uses: pascalgn/size-label-action@f8edde36b3be04b4f65dcfead05dc8691b374348 # v0.5.5
         env:
           GITHUB_TOKEN: "${{ steps.app-token.outputs.token }}"
         with:
