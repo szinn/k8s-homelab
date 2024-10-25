@@ -26,6 +26,183 @@ tasks:
       vars:
         - command
 
+  down_all:
+    desc: Turn down all applications using Postgres
+    cmds:
+      - task: _down
+        vars:
+          NAMESPACE: security
+          HELMRELEASE: dmarc-report
+          KUSTOMIZATION: security-dmarc-report
+          SERVICES: statefulset/dmarc-report
+      - task: _down
+        vars:
+          NAMESPACE: media
+          HELMRELEASE: lidarr
+          KUSTOMIZATION: media-lidarr
+          SERVICES: deployment/lidarr
+      - task: _down
+        vars:
+          NAMESPACE: media
+          HELMRELEASE: prowlarr
+          KUSTOMIZATION: media-prowlarr
+          SERVICES: deployment/prowlarr
+      - task: _down
+        vars:
+          NAMESPACE: media
+          HELMRELEASE: radarr-4k
+          KUSTOMIZATION: media-radarr-4k
+          SERVICES: deployment/radarr-4k
+      - task: _down
+        vars:
+          NAMESPACE: media
+          HELMRELEASE: radarr
+          KUSTOMIZATION: media-radarr
+          SERVICES: deployment/radarr
+      - task: _down
+        vars:
+          NAMESPACE: self-hosted
+          HELMRELEASE: shlink-api
+          KUSTOMIZATION: self-hosted-shlink
+          SERVICES: deployment/shlink-api
+      - task: _down
+        vars:
+          NAMESPACE: media
+          HELMRELEASE: sonarr
+          KUSTOMIZATION: media-sonarr
+          SERVICES: deployment/sonarr
+      - task: _down
+        vars:
+          NAMESPACE: observability
+          HELMRELEASE: teslamate
+          KUSTOMIZATION: observability-teslamate
+          SERVICES: deployment/teslamate
+      - task: _down
+        vars:
+          NAMESPACE: self-hosted
+          HELMRELEASE: wikijs
+          KUSTOMIZATION: self-hosted-wikijs
+          SERVICES: deployment/wikijs
+      - task: _down
+        vars:
+          NAMESPACE: security
+          HELMRELEASE: authentik
+          KUSTOMIZATION: security-authentik
+          SERVICES: deployment/authentik-server deployment/authentik-worker
+      - task: _down
+        vars:
+          NAMESPACE: home
+          HELMRELEASE: home-assistant
+          KUSTOMIZATION: home-home-assistant
+          SERVICES: deployment/home-assistant
+      - task: _down
+        vars:
+          NAMESPACE: observability
+          HELMRELEASE: gatus
+          KUSTOMIZATION: observability-gatus
+          SERVICES: deployment/gatus
+      - task: _down
+        vars:
+          NAMESPACE: observability
+          HELMRELEASE: grafana
+          KUSTOMIZATION: observability-grafana
+          SERVICES: deployment/grafana
+
+  up_all:
+    desc: Turn down all applications using Postgres
+    cmds:
+      - task: _up
+        vars:
+          NAMESPACE: security
+          HELMRELEASE: dmarc-report
+          KUSTOMIZATION: security-dmarc-report
+          SERVICES: statefulset/dmarc-report
+          REPLICAS: 1
+      - task: _up
+        vars:
+          NAMESPACE: media
+          HELMRELEASE: lidarr
+          KUSTOMIZATION: media-lidarr
+          SERVICES: deployment/lidarr
+          REPLICAS: 1
+      - task: _up
+        vars:
+          NAMESPACE: media
+          HELMRELEASE: prowlarr
+          KUSTOMIZATION: media-prowlarr
+          SERVICES: deployment/prowlarr
+          REPLICAS: 1
+      - task: _up
+        vars:
+          NAMESPACE: media
+          HELMRELEASE: radarr-4k
+          KUSTOMIZATION: media-radarr-4k
+          SERVICES: deployment/radarr-4k
+          REPLICAS: 1
+      - task: _up
+        vars:
+          NAMESPACE: media
+          HELMRELEASE: radarr
+          KUSTOMIZATION: media-radarr
+          SERVICES: deployment/radarr
+          REPLICAS: 1
+      - task: _up
+        vars:
+          NAMESPACE: self-hosted
+          HELMRELEASE: shlink-api
+          KUSTOMIZATION: self-hosted-shlink
+          SERVICES: deployment/shlink-api
+          REPLICAS: 1
+      - task: _up
+        vars:
+          NAMESPACE: media
+          HELMRELEASE: sonarr
+          KUSTOMIZATION: media-sonarr
+          SERVICES: deployment/sonarr
+          REPLICAS: 1
+      - task: _up
+        vars:
+          NAMESPACE: observability
+          HELMRELEASE: teslamate
+          KUSTOMIZATION: observability-teslamate
+          SERVICES: deployment/teslamate
+          REPLICAS: 1
+      - task: _up
+        vars:
+          NAMESPACE: self-hosted
+          HELMRELEASE: wikijs
+          KUSTOMIZATION: self-hosted-wikijs
+          SERVICES: deployment/wikijs
+          REPLICAS: 1
+      - task: _up
+        vars:
+          NAMESPACE: security
+          HELMRELEASE: authentik
+          KUSTOMIZATION: security-authentik
+          SERVICES: deployment/authentik-server deployment/authentik-worker
+          REPLICAS: 1
+      - task: _up
+        vars:
+          NAMESPACE: home
+          HELMRELEASE: home-assistant
+          KUSTOMIZATION: home-home-assistant
+          SERVICES: deployment/home-assistant
+          REPLICAS: 1
+      - task: _up
+        vars:
+          NAMESPACE: observability
+          HELMRELEASE: gatus
+          KUSTOMIZATION: observability-gatus
+          SERVICES: deployment/gatus
+          REPLICAS: 1
+      - task: _up
+        vars:
+          NAMESPACE: observability
+          HELMRELEASE: grafana
+          KUSTOMIZATION: observability-grafana
+          SERVICES: deployment/grafana
+          REPLICAS: 1
+
   restore_dmarc:
     desc: Restore dmarc database
     cmds:
