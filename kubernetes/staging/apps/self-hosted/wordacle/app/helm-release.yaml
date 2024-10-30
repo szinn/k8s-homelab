@@ -36,7 +36,7 @@ spec:
           main:
             image:
               repository: ghcr.io/szinn/wordacle
-              tag: latest@sha256:31c8eed85b7adc6065b0b6d7a074637dd40573c3d21eb1cd5015c3a140bcc007
+              tag: latest@sha256:91a63c28331236ee7689f52ad37f8cc7a2500ab540eb97ba2bd59d5df858e5e0
               pullPolicy: Always
             env:
               TZ: ${CONFIG_TIMEZONE}
