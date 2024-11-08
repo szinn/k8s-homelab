@@ -12,7 +12,7 @@ spec:
       restartPolicy: OnFailure
       containers:
         - name: list
-          image: docker.io/restic/restic:0.17.2@sha256:a62b28aa521d8613281c831b0fb3a3911b90d36ad8bf279ecd3e94dd6c467616
+          image: docker.io/restic/restic:0.17.3@sha256:8f5a62b422a2cb1277ea0dd6e826fe1acf649e5b9f02d60e5268d5fd1976255a
           args:
             - snapshots
           envFrom:
