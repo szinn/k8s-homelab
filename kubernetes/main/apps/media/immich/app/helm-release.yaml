@@ -87,7 +87,7 @@ spec:
           main:
             image:
               repository: public.ecr.aws/docker/library/redis
-              tag: 7.4.1@sha256:5fba7fb1c811b1cd452544cad5b161116d4da7bad9dece1802ea87787c0b8963
+              tag: 7.4.1@sha256:69c2f5bd13c8d3c099a08c002228a30f896e6873f2759de5861cc99d9ab35a84
             env:
               REDIS_REPLICATION_MODE: master
             command: ["redis-server"]
