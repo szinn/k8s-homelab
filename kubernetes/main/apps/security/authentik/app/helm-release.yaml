@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: authentik
-      version: 2024.10.1
+      version: 2024.10.2
       sourceRef:
         kind: HelmRepository
         name: authentik-charts
