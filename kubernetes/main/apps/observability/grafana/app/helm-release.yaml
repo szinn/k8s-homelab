@@ -382,7 +382,7 @@ spec:
         coredns:
           # renovate: dashboardName="Kubernetes / System / CoreDNS"
           gnetId: 15762
-          revision: 18
+          revision: 19
           datasource: Prometheus
         global:
           # renovate: dashboardName="Kubernetes / Views / Global"
@@ -392,7 +392,7 @@ spec:
         namespaces:
           # renovate: dashboardName="Kubernetes / Views / Namespaces"
           gnetId: 15758
-          revision: 40
+          revision: 41
           datasource: Prometheus
         nodes:
           # renovate: dashboardName="Kubernetes / Views / Nodes"
@@ -402,7 +402,7 @@ spec:
         pods:
           # renovate: dashboardName="Kubernetes / Views / Pods"
           gnetId: 15760
-          revision: 32
+          revision: 34
           datasource: Prometheus
         volumes:
           # renovate: dashboardName="K8s / Storage / Volumes / Cluster"
@@ -594,7 +594,7 @@ spec:
         prometheus:
           # renovate: dashboardName="Prometheus"
           gnetId: 19105
-          revision: 5
+          revision: 6
           datasource: Prometheus
         vm-agent:
           # renovate: dashboardName="VictoriaMetrics - vmagent"
