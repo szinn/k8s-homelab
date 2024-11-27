@@ -72,16 +72,14 @@ spec:
             image:
               repository: ghcr.io/coder/code-server
               tag: 4.95.3@sha256:6d74583d68179cbb6ddadc2518b450d2ac3eaec2d342474fe1941e03371cd2cf
-            args:
-              - --auth
-              - none
-              - --user-data-dir
-              - "/config/.vscode"
-              - --extensions-dir
-              - "/config/.vscode"
-              - --port
-              - "8080"
-              - "/config"
+            args: [
+              "--auth", "none",
+              "--disable-telemetry", "--disable-update-check",
+              "--user-data-dir", "/config/.vscode",
+              "--extensions-dir", "/config/.vscode",
+              "--port", "8080",
+              "/config"
+            ]
             env:
               TZ: "${CONFIG_TIMEZONE}"
     service:

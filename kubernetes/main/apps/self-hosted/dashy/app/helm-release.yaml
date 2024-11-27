@@ -46,16 +46,14 @@ spec:
               tag: 4.95.3@sha256:6d74583d68179cbb6ddadc2518b450d2ac3eaec2d342474fe1941e03371cd2cf
             securityContext:
               runAsUser: 0
-            args:
-              - --auth
-              - none
-              - --user-data-dir
-              - "/tmp/.vscode"
-              - --extensions-dir
-              - "/tmp/.vscode"
-              - --port
-              - "8081"
-              - "/config"
+            args: [
+              "--auth", "none",
+              "--disable-telemetry", "--disable-update-check",
+              "--user-data-dir", "/tmp/.vscode",
+              "--extensions-dir", "/tmp/.vs1ode",
+              "--port", "8081",
+              "/config"
+            ]
     service:
       main:
         controller: main
