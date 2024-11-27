@@ -429,8 +429,9 @@ spec:
         #     - name: "VAR_BLOCKY_URL"
         #       value: 'http:\/\/10.0.0.7:4000'
         cert-manager:
-          url: https://raw.githubusercontent.com/szinn/k8s-homelab/main/kubernetes/main/apps/cert-manager/cert-manager/app/cert-manager-dashboard.json
-          datasource: Prometheus
+          # renovate: depName="Cert-manager-Kubernetes"
+          gnetId: 20842
+          revision: 3
         cloudflared:
           # renovate: dashboardName="Cloudflare Tunnels (cloudflared)"
           gnetId: 17457
