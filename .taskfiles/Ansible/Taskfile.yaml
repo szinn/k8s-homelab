@@ -17,7 +17,7 @@ tasks:
     desc: Configure the ansible environment
     cmds:
       - true && {{.PYTHON_BIN}} -m venv {{.ROOT_DIR}}/.venv
-      - .venv/bin/ansible-galaxy collection install -r "{{.ANSIBLE_DIR}}/requirements.yaml"
+      - ansible-galaxy collection install -r "{{.ANSIBLE_DIR}}/requirements.yaml"
 
   fetch-certificate:
     desc: Fetch domain certificate from cluster
