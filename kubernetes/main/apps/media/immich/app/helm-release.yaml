@@ -125,6 +125,12 @@ spec:
                   port: http
 
     persistence:
+      matplotlib:
+        type: emptyDir
+        advancedMounts:
+          server:
+            main:
+              - path: /config/matplotlib
       library:
         existingClaim: immich-nfs
         advancedMounts:
