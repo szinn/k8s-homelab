@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/sh
 OUTPUT_DIR=$1
 TLS_CERT="tech-wildcard-tls"
 TLS_NAMESPACE="networking"

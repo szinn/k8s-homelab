@@ -42,8 +42,6 @@
   "yaml.customTags": ["!env_var"],
   "explorer.autoReveal": false,
   "markdownlint.config": {
-    "MD033": false,
-    "MD041": false,    
-    "MD045": false
+    "extends": ".ci/markdownlint/.markdownlint.yaml"
   }
 }

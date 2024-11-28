@@ -60,7 +60,7 @@ jobs:
           ACTION_ACTIONLINT_CONFIG_FILE: .ci/actionlint/actionlint.yml
           ANSIBLE_ANSIBLE_LINT_ARGUMENTS: "-c .ci/ansible-lint/.ansible-lint ansible"
           COPYPASTE_JSCPD_CONFIG_FILE: .ci/jscpd/jscpd.json
-          MARKDOWN_MARKDOWNLINT_CONFIG_FILE: .ci/markdownlint/markdownlint.config.yaml
+          MARKDOWN_MARKDOWNLINT_CONFIG_FILE: .ci/markdownlint/markdownlint.yaml
           MARKDOWN_MARKDOWNLINT_RULES_PATH: .ci/markdownlint/
           PYTHON_FLAKE8_CONFIG_FILE: .ci/flake8/.flake8
           YAML_YAMLLINT_CONFIG_FILE: .ci/yamllint/.yamllint.yaml
