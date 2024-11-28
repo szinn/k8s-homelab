@@ -112,10 +112,7 @@ spec:
     ingress:
       main:
         enabled: true
-        className: external-nginx
-        annotations:
-          external-dns/is-public: "true"
-          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN_NAME}
+        className: internal-nginx
         hosts:
           - host: photos.${SECRET_DOMAIN_NAME}
             paths:
