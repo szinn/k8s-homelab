@@ -53,7 +53,7 @@ spec:
           main:
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v1.121.0@sha256:851c02f28891f1854c5b5762ee8d2e254e2de528cfe3627b2fbcb37a7f108ff3
+              tag: v1.122.0@sha256:20b5b6a2845e40ff18cc3b3ae7d9261638f40511ea73c3c9ececd428e95fb43e
             envFrom:
               - secretRef:
                   name: immich-secret
@@ -76,7 +76,7 @@ spec:
           main:
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
-              tag: v1.121.0@sha256:1b8494bb9fe2194f2dc72c4d6b0104e16718f50e8772d54ade57909770816ad1
+              tag: v1.122.0@sha256:c52a1eacd797d94461b11336655595e2083524ecd2e513a8fb9d9d83ccbede94
             envFrom:
               - secretRef:
                   name: immich-secret
