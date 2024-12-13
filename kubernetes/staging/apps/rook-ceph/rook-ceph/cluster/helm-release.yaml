@@ -24,8 +24,6 @@ spec:
   upgrade:
     remediation:
       retries: 5
-  driftDetection:
-    mode: enabled
   values:
     toolbox:
       enabled: true
