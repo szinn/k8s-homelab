@@ -6,7 +6,7 @@ metadata:
 spec:
   image:
     repository: victoriametrics/vmalert
-    tag: v1.107.0@sha256:225375d60c6fb562927f733f2d00e2dc98c4543c095c794757637cff21dde7c0
+    tag: v1.108.0@sha256:54676dc11dfe323d8b015a6fa8730b7e24bf8ba5a49b0fd8ad80212602e7fc9b
   datasource:
     url: http://vmsingle-stack.observability.svc:8429
   evaluationInterval: 1m
