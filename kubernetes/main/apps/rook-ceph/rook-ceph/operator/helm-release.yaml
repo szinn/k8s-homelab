@@ -31,6 +31,7 @@ spec:
     keepHistory: false
   values:
     csi:
+      enableVolumeGroupSnapshot: false # TODO: enable this when v1beta1 CRDs are available
       enableLiveness: true
       serviceMonitor:
         enabled: true

@@ -32,6 +32,7 @@ spec:
       enabled: true
     pspEnable: false
     csi:
+      enableVolumeGroupSnapshot: false # TODO: enable this when v1beta1 CRDs are available
       csiAddons:
         enabled: false
       enableLiveness: true
