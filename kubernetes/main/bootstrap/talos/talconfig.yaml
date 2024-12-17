@@ -108,7 +108,7 @@ controlPlane:
       systemExtensions:
         officialExtensions:
           - siderolabs/intel-ucode
-          - siderolabs/i915-ucode
+          - siderolabs/i915
 
   patches:
     # Custom Talos installer patch
@@ -256,7 +256,7 @@ worker:
       systemExtensions:
         officialExtensions:
           - siderolabs/intel-ucode
-          - siderolabs/i915-ucode
+          - siderolabs/i915
 
   patches:
     - *customTalosPatch
