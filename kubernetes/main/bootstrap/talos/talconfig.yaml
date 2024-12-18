@@ -180,7 +180,7 @@ controlPlane:
             kubernetes:
               disabled: false
             service:
-              disabled: true
+              disabled: false
         controllerManager:
           extraArgs:
             bind-address: 0.0.0.0
@@ -211,25 +211,17 @@ controlPlane:
           - op: create
             path: /etc/cri/conf.d/20-customization.part
             content: |-
-              [plugins."io.containerd.grpc.v1.cri"]
-                enable_unprivileged_ports = true
-                enable_unprivileged_icmp = true
-              [plugins."io.containerd.grpc.v1.cri".containerd]
-                discard_unpacked_layers = false
-              [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
+              [plugins."io.containerd.cri.v1.images"]
                 discard_unpacked_layers = false
           - op: overwrite
             path: /etc/nfsmount.conf
-            permissions: 420
+            permissions: 0o644
             content: |-
               [ NFSMount_Global_Options ]
               nfsvers=4.2
               hard=True
               noatime=True
-              nodiratime=True
-              rsize=131072
-              wsize=131072
-              nconnect=8
+              nconnect=16
 
     # Custom sysctl settings
     - &sysctlPatch |-

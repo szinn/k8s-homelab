@@ -155,7 +155,7 @@ controlPlane:
             kubernetes:
               disabled: false
             service:
-              disabled: true
+              disabled: false
         # controllerManager:
         #   extraArgs:
         #     bind-address: 0.0.0.0
@@ -186,12 +186,7 @@ controlPlane:
           - op: create
             path: /etc/cri/conf.d/20-customization.part
             content: |-
-              [plugins."io.containerd.grpc.v1.cri"]
-                enable_unprivileged_ports = true
-                enable_unprivileged_icmp = true
-              [plugins."io.containerd.grpc.v1.cri".containerd]
-                discard_unpacked_layers = false
-              [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
+              [plugins."io.containerd.cri.v1.images"]
                 discard_unpacked_layers = false
 
     # Custom sysctl settings
