@@ -13,7 +13,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: ${SECRET_ATLAS_NFS_SERVER}
-    path: "/mnt/nvme/incomplete"
+    path: "/mnt/atlas/media/Downloads/incomplete"
   mountOptions:
     - nfsvers=4.2
     - nconnect=8
