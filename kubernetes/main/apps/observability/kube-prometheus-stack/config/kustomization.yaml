@@ -6,3 +6,4 @@ resources:
   # - blocky-scrape.yaml
   - minio-scrape.yaml
   - node-exporter-scrape.yaml
+  - smartctl-exporter-scrape.yaml

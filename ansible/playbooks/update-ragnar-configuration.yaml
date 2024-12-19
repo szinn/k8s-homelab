@@ -1,0 +1,16 @@
+- name: Update Ragnar Configuration
+  hosts: ragnar
+  tasks:
+    - name: Copy ntp allow
+      copy:
+        src: ../files/ragnar/0-ntp-allow.conf
+        dest: /etc/chrony/conf.d/0-ntp-allow.conf
+        owner: root
+        group: root
+        mode: u+rw,g-wx,o-wx
+    - name: Restart chrony
+      ansible.builtin.systemd:
+        name: "chrony"
+        state: restarted
+        enabled: true
+        daemon_reload: true
