@@ -116,11 +116,22 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
         seccompProfile: { type: RuntimeDefault }
     service:
-      app:
+      api:
         controller: onepassword-connect
         ports:
           http:
             port: *apiPort
+    ingress:
+      api:
+        enabled: true
+        className: internal-nginx
+        hosts:
+          - host: "onepassword-connect.${SECRET_DOMAIN_NAME}"
+            paths:
+              - path: /
+                service:
+                  identifier: api
+                  port: http
     persistence:
       config:
         type: emptyDir
