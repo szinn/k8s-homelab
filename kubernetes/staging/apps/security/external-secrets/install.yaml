@@ -27,6 +27,8 @@ spec:
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes
+  dependsOn:
+    - name: security-external-secrets
   prune: true
-  wait: true
+  wait: false
   interval: 10m
