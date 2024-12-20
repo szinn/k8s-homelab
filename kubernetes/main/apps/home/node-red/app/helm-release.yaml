@@ -45,7 +45,7 @@ spec:
           main:
             image:
               repository: docker.io/nodered/node-red
-              tag: 4.0.7@sha256:4c54cee64a41038bbed95207e964fafbeb06b8060ab3e48d649d4b2d57a4dbef
+              tag: 4.0.8@sha256:871225abb46d62e434c75c73ec264c406ae1d0ea09b365ed9ffa122fdc327879
             env:
               TZ: "${CONFIG_TIMEZONE}"
               NODE_RED_ENABLE_PROJECTS: "true"
