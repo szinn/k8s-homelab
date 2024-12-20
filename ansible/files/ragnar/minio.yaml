@@ -1,0 +1,14 @@
+services:
+  minio:
+    command: server /data --console-address ":9001"
+    container_name: minio
+    environment:
+      MINIO_ROOT_PASSWORD: <REDACTED>
+      MINIO_ROOT_USER: <REDACTED>
+    image: quay.io/minio/minio:RELEASE.2024-12-13T22-19-12Z
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    user: '473:473'
+    volumes:
+      - /mnt/atlas/Apps/minio:/data
