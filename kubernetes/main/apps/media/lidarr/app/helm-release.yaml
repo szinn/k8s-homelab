@@ -51,7 +51,7 @@ spec:
           app:
             image:
               repository: ghcr.io/szinn/lidarr-develop
-              tag: 2.8.2.4493@sha256:6cdd896d416cddebf80f133a638d0ea17441b6c24a32e5512ea15a5b6b26a8fe
+              tag: 2.9.0.4508@sha256:f09b802f3fff468489435dcc0124bd6aed6741c21302f9aed9f99b710e3c5d7d
             env:
               TZ: ${CONFIG_TIMEZONE}
               LIDARR__INSTANCE_NAME: Lidarr
