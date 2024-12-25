@@ -18,7 +18,7 @@ spec:
         bearer-token: "{{ .minio_PROMETHEUS_TOKEN }}"
   dataFrom:
     - extract:
-        key: minio-ragnar
+        key: minio
       rewrite:
         - regexp:
             source: "(.*)"
