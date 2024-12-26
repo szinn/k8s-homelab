@@ -44,6 +44,7 @@ spec:
     args:
       - --nodes=$(NODE_IP)
       - upgrade
-      - --image=factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba:$(SYSTEM_UPGRADE_PLAN_LATEST_VERSION)
+      - --image=factory.talos.dev/installer/4b3cd373a192c8469e859b7a0cfbed3ecc3577c4a2d346a37b0aeff9cd17cdb0:$(SYSTEM_UPGRADE_PLAN_LATEST_VERSION)
       - --preserve=true
+      - --reboot-mode "powercycle"
       - --wait=false
