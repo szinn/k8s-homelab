@@ -42,6 +42,8 @@ spec:
       ingressClassResource:
         default: true
       config:
+        allow-snippet-annotations: true
+        annotations-risk-level: Critical
         custom-http-errors: >-
           401,403,404,500,501,502,503
         client-header-timeout: 120
