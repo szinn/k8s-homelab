@@ -136,6 +136,17 @@
         "commitMessageTopic": "{{{groupName}}} group"
       },
       "separateMinorPatch": false
+    },
+    {
+      "description": "TrueNAS",
+      "groupName": "TrueNAS",
+      "fileMatch": [
+        "ansible/files/ragnar/.+\\.ya?ml$"
+      ],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
+      "separateMinorPatch": false
     }
   ]
 }

@@ -22,6 +22,12 @@
     "**/archive/**",
     "**/*.sops.*"
   ],
+  "docker": {
+    "fileMatch": [
+      "ansible/files/ragnar/.+\\.ya?ml$",
+      "kubernetes/.+\\.ya?ml$"
+    ]
+  },
   "flux": {
     "fileMatch": ["kubernetes/.+\\.ya?ml$"]
   },
