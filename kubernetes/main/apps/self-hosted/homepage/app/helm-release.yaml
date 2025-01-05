@@ -32,7 +32,7 @@ spec:
           app:
             image:
               repository: ghcr.io/gethomepage/homepage
-              tag: v0.10.7@sha256:b261c981a866a0e287205394bf365bd8cdb9152469a85ec569d7bfcd7812cf14
+              tag: v0.10.8@sha256:9bc98f11977b9067be1f873e2decd6a30a9b06a2741c58ecdc8c40ca0cdcba79
             env:
               TZ: ${CONFIG_TIMEZONE}
             envFrom:
