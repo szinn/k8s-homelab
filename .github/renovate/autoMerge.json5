@@ -52,8 +52,9 @@
         "ghcr.io/onedr0p/sabnzbd",
         "ghcr.io/onedr0p/sonarr",
         "ghcr.io/onedr0p/sonarr-develop",
-        "ghcr.io/szinn/lidarr-develop"
-      ]
+        "ghcr.io/szinn/lidarr-develop",
+        "ghcr.io/szinn/readarr-develop"
+       ]
     }
   ]
 }
