@@ -96,6 +96,15 @@ spec:
               - path: /app/user-data
             code-server:
               - path: /config
+      icons:
+        enabled: true
+        type: configMap
+        name: dashy-icons
+        advancedMounts:
+          main:
+            main:
+              - path: /app/user-data/item-icons
+                readOnly: true
       temp:
         enabled: true
         type: emptyDir

@@ -6,3 +6,10 @@ resources:
   - dashy-secrets.yaml
   - helm-release.yaml
   - ../../../../templates/volsync
+configMapGenerator:
+  - name: dashy-icons
+    files:
+      - pikvm.png=./icons/pikvm.png
+      - pikvm-light.png=./icons/pikvm-light.png
+generatorOptions:
+  disableNameSuffixHash: true
