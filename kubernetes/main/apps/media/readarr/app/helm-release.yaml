@@ -42,7 +42,7 @@ spec:
           main:
             image:
               repository: ghcr.io/szinn/readarr-develop
-              tag: 0.4.7.2718@sha256:41a0305b08d714e05f6d8d1ecd3a35ffd136ccec0a0fa7c04ed8c5930775b7ac
+              tag: 0.4.7.2718@sha256:b27fa648e9e6fe81f82949b8e526d30e563d70d128c41b8effd7f3019fad6711
             env:
               TZ: ${CONFIG_TIMEZONE}
               READARR__APP__INSTANCENAME: Readarr
