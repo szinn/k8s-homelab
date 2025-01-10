@@ -44,6 +44,24 @@ tasks:
     desc: Rebuild all cluster configuration
     cmd: bash .taskfiles/Bootstrap/_scripts/build-config.sh
 
+  dump:
+    desc: Dump resources
+    preconditions:
+      - which helmfile kubectl
+      - test -f "${TALOSCONFIG}"
+      - test -f {{.CLUSTER_DIR}}/bootstrap/helmfile.yaml
+      - test -f {{.CLUSTER_DIR}}/bootstrap/templates/resources.yaml.j2
+      - talosctl --context {{.cluster}} config info
+    requires:
+      vars:
+        - cluster
+    env:
+      TALOSCONFIG: "{{.CLUSTER_DIR}}/talosconfig"
+    vars:
+      CLUSTER_DIR: "{{.KUBERNETES_DIR}}/{{.cluster}}"
+    cmds:
+      - op run --env-file {{.CLUSTER_DIR}}/bootstrap/bootstrap.env --no-masking -- minijinja-cli "{{.CLUSTER_DIR}}/bootstrap/templates/resources.yaml.j2"
+
   deploy:
     desc: Bootstrap Apps [K8S_CLUSTER={{.K8S_CLUSTER}}]
     preconditions:

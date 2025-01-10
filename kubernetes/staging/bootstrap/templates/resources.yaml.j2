@@ -30,13 +30,13 @@ stringData:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: network
+  name: networking
 ---
 apiVersion: v1
 kind: Secret
 metadata:
-  name: devbu-io-tls
-  namespace: network
+  name: wildcard-tls
+  namespace: networking
   annotations:
     cert-manager.io/alt-names: '*.test.zinn.ca,test.zinn.ca'
     cert-manager.io/certificate-name: wildcard
