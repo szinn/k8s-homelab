@@ -70,7 +70,7 @@ releases:
   - name: flux-instance
     namespace: flux-system
     chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-instance
-    version: 0.12.0
+    version: 0.13.0
     wait: false
     values:
       - ../apps/flux-system/flux-operator/instance/helm-values.yaml
