@@ -1,0 +1,9 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: dbms
+resources:
+  - postgres-superuser-secret.yaml
+  - helm-release.yaml
+  - service.yaml

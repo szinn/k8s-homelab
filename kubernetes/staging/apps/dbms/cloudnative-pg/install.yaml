@@ -1,0 +1,38 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: dbms-cloudnative-pg
+  namespace: flux-system
+spec:
+  targetNamespace: dbms
+  path: ./kubernetes/staging/apps/dbms/cloudnative-pg/cloudnative-pg
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  dependsOn:
+    - name: security-external-secrets-stores
+    - name: rook-ceph-cluster
+  prune: true
+  wait: true
+  interval: 10m
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: dbms-cloudnative-pg-cluster
+  namespace: flux-system
+spec:
+  targetNamespace: dbms
+  path: ./kubernetes/staging/apps/dbms/cloudnative-pg/cluster
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  dependsOn:
+    - name: dbms-cloudnative-pg
+    - name: security-external-secrets-stores
+  prune: true
+  wait: true
+  interval: 10m
