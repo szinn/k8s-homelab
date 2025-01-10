@@ -47,7 +47,8 @@ repos:
       - id: forbid-secrets
         exclude: |
           (?x)^(
-            kubernetes/staging/apps/kube-system/kubernetes-dashboard/app/rbac.yaml
+            kubernetes/staging/apps/kube-system/kubernetes-dashboard/app/rbac.yaml|
+            kubernetes/staging.old/apps/kube-system/kubernetes-dashboard/app/rbac.yaml
           )$
 
   - repo: https://github.com/igorshubovych/markdownlint-cli

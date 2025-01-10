@@ -1,19 +1,17 @@
 ---
 clusterName: staging
-
 # renovate: depName=ghcr.io/siderolabs/installer datasource=docker
 talosVersion: v1.9.1
 # renovate: depName=ghcr.io/siderolabs/kubelet datasource=docker
 kubernetesVersion: v1.32.0
-
-endpoint: https://staging.zinn.tech:6443
+endpoint: https://staging.${SECRET_TECH_DOMAIN_NAME}:6443
 
 cniConfig:
   name: none
 
 additionalApiServerCertSans: &san
-  - &talosControlPlaneVip 10.12.0.15
-  - staging.zinn.tech
+  - ${clusterEndpointIP}
+  - staging.${SECRET_TECH_DOMAIN_NAME}
   - 127.0.0.1
 
 additionalMachineCertSans: *san
@@ -21,12 +19,12 @@ additionalMachineCertSans: *san
 domain: cluster.local
 
 clusterSvcNets:
-  - 10.210.0.0/16
+  - ${clusterServiceNets}
 clusterPodNets:
-  - 10.211.0.0/16
+  - ${clusterPodNets}
 
 nodes:
-  - hostname: stage-1.zinn.tech
+  - hostname: stage-1.${SECRET_TECH_DOMAIN_NAME}
     ipAddress: 10.12.0.16
     controlPlane: true
     installDisk: /dev/sda
@@ -36,7 +34,7 @@ nodes:
           driver: virtio_net
         dhcp: true
         mtu: 1500
-  - hostname: stage-2.zinn.tech
+  - hostname: stage-2.${SECRET_TECH_DOMAIN_NAME}
     ipAddress: 10.12.0.17
     controlPlane: true
     installDisk: /dev/sda
@@ -46,13 +44,43 @@ nodes:
           driver: virtio_net
         dhcp: true
         mtu: 1500
-  - hostname: stage-3.zinn.tech
+  - hostname: stage-3.${SECRET_TECH_DOMAIN_NAME}
     ipAddress: 10.12.0.18
     controlPlane: true
     installDisk: /dev/sda
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: de:ca:ff:10:12:12
+          driver: virtio_net
+        dhcp: true
+        mtu: 1500
+  - hostname: stage-4.${SECRET_TECH_DOMAIN_NAME}
+    ipAddress: 10.12.0.19
+    controlPlane: false
+    installDisk: /dev/sda
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: de:ca:ff:10:12:13
+          driver: virtio_net
+        dhcp: true
+        mtu: 1500
+  - hostname: stage-5.${SECRET_TECH_DOMAIN_NAME}
+    ipAddress: 10.12.0.20
+    controlPlane: false
+    installDisk: /dev/sda
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: de:ca:ff:10:12:14
+          driver: virtio_net
+        dhcp: true
+        mtu: 1500
+  - hostname: stage-6.${SECRET_TECH_DOMAIN_NAME}
+    ipAddress: 10.12.0.21
+    controlPlane: false
+    installDisk: /dev/sda
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: de:ca:ff:10:12:15
           driver: virtio_net
         dhcp: true
         mtu: 1500
@@ -79,32 +107,13 @@ controlPlane:
         network:
           disableSearchDomain: true
 
-    # Enable cluster discovery
-    - &clusterDiscoveryPatch |-
-      cluster:
-        discovery:
-          registries:
-            kubernetes:
-              disabled: true
-            service:
-              disabled: false
-
-    # Disable Host DNS
-    - &disableHostDNSPatch |-
-      machine:
-        features:
-          hostDNS:
-            enabled: true
-            resolveMemberNames: true
-            forwardKubeDNSToHost: false
-
     # Configure NTP
     - &ntpPatch |-
       machine:
         time:
           disabled: false
           servers:
-            - 10.10.0.2
+            - 10.0.0.7
 
     # Enable KubePrism
     - &kubePrismPatch |-
@@ -138,11 +147,15 @@ controlPlane:
     # Cluster configuration
     - |-
       cluster:
-        allowSchedulingOnMasters: true
-        coreDNS:
-            disabled: true
         proxy:
           disabled: true
+        discovery:
+          enabled: true
+          registries:
+            kubernetes:
+              disabled: false
+            service:
+              disabled: false
         # controllerManager:
         #   extraArgs:
         #     bind-address: 0.0.0.0
@@ -189,17 +202,15 @@ controlPlane:
       machine:
         network:
           extraHostEntries:
-            - ip: 10.12.0.15 # *talosControlPlaneVip
+            - ip: ${clusterEndpointIP}
               aliases:
-                - staging.zinn.tech
+                - staging.${SECRET_TECH_DOMAIN_NAME}
 
 worker:
   patches:
     # - *customTalosPatch
     # - *loggingPatch
     - *disableSearchDomainPatch
-    - *disableHostDNSPatch
-    - *clusterDiscoveryPatch
     - *ntpPatch
     - *kubePrismPatch
     - *containerdPatch

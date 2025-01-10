@@ -15,6 +15,18 @@ tasks:
       vars:
         - cluster
 
+  approve-certs:
+    desc: Approve pending certs on startup
+    cmds:
+      - for: {var: CERTS}
+        cmd: kubectl --kubeconfig {{.KUBERNETES_DIR}}/{{.cluster}}/kubeconfig --context {{.cluster}} certificate approve {{.ITEM}}
+    vars:
+      CERTS:
+        sh: kubectl --kubeconfig {{.KUBERNETES_DIR}}/{{.cluster}}/kubeconfig --context {{.cluster}} get certificatesigningrequests.certificates.k8s.io | grep Pending | awk '{print $1}' | grep -v NAME
+    requires:
+      vars:
+        - cluster
+
   alpine:
     desc: Run alpine container
     cmds:
