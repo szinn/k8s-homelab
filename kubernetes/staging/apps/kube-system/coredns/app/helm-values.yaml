@@ -6,7 +6,7 @@ serviceAccount:
   create: true
 service:
   name: kube-dns
-  clusterIP: 10.210.0.2
+  clusterIP: 10.210.0.10
 servers:
   - zones:
       - zone: .
@@ -21,7 +21,7 @@ servers:
       - name: ready
       - name: log
         configBlock: |-
-          class error
+          class all
       - name: prometheus
         parameters: 0.0.0.0:9153
       - name: kubernetes

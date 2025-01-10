@@ -13,7 +13,7 @@ spec:
   path: ./kubernetes/staging/apps/kube-system/coredns/app
   sourceRef:
     kind: GitRepository
-    name: homelab-kubernetes
+    name: flux-system
   prune: true
   wait: false
   interval: 30m

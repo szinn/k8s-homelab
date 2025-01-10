@@ -13,7 +13,7 @@ spec:
   path: ./kubernetes/staging/apps/system/spegel/app
   sourceRef:
     kind: GitRepository
-    name: homelab-kubernetes
+    name: flux-system
   prune: true
   wait: false
   interval: 30m

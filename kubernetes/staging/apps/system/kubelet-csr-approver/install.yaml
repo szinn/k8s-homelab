@@ -14,7 +14,7 @@ spec:
   path: ./kubernetes/staging/apps/system/kubelet-csr-approver/app
   sourceRef:
     kind: GitRepository
-    name: homelab-kubernetes
+    name: flux-system
   prune: true
   wait: false
   interval: 30m
