@@ -7,10 +7,14 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
+  targetNamespace: kube-system
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: cilium
   path: ./kubernetes/staging/apps/kube-system/cilium/app
   sourceRef:
     kind: GitRepository
-    name: homelab-kubernetes
+    name: flux-system
   prune: true
   wait: true
   interval: 30m
@@ -24,10 +28,11 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
+  targetNamespace: kube-system
   path: ./kubernetes/staging/apps/kube-system/cilium/config
   sourceRef:
     kind: GitRepository
-    name: homelab-kubernetes
+    name: flux-system
   dependsOn:
     - name: kube-system-cilium
   prune: true

@@ -30,8 +30,10 @@ tasks:
   sync:
     desc: Sync flux-cluster with the Git Repository
     cmds:
-      - flux --context {{.cluster}} reconcile source git homelab-kubernetes
-      - flux --context {{.cluster}} reconcile kustomization cluster
+      - flux --context {{.cluster}} reconcile source git flux-system
+      - flux --context {{.cluster}} reconcile kustomization cluster-repositories
+      - flux --context {{.cluster}} reconcile kustomization cluster-settings
+      - flux --context {{.cluster}} reconcile kustomization cluster-apps
     silent: false
     requires:
       vars:

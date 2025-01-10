@@ -3,5 +3,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - l2-policy.yaml
-  - lb-pool.yaml
+  # Pre Flux-Kustomizations
+  - namespace.yaml
+  # Flux-Kustomizations
+  - flux-operator/install.yaml
