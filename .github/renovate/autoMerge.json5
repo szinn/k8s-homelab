@@ -27,12 +27,7 @@
     },
     {
       "description": "Auto merge media releases",
-      "matchDatasources": [
-        "docker",
-        "github-releases",
-        "github-tags",
-        "helm"
-      ],
+      "matchDatasources": ["docker", "github-releases", "github-tags", "helm"],
       "automerge": true,
       "automergeType": "branch",
       "requiredStatusChecks": null,
@@ -54,7 +49,7 @@
         "ghcr.io/onedr0p/sonarr-develop",
         "ghcr.io/szinn/lidarr-develop",
         "ghcr.io/szinn/readarr-develop"
-       ]
+      ]
     }
   ]
 }

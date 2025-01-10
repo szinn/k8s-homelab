@@ -14,7 +14,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  prune: false  # never should be deleted
+  prune: false # never should be deleted
   wait: true
   interval: 30m
   timeout: 5m
@@ -36,7 +36,7 @@ spec:
     name: flux-system
   dependsOn:
     - name: flux-operator
-  prune: false  # never should be deleted
+  prune: false # never should be deleted
   wait: false
   interval: 30m
   timeout: 5m

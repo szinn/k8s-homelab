@@ -1,5 +1,3 @@
 {
-    "recommendations": [
-        "signageos.signageos-vscode-sops"
-    ]
+  "recommendations": ["signageos.signageos-vscode-sops"]
 }

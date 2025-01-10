@@ -415,13 +415,13 @@ tasks:
     cmds:
       - flux suspend helmrelease -n {{.NAMESPACE}} {{.HELMRELEASE}}
       - flux suspend kustomization {{.KUSTOMIZATION}}
-      - for: {var: SERVICES}
+      - for: { var: SERVICES }
         cmd: kubectl scale --replicas=0 -n {{.NAMESPACE}} {{.ITEM}}
 
   _up:
     desc: Bring a service up
     cmds:
-      - for: {var: SERVICES}
+      - for: { var: SERVICES }
         cmd: kubectl scale --replicas={{.REPLICAS}} -n {{.NAMESPACE}} {{.ITEM}}
       - flux resume helmrelease -n {{.NAMESPACE}} {{.HELMRELEASE}}
       - flux resume kustomization {{.KUSTOMIZATION}}

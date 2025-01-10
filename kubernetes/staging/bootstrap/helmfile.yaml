@@ -43,8 +43,7 @@ releases:
     namespace: system
     chart: postfinance/kubelet-csr-approver
     version: 1.2.5
-    values:
-      ["../apps/system/kubelet-csr-approver/app/helm-values.yaml"]
+    values: ["../apps/system/kubelet-csr-approver/app/helm-values.yaml"]
     needs:
       - kube-system/cilium
 

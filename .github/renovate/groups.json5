@@ -89,10 +89,7 @@
     {
       "description": "Github Action Runner",
       "groupName": "gha",
-      "matchPackagePatterns": [
-        "gha-runner-scale-set",
-        "gha-runner-scale-set-controller"
-      ],
+      "matchPackagePatterns": ["gha-runner-scale-set", "gha-runner-scale-set-controller"],
       "matchDatasources": ["docker", "github-releases"],
       "matchUpdateTypes": ["minor", "patch"],
       "group": {
@@ -103,10 +100,7 @@
     {
       "description": "Snapshot controller",
       "groupName": "SnapshotController",
-      "matchPackagePatterns": [
-        "snapshot-validation-webhook",
-        "snapshot-controller"
-      ],
+      "matchPackagePatterns": ["snapshot-validation-webhook", "snapshot-controller"],
       "matchDatasources": ["docker", "github-releases"],
       "matchUpdateTypes": ["minor", "patch"],
       "group": {
@@ -117,10 +111,7 @@
     {
       "description": "Dragonfly Operator",
       "groupName": "DragonflyOperator",
-      "matchPackagePatterns": [
-        "docker.dragonflydb.io/dragonflydb/operator",
-        "dragonflydb/dragonfly-operator"
-      ],
+      "matchPackagePatterns": ["docker.dragonflydb.io/dragonflydb/operator", "dragonflydb/dragonfly-operator"],
       "group": {
         "commitMessageTopic": "{{{groupName}}} group"
       },
@@ -129,9 +120,7 @@
     {
       "description": "Victoria Metrics",
       "groupName": "VictoriaMetrics",
-      "matchPackagePatterns": [
-        "victoriametrics/"
-      ],
+      "matchPackagePatterns": ["victoriametrics/"],
       "group": {
         "commitMessageTopic": "{{{groupName}}} group"
       },

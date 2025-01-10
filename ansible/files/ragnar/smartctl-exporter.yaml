@@ -1,11 +1,11 @@
 services:
   smartctl-exporter:
     command:
-      - '--smartctl.device-exclude=nvme0'
+      - "--smartctl.device-exclude=nvme0"
     # renovate: datasource=docker depName=quay.io/prometheuscommunity/smartctl-exporter
     image: quay.io/prometheuscommunity/smartctl-exporter:v0.13.0
     ports:
-      - '9633:9633'
+      - "9633:9633"
     privileged: True
     restart: always
     user: root

@@ -94,7 +94,7 @@ tasks:
         sh: ls {{.CLUSTER_CONFIG_ROOT}}/*.yaml
       TALOSCONFIG: "{{.CLUSTER_DIR}}/talosconfig"
     cmds:
-      - for: {var: CONFIG_FILES}
+      - for: { var: CONFIG_FILES }
         task: _apply-machineconfig
         vars:
           cluster: "{{.cluster}}"
@@ -160,11 +160,11 @@ tasks:
         sh: talosctl --talosconfig "{{.CLUSTER_DIR}}/talosconfig" --context {{.cluster}} config info --output json | jq --raw-output '.endpoints[0]'
     cmds:
       - talosctl kubeconfig
-          --context {{.cluster}}
-          --nodes {{.TALOS_CONTROLLER}}
-          --force
-          --force-context-name {{.cluster}}
-          "{{.KUBECONFIG}}"
+        --context {{.cluster}}
+        --nodes {{.TALOS_CONTROLLER}}
+        --force
+        --force-context-name {{.cluster}}
+        "{{.KUBECONFIG}}"
       - cmd: kubectl config delete-context "admin@{{.cluster}}"
         ignore_error: true
 

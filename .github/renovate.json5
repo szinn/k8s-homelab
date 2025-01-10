@@ -23,10 +23,7 @@
     "**/*.sops.*"
   ],
   "docker": {
-    "fileMatch": [
-      "ansible/files/ragnar/.+\\.ya?ml$",
-      "kubernetes/.+\\.ya?ml$"
-    ]
+    "fileMatch": ["ansible/files/ragnar/.+\\.ya?ml$", "kubernetes/.+\\.ya?ml$"]
   },
   "flux": {
     "fileMatch": ["kubernetes/.+\\.ya?ml$"]
@@ -35,9 +32,6 @@
     "fileMatch": ["kubernetes/.+\\.ya?ml$"]
   },
   "kubernetes": {
-    "fileMatch": [
-      "\\.taskfiles/.+\\.ya?ml(?:\\.j2)?$",
-      "kubernetes/.+\\.ya?ml$"
-    ]
+    "fileMatch": ["\\.taskfiles/.+\\.ya?ml(?:\\.j2)?$", "kubernetes/.+\\.ya?ml$"]
   }
 }

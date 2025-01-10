@@ -93,7 +93,7 @@ tasks:
   get-certs:
     desc: Fetch certificates from cluster
     cmds:
-      - for: {var: certs, split: " "}
+      - for: { var: certs, split: " " }
         cmd: kubectl --context {{.cluster}} get secrets -n networking {{.ITEM}}-tls -o yaml | grep -v "creationTimestamp:" | grep -v "resourceVersion:" | grep -v " uid:" > kubernetes/{{.cluster}}/apps/{{.ITEM}}-tls.yaml
     requires:
       vars:
@@ -105,7 +105,7 @@ tasks:
   put-certs:
     desc: Upload certificates to cluster
     cmds:
-      - for: {var: certs, split: " "}
+      - for: { var: certs, split: " " }
         cmd: kubectl --context {{.cluster}} apply -f kubernetes/{{.cluster}}/apps/{{.ITEM}}-tls.yaml
     requires:
       vars:

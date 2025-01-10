@@ -17,15 +17,10 @@
       "description": ["Custom versioning for minio"],
       "matchDatasources": ["docker"],
       "versioning": "regex:^RELEASE\\.(?<major>\\d+)-(?<minor>\\d+)-(?<patch>\\d+)T.*Z$",
-      "matchPackagePatterns": [
-        "minio",
-        "quay.io/minio/minio"
-      ]
+      "matchPackagePatterns": ["minio", "quay.io/minio/minio"]
     },
     {
-      "description": [
-        "Don't pin digests for packages that don't have/need a digest"
-      ],
+      "description": ["Don't pin digests for packages that don't have/need a digest"],
       "matchDatasources": ["docker"],
       "matchDepNames": [
         "ghcr.io/bjw-s/helm/app-template",
@@ -40,9 +35,7 @@
       "pinDigests": false
     },
     {
-      "description": [
-        "Don't pin digests for managers that don't need a digest"
-      ],
+      "description": ["Don't pin digests for managers that don't need a digest"],
       "matchManagers": ["flux", "helmfile"],
       "pinDigests": false
     }
