@@ -9,6 +9,7 @@ resources:
   - bjw-s-charts.yaml
   - cilium-charts.yaml
   - cloudnative-pg-charts.yaml
+  - coredns-charts.yaml
   - deliveryhero-charts.yaml
   - descheduler-charts.yaml
   - dragonfly-charts.yaml

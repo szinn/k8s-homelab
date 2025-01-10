@@ -1,0 +1,76 @@
+---
+autoDirectNodeRoutes: true
+
+bandwidthManager:
+  enabled: true
+  bbr: true
+
+bpf:
+  masquerade: true
+  tproxy: true
+
+cgroup:
+  automount:
+    enabled: false
+  hostRoot: /sys/fs/cgroup
+
+cluster:
+  name: staging
+  id: 1
+
+enableRuntimeDeviceDetection: true
+
+endpointRoutes:
+  enabled: true
+
+envoy:
+  enabled: false
+
+hubble:
+  enabled: false
+
+ipam:
+  mode: kubernetes
+
+ipv4NativeRoutingCIDR: 10.211.0.0/16
+
+k8sServiceHost: 127.0.0.1
+k8sServicePort: 7445
+kubeProxyReplacement: true
+kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
+
+l2announcements:
+  enabled: true
+
+loadBalancer:
+  algorithm: maglev
+  mode: dsr
+
+localRedirectPolicy: true
+
+operator:
+  enabled: true
+  rollOutPods: true
+
+rollOutCiliumPods: true
+
+routingMode: native
+
+securityContext:
+  privileged: true
+  capabilities:
+    ciliumAgent:
+      [
+        CHOWN,
+        KILL,
+        NET_ADMIN,
+        NET_RAW,
+        IPC_LOCK,
+        SYS_ADMIN,
+        SYS_RESOURCE,
+        DAC_OVERRIDE,
+        FOWNER,
+        SETGID,
+        SETUID
+      ]
+    cleanCiliumState: [NET_ADMIN, SYS_ADMIN, SYS_RESOURCE]
