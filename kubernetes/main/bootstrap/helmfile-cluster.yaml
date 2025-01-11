@@ -1,0 +1,31 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/helmfile
+
+helmDefaults:
+  wait: true
+  waitForJobs: true
+  timeout: 600
+  recreatePods: true
+  force: true
+
+releases:
+  - name: flux-operator
+    namespace: flux-system
+    chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator
+    version: 0.13.0
+    values:
+      - ../apps/flux-system/flux-operator/app/helm-values.yaml
+    needs:
+      - kube-system/cilium
+      - kube-system/coredns
+      - system/spegel
+
+  - name: flux-instance
+    namespace: flux-system
+    chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-instance
+    version: 0.12.0
+    wait: false
+    values:
+      - ../apps/flux-system/flux-operator/instance/helm-values.yaml
+    needs:
+      - flux-system/flux-operator
