@@ -54,12 +54,13 @@ spec:
               tag: 2.9.2.4521@sha256:4c3846fc1b53d00e70f9183dd0a078381f77ef9d930f910dc8208ec21556b421
             env:
               TZ: ${CONFIG_TIMEZONE}
-              LIDARR__INSTANCE_NAME: Lidarr
-              LIDARR__PORT: &port 8686
+              LIDARR__APP__INSTANCENAME: Lidarr
+              LIDARR__APP__THEME: dark
+              LIDARR__AUTH__METHOD: External
+              LIDARR__AUTH__REQUIRED: DisabledForLocalAddresses
+              LIDARR__LOG__DBENABLED: "False"
               LIDARR__LOG_LEVEL: info
-              LIDARR__AUTHENTICATION_METHOD: External
-              LIDARR__AUTHENTICATION_REQUIRED: DisabledForLocalAddresses
-              LIDARR__THEME: dark
+              LIDARR__SERVER__PORT: &port 8686
             envFrom:
               - secretRef:
                   name: lidarr-secret
