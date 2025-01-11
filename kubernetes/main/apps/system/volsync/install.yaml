@@ -15,8 +15,8 @@ spec:
     kind: GitRepository
     name: flux-system
   dependsOn:
-    - name: system-snapshot-controller
-    - name: security-external-secrets-stores
+    - name: snapshot-controller
+    - name: external-secrets
   prune: true
   wait: true
   interval: 30m

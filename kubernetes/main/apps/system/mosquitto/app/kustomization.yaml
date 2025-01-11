@@ -11,4 +11,4 @@ configMapGenerator:
     files:
       - mosquitto.conf=./config/mosquitto.conf
 configurations:
-  - ./patches/kustomizeconfig.yaml
+  - kustomizeconfig.yaml
