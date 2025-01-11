@@ -15,10 +15,6 @@ releases:
     version: 0.13.0
     values:
       - ../apps/flux-system/flux-operator/app/helm-values.yaml
-    needs:
-      - kube-system/cilium
-      - kube-system/coredns
-      - system/spegel
 
   - name: flux-instance
     namespace: flux-system

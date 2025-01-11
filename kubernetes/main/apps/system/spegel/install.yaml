@@ -6,7 +6,7 @@ metadata:
   name: &app spegel
   namespace: flux-system
 spec:
-  targetNamespace: kube-system
+  targetNamespace: system
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
