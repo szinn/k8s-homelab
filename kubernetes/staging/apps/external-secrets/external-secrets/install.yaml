@@ -2,12 +2,15 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: security-external-secrets
+  name: &app external-secrets
   namespace: flux-system
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
   targetNamespace: external-secrets
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
   path: ./kubernetes/staging/apps/external-secrets/external-secrets/app
   sourceRef:
     kind: GitRepository
@@ -20,18 +23,21 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: security-external-secrets-stores
+  name: &app external-secrets-stores
   namespace: flux-system
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
   targetNamespace: external-secrets
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
   path: ./kubernetes/staging/apps/external-secrets/external-secrets/stores
   sourceRef:
     kind: GitRepository
     name: flux-system
   dependsOn:
-    - name: security-external-secrets
+    - name: external-secrets
   prune: true
   wait: false
   interval: 30m

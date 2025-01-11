@@ -3,13 +3,13 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: kube-system-spegel
+  name: &app spegel
   namespace: flux-system
 spec:
   targetNamespace: system
   commonMetadata:
     labels:
-      app.kubernetes.io/name: spegel
+      app.kubernetes.io/name: *app
   path: ./kubernetes/staging/apps/system/spegel/app
   sourceRef:
     kind: GitRepository

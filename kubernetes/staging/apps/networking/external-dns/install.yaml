@@ -3,7 +3,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: networking-external-dns-unifi
+  name: &app external-dns-unifi
   namespace: flux-system
   labels:
     substitution.flux.home.arpa/enabled: "true"
@@ -11,13 +11,13 @@ spec:
   targetNamespace: networking
   commonMetadata:
     labels:
-      app.kubernetes.io/name: &app external-dns-unifi
+      app.kubernetes.io/name: *app
   path: ./kubernetes/staging/apps/networking/external-dns/unifi
   sourceRef:
     kind: GitRepository
     name: flux-system
   dependsOn:
-    - name: security-external-secrets-stores
+    - name: external-secrets-stores
   prune: true
   wait: false
   interval: 10m

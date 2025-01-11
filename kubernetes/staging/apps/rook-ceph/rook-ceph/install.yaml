@@ -2,29 +2,38 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: rook-ceph-operator
+  name: &app rook-ceph-operator
   namespace: flux-system
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
   targetNamespace: rook-ceph
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  dependsOn:
+    - name: external-secrets-stores
   path: ./kubernetes/staging/apps/rook-ceph/rook-ceph/operator
   sourceRef:
     kind: GitRepository
     name: flux-system
   prune: true
   wait: true
-  interval: 10m
+  interval: 30m
+  timeout: 5m
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: rook-ceph-cluster
+  name: &app rook-ceph-cluster
   namespace: flux-system
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
   targetNamespace: rook-ceph
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
   path: ./kubernetes/staging/apps/rook-ceph/rook-ceph/cluster
   sourceRef:
     kind: GitRepository
@@ -33,17 +42,21 @@ spec:
     - name: rook-ceph-operator
   prune: true
   wait: true
-  interval: 10m
+  interval: 30m
+  timeout: 5m
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: rook-ceph-addons
+  name: &app rook-ceph-addons
   namespace: flux-system
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
   targetNamespace: rook-ceph
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
   path: ./kubernetes/staging/apps/rook-ceph/rook-ceph/add-ons
   sourceRef:
     kind: GitRepository
@@ -52,4 +65,5 @@ spec:
     - name: rook-ceph-operator
   prune: true
   wait: true
-  interval: 10m
+  interval: 30m
+  timeout: 5m
