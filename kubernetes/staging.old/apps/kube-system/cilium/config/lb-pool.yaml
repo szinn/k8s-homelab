@@ -1,8 +1,0 @@
----
-apiVersion: cilium.io/v2alpha1
-kind: CiliumLoadBalancerIPPool
-metadata:
-  name: main-pool
-spec:
-  blocks:
-    - cidr: ${CONFIG_STAGING_L2_POOL_CIDR}

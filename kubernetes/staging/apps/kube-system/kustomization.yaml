@@ -8,4 +8,4 @@ resources:
   # Flux-Kustomizations
   - cilium/install.yaml
   - coredns/install.yaml
-  # - metrics-server/install.yaml
+  - metrics-server/install.yaml
