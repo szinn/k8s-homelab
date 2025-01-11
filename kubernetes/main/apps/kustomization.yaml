@@ -5,11 +5,10 @@ kind: Kustomization
 resources:
   # Step 1
   - cert-manager
+  - external-secrets
   - kube-system
   - flux-system
   - networking
-  - security/namespace.yaml
-  - security/external-secrets/install.yaml
   - system
   # Step 2
   # - rook-ceph

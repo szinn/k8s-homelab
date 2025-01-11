@@ -18,6 +18,9 @@ tasks:
       - task: merge
         vars:
           cluster: main
+      - task: deploy-base
+        vars:
+          cluster: main
 
   staging:
     desc: Bootstrap staging cluster
