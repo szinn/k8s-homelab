@@ -31,81 +31,81 @@ tasks:
     cmds:
       - task: _down
         vars:
-          NAMESPACE: security
+          NAMESPACE: self-hosted
           HELMRELEASE: dmarc-report
-          KUSTOMIZATION: security-dmarc-report
+          KUSTOMIZATION: dmarc-report
           SERVICES: statefulset/dmarc-report
       - task: _down
         vars:
           NAMESPACE: media
           HELMRELEASE: lidarr
-          KUSTOMIZATION: media-lidarr
+          KUSTOMIZATION: lidarr
           SERVICES: deployment/lidarr
       - task: _down
         vars:
           NAMESPACE: media
           HELMRELEASE: prowlarr
-          KUSTOMIZATION: media-prowlarr
+          KUSTOMIZATION: prowlarr
           SERVICES: deployment/prowlarr
       - task: _down
         vars:
           NAMESPACE: media
           HELMRELEASE: radarr-4k
-          KUSTOMIZATION: media-radarr-4k
+          KUSTOMIZATION: radarr-4k
           SERVICES: deployment/radarr-4k
       - task: _down
         vars:
           NAMESPACE: media
           HELMRELEASE: radarr
-          KUSTOMIZATION: media-radarr
+          KUSTOMIZATION: radarr
           SERVICES: deployment/radarr
       - task: _down
         vars:
           NAMESPACE: self-hosted
           HELMRELEASE: shlink-api
-          KUSTOMIZATION: self-hosted-shlink
+          KUSTOMIZATION: shlink
           SERVICES: deployment/shlink-api
       - task: _down
         vars:
           NAMESPACE: media
           HELMRELEASE: sonarr
-          KUSTOMIZATION: media-sonarr
+          KUSTOMIZATION: sonarr
           SERVICES: deployment/sonarr
       - task: _down
         vars:
           NAMESPACE: observability
           HELMRELEASE: teslamate
-          KUSTOMIZATION: observability-teslamate
+          KUSTOMIZATION: teslamate
           SERVICES: deployment/teslamate
       - task: _down
         vars:
           NAMESPACE: self-hosted
           HELMRELEASE: wikijs
-          KUSTOMIZATION: self-hosted-wikijs
+          KUSTOMIZATION: wikijs
           SERVICES: deployment/wikijs
       - task: _down
         vars:
           NAMESPACE: security
           HELMRELEASE: authentik
-          KUSTOMIZATION: security-authentik
+          KUSTOMIZATION: authentik
           SERVICES: deployment/authentik-server deployment/authentik-worker
       - task: _down
         vars:
           NAMESPACE: home
           HELMRELEASE: home-assistant
-          KUSTOMIZATION: home-home-assistant
+          KUSTOMIZATION: home-assistant
           SERVICES: deployment/home-assistant
       - task: _down
         vars:
           NAMESPACE: observability
           HELMRELEASE: gatus
-          KUSTOMIZATION: observability-gatus
+          KUSTOMIZATION: gatus
           SERVICES: deployment/gatus
       - task: _down
         vars:
           NAMESPACE: observability
           HELMRELEASE: grafana
-          KUSTOMIZATION: observability-grafana
+          KUSTOMIZATION: grafana
           SERVICES: deployment/grafana
 
   up_all:
@@ -113,93 +113,93 @@ tasks:
     cmds:
       - task: _up
         vars:
-          NAMESPACE: security
+          NAMESPACE: self-hosted
           HELMRELEASE: dmarc-report
-          KUSTOMIZATION: security-dmarc-report
+          KUSTOMIZATION: dmarc-report
           SERVICES: statefulset/dmarc-report
           REPLICAS: 1
       - task: _up
         vars:
           NAMESPACE: media
           HELMRELEASE: lidarr
-          KUSTOMIZATION: media-lidarr
+          KUSTOMIZATION: lidarr
           SERVICES: deployment/lidarr
           REPLICAS: 1
       - task: _up
         vars:
           NAMESPACE: media
           HELMRELEASE: prowlarr
-          KUSTOMIZATION: media-prowlarr
+          KUSTOMIZATION: prowlarr
           SERVICES: deployment/prowlarr
           REPLICAS: 1
       - task: _up
         vars:
           NAMESPACE: media
           HELMRELEASE: radarr-4k
-          KUSTOMIZATION: media-radarr-4k
+          KUSTOMIZATION: radarr-4k
           SERVICES: deployment/radarr-4k
           REPLICAS: 1
       - task: _up
         vars:
           NAMESPACE: media
           HELMRELEASE: radarr
-          KUSTOMIZATION: media-radarr
+          KUSTOMIZATION: radarr
           SERVICES: deployment/radarr
           REPLICAS: 1
       - task: _up
         vars:
           NAMESPACE: self-hosted
           HELMRELEASE: shlink-api
-          KUSTOMIZATION: self-hosted-shlink
+          KUSTOMIZATION: shlink
           SERVICES: deployment/shlink-api
           REPLICAS: 1
       - task: _up
         vars:
           NAMESPACE: media
           HELMRELEASE: sonarr
-          KUSTOMIZATION: media-sonarr
+          KUSTOMIZATION: sonarr
           SERVICES: deployment/sonarr
           REPLICAS: 1
       - task: _up
         vars:
           NAMESPACE: observability
           HELMRELEASE: teslamate
-          KUSTOMIZATION: observability-teslamate
+          KUSTOMIZATION: teslamate
           SERVICES: deployment/teslamate
           REPLICAS: 1
       - task: _up
         vars:
           NAMESPACE: self-hosted
           HELMRELEASE: wikijs
-          KUSTOMIZATION: self-hosted-wikijs
+          KUSTOMIZATION: wikijs
           SERVICES: deployment/wikijs
           REPLICAS: 1
       - task: _up
         vars:
           NAMESPACE: security
           HELMRELEASE: authentik
-          KUSTOMIZATION: security-authentik
+          KUSTOMIZATION: authentik
           SERVICES: deployment/authentik-server deployment/authentik-worker
           REPLICAS: 1
       - task: _up
         vars:
           NAMESPACE: home
           HELMRELEASE: home-assistant
-          KUSTOMIZATION: home-home-assistant
+          KUSTOMIZATION: home-assistant
           SERVICES: deployment/home-assistant
           REPLICAS: 1
       - task: _up
         vars:
           NAMESPACE: observability
           HELMRELEASE: gatus
-          KUSTOMIZATION: observability-gatus
+          KUSTOMIZATION: gatus
           SERVICES: deployment/gatus
           REPLICAS: 1
       - task: _up
         vars:
           NAMESPACE: observability
           HELMRELEASE: grafana
-          KUSTOMIZATION: observability-grafana
+          KUSTOMIZATION: grafana
           SERVICES: deployment/grafana
           REPLICAS: 1
 
@@ -208,18 +208,18 @@ tasks:
     cmds:
       - task: _down
         vars:
-          NAMESPACE: security
+          NAMESPACE: self-hosted
           HELMRELEASE: dmarc-report
-          KUSTOMIZATION: security-dmarc-report
+          KUSTOMIZATION: dmarc-report
           SERVICES: statefulset/dmarc-report
       - task: _restore_db
         vars:
           DATABASE: dmarc
       - task: _up
         vars:
-          NAMESPACE: security
+          NAMESPACE: self-hosted
           HELMRELEASE: dmarc-report
-          KUSTOMIZATION: security-dmarc-report
+          KUSTOMIZATION: dmarc-report
           SERVICES: statefulset/dmarc-report
           REPLICAS: 1
 
@@ -230,7 +230,7 @@ tasks:
         vars:
           NAMESPACE: media
           HELMRELEASE: lidarr
-          KUSTOMIZATION: media-lidarr
+          KUSTOMIZATION: lidarr
           SERVICES: deployment/lidarr
       - task: _restore_db
         vars:
@@ -239,7 +239,7 @@ tasks:
         vars:
           NAMESPACE: media
           HELMRELEASE: lidarr
-          KUSTOMIZATION: media-lidarr
+          KUSTOMIZATION: lidarr
           SERVICES: deployment/lidarr
           REPLICAS: 1
 
@@ -250,7 +250,7 @@ tasks:
         vars:
           NAMESPACE: media
           HELMRELEASE: prowlarr
-          KUSTOMIZATION: media-prowlarr
+          KUSTOMIZATION: prowlarr
           SERVICES: deployment/prowlarr
       - task: _restore_db
         vars:
@@ -259,7 +259,7 @@ tasks:
         vars:
           NAMESPACE: media
           HELMRELEASE: prowlarr
-          KUSTOMIZATION: media-prowlarr
+          KUSTOMIZATION: prowlarr
           SERVICES: deployment/prowlarr
           REPLICAS: 1
 
@@ -270,7 +270,7 @@ tasks:
         vars:
           NAMESPACE: media
           HELMRELEASE: radarr-4k
-          KUSTOMIZATION: media-radarr-4k
+          KUSTOMIZATION: radarr-4k
           SERVICES: deployment/radarr-4k
       - task: _restore_db
         vars:
@@ -279,7 +279,7 @@ tasks:
         vars:
           NAMESPACE: media
           HELMRELEASE: radarr-4k
-          KUSTOMIZATION: media-radarr-4k
+          KUSTOMIZATION: radarr-4k
           SERVICES: deployment/radarr-4k
           REPLICAS: 1
 
@@ -290,7 +290,7 @@ tasks:
         vars:
           NAMESPACE: media
           HELMRELEASE: radarr
-          KUSTOMIZATION: media-radarr
+          KUSTOMIZATION: radarr
           SERVICES: deployment/radarr
       - task: _restore_db
         vars:
@@ -299,7 +299,7 @@ tasks:
         vars:
           NAMESPACE: media
           HELMRELEASE: radarr
-          KUSTOMIZATION: media-radarr
+          KUSTOMIZATION: radarr
           SERVICES: deployment/radarr
           REPLICAS: 1
 
@@ -310,7 +310,7 @@ tasks:
         vars:
           NAMESPACE: self-hosted
           HELMRELEASE: shlink-api
-          KUSTOMIZATION: self-hosted-shlink
+          KUSTOMIZATION: shlink
           SERVICES: deployment/shlink-api
       - task: _restore_db
         vars:
@@ -319,7 +319,7 @@ tasks:
         vars:
           NAMESPACE: self-hosted
           HELMRELEASE: shlink-api
-          KUSTOMIZATION: self-hosted-shlink
+          KUSTOMIZATION: shlink
           SERVICES: deployment/shlink-api
           REPLICAS: 1
 
@@ -330,7 +330,7 @@ tasks:
         vars:
           NAMESPACE: media
           HELMRELEASE: sonarr
-          KUSTOMIZATION: media-sonarr
+          KUSTOMIZATION: sonarr
           SERVICES: deployment/sonarr
       - task: _restore_db
         vars:
@@ -339,7 +339,7 @@ tasks:
         vars:
           NAMESPACE: media
           HELMRELEASE: sonarr
-          KUSTOMIZATION: media-sonarr
+          KUSTOMIZATION: sonarr
           SERVICES: deployment/sonarr
           REPLICAS: 1
 
@@ -350,7 +350,7 @@ tasks:
         vars:
           NAMESPACE: observability
           HELMRELEASE: teslamate
-          KUSTOMIZATION: observability-teslamate
+          KUSTOMIZATION: teslamate
           SERVICES: deployment/teslamate
       - task: _restore_db
         vars:
@@ -359,7 +359,7 @@ tasks:
         vars:
           NAMESPACE: observability
           HELMRELEASE: teslamate
-          KUSTOMIZATION: observability-teslamate
+          KUSTOMIZATION: teslamate
           SERVICES: deployment/teslamate
           REPLICAS: 1
 
@@ -370,7 +370,7 @@ tasks:
         vars:
           NAMESPACE: self-hosted
           HELMRELEASE: wikijs
-          KUSTOMIZATION: self-hosted-wikijs
+          KUSTOMIZATION: wikijs
           SERVICES: deployment/wikijs
       - task: _restore_db
         vars:
@@ -379,7 +379,7 @@ tasks:
         vars:
           NAMESPACE: self-hosted
           HELMRELEASE: wikijs
-          KUSTOMIZATION: self-hosted-wikijs
+          KUSTOMIZATION: wikijs
           SERVICES: deployment/wikijs
           REPLICAS: 1
 
@@ -390,7 +390,7 @@ tasks:
         vars:
           NAMESPACE: media
           HELMRELEASE: immich
-          KUSTOMIZATION: media-immich
+          KUSTOMIZATION: immich
           SERVICES: deployment/immich-server
       - cp {{.DBBACKUP}}/last/immich-latest.sql.gz /tmp
       - gzip -d /tmp/immich-latest.sql.gz
@@ -400,7 +400,7 @@ tasks:
         vars:
           NAMESPACE: media
           HELMRELEASE: immich
-          KUSTOMIZATION: media-immich
+          KUSTOMIZATION: immich
           SERVICES: deployment/immich-server
           REPLICAS: 1
 
@@ -413,18 +413,18 @@ tasks:
   _down:
     desc: Bring a service down
     cmds:
-      - flux suspend helmrelease -n {{.NAMESPACE}} {{.HELMRELEASE}}
-      - flux suspend kustomization {{.KUSTOMIZATION}}
+      - flux --context main suspend helmrelease -n {{.NAMESPACE}} {{.HELMRELEASE}}
+      - flux --context main suspend kustomization {{.KUSTOMIZATION}}
       - for: { var: SERVICES }
-        cmd: kubectl scale --replicas=0 -n {{.NAMESPACE}} {{.ITEM}}
+        cmd: kubectl --context main scale --replicas=0 -n {{.NAMESPACE}} {{.ITEM}}
 
   _up:
     desc: Bring a service up
     cmds:
       - for: { var: SERVICES }
-        cmd: kubectl scale --replicas={{.REPLICAS}} -n {{.NAMESPACE}} {{.ITEM}}
-      - flux resume helmrelease -n {{.NAMESPACE}} {{.HELMRELEASE}}
-      - flux resume kustomization {{.KUSTOMIZATION}}
+        cmd: kubectl --context main  scale --replicas={{.REPLICAS}} -n {{.NAMESPACE}} {{.ITEM}}
+      - flux --context main  resume helmrelease -n {{.NAMESPACE}} {{.HELMRELEASE}}
+      - flux --context main  resume kustomization {{.KUSTOMIZATION}}
 
   _restore_db:
     prompt: Ready to restore database {{.DATABASE}}?

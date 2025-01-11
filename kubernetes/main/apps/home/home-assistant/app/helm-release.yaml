@@ -26,7 +26,7 @@ spec:
   uninstall:
     keepHistory: false
   dependsOn:
-    - name: cloudnative-pg-cluster
+    - name: cloudnative-pg
       namespace: dbms
     - name: rook-ceph-cluster
       namespace: rook-ceph
