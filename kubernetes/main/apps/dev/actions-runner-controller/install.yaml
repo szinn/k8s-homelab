@@ -25,7 +25,7 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app actions-runner-controller-runners
+  name: &app actions-runners
   namespace: flux-system
 spec:
   targetNamespace: dev
@@ -37,7 +37,7 @@ spec:
     kind: GitRepository
     name: flux-system
   dependsOn:
-    - name: actions-runner-controller
+    - name: actions-runner-operator
     - name: external-secrets
   prune: true
   wait: false
