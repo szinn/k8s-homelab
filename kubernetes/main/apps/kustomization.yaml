@@ -13,6 +13,6 @@ resources:
   # Step 2
   - rook-ceph
   # Step 3
-  # - dbms
+  - dbms
   # Step 4
-  # - self-hosted
+  - self-hosted
