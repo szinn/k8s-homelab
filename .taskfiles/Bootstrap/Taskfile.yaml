@@ -21,6 +21,16 @@ tasks:
         vars:
           cluster: staging
       - task: :proxmox:unmount-staging-cdrom
+      - cmd: talosctl config context main
+        ignore_error: true
+      - cmd: kubectl config use-context main
+        ignore_error: true
+      - task: merge
+        vars:
+          cluster: staging
+      - task: deploy
+        vars:
+          cluster: staging
 
   merge:
     desc: Merge kubeconfig and talosconfig configurations

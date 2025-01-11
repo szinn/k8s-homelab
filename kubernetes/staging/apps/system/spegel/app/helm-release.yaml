@@ -25,10 +25,3 @@ spec:
   valuesFrom:
     - kind: ConfigMap
       name: spegel-helm-values
-  values:
-    image:
-      repository: ghcr.io/deedee-ops/spegel
-      tag: 0.0.25
-      digest: ""
-    serviceMonitor:
-      enabled: true
