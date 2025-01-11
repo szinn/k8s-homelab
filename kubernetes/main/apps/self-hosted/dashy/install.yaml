@@ -3,20 +3,20 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: self-hosted-dashy
+  name: &app dashy
   namespace: flux-system
 spec:
   targetNamespace: self-hosted
   commonMetadata:
     labels:
-      app.kubernetes.io/name: &app dashy
+      app.kubernetes.io/name: *app
   path: ./kubernetes/main/apps/self-hosted/dashy/app
   sourceRef:
     kind: GitRepository
-    name: homelab-kubernetes
+    name: flux-system
   dependsOn:
-    - name: security-external-secrets-stores
-    - name: system-volsync
+    - name: external-secrets
+    - name: volsync
   postBuild:
     substitute:
       APP: *app
@@ -26,4 +26,5 @@ spec:
       VOLSYNC_CAPACITY: 1Gi
   prune: true
   wait: false
-  interval: 10m
+  interval: 30m
+  timeout: 5m

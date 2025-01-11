@@ -9,8 +9,11 @@ resources:
   - intel-device-plugin/install.yaml
   - k8s-ycl/install.yaml
   - kube-cleanup-operator/install.yaml
+  - kubelet-csr-approver/install.yaml
+  - mosquitto/install.yaml
   - node-feature-discovery/install.yaml
   - openebs/install.yaml
   - reloader/install.yaml
   - snapshot-controller/install.yaml
+  - spegel/install.yaml
   - volsync/install.yaml

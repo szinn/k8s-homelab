@@ -6,5 +6,4 @@ resources:
   - namespace.yaml
   - frigate/install.yaml
   - home-assistant/install.yaml
-  - mosquitto/install.yaml
   - node-red/install.yaml

@@ -3,43 +3,46 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: dbms-cloudnative-pg
+  name: &app cloudnative-pg
   namespace: flux-system
 spec:
   targetNamespace: dbms
   commonMetadata:
     labels:
-      app.kubernetes.io/name: &app cloudnative-pg
+      app.kubernetes.io/name: *app
   path: ./kubernetes/main/apps/dbms/cloudnative-pg/cloudnative-pg
   sourceRef:
     kind: GitRepository
-    name: homelab-kubernetes
+    name: flux-system
   dependsOn:
-    - name: security-external-secrets-stores
+    - name: external-secrets
   prune: true
   wait: true
-  interval: 0m
+  interval: 30m
+  timeout: 5m
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: dbms-cloudnative-pg-cluster
+  name: &app cloudnative-pg-cluster
   namespace: flux-system
 spec:
   targetNamespace: dbms
   commonMetadata:
     labels:
-      app.kubernetes.io/name: &app cloudnative-pg
+      app.kubernetes.io/name: *app
   path: ./kubernetes/main/apps/dbms/cloudnative-pg/cluster
   sourceRef:
     kind: GitRepository
-    name: homelab-kubernetes
+    name: flux-system
   dependsOn:
-    - name: dbms-cloudnative-pg
+    - name: cloudnative-pg
+    - name: rook-ceph-cluster
   prune: true
   wait: false
-  interval: 0m
+  interval: 30m
+  timeout: 5m
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -55,7 +58,11 @@ spec:
   path: ./kubernetes/main/apps/dbms/cloudnative-pg/backup
   sourceRef:
     kind: GitRepository
-    name: homelab-kubernetes
+    name: flux-system
+  dependsOn:
+    - name: cloudnative-pg
+    - name: external-secrets
   prune: true
   wait: false
-  interval: 0m
+  interval: 30m
+  timeout: 5m

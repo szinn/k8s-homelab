@@ -3,28 +3,29 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: networking-external-dns-cloudflare
+  name: &app external-dns-cloudflare
   namespace: flux-system
 spec:
   targetNamespace: networking
   commonMetadata:
     labels:
-      app.kubernetes.io/name: &app external-dns-cloudflare
+      app.kubernetes.io/name: *app
   path: ./kubernetes/main/apps/networking/external-dns/cloudflare
   sourceRef:
     kind: GitRepository
-    name: homelab-kubernetes
+    name: flux-system
   dependsOn:
-    - name: security-external-secrets-stores
+    - name: external-secrets
   prune: true
   wait: true
-  interval: 10m
+  interval: 30m
+  timeout: 5m
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: networking-external-dns-unifi
+  name: &app external-dns-unifi
   namespace: flux-system
   labels:
     substitution.flux.home.arpa/enabled: "true"
@@ -32,36 +33,13 @@ spec:
   targetNamespace: networking
   commonMetadata:
     labels:
-      app.kubernetes.io/name: &app external-dns-unifi
+      app.kubernetes.io/name: *app
   path: ./kubernetes/main/apps/networking/external-dns/unifi
   sourceRef:
     kind: GitRepository
-    name: homelab-kubernetes
+    name: flux-system
   dependsOn:
-    - name: security-external-secrets-stores
+    - name: external-secrets
   prune: true
-  wait: false
-  interval: 10m
-# ---
-# # yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/kustomize.toolkit.fluxcd.io/kustomization_v1.json
-# apiVersion: kustomize.toolkit.fluxcd.io/v1
-# kind: Kustomization
-# metadata:
-#   name: networking-external-dns-bind
-#   namespace: flux-system
-#   labels:
-#     substitution.flux.home.arpa/enabled: "true"
-# spec:
-#   targetNamespace: networking
-#   commonMetadata:
-#     labels:
-#       app.kubernetes.io/name: &app external-dns-bind
-#   path: ./kubernetes/main/apps/networking/external-dns/bind
-#   sourceRef:
-#     kind: GitRepository
-#     name: homelab-kubernetes
-#   dependsOn:
-#     - name: security-external-secrets-stores
-#   prune: true
-#   wait: false
-#   interval: 10m
+  interval: 30m
+  timeout: 5m

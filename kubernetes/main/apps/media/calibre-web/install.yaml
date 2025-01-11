@@ -3,20 +3,20 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: media-calibre-web
+  name: &app calibre-web
   namespace: flux-system
 spec:
   targetNamespace: media
   commonMetadata:
     labels:
-      app.kubernetes.io/name: &app calibre-web
+      app.kubernetes.io/name: *app
   path: "./kubernetes/main/apps/media/calibre-web/app"
   sourceRef:
     kind: GitRepository
-    name: homelab-kubernetes
+    name: flux-system
   dependsOn:
-    - name: security-external-secrets-stores
-    - name: system-volsync
+    - name: theme-park
+    - name: volsync
   postBuild:
     substitute:
       APP: *app
@@ -26,4 +26,5 @@ spec:
       VOLSYNC_CAPACITY: 2Gi
   prune: true
   wait: false
-  interval: 10m
+  interval: 30m
+  timeout: 5m

@@ -1,0 +1,30 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app mosquitto
+  namespace: flux-system
+spec:
+  targetNamespace: system
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  path: ./kubernetes/main/apps/system/mosquitto/app
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  dependsOn:
+    - name: external-secrets
+    - name: volsync
+  postBuild:
+    substitute:
+      APP: *app
+      APP_UID: "2000"
+      APP_GID: "2000"
+      VOLSYNC_CLAIM: mosquitto-config
+      VOLSYNC_CAPACITY: 1Gi
+  prune: true
+  wait: false
+  interval: 30m
+  timeout: 5m

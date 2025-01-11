@@ -3,24 +3,25 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: media-prowlarr
+  name: &app prowlarr
   namespace: flux-system
 spec:
   targetNamespace: media
   commonMetadata:
     labels:
-      app.kubernetes.io/name: &app prowlarr
+      app.kubernetes.io/name: *app
   path: ./kubernetes/main/apps/media/prowlarr/app
   sourceRef:
     kind: GitRepository
-    name: homelab-kubernetes
+    name: flux-system
   dependsOn:
-    - name: dbms-cloudnative-pg
-    - name: security-external-secrets-stores
+    - name: cloudnative-pg-cluster
+    - name: external-secrets
   postBuild:
     substitute:
       GATUS_APP: *app
       GATUS_SUBDOMAIN: prowlarr
   prune: true
   wait: false
-  interval: 10m
+  interval: 30m
+  timeout: 5m

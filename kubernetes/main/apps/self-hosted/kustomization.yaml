@@ -6,6 +6,7 @@ resources:
   - namespace.yaml
   - changedetection/install.yaml
   - dashy/install.yaml
+  - dmarc-report/install.yaml
   - homepage/install.yaml
   - ocis/install.yaml
   - pdf-tool/install.yaml

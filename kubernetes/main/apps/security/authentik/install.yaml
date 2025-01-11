@@ -3,24 +3,25 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: security-authentik
+  name: &app authentik
   namespace: flux-system
 spec:
   targetNamespace: security
   commonMetadata:
     labels:
-      app.kubernetes.io/name: &app authentik
+      app.kubernetes.io/name: *app
   path: ./kubernetes/main/apps/security/authentik/app
   sourceRef:
     kind: GitRepository
-    name: homelab-kubernetes
+    name: flux-system
   dependsOn:
-    - name: dbms-cloudnative-pg
-    - name: dbms-dragonfly-cluster
-    - name: security-external-secrets-stores
+    - name: cloudnative-pg-cluster
+    - name: dragonfly-cluster
+    - name: external-secrets
   prune: true
   wait: false
-  interval: 10m
+  interval: 30m
+  timeout: 5m
   postBuild:
     substitute:
       APP: authentik
@@ -31,19 +32,19 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: security-authentik-cdn
+  name: &app authentik-cdn
   namespace: flux-system
 spec:
   targetNamespace: security
   commonMetadata:
     labels:
-      app.kubernetes.io/name: &app authentik
+      app.kubernetes.io/name: *app
   path: ./kubernetes/main/apps/security/authentik/cdn
   sourceRef:
     kind: GitRepository
-    name: homelab-kubernetes
+    name: flux-system
   dependsOn:
-    - name: security-external-secrets-stores
+    - name: external-secrets
   prune: true
-  wait: false
-  interval: 10m
+  interval: 30m
+  timeout: 5m

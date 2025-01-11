@@ -3,7 +3,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: self-hosted-pdf-tool
+  name: &app pdf-tool
   namespace: flux-system
   labels:
     substitution.flux.home.arpa/enabled: "true"
@@ -11,13 +11,14 @@ spec:
   targetNamespace: self-hosted
   commonMetadata:
     labels:
-      app.kubernetes.io/name: &app pdf-tool
+      app.kubernetes.io/name: *app
   path: ./kubernetes/main/apps/self-hosted/pdf-tool/app
   sourceRef:
     kind: GitRepository
-    name: homelab-kubernetes
+    name: flux-system
   dependsOn:
-    - name: security-external-secrets-stores
+    - name: external-secrets
   prune: true
   wait: true
-  interval: 10m
+  interval: 30m
+  timeout: 5m

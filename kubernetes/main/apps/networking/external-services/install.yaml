@@ -3,14 +3,15 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: networking-external-services
+  name: external-services
   namespace: flux-system
 spec:
   targetNamespace: networking
   path: ./kubernetes/main/apps/networking/external-services
   sourceRef:
     kind: GitRepository
-    name: homelab-kubernetes
+    name: flux-system
   prune: true
   wait: false
-  interval: 10m
+  interval: 30m
+  timeout: 5m

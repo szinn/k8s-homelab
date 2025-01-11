@@ -11,7 +11,13 @@ tasks:
       - task: :talos:bootstrap
         vars:
           cluster: main
-          nodes: k8s-1 k8s-2 k8s-3 k8s-4 k8s-5 k8s-6
+      - cmd: talosctl config context staging
+        ignore_error: true
+      - cmd: kubectl config use-context staging
+        ignore_error: true
+      - task: merge
+        vars:
+          cluster: main
 
   staging:
     desc: Bootstrap staging cluster
@@ -49,6 +55,8 @@ tasks:
       - KUBECONFIG="$HOME/.kube/config:{{.CLUSTER_DIR}}/kubeconfig" kubectl config view --flatten > $HOME/.kube/config-new
       - mv $HOME/.kube/config-new $HOME/.kube/config
       - talosctl  --talosconfig $HOME/.talos/config config merge {{.CLUSTER_DIR}}/talosconfig
+      - chmod og-rwx $HOME/.kube/config
+      - chmod og-rwx $HOME/.talos/config
 
   config:
     desc: Rebuild all cluster configuration
