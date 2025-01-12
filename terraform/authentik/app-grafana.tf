@@ -17,6 +17,7 @@ module "grafana" {
 
   authentication_flow_id = authentik_flow.authentication.uuid
   authorization_flow_id  = data.authentik_flow.default-provider-authorization-implicit-consent.id
+  invalidation_flow_id   = data.authentik_flow.default-provider-invalidation-flow.id
   property_mappings      = data.authentik_property_mapping_provider_scope.oauth2.ids
 
   redirect_uris = ["https://grafana.${local.cluster_domain}/login/generic_oauth"]

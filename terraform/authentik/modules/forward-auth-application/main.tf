@@ -79,6 +79,10 @@ variable "skip_path_regex" {
   default = null
 }
 
+data "authentik_flow" "default-provider-invalidation-flow" {
+  slug = "default-provider-invalidation-flow"
+}
+
 resource "authentik_provider_proxy" "main" {
   name                          = var.name
   external_host                 = "https://${var.domain}"
@@ -89,6 +93,7 @@ resource "authentik_provider_proxy" "main" {
   mode                          = var.mode
   authentication_flow           = var.authentication_flow_uuid
   authorization_flow            = var.authorization_flow_uuid
+  invalidation_flow             = data.authentik_flow.default-provider-invalidation-flow.id
   access_token_validity         = var.access_token_validity
   property_mappings             = var.property_mappings
   skip_path_regex               = var.skip_path_regex

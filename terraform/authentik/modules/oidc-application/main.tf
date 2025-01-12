@@ -34,6 +34,10 @@ variable "authentication_flow_id" {
   type = string
 }
 
+variable "invalidation_flow_id" {
+  type = string
+}
+
 variable "meta_icon" {
   type    = string
   default = null
@@ -96,7 +100,7 @@ resource "authentik_provider_oauth2" "main" {
   client_secret          = var.client_secret
   authorization_flow     = var.authorization_flow_id
   authentication_flow    = var.authentication_flow_id
-  redirect_uris          = var.redirect_uris
+  invalidation_flow      = var.invalidation_flow_id
   access_token_validity  = var.access_token_validity
   refresh_token_validity = var.refresh_token_validity
   property_mappings      = var.property_mappings
