@@ -76,7 +76,7 @@ spec:
         enabled: true
         className: internal-nginx
         hosts:
-          - host: "{{ .Release.Name }}.${SECRET_DOMAIN_NAME}"
+          - host: "{{ .Release.Name }}.zinn.ca"
             paths:
               - path: /
                 service:
@@ -86,7 +86,7 @@ spec:
         enabled: true
         className: internal-nginx
         hosts:
-          - host: "dashy-code.${SECRET_DOMAIN_NAME}"
+          - host: "dashy-code.zinn.ca"
             paths:
               - path: /
                 service:

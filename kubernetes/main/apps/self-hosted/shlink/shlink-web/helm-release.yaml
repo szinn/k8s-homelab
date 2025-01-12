@@ -49,7 +49,7 @@ spec:
               repository: ghcr.io/shlinkio/shlink-web-client
               tag: 4.3.0@sha256:4a84d58508d0a327e6c383a0b57f624dd9a4f1a6e24f3cb538dec18dbaa9f7a1
             env:
-              SHLINK_SERVER_URL: "https://ln.${SECRET_DOMAIN_NAME}"
+              SHLINK_SERVER_URL: "https://ln.zinn.ca"
             envFrom:
               - secretRef:
                   name: shlink-secret
@@ -64,7 +64,7 @@ spec:
         enabled: true
         className: internal-nginx
         hosts:
-          - host: "shlink.${SECRET_DOMAIN_NAME}"
+          - host: "shlink.zinn.ca"
             paths:
               - path: /
                 service:

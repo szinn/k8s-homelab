@@ -10,7 +10,7 @@ data:
     endpoints:
       - name: "${GATUS_APP}"
         group: "${GATUS_GROUP:-external}"
-        url: "https://${GATUS_SUBDOMAIN:-${APP}}.${SECRET_DOMAIN_NAME}${GATUS_PATH:-/}"
+        url: "https://${GATUS_SUBDOMAIN:-${APP}}.zinn.ca${GATUS_PATH:-/}"
         interval: 1m
         client:
           dns-resolver: tcp://1.1.1.1:53

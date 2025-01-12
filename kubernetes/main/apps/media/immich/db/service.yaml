@@ -7,7 +7,7 @@ metadata:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: immich.${SECRET_DOMAIN_NAME}
+    external-dns.alpha.kubernetes.io/hostname: immich.zinn.ca
     lbipam.cilium.io/ips: ${CONFIG_MAIN_SVC_POSTGRES_IMMICH_ADDR}
 spec:
   type: LoadBalancer

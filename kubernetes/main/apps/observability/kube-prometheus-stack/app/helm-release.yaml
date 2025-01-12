@@ -42,7 +42,7 @@ spec:
         enabled: true
         ingressClassName: internal-nginx
         hosts:
-          - alerts.${SECRET_DOMAIN_NAME}
+          - alerts.zinn.ca
         path: /
         pathPrefix: Prefix
       alertmanagerSpec:
@@ -158,7 +158,7 @@ spec:
               targetLabel: kubernetes_node
             - action: replace
               regex: (.*)
-              replacement: $1.${SECRET_TECH_DOMAIN_NAME}:9100
+              replacement: $1.zinn.tech:9100
               sourceLabels:
                 - kubernetes_node
               targetLabel: instance

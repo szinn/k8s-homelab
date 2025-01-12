@@ -13,7 +13,7 @@ spec:
   externalLabels:
     cluster: main
   extraArgs:
-    external.url: https://vm-single.${SECRET_DOMAIN_NAME}
+    external.url: https://vm-single.zinn.ca
   notifiers:
     - url: http://alertmanager-operated.observability.svc:9093
   remoteRead:

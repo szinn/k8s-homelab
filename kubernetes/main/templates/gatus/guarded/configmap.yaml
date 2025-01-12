@@ -16,7 +16,7 @@ data:
           hide-hostname: true
           hide-url: true
         dns:
-          query-name: "${GATUS_SUBDOMAIN:-${APP}}.${SECRET_DOMAIN_NAME}"
+          query-name: "${GATUS_SUBDOMAIN:-${APP}}.zinn.ca"
           query-type: A
         conditions:
           - "len([BODY]) == 0"

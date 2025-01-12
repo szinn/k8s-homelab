@@ -76,10 +76,10 @@ spec:
             proxy_hide_header "content-security-policy";
             proxy_hide_header "X-Frame-Options";
             proxy_set_header Accept-Encoding "";
-            sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.${SECRET_DOMAIN_NAME}/css/base/qbittorrent/nord.css"></head>';
+            sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.zinn.ca/css/base/qbittorrent/nord.css"></head>';
             sub_filter_once on;
         hosts:
-          - host: "{{ .Release.Name }}.${SECRET_DOMAIN_NAME}"
+          - host: "{{ .Release.Name }}.zinn.ca"
             paths:
               - path: /
                 service:

@@ -114,7 +114,7 @@ spec:
         enabled: true
         className: internal-nginx
         hosts:
-          - host: photos.${SECRET_DOMAIN_NAME}
+          - host: photos.zinn.ca
             paths:
               - path: /
                 service:

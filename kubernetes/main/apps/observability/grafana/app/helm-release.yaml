@@ -50,9 +50,9 @@ spec:
       passwordKey: adminPassword
     env:
       # Authelia
-      # GF_AUTH_GENERIC_OAUTH_API_URL: https://auth.${SECRET_DOMAIN_NAME}/api/oidc/userinfo
-      # GF_AUTH_GENERIC_OAUTH_AUTH_URL: https://auth.${SECRET_DOMAIN_NAME}/api/oidc/authorization
-      # GF_AUTH_GENERIC_OAUTH_TOKEN_URL: https://auth.${SECRET_DOMAIN_NAME}/api/oidc/token
+      # GF_AUTH_GENERIC_OAUTH_API_URL: https://auth.zinn.ca/api/oidc/userinfo
+      # GF_AUTH_GENERIC_OAUTH_AUTH_URL: https://auth.zinn.ca/api/oidc/authorization
+      # GF_AUTH_GENERIC_OAUTH_TOKEN_URL: https://auth.zinn.ca/api/oidc/token
 
       GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: natel-discrete-panel,pr0ps-trackmap-panel,panodata-map-panel
       GF_SECURITY_ANGULAR_SUPPORT_ENABLED: true
@@ -64,15 +64,15 @@ spec:
         check_for_plugin_updates: false
         reporting_enabled: false
       auth:
-        signout_redirect_url: https://sso.${SECRET_DOMAIN_NAME}/application/o/grafana/end-session/
+        signout_redirect_url: https://sso.zinn.ca/application/o/grafana/end-session/
         oauth_auto_login: true
       auth.generic_oauth:
         name: authentik
         enabled: true
         scopes: "openid profile email"
-        auth_url: "https://sso.${SECRET_DOMAIN_NAME}/application/o/authorize/"
-        token_url: "https://sso.${SECRET_DOMAIN_NAME}/application/o/token/"
-        api_url: "https://sso.${SECRET_DOMAIN_NAME}/application/o/userinfo/"
+        auth_url: "https://sso.zinn.ca/application/o/authorize/"
+        token_url: "https://sso.zinn.ca/application/o/token/"
+        api_url: "https://sso.zinn.ca/application/o/userinfo/"
         role_attribute_path: contains(groups, 'Grafana Admins') && 'Admin' || contains(groups, 'Grafana Editors') && 'Editor' || 'Viewer'
       auth.basic:
         enabled: false
@@ -103,7 +103,7 @@ spec:
         allow_embedding: true
         cookie_samesite: grafana
       server:
-        root_url: https://grafana.${SECRET_DOMAIN_NAME}
+        root_url: https://grafana.zinn.ca
       users:
         auto_assign_org: true
         auto_assign_org_id: 1
@@ -279,7 +279,7 @@ spec:
       enabled: true
       ingressClassName: internal-nginx
       hosts:
-        - "grafana.${SECRET_DOMAIN_NAME}"
+        - "grafana.zinn.ca"
       path: /
       pathType: Prefix
     imageRenderer:

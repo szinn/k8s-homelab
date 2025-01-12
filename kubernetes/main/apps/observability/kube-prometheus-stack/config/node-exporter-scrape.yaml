@@ -7,8 +7,8 @@ metadata:
 spec:
   staticConfigs:
     - targets:
-        - "ragnar.${SECRET_TECH_DOMAIN_NAME}:9100"
-        - "titan.${SECRET_TECH_DOMAIN_NAME}:9100"
+        - "ragnar.zinn.tech:9100"
+        - "titan.zinn.tech:9100"
   metricsPath: /metrics
   scheme: HTTP
   relabelings:

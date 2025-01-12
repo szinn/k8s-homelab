@@ -55,7 +55,7 @@ spec:
               tag: 4.4.0@sha256:89df56bc72a04809476cf2cbfd94c8fce222da89b57642d0e92b717452646e07
             env:
               DB_DRIVER: postgres
-              DEFAULT_DOMAIN: &host "ln.${SECRET_DOMAIN_NAME}"
+              DEFAULT_DOMAIN: &host "ln.zinn.ca"
               DISABLE_TRACKING_FROM: 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
               ENABLE_PERIODIC_VISIT_LOCATE: "true"
               IS_HTTPS_ENABLED: "true"
@@ -76,7 +76,7 @@ spec:
         className: external-nginx
         annotations:
           external-dns/is-public: "true"
-          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN_NAME}
+          external-dns.alpha.kubernetes.io/target: external.zinn.ca
         hosts:
           - host: *host
             paths:

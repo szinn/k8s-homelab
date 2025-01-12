@@ -114,7 +114,7 @@ spec:
       dashboard:
         ingressClassName: internal-nginx
         host:
-          name: "rook.${SECRET_DOMAIN_NAME}"
+          name: "rook.zinn.ca"
           path: "/"
 
     cephBlockPools:
@@ -231,5 +231,5 @@ spec:
       #     enabled: true
       #     ingressClassName: internal-nginx
       #     host:
-      #       name: s3-rook.${SECRET_DOMAIN_NAME}
+      #       name: s3-rook.zinn.ca
       #       path: /

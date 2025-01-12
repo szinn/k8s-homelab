@@ -11,7 +11,7 @@ spec:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   nfs:
-    server: ${SECRET_ATLAS_NFS_SERVER}
+    server: ragnar.zinn.tech
     path: /mnt/atlas/media/Frigate
   mountOptions:
     - nfsvers=4.2

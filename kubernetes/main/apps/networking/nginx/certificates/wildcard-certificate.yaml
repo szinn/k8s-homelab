@@ -9,7 +9,7 @@ spec:
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
-  commonName: "${SECRET_DOMAIN_NAME}"
+  commonName: "zinn.ca"
   dnsNames:
-    - "${SECRET_DOMAIN_NAME}"
-    - "*.${SECRET_DOMAIN_NAME}"
+    - "zinn.ca"
+    - "*.zinn.ca"

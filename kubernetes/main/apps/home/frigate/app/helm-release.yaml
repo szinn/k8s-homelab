@@ -102,7 +102,7 @@ spec:
         enabled: true
         className: internal-nginx
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN_NAME}"
+          - host: &host "{{ .Release.Name }}.zinn.ca"
             paths:
               - path: /
                 pathType: Prefix

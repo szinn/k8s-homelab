@@ -126,7 +126,7 @@ spec:
         enabled: true
         className: internal-nginx
         hosts:
-          - host: "onepassword-connect.${SECRET_DOMAIN_NAME}"
+          - host: "onepassword-connect.zinn.ca"
             paths:
               - path: /
                 service:

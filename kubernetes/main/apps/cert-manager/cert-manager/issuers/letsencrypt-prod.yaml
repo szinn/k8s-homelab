@@ -7,13 +7,13 @@ metadata:
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
-    email: ${SECRET_ADMIN_EMAIL}
+    email: postmaster@zinn.tech
     privateKeySecretRef:
       name: letsencrypt-prod
     solvers:
       - dns01:
           cloudflare:
-            email: ${SECRET_ADMIN_EMAIL}
+            email: postmaster@zinn.tech
             apiTokenSecretRef:
               name: cloudflare-secrets
               key: API_TOKEN

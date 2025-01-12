@@ -63,7 +63,7 @@ spec:
               GATUS_CONFIG_PATH: /config
               GATUS_DELAY_START_SECONDS: 5
               CUSTOM_WEB_PORT: &port 8080
-              SECRET_DOMAIN_NAME: ${SECRET_DOMAIN_NAME}
+              SECRET_DOMAIN_NAME: zinn.ca
             envFrom: *envFrom
             probes:
               liveness: &probes
@@ -112,7 +112,7 @@ spec:
       app:
         className: internal-nginx
         hosts:
-          - host: status.${SECRET_DOMAIN_NAME}
+          - host: status.zinn.ca
             paths:
               - path: /
                 service:

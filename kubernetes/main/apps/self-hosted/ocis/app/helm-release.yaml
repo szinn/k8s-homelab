@@ -55,7 +55,7 @@ spec:
               OCIS_LOG_COLOR: true
               OCIS_LOG_LEVEL: info
               OCIS_LOG_PRETTY: true
-              OCIS_URL: https://files.${SECRET_DOMAIN_NAME}
+              OCIS_URL: https://files.zinn.ca
               PROXY_TLS: false
             envFrom:
               - secretRef:
@@ -89,7 +89,7 @@ spec:
       app:
         className: internal-nginx
         hosts:
-          - host: files.${SECRET_DOMAIN_NAME}
+          - host: files.zinn.ca
             paths:
               - path: /
                 service:

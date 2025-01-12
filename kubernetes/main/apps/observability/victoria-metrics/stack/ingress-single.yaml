@@ -9,7 +9,7 @@ metadata:
 spec:
   ingressClassName: internal-nginx
   rules:
-    - host: vm-single.${SECRET_DOMAIN_NAME}
+    - host: vm-single.zinn.ca
       http:
         paths:
           - path: /

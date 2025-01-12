@@ -32,7 +32,7 @@ endpoints:
       hide-hostname: true
       hide-url: true
     dns:
-      query-name: "status.$${SECRET_DOMAIN_NAME}"
+      query-name: "status.$zinn.ca"
       query-type: A
     conditions:
       - "len([BODY]) == 0"
@@ -44,7 +44,7 @@ endpoints:
     url: 1.1.1.1
     interval: 1m
     dns:
-      query-name: "external.$${SECRET_DOMAIN_NAME}"
+      query-name: "external.$zinn.ca"
       query-type: A
     conditions:
       - "len([BODY]) > 0"
@@ -53,7 +53,7 @@ endpoints:
         send-on-resolved: true
   - name: flux-webhook
     group: external
-    url: https://flux-receiver.$${SECRET_DOMAIN_NAME}
+    url: https://flux-receiver.$zinn.ca
     interval: 1m
     client:
       dns-resolver: tcp://1.1.1.1:53

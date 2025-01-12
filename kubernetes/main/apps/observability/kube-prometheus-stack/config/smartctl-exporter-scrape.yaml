@@ -7,7 +7,7 @@ metadata:
 spec:
   staticConfigs:
     - targets:
-        - ragnar.${SECRET_TECH_DOMAIN_NAME}:9633
+        - ragnar.zinn.tech:9633
   metricsPath: /metrics
   relabelings:
     - action: replace

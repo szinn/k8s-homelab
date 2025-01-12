@@ -11,8 +11,8 @@ spec:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   nfs:
-    server: ${SECRET_ATLAS_NFS_SERVER}
-    path: "${SECRET_ATLAS_NFS_ROOTDIR}/backup/dbms"
+    server: ragnar.zinn.tech
+    path: "/mnt/atlas/k8s/main/backup/dbms"
   mountOptions:
     - nfsvers=4.2
     - nconnect=8

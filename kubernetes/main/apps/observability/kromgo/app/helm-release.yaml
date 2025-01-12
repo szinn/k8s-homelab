@@ -83,9 +83,9 @@ spec:
         className: external-nginx
         annotations:
           external-dns/is-public: "true"
-          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN_NAME}
+          external-dns.alpha.kubernetes.io/target: external.zinn.ca
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN_NAME}"
+          - host: &host "{{ .Release.Name }}.zinn.ca"
             paths:
               - path: /
                 service:

@@ -31,7 +31,7 @@ metadata:
   name: minio-scrape
 spec:
   staticConfigs:
-    - targets: ["atlas.${SECRET_TECH_DOMAIN_NAME}:9000"]
+    - targets: ["atlas.zinn.tech:9000"]
   metricsPath: /minio/v2/metrics/cluster
   scheme: HTTP
   authorization:

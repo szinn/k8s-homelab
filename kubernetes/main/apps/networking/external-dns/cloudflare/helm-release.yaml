@@ -58,6 +58,6 @@ spec:
     sources: ["crd", "ingress"]
     txtOwnerId: "homelab"
     txtPrefix: "k8s."
-    domainFilters: ["${SECRET_DOMAIN_NAME}"]
+    domainFilters: ["zinn.ca"]
     serviceMonitor:
       enabled: true

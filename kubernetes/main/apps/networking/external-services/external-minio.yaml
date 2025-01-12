@@ -35,7 +35,7 @@ metadata:
 spec:
   ingressClassName: internal-nginx
   rules:
-    - host: minio.${SECRET_DOMAIN_NAME}
+    - host: minio.zinn.ca
       http:
         paths:
           - path: /

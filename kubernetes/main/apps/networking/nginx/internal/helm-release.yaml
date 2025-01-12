@@ -39,7 +39,7 @@ spec:
         type: LoadBalancer
         annotations:
           lbipam.cilium.io/ips: ${CONFIG_MAIN_SVC_INGRESS_INTERNAL_ADDR}
-          external-dns.alpha.kubernetes.io/hostname: "internal.${SECRET_DOMAIN_NAME}"
+          external-dns.alpha.kubernetes.io/hostname: "internal.zinn.ca"
 
       publishService:
         enabled: true
