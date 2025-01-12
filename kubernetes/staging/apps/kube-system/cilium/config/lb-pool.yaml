@@ -5,4 +5,4 @@ metadata:
   name: main-pool
 spec:
   blocks:
-    - cidr: ${CONFIG_STAGING_L2_POOL_CIDR}
+    - cidr: 10.12.1.0/24

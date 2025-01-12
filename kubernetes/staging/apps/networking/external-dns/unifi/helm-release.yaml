@@ -65,8 +65,8 @@ spec:
       - --ingress-class=nginx
     policy: sync
     sources: ["ingress", "service"]
-    txtOwnerId: ${CONFIG_CLUSTER_NAME}
-    txtPrefix: k8s.${CONFIG_CLUSTER_NAME}.
+    txtOwnerId: staging
+    txtPrefix: k8s.staging.
     domainFilters: ["test.zinn.ca"]
     serviceMonitor:
       enabled: true

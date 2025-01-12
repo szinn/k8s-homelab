@@ -39,7 +39,7 @@ spec:
               tag: latest@sha256:5d3c1d66a667623734e14001500caea48fb891037e2af6cfe9fee0f3f4182980
               pullPolicy: Always
             env:
-              TZ: ${CONFIG_TIMEZONE}
+              TZ: America/Toronto
     service:
       main:
         controller: main
