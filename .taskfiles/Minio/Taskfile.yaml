@@ -7,16 +7,16 @@ tasks:
     desc: "Run 'terraform init'"
     dir: terraform/minio
     cmds:
-      - terraform init --upgrade
+      - op run --env-file ../terraform.env --no-masking -- terraform init --upgrade
 
   plan:
     desc: "Run 'terraform plan'"
     dir: terraform/minio
     cmds:
-      - terraform plan
+      - op run --env-file ../terraform.env --no-masking -- terraform plan
 
   apply:
     desc: "Run 'terraform apply'"
     dir: terraform/minio
     cmds:
-      - terraform apply  -auto-approve
+      - op run --env-file ../terraform.env --no-masking -- terraform apply  -auto-approve
