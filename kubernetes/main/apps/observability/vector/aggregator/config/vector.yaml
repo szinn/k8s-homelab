@@ -72,7 +72,7 @@ sinks:
     type: loki
     inputs:
       - kubernetes_remap
-    endpoint: http://loki-gateway.observability.svc.cluster.local
+    endpoint: http://loki-headless.observability.svc.cluster.local:3100
     encoding:
       codec: json
     buffer:
@@ -94,7 +94,7 @@ sinks:
     type: loki
     inputs:
       - talos_kernel_transform
-    endpoint: http://loki-gateway:80
+    endpoint: http://loki-headless.observability.svc.cluster.local:3100
     encoding:
       codec: json
       except_fields:
@@ -111,7 +111,7 @@ sinks:
     type: loki
     inputs:
       - talos_service_transform
-    endpoint: http://loki-gateway.observability.svc.cluster.local
+    endpoint: http://loki-headless.observability.svc.cluster.local:3100
     encoding:
       codec: json
       except_fields:
@@ -128,7 +128,7 @@ sinks:
     type: loki
     inputs:
       - titan_logs
-    endpoint: http://loki-gateway.observability.svc.cluster.local
+    endpoint: http://loki-headless.observability.svc.cluster.local:3100
     encoding:
       codec: json
     batch:
