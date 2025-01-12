@@ -18,7 +18,7 @@ repositories:
 
 releases:
   - name: prometheus-operator-crds
-    namespace: monitoring
+    namespace: observability
     chart: oci://ghcr.io/prometheus-community/charts/prometheus-operator-crds
     version: 17.0.2
 
@@ -28,7 +28,7 @@ releases:
     version: 1.16.5
     values: ["../apps/kube-system/cilium/app/helm-values.yaml"]
     needs:
-      - monitoring/prometheus-operator-crds
+      - observability/prometheus-operator-crds
 
   - name: coredns
     namespace: kube-system
