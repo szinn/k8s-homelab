@@ -3,7 +3,18 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
+  # Pre Flux-Kustomizations
   - namespace.yaml
+  - ../../templates/flux
+  # Flux-Kustomizations
   - frigate/install.yaml
   - home-assistant/install.yaml
   - node-red/install.yaml
+transformers:
+  - |-
+    apiVersion: builtin
+    kind: NamespaceTransformer
+    metadata:
+      name: not-used
+      namespace: home
+    unsetOnly: true

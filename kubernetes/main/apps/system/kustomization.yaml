@@ -3,7 +3,10 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
+  # Pre Flux-Kustomizations
   - namespace.yaml
+  - ../../templates/flux
+  # Flux-Kustomizations
   - descheduler/install.yaml
   - fstrim/install.yaml
   - intel-device-plugin/install.yaml
@@ -16,3 +19,11 @@ resources:
   - snapshot-controller/install.yaml
   - spegel/install.yaml
   - volsync/install.yaml
+transformers:
+  - |-
+    apiVersion: builtin
+    kind: NamespaceTransformer
+    metadata:
+      name: not-used
+      namespace: system
+    unsetOnly: true
