@@ -12,7 +12,7 @@ tasks:
       Args:
         cluster: Cluster to run command against (required)
     preconditions:
-      - which test talhelper
+      - which test talhelper sops
       - test -f {{.CLUSTER_DIR}}/bootstrap/talos/talsecret.sops.yaml
       - test -f {{.CLUSTER_DIR}}/bootstrap/talos/talconfig.yaml
     requires:

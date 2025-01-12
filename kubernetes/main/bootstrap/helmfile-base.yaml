@@ -54,3 +54,12 @@ releases:
     values: ["../apps/system/spegel/app/helm-values.yaml"]
     needs:
       - kube-system/coredns
+
+  - name: wipe-rook
+    namespace: kube-system
+    chart: oci://ghcr.io/bjw-s/helm/app-template
+    version: 3.6.0
+    values:
+      - ./templates/wipe-rook.yaml.gotmpl
+    needs:
+      - system/spegel
