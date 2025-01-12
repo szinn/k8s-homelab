@@ -408,7 +408,7 @@ tasks:
     prompt: Ready to restore database {{.DATABASE}}?
     desc: Restore a database
     cmds:
-      - cat /tmp/immich-latest.sql | sed "s/SELECT pg_catalog.set_config('search_path', '', false);/SELECT pg_catalog.set_config('search_path', 'public, pg_catalog', true);/g" | psql -h immich.{{.SECRET_BASE_DOMAIN_NAME}}
+      - cat /tmp/immich-latest.sql | sed "s/SELECT pg_catalog.set_config('search_path', '', false);/SELECT pg_catalog.set_config('search_path', 'public, pg_catalog', true);/g" | psql -h immich.zinn.ca
 
   _down:
     desc: Bring a service down

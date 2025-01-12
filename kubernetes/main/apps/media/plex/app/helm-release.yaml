@@ -52,8 +52,8 @@ spec:
               repository: ghcr.io/onedr0p/plex
               tag: 1.41.3.9314-a0bfb8370@sha256:cbefe5f2f44d0519fd72985ed4005b7b55a7eb9dcbdcc3b4d6bb7055730db565
             env:
-              TZ: "${CONFIG_TIMEZONE}"
-              ADVERTISE_IP: "http://${CONFIG_MAIN_SVC_PLEX_ADDR}:32400,https://{{ .Release.Name }}.zinn.ca:443"
+              TZ: "America/Toronto"
+              ADVERTISE_IP: "http://10.11.1.14:32400,https://{{ .Release.Name }}.zinn.ca:443"
               ALLOWED_NETWORKS: "10.0.0.0/8"
               HOSTNAME: "plex"
             envFrom:
@@ -72,7 +72,7 @@ spec:
         controller: main
         type: LoadBalancer
         annotations:
-          lbipam.cilium.io/ips: ${CONFIG_MAIN_SVC_PLEX_ADDR}
+          lbipam.cilium.io/ips: 10.11.1.14
         ports:
           http:
             port: 32400

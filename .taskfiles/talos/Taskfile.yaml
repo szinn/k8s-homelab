@@ -233,9 +233,9 @@ tasks:
   #       node: The node to upgrade
   #   cmd:
   #     bash {{.TALOS_SCRIPTS_DIR}}/upgrade.sh "{{.cluster}}" "{{.node}}" "{{.TALOS_IMAGE}}" "{{.rollout}}"
-  #     # - echo "Upgrading node {{.node}}.{{.SECRET_TECH_DOMAIN_NAME}} on cluster {{.cluster}} to image {{.TALOS_IMAGE}}"
+  #     # - echo "Upgrading node {{.node}}.zinn.tech on cluster {{.cluster}} to image {{.TALOS_IMAGE}}"
   #     # - read -p "Press any key to resume ..."
-  #     # - talosctl --context {{.cluster}} upgrade -n {{.node}}.{{.SECRET_TECH_DOMAIN_NAME}} --image {{.TALOS_IMAGE}}
+  #     # - talosctl --context {{.cluster}} upgrade -n {{.node}}.zinn.tech --image {{.TALOS_IMAGE}}
   #   vars:
   #     rollout: '{{.rollout | default "false"}}'
   #     TALOS_VERSION:

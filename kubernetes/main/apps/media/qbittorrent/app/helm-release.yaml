@@ -44,7 +44,7 @@ spec:
               repository: ghcr.io/onedr0p/qbittorrent
               tag: 5.0.3@sha256:3d62f065290ae77a10c7f7deaef7bc857068feff89503773707d2dae339b66c6
             env:
-              TZ: ${CONFIG_TIMEZONE}
+              TZ: America/Toronto
               QBITTORRENT__PORT: &port 8080
               QBITTORRENT__BT_PORT: &port-bt 50413
     service:
@@ -57,7 +57,7 @@ spec:
         controller: main
         type: LoadBalancer
         annotations:
-          lbipam.cilium.io/ips: ${CONFIG_MAIN_SVC_QBITTORRENT_ADDR}
+          lbipam.cilium.io/ips: 10.11.1.13
           prometheus.io/probe: "true"
           prometheus.io/protocol: tcp
         ports:

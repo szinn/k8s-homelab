@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/instance: *app
   annotations:
     external-dns.alpha.kubernetes.io/hostname: postgres.zinn.ca
-    lbipam.cilium.io/ips: ${CONFIG_MAIN_SVC_POSTGRES_ADDR}
+    lbipam.cilium.io/ips: 10.11.1.10
 spec:
   type: LoadBalancer
   ports:

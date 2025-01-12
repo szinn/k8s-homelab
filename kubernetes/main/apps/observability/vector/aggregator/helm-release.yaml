@@ -64,7 +64,7 @@ spec:
         controller: main
         type: LoadBalancer
         annotations:
-          lbipam.cilium.io/ips: ${CONFIG_MAIN_SVC_VECTOR_AGGREGATOR_ADDR}
+          lbipam.cilium.io/ips: 10.11.1.4
           external-dns.alpha.kubernetes.io/hostname: vector.zinn.ca
         ports:
           http:

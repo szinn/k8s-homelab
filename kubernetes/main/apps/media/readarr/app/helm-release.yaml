@@ -44,7 +44,7 @@ spec:
               repository: ghcr.io/szinn/readarr-develop
               tag: 0.4.8.2726@sha256:972eae0093c55b35bfaf642a7ee910eaf0741f24da9494e50ce86a37366239a6
             env:
-              TZ: ${CONFIG_TIMEZONE}
+              TZ: America/Toronto
               READARR__APP__INSTANCENAME: Readarr
               READARR__APP__THEME: dark
               READARR__AUTH__METHOD: External

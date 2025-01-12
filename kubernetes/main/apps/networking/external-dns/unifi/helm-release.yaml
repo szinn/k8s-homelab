@@ -65,8 +65,8 @@ spec:
       - --ingress-class=internal-nginx
     policy: sync
     sources: ["ingress", "service"]
-    txtOwnerId: ${CONFIG_CLUSTER_NAME}
-    txtPrefix: k8s.${CONFIG_CLUSTER_NAME}.
+    txtOwnerId: main
+    txtPrefix: k8s.main.
     domainFilters: ["zinn.ca"]
     serviceMonitor:
       enabled: true

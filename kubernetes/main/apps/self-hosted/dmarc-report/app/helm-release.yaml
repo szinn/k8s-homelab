@@ -52,7 +52,7 @@ spec:
               tag: 1.4.5@sha256:1b3fcdf2e3e5acf06180c89196f2edd514e679c023122bfefb4a5f7179b24675
               pullPolicy: IfNotPresent
             env:
-              TZ: ${CONFIG_TIMEZONE}
+              TZ: America/Toronto
             envFrom:
               - secretRef:
                   name: dmarc-report-secret

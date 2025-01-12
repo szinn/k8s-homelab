@@ -43,7 +43,7 @@ spec:
               repository: docker.io/golift/unifi-poller
               tag: v2.14.0@sha256:6e9eb4a34b8d976e398511766281ec51946aafa51b5f563fca9238656eeaa118
             env:
-              TZ: "${CONFIG_TIMEZONE}"
+              TZ: "America/Toronto"
               UP_UNIFI_DEFAULT_ROLE: "homelab-controller"
               UP_UNIFI_DEFAULT_VERIFY_SSL: false
               UP_UNIFI_DEFAULT_SAVE_SITES: true

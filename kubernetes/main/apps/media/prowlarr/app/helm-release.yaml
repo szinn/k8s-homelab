@@ -53,7 +53,7 @@ spec:
               repository: ghcr.io/onedr0p/prowlarr-develop
               tag: 1.30.0.4920@sha256:d204db1e4b73aa61600162da74ec85062acc54b0a7ee4f44444fab9b68816509
             env:
-              TZ: ${CONFIG_TIMEZONE}
+              TZ: America/Toronto
               PROWLARR__APP__INSTANCENAME: Prowlarr
               PROWLARR__THEME: dark
               PROWLARR__AUTH__METHOD: External

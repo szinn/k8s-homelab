@@ -29,7 +29,7 @@ spec:
   serviceSpec:
     type: LoadBalancer
     annotations:
-      lbipam.cilium.io/ips: ${CONFIG_MAIN_SVC_REDIS_ADDR}
+      lbipam.cilium.io/ips: 10.11.1.12
       external-dns.alpha.kubernetes.io/hostname: redis.zinn.ca
   topologySpreadConstraints:
     - maxSkew: 1

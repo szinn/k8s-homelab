@@ -60,7 +60,7 @@ spec:
               ENABLE_PERIODIC_VISIT_LOCATE: "true"
               IS_HTTPS_ENABLED: "true"
               PORT: &port 8080
-              TIMEZONE: "${CONFIG_TIMEZONE}"
+              TIMEZONE: "America/Toronto"
             envFrom:
               - secretRef:
                   name: shlink-secret

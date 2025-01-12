@@ -61,7 +61,7 @@ spec:
         controller: main
         type: LoadBalancer
         annotations:
-          lbipam.cilium.io/ips: ${CONFIG_MAIN_SVC_MOSQUITTO_ADDR}
+          lbipam.cilium.io/ips: 10.11.1.16
         ports:
           http:
             port: 1883

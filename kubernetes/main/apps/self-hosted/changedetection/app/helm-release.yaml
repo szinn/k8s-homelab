@@ -34,7 +34,7 @@ spec:
               repository: ghcr.io/dgtlmoon/changedetection.io
               tag: "0.48.06@sha256:c67332c39ac8f5c12af68a6205461f7ab487352f4a3bcda8e6f4c17e6cf3f47a"
             env:
-              TZ: ${CONFIG_TIMEZONE}
+              TZ: America/Toronto
               PORT: &port 5000
               USE_X_SETTINGS: 1
               PLAYWRIGHT_DRIVER_URL: ws://localhost:3000/?stealth=1&--disable-web-security=true&--user-data-dir=~/browserless-cache-123

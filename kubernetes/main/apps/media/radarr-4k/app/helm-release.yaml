@@ -66,7 +66,7 @@ spec:
               repository: ghcr.io/onedr0p/radarr-develop
               tag: 5.18.0.9595@sha256:aa13d1366330e665a4f9fcb618e5307882c528e8fd4df6b4a3677c1c64e9d45c
             env:
-              TZ: ${CONFIG_TIMEZONE}
+              TZ: America/Toronto
               RADARR__APP__INSTANCENAME: Radarr-4k
               RADARR__APP__THEME: dark
               RADARR__AUTH__METHOD: External

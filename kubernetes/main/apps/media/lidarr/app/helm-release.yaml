@@ -53,7 +53,7 @@ spec:
               repository: ghcr.io/szinn/lidarr-develop
               tag: 2.9.3.4527@sha256:2d5909490c1f20fe5749a0d3dcc49fd415ae0dfbe0574ad3a2c41c49d248a690
             env:
-              TZ: ${CONFIG_TIMEZONE}
+              TZ: America/Toronto
               LIDARR__APP__INSTANCENAME: Lidarr
               LIDARR__APP__THEME: dark
               LIDARR__AUTH__METHOD: External

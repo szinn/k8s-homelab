@@ -23,7 +23,7 @@ ports:
     port: 3000
 endpoints:
   - addresses:
-      - "${CONFIG_TITAN_ADDR}"
+      - "10.0.0.7"
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress

@@ -87,7 +87,7 @@ spec:
                 "/config"
               ]
             env:
-              TZ: "${CONFIG_TIMEZONE}"
+              TZ: "America/Toronto"
     service:
       main:
         controller: main
