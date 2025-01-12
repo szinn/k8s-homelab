@@ -44,7 +44,7 @@ spec:
         enabled: true
         className: "nginx"
         hosts:
-          - host: "{{ .Release.Name }}.${SECRET_DOMAIN_NAME}"
+          - host: "{{ .Release.Name }}.test.zinn.ca"
             paths:
               - path: /
                 service:

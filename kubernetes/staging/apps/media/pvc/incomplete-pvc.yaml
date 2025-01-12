@@ -12,7 +12,7 @@ spec:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   nfs:
-    server: ${SECRET_ATLAS_NFS_SERVER}
+    server: ragnar.zinn.tech
     path: "/mnt/nvme/incomplete"
   mountOptions:
     - nfsvers=4

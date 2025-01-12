@@ -119,7 +119,7 @@ spec:
       dashboard:
         ingressClassName: nginx
         host:
-          name: rook.${SECRET_DOMAIN_NAME}
+          name: rook.test.zinn.ca
           path: /
 
     cephBlockPools:

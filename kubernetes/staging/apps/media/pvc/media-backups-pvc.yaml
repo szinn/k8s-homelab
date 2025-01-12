@@ -12,8 +12,8 @@ spec:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   nfs:
-    server: ${SECRET_ATLAS_NFS_SERVER}
-    path: "${SECRET_ATLAS_NFS_ROOTDIR}/backup/media"
+    server: ragnar.zinn.tech
+    path: "/mnt/atlas/k8s/staging/backup/media"
   mountOptions:
     - nfsvers=4
     - tcp
