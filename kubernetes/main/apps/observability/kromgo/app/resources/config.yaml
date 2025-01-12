@@ -5,6 +5,16 @@ badge:
   size: 12
 
 metrics:
+  - name: talos_version
+    query: node_os_info{name="Talos"}
+    label: version_id
+    title: Talos
+
+  - name: kubernetes_version
+    query: kubernetes_build_info{service="kubernetes"}
+    label: git_version
+    title: Kubernetes
+
   - name: cluster_node_count
     query: count(count by (node) (kube_node_status_condition{node=~"k8s-[0-9]+", condition="Ready"}))
     title: Nodes
