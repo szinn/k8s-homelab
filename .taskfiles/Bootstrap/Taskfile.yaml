@@ -64,10 +64,6 @@ tasks:
       - chmod og-rwx $HOME/.kube/config
       - chmod og-rwx $HOME/.talos/config
 
-  config:
-    desc: Rebuild all cluster configuration
-    cmd: bash .taskfiles/Bootstrap/_scripts/build-config.sh
-
   dump:
     desc: Dump resources
     preconditions:
