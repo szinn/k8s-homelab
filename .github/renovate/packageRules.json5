@@ -36,7 +36,7 @@
     },
     {
       "description": ["Don't pin branches for ansible files"],
-      "matchFileNames": ["ansible/**",".taskfiles/**"],
+      "matchFileNames": ["ansible/**", ".taskfiles/**"],
       "matchDatasources": ["docker"],
       "pinDigests": false
     },
