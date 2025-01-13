@@ -23,6 +23,7 @@ spec:
       localpv:
         image:
           registry: quay.io/
+        basePath: &basePath /var/mnt/ssd/openebs/local
 
       helperPod:
         image:
@@ -32,7 +33,7 @@ spec:
         enabled: true
         name: openebs-hostpath
         isDefaultClass: false
-        basePath: /var/mnt/ssd/openebs/local
+        basePath: *basePath
 
     openebs-crds:
       csi:
