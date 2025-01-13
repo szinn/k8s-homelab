@@ -82,46 +82,12 @@ spec:
     kubelet:
       enabled: true
       serviceMonitor:
-        cAdvisorMetricRelabelings:
-          # Drop less useful container CPU metrics.
-          - sourceLabels: [__name__]
-            action: drop
-            regex: "container_cpu_(cfs_throttled_seconds_total|load_average_10s|system_seconds_total|user_seconds_total)"
-          # Drop less useful / always zero container memory metrics.
-          - sourceLabels: [__name__]
-            action: drop
-            regex: "container_memory_(failures_total|mapped_file|swap)"
-          # Drop less useful container process metrics.
-          - sourceLabels: [__name__]
-            action: drop
-            regex: "container_(file_descriptors|tasks_state|threads_max)"
-          # Drop less useful container filesystem metrics.
-          - sourceLabels: [__name__]
-            action: drop
-            regex: "container_fs_(io_current|io_time_seconds_total|io_time_weighted_seconds_total|reads_merged_total|sector_reads_total|sector_writes_total|writes_merged_total)"
-          # Drop less useful container blkio metrics.
-          - sourceLabels: [__name__]
-            action: drop
-            regex: "container_blkio_device_usage_total"
-          # Drop container spec metrics that overlap with kube-state-metrics.
-          - sourceLabels: [__name__]
-            action: drop
-            regex: "container_spec.*"
-          # Drop cgroup metrics with no pod.
-          - sourceLabels: [id, pod]
-            action: drop
-            regex: ".+;"
-          # Drop high-cardinality labels.
-          - action: labeldrop
-            regex: (uid|id|name|pod_uid|interface)
-        probesMetricRelabelings:
-          - action: drop
-            sourceLabels: ["__name__"]
-            regex: prober_probe_duration_seconds_bucket
         metricRelabelings:
-          # Drop high-cardinality labels.
+          # Drop high cardinality labels
           - action: labeldrop
-            regex: (uid|id|name|pod_uid|interface)
+            regex: (uid)
+          - action: labeldrop
+            regex: (id|name)
           - action: drop
             sourceLabels: ["__name__"]
             regex: (rest_client_request_duration_seconds_bucket|rest_client_request_duration_seconds_sum|rest_client_request_duration_seconds_count)
@@ -213,10 +179,10 @@ spec:
             patch: |
               - op: add
                 path: /spec/endpoints/0/trackTimestampsStaleness
-                value: true
+                value: false
               - op: add
                 path: /spec/endpoints/1/trackTimestampsStaleness
-                value: true
+                value: false
               - op: add
                 path: /spec/endpoints/2/trackTimestampsStaleness
-                value: true
+                value: false
