@@ -98,14 +98,14 @@ spec:
               - path: /config
       media:
         type: nfs
-        server: "ragnar.zinn.tech"
+        server: ragnar.zinn.tech
         path: /mnt/atlas/media/
         globalMounts:
           - path: /data
       backup:
         type: nfs
-        server: "ragnar.zinn.tech"
-        path: "/mnt/atlas/k8s/main/backup/media/plex"
+        server: ragnar.zinn.tech
+        path: /mnt/atlas/k8s/main/backup/media/plex
         globalMounts:
           - path: /backup
       transcode:
