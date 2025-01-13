@@ -25,4 +25,4 @@ spec:
     substitute:
       GATUS_APP: shlink
       GATUS_SUBDOMAIN: ln
-      GATUS_PATH: /nix
+      GATUS_PATH: /g
