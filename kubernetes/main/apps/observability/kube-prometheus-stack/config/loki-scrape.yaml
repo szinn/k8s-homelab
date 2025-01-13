@@ -3,13 +3,13 @@
 apiVersion: monitoring.coreos.com/v1alpha1
 kind: ScrapeConfig
 metadata:
-  name: blocky-scrape
+  name: loki-scrape
 spec:
   staticConfigs:
-    - targets: ["titan.zinn.tech:4000"]
+    - targets: ["loki-headless.observability:3100"]
   metricsPath: /metrics
   scheme: HTTP
   relabelings:
     - action: replace
       targetLabel: job
-      replacement: blocky
+      replacement: loki
