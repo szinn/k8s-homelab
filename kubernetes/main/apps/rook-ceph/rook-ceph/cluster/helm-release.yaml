@@ -92,7 +92,7 @@ spec:
         enabled: true
         urlPrefix: /
         ssl: false
-        prometheusEndpoint: http://vmsingle-stack.observability.svc.cluster.local:8429
+        prometheusEndpoint: http://prometheus-operated.observability.svc.cluster.local:9090
 
       storage:
         useAllNodes: false

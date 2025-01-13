@@ -36,7 +36,7 @@ spec:
               repository: ghcr.io/kashalls/kromgo
               tag: v0.4.3@sha256:c9148045a3e211ad46d416c3e3bb7ffd4c169a8b6f8e56df03ea68ed1ed5571b
             env:
-              PROMETHEUS_URL: http://vmsingle-stack.observability.svc.cluster.local:8429/
+              PROMETHEUS_URL: http://prometheus-operated.observability.svc.cluster.local:9090
               SERVER_HOST: 0.0.0.0
               SERVER_PORT: &port 8080
               HEALTH_HOST: 0.0.0.0

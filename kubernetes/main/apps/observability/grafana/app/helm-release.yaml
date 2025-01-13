@@ -219,22 +219,14 @@ spec:
             orgId: 1
           - name: Alertmanager
             orgId: 1
+          - name: Prometheus
+            orgId: 1
         datasources:
           - name: Prometheus
             type: prometheus
-            url: http://vmsingle-stack.observability.svc.cluster.local:8429
+            access: proxy
+            url: http://prometheus-operated.observability.svc.cluster.local:9090
             isDefault: false
-            jsonData:
-              prometheusType: Prometheus
-              timeInterval: 60s
-          # - name: Original Prometheus
-          #   type: prometheus
-          #   access: proxy
-          #   url: http://thanos-query.observability.svc.cluster.local:10902/
-          #   isDefault: false
-          #   jsonData:
-          #     prometheusType: Thanos
-          #     timeInterval: 1m
           - name: Loki
             type: loki
             access: proxy

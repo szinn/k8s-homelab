@@ -172,4 +172,51 @@ spec:
       fullnameOverride: prometheus-operator
 
     prometheus:
-      enabled: false # Using VictoriaMetrics
+      ingress:
+        enabled: true
+        ingressClassName: internal-nginx
+        hosts: ["prometheus.zinn.ca"]
+        pathType: Prefix
+      prometheusSpec:
+        podMonitorSelectorNilUsesHelmValues: false
+        probeSelectorNilUsesHelmValues: false
+        ruleSelectorNilUsesHelmValues: false
+        scrapeConfigSelectorNilUsesHelmValues: false
+        serviceMonitorSelectorNilUsesHelmValues: false
+        enableAdminAPI: true
+        walCompression: true
+        enableFeatures:
+          - memory-snapshot-on-shutdown
+        retention: 14d
+        retentionSize: 50GB
+        resources:
+          requests:
+            cpu: 100m
+          limits:
+            memory: 2000Mi
+        storageSpec:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: ceph-block
+              resources:
+                requests:
+                  storage: 50Gi
+
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              group: monitoring.coreos.com
+              version: v1
+              kind: ServiceMonitor
+              name: kube-prometheus-stack-kubelet
+            patch: |
+              - op: add
+                path: /spec/endpoints/0/trackTimestampsStaleness
+                value: true
+              - op: add
+                path: /spec/endpoints/1/trackTimestampsStaleness
+                value: true
+              - op: add
+                path: /spec/endpoints/2/trackTimestampsStaleness
+                value: true
