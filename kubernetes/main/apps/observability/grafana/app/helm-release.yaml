@@ -202,14 +202,6 @@ spec:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/unifi
-          - name: victoriametrics
-            disableDeletion: false
-            editable: true
-            folder: "VictoriaMetrics"
-            options:
-              path: /var/lib/grafana/dashboards/victoria-metrics
-            orgId: 1
-            type: file
     datasources:
       datasources.yaml:
         apiVersion: 1
@@ -588,36 +580,4 @@ spec:
           # renovate: dashboardName="UniFi-Poller: Client Insights - Prometheus"
           gnetId: 11315
           revision: 9
-          datasource: Prometheus
-      victoriametrics:
-        prometheus:
-          # renovate: dashboardName="Prometheus"
-          gnetId: 19105
-          revision: 6
-          datasource: Prometheus
-        vm-agent:
-          # renovate: dashboardName="VictoriaMetrics - vmagent"
-          gnetId: 12683
-          revision: 21
-          datasource:
-            - name: "DS_PROMETHEUS"
-              value: Prometheus
-        vm-alert:
-          # renovate: dashboardName="VictoriaMetrics - vmalert"
-          gnetId: 14950
-          revision: 13
-          datasource:
-            - name: "DS_PROMETHEUS"
-              value: Prometheus
-        vm-operator:
-          # renovate: dashboardName="VictoriaMetrics - operator"
-          gnetId: 17869
-          revision: 3
-          datasource:
-            - name: "DS_PROMETHEUS"
-              value: Prometheus
-        vm-single:
-          # renovate: dashboardName="VictoriaMetrics - single-node"
-          gnetId: 10229
-          revision: 37
           datasource: Prometheus
