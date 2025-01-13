@@ -27,10 +27,6 @@ spec:
   dependsOn:
     - name: prometheus-operator-crds
       namespace: observability
-  valuesFrom:
-    - kind: ConfigMap
-      name: kube-state-metrics-config
-      valuesKey: kube-state-metrics-config.yaml
   values:
     nameOverride: *app
     crds:
@@ -133,6 +129,9 @@ spec:
               sourceLabels:
                 - kubernetes_node
               targetLabel: instance
+
+    kube-state-metrics:
+      fullnameOverride: kube-state-metrics
 
     prometheusOperator:
       fullnameOverride: prometheus-operator

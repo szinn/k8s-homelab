@@ -11,7 +11,7 @@ configMapGenerator:
     files:
       - vector.yaml=./config/vector.yaml
 configurations:
-  - ./patches/kustomizeconfig.yaml
+  - kustomizeconfig.yaml
 labels:
   - pairs:
       app.kubernetes.io/name: vector-agent
