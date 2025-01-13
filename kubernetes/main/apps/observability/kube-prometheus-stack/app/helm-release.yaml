@@ -64,6 +64,8 @@ spec:
 
     kubeApiServer:
       serviceMonitor:
+        selector:
+          k8s-app: kube-apiserver
         metricRelabelings:
           - action: drop
             sourceLabels: ["__name__"]
@@ -126,21 +128,23 @@ spec:
 
     kubeControllerManager:
       enabled: true
-      endpoints: &cp
-        - 10.11.0.16
-        - 10.11.0.17
-        - 10.11.0.18
-      serviceMonitor: &sm
+      serviceMonitor:
+        selector:
+          k8s-app: kube-controller-manager
         metricRelabelings:
           - action: drop
             sourceLabels: ["__name__"]
             regex: workqueue_(work|queue)_duration_seconds_bucket
     kubeEtcd:
       enabled: false
-      endpoints: *cp
     kubeScheduler:
-      endpoints: *cp
-      serviceMonitor: *sm
+      serviceMonitor:
+        selector:
+          k8s-app: kube-scheduler
+        metricRelabelings:
+          - action: drop
+            sourceLabels: ["__name__"]
+            regex: workqueue_(work|queue)_duration_seconds_bucket
     kubeProxy:
       enabled: false # KubeProxy is disabled in the cluster, see Cilium/Talos configs
 
