@@ -6,7 +6,7 @@ metadata:
 spec:
   image:
     repository: victoriametrics/vmagent
-    tag: v1.109.0@sha256:708cf6547196236441d95deadb50e3e4b90911be52519591d07d9b60ea6ddfe0
+    tag: v1.109.0@sha256:07b4d72e929013c068d01de7100f7b925a352add0cdc12a416d0e13530c5c098
   externalLabels:
     cluster: main
   extraArgs:
