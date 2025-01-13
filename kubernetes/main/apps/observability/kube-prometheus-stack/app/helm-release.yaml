@@ -111,6 +111,9 @@ spec:
     kubeProxy:
       enabled: false # KubeProxy is disabled in the cluster, see Cilium/Talos configs
 
+    nodeExporter:
+      enabled: true
+
     prometheus-node-exporter:
       fullnameOverride: node-exporter
       prometheus:
@@ -129,6 +132,9 @@ spec:
               sourceLabels:
                 - kubernetes_node
               targetLabel: instance
+
+    kubeStateMetrics:
+      enabled: true
 
     kube-state-metrics:
       fullnameOverride: kube-state-metrics
