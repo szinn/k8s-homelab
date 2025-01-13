@@ -63,6 +63,7 @@ spec:
       enabled: false
 
     kubeApiServer:
+      enabled: true
       serviceMonitor:
         metricRelabelings:
           - action: drop
@@ -79,6 +80,7 @@ spec:
             regex: workqueue_(work|queue)_duration_seconds_bucket
 
     kubelet:
+      enabled: true
       serviceMonitor:
         cAdvisorMetricRelabelings:
           # Drop less useful container CPU metrics.
@@ -135,12 +137,15 @@ spec:
           - action: drop
             sourceLabels: ["__name__"]
             regex: workqueue_(work|queue)_duration_seconds_bucket
+
     kubeEtcd:
       enabled: false
       endpoints: *cp
+
     kubeScheduler:
       endpoints: *cp
       serviceMonitor: *sm
+
     kubeProxy:
       enabled: false # KubeProxy is disabled in the cluster, see Cilium/Talos configs
 
@@ -168,22 +173,3 @@ spec:
 
     prometheus:
       enabled: false # Using VictoriaMetrics
-
-  postRenderers:
-    - kustomize:
-        patches:
-          - target:
-              group: monitoring.coreos.com
-              version: v1
-              kind: ServiceMonitor
-              name: kps-kubelet
-            patch: |
-              - op: add
-                path: /spec/endpoints/0/trackTimestampsStaleness
-                value: true
-              - op: add
-                path: /spec/endpoints/1/trackTimestampsStaleness
-                value: true
-              - op: add
-                path: /spec/endpoints/2/trackTimestampsStaleness
-                value: true
