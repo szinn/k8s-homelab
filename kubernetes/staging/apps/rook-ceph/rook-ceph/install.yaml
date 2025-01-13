@@ -12,7 +12,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: external-secrets-stores
+    - name: external-secrets
   path: ./kubernetes/staging/apps/rook-ceph/rook-ceph/operator
   sourceRef:
     kind: GitRepository

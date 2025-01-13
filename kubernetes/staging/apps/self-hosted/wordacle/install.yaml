@@ -16,7 +16,7 @@ spec:
     kind: GitRepository
     name: flux-system
   dependsOn:
-    - name: security-external-secrets-stores
+    - name: external-secrets
   prune: true
   wait: false
   interval: 10m

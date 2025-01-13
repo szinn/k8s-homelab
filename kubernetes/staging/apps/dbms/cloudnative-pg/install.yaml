@@ -15,7 +15,7 @@ spec:
     kind: GitRepository
     name: flux-system
   dependsOn:
-    - name: external-secrets-stores
+    - name: external-secrets
     - name: rook-ceph-cluster
   prune: true
   wait: true
@@ -38,7 +38,7 @@ spec:
     name: flux-system
   dependsOn:
     - name: cloudnative-pg
-    - name: external-secrets-stores
+    - name: external-secrets
   prune: true
   wait: true
   interval: 10m

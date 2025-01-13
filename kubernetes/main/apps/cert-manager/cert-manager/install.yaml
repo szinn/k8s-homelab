@@ -35,7 +35,7 @@ spec:
     kind: GitRepository
     name: flux-system
   dependsOn:
-    - name: external-secrets-stores
+    - name: external-secrets
     - name: cert-manager
   prune: true
   wait: false
