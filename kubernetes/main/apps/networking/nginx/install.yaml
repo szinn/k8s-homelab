@@ -18,6 +18,7 @@ spec:
     name: flux-system
   dependsOn:
     - name: cert-manager
+    - name: external-secrets
   prune: true
   wait: false
   interval: 30m

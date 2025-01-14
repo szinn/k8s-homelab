@@ -8,6 +8,7 @@ resources:
   - ../../templates/alerts
   # Flux-Kustomizations
   - flux-operator/install.yaml
+  - flux-config/install.yaml
 transformers:
   - |-
     apiVersion: builtin
