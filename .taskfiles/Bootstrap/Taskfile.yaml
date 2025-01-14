@@ -119,6 +119,8 @@ tasks:
         - cluster
     env:
       TALOSCONFIG: "{{.CLUSTER_DIR}}/talosconfig"
+      NODE_COUNT:
+        sh: kubectl --context {{.context}} get nodes --no-headers --selector !node-role.kubernetes.io/control-plane | wc
     vars:
       CLUSTER_DIR: "{{.KUBERNETES_DIR}}/{{.cluster}}"
     cmds:
