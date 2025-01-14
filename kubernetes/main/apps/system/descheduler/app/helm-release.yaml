@@ -29,7 +29,6 @@ spec:
   values:
     replicas: 1
     kind: Deployment
-    deschedulerPolicyAPIVersion: descheduler/v1alpha2
     deschedulerPolicy:
       profiles:
         - name: Default
