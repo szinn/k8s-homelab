@@ -35,6 +35,7 @@ _... managed with Flux, Renovate and GitHub_ 🤖
 ## Overview
 
 This is my mono repo for my home infrastructure. It's based loosely on the template at [onedr0p/flux-cluster-template](https://github.com/onedr0p/flux-cluster-template) as well as many of the exemplar repos, searchable via [https://nanne.dev/k8s-at-home-search](https://nanne.dev/k8s-at-home-search/).
+
 It follows the concept of Infrastructure as Code and by using tools such [Flux](https://github.com/fluxcd/flux2),
 [Renovate](https://github.com/renovatebot/renovate),
 [go-task](https://github.com/go-task/task) and shell scripts, creates a reproducible, mostly self-managing implementation.
@@ -48,40 +49,41 @@ At the bottom of this page, is the bringup process that I follow for this cluste
 
 ## Hardware
 
-| Device                                             | Count | OS Disk Size | Data Disk Size        | RAM  | Operating System     |
-| -------------------------------------------------- | ----- | ------------ | --------------------- | ---- | -------------------- |
-| Ryzen 3900 12c24t NAS server                       | 1     | 1TB          | 1TB NVME, 6x16Tb SATA | 64GB | NixOS 23.11 - Ragnar |
-| Raspberry Pi                                       | 1     |              |                       |      | OctoPrint            |
-| Raspberry Pi 4B                                    | 1     |              |                       |      | BirdNet              |
-| Raspberry Pi 5                                     | 1     |              |                       |      | Raspberry PiOS       |
-| TESmart 16-port HDMI Switch                        | 1     |              |                       |      |                      |
-| PiKVM                                              | 1     |              |                       |      |                      |
-| Intel NUC11PAHi7 (worker nodes)                    | 3     | 500GB SSD    | 1TB NVMe              | 64GB | Talos                |
-| Beelink MiniPC, Celeron J4125 (controlplane nodes) | 3     | 256GB SSD    |                       | 8GB  | Talos                |
-| Synology 1019+ (NFS server)                        | 1     |              | 5x12TB SATA           |      |                      |
-| UniFi UDM SE                                       | 1     |              |                       |      |                      |
-| USW-Pro-24-PoE                                     | 1     |              |                       |      |                      |
-| USW-Aggregation                                    |       |              |                       |      |                      |
-| USW-Enterprise-8-PoE                               | 2     |              |                       |      |                      |
-| USW-Flex XG                                        | 1     |              |                       |      | Desktop Hub          |
-| USW-Flex                                           | 1     |              |                       |      | Outside Camera Hub   |
-| UNVR                                               | 1     |              | 3x4TB SATA            |      |                      |
-| USP-PDU Pro                                        | 2     |              |                       |      |                      |
-| 6-port NUC                                         | 1     | 512GB SSD    |                       | 32GB | NixOS - Titan        |
-| Intel NUC11TNHi7                                   | 1     | 1Tb          |                       | 64GB | Proxmox              |
-| Intel NUC13 Pro                                    | 1     | 1Tb          |                       | 32GB | NixOS - Hera         |
-| UVC G4 Doorbell                                    | 1     |              |                       |      | Front Door Camera    |
-| UVC G4 Pro                                         | 3     |              |                       |      | Additional Cameras   |
+| Device                                             | Count | OS Disk Size | Data Disk Size        | RAM  | Operating System       |
+| -------------------------------------------------- | ----- | ------------ | --------------------- | ---- | ---------------------- |
+| Ryzen 3900 12c24t NAS server                       | 1     | 1TB          | 1TB NVME, 6x16Tb SATA | 64GB | TrueNAS Scale - Ragnar |
+| Raspberry Pi                                       | 1     |              |                       |      | OctoPrint              |
+| Raspberry Pi 4B                                    | 1     |              |                       |      | BirdNet                |
+| Raspberry Pi 5                                     | 1     |              |                       |      | Raspberry PiOS         |
+| TESmart 16-port HDMI Switch                        | 1     |              |                       |      |                        |
+| PiKVM                                              | 1     |              |                       |      |                        |
+| Intel NUC11PAHi7 (worker nodes)                    | 3     | 500GB SSD    | 1TB NVMe              | 64GB | Talos                  |
+| Beelink MiniPC, Celeron J4125 (controlplane nodes) | 3     | 256GB SSD    |                       | 8GB  | Talos                  |
+| Synology 1019+ (NFS server)                        | 1     |              | 5x12TB SATA           |      |                        |
+| UniFi UDM SE                                       | 1     |              |                       |      |                        |
+| USW-Pro-24-PoE                                     | 1     |              |                       |      |                        |
+| USW-Aggregation                                    | 1     |              |                       |      |                        |
+| USW-Enterprise-8-PoE                               | 2     |              |                       |      |                        |
+| USW-Flex XG                                        | 1     |              |                       |      | Desktop Hub            |
+| USW-Flex                                           | 1     |              |                       |      | Outside Camera Hub     |
+| UNVR                                               | 1     |              | 3x4TB SATA            |      |                        |
+| USP-PDU Pro                                        | 2     |              |                       |      |                        |
+| 6-port NUC                                         | 1     | 512GB SSD    |                       | 32GB | NixOS - Titan          |
+| Intel NUC11TNHi7                                   | 1     | 1Tb          |                       | 64GB | Proxmox                |
+| Intel NUC13 Pro                                    | 1     | 1Tb          |                       | 32GB | NixOS - Hera           |
+| UVC G4 Doorbell                                    | 1     |              |                       |      | Front Door Camera      |
+| UVC G4 Pro                                         | 3     |              |                       |      | Additional Cameras     |
 
 The Proxmox Intel NUC runs a 6-node Talos staging cluster where I can try out various patterns before deploying in the main cluster.
 
 The Intel NUC13 (Hera) is a spare NUC that I'm currently using as a NixOS platform with a graphical UI.
 
-Titan used to be the VyOS router which has since gone out of favour. It now runs critical services that used to run on the VyOS router including:
+Titan used to be the VyOS router which has since gone out of favour. It now runs critical services on NixOS that used to run on the VyOS router including:
 
-- DNS (dnsdist, bind, blocky)
-- ntpd (chrony)
-- onepassword-connect
+- DNS (AdGuard Home)
+- Cloudflare DDNS
+- haproxy frontends for both main and staging cluster
+- gatus to track machine and non-cluster services
 
 ## Kubernetes
 
@@ -97,7 +99,7 @@ The cluster is based on [Talos](https://www.talos.dev) with 3 control-plane node
 
 ### GitOps
 
-[Flux](https://github.com/fluxcd/flux2) watches my [cluster](./kubernetes/) folder (see Directories below) and makes the changes to my cluster based on the YAML manifests.
+[Flux](https://github.com/fluxcd/flux2) watches my [cluster](./kubernetes/{cluster}) folder (see Directories below) and makes the changes to my cluster based on the YAML manifests.
 
 [Renovate](https://github.com/renovatebot/renovate) watches my **entire** repository looking for dependency updates, when they are found a PR is automatically created.
 When PRs are merged [Flux](https://github.com/fluxcd/flux2) applies the changes to my cluster.
@@ -116,10 +118,7 @@ Multiple wired access points are scattered around the house and backyard.
 The Kubernetes cluster and IPs are on the 10.11.0.x subnet with VLAN tagging.
 External machines (Synology, etc) are on the main household VLAN subnet. IoT devices are on an isolated 191.168.1.x VLAN. They cannot reach the other VLANs directly but will answer when spoken to.
 
-Cilium works with the router using BGP to route external IPs to Kubernetes services(e.g., MySQL). Ingress-nginx is used to reverse-proxy services within the cluster.
-
-DNS is managed by CoreDNS in the cluster which then forwards unresolved requests to DNSdist running on the Titan server that will forward to either bind (for local home traffic) or
-Blocky for ad blocking for external traffic.
+DNS is managed by CoreDNS in the cluster which then forwards unresolved requests to DNS running on the Titan server. External DNS is used to feed DNS info to the UDM-SE gateway.
 
 The external DNS is managed via [Cloudflare](https://www.cloudflare.com/en-ca/).
 External names are managed by [external-dns](https://github.com/kubernetes-sigs/external-dns) on the cluster and, since my home IP can be changed at any time, DDNS is maintained by the
@@ -143,13 +142,14 @@ The repository directories are:
   - **setup**: Scripts to configure and create the cluster.
   - **talos**: Talos machine configuration.
   - **terraform**: Terraform configuration.
-- **kubernetes**: The cluster itself.
-  - **apps**: The applications to load.
-  - **bootstrap**: The initial code loaded on the cluster to bootstrap it.
-  - **cluster**: The definition of the cluster.
-    - **config**: The configuration of the cluster to use flux.
-    - **repositories**: Sources of code for the cluster.
-    - **vars**: The ConfigMap and Secret used for variable substitution by Flux.
+- **kubernetes**: The clusters themselves.
+  - **main**: The main cluster
+    - **apps**: The applications to load.
+    - **bootstrap**: The initial code loaded on the cluster to bootstrap it.
+    - **flux**: The definition of the cluster.
+      - **cluster**: The configuration of the cluster to use flux.
+  - **repositories**: Sources of code for the cluster.
+  - **staging**: The staging cluster that follows the same structure as the main cluster.
 - **hack**: Miscellaneous stuff that really has nothing to do with managing the cluster.
 
 ### Environment Setup
@@ -171,20 +171,6 @@ pre-commit auto-update
 ### External Environment Configuration
 
 All values are defined as shell environment variables.
-
-The task `bootstrap:config` is responsible for traversing the whole repo and creating the appropriate YAML files and encrypting them when necessary.
-With this structure, all files can be checked in to the repo with no risk of leaking secret values. `build-config.sh` will also create a `.sha256` file for each of the `.cfg` files processed.
-This file is used as an optimization so that the YAML files will only be regenerated if the actual values change, which keeps the number of files in an updating PR smaller.
-
-### Setup Configuration
-
-The file [cluster-settings.cfg](./kubernetes/main/cluster/vars/cluster-settings.cfg) defines a ConfigMap resource that will be filled in with values from the `env.XXX` configuration files.
-Flux will load this file to the cluster at the beginning of the resolve phase so that the ConfigMap values are available through the Kustomization post-build step.
-Since the configuration values are stored in a ConfigMap resource, the resulting YAML file will make them visible in the repo. If you do not wish to have them visible, use the `cluster-secrets.sops.cfg` file described below.
-
-### Cluster Secrets
-
-The file [cluster-secrets.sops.cfg](./kubernetes/main/cluster/vars/cluster-secrets.sops.cfg) defines a Secret resource that will be filled in with values from the `env.XXX` configuration files and then encrypted with Mozilla/sops.
 
 ### Application Secrets
 
@@ -241,11 +227,7 @@ When you've got everything created and to your liking, create a commit and push 
 
 At this point you should have your machines up and running with the base k3s install of control planes and workers.
 
-The final step is to run the `bootstrap-cluster.sh` script as
-
-```shell
-bootstrap-cluster.sh
-```
+The final step is to run `task bootstrap:main`.
 
 This will connect flux to your repo, put the Flux controllers onto your cluster which will then load up your cluster. Pick your favourite tool (e.g., Lens) to watch your cluster come alive.
 
