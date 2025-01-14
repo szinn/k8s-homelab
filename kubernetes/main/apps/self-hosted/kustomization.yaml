@@ -11,6 +11,7 @@ resources:
   - dashy/install.yaml
   - dmarc-report/install.yaml
   - homepage/install.yaml
+  - kubernetes-schemas/install.yaml
   - ocis/install.yaml
   - pdf-tool/install.yaml
   - shlink/install.yaml
