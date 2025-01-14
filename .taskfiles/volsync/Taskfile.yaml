@@ -108,7 +108,8 @@ tasks:
       #   vars: *env
       - kubectl --context {{.cluster}} -n {{.ns}} patch replicationsources {{.app}} --type merge -p '{"spec":{"trigger":{"manual":"{{.ts}}"}}}'
       - bash {{.scriptsDir}}/wait-for-k8s-job.sh volsync-src-{{.app}} {{.ns}} {{.cluster}}
-      - kubectl --context {{.cluster}} -n {{.ns}} wait job/volsync-src-{{.app}} --for condition=complete --timeout=120m
+      - cmd: kubectl --context {{.cluster}} -n {{.ns}} wait job/volsync-src-{{.app}} --for condition=complete --timeout=120m
+        ignore_error: true
     vars:
       cluster: '{{ or .cluster (fail "Argument (cluster) is required") }}'
       app: '{{ or .app (fail "Argument (app) is required") }}'
