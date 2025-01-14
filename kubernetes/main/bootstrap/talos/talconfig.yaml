@@ -114,19 +114,19 @@ controlPlane:
 
   patches:
     # Custom Talos installer patch
-    - &customTalosPatch |-
-      machine:
-        install:
-          extraKernelArgs:
-            - talos.logging.kernel=udp://10.11.1.4:6001/
+    # - &customTalosPatch |-
+    #   machine:
+    #     install:
+    #       extraKernelArgs:
+    #         - talos.logging.kernel=udp://10.11.1.4:6001/
 
     # Enable logging
-    - &loggingPatch |-
-      machine:
-        logging:
-          destinations:
-            - endpoint: udp://10.11.1.4:6002/
-              format: json_lines
+    # - &loggingPatch |-
+    #   machine:
+    #     logging:
+    #       destinations:
+    #         - endpoint: udp://10.11.1.4:6002/
+    #           format: json_lines
 
     # Disable search domain everywhere
     - &disableSearchDomainPatch |-
@@ -269,8 +269,8 @@ worker:
           - siderolabs/i915
 
   patches:
-    - *customTalosPatch
-    - *loggingPatch
+    # - *customTalosPatch
+    # - *loggingPatch
     - *disableSearchDomainPatch
     - *disableHostDNSPatch
     - *clusterDiscoveryPatch

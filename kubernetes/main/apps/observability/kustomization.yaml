@@ -14,9 +14,9 @@ resources:
   - loki/install.yaml
   - miscellaneous
   - prometheus-operator-crds/install.yaml
+  - promtail/install.yaml
   - teslamate/install.yaml
   - unifi-poller/install.yaml
-  - vector/install.yaml
 transformers:
   - |-
     apiVersion: builtin
