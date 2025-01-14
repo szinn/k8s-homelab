@@ -127,24 +127,24 @@ tasks:
   #     - op run --env-file {{.CLUSTER_DIR}}/bootstrap/bootstrap.env --no-masking -- minijinja-cli "{{.CLUSTER_DIR}}/bootstrap/templates/resources.yaml.j2"
 
   # NOTE: Nodes must all be part of the Ceph cluster
-  rook:
-    desc: Bootstrap Rook-Ceph [cluster={{.cluster}}]
-    preconditions:
-      - which kubectl talosctl
-      - talosctl config info
-    requires:
-      vars:
-        - cluster
-    vars:
-      BLUESTORE_DISKS_RAW:
-        sh: talosctl --context {{.cluster}} get discoveredvolumes -o json | jq -r 'select(.spec.type=="disk" and .spec.name=="bluestore") | {"node":.node, "disk":.spec.dev_dath}' | jq -crs '.'
-      BLUESTORE_DISKS:
-        ref: "fromJson .BLUESTORE_DISKS_RAW"
-    cmds:
-      - for:
-          var: BLUESTORE_DISKS
-        vars:
-          NODE:
-            sh: kubectl --context {{.cluster}} get nodes -o json | jq -r '.items[] | select(.status.addresses[].address=="{{.ITEM.node}}") | .metadata.name'
-          DISK: "{{ .ITEM.disk }}"
-        task: :rook:wipe-disk
+  # rook:
+  #   desc: Bootstrap Rook-Ceph [cluster={{.cluster}}]
+  #   preconditions:
+  #     - which kubectl talosctl
+  #     - talosctl config info
+  #   requires:
+  #     vars:
+  #       - cluster
+  #   vars:
+  #     BLUESTORE_DISKS_RAW:
+  #       sh: talosctl --context {{.cluster}} get discoveredvolumes -o json | jq -r 'select(.spec.type=="disk" and .spec.name=="bluestore") | {"node":.node, "disk":.spec.dev_dath}' | jq -crs '.'
+  #     BLUESTORE_DISKS:
+  #       ref: "fromJson .BLUESTORE_DISKS_RAW"
+  #   cmds:
+  #     - for:
+  #         var: BLUESTORE_DISKS
+  #       vars:
+  #         NODE:
+  #           sh: kubectl --context {{.cluster}} get nodes -o json | jq -r '.items[] | select(.status.addresses[].address=="{{.ITEM.node}}") | .metadata.name'
+  #         DISK: "{{ .ITEM.disk }}"
+  #       task: :rook:wipe-disk
