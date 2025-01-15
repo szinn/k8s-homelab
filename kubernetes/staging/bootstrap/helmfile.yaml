@@ -61,8 +61,7 @@ releases:
     version: 0.13.0
     values:
       - ../apps/flux-system/flux-operator/app/helm-values.yaml
-    needs:
-      system/spegel
+    needs: system/spegel
 
   - name: flux-instance
     namespace: flux-system
