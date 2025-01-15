@@ -31,6 +31,12 @@ tasks:
     cmds:
       - task: _down
         vars:
+          NAMESPACE: security
+          HELMRELEASE: authentik
+          KUSTOMIZATION: authentik
+          SERVICES: deployment/authentik-server deployment/authentik-worker
+      - task: _down
+        vars:
           NAMESPACE: self-hosted
           HELMRELEASE: dmarc-report
           KUSTOMIZATION: dmarc-report
@@ -113,6 +119,12 @@ tasks:
     cmds:
       - task: _up
         vars:
+          NAMESPACE: security
+          HELMRELEASE: authentik
+          KUSTOMIZATION: authentik
+          SERVICES: deployment/authentik-server deployment/authentik-worker
+      - task: _up
+        vars:
           NAMESPACE: self-hosted
           HELMRELEASE: dmarc-report
           KUSTOMIZATION: dmarc-report
@@ -201,6 +213,26 @@ tasks:
           HELMRELEASE: grafana
           KUSTOMIZATION: grafana
           SERVICES: deployment/grafana
+          REPLICAS: 1
+
+  restore_authentik:
+    desc: Restore authentik database
+    cmds:
+      - task: _down
+        vars:
+          NAMESPACE: security
+          HELMRELEASE: authentik
+          KUSTOMIZATION: authentik
+          SERVICES: deployment/authentik-server deployment/authentik-worker
+      - task: _restore_db
+        vars:
+          DATABASE: authentik
+      - task: _up
+        vars:
+          NAMESPACE: security
+          HELMRELEASE: authentik
+          KUSTOMIZATION: authentik
+          SERVICES: deployment/authentik-server deployment/authentik-worker
           REPLICAS: 1
 
   restore_dmarc:
