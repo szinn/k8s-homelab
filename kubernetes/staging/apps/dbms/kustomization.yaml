@@ -5,3 +5,4 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - cloudnative-pg/install.yaml
+  - pgadmin/install.yaml
