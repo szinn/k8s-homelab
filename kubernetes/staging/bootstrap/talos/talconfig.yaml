@@ -127,6 +127,14 @@ controlPlane:
             validSubnets:
                 - 10.12.0.0/16
 
+    # Enable MutatingAdmissionPolicy
+    - |-
+      cluster:
+        apiServer:
+          extraArgs:
+            runtime-config: admissionregistration.k8s.io/v1alpha1=true
+            feature-gates: MutatingAdmissionPolicy=true
+
     # ETCD configuration
     - |-
       cluster:
