@@ -1,0 +1,90 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: pgadmin
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.6.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+      interval: 15m
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      main:
+        strategy: Recreate
+        annotations:
+          reloader.stakater.com/auto: "true"
+        pod:
+          securityContext:
+            runAsUser: 5050 # ${APP_UID}
+            runAsGroup: 5050 # ${APP_GID}
+            fsGroup: 5050 # ${APP_GID}
+            fsGroupChangePolicy: OnRootMismatch
+        containers:
+          main:
+            image:
+              repository: docker.io/dpage/pgadmin4
+              tag: "8.14@sha256:8a68677a97b8c8d1427dc915672a26d2c4a04376916a68256f53d669d6171be7"
+            envFrom:
+              - secretRef:
+                  name: pgadmin-secret
+            resources:
+              requests:
+                cpu: 15m
+                memory: 164M
+              limits:
+                memory: 236M
+
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 80
+
+    ingress:
+      main:
+        enabled: true
+        className: internal-nginx
+        hosts:
+          - host: "{{ .Release.Name }}.zinn.ca"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: main
+                  port: http
+
+    persistence:
+      config:
+        enabled: true
+        existingClaim: "${VOLSYNC_CLAIM}"
+        advancedMounts:
+          main:
+            main:
+              - path: /var/lib/pgadmin
+      server-json:
+        enabled: true
+        type: configMap
+        name: servers-json
+        globalMounts:
+          - path: /pgadmin4/servers.json
+            subPath: servers.json
