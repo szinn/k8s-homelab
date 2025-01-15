@@ -79,7 +79,7 @@ spec:
       replicas: 1
       persistence:
         enabled: true
-        storageClass: openebs-hostpath
+        storageClass: ceph-block
         size: 50Gi
     test:
       enabled: false
