@@ -36,7 +36,7 @@ spec:
             - -c
           args:
             - |
-              apk add --no-cache findutils nvme-cli;
+              apk add --no-cache nvme-cli;
               DISK={{ ENV.DISK }};
               nvme id-ns -H $DISK
               echo "=== Wiping $DISK ===";

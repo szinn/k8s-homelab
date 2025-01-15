@@ -11,33 +11,6 @@
 #                                                                  #
 ####################################################################
 #
-#########
-# Wrong #
-#########
-# kvmd:
-#    gpio:
-#        drivers: ...
-# kvmd:
-#    gpio:
-#        scheme: ...
-#
-###########
-# Correct #
-###########
-# kvmd:
-#    gpio:
-#        drivers: ...
-#        scheme: ...
-#
-###########
-# Example #
-###########
-# vnc:
-#    # See https://github.com/pikvm/pikvm/blob/master/pages/vnc.md
-#    keymap: /usr/share/kvmd/keymaps/ru # Set russian keymap
-#    auth:
-#        vncauth:
-#            enabled: true # Enable auth via /etc/kvmd/vncpasswd
 kvmd:
   gpio:
     drivers:
@@ -206,5 +179,6 @@ kvmd:
         - ["#Ragnar", server7_led, server7_switch|Switch]
         - ["#Ares", server8_led, server8_switch|Switch]
         - ["#Artemis", server9_led, server9_switch|Switch]
+        # - ["#DontUse - USB not working", server10_led, server10_switch|Switch]
         - ["#Apollo", server11_led, server11_switch|Switch]
         - ["#Hera", server12_led, server12_switch|Switch]

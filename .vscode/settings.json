@@ -3,8 +3,7 @@
   "files.associations": {
     "*.json5": "jsonc",
     "ansible/**/*.sops.toml": "plaintext",
-    "kubernetes/**/*.sops.toml": "plaintext",
-    "terraform/**/*.tf": "terraform"
+    "kubernetes/**/*.sops.toml": "plaintext"
   },
   "files.exclude": {
     ".direnv/": true,
