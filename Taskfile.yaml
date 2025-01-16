@@ -12,7 +12,6 @@ vars:
 
 env:
   MINIJINJA_CONFIG_FILE: "{{.ROOT_DIR}}/.minijinja.toml"
-  KUBECONFIG: "{{.KUBERNETES_DIR}}/main/kubeconfig:{{.KUBERNETES_DIR}}/staging/kubeconfig"
 
 includes:
   ansible: .taskfiles/Ansible
