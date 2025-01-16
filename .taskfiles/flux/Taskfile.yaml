@@ -32,7 +32,6 @@ tasks:
     cmds:
       - flux --context {{.cluster}} reconcile source git flux-system
       - flux --context {{.cluster}} reconcile kustomization cluster-repositories
-      - flux --context {{.cluster}} reconcile kustomization cluster-settings
       - flux --context {{.cluster}} reconcile kustomization cluster-apps
     silent: false
     requires:
