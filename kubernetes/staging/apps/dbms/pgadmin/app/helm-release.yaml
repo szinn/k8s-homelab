@@ -63,9 +63,9 @@ spec:
     ingress:
       main:
         enabled: true
-        className: internal-nginx
+        className: nginx
         hosts:
-          - host: "{{ .Release.Name }}.zinn.ca"
+          - host: "{{ .Release.Name }}.test.zinn.ca"
             paths:
               - path: /
                 pathType: Prefix
