@@ -4,7 +4,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app nginx-certificates
-  namespace: flux-system
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
@@ -16,9 +15,12 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
+    namespace: flux-system
   dependsOn:
     - name: cert-manager
+      namespace: cert-manager
     - name: external-secrets
+      namespace: external-secrets
   prune: true
   wait: false
   interval: 30m
@@ -29,7 +31,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app nginx-internal
-  namespace: flux-system
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
@@ -41,6 +42,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
+    namespace: flux-system
   prune: true
   wait: false
   interval: 30m
@@ -55,7 +57,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app nginx-external
-  namespace: flux-system
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
@@ -67,6 +68,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
+    namespace: flux-system
   prune: true
   wait: false
   interval: 30m

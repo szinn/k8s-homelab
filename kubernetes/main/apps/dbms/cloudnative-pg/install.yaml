@@ -4,7 +4,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app cloudnative-pg
-  namespace: flux-system
 spec:
   targetNamespace: dbms
   commonMetadata:
@@ -14,8 +13,10 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
+    namespace: flux-system
   dependsOn:
     - name: external-secrets
+      namespace: external-secrets
   prune: true
   wait: true
   interval: 30m
@@ -26,7 +27,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app cloudnative-pg-cluster
-  namespace: flux-system
 spec:
   targetNamespace: dbms
   commonMetadata:
@@ -36,9 +36,12 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
+    namespace: flux-system
   dependsOn:
     - name: cloudnative-pg
+      namespace: dbms
     - name: rook-ceph-cluster
+      namespace: rook-ceph
   prune: true
   wait: false
   interval: 30m
@@ -49,7 +52,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app cloudnative-pg-backup
-  namespace: flux-system
 spec:
   targetNamespace: dbms
   commonMetadata:
@@ -59,9 +61,12 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
+    namespace: flux-system
   dependsOn:
     - name: cloudnative-pg
+      namespace: dbms
     - name: external-secrets
+      namespace: external-secrets
   prune: true
   wait: false
   interval: 30m
