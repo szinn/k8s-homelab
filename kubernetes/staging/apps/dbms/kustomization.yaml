@@ -6,3 +6,11 @@ resources:
   - namespace.yaml
   - cloudnative-pg/install.yaml
   - pgadmin/install.yaml
+transformers:
+  - |-
+    apiVersion: builtin
+    kind: NamespaceTransformer
+    metadata:
+      name: not-used
+      namespace: dbms
+    unsetOnly: true

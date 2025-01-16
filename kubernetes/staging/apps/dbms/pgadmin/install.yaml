@@ -4,7 +4,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app pgadmin
-  namespace: flux-system
 spec:
   targetNamespace: dbms
   commonMetadata:
@@ -14,9 +13,12 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
+    namespace: flux-system
   dependsOn:
     - name: external-secrets
+      namespace: external-secrets
     - name: volsync
+      namespace: volsync-system
   postBuild:
     substitute:
       APP: *app

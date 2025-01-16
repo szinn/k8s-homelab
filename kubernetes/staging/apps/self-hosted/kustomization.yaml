@@ -5,3 +5,11 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - wordacle/install.yaml
+transformers:
+  - |-
+    apiVersion: builtin
+    kind: NamespaceTransformer
+    metadata:
+      name: not-used
+      namespace: self-hosted
+    unsetOnly: true

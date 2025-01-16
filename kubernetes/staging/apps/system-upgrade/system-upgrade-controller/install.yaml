@@ -4,7 +4,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app system-upgrade-controller
-  namespace: flux-system
 spec:
   targetNamespace: system-upgrade
   commonMetadata:
@@ -14,6 +13,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
+    namespace: flux-system
   prune: true
   wait: true
   interval: 10m
@@ -23,7 +23,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app system-upgrade-controller-plans
-  namespace: flux-system
 spec:
   targetNamespace: system-upgrade
   commonMetadata:
@@ -33,11 +32,13 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
+    namespace: flux-system
   prune: true
   wait: false
   interval: 10m
   dependsOn:
     - name: system-upgrade-controller
+      namespace: system-upgrade
   postBuild:
     substitute:
       # renovate: depName=ghcr.io/siderolabs/installer datasource=docker
