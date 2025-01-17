@@ -22,10 +22,14 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
-  valuesFrom:
-    - kind: ConfigMap
-      name: spegel-helm-values
   values:
+    spegel:
+      appendMirrors: true
+      containerdSock: /run/containerd/containerd.sock
+      containerdRegistryConfigPath: /etc/cri/conf.d/hosts
+    service:
+      registry:
+        hostPort: 29999
     grafanaDashboard:
       enabled: true
       annotations:

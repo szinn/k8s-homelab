@@ -47,14 +47,6 @@ releases:
     needs:
       - kube-system/cilium
 
-  - name: spegel
-    namespace: system
-    chart: oci://ghcr.io/spegel-org/helm-charts/spegel
-    version: v0.0.29
-    values: ["../apps/system/spegel/app/helm-values.yaml"]
-    needs:
-      - kube-system/coredns
-
   - name: wipe-rook
     namespace: kube-system
     chart: oci://ghcr.io/bjw-s/helm/app-template
@@ -62,7 +54,7 @@ releases:
     values:
       - ./templates/wipe-rook.yaml.gotmpl
     needs:
-      - system/spegel
+      - kube-system/coredns
 
   - name: flux-operator
     namespace: flux-system
