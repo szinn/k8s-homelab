@@ -10,7 +10,7 @@ auth:
 
 mqtt:
   enabled: false
-  # host: mosquitto.system.svc.cluster.local
+  # host: "{FRIGATE_MQTT_HOST}"
   # topic_prefix: frigate
   # user: "{FRIGATE_MQTT_USERNAME}"
   # password: "{FRIGATE_MQTT_PASSWORD}"
@@ -28,7 +28,6 @@ ffmpeg:
   hwaccel_args: preset-intel-qsv-h264
   output_args:
     record: preset-record-ubiquiti
-    # rtmp: preset-rtmp-ubiquiti
 
 snapshots:
   enabled: true

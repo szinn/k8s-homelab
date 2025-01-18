@@ -48,16 +48,21 @@ spec:
               tag: 0.14.1@sha256:22e3d0b486df52c3d669682254c2b1bf4205fa6ad8bd8f8c9f7fe76b1517005d
             env:
               TZ: America/Toronto
+              FRIGATE_MQTT_HOST:
+                valueFrom:
+                  secretKeyRef:
+                    name: frigate-secret
+                    key: MQTT_HOST
               FRIGATE_MQTT_USERNAME:
                 valueFrom:
                   secretKeyRef:
                     name: frigate-secret
-                    key: MOSQUITTO_USERNAME
+                    key: MQTT_USERNAME
               FRIGATE_MQTT_PASSWORD:
                 valueFrom:
                   secretKeyRef:
                     name: frigate-secret
-                    key: MOSQUITTO_PASSWORD
+                    key: MQTT_PASSWORD
             envFrom:
               - secretRef:
                   name: frigate-secret
