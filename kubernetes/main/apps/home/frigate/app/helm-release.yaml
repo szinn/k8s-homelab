@@ -93,6 +93,9 @@ spec:
         ports:
           http:
             port: 5000
+          go2rtc:
+            enabled: true
+            port: &api-port 1984
           rtsp:
             enabled: true
             port: 8554
@@ -102,13 +105,20 @@ spec:
         enabled: true
         className: internal-nginx
         hosts:
-          - host: &host "{{ .Release.Name }}.zinn.ca"
+          - host: frigate.zinn.ca
             paths:
               - path: /
                 pathType: Prefix
                 service:
                   identifier: main
                   port: http
+          - host: go2rtc.zinn.ca
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: main
+                  port: go2rtc
 
     persistence:
       config:
