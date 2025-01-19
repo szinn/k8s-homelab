@@ -8,4 +8,3 @@ metadata:
 spec:
   interval: 30m
   url: https://charts.rook.io/release
-  timeout: 3m

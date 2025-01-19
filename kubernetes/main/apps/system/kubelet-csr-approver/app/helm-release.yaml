@@ -12,7 +12,7 @@ spec:
       version: 1.2.5
       sourceRef:
         kind: HelmRepository
-        name: postfinance
+        name: postfinance-charts
         namespace: flux-system
       interval: 30m
   valuesFrom:

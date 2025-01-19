@@ -8,4 +8,3 @@ metadata:
 spec:
   interval: 30m
   url: https://helm.cilium.io
-  timeout: 3m

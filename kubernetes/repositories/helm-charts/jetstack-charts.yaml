@@ -8,4 +8,3 @@ metadata:
 spec:
   interval: 30m
   url: https://charts.jetstack.io/
-  timeout: 3m

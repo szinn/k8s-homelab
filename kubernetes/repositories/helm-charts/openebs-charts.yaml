@@ -8,4 +8,3 @@ metadata:
 spec:
   interval: 30m
   url: https://openebs.github.io/openebs
-  timeout: 3m

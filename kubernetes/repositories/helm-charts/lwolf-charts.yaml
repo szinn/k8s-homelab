@@ -6,6 +6,5 @@ metadata:
   name: lwolf-charts
   namespace: flux-system
 spec:
-  interval: 1h
+  interval: 30m
   url: https://charts.lwolf.org
-  timeout: 3m
