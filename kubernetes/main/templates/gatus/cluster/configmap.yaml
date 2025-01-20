@@ -9,14 +9,14 @@ data:
   config.yaml: |
     endpoints:
       - name: "${GATUS_APP}"
-        group: "${GATUS_GROUP:-cluster}"
+        group: "${GATUS_GROUP:=cluster}"
         url: 10.0.5.4
         interval: 1m
         ui:
           hide-hostname: true
           hide-url: true
         dns:
-          query-name: "${GATUS_SUBDOMAIN:-${APP}}.zinn.ca"
+          query-name: "${GATUS_SUBDOMAIN:=${APP}}.zinn.ca"
           query-type: A
         conditions: ["[DNS_RCODE] == NOERROR"]
         alerts:

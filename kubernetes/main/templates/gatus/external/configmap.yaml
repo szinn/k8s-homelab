@@ -9,13 +9,13 @@ data:
   config.yaml: |
     endpoints:
       - name: "${GATUS_APP}"
-        group: "${GATUS_GROUP:-external}"
-        url: "https://${GATUS_SUBDOMAIN:-${APP}}.zinn.ca${GATUS_PATH:-/}"
+        group: "${GATUS_GROUP:=external}"
+        url: "https://${GATUS_SUBDOMAIN:=${APP}}.zinn.ca${GATUS_PATH:=/}"
         interval: 1m
         client:
           dns-resolver: tcp://1.1.1.1:53
         conditions:
-          - "[STATUS] == ${GATUS_STATUS:-200}"
+          - "[STATUS] == ${GATUS_STATUS:=200}"
         alerts:
           - type: discord
             send-on-resolved: true
