@@ -6,4 +6,3 @@ resources:
   - radarr-secrets.yaml
   - helm-release.yaml
   - pvc.yaml
-  - ../../../../templates/gatus/guarded

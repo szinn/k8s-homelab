@@ -44,12 +44,14 @@ spec:
       namespace: media
     - name: external-secrets
       namespace: external-secrets
-  prune: true
-  wait: false
-  interval: 30m
-  timeout: 5m
+  components:
+    - ../../../../components/gatus/guarded
   postBuild:
     substitute:
       APP: immich
       GATUS_APP: immich
       GATUS_SUBDOMAIN: photos
+  prune: true
+  wait: false
+  interval: 30m
+  timeout: 5m

@@ -5,11 +5,12 @@ kind: Kustomization
 resources:
   # Pre Flux-Kustomizations
   - namespace.yaml
-  - ../../templates/alerts
   # Flux-Kustomizations
   - cilium/install.yaml
   - coredns/install.yaml
   - metrics-server/install.yaml
+components:
+  - ../../components/alerts
 transformers:
   - |-
     apiVersion: builtin

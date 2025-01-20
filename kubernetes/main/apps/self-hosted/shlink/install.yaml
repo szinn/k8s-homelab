@@ -19,12 +19,14 @@ spec:
       namespace: dbms
     - name: external-secrets
       namespace: external-secrets
-  prune: true
-  wait: false
-  interval: 30m
-  timeout: 5m
+  components:
+    - ../../../components/gatus/external
   postBuild:
     substitute:
       GATUS_APP: shlink
       GATUS_SUBDOMAIN: ln
       GATUS_PATH: /g
+  prune: true
+  wait: false
+  interval: 30m
+  timeout: 5m

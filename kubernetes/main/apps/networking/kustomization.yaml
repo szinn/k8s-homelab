@@ -5,13 +5,14 @@ kind: Kustomization
 resources:
   # Pre Flux-Kustomizations
   - namespace.yaml
-  - ../../templates/alerts
   # Flux-Kustomizations
   - cloudflared/install.yaml
   - echo-server/install.yaml
   - external-dns/install.yaml
   - external-services/install.yaml
   - nginx/install.yaml
+components:
+  - ../../components/alerts
 transformers:
   - |-
     apiVersion: builtin

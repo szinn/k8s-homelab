@@ -19,12 +19,14 @@ spec:
       namespace: external-secrets
     - name: volsync
       namespace: system
-  prune: true
-  wait: false
-  interval: 30m
-  timeout: 5m
+  components:
+    - ../../../../components/volsync
   postBuild:
     substitute:
       APP: oics
       VOLSYNC_CLAIM: ocis-data
       VOLSYNC_CAPACITY: 15Gi
+  prune: true
+  wait: false
+  interval: 30m
+  timeout: 5m

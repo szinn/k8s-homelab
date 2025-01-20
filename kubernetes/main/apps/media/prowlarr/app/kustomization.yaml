@@ -5,4 +5,3 @@ kind: Kustomization
 resources:
   - prowlarr-secrets.yaml
   - helm-release.yaml
-  - ../../../../templates/gatus/guarded

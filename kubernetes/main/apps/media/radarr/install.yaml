@@ -19,6 +19,8 @@ spec:
       namespace: dbms
     - name: external-secrets
       namespace: external-secrets
+  components:
+    - ../../../../components/gatus/guarded
   postBuild:
     substitute:
       GATUS_APP: radarr

@@ -6,4 +6,3 @@ resources:
   - lidarr-secrets.yaml
   - helm-release.yaml
   - pvc.yaml
-  - ../../../../templates/gatus/guarded

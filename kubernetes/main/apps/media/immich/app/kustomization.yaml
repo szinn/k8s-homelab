@@ -7,7 +7,6 @@ resources:
   - immich-config.yaml
   - immich-pvc.yaml
   - helm-release.yaml
-  - ../../../../templates/gatus/guarded
 labels:
   - pairs:
       app.kubernetes.io/name: immich

@@ -5,7 +5,6 @@ kind: Kustomization
 resources:
   # Pre Flux-Kustomizations
   - namespace.yaml
-  - ../../templates/alerts
   # Flux-Kustomizations
   - gatus/install.yaml
   - grafana/install.yaml
@@ -17,6 +16,8 @@ resources:
   - promtail/install.yaml
   - teslamate/install.yaml
   - unifi-poller/install.yaml
+components:
+  - ../../components/alerts
 transformers:
   - |-
     apiVersion: builtin

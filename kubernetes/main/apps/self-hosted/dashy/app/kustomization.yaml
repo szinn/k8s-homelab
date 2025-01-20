@@ -5,7 +5,6 @@ kind: Kustomization
 resources:
   - dashy-secrets.yaml
   - helm-release.yaml
-  - ../../../../templates/volsync
 configMapGenerator:
   - name: dashy-icons
     files:

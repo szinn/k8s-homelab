@@ -5,7 +5,6 @@ kind: Kustomization
 namespace: observability
 resources:
   - helm-release.yaml
-  - ../../../../templates/gatus/external
 configMapGenerator:
   - name: kromgo-configmap
     files:

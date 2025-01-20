@@ -21,6 +21,8 @@ spec:
       namespace: self-hosted
     - name: volsync
       namespace: system
+  components:
+    - ../../../../components/volsync
   postBuild:
     substitute:
       APP: *app

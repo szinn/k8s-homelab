@@ -5,11 +5,12 @@ kind: Kustomization
 resources:
   # Pre Flux-Kustomizations
   - namespace.yaml
-  - ../../templates/alerts
   # Flux-Kustomizations
   - frigate/install.yaml
   - home-assistant/install.yaml
   - node-red/install.yaml
+components:
+  - ../../components/alerts
 transformers:
   - |-
     apiVersion: builtin

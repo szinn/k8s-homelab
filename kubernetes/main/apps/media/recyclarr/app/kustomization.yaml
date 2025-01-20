@@ -5,7 +5,6 @@ kind: Kustomization
 resources:
   - recyclarr-secrets.yaml
   - helm-release.yaml
-  - ../../../../templates/volsync
 namespace: media
 configMapGenerator:
   - name: recyclarr-configmap

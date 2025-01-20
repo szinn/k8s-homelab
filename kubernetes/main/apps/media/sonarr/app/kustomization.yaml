@@ -6,4 +6,3 @@ resources:
   - sonarr-secrets.yaml
   - helm-release.yaml
   - pvc.yaml
-  - ../../../../templates/gatus/guarded

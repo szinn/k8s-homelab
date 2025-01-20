@@ -6,8 +6,6 @@ resources:
   - plex-secrets.yaml
   - helm-release.yaml
   - cache-pvc.yaml
-  - ../../../../templates/volsync
-  - ../../../../templates/gatus/guarded
 configMapGenerator:
   - name: plex-loki-rules
     files:

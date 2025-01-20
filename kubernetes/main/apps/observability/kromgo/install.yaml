@@ -14,12 +14,14 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  prune: true
-  wait: false
-  interval: 30m
-  timeout: 5m
+  components:
+    - ../../../../components/gatus/external
   postBuild:
     substitute:
       GATUS_APP: kromgo
       GATUS_SUBDOMAIN: kromgo
       GATUS_PATH: /cluster_node_count
+  prune: true
+  wait: false
+  interval: 30m
+  timeout: 5m
