@@ -19,10 +19,9 @@ spec:
       namespace: external-secrets
     - name: volsync
       namespace: system
-  prune: true
-  wait: false
-  interval: 30m
-  timeout: 5m
+  components:
+    - ../../../../components/gatus/guarded
+    - ../../../../components/volsync
   postBuild:
     substitute:
       APP: *app
@@ -32,3 +31,7 @@ spec:
       APP_GID: "2000"
       VOLSYNC_CLAIM: bazarr-config
       VOLSYNC_CAPACITY: 5Gi
+  prune: true
+  wait: false
+  interval: 30m
+  timeout: 5m

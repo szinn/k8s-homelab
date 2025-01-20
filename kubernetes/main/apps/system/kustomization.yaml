@@ -5,7 +5,6 @@ kind: Kustomization
 resources:
   # Pre Flux-Kustomizations
   - namespace.yaml
-  - ../../templates/alerts
   # Flux-Kustomizations
   - descheduler/install.yaml
   - fstrim/install.yaml
@@ -19,6 +18,8 @@ resources:
   - snapshot-controller/install.yaml
   - spegel/install.yaml
   - volsync/install.yaml
+components:
+  - ../../components/alerts
 transformers:
   - |-
     apiVersion: builtin

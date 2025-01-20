@@ -5,4 +5,3 @@ kind: Kustomization
 resources:
   - authentik-secret.yaml
   - helm-release.yaml
-  - ../../../../templates/gatus/external

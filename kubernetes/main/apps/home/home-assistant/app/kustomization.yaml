@@ -7,5 +7,3 @@ resources:
   - helm-release.yaml
   - podmonitor.yaml
   - prometheus-rules.yaml
-  - ../../../../templates/volsync
-  - ../../../../templates/gatus/external

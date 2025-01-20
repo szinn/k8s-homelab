@@ -21,15 +21,17 @@ spec:
       namespace: dbms
     - name: external-secrets
       namespace: external-secrets
-  prune: true
-  wait: false
-  interval: 30m
-  timeout: 5m
+  components:
+    - ../../../../components/gatus/external
   postBuild:
     substitute:
       APP: authentik
       GATUS_APP: authentik
       GATUS_SUBDOMAIN: sso
+  prune: true
+  wait: false
+  interval: 30m
+  timeout: 5m
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -50,5 +52,6 @@ spec:
     - name: external-secrets
       namespace: external-secrets
   prune: true
+  wait: false
   interval: 30m
   timeout: 5m

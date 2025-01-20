@@ -5,8 +5,6 @@ kind: Kustomization
 resources:
   - bazarr-secrets.yaml
   - helm-release.yaml
-  - ../../../../templates/gatus/guarded
-  - ../../../../templates/volsync
 configMapGenerator:
   - name: bazarr-scripts
     files:

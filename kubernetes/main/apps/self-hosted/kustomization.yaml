@@ -5,7 +5,6 @@ kind: Kustomization
 resources:
   # Pre Flux-Kustomizations
   - namespace.yaml
-  - ../../templates/alerts
   # Flux-Kustomizations
   - changedetection/install.yaml
   - dashy/install.yaml
@@ -17,6 +16,8 @@ resources:
   - shlink/install.yaml
   - theme-park/install.yaml
   - wikijs/install.yaml
+components:
+  - ../../components/alerts
 transformers:
   - |-
     apiVersion: builtin
