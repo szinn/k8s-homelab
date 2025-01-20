@@ -5,7 +5,6 @@ kind: Kustomization
 resources:
   - pgadmin-secret.yaml
   - helm-release.yaml
-  - ../../../../templates/volsync
 configMapGenerator:
   - name: servers-json
     files:
