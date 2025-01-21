@@ -4,5 +4,4 @@ kind: Namespace
 metadata:
   name: system
   annotations:
-    volsync.backube/privileged-movers: "true"
     kustomize.toolkit.fluxcd.io/prune: disabled
