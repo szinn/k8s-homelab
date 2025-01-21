@@ -105,6 +105,7 @@ spec:
       endpoints: *cp
 
     kubeScheduler:
+      enabled: false
       endpoints: *cp
       serviceMonitor: *sm
 
