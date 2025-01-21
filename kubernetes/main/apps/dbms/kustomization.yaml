@@ -2,6 +2,7 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: dbms
 resources:
   # Pre Flux-Kustomizations
   - namespace.yaml
@@ -11,11 +12,3 @@ resources:
   - pgadmin/install.yaml
 components:
   - ../../components/alerts
-transformers:
-  - |-
-    apiVersion: builtin
-    kind: NamespaceTransformer
-    metadata:
-      name: not-used
-      namespace: dbms
-    unsetOnly: true
