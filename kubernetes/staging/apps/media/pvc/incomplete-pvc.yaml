@@ -13,7 +13,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: ragnar.zinn.tech
-    path: "/mnt/nvme/incomplete"
+    path: /mnt/nvme/incomplete
   mountOptions:
     - nfsvers=4
     - tcp

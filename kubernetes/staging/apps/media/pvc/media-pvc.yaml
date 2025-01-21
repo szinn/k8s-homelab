@@ -13,7 +13,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: ragnar.zinn.tech
-    path: "/mnt/atlas/media"
+    path: /mnt/atlas/media
   mountOptions:
     - nfsvers=4
     - tcp
