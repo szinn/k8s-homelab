@@ -4,10 +4,9 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app nginx-certificates
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
+  namespace: &namespace networking
 spec:
-  targetNamespace: networking
+  targetNamespace: *namespace
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
@@ -31,10 +30,9 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app nginx-internal
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
+  namespace: &namespace networking
 spec:
-  targetNamespace: networking
+  targetNamespace: *namespace
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
@@ -59,10 +57,9 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app nginx-external
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
+  namespace: &namespace networking
 spec:
-  targetNamespace: networking
+  targetNamespace: *namespace
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app

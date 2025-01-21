@@ -4,12 +4,13 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app calibre-web
+  namespace: &namespace media
 spec:
-  targetNamespace: media
+  targetNamespace: *namespace
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: "./kubernetes/main/apps/media/calibre-web/app"
+  path: ./kubernetes/main/apps/media/calibre-web/app
   sourceRef:
     kind: GitRepository
     name: flux-system

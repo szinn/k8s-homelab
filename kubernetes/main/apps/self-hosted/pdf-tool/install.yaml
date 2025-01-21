@@ -4,10 +4,9 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app pdf-tool
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
+  namespace: &namespace self-hosted
 spec:
-  targetNamespace: self-hosted
+  targetNamespace: *namespace
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
