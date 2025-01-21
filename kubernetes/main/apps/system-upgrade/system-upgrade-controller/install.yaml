@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: "./kubernetes/main/apps/system-upgrade/system-upgrade-controller/app"
+  path: ./kubernetes/main/apps/system-upgrade/system-upgrade-controller/app
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -31,7 +31,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: "./kubernetes/main/apps/system-upgrade/system-upgrade-controller/plans"
+  path: ./kubernetes/main/apps/system-upgrade/system-upgrade-controller/plans
   sourceRef:
     kind: GitRepository
     name: flux-system

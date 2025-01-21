@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: "./kubernetes/main/apps/self-hosted/ocis/app"
+  path: ./kubernetes/main/apps/self-hosted/ocis/app
   sourceRef:
     kind: GitRepository
     name: flux-system

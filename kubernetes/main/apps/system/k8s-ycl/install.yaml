@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: "./kubernetes/main/apps/system/k8s-ycl/app"
+  path: ./kubernetes/main/apps/system/k8s-ycl/app
   sourceRef:
     kind: GitRepository
     name: flux-system
