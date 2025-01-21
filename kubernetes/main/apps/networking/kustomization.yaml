@@ -13,4 +13,4 @@ resources:
   - external-services/install.yaml
   - nginx/install.yaml
 components:
-  - ../../components/alerts
+  - ../../components/flux/alerts

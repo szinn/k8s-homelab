@@ -10,4 +10,4 @@ resources:
   - external-secrets/install.yaml
   - onepassword-connect/install.yaml
 components:
-  - ../../components/alerts
+  - ../../components/flux/alerts

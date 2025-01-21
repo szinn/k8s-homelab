@@ -18,4 +18,4 @@ resources:
   - theme-park/install.yaml
   - wikijs/install.yaml
 components:
-  - ../../components/alerts
+  - ../../components/flux/alerts

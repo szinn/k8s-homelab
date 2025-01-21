@@ -18,4 +18,4 @@ resources:
   - teslamate/install.yaml
   - unifi-poller/install.yaml
 components:
-  - ../../components/alerts
+  - ../../components/flux/alerts

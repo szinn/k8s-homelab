@@ -20,4 +20,4 @@ resources:
   - spegel/install.yaml
   - volsync/install.yaml
 components:
-  - ../../components/alerts
+  - ../../components/flux/alerts

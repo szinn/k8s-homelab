@@ -11,4 +11,4 @@ resources:
   - home-assistant/install.yaml
   - node-red/install.yaml
 components:
-  - ../../components/alerts
+  - ../../components/flux/alerts

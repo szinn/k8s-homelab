@@ -9,4 +9,4 @@ resources:
   # Flux-Kustomizations
   - authentik/install.yaml
 components:
-  - ../../components/alerts
+  - ../../components/flux/alerts

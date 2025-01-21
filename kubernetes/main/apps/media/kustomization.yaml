@@ -26,4 +26,4 @@ resources:
   - sabnzbd/install.yaml
   - sonarr/install.yaml
 components:
-  - ../../components/alerts
+  - ../../components/flux/alerts

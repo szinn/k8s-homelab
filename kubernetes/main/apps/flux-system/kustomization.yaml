@@ -10,4 +10,4 @@ resources:
   - flux-operator/install.yaml
   - flux-config/install.yaml
 components:
-  - ../../components/alerts
+  - ../../components/flux/alerts

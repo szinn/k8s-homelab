@@ -11,4 +11,4 @@ resources:
   - dragonfly-operator/install.yaml
   - pgadmin/install.yaml
 components:
-  - ../../components/alerts
+  - ../../components/flux/alerts
