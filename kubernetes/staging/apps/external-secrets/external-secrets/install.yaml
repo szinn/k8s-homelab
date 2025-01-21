@@ -3,10 +3,9 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app external-secrets
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
+  namespace: &namespace external-secrets
 spec:
-  targetNamespace: external-secrets
+  targetNamespace: *namespace
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
@@ -24,10 +23,9 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app external-secrets-stores
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
+  namespace: &namespace external-secrets
 spec:
-  targetNamespace: external-secrets
+  targetNamespace: *namespace
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app

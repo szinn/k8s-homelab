@@ -3,10 +3,9 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app whoami
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
+  namespace: &namespace default
 spec:
-  targetNamespace: default
+  targetNamespace: *namespace
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
