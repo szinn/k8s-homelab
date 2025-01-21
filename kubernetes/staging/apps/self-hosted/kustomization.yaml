@@ -2,14 +2,9 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: self-hosted
 resources:
+  # Pre Flux-Kustomizations
   - namespace.yaml
+  # Flux-Kustomizations
   - wordacle/install.yaml
-transformers:
-  - |-
-    apiVersion: builtin
-    kind: NamespaceTransformer
-    metadata:
-      name: not-used
-      namespace: self-hosted
-    unsetOnly: true
