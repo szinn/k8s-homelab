@@ -61,7 +61,7 @@ jobs:
       fail-fast: false
     steps:
       - name: Generate Token
-        uses: actions/create-github-app-token@v1
+        uses: actions/create-github-app-token@c1a285145b9d317df6ced56c09f525b5c2b6f755 # v1
         if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
         id: app-token
         with:
@@ -69,12 +69,12 @@ jobs:
           private-key: "${{ secrets.BOT_APP_PRIVATE_KEY }}"
 
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           token: "${{ steps.app-token.outputs.token }}"
 
       - name: Run flux-local test
-        uses: docker://ghcr.io/allenporter/flux-local:v7.0.0
+        uses: docker://ghcr.io/allenporter/flux-local:v7.0.0@sha256:abf237e31d20de26f8a4b08e588cc927cb0a9f0ecf90d04bada00f393b919354
         with:
           args: test --enable-helm --all-namespaces --path /github/workspace/kubernetes/{{ matrix.paths }}/flux/cluster -v
 
