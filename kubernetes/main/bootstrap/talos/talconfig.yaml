@@ -12,7 +12,7 @@ cniConfig:
   name: none
 
 additionalApiServerCertSans: &san
-  - 10.11.0.15
+  - &talosControlPlaneVip 10.11.0.15
   - main.zinn.tech
   - 127.0.0.1
 
@@ -36,6 +36,8 @@ nodes:
           driver: r8169
         mtu: 1500
         dhcp: true
+        vip:
+          ip: *talosControlPlaneVip
 
   - hostname: k8s-2.zinn.tech
     ipAddress: 10.11.0.17
@@ -47,6 +49,8 @@ nodes:
           driver: r8169
         mtu: 1500
         dhcp: true
+        vip:
+          ip: *talosControlPlaneVip
 
   - hostname: k8s-3.zinn.tech
     ipAddress: 10.11.0.18
@@ -58,6 +62,8 @@ nodes:
           driver: r8169
         mtu: 1500
         dhcp: true
+        vip:
+          ip: *talosControlPlaneVip
 
   - hostname: k8s-4.zinn.tech
     ipAddress: 10.11.0.19
