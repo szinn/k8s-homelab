@@ -1,11 +1,18 @@
 ---
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
-name: "Flux Diff"
+name: "Flux Local"
 
 on:
   pull_request:
     branches: ["main"]
-    paths: ["kubernetes/**"]
+    paths:
+      - "kubernetes/main/apps/**"
+      - "kubernetes/main/components/**"
+      - "kubernetes/main/flux/**"
+      - "kubernetes/repositories/**"
+      - "kubernetes/staging/apps/**"
+      - "kubernetes/staging/components/**"
+      - "kubernetes/staging/flux/**"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
@@ -43,8 +50,36 @@ jobs:
       - name: List All Changed Clusters
         run: echo "${{ steps.changed-clusters.outputs.all_changed_and_modified_files }}"
 
+  test:
+    name: Flux Local Test
+    runs-on: ubuntu-latest
+    needs: ["changed-clusters"]
+    strategy:
+      matrix:
+        paths: ${{ fromJSON(needs.changed-clusters.outputs.matrix) }}
+      max-parallel: 4
+      fail-fast: false
+    steps:
+      - name: Generate Token
+        uses: actions/create-github-app-token@v1
+        if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+        id: app-token
+        with:
+          app-id: "${{ secrets.BOT_APP_ID }}"
+          private-key: "${{ secrets.BOT_APP_PRIVATE_KEY }}"
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: "${{ steps.app-token.outputs.token }}"
+
+      - name: Run flux-local test
+        uses: docker://ghcr.io/allenporter/flux-local:v7.0.0
+        with:
+          args: test --enable-helm --all-namespaces --path /github/workspace/kubernetes/{{ matrix.paths }}/flux/cluster -v
+
   flux-diff:
-    name: Flux Diff
+    name: Flux Local Diff
     runs-on: ubuntu-latest
     needs: ["changed-clusters"]
     permissions:
@@ -52,7 +87,9 @@ jobs:
     strategy:
       matrix:
         paths: ${{ fromJSON(needs.changed-clusters.outputs.matrix) }}
-        resources: ["helmrelease", "kustomization"]
+        resources:
+          - helmrelease
+          - kustomization
       max-parallel: 4
       fail-fast: false
     steps:
