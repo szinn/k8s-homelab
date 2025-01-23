@@ -14,17 +14,12 @@
     "github>szinn/k8s-homelab//.github/renovate/packageRules.json5"
   ],
   "ignorePaths": [
-    "kubernetes/main/apps/flux-system/add-ons/monitoring/prometheus-rules.yaml",
     "kubernetes/main/apps/media/recyclarr/app/config/recyclarr.yaml",
     "kubernetes/main/apps/rook-ceph/rook-ceph/add-ons/prometheus-rules.yaml",
     "kubernetes/staging/apps/rook-ceph/rook-ceph/add-ons/rules.yaml",
-    "kubernetes/staging/cluster/repositories/**",
     "**/archive/**",
     "**/*.sops.*"
   ],
-  "docker": {
-    "fileMatch": ["ansible/files/ragnar/.+\\.ya?ml$", "kubernetes/.+\\.ya?ml$"]
-  },
   "flux": {
     "fileMatch": ["kubernetes/.+\\.ya?ml$"]
   },
