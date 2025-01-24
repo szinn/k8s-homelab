@@ -89,6 +89,7 @@ jobs:
         with:
           args: >-
             get cluster
+            --all-namespaces
             --path /github/workspace/default/${{ matrix.paths }}/flux/cluster
             --enable-images
             --output yaml
@@ -99,6 +100,7 @@ jobs:
         with:
           args: >-
             get cluster
+            --all-namespaces
             --path /github/workspace/pull/${{ matrix.paths }}/flux/cluster
             --enable-images
             --output yaml
