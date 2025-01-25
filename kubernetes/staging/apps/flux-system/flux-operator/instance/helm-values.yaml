@@ -14,7 +14,7 @@ instance:
     kind: GitRepository
     url: https://github.com/szinn/k8s-homelab.git
     ref: refs/heads/main
-    path: kubernetes/staging/flux/cluster
+    path: kubernetes/staging/cluster/config
   commonMetadata:
     labels:
       app.kubernetes.io/name: flux
