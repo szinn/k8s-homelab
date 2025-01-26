@@ -1,3 +1,4 @@
+---
 services:
   smartctl-exporter:
     command:
@@ -6,6 +7,6 @@ services:
     image: quay.io/prometheuscommunity/smartctl-exporter:v0.13.0
     ports:
       - "9633:9633"
-    privileged: True
+    privileged: true
     restart: always
     user: root

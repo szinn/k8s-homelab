@@ -1,3 +1,4 @@
+---
 services:
   minio:
     command: server /data --console-address ":9001"

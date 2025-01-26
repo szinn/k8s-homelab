@@ -1,3 +1,4 @@
+---
 - name: Update Gatus Certificate
   hosts: titan
   remote_user: root
