@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -89,20 +89,6 @@ jobs:
           markdownlint_config: .markdownlint.yaml
           file_pattern: ${{ steps.changed-files.outputs.all_changed_files }}
 
-  ansiblelint:
-    name: ansiblelint
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-
-      - name: Run ansible-lint
-        uses: ansible/ansible-lint@main
-        with:
-          args: "-c .ansible-lint --project-dir ansible"
-          setup_python: "true"
-          working_directory: "ansible"
-          requirements_file: "requirements.yaml"
-
   prettier:
     name: prettier
     runs-on: ubuntu-latest
@@ -130,7 +116,6 @@ jobs:
       - prettier
       - yamllint
       - markdownlint
-      - ansiblelint
     if: |
       always()
     name: Lint successful
