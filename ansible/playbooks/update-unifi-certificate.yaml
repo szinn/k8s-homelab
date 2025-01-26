@@ -1,3 +1,4 @@
+---
 - name: Update UniFi Certificate
   hosts: styx zeus
   tasks:

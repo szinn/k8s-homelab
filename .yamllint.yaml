@@ -3,9 +3,13 @@ ignore: |
   hack/
   .private/
   .terraform/
+  .venv/
   .vscode/
   *.sops.*
-  gotk-components.yaml
+  *.zinn.tech.yaml
+  tech-wildcard-tls.yaml
+  wildcard-tls.yaml
+
 extends: default
 rules:
   truthy:

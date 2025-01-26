@@ -1,3 +1,4 @@
+---
 - name: Update Styx Configuration
   hosts: styx
   tasks:

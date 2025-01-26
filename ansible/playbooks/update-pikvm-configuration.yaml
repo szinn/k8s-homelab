@@ -1,3 +1,4 @@
+---
 - name: Update PiKVM Configuration
   hosts: pikvm
   remote_user: root

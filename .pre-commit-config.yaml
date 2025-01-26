@@ -16,7 +16,7 @@ repos:
       - id: yamllint
         args:
           - --config-file
-          - .ci/yamllint/.yamllint.yaml
+          - .yamllint.yaml
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
@@ -57,7 +57,7 @@ repos:
       - id: markdownlint
         args:
           - --config
-          - ".ci/markdownlint/.markdownlint.yaml"
+          - .markdownlint.yaml
 
   - repo: https://github.com/jumanjihouse/pre-commit-hooks
     rev: 3.0.0

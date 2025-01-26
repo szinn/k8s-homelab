@@ -1,3 +1,4 @@
+---
 - name: Update Ragnar Configuration
   hosts: ragnar
   tasks:
