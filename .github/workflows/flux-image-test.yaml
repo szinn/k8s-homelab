@@ -90,7 +90,7 @@ jobs:
           args: >-
             get cluster
             --all-namespaces
-            --path /github/workspace/default/${{ matrix.paths }}/flux/cluster
+            --path /github/workspace/default/${{ matrix.paths }}/cluster/config
             --enable-images
             --output yaml
             --output-file default.yaml
@@ -101,7 +101,7 @@ jobs:
           args: >-
             get cluster
             --all-namespaces
-            --path /github/workspace/pull/${{ matrix.paths }}/flux/cluster
+            --path /github/workspace/pull/${{ matrix.paths }}/cluster/config
             --enable-images
             --output yaml
             --output-file pull.yaml
