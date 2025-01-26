@@ -94,7 +94,7 @@ tasks:
         sh: ls {{.CLUSTER_CONFIG_ROOT}}/*.yaml
       TALOSCONFIG: "{{.CLUSTER_DIR}}/talosconfig"
     cmds:
-      - for: {var: CONFIG_FILES}
+      - for: { var: CONFIG_FILES }
         task: _apply-machineconfig
         vars:
           cluster: "{{.cluster}}"

@@ -18,37 +18,37 @@ tasks:
   start-staging:
     desc: Start staging cluster
     cmds:
-      - for: {var: ALL_VMS, split: " "}
+      - for: { var: ALL_VMS, split: " " }
         task: start-vm-{{.ITEM}}
 
   stop-staging:
     desc: Stop staging cluster
     cmds:
-      - for: {var: ALL_VMS, split: " "}
+      - for: { var: ALL_VMS, split: " " }
         task: stop-vm-{{.ITEM}}
 
   unmount-staging-cdrom:
     desc: Unmount staging cluster CD-ROM drives
     cmds:
-      - for: {var: ALL_VMS, split: " "}
+      - for: { var: ALL_VMS, split: " " }
         task: unmount-cdrom-{{.ITEM}}
 
   destroy-staging:
     desc: Destroy staging cluster
     cmds:
-      - for: {var: ALL_VMS, split: " "}
+      - for: { var: ALL_VMS, split: " " }
         task: destroy-vm-{{.ITEM}}
 
   create-staging:
     desc: Create staging cluster
     cmds:
-      - for: {var: CP_VMS, split: " "}
+      - for: { var: CP_VMS, split: " " }
         task: create-cp-vm-{{.ITEM}}
 
   wait-for-startup:
     internal: true
     cmds:
-      - for: {var: ALL_VMS, split: " "}
+      - for: { var: ALL_VMS, split: " " }
         task: wait-for-startup-{{.ITEM}}
 
   start-vm-*-*-*:

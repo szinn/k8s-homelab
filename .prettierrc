@@ -22,7 +22,7 @@
       }
     },
     {
-      "files": "*.json5",
+      "files": "*.json*",
       "options": {
         "quoteProps": "preserve",
         "singleQuote": false,

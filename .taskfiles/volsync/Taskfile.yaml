@@ -119,7 +119,7 @@ tasks:
         sh: kubectl --namespace {{.NS}} get deployment {{.APP}} &>/dev/null && echo deployment || echo statefulset
       PREVIOUS: "{{.previous}}"
     env:
-      CLUSTER: '{{.CLUSTER}}'
+      CLUSTER: "{{.CLUSTER}}"
       NS: "{{.NS}}"
       APP: "{{.APP}}"
       PREVIOUS: "{{.PREVIOUS}}"
