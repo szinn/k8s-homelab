@@ -18,13 +18,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           fetch-depth: 0
 
       - name: Get changed files
         id: changed-files
-        uses: tj-actions/changed-files@v45
+        uses: tj-actions/changed-files@d6e91a2266cdb9d62096cebf1e8546899c6aa18f # v45
         with:
           files: |
             .github/workflows/**/*.yml
@@ -32,7 +32,7 @@ jobs:
 
       - name: Run actionlint
         if: steps.changed-files.outputs.any_changed == 'true'
-        uses: bjw-s/action-actionlint@v0.1
+        uses: bjw-s/action-actionlint@83d0aa4dfef4ebecbdd304776e133f5936ff7358 # v0.1
         with:
           actionlint_config: .github/actionlint.yaml
           file_pattern: ${{ steps.changed-files.outputs.all_changed_files }}
@@ -42,13 +42,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           fetch-depth: 0
 
       - name: Get changed files
         id: changed-files
-        uses: tj-actions/changed-files@v45
+        uses: tj-actions/changed-files@d6e91a2266cdb9d62096cebf1e8546899c6aa18f # v45
         with:
           files: |
             **.yml
@@ -71,20 +71,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           fetch-depth: 0
 
       - name: Get changed files
         id: changed-files
-        uses: tj-actions/changed-files@v45
+        uses: tj-actions/changed-files@d6e91a2266cdb9d62096cebf1e8546899c6aa18f # v45
         with:
           files: |
             **.md
 
       - name: Run markdownlint-cli2
         if: steps.changed-files.outputs.any_changed == 'true'
-        uses: bjw-s/action-markdownlint-cli2@v0.1
+        uses: bjw-s/action-markdownlint-cli2@c3c44cc6f77516007f1a85d982ed6276e840dcec # v0.1
         with:
           markdownlint_config: .markdownlint.yaml
           file_pattern: ${{ steps.changed-files.outputs.all_changed_files }}
@@ -93,7 +93,7 @@ jobs:
     name: ansiblelint
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
 
       - name: Run ansible-lint
         uses: ansible/ansible-lint@main
@@ -108,17 +108,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           fetch-depth: 0
 
       - name: Get changed files
         id: changed-files
-        uses: tj-actions/changed-files@v45
+        uses: tj-actions/changed-files@d6e91a2266cdb9d62096cebf1e8546899c6aa18f # v45
 
       - name: Run prettier
         if: steps.changed-files.outputs.any_changed == 'true'
-        uses: bjw-s/action-prettier-lint@v0.1
+        uses: bjw-s/action-prettier-lint@1014e6a3453ff28a8b746715f44a75306d223266 # v0.1
         with:
           prettier_ignore: .prettierignore
           prettier_config: .prettierrc.yaml
