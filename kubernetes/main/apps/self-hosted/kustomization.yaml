@@ -7,6 +7,7 @@ resources:
   # Pre Flux-Kustomizations
   - namespace.yaml
   # Flux-Kustomizations
+  - atuin/install.yaml
   - changedetection/install.yaml
   - dashy/install.yaml
   - dmarc-report/install.yaml

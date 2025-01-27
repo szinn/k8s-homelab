@@ -1,0 +1,36 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app atuin
+  namespace: &namespace self-hosted
+spec:
+  targetNamespace: *namespace
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  path: ./kubernetes/main/apps/self-hosted/atuin/app
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  dependsOn:
+    - name: volsync
+      namespace: system
+  components:
+    - ../../../../components/gatus/guarded
+    - ../../../../components/volsync
+  postBuild:
+    substitute:
+      APP: *app
+      APP_UID: "2000"
+      APP_GID: "2000"
+      VOLSYNC_CLAIM: atuin-config
+      VOLSYNC_CAPACITY: 5Gi
+      GATUS_APP: atuin
+      GATUS_SUBDOMAIN: atuin
+  prune: true
+  wait: false
+  interval: 30m
+  timeout: 5m
