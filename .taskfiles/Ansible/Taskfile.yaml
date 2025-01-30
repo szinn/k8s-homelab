@@ -26,12 +26,19 @@ tasks:
   update-certificates:
     desc: Update machines with certificates
     cmds:
-      - ansible-playbook "{{.ANSIBLE_DIR}}/playbooks/update-octopi-certificate.yaml"
+      # - ansible-playbook "{{.ANSIBLE_DIR}}/playbooks/update-octopi-certificate.yaml"
+      - task update-octopi-certificate
       - ansible-playbook "{{.ANSIBLE_DIR}}/playbooks/update-pikvm-certificate.yaml"
       - ansible-playbook "{{.ANSIBLE_DIR}}/playbooks/update-proxmox-certificate.yaml"
       - ansible-playbook "{{.ANSIBLE_DIR}}/playbooks/update-ragnar-certificate.yaml"
       - ansible-playbook "{{.ANSIBLE_DIR}}/playbooks/update-titan-certificate.yaml"
       - ansible-playbook "{{.ANSIBLE_DIR}}/playbooks/update-unifi-certificate.yaml"
+
+  update-octopi-certificate:
+    desc: Update octopi certificate
+    cmds:
+      - scp "{{.ANSIBLE_DIR}}/files/certificates/certificate.pem" root@octopi.zinn.tech:/etc/ssl/snakeoil.pem
+      - ssh root@octopi.zinn.tech systemctl restart haproxy
 
   update-titan:
     desc: Update titan with certificates
