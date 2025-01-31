@@ -35,16 +35,11 @@ spec:
     provider:
       name: cloudflare
     env:
-      - name: CF_API_EMAIL
+      - name: &name CF_API_TOKEN
         valueFrom:
           secretKeyRef:
             name: *secret
-            key: CF_API_EMAIL
-      - name: CF_API_KEY
-        valueFrom:
-          secretKeyRef:
-            name: *secret
-            key: CF_API_KEY
+            key: *name
     extraArgs:
       - --ingress-class=external-nginx
       - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
