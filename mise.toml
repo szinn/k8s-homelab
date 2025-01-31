@@ -1,0 +1,7 @@
+[settings]
+pipx_uvx = true
+
+[tools]
+"aqua:astral-sh/uv" = ["latest"]
+"pipx:ansible" = ["11.2.0"]
+"pipx:ansible-core" = ["2.18.2"]
