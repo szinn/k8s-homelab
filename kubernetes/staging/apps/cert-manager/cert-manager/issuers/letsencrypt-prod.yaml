@@ -12,7 +12,6 @@ spec:
     solvers:
       - dns01:
           cloudflare:
-            email: postmaster@zinn.tech
             apiTokenSecretRef:
               name: cloudflare-secrets
-              key: API_TOKEN
+              key: CLOUDFLARE_DNS_TOKEN
