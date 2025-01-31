@@ -13,8 +13,8 @@ tasks:
     cmds:
       - >-
         prettier
-        --config '.ci/prettier/.prettierrc.yaml'
-        --ignore-path '.ci/prettier/.prettierignore'
+        --config '.prettierrc'
+        --ignore-path '.prettierignore'
         --list-different
         --ignore-unknown
         --parser=markdown
@@ -26,8 +26,8 @@ tasks:
     cmds:
       - >-
         prettier
-        --config '.ci/prettier/.prettierrc.yaml'
-        --ignore-path '.ci/prettier/.prettierignore'
+        --config '.prettierrc'
+        --ignore-path '.prettierignore'
         --list-different
         --ignore-unknown
         --parser=yaml
