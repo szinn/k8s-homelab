@@ -1,0 +1,103 @@
+---
+version: "3"
+
+vars:
+  MACHINE_ROOT_DIR: "{{.ROOT_DIR}}/.taskfiles/Machine"
+  FILES_DIR: "{{.MACHINE_ROOT_DIR}}/files"
+  SCRIPTS_DIR: "{{.MACHINE_ROOT_DIR}}/scripts"
+
+tasks:
+  fetch-certificate:
+    desc: Fetch domain certificate from cluster
+    cmd: "{{.SCRIPTS_DIR}}/fetch-certificate.sh {{.FILES_DIR}}/certificates"
+
+  update-octopi-certificate:
+    desc: Update OctoPi certificate
+    cmds:
+      - scp "{{.FILES_DIR}}/certificates/certificate.pem" root@octopi.zinn.tech:/etc/ssl/snakeoil.pem
+      - ssh root@octopi.zinn.tech systemctl restart haproxy
+      - ssh root@octopi.zinn.tech chmod u+rw,g-rwx,o-rwx /etc/ssl/snakeoil.pem
+
+  update-pikvm-certificate:
+    desc: Update PiKVM certificate
+    cmds:
+      - ssh root@pikvm.zinn.tech rw
+      - scp "{{.FILES_DIR}}/certificates/certificate.crt" root@pikvm.zinn.tech:/etc/kvmd/nginx/ssl/server.crt
+      - ssh root@pikvm.zinn.tech chmod u+rw,g-wx,o-wx /etc/kvmd/nginx/ssl/server.crt
+      - scp "{{.FILES_DIR}}/certificates/certificate.key" root@pikvm.zinn.tech:/etc/kvmd/nginx/ssl/server.key
+      - ssh root@pikvm.zinn.tech chmod u+rw,g-wx,o-wx /etc/kvmd/nginx/ssl/server.key
+      - ssh root@pikvm.zinn.tech ro
+      - ssh root@pikvm.zinn.tech systemctl restart kvmd-nginx
+
+  update-pikvm-configuration:
+    desc: Update PiKVM configuration
+    cmds:
+      - ssh root@pikvm.zinn.tech rw
+      - scp "{{.FILES_DIR}}/pikvm/override.yaml" root@pikvm.zinn.tech:/etc/kvmd/override.yaml
+      - ssh root@pikvm.zinn.tech ro
+      - ssh root@pikvm.zinn.tech systemctl restart kvmd
+
+  update-proxmox-certificate:
+    desc: Update Proxmox certificate
+    cmds:
+      - scp "{{.FILES_DIR}}/certificates/certificate.crt" root@ares.zinn.tech:/etc/pve/nodes/ares/pve-ssl.pem
+      - ssh root@ares.zinn.tech chown root:www-data /etc/pve/nodes/ares/pve-ssl.pem
+      - ssh root@ares.zinn.tech chmod u+rw,g-wx,o-wx /etc/pve/nodes/ares/pve-ssl.pem
+      - scp "{{.FILES_DIR}}/certificates/certificate.key" root@ares.zinn.tech:/etc/pve/nodes/ares/pve-ssl.key
+      - ssh root@ares.zinn.tech chown root:www-data /etc/pve/nodes/ares/pve-ssl.key
+      - ssh root@ares.zinn.tech chmod u+rw,g-wx,o-wx /etc/pve/nodes/ares/pve-ssl.key
+      - ssh root@ares.zinn.tech systemctl restart pveproxy
+
+  update-ragnar-certificate:
+    desc: Update Ragnar certificate
+    cmds:
+      - scp "{{.FILES_DIR}}/certificates/certificate.crt" root@ragnar.zinn.tech:/etc/certificates/ZinnTech.crt
+      - ssh root@ragnar.zinn.tech chmod u+rw,g-wx,o-wx /etc/certificates/ZinnTech.crt
+      - scp "{{.FILES_DIR}}/certificates/certificate.key" root@ragnar.zinn.tech:/etc/certificates/ZinnTech.key
+      - ssh root@ragnar.zinn.tech chmod u+rw,g-wx,o-wx /etc/certificates/ZinnTech.key
+      - ssh root@ragnar.zinn.tech systemctl restart nginx
+
+  update-ragnar-configuration:
+    desc: Update Ragnar configuration
+    cmds:
+      - scp "{{.FILES_DIR}}/ragnar/0-ntp-allow.conf" root@ragnar.zinn.tech:/etc/chrony/conf.d/0-ntp-allow.conf
+      - ssh root@ragnar.zinn.tech chmod u+rw,g-wx,o-wx /etc/chrony/conf.d/0-ntp-allow.conf
+      - ssh root@ragnar.zinn.tech systemctl restart chrony
+
+  update-titan-certificate:
+    desc: Update Titan certificate
+    cmds:
+      - ssh root@titan.zinn.tech mkdir -p /var/lib/gatus
+      - scp "{{.FILES_DIR}}/certificates/certificate.crt" root@titan.zinn.tech:/var/lib/gatus/certificate.crt
+      - ssh root@titan.zinn.tech chown gatus:gatus /var/lib/gatus/certificate.crt
+      - ssh root@titan.zinn.tech chmod u+rw,g-wx,o-wx /var/lib/gatus/certificate.crt
+      - scp "{{.FILES_DIR}}/certificates/certificate.key" root@titan.zinn.tech:/var/lib/gatus/certificate.key
+      - ssh root@titan.zinn.tech chown gatus:gatus /var/lib/gatus/certificate.key
+      - ssh root@titan.zinn.tech chmod u+rw,g-wx,o-wx /var/lib/gatus/certificate.key
+      - ssh root@titan.zinn.tech systemctl restart gatus
+
+  update-styx-certificate:
+    desc: Update Styx certificate
+    cmds:
+      - task: update-unifi-certificate
+        vars:
+          MACHINE: styx
+
+  update-zeus-certificate:
+    desc: Update Zeus certificate
+    cmds:
+      - task: update-unifi-certificate
+        vars:
+          MACHINE: zeus
+
+  update-unifi-certificate:
+    desc: Update UniFi certificate
+    requires:
+      vars:
+        - MACHINE
+    cmds:
+      - scp "{{.FILES_DIR}}/certificates/certificate.crt" root@{{.MACHINE}}.zinn.tech:/data/unifi-core/config/unifi-core.crt
+      - ssh root@{{.MACHINE}}.zinn.tech chmod u+rw,g-wx,o-wx /data/unifi-core/config/unifi-core.crt
+      - scp "{{.FILES_DIR}}/certificates/certificate.key" root@{{.MACHINE}}.zinn.tech:/data/unifi-core/config/unifi-core.key
+      - ssh root@{{.MACHINE}}.zinn.tech chmod u+rw,g-wx,o-wx /data/unifi-core/config/unifi-core.key
+      - ssh root@{{.MACHINE}}.zinn.tech systemctl restart unifi-core

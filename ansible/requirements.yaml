@@ -1,7 +1,0 @@
----
-# ansible-galaxy collection install -r requirements.yaml
-collections:
-  - name: ansible.posix
-    version: 2.0.0
-  - name: community.sops
-    version: 2.0.1

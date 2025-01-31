@@ -3,7 +3,7 @@
 version: "3"
 
 vars:
-  ROOK_TASK_RESOURCES_DIR: "{{.ROOT_DIR}}/.taskfiles/rook/resources"
+  ROOK_TASK_RESOURCES_DIR: "{{.ROOT_DIR}}/.taskfiles/Rook/resources"
 
 tasks:
   wipe-disk:
