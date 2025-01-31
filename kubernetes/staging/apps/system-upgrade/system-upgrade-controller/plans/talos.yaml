@@ -30,7 +30,7 @@ spec:
       - health
       - --server=false
   upgrade:
-    image: ghcr.io/jfroy/tnu:0.2.1@sha256:dd2fd4547b057e07ce0e39f09aac9fa19709aa400b81515e2a2288ab7b295b4a
+    image: ghcr.io/jfroy/tnu:0.3.0@sha256:3a6d4465d3533cc849fe241c1a7a250a8cad8855d998f0912c14eaafff0ef883
     envs: *envs
     args:
       - --node=$(NODE)
