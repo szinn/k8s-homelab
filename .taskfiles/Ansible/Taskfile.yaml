@@ -53,6 +53,10 @@ tasks:
     desc: Update UniFi UDM-SE configuration
     cmd: ansible-playbook "{{.ANSIBLE_DIR}}/playbooks/update-udmse-configuration.yaml"
 
+  update-ragnar:
+    desc: Update Ragnar (TrueNAS) configuration
+    cmd: ansible-playbook "{{.ANSIBLE_DIR}}/playbooks/update-ragnar-configuration.yaml"
+
   playbook:
     desc: Run a playbook
     cmd: ansible-playbook "{{.ANSIBLE_DIR}}/playbooks/{{.playbook}}.yaml"
