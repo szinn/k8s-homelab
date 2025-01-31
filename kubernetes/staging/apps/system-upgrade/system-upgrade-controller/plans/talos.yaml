@@ -19,7 +19,7 @@ spec:
       operator: Exists
       effect: NoSchedule
   upgrade:
-    image: ghcr.io/jfroy/tnu:0.3.0
+    image: ghcr.io/jfroy/tnu:0.3.0@sha256:3a6d4465d3533cc849fe241c1a7a250a8cad8855d998f0912c14eaafff0ef883
     envs:
       - name: NODE_IP
         valueFrom:
