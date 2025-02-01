@@ -1,0 +1,28 @@
+router bgp 65001
+  bgp router-id 10.0.0.1
+  no bgp ebgp-requires-policy
+
+  neighbor k8s_main peer-group
+  neighbor k8s_main remote-as 65002
+
+  neighbor 10.11.0.16 peer-group k8s_main
+  neighbor 10.11.0.17 peer-group k8s_main
+  neighbor 10.11.0.18 peer-group k8s_main
+  neighbor 10.11.0.19 peer-group k8s_main
+  neighbor 10.11.0.20 peer-group k8s_main
+  neighbor 10.11.0.21 peer-group k8s_main
+
+  neighbor k8s_staging peer-group
+  neighbor k8s_staging remote-as 65003
+
+  neighbor 10.12.0.16 peer-group k8s_staging
+  neighbor 10.12.0.17 peer-group k8s_staging
+  neighbor 10.12.0.18 peer-group k8s_staging
+
+  address-family ipv4 unicast
+    neighbor k8s_main next-hop-self
+    neighbor k8s_main soft-reconfiguration inbound
+    neighbor k8s_staging next-hop-self
+    neighbor k8s_staging soft-reconfiguration inbound
+  exit-address-family
+exit
