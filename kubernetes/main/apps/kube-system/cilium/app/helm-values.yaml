@@ -6,8 +6,13 @@ bandwidthManager:
   bbr: true
 
 bpf:
+  datapathMode: netkit
   masquerade: true
+  preallocateMaps: true
   tproxy: true
+
+bgpControlPlane:
+  enabled: true
 
 cgroup:
   automount:
@@ -50,6 +55,7 @@ localRedirectPolicy: true
 
 operator:
   enabled: true
+  replicas: 2
   rollOutPods: true
   prometheus:
     enabled: true
