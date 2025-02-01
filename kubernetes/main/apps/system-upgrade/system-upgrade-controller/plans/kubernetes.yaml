@@ -18,8 +18,6 @@ spec:
         operator: In
         values:
           - k8s-1
-          - k8s-2
-          - k8s-3
   tolerations:
     - key: CriticalAddonsOnly
       operator: Exists

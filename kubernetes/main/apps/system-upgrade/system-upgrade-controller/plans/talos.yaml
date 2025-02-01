@@ -8,6 +8,11 @@ spec:
   concurrency: 1
   exclusive: true
   serviceAccountName: system-upgrade
+  nodeSelector:
+    matchExpressions:
+      - key: kubernetes.io/os
+        operator: In
+        values: ["linux"]
   secrets:
     - name: talos
       path: /var/run/secrets/talos.dev

@@ -12,6 +12,12 @@ spec:
       ignoreUpdates: true
   concurrency: 1
   exclusive: true
+  nodeSelector:
+    matchExpressions:
+      - key: kubernetes.io/hostname
+        operator: In
+        values:
+          - stage-1
   upgrade:
     image: ghcr.io/siderolabs/talosctl:${TALOS_VERSION}
     envs:
