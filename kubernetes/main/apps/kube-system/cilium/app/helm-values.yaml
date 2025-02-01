@@ -51,6 +51,24 @@ localRedirectPolicy: true
 operator:
   enabled: true
   rollOutPods: true
+  prometheus:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+  dashboards:
+    enabled: false
+    annotations:
+      grafana_folder: Cilium
+
+prometheus:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+    trustCRDsExist: true
+dashboards:
+  enabled: false
+  annotations:
+    grafana_folder: Cilium
 
 rollOutCiliumPods: true
 
