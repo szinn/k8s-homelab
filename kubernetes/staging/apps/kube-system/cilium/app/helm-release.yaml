@@ -34,50 +34,32 @@ spec:
     - kind: ConfigMap
       name: cilium-helm-values
 
-  values:
-    hubble:
-      enabled: false
-      metrics:
-        enabled:
-          - dns:query;ignoreAAAA
-          - drop
-          - tcp
-          - flow
-          - port-distribution
-          - icmp
-          - http
-      relay:
-        enabled: false
-        rollOutPods: true
-        prometheus:
-          serviceMonitor:
-            enabled: true
-      ui:
-        enabled: false
-        rollOutPods: true
-        ingress:
-          enabled: false
-          className: nginx
-          annotations:
-            kubernetes.io/ingress.class: nginx
-            nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-            nginx.ingress.kubernetes.io/whitelist-source-range: 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
-          hosts: ["hubble.test.zinn.ca"]
-    operator:
-      prometheus:
-        enabled: false
-        serviceMonitor:
-          enabled: false
-      dashboards:
-        enabled: false
-        annotations:
-          grafana_folder: Cilium
-    prometheus:
-      enabled: false
-      serviceMonitor:
-        enabled: false
-        trustCRDsExist: true
-    dashboards:
-      enabled: false
-      annotations:
-        grafana_folder: Cilium
+  # values:
+  #   hubble:
+  #     enabled: false
+  #     metrics:
+  #       enabled:
+  #         - dns:query;ignoreAAAA
+  #         - drop
+  #         - tcp
+  #         - flow
+  #         - port-distribution
+  #         - icmp
+  #         - http
+  #     relay:
+  #       enabled: false
+  #       rollOutPods: true
+  #       prometheus:
+  #         serviceMonitor:
+  #           enabled: true
+  #     ui:
+  #       enabled: false
+  #       rollOutPods: true
+  #       ingress:
+  #         enabled: false
+  #         className: nginx
+  #         annotations:
+  #           kubernetes.io/ingress.class: nginx
+  #           nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+  #           nginx.ingress.kubernetes.io/whitelist-source-range: 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+  #         hosts: ["hubble.test.zinn.ca"]
