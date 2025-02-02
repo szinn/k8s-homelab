@@ -75,6 +75,7 @@ tasks:
       vars:
         - cluster
     env:
+      CLUSTER_DIR: "{{.CLUSTER_DIR}}"
       TALOSCONFIG: "{{.CLUSTER_DIR}}/talosconfig"
       NODE_COUNT: 3
     vars:
