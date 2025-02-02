@@ -24,24 +24,11 @@ releases:
     namespace: kube-system
     chart: cilium/cilium
     version: 1.16.6
-    values: ["../apps/kube-system/cilium/app/helm-values.yaml"]
+    values: ['{{ requiredEnv "CLUSTER_DIR" }}/apps/kube-system/cilium/app/helm-values.yaml']
     hooks:
       - events: ["postsync"]
-        command: kubectl
-        args:
-          - wait
-          - --namespace=kube-system
-          - --for=condition=Available
-          - deployment/cilium-operator
-      - events: ["cleanup"]
-        command: kubectl
-        args:
-          - apply
-          - --namespace=kube-system
-          - --server-side
-          - --field-manager=kustomize-controller
-          - --kustomize
-          - ../apps/kube-system/cilium/config
+        command: bash
+        args: ['{{ requiredEnv "CLUSTER_DIR" }}/bootstrap/scripts/cilium-postsync.sh']
     needs:
       - observability/prometheus-operator-crds
 
@@ -49,7 +36,7 @@ releases:
     namespace: kube-system
     chart: oci://ghcr.io/coredns/charts/coredns
     version: 1.39.0
-    values: ["../apps/kube-system/coredns/app/helm-values.yaml"]
+    values: ['{{ requiredEnv "CLUSTER_DIR" }}/apps/kube-system/coredns/app/helm-values.yaml']
     needs:
       - kube-system/cilium
 
@@ -57,7 +44,7 @@ releases:
     namespace: system
     chart: postfinance/kubelet-csr-approver
     version: 1.2.5
-    values: ["../apps/system/kubelet-csr-approver/app/helm-values.yaml"]
+    values: ['{{ requiredEnv "CLUSTER_DIR" }}/apps/system/kubelet-csr-approver/app/helm-values.yaml']
     needs:
       - kube-system/cilium
 
@@ -73,7 +60,7 @@ releases:
     namespace: flux-system
     chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator
     version: 0.13.0
-    values: ["../apps/flux-system/flux-operator/app/helm-values.yaml"]
+    values: ['{{ requiredEnv "CLUSTER_DIR" }}/apps/flux-system/flux-operator/app/helm-values.yaml']
     needs:
       - kube-system/wipe-rook
 
@@ -82,6 +69,6 @@ releases:
     chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-instance
     version: 0.13.0
     wait: false
-    values: ["../apps/flux-system/flux-operator/instance/helm-values.yaml"]
+    values: ['{{ requiredEnv "CLUSTER_DIR" }}/apps/flux-system/flux-operator/instance/helm-values.yaml']
     needs:
       - flux-system/flux-operator

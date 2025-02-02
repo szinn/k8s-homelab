@@ -8,7 +8,7 @@ wait_for_crds() {
     )
 
     for crd in "${crds[@]}"; do
-        until kubectl --context staging get crd "${crd}" &>/dev/null; do
+        until kubectl --context main get crd "${crd}" &>/dev/null; do
             echo "Waiting for CRD ${crd}..."
             sleep 5
         done
@@ -17,7 +17,7 @@ wait_for_crds() {
 
 apply_kustomize_config() {
     kubectl apply \
-        --context=staging \
+        --context=main \
         --namespace=kube-system \
         --server-side \
         --field-manager=kustomize-controller \
