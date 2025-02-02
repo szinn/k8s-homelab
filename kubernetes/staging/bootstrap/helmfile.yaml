@@ -29,6 +29,13 @@ releases:
       - events: ["postsync"]
         command: kubectl
         args:
+          - wait
+          - --namespace=kube-system
+          - --for=condition=Available
+          - deployment/cilium-operator
+      - events: ["cleanup"]
+        command: kubectl
+        args:
           - apply
           - --namespace=kube-system
           - --server-side
