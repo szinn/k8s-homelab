@@ -50,6 +50,8 @@ At the bottom of this page, is the bringup process that I follow for this cluste
 
 ## Hardware
 
+My HomeLab consists of a bunch of machines and Ubiquity networking.
+
 | Device                                             | Count | OS Disk Size | Data Disk Size        | RAM  | Operating System       |
 | -------------------------------------------------- | ----- | ------------ | --------------------- | ---- | ---------------------- |
 | Ryzen 3900 12c24t NAS server                       | 1     | 1TB          | 1TB NVME, 6x16Tb SATA | 64GB | TrueNAS Scale - Ragnar |
@@ -83,7 +85,6 @@ Titan used to be the VyOS router which has since gone out of favour. It now runs
 
 - DNS (AdGuard Home)
 - Cloudflare DDNS
-- haproxy frontends for both main and staging cluster
 - gatus to track machine and non-cluster services
 
 ## Kubernetes
@@ -92,7 +93,6 @@ The cluster is based on [Talos](https://www.talos.dev) with 3 control-plane node
 
 ### Core Components
 
-- [mozilla/sops](https://toolkit.fluxcd.io/guides/mozilla-sops/): Manages secrets for Kubernetes.
 - [kubernetes/ingress-nginx](https://github.com/kubernetes/ingress-nginx): Manages reverse-proxy access to Kubernetes services.
 - [rook/rook](https://github.com/rook/rook): Distributed block storage for persistent storage.
 - [jetstack/cert-manager](https://cert-manager.io/docs/): Creates SSL certificates for services in my Kubernetes cluster.
@@ -111,21 +111,21 @@ Charts and images are tagged in the various YAML files to enable Renovate to wat
 
 See [diagram](./docs/Network-Backbone.png) of the backbone.
 
-The external network is connected to the UDM SE with a [Wireguard](https://www.wireguard.com) port forwarded to the router VM. Inbound services are managed with cloudflared.
+The external network is connected to the UDM SE with a [Wireguard](https://www.wireguard.com) port being the only exposed access.
+This allows me to connect into the network when I'm traveling.
+Inbound services are managed with cloudflared.
 
-The 3 worker nodes and Ryzen server are connected to the 8-port switch with 2.5Gb ethernet. The Unifi components are connected with 10Gb ethernet connections.
-Multiple wired access points are scattered around the house and backyard.
+The main cluster and IPs are on the 10.11.x.x subnet on VLAN HOMELAB.
+The stagint cluster and IPs are on the 10.12.x.x subnet on VLAN STAGING.
+External machines (Synology, etc) are SERVERS VLAN subnet. IoT devices are on an isolated IoT VLAN.
+They cannot reach the other VLANs directly but will answer when spoken to.
 
-The Kubernetes cluster and IPs are on the 10.11.0.x subnet with VLAN tagging.
-External machines (Synology, etc) are on the main household VLAN subnet. IoT devices are on an isolated 191.168.1.x VLAN. They cannot reach the other VLANs directly but will answer when spoken to.
-
-DNS is managed by CoreDNS in the cluster which then forwards unresolved requests to DNS running on the Titan server. External DNS is used to feed DNS info to the UDM-SE gateway.
+DNS is managed by CoreDNS in the cluster which then forwards unresolved requests to DNS running on the Titan server.
+Titan will forward accepted addresses onto the UDM-SE for resolution.
 
 The external DNS is managed via [Cloudflare](https://www.cloudflare.com/en-ca/).
 External names are managed by [external-dns](https://github.com/kubernetes-sigs/external-dns) on the cluster and, since my home IP can be changed at any time, DDNS is maintained by the
 [oznu/cloudflare-ddns](https://hub.docker.com/r/oznu/cloudflare-ddns/) docker image. Certificates are managed through CloudFlare as well using cert-manager and the DNS01 challenge protocol.
-
-Any services that are exposed externally use [Authelia](https://www.authelia.com) for access authentication via a ingress-nginx.
 
 ## Repository Structure
 
@@ -139,10 +139,6 @@ The repository directories are:
 
 - **.github**: GitHub support files and renovate configuration.
 - **.taskfiles**: Auxiliary files used for the task command-line tool.
-- **infrastructure**: Code to manage the infrastructure of the cluster.
-  - **setup**: Scripts to configure and create the cluster.
-  - **talos**: Talos machine configuration.
-  - **terraform**: Terraform configuration.
 - **kubernetes**: The clusters themselves.
   - **main**: The main cluster
     - **apps**: The applications to load.
@@ -152,6 +148,7 @@ The repository directories are:
   - **repositories**: Sources of code for the cluster.
   - **staging**: The staging cluster that follows the same structure as the main cluster.
 - **hack**: Miscellaneous stuff that really has nothing to do with managing the cluster.
+- **terraform**: Terraform one-off configurations for Authentik and Minio.
 
 ### Environment Setup
 
@@ -194,49 +191,26 @@ The NFS drives are available across the cluster but are at a slower speed than t
 
 ### Data Backup and Recovery
 
-Currently, I use a combination of built-in application backups (e.g., \*arr applications will backup weekly), an external shell script that will backup databases (mysql and postgres),
-and a couple of apps that I have backed up their configuration as it doesn't change frequently and it gets automatically restored upon the very first startup.
-I am also using poor man's backup (PMB) that is based on kopia as well as volsync which is based on restic and puts the backups into my Minio storage.
+Currently, I use a combination of built-in application backups (e.g., \*arr applications will backup weekly),
+a backup job in cluster that will backup databases (mysql and postgres),
+I am also using volsync to backup the PVCs to NFS that will automatically restore the most recent backup (if it exists) .
 
 ## Installation
 
-### Initial Machine Configuration
+The initial bootstrap relies on some configuration, including secrets stored in 1Password such as:
 
-The machines are configured using Talos (see [Getting Started](https://www.talos.dev/v0.14/introduction/getting-started/) for a walkthrough).
-
-The tasks I used for generating the Talos configuration are found in `./.taskfiles/Talos`.
-
-The expectation is that at the end of this step, your machines are up and running and the command line tool `kubectl` can be used to interact with the cluster.
+- 1Password credentials required for access by external-secrets
+- TLS keys that pre-seed the certificates to prevent hammering on lets-encrypt.
 
 ### Cluster Bringup
 
-You will need to have installed `flux` and the Mozilla sops tool for this bringup.
-
-The bringup of this cluster sort of follows the template cluster at [onedr0p/flux-cluster-template](https://github.com/onedr0p/flux-cluster-template).
-A Mozilla/sops secret needs to be created and the [.sops.yaml](./.sops.yaml) file updated appropriately. This is a one-time operation.
-
-There are env.XXX.template files in the setup directory. These should be filled in as appropriate with values needed. I've included descriptions in the template file.
-Again, filling these in is typically a one-time operation, but as you add functionality to your cluster, you will likely need to add configuration and/or secrets to the file.
-
-Pairing with the env.XXX files, you will need to expose your configuration in the `cluster-config.cfg` and `cluster-secrets.sops.cfg` files. You don't need to hard-code any values there, just follow the template.
-
-Once the environment and the cluster config/secret file templates are created, run the `build-config.sh` script file and fix any errors.
-Examine all the updated `.YAML` files to ensure that the appropriate configuration is filled in.
-For example, if there is an environment typo, the YAML file may contain a blank or null rather than the desired value.
-
-When you've got everything created and to your liking, create a commit and push to GitHub.
-
-At this point you should have your machines up and running with the base k3s install of control planes and workers.
-
-The final step is to run `task bootstrap:main`.
-
-This will connect flux to your repo, put the Flux controllers onto your cluster which will then load up your cluster. Pick your favourite tool (e.g., Lens) to watch your cluster come alive.
+The initial bootstrap of the cluster is launched by the task `bootstrap:main` or `bootstrap:staging` which apply the initial configuration
+in the `{{cluster}}/bootstrap` directories.
 
 ### Adding a New Package / Updating Configuration
 
-If you ever need to change any of the configuration or want to add a new package to your repo, modify the env.XXX files appropriately, create the package files with
-.cfg or .sops.cfg files as needed and then run `build-config.sh` from the `setup` directory. This will update any of the config / secret files throughout the repo.
-Commit and push the change and Flux will take care of updating your cluster with the changes.
+Adding a new package is simply done by following the patterns of an existing, similar package and pushing the commit to GitHub.
+Flux will then notice the change and apply it.
 
 ### Ongoing Maintenance
 
@@ -245,10 +219,8 @@ Maintenance of the cluster is fairly minimal.
 - renovate creates PRs to update helm charts, flux system files, or docker images in the cluster;
 - flux applies any merged PRs or changes to the repo to the cluster automatically.
 
-I manually keep the router VM and PiHole up to date through Anisble scripts.
-
 Through Wireguard and [Kubenav](https://kubenav.io), I can pretty much manage the cluster remotely from my phone.
-On my desktop/laptop, I use [Lens](https://k8slens.dev) to manage the cluster which works remotely through Wireguard as well.
+On my desktop/laptop, I use [Lens](https://k8slens.dev) and `k9s` to manage the cluster which works remotely through Wireguard as well.
 
 ## Gratitude and Thanks
 
