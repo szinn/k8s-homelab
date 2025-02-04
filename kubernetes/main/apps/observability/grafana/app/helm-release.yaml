@@ -404,15 +404,6 @@ spec:
         1-node-exporter:
           url: https://grafana.com/api/dashboards/11074/revisions/9/download
           datasource: Prometheus
-        # blocky:
-        #   # renovate: dashboardName="blocky"
-        #   gnetId: 13768
-        #   revision: 3
-        #   datasource:
-        #     - name: DS_PROMETHEUS
-        #       value: Prometheus
-        #     - name: "VAR_BLOCKY_URL"
-        #       value: 'http:\/\/10.0.0.7:4000'
         cert-manager:
           # renovate: depName="cert-manager"
           gnetId: 20340
@@ -447,7 +438,10 @@ spec:
           datasource:
             - { name: DS_PROMETHEUS, value: Prometheus }
         node-feature-discovery:
-          url: https://raw.githubusercontent.com/kubernetes-sigs/node-feature-discovery/master/examples/grafana-dashboard.json
+          url: https://raw.githubusercontent.com/szinn/k8s-homelab/main/kubernetes/main/apps/system/node-feature-discovery/dashboards/node-feature-discovery-dashboard.json
+          datasource:
+            - name: DS_PROMETHEUS
+              value: Prometheus
         ingress-nginx:
           url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/grafana/dashboards/nginx.json
           datasource: Prometheus
