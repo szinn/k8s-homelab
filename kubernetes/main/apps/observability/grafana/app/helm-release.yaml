@@ -218,13 +218,13 @@ spec:
             type: prometheus
             access: proxy
             url: http://prometheus-operated.observability.svc.cluster.local:9090
-            isDefault: false
+            isDefault: true
           - name: Loki
             type: loki
             access: proxy
             url: http://loki-headless.observability.svc.cluster.local:3100
             version: 1
-            isDefault: true
+            isDefault: false
             jsonData:
               maxLines: 200
           - name: Alertmanager
@@ -448,7 +448,6 @@ spec:
             - { name: DS_PROMETHEUS, value: Prometheus }
         node-feature-discovery:
           url: https://raw.githubusercontent.com/kubernetes-sigs/node-feature-discovery/master/examples/grafana-dashboard.json
-          datasource: Prometheus
         ingress-nginx:
           url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/grafana/dashboards/nginx.json
           datasource: Prometheus
