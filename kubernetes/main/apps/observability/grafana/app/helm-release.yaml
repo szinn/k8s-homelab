@@ -324,10 +324,12 @@ spec:
           datasource: Prometheus
         cilium-operator-dashboard:
           url: https://raw.githubusercontent.com/cilium/cilium/v1.16.6/install/kubernetes/cilium/files/cilium-operator/dashboards/cilium-operator-dashboard.json
-          datasource: Prometheus
-        hubble-dashboard:
-          url: https://raw.githubusercontent.com/cilium/cilium/v1.16.6/install/kubernetes/cilium/files/hubble/dashboards/hubble-dashboard.json
-          datasource: Prometheus
+          datasource:
+            - name: DS_PROMETHEUS
+              value: Prometheus
+        # hubble-dashboard:
+        #   url: https://raw.githubusercontent.com/cilium/cilium/v1.16.6/install/kubernetes/cilium/files/hubble/dashboards/hubble-dashboard.json
+        #   datasource: Prometheus
       data:
         cloudnative-pg:
           url: https://raw.githubusercontent.com/cloudnative-pg/grafana-dashboards/main/charts/cluster/grafana-dashboard.json
@@ -350,7 +352,9 @@ spec:
       flux:
         flux-cluster:
           url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/cluster.json
-          datasource: Prometheus
+          datasource:
+            - name: DS_PROMETHEUS
+              value: Prometheus
         flux-control-plane:
           url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/control-plane.json
           datasource: Prometheus
@@ -444,9 +448,7 @@ spec:
             - { name: DS_PROMETHEUS, value: Prometheus }
         node-feature-discovery:
           url: https://raw.githubusercontent.com/kubernetes-sigs/node-feature-discovery/master/examples/grafana-dashboard.json
-          datasource:
-            - name: prometheus
-              value: Prometheus
+          datasource: Prometheus
         ingress-nginx:
           url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/grafana/dashboards/nginx.json
           datasource: Prometheus
