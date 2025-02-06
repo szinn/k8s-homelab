@@ -23,6 +23,7 @@ spec:
     cleanupOnFail: true
     crds: Skip
     remediation:
+      strategy: rollback
       retries: 3
   dependsOn:
     - name: prometheus-operator-crds

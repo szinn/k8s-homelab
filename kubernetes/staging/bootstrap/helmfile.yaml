@@ -16,7 +16,7 @@ repositories:
 
 releases:
   - name: prometheus-operator-crds
-    namespace: monitoring
+    namespace: observability
     chart: oci://ghcr.io/prometheus-community/charts/prometheus-operator-crds
     version: 18.0.0
 
@@ -30,7 +30,7 @@ releases:
         command: bash
         args: ['{{ requiredEnv "CLUSTER_DIR" }}/bootstrap/scripts/cilium-postsync.sh']
     needs:
-      - monitoring/prometheus-operator-crds
+      - observability/prometheus-operator-crds
 
   - name: coredns
     namespace: kube-system
