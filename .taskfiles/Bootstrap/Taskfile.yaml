@@ -7,6 +7,9 @@ tasks:
     desc: Bootstrap main cluster
     vars:
       cluster: main
+      CLUSTER_DIR: "{{.KUBERNETES_DIR}}/{{.cluster}}"
+    env:
+      CLUSTER_DIR: "{{.CLUSTER_DIR}}"
     cmds:
       - task: :talos:bootstrap
         vars:
