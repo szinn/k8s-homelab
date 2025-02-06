@@ -35,26 +35,7 @@ spec:
     cleanPrometheusOperatorObjectNames: true
 
     alertmanager:
-      ingress:
-        enabled: true
-        ingressClassName: internal-nginx
-        hosts:
-          - alerts.zinn.ca
-        path: /
-        pathPrefix: Prefix
-      alertmanagerSpec:
-        replicas: 1
-        alertmanagerConfiguration:
-          name: cluster
-          global:
-            resolveTimeout: 5m
-        storage:
-          volumeClaimTemplate:
-            spec:
-              storageClassName: openebs-hostpath
-              resources:
-                requests:
-                  storage: 1Gi
+      enabled: false
 
     grafana:
       enabled: false

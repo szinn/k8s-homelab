@@ -1,0 +1,87 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: alertmanager
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.6.1
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+  values:
+    controllers:
+      alertmanager:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        statefulset:
+          volumeClaimTemplates:
+            - name: storage
+              accessMode: ReadWriteOnce
+              size: 1Gi
+              storageClass: ceph-block
+              globalMounts:
+                - path: /alertmanager
+
+        containers:
+          alertmanager:
+            image:
+              repository: quay.io/prometheus/alertmanager
+              tag: v0.28.0
+            ports:
+              - name: http
+                containerPort: 9093
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
+            resources:
+              requests:
+                cpu: 11m
+                memory: 50M
+              limits:
+                memory: 99M
+
+    service:
+      app:
+        controller: alertmanager
+        ports:
+          http:
+            port: 9093
+
+    ingress:
+      app:
+        className: internal-nginx
+        hosts:
+          - host: alerts.zinn.ca
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+
+    persistence:
+      config:
+        type: configMap
+        name: alertmanager
+        globalMounts:
+          - path: /etc/alertmanager
+      secrets:
+        type: secret
+        name: alertmanager-secret
+        globalMounts:
+          - path: /etc/secrets
