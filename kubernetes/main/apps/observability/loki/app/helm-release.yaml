@@ -63,7 +63,7 @@ spec:
     chunksCache:
       enabled: false
     gateway:
-      replicas: 0
+      enabled: false
     lokiCanary:
       enabled: false
     read:
