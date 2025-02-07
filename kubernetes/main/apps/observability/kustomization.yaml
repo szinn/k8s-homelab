@@ -14,7 +14,6 @@ resources:
   - kube-prometheus-stack/install.yaml
   - loki/install.yaml
   - miscellaneous
-  - prometheus-operator-crds/install.yaml
   - promtail/install.yaml
   - teslamate/install.yaml
   - unifi-poller/install.yaml

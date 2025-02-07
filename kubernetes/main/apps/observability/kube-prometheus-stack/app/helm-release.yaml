@@ -16,12 +16,10 @@ spec:
         name: prometheus-community-charts
         namespace: flux-system
   install:
-    crds: Skip
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
-    crds: Skip
     remediation:
       strategy: rollback
       retries: 3
@@ -31,7 +29,10 @@ spec:
   values:
     nameOverride: *app
     crds:
-      enabled: false
+      enabled: true
+      upgradeJob:
+        enabled: true
+        forceConflicts: true
     cleanPrometheusOperatorObjectNames: true
 
     alertmanager:
