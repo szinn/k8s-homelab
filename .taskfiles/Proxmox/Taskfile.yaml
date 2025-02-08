@@ -97,7 +97,7 @@ tasks:
             --description stage-{{.vmid}} \
             --ide0 local:iso/metal-amd64.iso,media=cdrom \
             --boot 'order=ide0\;scsi0' \
-            --memory 16384 \
+            --memory 24576 \
             --balloon 0 \
             --sockets 1 \
             --cores 8 \
