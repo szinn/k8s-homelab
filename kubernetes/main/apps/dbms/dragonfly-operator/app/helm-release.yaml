@@ -8,11 +8,11 @@ spec:
   interval: 30m
   chart:
     spec:
-      chart: app-template
-      version: 3.7.0
+      chart: dragonfly-operator
+      version: v1.1.9
       sourceRef:
         kind: HelmRepository
-        name: bjw-s-charts
+        name: dragonfly-charts
         namespace: flux-system
   install:
     remediation:
@@ -22,79 +22,10 @@ spec:
     remediation:
       retries: 3
   values:
-    controllers:
-      dragonfly-operator:
-        containers:
-          app:
-            image:
-              repository: docker.dragonflydb.io/dragonflydb/operator
-              tag: v1.1.9@sha256:a6cc77aa5b2ecd1c6b18e2c91a9c6ca7891ad7fe9c4e60deae660dfac1b33610
-            args:
-              - "--health-probe-bind-address=:8081"
-              - "--metrics-bind-address=127.0.0.1:8080"
-            command:
-              - "/manager"
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
-            probes:
-              liveness:
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /healthz
-                    port: &port 8081
-                  initialDelaySeconds: 15
-                  periodSeconds: 20
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness:
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /readyz
-                    port: *port
-                  initialDelaySeconds: 5
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              startup:
-                enabled: false
-            resources:
-              requests:
-                cpu: 10m
-                memory: 128Mi
-              limits:
-                cpu: 500m
-                memory: 256Mi
-        annotations:
-          reloader.stakater.com/auto: "true"
-        pod:
-          topologySpreadConstraints:
-            - maxSkew: 1
-              topologyKey: kubernetes.io/hostname
-              whenUnsatisfiable: DoNotSchedule
-              labelSelector:
-                matchLabels:
-                  app.kubernetes.io/name: *app
-    service:
-      app:
-        controller: *app
-        ports:
-          http:
-            port: *port
-    serviceAccount:
-      create: true
-      name: *app
-    serviceMonitor:
-      app:
-        serviceName: *app
-        endpoints:
-          - port: metrics
-            scheme: http
-            path: /metrics
-            interval: 1m
-            scrapeTimeout: 10s
+    grafanaDashboard:
+      enabled: false
+      folder: Data
+      annotations:
+        name: grafana_folder
+      labels:
+        name: grafana_dashboard
