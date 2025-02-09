@@ -49,11 +49,6 @@ spec:
       userKey: adminUser
       passwordKey: adminPassword
     env:
-      # Authelia
-      # GF_AUTH_GENERIC_OAUTH_API_URL: https://auth.zinn.ca/api/oidc/userinfo
-      # GF_AUTH_GENERIC_OAUTH_AUTH_URL: https://auth.zinn.ca/api/oidc/authorization
-      # GF_AUTH_GENERIC_OAUTH_TOKEN_URL: https://auth.zinn.ca/api/oidc/token
-
       GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: natel-discrete-panel,pr0ps-trackmap-panel,panodata-map-panel
       GF_SECURITY_ANGULAR_SUPPORT_ENABLED: true
     envFromSecrets:
@@ -185,15 +180,6 @@ spec:
             allowUiUpdates: true
             options:
               path: /var/lib/grafana/dashboards/teslamate
-          # - name: "thanos`"
-          #   orgId: 1
-          #   folder: "Thanos"
-          #   type: file
-          #   disableDeletion: false
-          #   editable: true
-          #   allowUiUpdates: true
-          #   options:
-          #     path: /var/lib/grafana/dashboards/thanos
           - name: "unifi"
             orgId: 1
             folder: "Unifi"
@@ -334,9 +320,6 @@ spec:
         cloudnative-pg:
           url: https://raw.githubusercontent.com/cloudnative-pg/grafana-dashboards/main/charts/cluster/grafana-dashboard.json
           datasource: Prometheus
-        # dragonfly:
-        #   url: https://raw.githubusercontent.com/dragonflydb/dragonfly/main/tools/local/monitoring/grafana/provisioning/dashboards/dashboard.json
-        #   datasource: Prometheus
         minio:
           # renovate: dashboardName="MinIO Dashboard"
           gnetId: 13502
@@ -524,34 +507,6 @@ spec:
         visited:
           url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/visited.json
           datasource: TeslaMate
-      # thanos:
-      #   thanos-bucket-replicate-dashboard:
-      #     url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/bucket-replicate.json
-      #     datasource: Prometheus
-      #   thanos-compact-dashboard:
-      #     url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/compact.json
-      #     datasource: Prometheus
-      #   thanos-overview-dashboard:
-      #     url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/overview.json
-      #     datasource: Prometheus
-      #   thanos-query-dashboard:
-      #     url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/query.json
-      #     datasource: Prometheus
-      #   thanos-query-frontend-dashboard:
-      #     url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/query-frontend.json
-      #     datasource: Prometheus
-      #   thanos-receive-dashboard:
-      #     url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/receive.json
-      #     datasource: Prometheus
-      #   thanos-rule-dashboard:
-      #     url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/rule.json
-      #     datasource: Prometheus
-      #   thanos-sidecar-dashboard:
-      #     url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/sidecar.json
-      #     datasource: Prometheus
-      #   thanos-store-dashboard:
-      #     url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/store.json
-      #     datasource: Prometheus
       unifi:
         # unifi-client-dpi:
         #   # renovate: dashboardName="UniFi-Poller: Client DPI - Prometheus"
