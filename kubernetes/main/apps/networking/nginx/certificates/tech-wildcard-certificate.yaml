@@ -20,6 +20,8 @@ kind: PushSecret
 metadata:
   name: tech-wildcard-tls
 spec:
+  deletionPolicy: None
+  refreshInterval: 1h
   secretStoreRefs:
     - name: onepassword-connect
       kind: ClusterSecretStore
