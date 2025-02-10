@@ -23,10 +23,10 @@ releases:
     hooks:
       - events: ['presync']
         command: bash
-        args: ['{{ requiredEnv "CLUSTER_DIR" }}/bootstrap/scripts/cilium-presync.sh']
-      - events: ['postsync']
+        args: ['{{ requiredEnv "CLUSTER_DIR" }}/bootstrap/apps/hooks/cilium-presync.sh']
+      - events: ["postsync"]
         command: bash
-        args: ['{{ requiredEnv "CLUSTER_DIR" }}/bootstrap/scripts/cilium-postsync.sh']
+        args: ['{{ requiredEnv "CLUSTER_DIR" }}/bootstrap/apps/hooks/cilium-postsync.sh']
 
   - name: coredns
     namespace: kube-system
@@ -44,13 +44,21 @@ releases:
     needs:
       - kube-system/cilium
 
+  - name: wipe-rook
+    namespace: kube-system
+    chart: oci://ghcr.io/bjw-s/helm/app-template
+    version: 3.7.0
+    values: ["./templates/wipe-rook.yaml.gotmpl"]
+    needs:
+      - kube-system/coredns
+
   - name: flux-operator
     namespace: flux-system
     chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator
     version: 0.13.0
     values: ['{{ requiredEnv "CLUSTER_DIR" }}/apps/flux-system/flux-operator/app/helm-values.yaml']
     needs:
-      - kube-system/coredns
+      - kube-system/wipe-rook
 
   - name: flux-instance
     namespace: flux-system
