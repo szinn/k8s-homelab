@@ -49,5 +49,6 @@ spec:
     metadata:
       annotations:
         lbipam.cilium.io/ips: 10.11.1.11
+        external-dns.alpha.kubernetes.io/hostname: emqx-listener.zinn.ca
     spec:
       type: LoadBalancer
