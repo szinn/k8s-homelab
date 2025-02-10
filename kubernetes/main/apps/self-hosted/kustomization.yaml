@@ -8,6 +8,7 @@ resources:
   - namespace.yaml
   # Flux-Kustomizations
   - atuin/install.yaml
+  - birdnet/install.yaml
   - changedetection/install.yaml
   - dashy/install.yaml
   - dmarc-report/install.yaml
