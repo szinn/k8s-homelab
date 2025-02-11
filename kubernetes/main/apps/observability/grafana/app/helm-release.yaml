@@ -345,32 +345,32 @@ spec:
         api-server:
           # renovate: dashboardName="Kubernetes / System / API Server"
           gnetId: 15761
-          revision: 18
+          revision: 19
           datasource: Prometheus
         coredns:
           # renovate: dashboardName="Kubernetes / System / CoreDNS"
           gnetId: 15762
-          revision: 19
+          revision: 20
           datasource: Prometheus
         global:
           # renovate: dashboardName="Kubernetes / Views / Global"
           gnetId: 15757
-          revision: 42
+          revision: 43
           datasource: Prometheus
         namespaces:
           # renovate: dashboardName="Kubernetes / Views / Namespaces"
           gnetId: 15758
-          revision: 41
+          revision: 42
           datasource: Prometheus
         nodes:
           # renovate: dashboardName="Kubernetes / Views / Nodes"
           gnetId: 15759
-          revision: 32
+          revision: 34
           datasource: Prometheus
         pods:
           # renovate: dashboardName="Kubernetes / Views / Pods"
           gnetId: 15760
-          revision: 34
+          revision: 36
           datasource: Prometheus
         volumes:
           # renovate: dashboardName="K8s / Storage / Volumes / Cluster"
