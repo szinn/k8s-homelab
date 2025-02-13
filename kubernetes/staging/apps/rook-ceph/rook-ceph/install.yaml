@@ -43,7 +43,7 @@ spec:
   prune: true
   wait: true
   interval: 30m
-  timeout: 5m
+  timeout: 20m
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
@@ -66,4 +66,4 @@ spec:
   prune: true
   wait: true
   interval: 30m
-  timeout: 5m
+  timeout: 20m

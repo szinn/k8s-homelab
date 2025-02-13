@@ -1,23 +1,12 @@
 ---
 apiVersion: v1
-kind: Namespace
-metadata:
-  name: external-secrets
----
-apiVersion: v1
 kind: Secret
 metadata:
   name: onepassword-connect-secret
   namespace: external-secrets
 stringData:
-  1password-credentials.json: |-
-    {{ ENV.ONEPASSWORD_CREDENTIALS | indent(4) }}
-  token: {{ ENV.ONEPASSWORD_CONNECT_TOKEN }}
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: networking
+  1password-credentials.json: op://Private/1Password/OP_CREDENTIALS_JSON
+  token: op://Private/1Password/OP_CONNECT_TOKEN
 ---
 apiVersion: v1
 kind: Secret
@@ -37,5 +26,5 @@ metadata:
     controller.cert-manager.io/fao: "true"
 type: kubernetes.io/tls
 data:
-  tls.crt: {{ ENV.WILDCARD_CRT }}
-  tls.key: {{ ENV.WILDCARD_KEY }}
+  tls.crt: op://Kubernetes/cluster-staging/wildcard-crt
+  tls.key: op://Kubernetes/cluster-staging/wildcard-key

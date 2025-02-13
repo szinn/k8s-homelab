@@ -68,11 +68,11 @@ tasks:
   deploy:
     desc: Bootstrap [cluster={{.cluster}}]
     preconditions:
-      - which op helmfile kubectl
-      - test -f "${TALOSCONFIG}"
-      - test -f {{.CLUSTER_DIR}}/bootstrap/apps/helmfile.yaml
       - op user get --me
       - talosctl --context {{.cluster}} config info
+      - which curl gum jq helmfile kubectl kustomize op talosctl yq
+      - test -f "${TALOSCONFIG}"
+      - test -f {{.CLUSTER_DIR}}/bootstrap/apps/helmfile.yaml
     requires:
       vars:
         - cluster
