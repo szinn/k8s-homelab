@@ -1,0 +1,19 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  # Step 1
+  - cert-manager
+  - external-secrets
+  - kube-system
+  - flux-system
+  - networking
+  - system
+  - volsync-system
+  # Step 2
+  # - rook-ceph
+  # Step 3
+  # - dbms
+  # Step 4
+  # - self-hosted
