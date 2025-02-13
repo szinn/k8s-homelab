@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: system-upgrade-controller
+  name: &app system-upgrade-controller
 spec:
   interval: 30m
   chart:
@@ -25,8 +25,6 @@ spec:
             runAsNonRoot: true
             runAsUser: 65534
             runAsGroup: 65534
-            seccompProfile:
-              type: RuntimeDefault
 
         containers:
           app:
@@ -34,28 +32,16 @@ spec:
               repository: docker.io/rancher/system-upgrade-controller
               tag: v0.14.2@sha256:3cdbfdd90f814702cefb832fc4bdb09ea93865a4d06c6bafd019d1dc6a9f34c9
             env:
-              SYSTEM_UPGRADE_CONTROLLER_DEBUG: false
-              SYSTEM_UPGRADE_CONTROLLER_THREADS: 2
-              SYSTEM_UPGRADE_JOB_ACTIVE_DEADLINE_SECONDS: 900
-              SYSTEM_UPGRADE_JOB_BACKOFF_LIMIT: 99
-              SYSTEM_UPGRADE_JOB_IMAGE_PULL_POLICY: IfNotPresent
-              SYSTEM_UPGRADE_JOB_KUBECTL_IMAGE: registry.k8s.io/kubectl:v1.32.1@sha256:6ae337221866ae69380cfa08e2b38fa113fd5044cfb5b7a7662f5b0028be23b6
-              SYSTEM_UPGRADE_JOB_PRIVILEGED: true
-              SYSTEM_UPGRADE_JOB_TTL_SECONDS_AFTER_FINISH: 900
-              SYSTEM_UPGRADE_PLAN_POLLING_INTERVAL: 15m
-              SYSTEM_UPGRADE_CONTROLLER_NAME: system-upgrade-controller
+              SYSTEM_UPGRADE_CONTROLLER_NAME: *app
               SYSTEM_UPGRADE_CONTROLLER_NAMESPACE:
                 valueFrom:
                   fieldRef:
                     fieldPath: metadata.namespace
+              SYSTEM_UPGRADE_JOB_PRIVILEGED: true
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities:
-                drop:
-                  - ALL
-              seccompProfile:
-                type: RuntimeDefault
+              capabilities: { drop: ["ALL"] }
 
     serviceAccount:
       create: true
