@@ -8,7 +8,7 @@ shopt:
 
 vars:
   ANSIBLE_DIR: "{{.ROOT_DIR}}/ansible"
-  KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
+  KUBERNETES_ROOT: "{{.ROOT_DIR}}/kubernetes"
 
 env:
   MINIJINJA_CONFIG_FILE: "{{.ROOT_DIR}}/.minijinja.toml"

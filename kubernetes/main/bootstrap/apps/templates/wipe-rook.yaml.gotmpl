@@ -6,7 +6,7 @@ controllers:
       helm.sh/hook-delete-policy: "before-hook-creation"
     job:
       backoffLimit: 0
-      parallelism: {{ requiredEnv "NODE_COUNT" }}
+      parallelism: 3
     initContainers:
       data:
         image:

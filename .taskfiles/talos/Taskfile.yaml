@@ -13,16 +13,16 @@ tasks:
         cluster: Cluster to run command against (required)
     preconditions:
       - which test talhelper sops
-      - test -f {{.CLUSTER_DIR}}/bootstrap/talos/talsecret.sops.yaml
-      - test -f {{.CLUSTER_DIR}}/bootstrap/talos/talconfig.yaml
+      - test -f {{.KUBERNETES_DIR}}/bootstrap/talos/talsecret.sops.yaml
+      - test -f {{.KUBERNETES_DIR}}/bootstrap/talos/talconfig.yaml
     requires:
       vars:
         - cluster
     vars:
-      CLUSTER_DIR: "{{.KUBERNETES_DIR}}/{{.cluster}}"
+      KUBERNETES_DIR: "{{.KUBERNETES_ROOT}}/{{.cluster}}"
     cmds:
-      - talhelper gensecret > {{.CLUSTER_DIR}}/bootstrap/talos/talsecret.sops.yaml
-      - sops -e -i {{.CLUSTER_DIR}}/bootstrap/talos/talsecret.sops.yaml
+      - talhelper gensecret > {{.KUBERNETES_DIR}}/bootstrap/talos/talsecret.sops.yaml
+      - sops -e -i {{.KUBERNETES_DIR}}/bootstrap/talos/talsecret.sops.yaml
 
   bootstrap:
     desc: Bootstrap the cluster
@@ -46,7 +46,7 @@ tasks:
       - task: fetch-kubeconfig
         vars:
           cluster: "{{.cluster}}"
-      - until kubectl --context {{.cluster}} --kubeconfig="{{.KUBERNETES_DIR}}/{{.cluster}}/kubeconfig" wait nodes --for=condition=Ready=False --all --timeout=10m; do sleep 5; done
+      - until kubectl --context {{.cluster}} --kubeconfig="{{.KUBERNETES_ROOT}}/{{.cluster}}/kubeconfig" wait nodes --for=condition=Ready=False --all --timeout=10m; do sleep 5; done
 
   #     - task: bootstrap-core
   #       vars:
@@ -59,21 +59,21 @@ tasks:
         cluster: Cluster to run command against (required)
     preconditions:
       - which test talhelper cp
-      - test -f {{.CLUSTER_DIR}}/bootstrap/talos/talsecret.sops.yaml
-      - test -f {{.CLUSTER_DIR}}/bootstrap/talos/talconfig.yaml
+      - test -f {{.KUBERNETES_DIR}}/bootstrap/talos/talsecret.sops.yaml
+      - test -f {{.KUBERNETES_DIR}}/bootstrap/talos/talconfig.yaml
     requires:
       vars:
         - cluster
     vars:
-      CLUSTER_DIR: "{{.KUBERNETES_DIR}}/{{.cluster}}"
-      TALOS_CONFIG_ROOT: "{{.CLUSTER_DIR}}/bootstrap/talos"
+      KUBERNETES_DIR: "{{.KUBERNETES_ROOT}}/{{.cluster}}"
+      TALOS_CONFIG_ROOT: "{{.KUBERNETES_DIR}}/bootstrap/talos"
     cmds:
       - |
         talhelper genconfig \
           --secret-file {{.TALOS_CONFIG_ROOT}}/talsecret.sops.yaml \
           --config-file {{.TALOS_CONFIG_ROOT}}/talconfig.yaml \
           --out-dir {{.TALOS_CONFIG_ROOT}}/clusterconfig
-      - cp {{.TALOS_CONFIG_ROOT}}/clusterconfig/talosconfig {{.CLUSTER_DIR}}
+      - cp {{.TALOS_CONFIG_ROOT}}/clusterconfig/talosconfig {{.KUBERNETES_DIR}}
 
   apply-config:
     desc: Apply Talos configurations
@@ -82,17 +82,17 @@ tasks:
         cluster: Cluster to run command against (required)
     preconditions:
       - which ls
-      - test -f {{.KUBERNETES_DIR}}/{{.cluster}}/talosconfig
+      - test -f {{.KUBERNETES_ROOT}}/{{.cluster}}/talosconfig
     requires:
       vars:
         - cluster
     vars:
-      CLUSTER_DIR: "{{.KUBERNETES_DIR}}/{{.cluster}}"
-      TALOS_CONFIG_ROOT: "{{.CLUSTER_DIR}}/bootstrap/talos"
+      KUBERNETES_DIR: "{{.KUBERNETES_ROOT}}/{{.cluster}}"
+      TALOS_CONFIG_ROOT: "{{.KUBERNETES_DIR}}/bootstrap/talos"
       CLUSTER_CONFIG_ROOT: "{{.TALOS_CONFIG_ROOT}}/clusterconfig"
       CONFIG_FILES:
         sh: ls {{.CLUSTER_CONFIG_ROOT}}/*.yaml
-      TALOSCONFIG: "{{.CLUSTER_DIR}}/talosconfig"
+      TALOSCONFIG: "{{.KUBERNETES_DIR}}/talosconfig"
     cmds:
       - for: { var: CONFIG_FILES }
         task: _apply-machineconfig
@@ -132,11 +132,11 @@ tasks:
       vars:
         - cluster
     env:
-      TALOSCONFIG: "{{.CLUSTER_DIR}}/talosconfig"
+      TALOSCONFIG: "{{.KUBERNETES_DIR}}/talosconfig"
     vars:
-      CLUSTER_DIR: "{{.KUBERNETES_DIR}}/{{.cluster}}"
+      KUBERNETES_DIR: "{{.KUBERNETES_ROOT}}/{{.cluster}}"
       TALOS_CONTROLLER:
-        sh: talosctl --talosconfig "{{.CLUSTER_DIR}}/talosconfig" --context {{.cluster}} config info --output json | jq --raw-output '.endpoints[0]'
+        sh: talosctl --talosconfig "{{.KUBERNETES_DIR}}/talosconfig" --context {{.cluster}} config info --output json | jq --raw-output '.endpoints[0]'
     cmds:
       - until talosctl --context {{.cluster}} --nodes {{.TALOS_CONTROLLER}} bootstrap; do sleep 10; done
 
@@ -146,18 +146,18 @@ tasks:
       Args:
         cluster: Cluster to run command against (required)
     preconditions:
-      - test -f {{.CLUSTER_DIR}}/talosconfig
+      - test -f {{.KUBERNETES_DIR}}/talosconfig
       - talosctl --context {{.cluster}} config info >/dev/null 2>&1
     requires:
       vars:
         - cluster
     env:
-      TALOSCONFIG: "{{.CLUSTER_DIR}}/talosconfig"
+      TALOSCONFIG: "{{.KUBERNETES_DIR}}/talosconfig"
     vars:
-      CLUSTER_DIR: "{{.KUBERNETES_DIR}}/{{.cluster}}"
-      KUBECONFIG: "{{.CLUSTER_DIR}}/kubeconfig"
+      KUBERNETES_DIR: "{{.KUBERNETES_ROOT}}/{{.cluster}}"
+      KUBECONFIG: "{{.KUBERNETES_DIR}}/kubeconfig"
       TALOS_CONTROLLER:
-        sh: talosctl --talosconfig "{{.CLUSTER_DIR}}/talosconfig" --context {{.cluster}} config info --output json | jq --raw-output '.endpoints[0]'
+        sh: talosctl --talosconfig "{{.KUBERNETES_DIR}}/talosconfig" --context {{.cluster}} config info --output json | jq --raw-output '.endpoints[0]'
     cmds:
       - talosctl kubeconfig
         --context {{.cluster}}

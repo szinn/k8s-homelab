@@ -14,43 +14,38 @@ repositories:
   - name: postfinance
     url: https://postfinance.github.io/kubelet-csr-approver
 
-hooks:
-  - events: ["prepare"]
-    command: '{{ requiredEnv "CLUSTER_DIR" }}/bootstrap/apps/resources/prepare.sh'
-    showlogs: true
-
 releases:
   - name: cilium
     namespace: kube-system
     chart: cilium/cilium
     version: 1.17.1
-    values: ['{{ requiredEnv "CLUSTER_DIR" }}/apps/kube-system/cilium/app/helm-values.yaml']
+    values: ['{{ requiredEnv "KUBERNETES_DIR" }}/apps/kube-system/cilium/app/helm-values.yaml']
 
   - name: coredns
     namespace: kube-system
     chart: oci://ghcr.io/coredns/charts/coredns
     version: 1.39.0
-    values: ['{{ requiredEnv "CLUSTER_DIR" }}/apps/kube-system/coredns/app/helm-values.yaml']
+    values: ['{{ requiredEnv "KUBERNETES_DIR" }}/apps/kube-system/coredns/app/helm-values.yaml']
     needs: ['kube-system/cilium']
 
   - name: kubelet-csr-approver
     namespace: system
     chart: postfinance/kubelet-csr-approver
     version: 1.2.5
-    values: ['{{ requiredEnv "CLUSTER_DIR" }}/apps/system/kubelet-csr-approver/app/helm-values.yaml']
+    values: ['{{ requiredEnv "KUBERNETES_DIR" }}/apps/system/kubelet-csr-approver/app/helm-values.yaml']
     needs: ['kube-system/cilium']
 
   - name: flux-operator
     namespace: flux-system
     chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator
     version: 0.14.0
-    values: ['{{ requiredEnv "CLUSTER_DIR" }}/apps/flux-system/flux-operator/app/helm-values.yaml']
+    values: ['{{ requiredEnv "KUBERNETES_DIR" }}/apps/flux-system/flux-operator/app/helm-values.yaml']
     needs: ['kube-system/coredns']
 
   - name: flux-instance
     namespace: flux-system
     chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-instance
     version: 0.14.0
-    values: ['{{ requiredEnv "CLUSTER_DIR" }}/apps/flux-system/flux-operator/instance/helm-values.yaml']
+    values: ['{{ requiredEnv "KUBERNETES_DIR" }}/apps/flux-system/flux-operator/instance/helm-values.yaml']
     needs: ['flux-system/flux-operator']
     wait: false

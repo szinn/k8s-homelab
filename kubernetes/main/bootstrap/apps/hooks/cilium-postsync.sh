@@ -22,7 +22,7 @@ apply_kustomize_config() {
         --server-side \
         --field-manager=kustomize-controller \
         --kustomize \
-        "${CLUSTER_DIR}/apps/kube-system/cilium/config"
+        "${KUBERNETES_DIR}/apps/kube-system/cilium/config"
 }
 
 main() {

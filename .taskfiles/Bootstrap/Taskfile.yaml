@@ -7,9 +7,9 @@ tasks:
     desc: Bootstrap main cluster
     vars:
       cluster: main
-      CLUSTER_DIR: "{{.KUBERNETES_DIR}}/{{.cluster}}"
+      KUBERNETES_DIR: "{{.KUBERNETES_ROOT}}/{{.cluster}}"
     env:
-      CLUSTER_DIR: "{{.CLUSTER_DIR}}"
+      KUBERNETES_DIR: "{{.KUBERNETES_DIR}}"
     cmds:
       - task: :talos:bootstrap
         vars:
@@ -24,7 +24,7 @@ tasks:
       - task: deploy
         vars:
           cluster: main
-      - helmfile --kube-context {{.cluster}} --quiet --file {{.CLUSTER_DIR}}/bootstrap/apps/helmfile.yaml destroy --selector name=wipe-rook
+      - helmfile --kube-context {{.cluster}} --quiet --file {{.KUBERNETES_DIR}}/bootstrap/apps/helmfile.yaml destroy --selector name=wipe-rook
 
   staging:
     desc: Bootstrap staging cluster
@@ -51,7 +51,7 @@ tasks:
       vars:
         - cluster
     vars:
-      CLUSTER_DIR: "{{.KUBERNETES_DIR}}/{{.cluster}}"
+      KUBERNETES_DIR: "{{.KUBERNETES_ROOT}}/{{.cluster}}"
     cmds:
       - cp $HOME/.kube/config /tmp/kubectl-config-backup
       - cp $HOME/.talos/config /tmp/talosconfig-config-backup
@@ -59,9 +59,9 @@ tasks:
         ignore_error: true
       - cmd: talosctl --talosconfig $HOME/.talos/config config remove -y {{.cluster}}
         ignore_error: true
-      - KUBECONFIG="$HOME/.kube/config:{{.CLUSTER_DIR}}/kubeconfig" kubectl config view --flatten > $HOME/.kube/config-new
+      - KUBECONFIG="$HOME/.kube/config:{{.KUBERNETES_DIR}}/kubeconfig" kubectl config view --flatten > $HOME/.kube/config-new
       - mv $HOME/.kube/config-new $HOME/.kube/config
-      - talosctl  --talosconfig $HOME/.talos/config config merge {{.CLUSTER_DIR}}/talosconfig
+      - talosctl  --talosconfig $HOME/.talos/config config merge {{.KUBERNETES_DIR}}/talosconfig
       - chmod og-rwx $HOME/.kube/config
       - chmod og-rwx $HOME/.talos/config
 
@@ -72,18 +72,20 @@ tasks:
       - talosctl --context {{.cluster}} config info
       - which curl gum jq helmfile kubectl kustomize op talosctl yq
       - test -f "${TALOSCONFIG}"
-      - test -f {{.CLUSTER_DIR}}/bootstrap/apps/helmfile.yaml
+      - test -f {{.KUBERNETES_DIR}}/bootstrap/apps/helmfile.yaml
+      - test -f {{.KUBERNETES_DIR}}/bootstrap/apps/resources/prepare.sh
     requires:
       vars:
         - cluster
     env:
-      CLUSTER_DIR: "{{.CLUSTER_DIR}}"
-      TALOSCONFIG: "{{.CLUSTER_DIR}}/talosconfig"
       CLUSTER_CONTEXT: "{{.cluster}}"
-      NODE_COUNT: 3
+      KUBERNETES_DIR: "{{.KUBERNETES_DIR}}"
+      TALOSCONFIG: "{{.KUBERNETES_DIR}}/talosconfig"
     vars:
-      CLUSTER_DIR: "{{.KUBERNETES_DIR}}/{{.cluster}}"
-    cmd: helmfile --kube-context {{.cluster}} --quiet --file {{.CLUSTER_DIR}}/bootstrap/apps/helmfile.yaml apply --skip-diff-on-install --suppress-diff
+      KUBERNETES_DIR: "{{.KUBERNETES_ROOT}}/{{.cluster}}"
+    cmds:
+      - bash {{.KUBERNETES_DIR}}/bootstrap/apps/resources/prepare.sh
+      - helmfile --kube-context {{.cluster}} --quiet --file {{.KUBERNETES_DIR}}/bootstrap/apps/helmfile.yaml apply --skip-diff-on-install --suppress-diff
 
   get-certs:
     desc: Fetch certificates from cluster

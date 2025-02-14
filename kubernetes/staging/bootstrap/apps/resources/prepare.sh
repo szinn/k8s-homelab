@@ -5,6 +5,24 @@ set -euo pipefail
 # Set default values for the 'gum log' command
 readonly LOG_ARGS=("log" "--time=rfc3339" "--formatter=text" "--structured" "--level")
 
+# Verify required CLI tools are installed
+function check_dependencies() {
+    local deps=("gum" "jq" "kubectl" "kustomize" "op" "talosctl" "yq")
+    local missing=()
+
+    for dep in "${deps[@]}"; do
+        if ! command -v "${dep}" &>/dev/null; then
+            missing+=("${dep}")
+        fi
+    done
+
+    if [ ${#missing[@]} -ne 0 ]; then
+        printf "Missing required dependencies: %s\n" "${missing[*]}"
+        printf "Please install them and try again.\n"
+        exit 1
+    fi
+}
+
 # Talos requires the nodes to be 'Ready=False' before applying resources
 function wait_for_nodes() {
     gum "${LOG_ARGS[@]}" debug "Waiting for nodes to be available"
@@ -58,7 +76,7 @@ function apply_prometheus_crds() {
 function apply_namespaces() {
     gum "${LOG_ARGS[@]}" debug "Applying namespaces"
 
-    local -r apps_dir="${CLUSTER_DIR}/apps"
+    local -r apps_dir="${KUBERNETES_DIR}/apps"
 
     if [[ ! -d "${apps_dir}" ]]; then
         gum "${LOG_ARGS[@]}" fatal "Directory does not exist" directory "${apps_dir}"
@@ -88,7 +106,7 @@ function apply_namespaces() {
 function apply_secrets() {
     gum "${LOG_ARGS[@]}" debug "Applying secrets"
 
-    local -r secrets_file="${CLUSTER_DIR}/bootstrap/apps/resources/secrets.yaml.tpl"
+    local -r secrets_file="${KUBERNETES_DIR}/bootstrap/apps/resources/secrets.yaml.tpl"
     local resources
 
     if [[ ! -f "${secrets_file}" ]]; then
@@ -151,6 +169,7 @@ function wipe_rook_disks() {
 }
 
 function main() {
+    check_dependencies
     wait_for_nodes
     apply_prometheus_crds
     apply_namespaces
