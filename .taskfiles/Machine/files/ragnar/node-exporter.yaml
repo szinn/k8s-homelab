@@ -10,7 +10,7 @@ services:
       - >-
         --collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)
     # renovate: datasource=docker depName=quay.io/prometheus/node-exporter
-    image: quay.io/prometheus/node-exporter:v1.8.2
+    image: quay.io/prometheus/node-exporter:v1.9.0
     network_mode: host
     ports:
       - "9100:9100"
