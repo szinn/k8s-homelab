@@ -55,7 +55,7 @@ spec:
           init-db:
             image:
               repository: ghcr.io/onedr0p/postgres-init
-              tag: 16@sha256:a37bbb04a0ea3f15b505c6f97637e7ae89bc66541ae23b8d3848024087980e76
+              tag: 16@sha256:17146b73995abd3ece8c415949804c61f11cfedbd5a618298fe10adae5fbd4a2
             envFrom: &envFrom
               - secretRef:
                   name: sonarr-secret
