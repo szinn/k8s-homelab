@@ -28,13 +28,6 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
-          init-db:
-            image:
-              repository: ghcr.io/onedr0p/postgres-init
-              tag: 16.6@sha256:17146b73995abd3ece8c415949804c61f11cfedbd5a618298fe10adae5fbd4a2
-            envFrom: &envFrom
-              - secretRef:
-                  name: gatus-secret
           init-config:
             dependsOn: init-db
             image:
@@ -48,11 +41,11 @@ spec:
               UNIQUE_FILENAMES: true
               METHOD: WATCH
             restartPolicy: Always
-            resources: &resources
+            resources:
               requests:
                 cpu: 10m
               limits:
-                memory: 256Mi
+                memory: 128Mi
         containers:
           app:
             image:
@@ -63,7 +56,9 @@ spec:
               GATUS_CONFIG_PATH: /config
               GATUS_DELAY_START_SECONDS: 5
               CUSTOM_WEB_PORT: &port 8080
-            envFrom: *envFrom
+            envFrom:
+              - secretRef:
+                  name: gatus-secret
             probes:
               liveness: &probes
                 enabled: true
@@ -81,7 +76,11 @@ spec:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
-            resources: *resources
+            resources:
+              requests:
+                cpu: 100m
+              limits:
+                memory: 256Mi
         pod:
           dnsConfig:
             options:
@@ -122,7 +121,7 @@ spec:
       name: gatus
     persistence:
       config:
-        type: emptyDir
+        existingClaim: gatus-config
       config-file:
         type: configMap
         name: gatus-configmap

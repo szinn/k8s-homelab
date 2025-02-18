@@ -10,14 +10,6 @@ debug: false
 ui:
   title: Status | Gatus
   header: Status
-alerting:
-  discord:
-    webhook-url: "${DISCORD_WEBHOOK_URL}"
-    default-alert:
-      description: health-check failed
-      send-on-resolved: true
-      failure-threshold: 5
-      success-threshold: 2
 connectivity:
   checker:
     target: 1.1.1.1:53
@@ -35,9 +27,6 @@ endpoints:
       query-type: A
     conditions:
       - "len([BODY]) == 0"
-    alerts:
-      - type: discord
-        send-on-resolved: true
   - name: external
     group: external
     url: 1.1.1.1
@@ -47,9 +36,6 @@ endpoints:
       query-type: A
     conditions:
       - "len([BODY]) > 0"
-    alerts:
-      - type: discord
-        send-on-resolved: true
   - name: flux-webhook
     group: external
     url: https://flux-receiver.zinn.ca
@@ -58,6 +44,3 @@ endpoints:
       dns-resolver: tcp://1.1.1.1:53
     conditions:
       - "[STATUS] == 404"
-    alerts:
-      - type: discord
-        send-on-resolved: true

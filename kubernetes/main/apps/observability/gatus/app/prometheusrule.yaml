@@ -1,0 +1,39 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: gatus-rules
+spec:
+  groups:
+    - name: gatus.rules
+      rules:
+        - alert: GatusExternalEndpointDown
+          expr: |
+            gatus_results_endpoint_success{group="external"} == 0
+          for: 5m
+          annotations:
+            summary: >
+              The {{ $labels.name }} endpoint is down
+          labels:
+            severity: critical
+
+        - alert: GatusInfrastructureEndpointDown
+          expr: |
+            gatus_results_endpoint_success{group="infrastructure"} == 0
+          for: 5m
+          annotations:
+            summary: >
+              The {{ $labels.name }} endpoint is down
+          labels:
+            severity: critical
+
+        - alert: GatusGuardedEndpointExposed
+          expr: |
+            gatus_results_endpoint_success{group="guarded"} == 0
+          for: 5m
+          annotations:
+            summary: >
+              The {{ $labels.name }} endpoint has a public DNS record and is exposed
+          labels:
+            severity: critical
