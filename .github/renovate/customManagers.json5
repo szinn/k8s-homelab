@@ -4,7 +4,7 @@
     {
       "customType": "regex",
       "description": "Process raw GitHub URLs",
-      "fileMatch": ["kubernetes/.+\\.ya?ml$"],
+      "fileMatch": ["kubernetes/.+\\.ya?ml(?:\\.j2)?$"],
       "matchStrings": [
         "https:\\/\\/raw.githubusercontent.com\\/(?<depName>[\\w\\d\\-_]+\\/[\\w\\d\\-_]+)\\/(?<currentValue>[\\w\\d\\.\\-_]+)\\/.*"
       ],
@@ -14,7 +14,7 @@
     {
       "customType": "regex",
       "description": "Process GitHub release URLs",
-      "fileMatch": ["kubernetes/.+\\.ya?ml$"],
+      "fileMatch": ["kubernetes/.+\\.ya?ml(?:\\.j2)?$"],
       "matchStrings": [
         "https:\\/\\/github.com\\/(?<depName>[\\w\\d\\-_]+\\/[\\w\\d\\-_]+)\\/releases\\/download\\/v(?<currentValue>[\\w\\d\\.\\-_]+)\\/.*",
         "https:\\/\\/github.com\\/(?<depName>[\\w\\d\\-_]+\\/[\\w\\d\\-_]+)\\/releases\\/download\\/(?<currentValue>[\\w\\d\\.\\-_]+)\\/.*"
