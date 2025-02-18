@@ -10,9 +10,8 @@ spec:
   serviceAccountName: system-upgrade
   nodeSelector:
     matchExpressions:
-      - key: kubernetes.io/os
-        operator: In
-        values: ["linux"]
+      - key: kubernetes.io/hostname
+        operator: Exists
   secrets:
     - name: talos
       path: /var/run/secrets/talos.dev
