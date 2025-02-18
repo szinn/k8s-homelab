@@ -1,3 +1,11 @@
 * text=auto eol=lf
+*.env linguist-detectable linguist-language=SHELL
+*.json linguist-detectable linguist-language=JSON
+*.json5 linguist-detectable linguist-language=JSON5
+*.md linguist-detectable linguist-language=MARKDOWN
+*.sh linguist-detectable linguist-language=SHELL
 *.sops.* diff=sopsdiffer
-*.yaml.j2 linguist-language=YAML
+*.toml linguist-detectable linguist-language=TOML
+*.yaml linguist-detectable linguist-language=YAML
+*.yaml.j2 linguist-detectable linguist-language=YAML
+*.yml linguist-detectable linguist-language=YAML
