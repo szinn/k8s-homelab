@@ -4,8 +4,10 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - gatus-secret.yaml
-  - rbac.yaml
   - helm-release.yaml
+  - prometheusrule.yaml
+  - pvc.yaml
+  - rbac.yaml
 configMapGenerator:
   - name: gatus-configmap
     files:

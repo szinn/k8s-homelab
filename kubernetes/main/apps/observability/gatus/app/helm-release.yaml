@@ -28,15 +28,7 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
-          init-db:
-            image:
-              repository: ghcr.io/onedr0p/postgres-init
-              tag: 16.6@sha256:17146b73995abd3ece8c415949804c61f11cfedbd5a618298fe10adae5fbd4a2
-            envFrom: &envFrom
-              - secretRef:
-                  name: gatus-secret
           init-config:
-            dependsOn: init-db
             image:
               repository: ghcr.io/kiwigrid/k8s-sidecar
               tag: 1.30.0@sha256:9a326271c439b6f9e174f3b48ed132bbff71c00592c7dbd072ccdc334445bde2
@@ -48,22 +40,24 @@ spec:
               UNIQUE_FILENAMES: true
               METHOD: WATCH
             restartPolicy: Always
-            resources: &resources
+            resources:
               requests:
                 cpu: 10m
               limits:
-                memory: 256Mi
+                memory: 128Mi
         containers:
           app:
             image:
               repository: ghcr.io/twin/gatus
               tag: v5.16.0@sha256:bb738c87cf2e2a08b8fff180cfc433e7b8b87bb1779c1fb1b00f8b748673e3c3
+            envFrom:
+              - secretRef:
+                  name: gatus-secret
             env:
               TZ: America/Toronto
               GATUS_CONFIG_PATH: /config
               GATUS_DELAY_START_SECONDS: 5
               CUSTOM_WEB_PORT: &port 8080
-            envFrom: *envFrom
             probes:
               liveness: &probes
                 enabled: true
@@ -81,11 +75,12 @@ spec:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
-            resources: *resources
+            resources:
+              requests:
+                cpu: 100m
+              limits:
+                memory: 256Mi
         pod:
-          dnsConfig:
-            options:
-              - { name: ndots, value: "1" }
           securityContext:
             runAsUser: 2000
             runAsGroup: 2000
@@ -122,7 +117,7 @@ spec:
       name: gatus
     persistence:
       config:
-        type: emptyDir
+        existingClaim: gatus-config
       config-file:
         type: configMap
         name: gatus-configmap
