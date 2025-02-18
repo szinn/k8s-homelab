@@ -10,14 +10,6 @@ debug: false
 ui:
   title: Status | Gatus
   header: Status
-alerting:
-  discord:
-    webhook-url: "${DISCORD_WEBHOOK_URL}"
-    default-alert:
-      description: health-check failed
-      send-on-resolved: true
-      failure-threshold: 5
-      success-threshold: 2
 connectivity:
   checker:
     target: 1.1.1.1:53
