@@ -17,6 +17,14 @@
       ]
     },
     {
+      "description": ["Auto-merge GitHub Actions"],
+      "matchManagers": ["github-actions"],
+      "matchDatasources": ["github-tags"],
+      "automerge": true,
+      "automergeType": "branch",
+      "matchUpdateTypes": ["minor", "patch", "digest"]
+    },
+    {
       "description": "Auto merge KPS minors and patches",
       "matchDatasources": ["docker", "helm"],
       "automerge": true,
