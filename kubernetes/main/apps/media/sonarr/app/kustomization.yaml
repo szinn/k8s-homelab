@@ -6,3 +6,14 @@ resources:
   - sonarr-secrets.yaml
   - helm-release.yaml
   - pvc.yaml
+configMapGenerator:
+  - name: sonarr-loki-rules
+    files:
+      - sonarr.yaml=./lokirule.yaml
+    options:
+      labels:
+        loki_rule: "true"
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled

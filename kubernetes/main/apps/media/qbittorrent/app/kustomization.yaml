@@ -11,5 +11,13 @@ configMapGenerator:
     options:
       labels:
         loki_rule: "true"
+  - name: qbittorrent-loki-rules
+    files:
+      - qbittorrent.yaml=./lokirule.yaml
+    options:
+      labels:
+        loki_rule: "true"
 generatorOptions:
   disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled

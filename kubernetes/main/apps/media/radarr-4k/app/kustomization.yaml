@@ -6,3 +6,14 @@ resources:
   - radarr-4k-secrets.yaml
   - helm-release.yaml
   - pvc.yaml
+configMapGenerator:
+  - name: radarr-4k-loki-rules
+    files:
+      - radarr-4k.yaml=./lokirule.yaml
+    options:
+      labels:
+        loki_rule: "true"
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled

@@ -12,7 +12,7 @@ configMapGenerator:
       - config.yaml=./config/config.yaml
   - name: frigate-loki-rules
     files:
-      - frigate.yaml=./config/lokirule.yaml
+      - frigate.yaml=./lokirule.yaml
     options:
       labels:
         loki_rule: "true"
