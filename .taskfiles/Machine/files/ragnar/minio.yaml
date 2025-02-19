@@ -7,7 +7,7 @@ services:
       MINIO_ROOT_PASSWORD: <REDACTED>
       MINIO_ROOT_USER: <REDACTED>
     # renovate: datasource=docker depName=quay.io/minio/minio
-    image: quay.io/minio/minio:RELEASE.2025-02-07T23-21-09Z
+    image: quay.io/minio/minio:RELEASE.2025-02-18T16-25-55Z
     ports:
       - "9000:9000"
       - "9001:9001"
