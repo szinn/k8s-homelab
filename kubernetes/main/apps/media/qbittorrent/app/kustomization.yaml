@@ -7,12 +7,6 @@ resources:
 configMapGenerator:
   - name: qbittorrent-loki-rules
     files:
-      - qbittorrent.yaml=./resources/lokirule.yaml
-    options:
-      labels:
-        loki_rule: "true"
-  - name: qbittorrent-loki-rules
-    files:
       - qbittorrent.yaml=./lokirule.yaml
     options:
       labels:
