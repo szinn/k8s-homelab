@@ -53,7 +53,7 @@ spec:
               - name: POSTGRES_HOST
                 value: postgres-ro.dbms.svc.cluster.local
               - name: POSTGRES_DB
-                value: "authentik,dmarc,shlink,teslamate,wikijs,prowlarr_main,lidarr_main,radarr_main,radarr_4k_main,sonarr_main"
+                value: "authentik,dmarc,shlink,wikijs,prowlarr_main,lidarr_main,radarr_main,radarr_4k_main,sonarr_main"
               - name: BACKUP_KEEP_DAYS
                 value: "7"
               - name: BACKUP_KEEP_WEEKS

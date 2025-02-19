@@ -15,7 +15,6 @@ resources:
   - loki/install.yaml
   - miscellaneous
   - promtail/install.yaml
-  - teslamate/install.yaml
   - unifi-poller/install.yaml
 components:
   - ../../components/flux/alerts

@@ -171,15 +171,6 @@ spec:
             allowUiUpdates: true
             options:
               path: /var/lib/grafana/dashboards/system
-          - name: "teslamate`"
-            orgId: 1
-            folder: "Teslamate"
-            type: file
-            disableDeletion: false
-            editable: true
-            allowUiUpdates: true
-            options:
-              path: /var/lib/grafana/dashboards/teslamate
           - name: "unifi"
             orgId: 1
             folder: "Unifi"
@@ -219,21 +210,6 @@ spec:
             url: http://prometheus-alertmanager.observability.svc.cluster.local:9093
             jsonData:
               implementation: prometheus
-          - name: TeslaMate
-            type: postgres
-            access: proxy
-            url: postgres-ro.dbms.svc.cluster.local:5432
-            database: teslamate
-            user: teslamate
-            secureJsonData:
-              password: "$TESLAMATE_POSTGRES_PASSWORD"
-            basicAuth: false
-            withCredentials: false
-            jsonData:
-              postgresVersion: 1000
-              sslmode: disable
-            version: 1
-            editable: true
           - name: Redis
             type: redis-datasource
             access: proxy
@@ -452,61 +428,6 @@ spec:
           gnetId: 7845
           revision: 4
           datasource: Prometheus
-      teslamate:
-        battery-health:
-          url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/battery-health.json
-          datasource: TeslaMate
-        charge-level:
-          url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/charge-level.json
-          datasource: TeslaMate
-        charges:
-          url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/charges.json
-          datasource: TeslaMate
-        charging-stats:
-          url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/charging-stats.json
-          datasource: TeslaMate
-        drive-stats:
-          url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/drive-stats.json
-          datasource: TeslaMate
-        drives:
-          url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/drives.json
-          datasource: TeslaMate
-        efficiency:
-          url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/efficiency.json
-          datasource: TeslaMate
-        locations:
-          url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/locations.json
-          datasource: TeslaMate
-        milage:
-          url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/mileage.json
-          datasource: TeslaMate
-        overview:
-          url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/overview.json
-          datasource: TeslaMate
-        projected-range:
-          url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/projected-range.json
-          datasource: TeslaMate
-        states:
-          url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/states.json
-          datasource: TeslaMate
-        statistics:
-          url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/statistics.json
-          datasource: TeslaMate
-        timeline:
-          url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/timeline.json
-          datasource: TeslaMate
-        trip:
-          url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/trip.json
-          datasource: TeslaMate
-        updates:
-          url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/updates.json
-          datasource: TeslaMate
-        vampire-drain:
-          url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/vampire-drain.json
-          datasource: TeslaMate
-        visited:
-          url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/visited.json
-          datasource: TeslaMate
       unifi:
         # unifi-client-dpi:
         #   # renovate: dashboardName="UniFi-Poller: Client DPI - Prometheus"

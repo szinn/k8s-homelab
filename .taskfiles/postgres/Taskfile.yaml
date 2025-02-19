@@ -79,12 +79,6 @@ tasks:
           SERVICES: deployment/sonarr
       - task: _down
         vars:
-          NAMESPACE: observability
-          HELMRELEASE: teslamate
-          KUSTOMIZATION: teslamate
-          SERVICES: deployment/teslamate
-      - task: _down
-        vars:
           NAMESPACE: self-hosted
           HELMRELEASE: wikijs
           KUSTOMIZATION: wikijs
@@ -171,13 +165,6 @@ tasks:
           HELMRELEASE: sonarr
           KUSTOMIZATION: sonarr
           SERVICES: deployment/sonarr
-          REPLICAS: 1
-      - task: _up
-        vars:
-          NAMESPACE: observability
-          HELMRELEASE: teslamate
-          KUSTOMIZATION: teslamate
-          SERVICES: deployment/teslamate
           REPLICAS: 1
       - task: _up
         vars:
@@ -373,26 +360,6 @@ tasks:
           HELMRELEASE: sonarr
           KUSTOMIZATION: sonarr
           SERVICES: deployment/sonarr
-          REPLICAS: 1
-
-  restore_teslamate:
-    desc: Restore teslamate database
-    cmds:
-      - task: _down
-        vars:
-          NAMESPACE: observability
-          HELMRELEASE: teslamate
-          KUSTOMIZATION: teslamate
-          SERVICES: deployment/teslamate
-      - task: _restore_db
-        vars:
-          DATABASE: teslamate
-      - task: _up
-        vars:
-          NAMESPACE: observability
-          HELMRELEASE: teslamate
-          KUSTOMIZATION: teslamate
-          SERVICES: deployment/teslamate
           REPLICAS: 1
 
   restore_wikijs:
