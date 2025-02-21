@@ -14,13 +14,10 @@ tasks:
       - task: :talos:bootstrap
         vars:
           cluster: main
-      - cmd: talosctl config context staging
-        ignore_error: true
-      - cmd: kubectl config use-context staging
-        ignore_error: true
-      - task: merge
+      - task: save-config
         vars:
           cluster: main
+      - task: merge-configs
       - task: deploy
         vars:
           cluster: main
@@ -34,51 +31,27 @@ tasks:
         vars:
           cluster: staging
       - task: :proxmox:unmount-staging-cdrom
-      - cmd: talosctl config context main
-        ignore_error: true
-      - cmd: kubectl config use-context main
-        ignore_error: true
-      - task: merge
+      - task: save-config
         vars:
           cluster: staging
+      - task: merge-configs
       - task: deploy
         vars:
           cluster: staging
 
-  merge:
-    desc: Merge kubeconfig and talosconfig configurations
+  deploy:
+    desc: Bootstrap [cluster={{.cluster}}]
     requires:
       vars:
         - cluster
-    vars:
-      KUBERNETES_DIR: "{{.KUBERNETES_ROOT}}/{{.cluster}}"
-    cmds:
-      - cp $HOME/.kube/config /tmp/kubectl-config-backup
-      - cp $HOME/.talos/config /tmp/talosconfig-config-backup
-      - cmd: kubectl --kubeconfig $HOME/.kube/config config delete-context {{.cluster}}
-        ignore_error: true
-      - cmd: talosctl --talosconfig $HOME/.talos/config config remove -y {{.cluster}}
-        ignore_error: true
-      - KUBECONFIG="$HOME/.kube/config:{{.KUBERNETES_DIR}}/kubeconfig" kubectl config view --flatten > $HOME/.kube/config-new
-      - mv $HOME/.kube/config-new $HOME/.kube/config
-      - talosctl  --talosconfig $HOME/.talos/config config merge {{.KUBERNETES_DIR}}/talosconfig
-      - chmod og-rwx $HOME/.kube/config
-      - chmod og-rwx $HOME/.talos/config
-
-  deploy:
-    desc: Bootstrap [cluster={{.cluster}}]
     preconditions:
       - op user get --me
       - talosctl --context {{.cluster}} config info
-      - which curl gum jq helmfile kubectl kustomize op talosctl yq
+      - test -f "${KUBECONFIG}"
       - test -f "${TALOSCONFIG}"
-      - test -f {{.KUBERNETES_DIR}}/bootstrap/apps/helmfile.yaml
       - test -f {{.KUBERNETES_DIR}}/bootstrap/apps/resources/prepare.sh
-    requires:
-      vars:
-        - cluster
+      - test -f {{.KUBERNETES_DIR}}/bootstrap/apps/helmfile.yaml
     env:
-      CLUSTER_CONTEXT: "{{.cluster}}"
       KUBERNETES_DIR: "{{.KUBERNETES_DIR}}"
       KUBECONFIG: "{{.KUBERNETES_DIR}}/kubeconfig"
       TALOSCONFIG: "{{.KUBERNETES_DIR}}/talosconfig"
@@ -86,4 +59,48 @@ tasks:
       KUBERNETES_DIR: "{{.KUBERNETES_ROOT}}/{{.cluster}}"
     cmds:
       - bash {{.KUBERNETES_DIR}}/bootstrap/apps/resources/prepare.sh
-      - helmfile --kube-context {{.cluster}} --quiet --file {{.KUBERNETES_DIR}}/bootstrap/apps/helmfile.yaml apply --skip-diff-on-install --suppress-diff
+      - helmfile --quiet --file {{.KUBERNETES_DIR}}/bootstrap/apps/helmfile.yaml apply --skip-diff-on-install --suppress-diff
+
+  save-config:
+    desc: Save kubeconfig and talosconfig to 1Password
+    requires:
+      vars:
+        - cluster
+    preconditions:
+      - op user get --me
+      - test -f "{{.KUBERNETES_DIR}}/kubeconfig"
+      - test -f "{{.KUBERNETES_DIR}}/talosconfig"
+    vars:
+      KUBERNETES_DIR: "{{.KUBERNETES_ROOT}}/{{.cluster}}"
+    cmds:
+      - op item edit "cluster-{{.cluster}}" --vault Kubernetes "kubeconfig[text]=$(cat {{.KUBERNETES_DIR}}/kubeconfig)" > /dev/null
+      - op item edit "cluster-{{.cluster}}" --vault Kubernetes "talosconfig[text]=$(cat {{.KUBERNETES_DIR}}/talosconfig)" > /dev/null
+
+  fetch-config:
+    desc: Fetch kubeconfig and talosconfig from 1Password
+    requires:
+      vars:
+        - cluster
+    preconditions:
+      - op user get --me
+    vars:
+      KUBERNETES_DIR: "{{.KUBERNETES_ROOT}}/{{.cluster}}"
+    cmds:
+      - op read op://Kubernetes/cluster-{{.cluster}}/kubeconfig > {{.KUBERNETES_DIR}}/kubeconfig
+      - op read op://Kubernetes/cluster-{{.cluster}}/talosconfig > {{.KUBERNETES_DIR}}/talosconfig
+
+  merge-configs:
+    desc: Merge all configurations into ~/.kube and ~/.talos
+    preconditions:
+      - test -f "{{.KUBERNETES_ROOT}}/main/kubeconfig"
+      - test -f "{{.KUBERNETES_ROOT}}/main/talosconfig"
+      - test -f "{{.KUBERNETES_ROOT}}/staging/kubeconfig"
+      - test -f "{{.KUBERNETES_ROOT}}/staging/talosconfig"
+    cmds:
+      - KUBECONFIG="{{.KUBERNETES_ROOT}}/main/kubeconfig:{{.KUBERNETES_ROOT}}/staging/kubeconfig" kubectl config view --flatten > $HOME/.kube/config
+      - cp {{.KUBERNETES_ROOT}}/main/talosconfig $HOME/.talos/config
+      - talosctl --talosconfig $HOME/.talos/config config merge {{.KUBERNETES_ROOT}}/staging/talosconfig
+      - chmod og-rwx $HOME/.kube/config
+      - chmod og-rwx $HOME/.talos/config
+      - kubectl --kubeconfig=$HOME/.kube/config config use-context main
+      - talosctl --talosconfig $HOME/.talos/config config context main

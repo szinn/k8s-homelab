@@ -12,13 +12,13 @@ function wait_for_nodes() {
     log debug "Waiting for nodes to be available"
 
     # Skip waiting if all nodes are 'Ready=True'
-    if kubectl_cmd wait nodes --for=condition=Ready=True --all --timeout=10s &>/dev/null; then
+    if kubectl wait nodes --for=condition=Ready=True --all --timeout=10s &>/dev/null; then
         log info "Nodes are available and ready, skipping wait for nodes"
         return
     fi
 
     # Wait for all nodes to be 'Ready=False'
-    until kubectl_cmd wait nodes --for=condition=Ready=False --all --timeout=10s &>/dev/null; do
+    until kubectl wait nodes --for=condition=Ready=False --all --timeout=10s &>/dev/null; do
         log info "Nodes are not available, waiting for nodes to be available"
         sleep 10
     done
@@ -43,13 +43,13 @@ function apply_prometheus_crds() {
     fi
 
     # Check if the CRDs are up-to-date
-    if echo "${crds}" | kubectl_cmd diff --filename - &>/dev/null; then
+    if echo "${crds}" | kubectl diff --filename - &>/dev/null; then
         log info "Prometheus CRDs are up-to-date"
         return
     fi
 
     # Apply the CRDs
-    if echo "${crds}" | kubectl_cmd apply --server-side --filename - &>/dev/null; then
+    if echo "${crds}" | kubectl apply --server-side --filename - &>/dev/null; then
         log info "Prometheus CRDs applied successfully"
     else
         log error "Failed to apply Prometheus CRDs"
@@ -70,14 +70,14 @@ function apply_namespaces() {
         namespace=$(basename "${app}")
 
         # Check if the namespace resources are up-to-date
-        if  --context "${CLUSTER_CONTEXT}" get namespace "${namespace}" &>/dev/null; then
+        if  kubectl get namespace "${namespace}" &>/dev/null; then
             log info "Namespace resource is up-to-date" resource "${namespace}"
             continue
         fi
 
         # Apply the namespace resources
-        if kubectl_cmd create namespace "${namespace}" --dry-run=client --output=yaml \
-            | kubectl_cmd apply --server-side --filename - &>/dev/null;
+        if kubectl create namespace "${namespace}" --dry-run=client --output=yaml \
+            | kubectl apply --server-side --filename - &>/dev/null;
         then
             log info "Namespace resource applied" resource "${namespace}"
         else
@@ -103,13 +103,13 @@ function apply_secrets() {
     fi
 
     # Check if the secret resources are up-to-date
-    if echo "${resources}" | kubectl_cmd diff --filename - &>/dev/null; then
+    if echo "${resources}" | kubectl diff --filename - &>/dev/null; then
         log info "Secret resources are up-to-date"
         return
     fi
 
     # Apply secret resources
-    if echo "${resources}" | kubectl_cmd apply --server-side --filename - &>/dev/null; then
+    if echo "${resources}" | kubectl apply --server-side --filename - &>/dev/null; then
         log info "Secret resources applied"
     else
         log error "Failed to apply secret resources"
@@ -120,28 +120,25 @@ function apply_secrets() {
 function wipe_rook_disks() {
     log debug "Wiping Rook disks"
 
-    if [[ -z "${ROOK_DISK:-}" ]]; then
-        log error "Environment variable not set" env_var ROOK_DISK
-    fi
-
     # Skip disk wipe if Rook is detected running in the cluster
-    if  --context "${CLUSTER_CONTEXT}" --namespace rook-ceph get kustomization rook-ceph &>/dev/null; then
+    if  kubectl --namespace rook-ceph get kustomization rook-ceph &>/dev/null; then
         log warn "Rook is detected running in the cluster, skipping disk wipe"
         return
     fi
 
     # Wipe disks on each node that match the ROOK_DISK environment variable
-    for node in $(talosctl_cmd config info --output json | jq --raw-output '.nodes | .[]'); do
+    for node in $(talosctl config info --output json | jq --raw-output '.nodes | .[]'); do
         disk=$(
-            talosctl_cmd --nodes "${node}" get disks --output json \
-                | jq --raw-output 'select(.spec.model == env.ROOK_DISK) | .metadata.id' \
+            # | jq --raw-output 'select(.spec.model == env.ROOK_DISK_MODEL) | .metadata.id' \
+            talosctl --nodes "${node}" get disks --output json \
+                | jq --raw-output 'select(.spec.dev_path == "/dev/sdb") | .metadata.id' \
                 | xargs
         )
 
         if [[ -n "${disk}" ]]; then
             log debug "Discovered Talos node and disk" node "${node}" disk "${disk}"
 
-            if talosctl_cmd --nodes "${node}" wipe disk "${disk}" &>/dev/null; then
+            if talosctl --nodes "${node}" wipe disk "${disk}" &>/dev/null; then
                 log info "Disk wiped" node "${node}" disk "${disk}"
             else
                 log error "Failed to wipe disk" node "${node}" disk "${disk}"
@@ -154,14 +151,14 @@ function wipe_rook_disks() {
 
 function main() {
     # Verifications before bootstrapping the cluster
-    check_env CLUSTER_CONTEXT
+    check_env KUBECONFIG TALOSCONFIG # ROOK_DISK_MODEL
     check_cli helmfile jq kubectl kustomize minijinja-cli op talosctl yq
 
     wait_for_nodes
     apply_prometheus_crds
     apply_namespaces
     apply_secrets
-    # wipe_rook_disks
+    wipe_rook_disks
 }
 
 main "$@"

@@ -103,24 +103,12 @@ function check_cli() {
     log debug "Deps are installed" "deps=${deps[*]}"
 }
 
-# Execute talosctl with the cluster context
-function talosctl_cmd() {
-    # shellcheck disable=SC2068
-    talosctl --context "${CLUSTER_CONTEXT}" $@
-}
-
-# Execute kubectl with the cluster context
-function kubectl_cmd() {
-    # shellcheck disable=SC2068
-    kubectl --context "${CLUSTER_CONTEXT}" $@
-}
-
 # Wait for CRDs to be available
 function wait_for_crds() {
     local crds=("${@}")
 
     for crd in "${crds[@]}"; do
-        until kubectl_cmd get crd "${crd}" &>/dev/null; do
+        until kubectl get crd "${crd}" &>/dev/null; do
             log info "CRD is not available. Retrying in 10 seconds..." "crd=${crd}"
             sleep 10
         done
