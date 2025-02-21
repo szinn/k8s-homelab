@@ -64,6 +64,6 @@ spec:
     - name: rook-ceph-operator
       namespace: rook-ceph
   prune: true
-  wait: true
+  wait: false
   interval: 30m
   timeout: 20m
