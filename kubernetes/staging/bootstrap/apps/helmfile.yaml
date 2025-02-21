@@ -35,7 +35,7 @@ releases:
   - name: kubelet-csr-approver
     namespace: system
     chart: postfinance/kubelet-csr-approver
-    version: 1.2.5
+    version: 1.2.6
     values: ['{{ requiredEnv "KUBERNETES_DIR" }}/apps/system/kubelet-csr-approver/app/helm-values.yaml']
     needs: ["kube-system/cilium"]
 
