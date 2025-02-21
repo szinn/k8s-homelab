@@ -22,6 +22,7 @@ spec:
       namespace: rook-ceph
   prune: true
   wait: true
+  timeout: 30m
   interval: 10m
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/kustomize.toolkit.fluxcd.io/kustomization_v1.json
@@ -45,6 +46,15 @@ spec:
       namespace: dbms
     - name: external-secrets
       namespace: external-secrets
+  healthChecks:
+    - apiVersion: postgresql.cnpg.io/v1
+      kind: Cluster
+      name: postgres
+      namespace: *namespace
+  healthCheckExprs:
+    - apiVersion: postgresql.cnpg.io/v1
+      kind: Cluster
+      current: status.phase == 'Cluster in healthy state'
   prune: true
-  wait: true
+  timeout: 30m
   interval: 10m

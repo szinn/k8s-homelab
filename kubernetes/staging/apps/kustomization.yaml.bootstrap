@@ -12,8 +12,8 @@ resources:
   - system
   - volsync-system
   # Step 2
-  # - rook-ceph
+  - rook-ceph
   # Step 3
-  # - dbms
+  - dbms
   # Step 4
   # - self-hosted
