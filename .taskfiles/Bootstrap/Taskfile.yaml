@@ -80,33 +80,10 @@ tasks:
     env:
       CLUSTER_CONTEXT: "{{.cluster}}"
       KUBERNETES_DIR: "{{.KUBERNETES_DIR}}"
+      KUBECONFIG: "{{.KUBERNETES_DIR}}/kubeconfig"
       TALOSCONFIG: "{{.KUBERNETES_DIR}}/talosconfig"
     vars:
       KUBERNETES_DIR: "{{.KUBERNETES_ROOT}}/{{.cluster}}"
     cmds:
       - bash {{.KUBERNETES_DIR}}/bootstrap/apps/resources/prepare.sh
       - helmfile --kube-context {{.cluster}} --quiet --file {{.KUBERNETES_DIR}}/bootstrap/apps/helmfile.yaml apply --skip-diff-on-install --suppress-diff
-
-  get-certs:
-    desc: Fetch certificates from cluster
-    cmds:
-      - for: { var: certs, split: " " }
-        cmd: kubectl --context {{.cluster}} get secrets -n networking {{.ITEM}}-tls -o yaml | grep -v "creationTimestamp:" | grep -v "resourceVersion:" | grep -v " uid:" > kubernetes/{{.cluster}}/apps/{{.ITEM}}-tls.yaml
-    requires:
-      vars:
-        - cluster
-    vars:
-      certs:
-        sh: 'echo {{if eq .cluster "main"}} "tech-wildcard wildcard" {{else}} "wildcard" {{end}}'
-
-  put-certs:
-    desc: Upload certificates to cluster
-    cmds:
-      - for: { var: certs, split: " " }
-        cmd: kubectl --context {{.cluster}} apply -f kubernetes/{{.cluster}}/apps/{{.ITEM}}-tls.yaml
-    requires:
-      vars:
-        - cluster
-    vars:
-      certs:
-        sh: 'echo {{if eq .cluster "main"}} "tech-wildcard wildcard" {{else}} "wildcard" {{end}}'

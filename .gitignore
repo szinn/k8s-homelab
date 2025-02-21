@@ -3,6 +3,4 @@
 **/.terraform/*
 **/kubeconfig*
 **/talosconfig*
-**/tech-wildcard-tls.yaml
 **/terraform.tfstate*
-**/wildcard-tls.yaml
