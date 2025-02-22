@@ -101,3 +101,10 @@ tasks:
       - scp "{{.FILES_DIR}}/certificates/certificate.key" root@{{.MACHINE}}.zinn.tech:/data/unifi-core/config/unifi-core.key
       - ssh root@{{.MACHINE}}.zinn.tech chmod u+rw,g-wx,o-wx /data/unifi-core/config/unifi-core.key
       - ssh root@{{.MACHINE}}.zinn.tech systemctl restart unifi-core
+
+  update-artemis-configuration:
+    desc: Update Artemis configuration
+    cmds:
+      - scp "{{.FILES_DIR}}/artemis/AdGuardHome.yaml" root@artemis.zinn.tech:/opt/AdGuardHome/AdGuardHome.yaml
+      - ssh root@artemis.zinn.tech chmod og-rwx /opt/AdGuardHome/AdGuardHome.yaml
+      - ssh root@artemis.zinn.tech systemctl restart AdGuardHome

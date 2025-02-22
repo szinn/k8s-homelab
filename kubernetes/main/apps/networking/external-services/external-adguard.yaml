@@ -23,7 +23,7 @@ ports:
     port: 3000
 endpoints:
   - addresses:
-      - "10.0.0.7"
+      - "10.0.0.8"
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
