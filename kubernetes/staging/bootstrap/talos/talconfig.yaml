@@ -64,6 +64,14 @@ nodes:
           ip: *talosControlPlaneVip
 
 controlPlane:
+  schematic:
+    customization:
+      systemExtensions:
+        officialExtensions:
+          - siderolabs/i915
+          - siderolabs/intel-ucode
+          - siderolabs/qemu-guest-agent
+
   patches:
     # Custom Talos installer patch
     # - &customTalosPatch |-
