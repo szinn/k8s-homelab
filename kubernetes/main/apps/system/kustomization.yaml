@@ -9,6 +9,7 @@ resources:
   # Flux-Kustomizations
   - descheduler/install.yaml
   - fstrim/install.yaml
+  - generic-device-plugin/install.yaml
   - intel-device-plugin/install.yaml
   - k8s-ycl/install.yaml
   - kube-cleanup-operator/install.yaml
