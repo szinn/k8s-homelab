@@ -44,8 +44,16 @@ spec:
       namespace: dbms
     - name: rook-ceph-cluster
       namespace: rook-ceph
+  healthChecks:
+    - apiVersion: postgresql.cnpg.io/v1
+      kind: Cluster
+      name: postgres
+      namespace: *namespace
+  healthCheckExprs:
+    - apiVersion: postgresql.cnpg.io/v1
+      kind: Cluster
+      current: status.phase == 'Cluster in healthy state'
   prune: true
-  wait: false
   interval: 30m
   timeout: 5m
 ---
@@ -66,7 +74,7 @@ spec:
     name: flux-system
     namespace: flux-system
   dependsOn:
-    - name: cloudnative-pg
+    - name: cloudnative-pg-cluster
       namespace: dbms
     - name: external-secrets
       namespace: external-secrets

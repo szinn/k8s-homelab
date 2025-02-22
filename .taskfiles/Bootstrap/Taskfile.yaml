@@ -10,6 +10,7 @@ tasks:
       KUBERNETES_DIR: "{{.KUBERNETES_ROOT}}/{{.cluster}}"
     env:
       KUBERNETES_DIR: "{{.KUBERNETES_DIR}}"
+      ROOK_DISK_MODEL: "Samsung SSD 980 PRO 1TB"
     cmds:
       - task: :talos:bootstrap
         vars:
@@ -21,7 +22,6 @@ tasks:
       - task: deploy
         vars:
           cluster: main
-      - helmfile --kube-context {{.cluster}} --quiet --file {{.KUBERNETES_DIR}}/bootstrap/apps/helmfile.yaml destroy --selector name=wipe-rook
 
   staging:
     desc: Bootstrap staging cluster
