@@ -111,6 +111,14 @@ tasks:
       - ssh root@artemis.zinn.tech wget -q https://github.com/AdguardTeam/AdGuardHome/releases/download/{{.ADGUARD_VERSION}}/AdGuardHome_linux_arm64.tar.gz -O /opt/AdGuardHome_linux_arm64.tar.gz
       - ssh root@artemis.zinn.tech 'cd /opt && tar xf AdGuardHome_linux_arm64.tar.gz'
 
+  install-artemis-docker:
+    desc: Install docker
+    cmds:
+      - ssh root@artemis.zinn.tech  apt update -y && sudo apt upgrade -y
+      - ssh root@artemis.zinn.tech 'curl -fsSL https://get.docker.com -o /opt/get-docker.sh && sudo sh /opt/get-docker.sh && rm /opt/get-docker.sh'
+      - ssh root@artemis.zinn.tech apt install -y docker-compose
+      - ssh root@artemis.zinn.tech systemctl restart docker.service
+
   restart-artemis-adguard:
     desc: Restart AdGuardHome
     cmds:
