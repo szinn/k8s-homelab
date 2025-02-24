@@ -105,6 +105,33 @@ tasks:
   update-artemis-configuration:
     desc: Update Artemis configuration
     cmds:
+      - task: update-artemis-adguard-configuration
+      - task: update-artemis-gatus-configuration
+
+  update-artemis-adguard-configuration:
+    desc: Update Artemis AdGuardHome configuration
+    cmds:
       - scp "{{.FILES_DIR}}/artemis/AdGuardHome.yaml" root@artemis.zinn.tech:/opt/AdGuardHome/AdGuardHome.yaml
       - ssh root@artemis.zinn.tech chmod og-rwx /opt/AdGuardHome/AdGuardHome.yaml
       - ssh root@artemis.zinn.tech systemctl restart AdGuardHome
+
+  update-artemis-gatus-configuration:
+    desc: Update Artemis AdGuardHome configuration
+    cmds:
+      - ssh root@artemis.zinn.tech mkdir -p /opt/gatus
+      - op inject --in-file "{{.FILES_DIR}}/artemis/gatus-config.yaml" 2>/dev/null > /tmp/gatus.yaml
+      - scp /tmp/gatus.yaml root@artemis.zinn.tech:/opt/gatus/gatus.yaml
+      - scp "{{.FILES_DIR}}/artemis/gatus-docker-compose.yaml" root@artemis.zinn.tech:/opt/gatus/docker-compose.yaml
+      - scp "{{.FILES_DIR}}/artemis/gatus-environment" root@artemis.zinn.tech:/opt/gatus/.env
+      - scp "{{.FILES_DIR}}/artemis/gatus.service" root@artemis.zinn.tech:/etc/systemd/system/gatus.service
+      - task: update-artemis-certificate
+
+  update-artemis-certificate:
+    desc: Update Artemis certificate
+    cmds:
+      - ssh root@artemis.zinn.tech mkdir -p /opt/gatus
+      - scp "{{.FILES_DIR}}/certificates/certificate.crt" root@artemis.zinn.tech:/opt/gatus/certificate.crt
+      - ssh root@artemis.zinn.tech chmod u+rw,g-wx,o-wx /opt/gatus/certificate.crt
+      - scp "{{.FILES_DIR}}/certificates/certificate.key" root@artemis.zinn.tech:/opt/gatus/certificate.key
+      - ssh root@artemis.zinn.tech chmod u+rw,g-wx,o-wx /opt/gatus/certificate.key
+      - ssh root@artemis.zinn.tech systemctl restart gatus

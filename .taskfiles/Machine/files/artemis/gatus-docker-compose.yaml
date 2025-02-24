@@ -1,0 +1,15 @@
+services:
+  gatus:
+    image: ghcr.io/twin/gatus:v5.16.0@sha256:bb738c87cf2e2a08b8fff180cfc433e7b8b87bb1779c1fb1b00f8b748673e3c3
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - 8443:8443
+    volumes:
+      - /opt/gatus:/config
+    networks:
+      - backend
+
+networks:
+  backend: {}

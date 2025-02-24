@@ -1,0 +1,183 @@
+web:
+  port: 8443
+  tls:
+    certificate-file: /config/certificate.crt
+    private-key-file: /config/certificate.key
+storage:
+  type: memory
+metrics: false
+debug: false
+ui:
+  title: HomeLab Status | Gatus
+  header: HomeLab Status
+alerting:
+  discord:
+    webhook-url: op://Kubernetes/discord/DISCORD_K8S_MAIN_WEBHOOK
+    default-alert:
+      description: health-check failed
+      send-on-resolved: true
+      failure-threshold: 5
+      success-threshold: 2
+endpoints:
+  # DNS
+  - name: external-dns
+    group: DNS
+    url: 10.0.0.8
+    dns:
+      query-name: "google.com"
+      query-type: "A"
+    conditions: ["[DNS_RCODE] == NOERROR"]
+    alerts:
+      - type: discord
+        description: "External DNS: Cannot reach google.com"
+  - name: internal-dns
+    group: DNS
+    url: 10.0.0.8
+    dns:
+      query-name: "unifi.zinn.tech"
+      query-type: "A"
+    conditions: ["[BODY] == 10.0.0.1", "[DNS_RCODE] == NOERROR"]
+    alerts:
+      - type: discord
+        description: "Internal DNS: Cannot reach unifi"
+  # Servers
+  - name: Homelab
+    group: Servers
+    url: https://whoami.zinn.ca
+    client:
+      dns-resolver: tcp://1.1.1.1:53
+    conditions:
+      - "[STATUS] == 200"
+    alerts:
+      - type: discord
+        description: "Homelab down"
+  - name: Ragnar
+    group: Servers
+    url: icmp://10.10.0.2
+    conditions: ["[CONNECTED] == true"]
+    alerts:
+      - type: discord
+        description: "Ragnar down"
+  - name: Hades
+    group: Servers
+    url: icmp://10.10.0.3
+    conditions: ["[CONNECTED] == true"]
+    alerts:
+      - type: discord
+        description: "Hades down"
+  - name: Ares
+    group: Servers
+    url: icmp://10.10.0.4
+    conditions: ["[CONNECTED] == true"]
+    alerts:
+      - type: discord
+        description: "Ares down"
+  - name: PiKVM
+    group: Servers
+    url: icmp://10.10.0.5
+    conditions: ["[CONNECTED] == true"]
+    alerts:
+      - type: discord
+        description: "PiKVM down"
+  - name: Artemis
+    group: Servers
+    url: icmp://10.0.0.8
+    conditions: ["[CONNECTED] == true"]
+    alerts:
+      - type: discord
+        description: "Artemis down"
+  - name: Hera
+    group: Servers
+    url: icmp://10.10.0.8
+    conditions: ["[CONNECTED] == true"]
+    alerts:
+      - type: discord
+        description: "Hera down"
+  - name: Apollo
+    group: Servers
+    url: icmp://10.10.0.9
+    conditions: ["[CONNECTED] == true"]
+    alerts:
+      - type: discord
+        description: "Apollo down"
+  - name: UNVR
+    group: Servers
+    url: icmp://10.0.0.32
+    conditions: ["[CONNECTED] == true"]
+    alerts:
+      - type: discord
+        description: "UNVR down"
+  # k8s Cluster
+  - name: k8s-1
+    group: Kubernetes
+    url: icmp://10.11.0.16
+    conditions: ["[CONNECTED] == true"]
+    alerts:
+      - type: discord
+        description: "k8s-1 down"
+  - name: k8s-2
+    group: Kubernetes
+    url: icmp://10.11.0.17
+    conditions: ["[CONNECTED] == true"]
+    alerts:
+      - type: discord
+        description: "k8s-2 down"
+  - name: k8s-3
+    group: Kubernetes
+    url: icmp://10.11.0.18
+    conditions: ["[CONNECTED] == true"]
+    alerts:
+      - type: discord
+        description: "k8s-3 down"
+  - name: k8s-4
+    group: Kubernetes
+    url: icmp://10.11.0.19
+    conditions: ["[CONNECTED] == true"]
+    alerts:
+      - type: discord
+        description: "k8s-4 down"
+  - name: k8s-5
+    group: Kubernetes
+    url: icmp://10.11.0.20
+    conditions: ["[CONNECTED] == true"]
+    alerts:
+      - type: discord
+        description: "k8s-5 down"
+  - name: k8s-6
+    group: Kubernetes
+    url: icmp://10.11.0.21
+    conditions: ["[CONNECTED] == true"]
+    alerts:
+      - type: discord
+        description: "k8s-6 down"
+  # IoT
+  - name: TESmart
+    group: IoT
+    url: icmp://192.168.1.10
+    conditions: ["[CONNECTED] == true"]
+    alerts:
+      - type: discord
+        description: "TESmart down"
+  - name: Ecobee
+    group: IoT
+    url: icmp://192.168.1.49
+    conditions: ["[CONNECTED] == true"]
+    alerts:
+      - type: discord
+        description: "Ecobee down"
+        failure-threshold: 10
+  - name: Philips Hue
+    group: IoT
+    url: icmp://192.168.1.51
+    conditions: ["[CONNECTED] == true"]
+    alerts:
+      - type: discord
+        description: "Philips hue down"
+  - name: Bird House
+    group: IoT
+    interval: 10m
+    url: icmp://192.168.1.99
+    conditions: ["[CONNECTED] == true"]
+    alerts:
+      - type: discord
+        description: "Bird house down"

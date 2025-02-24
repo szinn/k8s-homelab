@@ -1,0 +1,15 @@
+[Unit]
+Description=%i service with docker compose
+Requires=docker.service
+After=docker.service
+ConditionPathIsMountPoint=/
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+WorkingDirectory=/opt/gatus
+ExecStart=/usr/bin/docker-compose up -d --remove-orphans
+ExecStop=/usr/bin/docker-compose down
+
+[Install]
+WantedBy=multi-user.target
