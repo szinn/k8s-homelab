@@ -23,10 +23,10 @@ dns:
   ratelimit_whitelist: []
   refuse_any: true
   upstream_dns:
-    - '[/zinn.ca/]10.0.0.1:53'
-    - '[/zinn.tech/]10.0.0.1:53'
-    - '[/10.in-addr.arpa/]10.0.0.1:53'
-    - '[/1.168.192.in-addr.arpa/]10.0.0.1:53'
+    - "[/zinn.ca/]10.0.0.1:53"
+    - "[/zinn.tech/]10.0.0.1:53"
+    - "[/10.in-addr.arpa/]10.0.0.1:53"
+    - "[/1.168.192.in-addr.arpa/]10.0.0.1:53"
     - https://dns.cloudflare.com/dns-query
     - https://dns.quad9.net/dns-query
   upstream_dns_file: ""
