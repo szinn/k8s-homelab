@@ -68,12 +68,7 @@ jobs:
       - name: Download and run crd-extractor
         env:
           KUBECONFIG: "${{ steps.kubeconfig.outputs.filePath }}"
-        shell: bash
-        run: |
-          curl -fsSL -o "${GITHUB_WORKSPACE}/crd-extractor.sh" \
-              https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/Utilities/crd-extractor.sh
-          chmod +x "${GITHUB_WORKSPACE}/crd-extractor.sh"
-          bash "${GITHUB_WORKSPACE}/crd-extractor.sh"
+        run: curl -fsSL https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/Utilities/crd-extractor.sh | bash
 
       - name: Login to GHCR
         uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3
