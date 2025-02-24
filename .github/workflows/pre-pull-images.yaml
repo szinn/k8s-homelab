@@ -11,9 +11,6 @@ concurrency:
   group: ${{ github.ref }}-${{ github.workflow }}
   cancel-in-progress: true
 
-env:
-  HOMEBREW_NO_ANALYTICS: "1"
-
 jobs:
   extract-images:
     name: Extract Images
@@ -88,11 +85,8 @@ jobs:
       max-parallel: 4
       fail-fast: false
     steps:
-      - name: Setup Homebrew
-        uses: Homebrew/actions/setup-homebrew@master
-
-      - name: Setup Workflow Tools
-        run: brew install siderolabs/tap/talosctl
+      - name: Install talosctl
+        run: curl -fsSL https://talos.dev/install | sh
 
       - name: Pre-pull Image
         run: talosctl -n "${NODE_IP}" image pull ${{ matrix.images }}
