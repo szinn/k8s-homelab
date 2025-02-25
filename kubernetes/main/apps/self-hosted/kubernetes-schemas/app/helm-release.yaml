@@ -40,7 +40,7 @@ spec:
           main:
             image:
               repository: ghcr.io/szinn/kubernetes-schemas-web
-              tag: latest@sha256:dc20f509eb11a27bd1ce13c8e978b26ffdb7f8e64b320660a89c0d9487d9c34b
+              tag: latest@sha256:a1fe87ba4bd568c508da6c1cfd73038bc5b9fa545aaed4240710dbce3a5e373f
             resources:
               requests:
                 cpu: 10m
