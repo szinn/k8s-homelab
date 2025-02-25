@@ -45,3 +45,7 @@ tasks:
     desc: What dockerhub images are running in my cluster
     cmds:
       - kubectl get pods --all-namespaces -o=jsonpath="{range .items[*]}{'\n'}{range .spec.containers[*]}{.image}{'\n'}{end}{end}" | sort | uniq | grep -Ev 'quay|gcr|ghcr|ecr|us-docker' | grep -Ev 'bitnami|rook|intel|grafana' |  sed -e 's/docker\.io\///g' | sort | uniq
+
+  redeploy-ingresses:
+    desc: Redeploy ingress-nginx controllers
+    cmd: kubectl rollout restart -n networking deployment nginx-external-controller nginx-internal-controller
