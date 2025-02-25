@@ -41,7 +41,7 @@ spec:
           init-db:
             image:
               repository: ghcr.io/onedr0p/postgres-init
-              tag: 16.8@sha256:31864a9350264f10f25dae1e90db3c6705a9bbb90644a28600afe197b3bf917f
+              tag: 16.8@sha256:7c339ac0b2eb88ab41878ac3a71d342343fe7e830b7ccd2adb6c7b5bbee8d66b
             envFrom:
               - secretRef:
                   name: dmarc-report-secret
