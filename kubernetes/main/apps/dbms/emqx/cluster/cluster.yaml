@@ -5,7 +5,7 @@ kind: EMQX
 metadata:
   name: emqx
 spec:
-  image: public.ecr.aws/emqx/emqx:5.8.4@sha256:c7da53f8de64f9d932b09b581c9b43e758d734d0c5a867511ce4452ef6b9b15a
+  image: public.ecr.aws/emqx/emqx:5.8.5@sha256:0291419919054fd7e8bc14d0382c9a0326f6dd754601508acf166ecfbba37ca3
   config:
     data: |
       authentication {
