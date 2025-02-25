@@ -31,7 +31,7 @@ spec:
     server:
       initContainers:
         - name: init-db
-          image: ghcr.io/onedr0p/postgres-init:16.8@sha256:d0971ca43ae77012d632e579ee2690a96dfdef9b062b727082cbd66c2fb7d12c
+          image: ghcr.io/onedr0p/postgres-init:16.8@sha256:217c47c886965474f5c234b5a35ed008f53b39ea90a3088b31c0da98e1f9284d
           envFrom:
             - secretRef:
                 name: *secret
