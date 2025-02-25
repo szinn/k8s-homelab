@@ -53,7 +53,7 @@ spec:
     - apiVersion: ceph.rook.io/v1
       kind: CephCluster
       failed: status.ceph.health == 'HEALTH_ERR'
-      current: status.ceph.health == 'HEALTH_OK' || status.ceph.health == 'HEALTH_WARN'
+      current: status.ceph.health in ['HEALTH_OK', 'HEALTH_WARN']
   prune: true
   interval: 30m
   timeout: 30m
