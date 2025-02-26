@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: adguard
+  name: adguard-artemis
 spec:
   ports:
     - protocol: TCP
@@ -12,9 +12,9 @@ spec:
 apiVersion: discovery.k8s.io/v1
 kind: EndpointSlice
 metadata:
-  name: adguard
+  name: adguard-artemis
   labels:
-    kubernetes.io/service-name: adguard
+    kubernetes.io/service-name: adguard-artemis
 addressType: IPv4
 ports:
   - name: http
@@ -28,14 +28,14 @@ endpoints:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: &app adguard
+  name: &app adguard-artemis
   labels:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
 spec:
   ingressClassName: internal-nginx
   rules:
-    - host: adguard.zinn.ca
+    - host: adguard-artemis.zinn.ca
       http:
         paths:
           - path: /

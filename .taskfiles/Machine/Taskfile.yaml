@@ -5,6 +5,8 @@ vars:
   MACHINE_ROOT_DIR: "{{.ROOT_DIR}}/.taskfiles/Machine"
   FILES_DIR: "{{.MACHINE_ROOT_DIR}}/files"
   SCRIPTS_DIR: "{{.MACHINE_ROOT_DIR}}/scripts"
+  # renovate: depName=AdguardTeam/AdGuardHome datasource=github-releases
+  ADGUARD_VERSION: v0.107.57
 
 tasks:
   fetch-certificate:
@@ -64,18 +66,6 @@ tasks:
       - ssh root@ragnar.zinn.tech chmod u+rw,g-wx,o-wx /etc/chrony/conf.d/0-ntp-allow.conf
       - ssh root@ragnar.zinn.tech systemctl restart chrony
 
-  update-titan-certificate:
-    desc: Update Titan certificate
-    cmds:
-      - ssh root@titan.zinn.tech mkdir -p /var/lib/gatus
-      - scp "{{.FILES_DIR}}/certificates/certificate.crt" root@titan.zinn.tech:/var/lib/gatus/certificate.crt
-      - ssh root@titan.zinn.tech chown gatus:gatus /var/lib/gatus/certificate.crt
-      - ssh root@titan.zinn.tech chmod u+rw,g-wx,o-wx /var/lib/gatus/certificate.crt
-      - scp "{{.FILES_DIR}}/certificates/certificate.key" root@titan.zinn.tech:/var/lib/gatus/certificate.key
-      - ssh root@titan.zinn.tech chown gatus:gatus /var/lib/gatus/certificate.key
-      - ssh root@titan.zinn.tech chmod u+rw,g-wx,o-wx /var/lib/gatus/certificate.key
-      - ssh root@titan.zinn.tech systemctl restart gatus
-
   update-styx-certificate:
     desc: Update Styx certificate
     cmds:
@@ -103,13 +93,24 @@ tasks:
       - ssh root@{{.MACHINE}}.zinn.tech systemctl restart unifi-core
 
   install-artemis-adguard:
-    desc: Install AdGuardHome
+    desc: Install Artemis AdGuardHome
     vars:
       # renovate: depName=AdguardTeam/AdGuardHome datasource=github-releases
       ADGUARD_VERSION: v0.107.57
     cmds:
       - ssh root@artemis.zinn.tech wget -q https://github.com/AdguardTeam/AdGuardHome/releases/download/{{.ADGUARD_VERSION}}/AdGuardHome_linux_arm64.tar.gz -O /opt/AdGuardHome_linux_arm64.tar.gz
       - ssh root@artemis.zinn.tech 'cd /opt && tar xf AdGuardHome_linux_arm64.tar.gz'
+      - ssh root@artemis.zinn.tech 'cd /opt/AdGuardHome && ./AdGuardHome -s install'
+
+  install-titan-adguard:
+    desc: Install Titan AdGuardHome
+    vars:
+      # renovate: depName=AdguardTeam/AdGuardHome datasource=github-releases
+      ADGUARD_VERSION: v0.107.57
+    cmds:
+      - ssh root@titan.zinn.tech wget -q https://github.com/AdguardTeam/AdGuardHome/releases/download/{{.ADGUARD_VERSION}}/AdGuardHome_linux_amd64.tar.gz -O /opt/AdGuardHome_linux_amd64.tar.gz
+      - ssh root@titan.zinn.tech 'cd /opt && tar xf AdGuardHome_linux_amd64.tar.gz'
+      - ssh root@titan.zinn.tech 'cd /opt/AdGuardHome && ./AdGuardHome -s install'
 
   install-artemis-docker:
     desc: Install docker
@@ -130,22 +131,46 @@ tasks:
       - ssh root@artemis.zinn.tech chmod -x /etc/cron.d/cloudflare-ddns
 
   restart-artemis-adguard:
-    desc: Restart AdGuardHome
+    desc: Restart Artemis AdGuardHome
     cmds:
       - ssh root@artemis.zinn.tech systemctl restart AdGuardHome
+
+  restart-titan-adguard:
+    desc: Restart Titan AdGuardHome
+    cmds:
+      - ssh root@titan.zinn.tech systemctl restart AdGuardHome
 
   update-artemis-configuration:
     desc: Update Artemis configuration
     cmds:
       - task: update-artemis-adguard-configuration
+        vars:
+          machine_ip: 10.0.0.8
       - task: update-artemis-gatus-configuration
 
   update-artemis-adguard-configuration:
     desc: Update Artemis AdGuardHome configuration
+    requires:
+      vars:
+        - machine_ip
     cmds:
-      - scp "{{.FILES_DIR}}/artemis/AdGuardHome.yaml" root@artemis.zinn.tech:/opt/AdGuardHome/AdGuardHome.yaml
+      - cat "{{.FILES_DIR}}/adguard/AdGuardHome.yaml" | sed -e "s/MACHINE_IP/{{.machine_ip}}/" > /tmp/AdGuardHome.yaml
+      - scp /tmp/AdGuardHome.yaml root@artemis.zinn.tech:/opt/AdGuardHome/AdGuardHome.yaml
+      - rm /tmp/AdGuardHome.yaml
       - ssh root@artemis.zinn.tech chmod og-rwx /opt/AdGuardHome/AdGuardHome.yaml
       - ssh root@artemis.zinn.tech systemctl restart AdGuardHome
+
+  update-titan-adguard-configuration:
+    desc: Update Titan AdGuardHome configuration
+    requires:
+      vars:
+        - machine_ip
+    cmds:
+      - cat "{{.FILES_DIR}}/adguard/AdGuardHome.yaml" | sed -e "s/MACHINE_IP/{{.machine_ip}}/" > /tmp/AdGuardHome.yaml
+      - scp /tmp/AdGuardHome.yaml root@titan.zinn.tech:/opt/AdGuardHome/AdGuardHome.yaml
+      - rm /tmp/AdGuardHome.yaml
+      - ssh root@titan.zinn.tech chmod og-rwx /opt/AdGuardHome/AdGuardHome.yaml
+      - ssh root@titan.zinn.tech systemctl restart AdGuardHome
 
   update-artemis-gatus-configuration:
     desc: Update Artemis AdGuardHome configuration

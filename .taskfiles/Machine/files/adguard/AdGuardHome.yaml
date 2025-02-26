@@ -2,7 +2,7 @@ http:
   pprof:
     port: 6060
     enabled: false
-  address: 10.0.0.8:3000
+  address: MACHINE_IP:3000
   session_ttl: 720h
 users:
   - name: admin
@@ -14,7 +14,7 @@ language: ""
 theme: auto
 dns:
   bind_hosts:
-    - 0.0.0.0
+    - MACHINE_IP
   port: 53
   anonymize_client_ip: false
   ratelimit: 200

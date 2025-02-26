@@ -1,0 +1,47 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: adguard-titan
+spec:
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+---
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: adguard-titan
+  labels:
+    kubernetes.io/service-name: adguard-titan
+addressType: IPv4
+ports:
+  - name: http
+    appProtocol: http
+    protocol: TCP
+    port: 3000
+endpoints:
+  - addresses:
+      - "10.0.0.7"
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: &app adguard-titan
+  labels:
+    app.kubernetes.io/name: *app
+    app.kubernetes.io/instance: *app
+spec:
+  ingressClassName: internal-nginx
+  rules:
+    - host: adguard-titan.zinn.ca
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: *app
+                port:
+                  number: 3000
