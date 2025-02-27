@@ -20,7 +20,7 @@ alerting:
       success-threshold: 2
 endpoints:
   # DNS
-  - name: external-dns
+  - name: external-dns-artemis
     group: DNS
     url: 10.0.0.8
     dns:
@@ -30,9 +30,29 @@ endpoints:
     alerts:
       - type: discord
         description: "External DNS: Cannot reach google.com"
-  - name: internal-dns
+  - name: internal-dns-artemis
     group: DNS
     url: 10.0.0.8
+    dns:
+      query-name: "unifi.zinn.tech"
+      query-type: "A"
+    conditions: ["[BODY] == 10.0.0.1", "[DNS_RCODE] == NOERROR"]
+    alerts:
+      - type: discord
+        description: "Internal DNS: Cannot reach unifi"
+  - name: external-dns-titan
+    group: DNS
+    url: 10.0.0.7
+    dns:
+      query-name: "google.com"
+      query-type: "A"
+    conditions: ["[DNS_RCODE] == NOERROR"]
+    alerts:
+      - type: discord
+        description: "External DNS: Cannot reach google.com"
+  - name: internal-dns-titan
+    group: DNS
+    url: 10.0.0.7
     dns:
       query-name: "unifi.zinn.tech"
       query-type: "A"
