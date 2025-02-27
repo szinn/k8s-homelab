@@ -92,6 +92,23 @@ tasks:
       - ssh root@{{.MACHINE}}.zinn.tech chmod u+rw,g-wx,o-wx /data/unifi-core/config/unifi-core.key
       - ssh root@{{.MACHINE}}.zinn.tech systemctl restart unifi-core
 
+  update-artemis-certificate:
+    desc: Update Artemis certificate
+    cmds:
+      - ssh root@artemis.zinn.tech mkdir -p /opt/gatus
+      - scp "{{.FILES_DIR}}/certificates/certificate.crt" root@artemis.zinn.tech:/opt/gatus/certificate.crt
+      - ssh root@artemis.zinn.tech chmod u+rw,g-wx,o-wx /opt/gatus/certificate.crt
+      - scp "{{.FILES_DIR}}/certificates/certificate.key" root@artemis.zinn.tech:/opt/gatus/certificate.key
+      - ssh root@artemis.zinn.tech chmod u+rw,g-wx,o-wx /opt/gatus/certificate.key
+      - ssh root@artemis.zinn.tech systemctl restart gatus
+
+  update-linux-packages:
+    desc: Update linux machines
+    cmds:
+      - ssh root@artemis.zinn.tech 'apt update -y && apt upgrade -y && apt autoremove'
+      - ssh root@hera.zinn.tech 'dnf upgrade -y'
+      - ssh root@titan.zinn.tech 'dnf upgrade -y'
+
   install-artemis-adguard:
     desc: Install Artemis AdGuardHome
     vars:
@@ -101,16 +118,6 @@ tasks:
       - ssh root@artemis.zinn.tech wget -q https://github.com/AdguardTeam/AdGuardHome/releases/download/{{.ADGUARD_VERSION}}/AdGuardHome_linux_arm64.tar.gz -O /opt/AdGuardHome_linux_arm64.tar.gz
       - ssh root@artemis.zinn.tech 'cd /opt && tar xf AdGuardHome_linux_arm64.tar.gz'
       - ssh root@artemis.zinn.tech 'cd /opt/AdGuardHome && ./AdGuardHome -s install'
-
-  install-titan-adguard:
-    desc: Install Titan AdGuardHome
-    vars:
-      # renovate: depName=AdguardTeam/AdGuardHome datasource=github-releases
-      ADGUARD_VERSION: v0.107.57
-    cmds:
-      - ssh root@titan.zinn.tech wget -q https://github.com/AdguardTeam/AdGuardHome/releases/download/{{.ADGUARD_VERSION}}/AdGuardHome_linux_amd64.tar.gz -O /opt/AdGuardHome_linux_amd64.tar.gz
-      - ssh root@titan.zinn.tech 'cd /opt && tar xf AdGuardHome_linux_amd64.tar.gz'
-      - ssh root@titan.zinn.tech 'cd /opt/AdGuardHome && ./AdGuardHome -s install'
 
   install-artemis-docker:
     desc: Install docker
@@ -129,16 +136,6 @@ tasks:
       - ssh root@artemis.zinn.tech 'chmod +x /usr/local/bin/cloudflare-ddns.sh && chmod og+rx /usr/local/bin/cloudflare-ddns.sh'
       - scp "{{.FILES_DIR}}/artemis/cloudflare-ddns.crontab" root@artemis.zinn.tech:/etc/cron.d/cloudflare-ddns
       - ssh root@artemis.zinn.tech chmod -x /etc/cron.d/cloudflare-ddns
-
-  restart-artemis-adguard:
-    desc: Restart Artemis AdGuardHome
-    cmds:
-      - ssh root@artemis.zinn.tech systemctl restart AdGuardHome
-
-  restart-titan-adguard:
-    desc: Restart Titan AdGuardHome
-    cmds:
-      - ssh root@titan.zinn.tech systemctl restart AdGuardHome
 
   update-artemis-configuration:
     desc: Update Artemis configuration
@@ -160,17 +157,10 @@ tasks:
       - ssh root@artemis.zinn.tech chmod og-rwx /opt/AdGuardHome/AdGuardHome.yaml
       - ssh root@artemis.zinn.tech systemctl restart AdGuardHome
 
-  update-titan-adguard-configuration:
-    desc: Update Titan AdGuardHome configuration
-    requires:
-      vars:
-        - machine_ip
+  restart-artemis-adguard:
+    desc: Restart Artemis AdGuardHome
     cmds:
-      - cat "{{.FILES_DIR}}/adguard/AdGuardHome.yaml" | sed -e "s/MACHINE_IP/{{.machine_ip}}/" > /tmp/AdGuardHome.yaml
-      - scp /tmp/AdGuardHome.yaml root@titan.zinn.tech:/opt/AdGuardHome/AdGuardHome.yaml
-      - rm /tmp/AdGuardHome.yaml
-      - ssh root@titan.zinn.tech chmod og-rwx /opt/AdGuardHome/AdGuardHome.yaml
-      - ssh root@titan.zinn.tech systemctl restart AdGuardHome
+      - ssh root@artemis.zinn.tech systemctl restart AdGuardHome
 
   update-artemis-gatus-configuration:
     desc: Update Artemis AdGuardHome configuration
@@ -183,12 +173,29 @@ tasks:
       - scp "{{.FILES_DIR}}/artemis/gatus.service" root@artemis.zinn.tech:/etc/systemd/system/gatus.service
       - task: update-artemis-certificate
 
-  update-artemis-certificate:
-    desc: Update Artemis certificate
+  install-titan-adguard:
+    desc: Install Titan AdGuardHome
+    vars:
+      # renovate: depName=AdguardTeam/AdGuardHome datasource=github-releases
+      ADGUARD_VERSION: v0.107.57
     cmds:
-      - ssh root@artemis.zinn.tech mkdir -p /opt/gatus
-      - scp "{{.FILES_DIR}}/certificates/certificate.crt" root@artemis.zinn.tech:/opt/gatus/certificate.crt
-      - ssh root@artemis.zinn.tech chmod u+rw,g-wx,o-wx /opt/gatus/certificate.crt
-      - scp "{{.FILES_DIR}}/certificates/certificate.key" root@artemis.zinn.tech:/opt/gatus/certificate.key
-      - ssh root@artemis.zinn.tech chmod u+rw,g-wx,o-wx /opt/gatus/certificate.key
-      - ssh root@artemis.zinn.tech systemctl restart gatus
+      - ssh root@titan.zinn.tech wget -q https://github.com/AdguardTeam/AdGuardHome/releases/download/{{.ADGUARD_VERSION}}/AdGuardHome_linux_amd64.tar.gz -O /opt/AdGuardHome_linux_amd64.tar.gz
+      - ssh root@titan.zinn.tech 'cd /opt && tar xf AdGuardHome_linux_amd64.tar.gz'
+      - ssh root@titan.zinn.tech 'cd /opt/AdGuardHome && ./AdGuardHome -s install'
+
+  restart-titan-adguard:
+    desc: Restart Titan AdGuardHome
+    cmds:
+      - ssh root@titan.zinn.tech systemctl restart AdGuardHome
+
+  update-titan-adguard-configuration:
+    desc: Update Titan AdGuardHome configuration
+    requires:
+      vars:
+        - machine_ip
+    cmds:
+      - cat "{{.FILES_DIR}}/adguard/AdGuardHome.yaml" | sed -e "s/MACHINE_IP/{{.machine_ip}}/" > /tmp/AdGuardHome.yaml
+      - scp /tmp/AdGuardHome.yaml root@titan.zinn.tech:/opt/AdGuardHome/AdGuardHome.yaml
+      - rm /tmp/AdGuardHome.yaml
+      - ssh root@titan.zinn.tech chmod og-rwx /opt/AdGuardHome/AdGuardHome.yaml
+      - ssh root@titan.zinn.tech systemctl restart AdGuardHome
