@@ -13,4 +13,4 @@ services:
       - "9001:9001"
     user: "473:473"
     volumes:
-      - /mnt/atlas/Apps/minio:/data
+      - /mnt/atlas/s3:/data
