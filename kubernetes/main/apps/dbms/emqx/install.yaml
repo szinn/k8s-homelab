@@ -42,7 +42,11 @@ spec:
   dependsOn:
     - name: emqx
       namespace: dbms
+  healthCheckExprs:
+    - apiVersion: apps.emqx.io/v2beta1
+      kind: EMQX
+      failed: status.conditions.filter(e, e.type == 'Available').all(e, e.status == 'False')
+      current: status.conditions.filter(e, e.type == 'Available').all(e, e.status == 'True')
   prune: true
-  wait: false
   interval: 30m
   timeout: 5m
