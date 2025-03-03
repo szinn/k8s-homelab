@@ -32,14 +32,16 @@ spec:
     monitoring:
       enabled: true
       createPrometheusRules: false
-    configOverride: |
-      [global]
-      bdev_enable_discard = true
-      bdev_async_discard = true
-      osd_class_update_on_start = false
+
     cephClusterSpec:
       cephVersion:
         image: quay.io/ceph/ceph:v19.2.1@sha256:41d3f5e46ff7de28544cc8869fdea13fca824dcef83936cb3288ed9de935e4de
+
+      cephConfig:
+        global:
+          bdev_enable_discard: "true"
+          bdev_async_discard: "true"
+          osd_class_update_on_start: "false"
 
       resources:
         mgr:
