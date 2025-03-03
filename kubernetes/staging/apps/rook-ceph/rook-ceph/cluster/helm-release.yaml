@@ -41,8 +41,8 @@ spec:
 
       cephConfig:
         global:
-          bdev_enable_discard: "true"
-          bdev_async_discard: "true"
+          bdev_enable_discard = true
+          bdev_async_discard = true
 
       resources:
         mgr:
