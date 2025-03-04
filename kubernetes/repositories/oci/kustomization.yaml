@@ -5,6 +5,7 @@ kind: Kustomization
 resources:
   - app-template.yaml
   - coredns.yaml
+  - dragonfly-operator.yaml
   - external-secrets.yaml
   - flux-instance.yaml
   - flux-operator.yaml

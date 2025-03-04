@@ -5,15 +5,11 @@ kind: HelmRelease
 metadata:
   name: dragonfly-operator
 spec:
-  interval: 30m
-  chart:
-    spec:
-      chart: dragonfly-operator
-      version: v1.1.10
-      sourceRef:
-        kind: HelmRepository
-        name: dragonfly-charts
-        namespace: flux-system
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: dragonfly-operator
+    namespace: flux-system
   install:
     remediation:
       retries: 3

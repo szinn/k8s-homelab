@@ -9,7 +9,6 @@ resources:
   - cilium-charts.yaml
   - cloudnative-pg-charts.yaml
   - descheduler-charts.yaml
-  - dragonfly-charts.yaml
   - emqx-charts.yaml
   - external-dns-charts.yaml
   - grafana-charts.yaml
