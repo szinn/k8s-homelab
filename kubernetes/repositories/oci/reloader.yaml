@@ -3,15 +3,13 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: OCIRepository
 metadata:
-  name: coredns
+  name: reloader
   namespace: flux-system
 spec:
   interval: 1h
   layerSelector:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
-  url: oci://ghcr.io/coredns/charts/coredns
   ref:
-    tag: 1.39.1
-  verify:
-    provider: cosign
+    tag: 1.3.0
+  url: oci://ghcr.io/stakater/charts/reloader
