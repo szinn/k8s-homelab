@@ -7,8 +7,8 @@ resources:
   - pod-monitor.yaml
   - prometheus-rule.yaml
 configMapGenerator:
-  - name: flux-instance-helm-values
+  - name: flux-instance-values
     files:
-      - values.yaml=./helm-values.yaml
+      - values.yaml=./values.yaml
 configurations:
   - kustomizeconfig.yaml
