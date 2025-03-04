@@ -58,6 +58,7 @@ spec:
 
       config:
         allow-snippet-annotations: true
+        block-user-agents: AI2Bot,Ai2Bot-Dolma,Amazonbot,anthropic-ai,Applebot,Applebot-Extended,Brightbot 1.0,Bytespider,CCBot,ChatGPT-User,Claude-Web,ClaudeBot,cohere-ai,cohere-training-data-crawler,Crawlspace,Diffbot,DuckAssistBot,FacebookBot,FriendlyCrawler,Google-Extended,GoogleOther,GoogleOther-Image,GoogleOther-Video,GPTBot,iaskspider/2.0,ICC-Crawler,ImagesiftBot,img2dataset,ISSCyberRiskCrawler,Kangaroo Bot,Meta-ExternalAgent,Meta-ExternalFetcher,OAI-SearchBot,omgili,omgilibot,PanguBot,PerplexityBot,PetalBot,Scrapy,SemrushBot-OCOB,SemrushBot-SWA,Sidetrade indexer bot,Timpibot,VelenPublicWebCrawler,Webzio-Extended,YouBot
         annotations-risk-level: Critical
         client-body-buffer-size: 100M
         client-body-timeout: 120
@@ -66,6 +67,7 @@ spec:
         enable-ocsp: "true"
         enable-real-ip: "true"
         force-ssl-redirect: "true"
+        hide-headers: Server,X-Powered-By
         hsts-max-age: 31449600
         keep-alive: 120
         keep-alive-requests: 10000
