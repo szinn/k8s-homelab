@@ -5,15 +5,11 @@ kind: HelmRelease
 metadata:
   name: coredns
 spec:
-  chart:
-    spec:
-      chart: coredns
-      version: 1.39.1
-      sourceRef:
-        kind: HelmRepository
-        name: coredns-charts
-        namespace: flux-system
-  interval: 30m
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: coredns
+    namespace: flux-system
 
   valuesFrom:
     - kind: ConfigMap
