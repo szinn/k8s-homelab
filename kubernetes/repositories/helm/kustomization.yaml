@@ -8,7 +8,6 @@ resources:
   - backube-charts.yaml
   - cilium-charts.yaml
   - cloudnative-pg-charts.yaml
-  - coredns-charts.yaml
   - descheduler-charts.yaml
   - dragonfly-charts.yaml
   - emqx-charts.yaml
