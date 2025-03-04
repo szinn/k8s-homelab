@@ -5,15 +5,11 @@ kind: HelmRelease
 metadata:
   name: postgres-backup
 spec:
-  interval: 15m
-  chart:
-    spec:
-      chart: app-template
-      version: 3.7.1
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s-charts
-        namespace: flux-system
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+    namespace: flux-system
   maxHistory: 3
   install:
     createNamespace: true
