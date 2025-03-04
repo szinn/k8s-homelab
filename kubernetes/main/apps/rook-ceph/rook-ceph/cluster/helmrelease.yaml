@@ -29,17 +29,55 @@ spec:
   values:
     toolbox:
       enabled: false
+
     monitoring:
       enabled: true
       createPrometheusRules: false
-    configOverride: |
-      [global]
-      bdev_enable_discard = true
-      bdev_async_discard = true
-      osd_class_update_on_start = false
+
+    ingress:
+      dashboard:
+        ingressClassName: internal-nginx
+        host:
+          name: "rook.zinn.ca"
+          path: "/"
+
     cephClusterSpec:
       cephVersion:
         image: quay.io/ceph/ceph:v19.2.1@sha256:41d3f5e46ff7de28544cc8869fdea13fca824dcef83936cb3288ed9de935e4de
+
+      cephConfig:
+        global:
+          bdev_enable_discard: "true" # quote
+          bdev_async_discard_threads: "1" # quote
+          osd_class_update_on_start: "false" # quote
+          device_failure_prediction_mode: local # requires mgr module
+        mgr:
+          mgr/crash/warn_recent_interval: "7200" # 2h
+
+      crashCollector:
+        disable: false
+
+      dashboard:
+        enabled: true
+        urlPrefix: /
+        ssl: false
+        prometheusEndpoint: http://prometheus-operated.observability.svc.cluster.local:9090
+
+      mgr:
+        modules:
+          - name: diskprediction_local
+            enabled: true
+          - name: insights
+            enabled: true
+          - name: pg_autoscaler
+            enabled: true
+          - name: rook
+            enabled: true
+
+      # network:
+      #   provider: host
+      #   connections:
+      #     requireMsgr2: true
 
       resources:
         mgr:
@@ -85,15 +123,6 @@ spec:
           limits:
             memory: "1Gi"
 
-      crashCollector:
-        disable: false
-
-      dashboard:
-        enabled: true
-        urlPrefix: /
-        ssl: false
-        prometheusEndpoint: http://prometheus-operated.observability.svc.cluster.local:9090
-
       storage:
         useAllNodes: false
         useAllDevices: false
@@ -109,13 +138,6 @@ spec:
           - name: "k8s-6"
             devices:
               - name: "/dev/disk/by-id/nvme-Samsung_SSD_980_PRO_1TB_S5P2NJ0RB00744X"
-
-    ingress:
-      dashboard:
-        ingressClassName: internal-nginx
-        host:
-          name: "rook.zinn.ca"
-          path: "/"
 
     cephBlockPools:
       - name: ceph-blockpool
