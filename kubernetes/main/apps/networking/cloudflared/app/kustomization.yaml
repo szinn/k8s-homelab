@@ -6,5 +6,5 @@ namespace: networking
 resources:
   - config.yaml
   - cloudflared-tunnel.yaml
-  - cloudflared-secrets.yaml
+  - secrets.yaml
   - helmrelease.yaml
