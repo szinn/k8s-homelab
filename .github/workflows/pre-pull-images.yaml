@@ -12,11 +12,26 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  pre-job:
+    name: Pre-pull Images Pre-Job
+    runs-on: ubuntu-latest
+    outputs:
+      any_changed: ${{ steps.changed-files.outputs.any_changed }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get Changed Files
+        id: changed-files
+        uses: tj-actions/changed-files@v45
+        with:
+          files: kubernetes/main/**
+
   extract-images:
     name: Extract Images
+    needs: pre-job
     runs-on: ubuntu-latest
-    permissions:
-      pull-requests: write
+    if: ${{ needs.pre-job.outputs.any_changed == 'true' }}
     strategy:
       matrix:
         branches: ["default", "pull"]
@@ -25,17 +40,9 @@ jobs:
       default: ${{ steps.extract-images.outputs.default }}
       pull: ${{ steps.extract-images.outputs.pull }}
     steps:
-      - name: Generate Token
-        uses: actions/create-github-app-token@21cfef2b496dd8ef5b904c159339626a10ad380e # v1
-        id: app-token
-        with:
-          app-id: "${{ secrets.BOT_APP_ID }}"
-          private-key: "${{ secrets.BOT_APP_PRIVATE_KEY }}"
-
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
-          token: "${{ steps.app-token.outputs.token }}"
           ref: "${{ matrix.branches == 'default' && github.event.repository.default_branch || '' }}"
 
       - name: Gather Images
@@ -46,23 +53,21 @@ jobs:
             --all-namespaces
             --path /github/workspace/kubernetes/main/cluster/config
             --enable-images
-            --output yaml
-            --output-file images.yaml
+            --only-images
+            --output json
+            --output-file images.json
 
-      - name: Extract Images
+      - name: Output Images
         id: extract-images
-        run: |
-          images=$(yq --indent=0 --output-format=json \
-              '[.. | .images? | select(. != null)] | flatten | sort | unique' images.yaml \
-          )
-          echo "${{ matrix.branches }}=${images}" >> "${GITHUB_OUTPUT}"
+        run: echo "${{ matrix.branches }}=$(jq --compact-output '.' images.json)" >> $GITHUB_OUTPUT
 
   compare-images:
     name: Compare Images
     runs-on: ubuntu-latest
-    needs: ["extract-images"]
+    needs: ["pre-job", "extract-images"]
     outputs:
       images: ${{ steps.compare-images.outputs.images }}
+    if: ${{ needs.pre-job.outputs.any_changed == 'true' && needs.extract-images.outputs.default != needs.extract-images.outputs.pull }}
     steps:
       - name: Compare Images
         id: compare-images
@@ -75,15 +80,15 @@ jobs:
           echo "images=${images}" >> "${GITHUB_OUTPUT}"
 
   pre-pull-images:
-    if: ${{ needs.compare-images.outputs.images != '[]' }}
     name: Pre-pull Images
     runs-on: ["k8s-homelab-runner"]
-    needs: ["compare-images"]
+    needs: ["pre-job", "compare-images"]
     strategy:
       matrix:
         images: ${{ fromJSON(needs.compare-images.outputs.images) }}
       max-parallel: 4
       fail-fast: false
+    if: ${{ needs.pre-job.outputs.any_changed == 'true' && needs.compare-images.outputs.images != '[]' }}
     steps:
       - name: Install talosctl
         run: curl -fsSL https://talos.dev/install | sh
@@ -91,13 +96,16 @@ jobs:
       - name: Pre-pull Image
         run: talosctl -n "${NODE_IP}" image pull ${{ matrix.images }}
 
-  # Summarize matrix https://github.community/t/status-check-for-a-matrix-jobs/127354/7
-  pre-pull-images-success:
-    if: ${{ !cancelled() }}
-    needs: ["pre-pull-images"]
-    name: Pre-pull Images Successful
+  pre-pull-images-status:
+    needs: pre-pull-images
+    name: Pre-pull Images Success
     runs-on: ubuntu-latest
+    if: ${{ always() }}
     steps:
-      - name: Check job status
+      - name: Any jobs failed?
         if: ${{ contains(needs.*.result, 'failure') }}
         run: exit 1
+
+      - name: All jobs passed or skipped?
+        if: ${{ !(contains(needs.*.result, 'failure')) }}
+        run: echo "All jobs passed or skipped" && echo "${{ toJSON(needs.*.result) }}"
