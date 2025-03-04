@@ -50,6 +50,14 @@ spec:
                 value: immich-ro.media.svc.cluster.local
               - name: POSTGRES_DB
                 value: "immich"
+              - name: POSTGRES_USER
+                secretKeyRef:
+                  name: immich-db-secret
+                  key: POSTGRES_SUPER_USER
+              - name: POSTGRES_PASSWORD
+                secretKeyRef:
+                  name: immich-db-secret
+                  key: POSTGRES_SUPER_PASSWORD
               - name: BACKUP_KEEP_DAYS
                 value: "7"
               - name: BACKUP_KEEP_WEEKS

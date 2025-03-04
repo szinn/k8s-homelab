@@ -13,7 +13,7 @@ spec:
     storageClass: ceph-block
   enableSuperuserAccess: true
   superuserSecret:
-    name: immich-postgres-superuser
+    name: immich-db-secret
   postgresql:
     parameters:
       max_connections: "300"
