@@ -5,5 +5,5 @@ kind: Kustomization
 namespace: dbms
 resources:
   - postgres-superuser-secret.yaml
-  - helm-release.yaml
+  - helmrelease.yaml
   - service.yaml
