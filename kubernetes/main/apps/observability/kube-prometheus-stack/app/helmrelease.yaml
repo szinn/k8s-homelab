@@ -5,16 +5,11 @@ kind: HelmRelease
 metadata:
   name: &app kube-prometheus-stack
 spec:
-  interval: 5m
-  timeout: 15m
-  chart:
-    spec:
-      chart: kube-prometheus-stack
-      version: 69.7.2
-      sourceRef:
-        kind: HelmRepository
-        name: prometheus-community-charts
-        namespace: flux-system
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: kube-prometheus-stack
+    namespace: flux-system
   install:
     remediation:
       retries: 3
