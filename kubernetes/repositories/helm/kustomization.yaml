@@ -12,7 +12,6 @@ resources:
   - dragonfly-charts.yaml
   - emqx-charts.yaml
   - external-dns-charts.yaml
-  - external-secrets-charts.yaml
   - grafana-charts.yaml
   - ingress-nginx-charts.yaml
   - intel-charts.yaml
