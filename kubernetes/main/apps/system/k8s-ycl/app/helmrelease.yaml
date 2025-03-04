@@ -9,7 +9,7 @@ spec:
   chartRef:
     kind: OCIRepository
     name: k8s-ycl
-    namespace: system
+    namespace: flux-system
   values:
     controllers:
       main:
