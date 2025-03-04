@@ -6,7 +6,7 @@ resources:
   - immich-secrets.yaml
   - immich-config.yaml
   - immich-pvc.yaml
-  - helm-release.yaml
+  - helmrelease.yaml
 labels:
   - pairs:
       app.kubernetes.io/name: immich

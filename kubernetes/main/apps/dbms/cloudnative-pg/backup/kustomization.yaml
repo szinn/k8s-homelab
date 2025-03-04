@@ -5,4 +5,4 @@ kind: Kustomization
 resources:
   - backups-pvc.yaml
   - backups-secret.yaml
-  - helm-release.yaml
+  - helmrelease.yaml

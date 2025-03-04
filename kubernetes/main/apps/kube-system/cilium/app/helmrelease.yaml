@@ -34,7 +34,7 @@ spec:
 
   valuesFrom:
     - kind: ConfigMap
-      name: cilium-helm-values
+      name: cilium-values
 
   # values:
   #   hubble:
