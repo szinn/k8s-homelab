@@ -6,7 +6,6 @@ resources:
   - actions-runner-controller-charts.yaml
   - authentik-charts.yaml
   - backube-charts.yaml
-  - bjw-s-charts.yaml
   - cilium-charts.yaml
   - cloudnative-pg-charts.yaml
   - controlplaneio-charts.yaml
