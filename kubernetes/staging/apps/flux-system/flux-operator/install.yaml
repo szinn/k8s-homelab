@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/staging/apps/flux-system/flux-operator/app
+  path: ./kubernetes/staging/apps/flux-system/flux-operator/operator
   sourceRef:
     kind: GitRepository
     name: flux-system
