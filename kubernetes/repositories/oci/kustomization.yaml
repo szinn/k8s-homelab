@@ -4,4 +4,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - app-template.yaml
+  - flux-instance.yaml
+  - flux-operator.yaml
   - k8s-ycl.yaml
