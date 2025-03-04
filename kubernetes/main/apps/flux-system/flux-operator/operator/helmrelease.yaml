@@ -5,15 +5,11 @@ kind: HelmRelease
 metadata:
   name: flux-operator
 spec:
-  interval: 30m
-  chart:
-    spec:
-      chart: flux-operator
-      version: 0.17.0
-      sourceRef:
-        kind: HelmRepository
-        name: controlplaneio-charts
-        namespace: flux-system
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: flux-operator
+    namespace: flux-system
   install:
     remediation:
       retries: 3
