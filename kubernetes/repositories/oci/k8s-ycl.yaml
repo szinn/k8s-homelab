@@ -4,7 +4,7 @@ apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: OCIRepository
 metadata:
   name: k8s-ycl
-  namespace: system
+  namespace: flux-system
 spec:
   interval: 1h
   layerSelector:
