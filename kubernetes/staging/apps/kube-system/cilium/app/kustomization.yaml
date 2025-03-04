@@ -6,8 +6,8 @@ namespace: kube-system
 resources:
   - helmrelease.yaml
 configMapGenerator:
-  - name: cilium-helm-values
+  - name: cilium-values
     files:
-      - values.yaml=./helm-values.yaml
+      - values.yaml=./values.yaml
 configurations:
   - kustomizeconfig.yaml
