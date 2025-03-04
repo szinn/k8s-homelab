@@ -6,7 +6,7 @@ resources:
   - backups-pvc.yaml
   - backups-secret.yaml
   - cluster.yaml
-  - helm-release.yaml
+  - helmrelease.yaml
   - postgres-superuser-secret.yaml
   - service.yaml
 labels:

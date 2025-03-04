@@ -5,5 +5,5 @@ kind: Kustomization
 resources:
   - configuration.yaml
   - homepage-secrets.yaml
-  - helm-release.yaml
+  - helmrelease.yaml
   - rbac.yaml
