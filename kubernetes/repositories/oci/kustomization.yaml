@@ -9,3 +9,4 @@ resources:
   - flux-instance.yaml
   - flux-operator.yaml
   - k8s-ycl.yaml
+  - spegel.yaml
