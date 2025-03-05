@@ -8,13 +8,7 @@
       "automergeType": "branch",
       "ignoreTests": true,
       "matchUpdateTypes": ["digest"],
-      "matchPackagePatterns": [
-        "ghcr.io/szinn",
-        "ghcr.io/onedr0p",
-        "ghcr.io/bjw-s",
-        "ghcr.io/bjw-s-labs",
-        "public.ecr.aws/docker/library/redis"
-      ]
+      "matchPackageNames": ["/szinn/", "/bjw-s/", "/onedr0p/"]
     },
     {
       "description": ["Auto-merge GitHub Actions"],
@@ -22,16 +16,17 @@
       "matchDatasources": ["github-tags"],
       "automerge": true,
       "automergeType": "branch",
-      "matchUpdateTypes": ["minor", "patch", "digest"]
+      "matchUpdateTypes": ["minor", "patch", "digest"],
+      "ignoreTests": true
     },
     {
       "description": "Auto merge KPS minors and patches",
       "matchDatasources": ["docker", "helm"],
       "automerge": true,
-      "automergeType": "branch",
+      "automergeType": "pr",
       "matchUpdateTypes": ["minor", "patch"],
-      "matchDepNames": ["kube-prometheus-stack"],
-      "ignoreTests": true
+      "matchDepNames": ["/kube-prometheus-stack/"],
+      "ignoreTests": false
     },
     {
       "description": "Auto merge media releases",
