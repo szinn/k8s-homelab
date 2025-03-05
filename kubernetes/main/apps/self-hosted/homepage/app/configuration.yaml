@@ -86,11 +86,18 @@ data:
         - KVM:
             icon: pikvm.png
             href: https://pikvm.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
-        - AdGuard Home:
-            href: https://adguard.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+        - AdGuard Home (Artemis):
+            href: https://adguard-artemis.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
             widget:
               type: adguard
-              url: https://adguard.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+              url: https://adguard-artemis.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+              username: {{HOMEPAGE_VAR_ADGUARD_USERNAME}}
+              password: {{HOMEPAGE_VAR_ADGUARD_PASSWORD}}
+        - AdGuard Home (Titan):
+            href: https://adguard-titan.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            widget:
+              type: adguard
+              url: https://adguard-titan.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
               username: {{HOMEPAGE_VAR_ADGUARD_USERNAME}}
               password: {{HOMEPAGE_VAR_ADGUARD_PASSWORD}}
         - Authentik:
