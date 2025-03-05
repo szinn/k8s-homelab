@@ -69,8 +69,8 @@ spec:
         controller: main
         ports:
           http:
-            primary: true
             port: *port
+            primary: true
           health:
             port: *hport
     ingress:

@@ -94,6 +94,7 @@ spec:
         ports:
           http:
             port: 5000
+            primary: true
           go2rtc:
             enabled: true
             port: &api-port 1984
