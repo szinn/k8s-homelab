@@ -83,8 +83,8 @@ jobs:
         id: compare
         run: |
           images=$(jq --compact-output --null-input \
-              --argjson f1 '${{ needs.extract-images.outputs.default }}' \
-              --argjson f2 '${{ needs.extract-images.outputs.pull }}' \
+              --argjson f1 '${{ needs.extract.outputs.default }}' \
+              --argjson f2 '${{ needs.extract.outputs.pull }}' \
               '$f2 - $f1' \
           )
           echo "images=${images}" >> "${GITHUB_OUTPUT}"
