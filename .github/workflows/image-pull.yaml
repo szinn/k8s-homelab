@@ -82,17 +82,17 @@ jobs:
       - name: Compare Images
         id: compare
         run: |
-          images="$(jq --compact-output --null-input \
+          images=$(jq --compact-output --null-input \
               --argjson f1 '${{ needs.extract.outputs.default }}' \
               --argjson f2 '${{ needs.extract.outputs.pull }}' \
               '$f2 - $f1' \
-          )"
+          )
           echo "images=${images}" >> "${GITHUB_OUTPUT}"
 
           {
             echo '## New images to Pull'
             echo '```json'
-            echo $images | jq
+            echo "${images}" | jq
             echo '```'
           } >> "${GITHUB_STEP_SUMMARY}"
 
