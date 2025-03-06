@@ -44,7 +44,7 @@ spec:
             command: ["/backup.sh"]
             envFrom:
               - secretRef:
-                  name: immich-postgres-backups-secret
+                  name: immich-db-secret
             env:
               - name: POSTGRES_HOST
                 value: immich-ro.media.svc.cluster.local
@@ -57,7 +57,7 @@ spec:
               - name: POSTGRES_PASSWORD
                 secretKeyRef:
                   name: immich-db-secret
-                  key: POSTGRES_SUPER_PASSWORD
+                  key: POSTGRES_SUPER_PASS
               - name: BACKUP_KEEP_DAYS
                 value: "7"
               - name: BACKUP_KEEP_WEEKS
