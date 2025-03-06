@@ -11,12 +11,6 @@ helmDefaults:
 repositories:
   - name: cilium
     url: https://helm.cilium.io
-  - name: controlplaneio
-    url: ghcr.io/controlplaneio-fluxcd/charts
-    oci: true
-  - name: coredns
-    url: ghcr.io/coredns/charts
-    oci: true
   - name: postfinance
     url: https://postfinance.github.io/kubelet-csr-approver
 
@@ -34,7 +28,7 @@ releases:
   - name: coredns
     namespace: kube-system
     atomic: true
-    chart: coredns/coredns
+    chart: oci://ghcr.io/coredns/charts/coredns
     version: 1.39.1
     values: ['{{ requiredEnv "KUBERNETES_DIR" }}/apps/kube-system/coredns/app/values.yaml']
     needs: ['kube-system/cilium']
@@ -49,7 +43,7 @@ releases:
   - name: flux-operator
     namespace: flux-system
     atomic: true
-    chart: controlplaneio/flux-operator
+    chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator
     version: 0.17.0
     values: ['{{ requiredEnv "KUBERNETES_DIR" }}/apps/flux-system/flux-operator/app/values.yaml']
     needs: ["kube-system/coredns"]
@@ -57,7 +51,7 @@ releases:
   - name: flux-instance
     namespace: flux-system
     atomic: true
-    chart: controlplaneio/flux-instance
+    chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-instance
     version: 0.17.0
     values: ['{{ requiredEnv "KUBERNETES_DIR" }}/apps/flux-system/flux-operator/instance/values.yaml']
     needs: ["flux-system/flux-operator"]
