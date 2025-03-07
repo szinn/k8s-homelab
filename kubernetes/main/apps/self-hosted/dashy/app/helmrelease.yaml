@@ -37,7 +37,7 @@ spec:
               GID: ${APP_GID}
           code-server:
             image:
-              repository: codercom/code-server
+              repository: ghcr.io/coder/code-server
               tag: 4.97.2@sha256:6ff0e9cf5a553b3961ece200be75e21e8c887ed0ae28a7c28213722dccf74b0c
             securityContext:
               runAsUser: 0
