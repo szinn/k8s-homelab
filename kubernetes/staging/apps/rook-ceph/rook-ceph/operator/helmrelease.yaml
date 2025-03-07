@@ -30,9 +30,10 @@ spec:
     - name: snapshot-controller
       namespace: volsync-system
   values:
+    image:
+      repository: ghcr.io/rook/ceph
     crds:
       enabled: true
-    pspEnable: false
     csi:
       enableVolumeGroupSnapshot: false # TODO: enable this when v1beta1 CRDs are available
       csiAddons:
@@ -40,11 +41,11 @@ spec:
       enableLiveness: true
       serviceMonitor:
         enabled: false
+    enableDiscoveryDaemon: true
     monitoring:
       enabled: true
     resources:
       requests:
         cpu: 109m
         memory: 204Mi
-      limits:
-        memory: 453Mi
+      limits: {}

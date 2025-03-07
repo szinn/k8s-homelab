@@ -30,16 +30,19 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    image:
+      repository: ghcr.io/rook/ceph
     csi:
+      # NOTE: Enable the driver and shapshotter if you want to use CephFS
+      # enableCephfsDriver: false
+      # enableCephfsSnapshotter: false
       enableVolumeGroupSnapshot: false # TODO: enable this when v1beta1 CRDs are available
       enableLiveness: true
       serviceMonitor:
         enabled: true
+    enableDiscoveryDaemon: true
     monitoring:
       enabled: true
-
-    pspEnable: false
-
     resources:
       requests:
         memory: 128Mi # unchangable
