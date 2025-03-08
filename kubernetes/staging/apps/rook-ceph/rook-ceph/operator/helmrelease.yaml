@@ -36,6 +36,10 @@ spec:
       enabled: true
     csi:
       enableVolumeGroupSnapshot: false # TODO: enable this when v1beta1 CRDs are available
+      cephFSKernelMountOptions: ms_mode=prefer-crc
+      # NOTE: Enable the driver and shapshotter if you want to use CephFS
+      enableCephfsDriver: false
+      enableCephfsSnapshotter: false
       csiAddons:
         enabled: false
       enableLiveness: true
