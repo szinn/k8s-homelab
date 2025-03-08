@@ -55,6 +55,7 @@ tasks:
       KUBERNETES_DIR: "{{.KUBERNETES_DIR}}"
       KUBECONFIG: "{{.KUBERNETES_DIR}}/kubeconfig"
       TALOSCONFIG: "{{.KUBERNETES_DIR}}/talosconfig"
+      ROOK_DISK_MODEL: "{{.ROOK_DISK_MODEL}}"
     vars:
       KUBERNETES_DIR: "{{.KUBERNETES_ROOT}}/{{.cluster}}"
     cmds:

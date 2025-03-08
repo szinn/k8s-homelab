@@ -4,8 +4,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: radarr-4k-config
 spec:
-  accessModes: ["ReadWriteMany"]
+  accessModes: ["ReadWriteOnce"]
   resources:
     requests:
       storage: 15Gi
-  storageClassName: ceph-filesystem
+  storageClassName: ceph-block
