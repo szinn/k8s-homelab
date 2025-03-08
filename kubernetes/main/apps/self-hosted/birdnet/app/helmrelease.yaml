@@ -24,7 +24,7 @@ spec:
           app:
             image:
               repository: ghcr.io/tphakala/birdnet-go
-              tag: v0.6.2@sha256:ccc392aa893e9c28b1d3c54a462ce1e77497fbe3283fe05f9f9a1e298a7a3c44
+              tag: v0.6.3@sha256:2a39d9873a5e4be55bec68541916c7a86fdaaae70c3e3cd242d2ac46b6238c56
             env:
               TZ: "America/Toronto"
             probes:
