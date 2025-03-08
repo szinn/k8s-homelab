@@ -40,9 +40,9 @@ spec:
       enableLiveness: true
       serviceMonitor:
         enabled: true
-    enableDiscoveryDaemon: true
     monitoring:
       enabled: true
+    pspEnable: false
     resources:
       requests:
         memory: 128Mi # unchangable
