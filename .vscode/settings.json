@@ -1,9 +1,11 @@
 {
-  "discord.enabled": true,
   "files.associations": {
-    "*.json5": "jsonc",
-    "ansible/**/*.sops.toml": "plaintext",
-    "kubernetes/**/*.sops.toml": "plaintext"
+    ".sops.yaml": "lock",
+    "*.sops.yaml": "lock",
+    "helmfile.yaml": "helm",
+    "kubeconfig": "kubernetes",
+    "talosconfig": "kubernetes",
+    "*.json5": "jsonc"
   },
   "files.exclude": {
     ".direnv/": true,
@@ -11,27 +13,31 @@
     "result": true
   },
   "material-icon-theme.folders.associations": {
-    ".github": "Github",
-    "workflows": "Robot",
+    // top level
+    ".github/workflows": "ci",
     ".taskfiles": "utils",
-    "hack": "Tools",
+    "hack": "tools",
+    "scripts": "tools",
+    "terraform": "terraform",
+    // namespaces
     "kubernetes": "Cluster",
     "kubernetes/main": "cluster",
     "kubernetes/staging": "cluster",
+    "actions-runner-system": "github",
     "cert-manager": "guard",
     "dbms": "database",
     "default": "cluster",
-    "dev": "less",
     "flux-system": "kubernetes",
+    "home": "home",
     "kube-system": "kubernetes",
     "media": "video",
-    "monitoring": "event",
     "networking": "connection",
-    "outline": "docs",
+    "observability": "event",
+    "rook-ceph": "dump",
     "security": "keys",
     "self-hosted": "app",
-    "setup": "import",
-    "config": "environment"
+    "system": "kubernetes",
+    "system-upgrade": "update",
   },
   "prettier.configPath": ".ci/prettier/.prettierrc.yaml",
   "prettier.ignorePath": ".ci/prettier/.prettierignore",
