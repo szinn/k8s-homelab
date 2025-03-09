@@ -199,3 +199,13 @@ tasks:
       - rm /tmp/AdGuardHome.yaml
       - ssh root@titan.zinn.tech chmod og-rwx /opt/AdGuardHome/AdGuardHome.yaml
       - ssh root@titan.zinn.tech systemctl restart AdGuardHome
+
+  install-hera-configuration:
+    desc: Install Hera configuration
+    vars:
+      # renovate: depName=ryanoasis/nerd-fonts datasource=github-releases
+      FONT_VERSION: v3.3.0
+    cmds:
+      - ssh scotte@hera.zinn.tech curl -o /tmp/FiraCode.zip -L https://github.com/ryanoasis/nerd-fonts/releases/download/{{.FONT_VERSION}}/FiraCode.zip
+      - ssh scotte@hera.zinn.tech unzip -o /tmp/FiraCode.zip -d /home/scotte/.local/share/fonts
+      - ssh scotte@hera.zinn.tech fc-cache -vf /home/scotte/.local/share/fonts
