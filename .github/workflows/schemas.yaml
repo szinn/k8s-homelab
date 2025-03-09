@@ -14,13 +14,18 @@ on:
     paths:
       - ".github/workflows/schemas.yaml"
 
+concurrency:
+  group: ${{ github.ref }}-${{ github.workflow }}
+  cancel-in-progress: true
+
 env:
-  OCI_REPO: "oci://ghcr.io/szinn/kubernetes-schemas/${{ github.event.repository.name }}"
+  HOMEBREW_NO_ANALYTICS: "1"
+  UV_SYSTEM_PYTHON: "1"
 
 jobs:
   publish-kubernetes-schemas:
     name: Publish Kubernetes Schemas
-    runs-on: k8s-homelab-runner"]
+    runs-on: k8s-homelab-runner
     permissions:
       contents: read
       packages: write
