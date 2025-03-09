@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/cert-manager.io/certificate_v1.json
+# yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/cert-manager.io/certificate_v1.json
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
@@ -14,7 +14,7 @@ spec:
     - "zinn.tech"
     - "*.zinn.tech"
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/external-secrets.io/pushsecret_v1alpha1.json
+# yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/external-secrets.io/pushsecret_v1alpha1.json
 apiVersion: external-secrets.io/v1alpha1
 kind: PushSecret
 metadata:

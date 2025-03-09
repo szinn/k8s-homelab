@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/nfd.k8s-sigs.io/nodefeaturerule_v1alpha1.json
+# yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/nfd.k8s-sigs.io/nodefeaturerule_v1alpha1.json
 apiVersion: nfd.k8s-sigs.io/v1alpha1
 kind: NodeFeatureRule
 metadata:

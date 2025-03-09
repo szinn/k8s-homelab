@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/monitoring.coreos.com/prometheusrule_v1.json
+# yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/monitoring.coreos.com/prometheusrule_v1.json
 # https://raw.githubusercontent.com/rook/rook/master/deploy/examples/monitoring/localrules.yaml
 # Copied from /deploy/charts/rook-ceph-cluster/prometheus/, CR header added, and indentation increased on the groups
 apiVersion: monitoring.coreos.com/v1
