@@ -11,5 +11,6 @@ resources:
   - flux-operator.yaml
   - k8s-ycl.yaml
   - kube-prometheus-stack.yaml
+  - promtail.yaml
   - reloader.yaml
   - spegel.yaml

@@ -5,15 +5,11 @@ kind: HelmRelease
 metadata:
   name: promtail
 spec:
-  interval: 30m
-  chart:
-    spec:
-      chart: promtail
-      version: 6.16.6
-      sourceRef:
-        kind: HelmRepository
-        name: grafana-charts
-        namespace: flux-system
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: promtail
+    namespace: flux-system
   values:
     fullnameOverride: promtail
 
