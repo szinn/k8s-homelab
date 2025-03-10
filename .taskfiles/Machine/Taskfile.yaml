@@ -57,7 +57,7 @@ tasks:
       - ssh root@ragnar.zinn.tech chmod u+rw,g-wx,o-wx /etc/certificates/ZinnTech.crt
       - scp "{{.FILES_DIR}}/certificates/certificate.key" root@ragnar.zinn.tech:/etc/certificates/ZinnTech.key
       - ssh root@ragnar.zinn.tech chmod u+rw,g-wx,o-wx /etc/certificates/ZinnTech.key
-      - ssh root@ragnar.zinn.tech systemctl restart nginx
+      - ssh root@ragnar.zinn.tech /mnt/atlas/support/update-certificate.sh
 
   update-ragnar-configuration:
     desc: Update Ragnar configuration
