@@ -9,11 +9,12 @@ auth:
   enabled: false
 
 mqtt:
-  enabled: false
-  # host: "{FRIGATE_MQTT_HOST}"
-  # topic_prefix: frigate
-  # user: "{FRIGATE_MQTT_USERNAME}"
-  # password: "{FRIGATE_MQTT_PASSWORD}"
+  enabled: true
+  host: emqx-listeners.dbms.svc.cluster.local
+  port: 1883
+  topic_prefix: frigate
+  user: "{FRIGATE_MQTT_USERNAME}"
+  password: "{FRIGATE_MQTT_PASSWORD}"
 
 database:
   path: /config/frigate.db
@@ -41,10 +42,6 @@ record:
   retain:
     days: 30
     mode: all
-  events:
-    retain:
-      default: 30
-      mode: active_objects
 
 objects:
   track: [person, dog, cat]
@@ -72,4 +69,4 @@ cameras:
     detect:
       width: 1280
       height: 720
-      fps: 24
+      fps: 5

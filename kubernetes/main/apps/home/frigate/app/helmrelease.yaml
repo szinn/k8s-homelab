@@ -32,7 +32,8 @@ spec:
     controllers:
       main:
         annotations:
-          reloader.stakater.com/auto: "true"
+          secret.reloader.stakater.com/reload: frigate-secret
+          configmap.reloader.stakater.com/reload: frigate-configmap
         pod:
           nodeSelector:
             google.feature.node.kubernetes.io/coral: "true"
@@ -44,11 +45,6 @@ spec:
               tag: 0.15.0@sha256:dc77295ccc5a7258510ab6b1d9d5b7a339027305e2d29224338534febc4d1e89
             env:
               TZ: America/Toronto
-              FRIGATE_MQTT_HOST:
-                valueFrom:
-                  secretKeyRef:
-                    name: frigate-secret
-                    key: MQTT_HOST
               FRIGATE_MQTT_USERNAME:
                 valueFrom:
                   secretKeyRef:
@@ -135,7 +131,7 @@ spec:
         type: configMap
         name: frigate-configmap
         globalMounts:
-          - path: /config/new-config.yml
+          - path: /config/config.yml
             subPath: config.yaml
             readOnly: true
       media:
