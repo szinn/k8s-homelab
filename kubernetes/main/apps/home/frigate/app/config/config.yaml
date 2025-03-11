@@ -12,6 +12,7 @@ mqtt:
   enabled: true
   host: emqx-listeners.dbms.svc.cluster.local
   port: 1883
+  client_id: Frigate
   topic_prefix: frigate
   user: "{FRIGATE_MQTT_USERNAME}"
   password: "{FRIGATE_MQTT_PASSWORD}"
