@@ -23,7 +23,7 @@
     {
       "description": "Rook-Ceph Group",
       "groupName": "Rook Ceph",
-      "matchPackagePatterns": ["rook.ceph"],
+      "matchPackageNames": ["/rook-ceph/", "/rook-ceph-cluster/"],
       "matchDatasources": ["docker", "helm"],
       "group": {
         "commitMessageTopic": "{{{groupName}}} group"
@@ -45,7 +45,7 @@
       "description": ["Actions Runner Controller Group"],
       "groupName": "Actions Runner Controller",
       "matchDatasources": ["docker", "helm"],
-      "matchPackageNames": ["/gha-runner-scale-set/"],
+      "matchPackageNames": ["/gha-runner-scale-set-controller/", "/gha-runner-scale-set/"],
       "group": {
         "commitMessageTopic": "{{{groupName}}} group"
       },
