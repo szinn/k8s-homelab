@@ -171,6 +171,8 @@ tasks:
       - scp "{{.FILES_DIR}}/artemis/gatus-docker-compose.yaml" root@artemis.zinn.tech:/opt/gatus/docker-compose.yaml
       - scp "{{.FILES_DIR}}/artemis/gatus-environment" root@artemis.zinn.tech:/opt/gatus/.env
       - scp "{{.FILES_DIR}}/artemis/gatus.service" root@artemis.zinn.tech:/etc/systemd/system/gatus.service
+      - ssh root@artemis.zinn.tech systemctl enable gatus
+      - ssh root@artemis.zinn.tech systemctl restart gatus
       - task: update-artemis-certificate
 
   install-titan-adguard:
