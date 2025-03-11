@@ -15,8 +15,12 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2
+      kind: HelmRelease
+      name: *app
+      namespace: *namespace
   prune: false # never should be deleted
-  wait: true
   interval: 30m
   timeout: 5m
 ---
