@@ -29,7 +29,7 @@ function apply_prometheus_crds() {
     log debug "Applying Prometheus CRDs"
 
     # renovate: datasource=github-releases depName=prometheus-operator/prometheus-operator
-    local -r version=v0.80.1
+    local -r version=v0.81.0
     local resources crds
 
     # Fetch resources using kustomize build
