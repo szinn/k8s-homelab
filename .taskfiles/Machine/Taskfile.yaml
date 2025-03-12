@@ -105,7 +105,7 @@ tasks:
   update-linux-packages:
     desc: Update linux machines
     cmds:
-      - ssh root@artemis.zinn.tech 'apt update -y && apt upgrade -y && apt autoremove'
+      - ssh root@artemis.zinn.tech 'apt update -y && apt upgrade -y && apt autoremove -y'
       - ssh root@hera.zinn.tech 'dnf upgrade -y'
       - ssh root@titan.zinn.tech 'dnf upgrade -y'
 
