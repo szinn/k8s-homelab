@@ -38,6 +38,9 @@ tasks:
       - task: deploy
         vars:
           cluster: staging
+      - task: :talos:delete-extra-manifests
+        vars:
+          cluster: staging
 
   deploy:
     desc: Bootstrap [cluster={{.cluster}}]
