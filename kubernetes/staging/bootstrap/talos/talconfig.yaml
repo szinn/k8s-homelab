@@ -4,7 +4,7 @@ clusterName: staging
 # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
 talosVersion: v1.9.4
 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
-kubernetesVersion: v1.32.2
+kubernetesVersion: v1.32.3
 
 endpoint: https://staging.zinn.tech:6443
 
