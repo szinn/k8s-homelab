@@ -22,6 +22,9 @@ tasks:
       - task: deploy
         vars:
           cluster: main
+      - task: :talos:delete-extra-manifests
+        vars:
+          cluster: main
 
   staging:
     desc: Bootstrap staging cluster
@@ -36,6 +39,9 @@ tasks:
           cluster: staging
       - task: merge-configs
       - task: deploy
+        vars:
+          cluster: staging
+      - task: :talos:delete-extra-manifests
         vars:
           cluster: staging
 

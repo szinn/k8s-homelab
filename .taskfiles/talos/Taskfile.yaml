@@ -103,8 +103,8 @@ tasks:
             {{ trimPrefix (printf "%s-" .cluster) (base .ITEM) | trimSuffix ".yaml" }}
 
   _apply-machineconfig:
-    internal: true
     desc: Apply a single Talos machineConfig to a Talos node
+    internal: true
     preconditions:
       - which talosctl
       - test -f "{{.FILENAME}}"
@@ -166,4 +166,37 @@ tasks:
         --force-context-name {{.cluster}}
         "{{.KUBECONFIG}}"
       - cmd: kubectl config delete-context "admin@{{.cluster}}"
+        ignore_error: true
+
+  delete-extra-manifests:
+    desc: Delete extra manifests from the control-plane nodes
+    requires:
+      vars:
+        - cluster
+    env:
+      TALOSCONFIG: "{{.KUBERNETES_DIR}}/talosconfig"
+    vars:
+      KUBERNETES_DIR: "{{.KUBERNETES_ROOT}}/{{.cluster}}"
+      TALOS_CONTROLLERS:
+        sh: talosctl --talosconfig "{{.KUBERNETES_DIR}}/talosconfig" config info --output json | jq --exit-status --raw-output '.endpoints[]'
+    cmds:
+      - for: { var: TALOS_CONTROLLERS }
+        task: _delete-extra-manifests
+        vars:
+          cluster: "{{.cluster}}"
+          node: "{{.ITEM}}"
+
+  _delete-extra-manifests:
+    internal: true
+    requires:
+      vars:
+        - cluster
+        - node
+    env:
+      TALOSCONFIG: "{{.KUBERNETES_DIR}}/talosconfig"
+    vars:
+      KUBERNETES_DIR: "{{.KUBERNETES_ROOT}}/{{.cluster}}"
+      PATCH: '[{"op": "remove", "path": "/cluster/extraManifests"}]'
+    cmds:
+      - cmd: talosctl --talosconfig "{{.KUBERNETES_DIR}}/talosconfig" --nodes {{.node}} --mode=no-reboot patch machineconfig -p '{{.PATCH}}'
         ignore_error: true
