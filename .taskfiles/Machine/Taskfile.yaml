@@ -5,7 +5,7 @@ vars:
   MACHINE_ROOT_DIR: "{{.ROOT_DIR}}/.taskfiles/Machine"
   FILES_DIR: "{{.MACHINE_ROOT_DIR}}/files"
   SCRIPTS_DIR: "{{.MACHINE_ROOT_DIR}}/scripts"
-  # renovate: depName=AdguardTeam/AdGuardHome datasource=github-releases
+  # renovate: datasource=github-releases depName=AdguardTeam/AdGuardHome
   ADGUARD_VERSION: v0.107.57
 
 tasks:
@@ -112,7 +112,7 @@ tasks:
   install-artemis-adguard:
     desc: Install Artemis AdGuardHome
     vars:
-      # renovate: depName=AdguardTeam/AdGuardHome datasource=github-releases
+      # renovate: datasource=github-releases depName=AdguardTeam/AdGuardHome
       ADGUARD_VERSION: v0.107.57
     cmds:
       - ssh root@artemis.zinn.tech wget -q https://github.com/AdguardTeam/AdGuardHome/releases/download/{{.ADGUARD_VERSION}}/AdGuardHome_linux_arm64.tar.gz -O /opt/AdGuardHome_linux_arm64.tar.gz
@@ -178,7 +178,7 @@ tasks:
   install-titan-adguard:
     desc: Install Titan AdGuardHome
     vars:
-      # renovate: depName=AdguardTeam/AdGuardHome datasource=github-releases
+      # renovate: datasource=github-releases depName=AdguardTeam/AdGuardHome
       ADGUARD_VERSION: v0.107.57
     cmds:
       - ssh root@titan.zinn.tech wget -q https://github.com/AdguardTeam/AdGuardHome/releases/download/{{.ADGUARD_VERSION}}/AdGuardHome_linux_amd64.tar.gz -O /opt/AdGuardHome_linux_amd64.tar.gz
@@ -205,7 +205,7 @@ tasks:
   install-hera-configuration:
     desc: Install Hera configuration
     vars:
-      # renovate: depName=ryanoasis/nerd-fonts datasource=github-releases
+      # renovate: datasource=github-releases depName=ryanoasis/nerd-fonts
       FONT_VERSION: v3.3.0
     cmds:
       - ssh scotte@hera.zinn.tech curl -o /tmp/FiraCode.zip -L https://github.com/ryanoasis/nerd-fonts/releases/download/{{.FONT_VERSION}}/FiraCode.zip

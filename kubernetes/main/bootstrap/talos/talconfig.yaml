@@ -1,9 +1,9 @@
 ---
 clusterName: main
 
-# renovate: depName=ghcr.io/siderolabs/installer datasource=docker
+# renovate: datasource=docker depName=ghcr.io/siderolabs/installer
 talosVersion: v1.9.4
-# renovate: depName=ghcr.io/siderolabs/kubelet datasource=docker
+# renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
 kubernetesVersion: v1.32.2
 
 endpoint: https://main.zinn.tech:6443

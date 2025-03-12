@@ -364,7 +364,7 @@ spec:
           url: https://grafana.com/api/dashboards/11074/revisions/9/download
           datasource: Prometheus
         cert-manager:
-          # renovate: depName="cert-manager"
+          # renovate: dashboardName="cert-manager"
           gnetId: 20340
           revision: 1
           datasource:
@@ -391,7 +391,7 @@ spec:
           revision: 37
           datasource: Prometheus
         smartctl:
-          # renovate: depName="Dashboard for smartctl_exporter"
+          # renovate: dashboardName="Dashboard for smartctl_exporter"
           gnetId: 20204
           revision: 1
           datasource:
