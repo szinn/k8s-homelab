@@ -41,16 +41,14 @@ spec:
             name: *secret
             key: *name
     extraArgs:
-      - --ingress-class=external-nginx
+      - --cloudflare-dns-records-per-page=1000
+      - --cloudflare-proxied
       - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
       - --crd-source-kind=DNSEndpoint
-      - --cloudflare-proxied
+      - --gateway-label-filter=gateway==external
       - --annotation-filter=external-dns.alpha.kubernetes.io/target
-      - --cloudflare-dns-records-per-page=1000
-      - --ignore-ingress-tls-spec
-
     policy: sync
-    sources: ["crd", "ingress"]
+    sources: ["gateway-httproute", "crd"]
     txtOwnerId: "homelab"
     txtPrefix: "k8s."
     domainFilters: ["zinn.ca"]

@@ -14,13 +14,7 @@ spec:
   resources:
     - apiVersion: source.toolkit.fluxcd.io/v1
       kind: GitRepository
-      name: "flux-system"
-      namespace: "flux-system"
+      name: flux-system
     - apiVersion: kustomize.toolkit.fluxcd.io/v1
       kind: Kustomization
-      name: "cluster"
-      namespace: "flux-system"
-    - apiVersion: kustomize.toolkit.fluxcd.io/v1
-      kind: Kustomization
-      name: "cluster-apps"
-      namespace: "flux-system"
+      name: flux-system

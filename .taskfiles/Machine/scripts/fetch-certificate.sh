@@ -1,7 +1,7 @@
 #!/bin/sh
 OUTPUT_DIR=$1
 TLS_CERT="tech-wildcard-tls"
-TLS_NAMESPACE="networking"
+TLS_NAMESPACE="kube-system"
 
 if [[ ! -e $OUTPUT_DIR/certificate-tls.json ]]; then
   touch $OUTPUT_DIR/certificate-tls.json

@@ -12,7 +12,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: wildcard-tls
-  namespace: networking
+  namespace: kube-system
   annotations:
     cert-manager.io/alt-names: '*.test.zinn.ca,test.zinn.ca'
     cert-manager.io/certificate-name: wildcard
@@ -33,7 +33,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: tech-wildcard-tls
-  namespace: networking
+  namespace: kube-system
   annotations:
     cert-manager.io/alt-names: '*.zinn.tech,zinn.tech'
     cert-manager.io/certificate-name: tech-wildcard

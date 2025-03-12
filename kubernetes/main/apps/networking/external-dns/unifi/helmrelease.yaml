@@ -62,9 +62,8 @@ spec:
           timeoutSeconds: 5
     extraArgs:
       - --ignore-ingress-tls-spec
-      - --ingress-class=internal-nginx
     policy: sync
-    sources: ["ingress", "service"]
+    sources: ["gateway-httproute", "service"]
     txtOwnerId: main
     txtPrefix: k8s.main.
     domainFilters: ["zinn.ca"]

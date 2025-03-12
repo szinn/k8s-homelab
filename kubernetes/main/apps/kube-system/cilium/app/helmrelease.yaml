@@ -36,38 +36,32 @@ spec:
     - kind: ConfigMap
       name: cilium-values
 
-  # values:
-  #   hubble:
-  #     enabled: false
-  #     metrics:
-  #       enabled:
-  #         - dns:query;ignoreAAAA
-  #         - drop
-  #         - tcp
-  #         - flow
-  #         - port-distribution
-  #         - icmp
-  #         - http
-  #       serviceMonitor:
-  #         enabled: true
-  #       dashboards:
-  #         enabled: false
-  #         annotations:
-  #           grafana_folder: Cilium
-  #     relay:
-  #       enabled: false
-  #       rollOutPods: true
-  #       prometheus:
-  #         serviceMonitor:
-  #           enabled: true
-  #     ui:
-  #       enabled: false
-  #       rollOutPods: true
-  #       ingress:
-  #         enabled: true
-  #         className: internal-nginx
-  #         annotations:
-  #           nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-  #           nginx.ingress.kubernetes.io/whitelist-source-range: 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
-  #         hosts:
-  #           - "hubble.zinn.ca"
+  values:
+    hubble:
+      enabled: true
+      metrics:
+        enabled:
+          - dns:query;ignoreAAAA
+          - drop
+          - tcp
+          - flow
+          - port-distribution
+          - icmp
+          - http
+        serviceMonitor:
+          enabled: true
+        dashboards:
+          enabled: false
+          annotations:
+            grafana_folder: Cilium
+      relay:
+        enabled: true
+        rollOutPods: true
+        prometheus:
+          serviceMonitor:
+            enabled: true
+      ui:
+        enabled: true
+        rollOutPods: true
+        ingress:
+          enabled: false
