@@ -155,7 +155,6 @@ function main() {
     check_cli helmfile jq kubectl kustomize minijinja-cli op talosctl yq
 
     wait_for_nodes
-    apply_prometheus_crds
     apply_namespaces
     apply_secrets
     wipe_rook_disks
