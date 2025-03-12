@@ -8,4 +8,4 @@ resources:
   - namespace.yaml
   # Flux-Kustomizations
   - external-dns/install.yaml
-  - ingress-nginx/install.yaml
+  # - ingress-nginx/install.yaml

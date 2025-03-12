@@ -64,7 +64,7 @@ spec:
       - --ignore-ingress-tls-spec
       - --ingress-class=nginx
     policy: sync
-    sources: ["ingress", "service"]
+    sources: ["gateway-httproute", "service"]
     txtOwnerId: staging
     txtPrefix: k8s.staging.
     domainFilters: ["test.zinn.ca"]

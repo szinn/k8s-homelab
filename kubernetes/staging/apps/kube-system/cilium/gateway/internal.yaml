@@ -1,0 +1,37 @@
+---
+# yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/gateway.networking.k8s.io/gateway_v1.json
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: internal
+  annotations:
+    external-dns.alpha.kubernetes.io/target: &hostname internal.test.zinn.ca
+  labels:
+    gateway: internal
+spec:
+  gatewayClassName: cilium
+  addresses:
+    - type: IPAddress
+      value: 10.12.1.2
+  infrastructure:
+    annotations:
+      external-dns.alpha.kubernetes.io/hostname: *hostname
+  listeners:
+    - name: http
+      protocol: HTTP
+      port: 80
+      hostname: "*.test.zinn.ca"
+      allowedRoutes:
+        namespaces:
+          from: All
+    - name: https
+      protocol: HTTPS
+      port: 443
+      hostname: "*.test.zinn.ca"
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        certificateRefs:
+          - kind: Secret
+            name: wildcard-tls
