@@ -88,13 +88,6 @@ controlPlane:
     #         - endpoint: udp://10.12.1.4:6002/
     #           format: json_lines
 
-    # Bootstrap manifests
-    - |-
-      cluster:
-        extraManifests:
-          - # renovate: datasource=github-releases depName=prometheus-operator/prometheus-operator
-            https://github.com/prometheus-operator/prometheus-operator/releases/download/v0.81.0/stripped-down-crds.yaml
-
     # Disable search domain everywhere
     - &disableSearchDomainPatch |-
       machine:
