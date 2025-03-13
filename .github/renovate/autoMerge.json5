@@ -29,6 +29,15 @@
       "ignoreTests": false
     },
     {
+      "description": "Auto-merge GitHub Releases",
+      "matchDatasources": ["github-releases"],
+      "automerge": true,
+      "automergeType": "pr",
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchPackageNames": ["/gateway-api/", "/prometheus-operator/"],
+      "ignoreTests": false
+    },
+    {
       "description": "Auto merge media releases",
       "matchDatasources": ["docker", "github-releases", "github-tags", "helm"],
       "automerge": true,
