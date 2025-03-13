@@ -21,7 +21,7 @@ spec:
     - name: external-secrets
       namespace: external-secrets
   components:
-    - ../../../../components/gatus/external
+    - ../../../../components/gatus/guarded
   postBuild:
     substitute:
       GATUS_APP: wiki

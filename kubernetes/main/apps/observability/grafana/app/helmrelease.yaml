@@ -58,22 +58,10 @@ spec:
         check_for_updates: false
         check_for_plugin_updates: false
         reporting_enabled: false
-      auth:
-        signout_redirect_url: https://sso.zinn.ca/application/o/grafana/end-session/
-        oauth_auto_login: true
-      auth.generic_oauth:
-        name: authentik
-        enabled: true
-        scopes: "openid profile email"
-        auth_url: "https://sso.zinn.ca/application/o/authorize/"
-        token_url: "https://sso.zinn.ca/application/o/token/"
-        api_url: "https://sso.zinn.ca/application/o/userinfo/"
-        role_attribute_path: contains(groups, 'Grafana Admins') && 'Admin' || contains(groups, 'Grafana Editors') && 'Editor' || 'Viewer'
-      auth.basic:
-        enabled: false
       auth.anonymous:
-        enabled: false
+        enabled: true
         org_id: 1
+        org_name: Main Org.
         org_role: Viewer
       date_formats:
         use_browser_locale: true
