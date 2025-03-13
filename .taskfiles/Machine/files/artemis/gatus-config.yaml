@@ -1,8 +1,8 @@
 web:
   port: 8443
   tls:
-    certificate-file: /config/certificate.crt
-    private-key-file: /config/certificate.key
+    certificate-file: /config/certificates/zinn-tech.crt
+    private-key-file: /config/certificates/zinn-tech.key
 storage:
   type: memory
 metrics: false
