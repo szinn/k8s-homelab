@@ -19,7 +19,6 @@ includes:
   format: .taskfiles/Format
   kubernetes: .taskfiles/Kubernetes
   machine: .taskfiles/Machine
-  minio: .taskfiles/Minio
   postgres: .taskfiles/Postgres
   pre-commit: .taskfiles/Pre-commit
   proxmox: .taskfiles/Proxmox

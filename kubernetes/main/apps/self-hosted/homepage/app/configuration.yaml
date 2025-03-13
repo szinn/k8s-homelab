@@ -156,9 +156,6 @@ data:
         - Hades:
             href: https://hades.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
             icon: synology-dsm.png
-        - Minio:
-            href: https://minio.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            icon: minio.png
         - pgAdmin:
             href: https://pgadmin.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
             icon: pgadmin.png
