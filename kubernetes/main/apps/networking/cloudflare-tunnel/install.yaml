@@ -3,14 +3,14 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app cloudflared
+  name: &app cloudflare-tunnel
   namespace: &namespace networking
 spec:
   targetNamespace: *namespace
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/main/apps/networking/cloudflared/app
+  path: ./kubernetes/main/apps/networking/cloudflare-tunnel/app
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -20,6 +20,10 @@ spec:
       namespace: networking
     - name: external-secrets
       namespace: external-secrets
+  postBuild:
+    substituteFrom:
+      - kind: Secret
+        name: cloudflare-tunnel-id-secret
   prune: true
   wait: false
   interval: 30m

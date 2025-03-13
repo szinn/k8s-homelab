@@ -1,0 +1,8 @@
+originRequest:
+  originServerName: external.zinn.ca
+ingress:
+  - hostname: "zinn.ca"
+    service: &svc https://nginx-external-controller.networking.svc.cluster.local:443
+  - hostname: "*.zinn.ca"
+    service: *svc
+  - service: http_status:404

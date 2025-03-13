@@ -49,3 +49,11 @@ type: kubernetes.io/tls
 data:
   tls.crt: op://Kubernetes/cluster-main/tech-wildcard-crt
   tls.key: op://Kubernetes/cluster-main/tech-wildcard-key
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cloudflare-tunnel-id-secret
+  namespace: networking
+stringData:
+  CLOUDFLARE_TUNNEL_ID: op://Kubernetes/cloudflare/TUNNEL_ID

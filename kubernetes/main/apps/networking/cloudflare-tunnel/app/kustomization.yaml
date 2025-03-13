@@ -4,7 +4,12 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: networking
 resources:
-  - config.yaml
-  - cloudflared-tunnel.yaml
+  - dnsendpoint.yaml
   - secrets.yaml
   - helmrelease.yaml
+configMapGenerator:
+  - name: cloudflare-tunnel-configmap
+    files:
+      - config.yaml=./resources/config.yaml
+generatorOptions:
+  disableNameSuffixHash: true

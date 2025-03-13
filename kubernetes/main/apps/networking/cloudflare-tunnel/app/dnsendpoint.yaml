@@ -9,4 +9,4 @@ spec:
   endpoints:
     - dnsName: external.zinn.ca
       recordType: CNAME
-      targets: ["03aa14df-fcc4-4e2a-9ec7-9bcb4f6028bc.cfargotunnel.com"]
+      targets: ["${CLOUDFLARE_TUNNEL_ID}.cfargotunnel.com"]

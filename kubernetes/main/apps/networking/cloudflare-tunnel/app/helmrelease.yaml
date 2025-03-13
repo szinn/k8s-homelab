@@ -10,42 +10,36 @@ spec:
     kind: OCIRepository
     name: app-template
     namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
   values:
     controllers:
-      main:
+      cloudflare-tunnel:
         replicas: 2
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
-        pod:
-          topologySpreadConstraints:
-            - maxSkew: 1
-              topologyKey: kubernetes.io/hostname
-              whenUnsatisfiable: DoNotSchedule
-              labelSelector:
-                matchLabels:
-                  app.kubernetes.io/name: cloudflared
         containers:
-          main:
+          app:
             image:
               repository: docker.io/cloudflare/cloudflared
               tag: 2025.2.1@sha256:03737f27c38ecfb257a55664953cac510727cf27052c51ddb7c8ff1a2b9969e1
             env:
               NO_AUTOUPDATE: "true"
-              TUNNEL_CRED_FILE: /etc/cloudflared/creds/credentials.json
               TUNNEL_METRICS: 0.0.0.0:8080
-              TUNNEL_TRANSPORT_PROTOCOL: auto
-              TUNNEL_ID:
-                valueFrom:
-                  secretKeyRef:
-                    name: cloudflared-secret
-                    key: TunnelID
-            args:
-              - tunnel
-              - --config
-              - /etc/cloudflared/config/config.yaml
-              - run
-              - "$(TUNNEL_ID)"
+              TUNNEL_ORIGIN_ENABLE_HTTP2: true
+              TUNNEL_POST_QUANTUM: true
+              TUNNEL_TRANSPORT_PROTOCOL: quic
+            envFrom:
+              - secretRef:
+                  name: cloudflare-tunnel-secret
+            args: ["tunnel", "run"]
             probes:
               liveness: &probes
                 enabled: true
@@ -59,43 +53,36 @@ spec:
                   timeoutSeconds: 1
                   failureThreshold: 3
               readiness: *probes
-              startup:
-                enabled: false
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
-                cpu: 5m
-                memory: 128M
+                cpu: 10m
               limits:
-                memory: 256M
+                memory: 256Mi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
     service:
-      main:
-        controller: main
+      app:
+        controller: cloudflare-tunnel
         ports:
           http:
-            port: 8080
+            port: *port
     serviceMonitor:
-      main:
-        serviceName: cloudflared
-        enabled: true
+      app:
+        serviceName: cloudflare-tunnel
         endpoints:
           - port: http
-            scheme: http
-            path: /metrics
-            interval: 1m
-            scrapeTimeout: 30s
     persistence:
-      config:
-        enabled: true
+      config-file:
         type: configMap
-        name: cloudflared-configmap
+        name: cloudflare-tunnel-configmap
         globalMounts:
-          - path: /etc/cloudflared/config/config.yaml
+          - path: /etc/cloudflared/config.yaml
             subPath: config.yaml
-            readOnly: true
-      creds:
-        type: secret
-        name: cloudflared-secret
-        globalMounts:
-          - path: /etc/cloudflared/creds/credentials.json
-            subPath: credentials.json
             readOnly: true
