@@ -49,15 +49,15 @@ spec:
           lbipam.cilium.io/ips: 10.11.1.15
         ports:
           http:
-            port: 4534
-    ingress:
-      main:
-        enabled: true
-        className: internal-nginx
-        hosts:
-          - host: bonob.zinn.ca
-            paths:
-              - path: /
-                service:
-                  identifier: main
-                  port: http
+            port: &port 4534
+    route:
+      internal:
+        hostnames: ["{{ .Release.Name }}.zinn.ca"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: main
+                port: *port

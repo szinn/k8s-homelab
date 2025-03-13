@@ -209,13 +209,14 @@ spec:
               pingInterval: 0
               pipelineWindow: 0
             editable: true
-    ingress:
-      enabled: true
-      ingressClassName: internal-nginx
-      hosts:
-        - "grafana.zinn.ca"
-      path: /
-      pathType: Prefix
+    route:
+      internal:
+        enabled: true
+        hostnames: ["grafana.zinn.ca"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
     imageRenderer:
       enabled: true
       replicas: 2

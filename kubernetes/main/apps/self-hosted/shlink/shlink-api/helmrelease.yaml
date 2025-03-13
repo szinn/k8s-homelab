@@ -66,17 +66,17 @@ spec:
         ports:
           http:
             port: *port
-    ingress:
-      main:
-        enabled: true
-        className: external-nginx
+    route:
+      external:
         annotations:
           external-dns/is-public: "true"
           external-dns.alpha.kubernetes.io/target: external.zinn.ca
-        hosts:
-          - host: *host
-            paths:
-              - path: /
-                service:
-                  identifier: main
-                  port: http
+        hostnames: [*host]
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: main
+                port: *port

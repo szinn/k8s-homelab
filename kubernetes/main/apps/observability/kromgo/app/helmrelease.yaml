@@ -73,23 +73,20 @@ spec:
             primary: true
           health:
             port: *hport
-    ingress:
-      main:
-        enabled: true
-        className: external-nginx
+    route:
+      external:
         annotations:
           external-dns/is-public: "true"
           external-dns.alpha.kubernetes.io/target: external.zinn.ca
-        hosts:
-          - host: &host "{{ .Release.Name }}.zinn.ca"
-            paths:
-              - path: /
-                service:
-                  identifier: main
-                  port: http
-        tls:
-          - hosts:
-              - *host
+        hostnames: ["{{ .Release.Name }}.zinn.ca"]
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: main
+                port: *port
     persistence:
       config-file:
         type: configMap

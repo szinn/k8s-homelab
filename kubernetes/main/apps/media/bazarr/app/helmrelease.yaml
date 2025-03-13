@@ -86,16 +86,17 @@ spec:
         ports:
           http:
             port: *port
-    ingress:
-      app:
-        className: internal-nginx
-        hosts:
-          - host: "{{ .Release.Name }}.zinn.ca"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+    route:
+      internal:
+        hostnames: ["{{ .Release.Name }}.zinn.ca"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: app
+                port: *port
     persistence:
       subcleaner:
         type: emptyDir

@@ -18,8 +18,6 @@ spec:
   dependsOn:
     - name: external-secrets
       namespace: external-secrets
-    - name: theme-park
-      namespace: self-hosted
     - name: volsync
       namespace: system
   components:

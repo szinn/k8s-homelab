@@ -56,18 +56,18 @@ spec:
         controller: main
         ports:
           http:
-            port: 3000
-    ingress:
-      main:
-        enabled: true
-        className: internal-nginx
-        hosts:
-          - host: "wiki.zinn.ca"
-            paths:
-              - path: /
-                service:
-                  identifier: main
-                  port: http
+            port: &port 3000
+    route:
+      internal:
+        hostnames: ["wiki.zinn.ca"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: main
+                port: *port
     persistence:
       sshkey:
         enabled: true

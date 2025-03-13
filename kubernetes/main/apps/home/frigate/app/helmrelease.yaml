@@ -89,34 +89,36 @@ spec:
         controller: main
         ports:
           http:
-            port: 5000
+            port: &port 5000
             primary: true
           go2rtc:
             enabled: true
-            port: &api-port 1984
+            port: &apiPort 1984
           rtsp:
             enabled: true
             port: 8554
 
-    ingress:
+    route:
       main:
-        enabled: true
-        className: internal-nginx
-        hosts:
-          - host: frigate.zinn.ca
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: main
-                  port: http
-          - host: go2rtc.zinn.ca
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: main
-                  port: go2rtc
+        hostnames: ["frigate.zinn.ca"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: main
+                port: *port
+      go2rtc:
+        hostnames: ["go2rtc.zinn.ca"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: main
+                port: *apiPort
 
     persistence:
       config:

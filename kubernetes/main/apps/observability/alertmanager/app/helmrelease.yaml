@@ -56,18 +56,19 @@ spec:
         controller: alertmanager
         ports:
           http:
-            port: 9093
+            port: &port 9093
 
-    ingress:
-      app:
-        className: internal-nginx
-        hosts:
-          - host: alerts.zinn.ca
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+    route:
+      internal:
+        hostnames: ["alerts.zinn.ca"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: app
+                port: *port
 
     persistence:
       config:

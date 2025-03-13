@@ -56,17 +56,17 @@ spec:
         ports:
           http:
             port: *port
-    ingress:
-      main:
-        enabled: true
-        className: internal-nginx
-        hosts:
-          - host: &host "{{ .Release.Name }}.zinn.ca"
-            paths:
-              - path: /
-                service:
-                  identifier: main
-                  port: http
+    route:
+      internal:
+        hostnames: ["{{ .Release.Name }}.zinn.ca"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: main
+                port: *port
     persistence:
       config:
         enabled: true

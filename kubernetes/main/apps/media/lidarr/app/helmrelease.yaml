@@ -80,18 +80,18 @@ spec:
         controller: lidarr
         ports:
           http:
-            port: 8686
-    ingress:
-      app:
-        enabled: true
-        className: internal-nginx
-        hosts:
-          - host: "{{ .Release.Name }}.zinn.ca"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+            port: &port 8686
+    route:
+      internal:
+        hostnames: ["{{ .Release.Name }}.zinn.ca"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: app
+                port: *port
     persistence:
       config:
         existingClaim: lidarr-config

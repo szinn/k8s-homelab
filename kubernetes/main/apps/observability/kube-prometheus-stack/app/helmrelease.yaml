@@ -119,11 +119,14 @@ spec:
       fullnameOverride: prometheus-operator
 
     prometheus:
-      ingress:
-        enabled: true
-        ingressClassName: internal-nginx
-        hosts: ["prometheus.zinn.ca"]
-        pathType: Prefix
+      route:
+        main:
+          enabled: true
+          hostnames: ["prometheus.zinn.ca"]
+          parentRefs:
+            - name: internal
+              namespace: kube-system
+              sectionName: https
       prometheusSpec:
         alertingEndpoints:
           - namespace: observability

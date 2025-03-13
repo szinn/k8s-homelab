@@ -93,18 +93,18 @@ spec:
         controller: radarr-4k
         ports:
           http:
-            port: 7878
-    ingress:
-      app:
-        enabled: true
-        className: internal-nginx
-        hosts:
-          - host: "{{ .Release.Name }}.zinn.ca"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+            port: &port 7878
+    route:
+      internal:
+        hostnames: ["{{ .Release.Name }}.zinn.ca"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: app
+                port: *port
     persistence:
       config:
         existingClaim: radarr-4k-config

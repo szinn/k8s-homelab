@@ -16,8 +16,6 @@ spec:
     name: flux-system
     namespace: flux-system
   dependsOn:
-    - name: theme-park
-      namespace: self-hosted
     - name: volsync
       namespace: system
   components:

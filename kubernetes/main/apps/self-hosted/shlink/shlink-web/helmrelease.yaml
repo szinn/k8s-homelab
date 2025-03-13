@@ -54,15 +54,15 @@ spec:
         controller: main
         ports:
           http:
-            port: 8080
-    ingress:
-      main:
-        enabled: true
-        className: internal-nginx
-        hosts:
-          - host: "shlink.zinn.ca"
-            paths:
-              - path: /
-                service:
-                  identifier: main
-                  port: http
+            port: &port 8080
+    route:
+      internal:
+        hostnames: ["shlink.zinn.ca"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: main
+                port: *port

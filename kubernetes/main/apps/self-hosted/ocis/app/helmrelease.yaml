@@ -78,18 +78,19 @@ spec:
         controller: ocis
         ports:
           http:
-            port: 9200
+            port: &port 9200
 
-    ingress:
-      app:
-        className: internal-nginx
-        hosts:
-          - host: files.zinn.ca
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+    route:
+      internal:
+        hostnames: ["files.zinn.ca"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: app
+                port: *port
 
     persistence:
       config:

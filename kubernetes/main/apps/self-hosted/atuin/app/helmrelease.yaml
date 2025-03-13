@@ -71,16 +71,17 @@ spec:
           http:
             primary: true
             port: *port
-    ingress:
-      app:
-        className: internal-nginx
-        hosts:
-          - host: atuin.zinn.ca
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+    route:
+      internal:
+        hostnames: ["{{ .Release.Name }}.zinn.ca"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: app
+                port: *port
     persistence:
       config:
         existingClaim: "${VOLSYNC_CLAIM}"

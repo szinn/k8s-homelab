@@ -93,7 +93,7 @@ spec:
         controller: server
         ports:
           http:
-            port: 2283
+            port: &port 2283
       machine-learning:
         controller: machine-learning
         ports:
@@ -105,17 +105,17 @@ spec:
           http:
             port: 6379
 
-    ingress:
-      main:
-        enabled: true
-        className: internal-nginx
-        hosts:
-          - host: photos.zinn.ca
-            paths:
-              - path: /
-                service:
-                  identifier: server
-                  port: http
+    route:
+      internal:
+        hostnames: ["photos.zinn.ca"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: server
+                port: *port
 
     persistence:
       matplotlib:

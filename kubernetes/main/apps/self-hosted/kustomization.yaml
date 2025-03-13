@@ -16,7 +16,6 @@ resources:
   - ocis/install.yaml
   - pdf-tool/install.yaml
   - shlink/install.yaml
-  - theme-park/install.yaml
   - wikijs/install.yaml
 components:
   - ../../components/flux/alerts

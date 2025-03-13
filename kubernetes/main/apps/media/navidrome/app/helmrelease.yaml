@@ -75,17 +75,17 @@ spec:
         ports:
           http:
             port: *port
-    ingress:
-      main:
-        enabled: true
-        className: internal-nginx
-        hosts:
-          - host: "music.zinn.ca"
-            paths:
-              - path: /
-                service:
-                  identifier: main
-                  port: http
+    route:
+      internal:
+        hostnames: ["music.zinn.ca"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: main
+                port: *port
     persistence:
       config:
         enabled: true

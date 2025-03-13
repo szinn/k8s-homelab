@@ -89,10 +89,10 @@ spec:
         type: ClusterIP
         ports:
           http:
-            port: 8123
+            port: &appPort 8123
             primary: true
           code-server:
-            port: 8080
+            port: &codePort 8080
     serviceMonitor:
       main:
         serviceName: home-assistant
@@ -104,41 +104,40 @@ spec:
             bearerTokenSecret:
               name: home-assistant-secret
               key: HASS_BEARER_TOKEN
-    ingress:
-      main:
-        enabled: true
-        className: internal-nginx
-        hosts:
-          - host: "home.zinn.ca"
-            paths:
-              - path: /
-                service:
-                  identifier: main
-                  port: http
-      external:
-        enabled: true
-        className: external-nginx
+    route:
+      internal-app:
+        hostnames: ["home.zinn.ca"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: home-assistant
+                port: *appPort
+      external-app:
         annotations:
           external-dns/is-public: "true"
           external-dns.alpha.kubernetes.io/target: external.zinn.ca
-          nginx.ingress.kubernetes.io/proxy-body-size: 1000M
-        hosts:
-          - host: "home.zinn.ca"
-            paths:
-              - path: /
-                service:
-                  identifier: main
-                  port: http
+        hostnames: ["home.zinn.ca"]
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: home-assistant
+                port: *appPort
       code-server:
-        enabled: true
-        className: internal-nginx
-        hosts:
-          - host: "ha-code.zinn.ca"
-            paths:
-              - path: /
-                service:
-                  identifier: main
-                  port: code-server
+        hostnames: ["ha-code.zinn.ca"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: home-assistant
+                port: *codePort
     persistence:
       config:
         enabled: true

@@ -40,7 +40,7 @@ spec:
         controller: *app
         ports:
           http:
-            port: 8080
+            port: &port 8080
           metrics:
             port: 8090
     serviceMonitor:
@@ -53,16 +53,17 @@ spec:
             interval: 1m
             scrapeTimeout: 10s
 
-    ingress:
-      app:
-        className: internal-nginx
-        hosts:
-          - host: birdnet.zinn.ca
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+    route:
+      internal:
+        hostnames: ["{{ .Release.Name }}.zinn.ca"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: app
+                port: *port
 
     persistence:
       data:
