@@ -181,6 +181,7 @@ tasks:
           HELMRELEASE: authentik
           KUSTOMIZATION: authentik
           SERVICES: deployment/authentik-server deployment/authentik-worker
+          REPLICAS: 1
 
   up_dmarc:
     desc: Turn up Dmarc Report
