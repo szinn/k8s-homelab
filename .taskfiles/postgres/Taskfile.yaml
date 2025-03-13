@@ -26,16 +26,6 @@ tasks:
       vars:
         - command
 
-  down_authentik:
-    desc: Turn down Authentik
-    cmds:
-      - task: _down
-        vars:
-          NAMESPACE: security
-          HELMRELEASE: authentik
-          KUSTOMIZATION: authentik
-          SERVICES: deployment/authentik-server deployment/authentik-worker
-
   down_dmarc:
     desc: Turn down Dmarc Report
     cmds:
@@ -159,7 +149,6 @@ tasks:
   down_all:
     desc: Turn down all applications using Postgres
     cmds:
-      - task: down_authentik
       - task: down_dmarc
       - task: down_lidarr
       - task: down_prowlarr
@@ -171,17 +160,6 @@ tasks:
       - task: down_home-assistant
       - task: down_gatus
       - task: down_grafana
-
-  up_authentik:
-    desc: Turn up Authentik
-    cmds:
-      - task: _up
-        vars:
-          NAMESPACE: security
-          HELMRELEASE: authentik
-          KUSTOMIZATION: authentik
-          SERVICES: deployment/authentik-server deployment/authentik-worker
-          REPLICAS: 1
 
   up_dmarc:
     desc: Turn up Dmarc Report
@@ -318,7 +296,6 @@ tasks:
   up_all:
     desc: Turn up all applications using Postgres
     cmds:
-      - task: up_authentik
       - task: up_dmarc
       - task: up_lidarr
       - task: up_prowlarr
@@ -330,15 +307,6 @@ tasks:
       - task: up_home-assistant
       - task: up_gatus
       - task: up_grafana
-
-  restore_authentik:
-    desc: Restore authentik database
-    cmds:
-      - task: down_authentik
-      - task: _restore_db
-        vars:
-          DATABASE: authentik
-      - task: up_authentik
 
   restore_dmarc:
     desc: Restore dmarc database

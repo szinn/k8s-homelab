@@ -148,7 +148,6 @@ The repository directories are:
   - **repositories**: Sources of code for the cluster.
   - **staging**: The staging cluster that follows the same structure as the main cluster.
 - **hack**: Miscellaneous stuff that really has nothing to do with managing the cluster.
-- **terraform**: Terraform one-off configurations for Authentik and Minio.
 
 ### Environment Setup
 
