@@ -13,6 +13,18 @@ tasks:
     desc: Fetch domain certificate from cluster
     cmd: "{{.SCRIPTS_DIR}}/fetch-certificate.sh {{.FILES_DIR}}/certificates"
 
+  update-certificates:
+    desc: Update machine certificates
+    cmds:
+      - task: update-octopi-certificate
+      - task: update-pikvm-certificate
+      - task: update-proxmox-certificate
+      - task: update-ragnar-certificate
+      - task: update-styx-certificate
+      - task: update-zeus-certificate
+      - task: update-artemis-certificates
+      - task: update-titan-certificates
+
   update-octopi-certificate:
     desc: Update OctoPi certificate
     cmds:
