@@ -10,7 +10,6 @@ resources:
   - cloudflare-tunnel/install.yaml
   - echo-server/install.yaml
   - external-dns/install.yaml
-  - external-services/install.yaml
   - nginx/install.yaml
 components:
   - ../../components/flux/alerts
