@@ -68,19 +68,6 @@ spec:
                 service:
                   identifier: main
                   port: http
-      external:
-        enabled: true
-        className: external-nginx
-        annotations:
-          external-dns/is-public: "true"
-          external-dns.alpha.kubernetes.io/target: external.zinn.ca
-        hosts:
-          - host: "wiki.zinn.ca"
-            paths:
-              - path: /
-                service:
-                  identifier: main
-                  port: http
     persistence:
       sshkey:
         enabled: true
