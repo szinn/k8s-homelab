@@ -116,17 +116,17 @@ spec:
         ports:
           http:
             port: *apiPort
-    ingress:
-      api:
-        enabled: true
-        className: internal-nginx
-        hosts:
-          - host: "onepassword-connect.zinn.ca"
-            paths:
-              - path: /
-                service:
-                  identifier: api
-                  port: http
+    route:
+      app:
+        hostnames: ["onepassword-connect.zinn.ca"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: api
+                port: *apiPort
     persistence:
       config:
         type: emptyDir

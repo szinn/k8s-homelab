@@ -30,36 +30,36 @@ spec:
               repository: ghcr.io/traefik/whoami
               tag: v1.11.0@sha256:200689790a0a0ea48ca45992e0450bc26ccab5307375b41c84dfc4f2475937ab
             env:
-              WHOAMI_PORT_NUMBER: 80
+              WHOAMI_PORT_NUMBER: &port 80
 
     service:
       main:
         controller: main
         ports:
           http:
-            port: 80
+            port: *port
 
-    ingress:
-      main:
-        enabled: true
-        className: internal-nginx
-        hosts:
-          - host: "{{ .Release.Name }}.zinn.ca"
-            paths:
-              - path: /
-                service:
-                  identifier: main
-                  port: http
+    route:
+      internal:
+        hostnames: ["{{ .Release.Name }}.zinn.ca"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: main
+                port: *port
       external:
-        enabled: true
-        className: external-nginx
         annotations:
           external-dns/is-public: "true"
           external-dns.alpha.kubernetes.io/target: external.zinn.ca
-        hosts:
-          - host: "{{ .Release.Name }}.zinn.ca"
-            paths:
-              - path: /
-                service:
-                  identifier: main
-                  port: http
+        hostnames: ["{{ .Release.Name }}.zinn.ca"]
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: main
+                port: *port

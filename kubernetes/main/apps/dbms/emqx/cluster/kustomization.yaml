@@ -5,5 +5,5 @@ kind: Kustomization
 resources:
   - cluster.yaml
   - gatus.yaml
-  - ingress.yaml
+  - httproute.yaml
   - podmonitor.yaml
