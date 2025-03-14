@@ -135,7 +135,7 @@ tasks:
         sh: kubectl --namespace {{.NS}} get replicationsources/{{.APP}} --output=jsonpath="{.spec.restic.moverSecurityContext.runAsGroup}"
     cmds:
       # Suspend
-      - flux --context {{.CLUSTER}} --namespace flux-system suspend kustomization {{.APP}}
+      - flux --context {{.CLUSTER}} --namespace {{.NS}} suspend kustomization {{.APP}}
       - flux --context {{.CLUSTER}} --namespace {{.NS}} suspend helmrelease {{.APP}}
       - kubectl --context {{.CLUSTER}} --namespace {{.NS}} scale {{.CONTROLLER}}/{{.APP}} --replicas 0
       - kubectl --context {{.CLUSTER}} --namespace {{.NS}} wait pod --for=delete --selector="app.kubernetes.io/name={{.APP}}" --timeout=5m
@@ -145,7 +145,7 @@ tasks:
       - kubectl --context {{.CLUSTER}} --namespace {{.NS}} wait job/volsync-dst-{{.APP}}-manual --for=condition=complete --timeout=120m
       - kubectl --context {{.CLUSTER}} --namespace {{.NS}} delete replicationdestination {{.APP}}-manual
       # Resume
-      - flux --context {{.CLUSTER}} --namespace flux-system resume kustomization {{.APP}}
+      - flux --context {{.CLUSTER}} --namespace {{.NS}} resume kustomization {{.APP}}
       - flux --context {{.CLUSTER}} --namespace {{.NS}} resume helmrelease {{.APP}}
       - flux --context {{.CLUSTER}} --namespace {{.NS}} reconcile helmrelease {{.APP}} --force
       - kubectl --context {{.CLUSTER}} --namespace {{.NS}} wait pod --for=condition=ready --selector="app.kubernetes.io/name={{.APP}}" --timeout=5m
