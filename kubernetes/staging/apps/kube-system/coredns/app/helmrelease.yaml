@@ -4,7 +4,6 @@ apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: OCIRepository
 metadata:
   name: coredns
-  namespace: flux-system
 spec:
   interval: 1h
   layerSelector:
@@ -26,7 +25,6 @@ spec:
   chartRef:
     kind: OCIRepository
     name: coredns
-    namespace: flux-system
   valuesFrom:
     - kind: ConfigMap
       name: coredns-values
