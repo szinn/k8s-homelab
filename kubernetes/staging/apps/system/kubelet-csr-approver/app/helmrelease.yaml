@@ -1,12 +1,19 @@
 ---
-# yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/source.toolkit.fluxcd.io/helmrepository_v1beta2.json
+# yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/source.toolkit.fluxcd.io/ocirepository_v1beta2.json
 apiVersion: source.toolkit.fluxcd.io/v1beta2
-kind: HelmRepository
+kind: OCIRepository
 metadata:
-  name: postfinance-charts
+  name: kubelet-csr-approver
 spec:
-  interval: 30m
-  url: https://postfinance.github.io/kubelet-csr-approver
+  interval: 1h
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: 1.2.6
+  url: oci://ghcr.io/szinn/charts-mirror/kubelet-csr-approver
+  verify:
+    provider: cosign
 ---
 # yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
@@ -15,15 +22,10 @@ metadata:
   name: kubelet-csr-approver
   namespace: system
 spec:
-  interval: 30m
-  chart:
-    spec:
-      chart: kubelet-csr-approver
-      version: 1.2.6
-      sourceRef:
-        kind: HelmRepository
-        name: postfinance-charts
-      interval: 30m
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: kubelet-csr-approver
   valuesFrom:
     - kind: ConfigMap
       name: kubelet-csr-approver-values
