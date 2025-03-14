@@ -1,4 +1,13 @@
 ---
+# yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/source.toolkit.fluxcd.io/helmrepository_v1beta2.json
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: piraeus
+spec:
+  interval: 30m
+  url: https://piraeus.io/helm-charts/
+---
 # yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -12,8 +21,7 @@ spec:
       version: 4.0.1
       sourceRef:
         kind: HelmRepository
-        name: piraeus-charts
-        namespace: flux-system
+        name: piraeus
       interval: 15m
   maxHistory: 3
   install:

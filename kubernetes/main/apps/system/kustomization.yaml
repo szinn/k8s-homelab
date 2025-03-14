@@ -3,6 +3,9 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: system
+components:
+  - ../../components/flux/alerts
+  - ../../components/repos/app-template
 resources:
   # Pre Flux-Kustomizations
   - namespace.yaml
@@ -19,5 +22,3 @@ resources:
   - snapshot-controller/install.yaml
   - spegel/install.yaml
   - volsync/install.yaml
-components:
-  - ../../components/flux/alerts

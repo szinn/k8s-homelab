@@ -3,10 +3,11 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: system-upgrade
+components:
+  - ../../components/flux/alerts
+  - ../../components/repos/app-template
 resources:
   # Pre Flux-Kustomizations
   - namespace.yaml
   # Flux-Kustomizations
   - system-upgrade-controller/install.yaml
-components:
-  - ../../components/flux/alerts
