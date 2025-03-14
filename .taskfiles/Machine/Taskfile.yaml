@@ -155,6 +155,12 @@ tasks:
       - scp "{{.FILES_DIR}}/artemis/cloudflare-ddns.crontab" root@artemis.zinn.tech:/etc/cron.d/cloudflare-ddns
       - ssh root@artemis.zinn.tech chmod -x /etc/cron.d/cloudflare-ddns
 
+  install-artemis-node_exporter:
+    desc: Install Node Exporter
+    cmds:
+      - ssh root@artemis.zinn.tech 'apt update -y && apt install prometheus-node-exporter -y'
+      - ssh root@artemis.zinn.tech 'systemctl disable nvmf-autoconnect smartmontools && systemctl reset-failed'
+
   update-artemis-configuration:
     desc: Update Artemis configuration
     cmds:
@@ -226,6 +232,13 @@ tasks:
     desc: Restart Titan AdGuardHome
     cmds:
       - ssh root@titan.zinn.tech systemctl restart AdGuardHome
+
+  install-titan-node_exporter:
+    desc: Install Node Exporter
+    cmds:
+      - ssh root@titan.zinn.tech 'dnf install node-exporter'
+      - scp "{{.FILES_DIR}}/titan/node_exporter.service" root@titan.zinn.tech:/etc/systemd/system/node_exporter.service
+      - ssh root@titan.zinn.tech 'systemctl daemon-reload && systemctl enable node_exporter && systemctl start node_exporter'
 
   update-titan-adguard-configuration:
     desc: Update Titan AdGuardHome configuration
