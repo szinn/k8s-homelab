@@ -10,7 +10,6 @@ resources:
   - flux-system
   - networking
   - system
-  - volsync-system
   # Step 2
   - rook-ceph
   # Step 3

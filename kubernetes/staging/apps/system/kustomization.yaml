@@ -10,4 +10,6 @@ resources:
   - kubelet-csr-approver/install.yaml
   - node-feature-discovery/install.yaml
   - reloader/install.yaml
+  - snapshot-controller/install.yaml
   - spegel/install.yaml
+  - volsync/install.yaml

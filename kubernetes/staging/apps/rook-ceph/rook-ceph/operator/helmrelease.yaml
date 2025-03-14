@@ -38,7 +38,7 @@ spec:
       retries: 3
   dependsOn:
     - name: snapshot-controller
-      namespace: volsync-system
+      namespace: system
   values:
     image:
       repository: ghcr.io/rook/ceph
