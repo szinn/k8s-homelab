@@ -1,4 +1,21 @@
 ---
+# yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/source.toolkit.fluxcd.io/ocirepository_v1beta2.json
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: OCIRepository
+metadata:
+  name: coredns
+  namespace: flux-system
+spec:
+  interval: 1h
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  url: oci://ghcr.io/coredns/charts/coredns
+  ref:
+    tag: 1.39.1
+  verify:
+    provider: cosign
+---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -10,7 +27,6 @@ spec:
     kind: OCIRepository
     name: coredns
     namespace: flux-system
-
   valuesFrom:
     - kind: ConfigMap
       name: coredns-values
