@@ -9,8 +9,10 @@ resources:
   - external-secrets.yaml
   - flux-instance.yaml
   - flux-operator.yaml
+  - intel-device-plugins-operator.yaml
   - k8s-ycl.yaml
   - kube-prometheus-stack.yaml
+  - loki.yaml
   - promtail.yaml
   - reloader.yaml
   - spegel.yaml

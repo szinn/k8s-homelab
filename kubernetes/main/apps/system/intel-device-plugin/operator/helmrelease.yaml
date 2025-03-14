@@ -5,15 +5,11 @@ kind: HelmRelease
 metadata:
   name: intel-device-plugin-operator
 spec:
-  interval: 15m
-  chart:
-    spec:
-      chart: intel-device-plugins-operator
-      version: 0.32.0
-      sourceRef:
-        kind: HelmRepository
-        name: intel-charts
-        namespace: flux-system
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: intel-device-plugins-operator
+    namespace: flux-system
   maxHistory: 2
   install:
     crds: CreateReplace
