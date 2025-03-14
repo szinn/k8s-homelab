@@ -1,4 +1,20 @@
 ---
+# yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/source.toolkit.fluxcd.io/ocirepository_v1beta2.json
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: OCIRepository
+metadata:
+  name: cloudnative-pg
+spec:
+  interval: 1h
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: 0.32.2
+  url: oci://ghcr.io/szinn/charts-mirror/cloudnative-pg
+  verify:
+    provider: cosign
+---
 # yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/source.toolkit.fluxcd.io/helmrepository_v1beta2.json
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
