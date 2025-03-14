@@ -25,41 +25,41 @@ spec:
   chartRef:
     kind: OCIRepository
     name: openebs
+  install:
+    disableHooks: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    disableHooks: true
+    remediation:
+      strategy: rollback
+      retries: 3
   values:
     localpv-provisioner:
-      rbac:
-        create: true
-
       localpv:
         image:
           registry: quay.io/
         basePath: &basePath /var/mnt/ssd/openebs/local
-
-      helperPod:
-        image:
-          registry: quay.io/
-
       hostpathClass:
         enabled: true
         name: openebs-hostpath
         isDefaultClass: false
         basePath: *basePath
-
+      helperPod:
+        image:
+          registry: quay.io/
     openebs-crds:
       csi:
         volumeSnapshots:
           enabled: false
           keep: false
-
     zfs-localpv:
       enabled: false
-
     lvm-localpv:
       enabled: false
-
     mayastor:
       enabled: false
-
     engines:
       local:
         lvm:
