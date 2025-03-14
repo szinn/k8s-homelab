@@ -39,14 +39,14 @@
     "system": "kubernetes",
     "system-upgrade": "update",
   },
-  "prettier.configPath": ".ci/prettier/.prettierrc.yaml",
-  "prettier.ignorePath": ".ci/prettier/.prettierignore",
+  "prettier.configPath": ".prettierrc",
+  "prettier.ignorePath": ".prettierignore",
   "yaml.schemas": {
     "Kubernetes": "kubernetes/*.yaml"
   },
   "yaml.customTags": ["!env_var"],
   "explorer.autoReveal": false,
   "markdownlint.config": {
-    "extends": ".ci/markdownlint/.markdownlint.yaml"
+    "extends": ".markdownlint.yaml"
   }
 }
