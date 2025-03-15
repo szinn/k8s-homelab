@@ -16,7 +16,7 @@ runs:
   steps:
     - name: Get changed files
       id: changed-files
-      uses: actions/github-script@v7
+      uses: actions/github-script@v7.0.1
       with:
         script: |
           input_matchers = `${{ inputs.matchers }}`;
