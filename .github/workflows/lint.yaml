@@ -27,8 +27,7 @@ jobs:
         uses: ./.github/actions/get-changed-files
         with:
           matchers: |-
-            .github/workflows/**/*.yml
-            .github/workflows/**/*.yaml
+            ^\.github/workflows/.+\.ya?ml$
 
       - name: Run actionlint
         if: steps.changed-files.outputs.filtered_files != '[]'
