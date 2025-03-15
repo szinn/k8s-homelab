@@ -44,11 +44,6 @@
       "description": ["Don't pin digests for managers that don't need a digest"],
       "matchManagers": ["flux", "helmfile"],
       "pinDigests": false
-    },
-    {
-      "description": ["Don't pin digests for tj-actions/changed-files"],
-      "matchDepNames": ["tj-actions/changed-files"],
-      "pinDigests": false
     }
   ]
 }
