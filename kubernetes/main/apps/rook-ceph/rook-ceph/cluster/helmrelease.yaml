@@ -220,7 +220,8 @@ spec:
       isDefault: false
       deletionPolicy: Delete
 
-    cephObjectStores: []
+    cephObjectStores:
+      []
       # - name: ceph-objectstore
       #   spec:
       #     metadataPool:
