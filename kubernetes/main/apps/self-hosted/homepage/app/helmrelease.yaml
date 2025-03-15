@@ -29,6 +29,7 @@ spec:
               repository: ghcr.io/gethomepage/homepage
               tag: v1.0.2@sha256:a729ffc5254a7d081d45270f7cb5b844819f9381d58c48e5f89f953d1f845817
             env:
+              HOMEPAGE_ALLOWED_HOSTS: &host "{{ .Release.Name }}.zinn.ca"
               TZ: America/Toronto
             envFrom:
               - secretRef:
@@ -47,7 +48,7 @@ spec:
             port: &port 3000
     route:
       internal:
-        hostnames: ["{{ .Release.Name }}.zinn.ca"]
+        hostnames: [*host]
         parentRefs:
           - name: internal
             namespace: kube-system
