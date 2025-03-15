@@ -2,23 +2,23 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "packageRules": [
     {
-      "description": "Auto merge container digests",
+      "description": "Auto merge trusted container digests",
       "matchDatasources": ["docker"],
       "automerge": true,
       "automergeType": "branch",
-      "ignoreTests": true,
       "matchUpdateTypes": ["digest"],
-      "matchPackageNames": ["/szinn/", "/bjw-s/", "/onedr0p/"]
+      "matchPackageNames": ["/szinn/", "/bjw-s/", "/onedr0p/"],
+      "ignoreTests": true
     },
-    // {
-    //   "description": ["Auto-merge GitHub Actions"],
-    //   "matchManagers": ["github-actions"],
-    //   "matchDatasources": ["github-tags"],
-    //   "automerge": true,
-    //   "automergeType": "branch",
-    //   "matchUpdateTypes": ["minor", "patch", "digest"],
-    //   "ignoreTests": true
-    // },
+    {
+      "description": ["Auto-merge GitHub Actions"],
+      "matchManagers": ["github-actions"],
+      "automerge": true,
+      "automergeType": "branch",
+      "matchUpdateTypes": ["minor", "patch", "digest"],
+      "minimumReleaseAge": "3 days",
+      "ignoreTests": true
+    },
     {
       "description": "Auto merge KPS minors and patches",
       "matchDatasources": ["docker", "helm"],
@@ -32,10 +32,10 @@
       "description": "Auto-merge GitHub Releases",
       "matchDatasources": ["github-releases"],
       "automerge": true,
-      "automergeType": "pr",
+      "automergeType": "branch",
       "matchUpdateTypes": ["minor", "patch"],
-      "matchPackageNames": ["/gateway-api/", "/prometheus-operator/"],
-      "ignoreTests": false
+      "matchPackageNames": ["/external-dns/", "/gateway-api/", "/prometheus-operator/"],
+      "ignoreTests": true
     },
     {
       "description": "Auto merge media releases",
