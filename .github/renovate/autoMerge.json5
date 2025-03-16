@@ -49,16 +49,13 @@
         "ghcr.io/onedr0p/jackett",
         "ghcr.io/onedr0p/lidarr",
         "ghcr.io/onedr0p/lidarr-develop",
-        "ghcr.io/onedr0p/prowlarr-develop",
-        "ghcr.io/onedr0p/prowlarr-nightly",
+        "ghcr.io/onedr0p/prowlarr",
         "ghcr.io/onedr0p/qbittorrent",
         "ghcr.io/onedr0p/radarr",
-        "ghcr.io/onedr0p/radarr-develop",
         "ghcr.io/onedr0p/readarr-develop",
         "ghcr.io/onedr0p/recyclarr",
         "ghcr.io/onedr0p/sabnzbd",
         "ghcr.io/onedr0p/sonarr",
-        "ghcr.io/onedr0p/sonarr-develop",
         "ghcr.io/szinn/lidarr-develop",
         "ghcr.io/szinn/readarr-develop"
       ]
