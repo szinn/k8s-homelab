@@ -41,7 +41,7 @@ spec:
     fullnameOverride: external-dns-cloudflare
     image: # TODO: Remove this block when new chart version is released
       repository: registry.k8s.io/external-dns/external-dns
-      tag: v0.16.1
+      tag: v0.16.1@sha256:37d3a7a05c4638b8177382b80a627c223bd84a53c1a91be137245bd3cfdf9986
     podAnnotations:
       secret.reloader.stakater.com/reload: &secret external-dns-cloudflare-secret
     logLevel: debug
