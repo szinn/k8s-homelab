@@ -86,7 +86,7 @@ data:
             icon: pikvm.png
         - AdGuard Home (Artemis):
             href: https://artemis.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:1443
-            siteMonitor: https://artemis.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
+            siteMonitor: https://artemis.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:1443
             widget:
               type: adguard
               url: https://artemis.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:1443
@@ -94,7 +94,7 @@ data:
               password: {{HOMEPAGE_VAR_ADGUARD_PASSWORD}}
         - AdGuard Home (Titan):
             href: https://titan.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:1443
-            siteMonitor: https://titan.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
+            siteMonitor: https://titan.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:1443
             widget:
               type: adguard
               url: https://titan.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:1443
@@ -146,7 +146,7 @@ data:
                 icon: prometheus.png
             - Gatus (Gateway):
                 href: https://gatus.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:8443
-                siteMonitor: https://gatus.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
+                siteMonitor: https://gatus.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:8443
                 icon: gatus.png
             - Gatus (Cluster):
                 href: https://status.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
@@ -159,21 +159,27 @@ data:
         - Storage:
             - TrueNAS:
                 href: https://ragnar.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
+                siteMonitor: https://ragnar.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
                 icon: truenas.png
             - Rook:
                 href: https://rook.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+                siteMonitor: https://rook.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
                 icon: rook.png
             - Hades:
                 href: https://hades.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
+                siteMonitor: https://hades.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
                 icon: synology-dsm.png
             - pgAdmin:
                 href: https://pgadmin.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+                siteMonitor: https://pgadmin.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
                 icon: pgadmin.png
             - EMQX:
                 href: https://emqx.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+                siteMonitor: https://emqx.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
                 icon: emqx.
             - Rook (Staging):
                 href: https://rook.test.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+                siteMonitor: https://rook.test.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
                 icon: rook.png
     - Media:
         - Overseerr:
