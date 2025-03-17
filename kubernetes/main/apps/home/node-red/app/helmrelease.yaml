@@ -38,7 +38,7 @@ spec:
           main:
             image:
               repository: docker.io/nodered/node-red
-              tag: 4.0.9@sha256:7a3e18f29578feb271bb8daab4379e4ebd355b87ea64b699ce74e6ff49d907aa
+              tag: 4.0.9@sha256:0b295b3a14c512548567ca99db631bc37b23bfc79fd009ee8248a610fafdb4b5
             env:
               TZ: "America/Toronto"
               NODE_RED_ENABLE_PROJECTS: "true"
