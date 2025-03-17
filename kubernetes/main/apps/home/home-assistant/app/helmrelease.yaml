@@ -41,8 +41,8 @@ spec:
         initContainers:
           init-db:
             image:
-              repository: ghcr.io/onedr0p/postgres-init
-              tag: 17.4@sha256:43dd04e91e861cf912378bad987afa168fa4f13d05528304907ad0aa351195d6
+              repository: ghcr.io/home-operations/postgres-init
+              tag: 17.4
               pullPolicy: IfNotPresent
             envFrom:
               - secretRef:
@@ -50,8 +50,8 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/onedr0p/home-assistant
-              tag: 2025.3.3@sha256:9e2a7177b4600653d6cb46dff01b1598189a5ae93be0b99242fbc039d32d79f1
+              repository: ghcr.io/home-operations/home-assistant
+              tag: 2025.3.3
             envFrom:
               - secretRef:
                   name: home-assistant-secret

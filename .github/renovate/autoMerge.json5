@@ -45,19 +45,13 @@
       requiredStatusChecks: null,
       matchUpdateTypes: ["minor", "patch"],
       matchDepNames: [
-        "ghcr.io/onedr0p/exportarr",
-        "ghcr.io/onedr0p/jackett",
-        "ghcr.io/onedr0p/lidarr",
-        "ghcr.io/onedr0p/lidarr-develop",
-        "ghcr.io/onedr0p/prowlarr",
-        "ghcr.io/onedr0p/qbittorrent",
-        "ghcr.io/onedr0p/radarr",
-        "ghcr.io/onedr0p/readarr-develop",
-        "ghcr.io/onedr0p/recyclarr",
-        "ghcr.io/onedr0p/sabnzbd",
-        "ghcr.io/onedr0p/sonarr",
-        "ghcr.io/szinn/lidarr-develop",
-        "ghcr.io/szinn/readarr-develop"
+        "ghcr.io/home-operations/lidarr",
+        "ghcr.io/home-operations/prowlarr",
+        "ghcr.io/home-operations/qbittorrent",
+        "ghcr.io/home-operations/radarr",
+        "ghcr.io/home-operations/recyclarr",
+        "ghcr.io/home-operations/sabnzbd",
+        "ghcr.io/home-operations/sonarr",
       ]
     }
   ]

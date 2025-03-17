@@ -11,7 +11,7 @@ spec:
     operation: copy
   ref:
     tag: 0.17.2
-  url: oci://ghcr.io/onedr0p/charts-mirror/node-feature-discovery
+  url: oci://ghcr.io/home-operations/charts-mirror/node-feature-discovery
   verify:
     provider: cosign
 ---

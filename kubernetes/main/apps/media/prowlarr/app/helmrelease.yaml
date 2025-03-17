@@ -35,16 +35,16 @@ spec:
         initContainers:
           init-db:
             image:
-              repository: ghcr.io/onedr0p/postgres-init
-              tag: 16@sha256:217c47c886965474f5c234b5a35ed008f53b39ea90a3088b31c0da98e1f9284d
+              repository: ghcr.io/home-operations/postgres-init
+              tag: 17.4
             envFrom: &envFrom
               - secretRef:
                   name: prowlarr-secret
         containers:
           app:
             image:
-              repository: ghcr.io/onedr0p/prowlarr
-              tag: 1.32.2.4987@sha256:aa248643aa72c407d2f565c2b63831f887152aae47acb076a12b062bbbdeb61d
+              repository: ghcr.io/home-operations/prowlarr
+              tag: 1.32.2.4987
             env:
               TZ: America/Toronto
               PROWLARR__APP__INSTANCENAME: Prowlarr
