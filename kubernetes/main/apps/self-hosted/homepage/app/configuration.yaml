@@ -77,13 +77,16 @@ data:
   services.yaml: |
     - Administration:
         - Proxmox:
-            icon: proxmox.png
             href: https://ares.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:8006
+            siteMonitor: https://ares.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:8006
+            icon: proxmox.png
         - KVM:
-            icon: pikvm.png
             href: https://pikvm.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
+            siteMonitor: https://pikvm.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
+            icon: pikvm.png
         - AdGuard Home (Artemis):
             href: https://artemis.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:1443
+            siteMonitor: https://artemis.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
             widget:
               type: adguard
               url: https://artemis.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:1443
@@ -91,23 +94,27 @@ data:
               password: {{HOMEPAGE_VAR_ADGUARD_PASSWORD}}
         - AdGuard Home (Titan):
             href: https://titan.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:1443
+            siteMonitor: https://titan.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
             widget:
               type: adguard
               url: https://titan.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:1443
               username: {{HOMEPAGE_VAR_ADGUARD_USERNAME}}
               password: {{HOMEPAGE_VAR_ADGUARD_PASSWORD}}
         - Mailu:
-            icon: mailu.png
             href: https://{{HOMEPAGE_VAR_MAILU}}/admin
+            icon: mailu.png
         - DMARC Reports:
-            icon: mail-in-a-box.png
             href: https://dmarc-report.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            siteMonitor: https://dmarc-report.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            icon: mail-in-a-box.png
         - Echo Server:
+            href: https://echo-server.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            siteMonitor: https://echo-server.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
             icon: babybuddy.png
-            href: 'https://echo-server.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}'
         - Who Am I:
+            href: https://whoami.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            siteMonitor: https://whoami.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
             icon: ward.png
-            href: 'https://whoami.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}'
         - Cloudflared:
             href: https://dash.cloudflare.com/
             icon: cloudflare-zero-trust.png
@@ -122,6 +129,7 @@ data:
         - Monitoring:
             - Grafana:
                 href: https://grafana.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+                siteMonitor: https://grafana.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
                 icon: grafana.png
                 # widget:
                 #   type: grafana
@@ -130,18 +138,23 @@ data:
                 #   password: https://grafana.{{HOMEPAGE_VAR_GRAFANA_PASSWORD}}
             - Alert Manager:
                 href: https://alerts.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+                siteMonitor: https://alerts.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
                 icon: alertmanager.png
             - Prometheus:
                 href: https://prometheus.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}/alerts?state=pending&state=firing&showEmptyGroups=0
+                siteMonitor: https://prometheus.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}/alerts?state=pending&state=firing&showEmptyGroups=0
                 icon: prometheus.png
             - Gatus (Gateway):
                 href: https://gatus.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:8443
+                siteMonitor: https://gatus.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
                 icon: gatus.png
             - Gatus (Cluster):
                 href: https://status.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+                siteMonitor: https://status.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
                 icon: gatus.png
             - Change Detection:
                 href: https://changedetection.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+                siteMonitor: https://changedetection.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
                 icon: changedetection-io.png
         - Storage:
             - TrueNAS:
