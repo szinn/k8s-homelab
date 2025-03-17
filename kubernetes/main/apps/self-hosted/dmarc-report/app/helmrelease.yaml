@@ -43,7 +43,7 @@ spec:
           main:
             image:
               repository: ghcr.io/szinn/dmarc-report
-              tag: 1.4.5@sha256:1cb1091cf77d1f0e14a8eb62e7a1674f64a1c16ac92b0be2ae0fdbc935774f53
+              tag: 1.4.5@sha256:eb3e89d4fafaebd4de723949d2c477449ebb779582c53899ae3beeeb811efd98
               pullPolicy: IfNotPresent
             env:
               TZ: America/Toronto
