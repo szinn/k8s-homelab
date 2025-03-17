@@ -43,8 +43,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/szinn/lidarr-develop
-              tag: 2.10.1.4589@sha256:c60a512ae329c4fb24fc7ce22aa8df9456eaae6de7fc980b3c2fa820b2eea81c
+              repository: ghcr.io/szinn/lidarr
+              tag: 2.10.1.4589
             env:
               TZ: America/Toronto
               LIDARR__APP__INSTANCENAME: Lidarr

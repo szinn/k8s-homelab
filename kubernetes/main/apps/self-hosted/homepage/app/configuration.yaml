@@ -28,20 +28,16 @@ data:
         initiallyCollapsed: false
       Administration:
         style: column
-        columns: 5
         icon: mdi-network
-      Monitoring:
+      Cluster:
         style: column
-        columns: 5
-        icon: grafana.png
-      Storage:
-        style: column
-        columns: 5
         icon: synology.png
       Media:
         style: column
-        columns: 5
         icon: mdi-download-circle
+      Home:
+        style: column
+        icon: home-assistant
 
   widgets.yaml: |
     # - logo:
@@ -166,7 +162,6 @@ data:
             - Rook (Staging):
                 href: https://rook.test.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
                 icon: rook.png
-
     - Media:
         - Overseerr:
             href: https://overseerr.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
@@ -222,18 +217,6 @@ data:
               type: lidarr
               url: http://lidarr.media.svc.cluster.local:8686
               key: {{HOMEPAGE_VAR_LIDARR_TOKEN}}
-        # - Navidrome:
-        #     href: https://music.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-        #     siteMonitor: https://music.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-        #     icon: navidrome.png
-        #     description: Music Library
-        #     widget:
-        #       type: navidrome
-        #       url: https://music.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-        #       username: {{HOMEPAGE_VAR_NAVIDROME_USERNAME}}
-        #       token: {{HOMEPAGE_VAR_NAVIDROME_TOKEN}}
-        #       salt: {{HOMEPAGE_VAR_NAVIDROME_SALT}}
-
         - Sabnzbd:
             href: https://sabnzbd.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
             siteMonitor: https://sabnzbd.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
@@ -256,36 +239,47 @@ data:
     - Home:
         - Home Assistant:
             href: https://home.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            siteMonitor: https://home.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
             icon: home-assistant.png
         - Node Red:
             href: https://node-red.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            siteMonitor: https://node-red.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
             icon: node-red.png
         - Wiki Recipes:
             href: https://wiki.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}/recipes/index
+            siteMonitor: https://wiki.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}/recipes/index
             icon: wikijs.png
         - OwnCloud:
             href: https://files.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            siteMonitor: https://files.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
             icon: owncloud.png
         - Excalidraw:
             href: https://excalidraw.com
+            siteMonitor: https://excalidraw.com
             icon: excalidraw.png
         - Shlink:
             href: https://shlink.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            siteMonitor: https://shlink.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
             icon: shlink.png
         - Octoprint:
             href: https://octopi.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
+            siteMonitor: https://octopi.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
             icon: octoprint.png
         - Stirling PDF:
             href: https://pdf-tool.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            siteMonitor: https://pdf-tool.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
             icon: https://raw.githubusercontent.com/Stirling-Tools/Stirling-PDF/main/docs/stirling.png
         - BirdNet:
             href: https://birdnet.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            siteMonitor: https://birdnet.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
             icon: netbird.png
         - Home Code:
             href: https://ha-code.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            siteMonitor: https://ha-code.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
             icon: home-assistant.png
         - Dashy Code:
             href: https://dashy-code.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            siteMonitor: https://dashy-code.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
             icon: etcd.png
 
     - Calendar:
