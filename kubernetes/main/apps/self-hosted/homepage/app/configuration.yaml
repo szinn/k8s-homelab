@@ -122,49 +122,50 @@ data:
               tunnelid: {{HOMEPAGE_VAR_CLOUDFLARED_TUNNELID}}
               key: {{HOMEPAGE_VAR_CLOUDFLARED_API_TOKEN}}
               fields: ["status"]
-    - Monitoring:
-        - Grafana:
-            href: https://grafana.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            icon: grafana.png
-            # widget:
-            #   type: grafana
-            #   url: http://grafana.observability.svc.cluster.local:3000
-            #   username: https://grafana.{{HOMEPAGE_VAR_GRAFANA_USERNAME}}
-            #   password: https://grafana.{{HOMEPAGE_VAR_GRAFANA_PASSWORD}}
-        - Alert Manager:
-            href: https://alerts.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            icon: alertmanager.png
-        - Prometheus:
-            href: https://prometheus.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}/alerts?state=pending&state=firing&showEmptyGroups=0
-            icon: prometheus.png
-        - Gatus (Gateway):
-            href: https://gatus.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:8443
-            icon: gatus.png
-        - Gatus (Cluster):
-            href: https://status.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            icon: gatus.png
-        - Change Detection:
-            href: https://changedetection.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            icon: changedetection-io.png
-    - Storage:
-        - TrueNAS:
-            href: https://ragnar.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
-            icon: truenas.png
-        - Rook:
-            href: https://rook.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            icon: rook.png
-        - Hades:
-            href: https://hades.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
-            icon: synology-dsm.png
-        - pgAdmin:
-            href: https://pgadmin.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            icon: pgadmin.png
-        - EMQX:
-            href: https://emqx.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            icon: emqx.png
-        - Rook (Staging):
-            href: https://rook.test.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            icon: rook.png
+    - Cluster:
+        - Monitoring:
+            - Grafana:
+                href: https://grafana.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+                icon: grafana.png
+                # widget:
+                #   type: grafana
+                #   url: http://grafana.observability.svc.cluster.local:3000
+                #   username: https://grafana.{{HOMEPAGE_VAR_GRAFANA_USERNAME}}
+                #   password: https://grafana.{{HOMEPAGE_VAR_GRAFANA_PASSWORD}}
+            - Alert Manager:
+                href: https://alerts.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+                icon: alertmanager.png
+            - Prometheus:
+                href: https://prometheus.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}/alerts?state=pending&state=firing&showEmptyGroups=0
+                icon: prometheus.png
+            - Gatus (Gateway):
+                href: https://gatus.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:8443
+                icon: gatus.png
+            - Gatus (Cluster):
+                href: https://status.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+                icon: gatus.png
+            - Change Detection:
+                href: https://changedetection.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+                icon: changedetection-io.png
+        - Storage:
+            - TrueNAS:
+                href: https://ragnar.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
+                icon: truenas.png
+            - Rook:
+                href: https://rook.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+                icon: rook.png
+            - Hades:
+                href: https://hades.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
+                icon: synology-dsm.png
+            - pgAdmin:
+                href: https://pgadmin.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+                icon: pgadmin.png
+            - EMQX:
+                href: https://emqx.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+                icon: emqx.
+            - Rook (Staging):
+                href: https://rook.test.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+                icon: rook.png
 
     - Media:
         - Overseerr:
@@ -252,6 +253,40 @@ data:
               url: https://qbittorrent.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
               username: {{HOMEPAGE_VAR_QBITTORRENT_USERNAME}}
               password: {{HOMEPAGE_VAR_QBITTORRENT_PASSWORD}}
+    - Home:
+        - Home Assistant:
+            href: https://home.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            icon: home-assistant.png
+        - Node Red:
+            href: https://node-red.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            icon: node-red.png
+        - Wiki Recipes:
+            href: https://wiki.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}/recipes/index
+            icon: wikijs.png
+        - OwnCloud:
+            href: https://files.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            icon: owncloud.png
+        - Excalidraw:
+            href: https://excalidraw.com
+            icon: excalidraw.png
+        - Shlink:
+            href: https://shlink.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            icon: shlink.png
+        - Octoprint:
+            href: https://octopi.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
+            icon: octoprint.png
+        - Stirling PDF:
+            href: https://pdf-tool.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            icon: https://raw.githubusercontent.com/Stirling-Tools/Stirling-PDF/main/docs/stirling.png
+        - BirdNet:
+            href: https://birdnet.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            icon: netbird.png
+        - Home Code:
+            href: https://ha-code.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            icon: home-assistant.png
+        - Dashy Code:
+            href: https://dashy-code.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            icon: etcd.png
 
     - Calendar:
         - Agenda:
