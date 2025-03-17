@@ -1,75 +1,75 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "packageRules": [
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  packageRules: [
     {
-      "description": "1Password Connect Group",
-      "groupName": "1Password",
-      "matchPackagePatterns": ["1password"],
-      "matchDatasources": ["docker"],
-      "group": {
-        "commitMessageTopic": "{{{groupName}}} group"
+      description: "1Password Connect Group",
+      groupName: "1Password",
+      matchPackagePatterns: ["1password"],
+      matchDatasources: ["docker"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group"
       },
-      "separateMinorPatch": true
+      separateMinorPatch: true
     },
     {
-      "description": "Flux Operator Group",
-      "groupName": "Flux Operator",
-      "matchDatasources": ["docker"],
-      "matchPackageNames": ["/flux-operator/", "/flux-instance/"],
-      "group": {
-        "commitMessageTopic": "{{{groupName}}} group"
+      description: "Flux Operator Group",
+      groupName: "Flux Operator",
+      matchDatasources: ["docker"],
+      matchPackageNames: ["/flux-operator/", "/flux-instance/"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group"
       }
     },
     {
-      "description": "Rook-Ceph Group",
-      "groupName": "Rook Ceph",
-      "matchPackageNames": ["/rook-ceph/", "/rook-ceph-cluster/"],
-      "matchDatasources": ["docker", "helm"],
-      "group": {
-        "commitMessageTopic": "{{{groupName}}} group"
+      description: "Rook-Ceph Group",
+      groupName: "Rook Ceph",
+      matchPackageNames: ["/rook-ceph/", "/rook-ceph-cluster/"],
+      matchDatasources: ["docker", "helm"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group"
       },
-      "separateMinorPatch": true
+      separateMinorPatch: true
     },
     {
-      "description": "Immich Group",
-      "groupName": "Immich",
-      "matchPackagePatterns": ["immich"],
-      "matchDatasources": ["docker", "github-releases", "helm"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "group": {
-        "commitMessageTopic": "{{{groupName}}} group"
+      description: "Immich Group",
+      groupName: "Immich",
+      matchPackagePatterns: ["immich"],
+      matchDatasources: ["docker", "github-releases", "helm"],
+      matchUpdateTypes: ["minor", "patch"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group"
       },
-      "separateMinorPatch": false
+      separateMinorPatch: false
     },
     {
-      "description": ["Actions Runner Controller Group"],
-      "groupName": "Actions Runner Controller",
-      "matchDatasources": ["docker", "helm"],
-      "matchPackageNames": ["/gha-runner-scale-set-controller/", "/gha-runner-scale-set/"],
-      "group": {
-        "commitMessageTopic": "{{{groupName}}} group"
+      description: ["Actions Runner Controller Group"],
+      groupName: "Actions Runner Controller",
+      matchDatasources: ["docker", "helm"],
+      matchPackageNames: ["/gha-runner-scale-set-controller/", "/gha-runner-scale-set/"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group"
       },
-      "separateMinorPatch": false
+      separateMinorPatch: false
     },
     {
-      "description": "Snapshot Controller Group",
-      "groupName": "SnapshotController",
-      "matchPackagePatterns": ["snapshot-validation-webhook", "snapshot-controller"],
-      "matchDatasources": ["docker", "github-releases"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "group": {
-        "commitMessageTopic": "{{{groupName}}} group"
+      description: "Snapshot Controller Group",
+      groupName: "SnapshotController",
+      matchPackagePatterns: ["snapshot-validation-webhook", "snapshot-controller"],
+      matchDatasources: ["docker", "github-releases"],
+      matchUpdateTypes: ["minor", "patch"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group"
       },
-      "separateMinorPatch": false
+      separateMinorPatch: false
     },
     {
-      "description": "Dragonfly Operator Group",
-      "groupName": "DragonflyOperator",
-      "matchPackagePatterns": ["docker.dragonflydb.io/dragonflydb/operator", "dragonflydb/dragonfly-operator"],
-      "group": {
-        "commitMessageTopic": "{{{groupName}}} group"
+      description: "Dragonfly Operator Group",
+      groupName: "DragonflyOperator",
+      matchPackagePatterns: ["docker.dragonflydb.io/dragonflydb/operator", "dragonflydb/dragonfly-operator"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group"
       },
-      "separateMinorPatch": false
+      separateMinorPatch: false
     }
   ]
 }

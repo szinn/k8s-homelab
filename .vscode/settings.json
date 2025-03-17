@@ -5,7 +5,7 @@
     "helmfile.yaml": "helm",
     "kubeconfig": "kubernetes",
     "talosconfig": "kubernetes",
-    "*.json5": "jsonc"
+    "*.json5": "json5"
   },
   "files.exclude": {
     ".direnv/": true,

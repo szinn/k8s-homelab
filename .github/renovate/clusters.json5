@@ -1,15 +1,15 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "packageRules": [
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+packageRules: [
     {
-      "description": "Separate PRs for main cluster",
-      "matchFileNames": ["**/kubernetes/main/**", "**/infrastructure/talos/main/**"],
-      "additionalBranchPrefix": "main-"
+      description: "Separate PRs for main cluster",
+      matchFileNames: ["**/kubernetes/main/**", "**/infrastructure/talos/main/**"],
+      additionalBranchPrefix: "main-"
     },
     {
-      "description": "Separate PRs for staging cluster",
-      "matchFileNames": ["**/kubernetes/staging/**", "**/infrastructure/talos/staging/**"],
-      "additionalBranchPrefix": "staging-"
+      description: "Separate PRs for staging cluster",
+      matchFileNames: ["**/kubernetes/staging/**", "**/infrastructure/talos/staging/**"],
+      additionalBranchPrefix: "staging-"
     }
   ]
 }

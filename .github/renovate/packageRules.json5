@@ -1,28 +1,28 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "packageRules": [
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  packageRules: [
     {
-      "description": ["Loose versioning for non-semver packages"],
-      "matchDatasources": ["docker", "github-releases"],
-      "versioning": "loose",
-      "matchPackagePatterns": ["changedetection"]
+      description: ["Loose versioning for non-semver packages"],
+      matchDatasources: ["docker", "github-releases"],
+      versioning: "loose",
+      matchPackagePatterns: ["changedetection"]
     },
     {
-      "description": ["Custom versioning for frigate"],
-      "matchDatasources": ["docker"],
-      "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)(-(?<compatibility>beta)(?<build>\\d+))?$",
-      "matchPackagePatterns": ["frigate"]
+      description: ["Custom versioning for frigate"],
+      matchDatasources: ["docker"],
+      versioning: "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)(-(?<compatibility>beta)(?<build>\\d+))?$",
+      matchPackagePatterns: ["frigate"]
     },
     {
-      "description": ["Custom versioning for minio"],
-      "matchDatasources": ["docker"],
-      "versioning": "regex:^RELEASE\\.(?<major>\\d+)-(?<minor>\\d+)-(?<patch>\\d+)T.*Z$",
-      "matchPackagePatterns": ["minio", "quay.io/minio/minio"]
+      description: ["Custom versioning for minio"],
+      matchDatasources: ["docker"],
+      versioning: "regex:^RELEASE\\.(?<major>\\d+)-(?<minor>\\d+)-(?<patch>\\d+)T.*Z$",
+      matchPackagePatterns: ["minio", "quay.io/minio/minio"]
     },
     {
-      "description": ["Don't pin digests for packages that don't have/need a digest"],
-      "matchDatasources": ["docker"],
-      "matchDepNames": [
+      description: ["Don't pin digests for packages that don't have/need a digest"],
+      matchDatasources: ["docker"],
+      matchDepNames: [
         "ghcr.io/bjw-s/helm/app-template",
         "ghcr.io/cloudnative-pg/postgresql",
         "ghcr.io/deedee-ops/spegel",
@@ -32,18 +32,19 @@
         "ghcr.io/siderolabs/talosctl",
         "ghcr.io/stakater/charts/reloader"
       ],
-      "pinDigests": false
+
+      pinDigests: false
     },
     {
-      "description": ["Don't pin branches for ansible files"],
-      "matchFileNames": ["ansible/**", ".taskfiles/**"],
-      "matchDatasources": ["docker"],
-      "pinDigests": false
+      description: ["Don't pin branches for ansible files"],
+      matchFileNames: ["ansible/**", ".taskfiles/**"],
+      matchDatasources: ["docker"],
+      pinDigests: false
     },
     {
-      "description": ["Don't pin digests for managers that don't need a digest"],
-      "matchManagers": ["flux", "helmfile"],
-      "pinDigests": false
+      description: ["Don't pin digests for managers that don't need a digest"],
+      matchManagers: ["flux", "helmfile"],
+      pinDigests: false
     }
   ]
 }

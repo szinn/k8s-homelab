@@ -1,26 +1,26 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "customManagers": [
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  customManagers: [
     {
-      "customType": "regex",
-      "description": "Process raw GitHub URLs",
-      "fileMatch": ["kubernetes/.+\\.ya?ml(?:\\.j2)?$"],
-      "matchStrings": [
+      customType: "regex",
+      description: "Process raw GitHub URLs",
+      fileMatch: ["kubernetes/.+\\.ya?ml(?:\\.j2)?$"],
+      matchStrings: [
         "https:\\/\\/raw.githubusercontent.com\\/(?<depName>[\\w\\d\\-_]+\\/[\\w\\d\\-_]+)\\/(?<currentValue>[\\w\\d\\.\\-_]+)\\/.*"
       ],
-      "datasourceTemplate": "github-releases",
-      "versioningTemplate": "semver"
+      datasourceTemplate: "github-releases",
+      versioningTemplate: "semver"
     },
     {
-      "customType": "regex",
-      "description": "Process GitHub release URLs",
-      "fileMatch": ["kubernetes/.+\\.ya?ml(?:\\.j2)?$"],
-      "matchStrings": [
+      customType: "regex",
+      description: "Process GitHub release URLs",
+      fileMatch: ["kubernetes/.+\\.ya?ml(?:\\.j2)?$"],
+      matchStrings: [
         "https:\\/\\/github.com\\/(?<depName>[\\w\\d\\-_]+\\/[\\w\\d\\-_]+)\\/releases\\/download\\/v(?<currentValue>[\\w\\d\\.\\-_]+)\\/.*",
         "https:\\/\\/github.com\\/(?<depName>[\\w\\d\\-_]+\\/[\\w\\d\\-_]+)\\/releases\\/download\\/(?<currentValue>[\\w\\d\\.\\-_]+)\\/.*"
       ],
-      "datasourceTemplate": "github-releases",
-      "versioningTemplate": "semver"
+      datasourceTemplate: "github-releases",
+      versioningTemplate: "semver"
     }
   ]
 }

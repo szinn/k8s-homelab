@@ -1,11 +1,11 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "packageRules": [
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  packageRules: [
     {
-      "description": "Disable kubernetes-api",
-      "matchManagers": ["kubernetes"],
-      "matchDatasources": ["kubernetes-api"],
-      "enabled": false
+      description: "Disable kubernetes-api",
+      matchManagers: ["kubernetes"],
+      matchDatasources: ["kubernetes-api"],
+      enabled: false
     }
   ]
 }

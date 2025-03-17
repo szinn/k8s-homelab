@@ -1,10 +1,10 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "packageRules": [
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  packageRules: [
     {
-      "matchDatasources": ["docker"],
-      "matchPackagePatterns": ["cloudnative-pg/postgresql"],
-      "allowedVersions": "<18"
+      matchDatasources: ["docker"],
+      matchPackagePatterns: ["cloudnative-pg/postgresql"],
+      allowedVersions: "<18"
     }
   ]
 }
