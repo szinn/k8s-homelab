@@ -50,7 +50,7 @@ spec:
           init-db:
             image:
               repository: ghcr.io/home-operations/postgres-init
-              tag: 17.4
+              tag: 17.4@sha256:1efd1019b3924d3bcff7ee581255813f17555a7413b8a3ff5b0b344a47632d6c
             envFrom: &envFrom
               - secretRef:
                   name: radarr-4k-secret
@@ -58,7 +58,7 @@ spec:
           app:
             image:
               repository: ghcr.io/home-operations/radarr
-              tag: 5.20.1.9773
+              tag: 5.20.1.9773@sha256:407eb673a46134648c991bb7727b1b788897a181eb9234376105dd763c2b8406
             env:
               TZ: America/Toronto
               RADARR__APP__INSTANCENAME: Radarr-4k
