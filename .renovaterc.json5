@@ -1,0 +1,34 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "github>szinn/renovate-config",
+    "docker:pinDigests",
+    ":skipStatusChecks",
+    "github>szinn/k8s-homelab//.renovate/allowedVersions.json5",
+    "github>szinn/k8s-homelab//.renovate/autoMerge.json5",
+    "github>szinn/k8s-homelab//.renovate/clusters.json5",
+    "github>szinn/k8s-homelab//.renovate/customManagers.json5",
+    "github>szinn/k8s-homelab//.renovate/disabledDatasources.json5",
+    "github>szinn/k8s-homelab//.renovate/groups.json5",
+    "github>szinn/k8s-homelab//.renovate/grafanaDashboards.json5",
+    "github>szinn/k8s-homelab//.renovate/labels.json5",
+    "github>szinn/k8s-homelab//.renovate/packageRules.json5",
+    "github>szinn/k8s-homelab//.renovate/semantic-commits.json5"
+  ],
+  "ignorePaths": [
+    "kubernetes/main/apps/media/recyclarr/app/config/recyclarr.yaml",
+    "kubernetes/main/apps/rook-ceph/rook-ceph/add-ons/prometheus-rules.yaml",
+    "kubernetes/staging/apps/rook-ceph/rook-ceph/add-ons/rules.yaml",
+    "**/archive/**",
+    "**/*.sops.*"
+  ],
+  "flux": {
+    "fileMatch": ["kubernetes/.+\\.ya?ml$"]
+  },
+  "helm-values": {
+    "fileMatch": ["kubernetes/.+\\.ya?ml$"]
+  },
+  "kubernetes": {
+    "fileMatch": ["\\.taskfiles/.+\\.ya?ml(?:\\.j2)?$", "kubernetes/.+\\.ya?ml$"]
+  }
+}

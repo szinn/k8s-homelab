@@ -19,8 +19,8 @@ on: # yamllint disable-line rule:truthy
     branches:
       - main
     paths:
-      - ".github/renovate.json5"
-      - ".github/renovate/**.json5"
+      - ".renovaterc.json5"
+      - ".renovate/**.json5"
 
 concurrency:
   group: ${{ github.ref }}-${{ github.workflow }}
@@ -61,5 +61,5 @@ jobs:
       - name: Renovate
         uses: renovatebot/github-action@02f4fdeb479bbb229caa7ad82cb5e691c07e80b3 # v41.0.14
         with:
-          configurationFile: .github/renovate.json5
+          configurationFile: .renovaterc.json5
           token: "${{ steps.app-token.outputs.token }}"
