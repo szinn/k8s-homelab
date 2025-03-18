@@ -3,14 +3,14 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app emqx
+  name: &app emqx-operator
   namespace: &namespace dbms
 spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   targetNamespace: *namespace
-  path: ./kubernetes/main/apps/dbms/emqx/app
+  path: ./kubernetes/main/apps/dbms/emqx/operator
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -40,7 +40,7 @@ spec:
     name: flux-system
     namespace: flux-system
   dependsOn:
-    - name: emqx
+    - name: emqx-operator
       namespace: dbms
   healthCheckExprs:
     - apiVersion: apps.emqx.io/v2beta1
