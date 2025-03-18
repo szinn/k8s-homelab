@@ -8,3 +8,4 @@ resources:
   - namespace.yaml
   # Flux-Kustomizations
   - external-dns/install.yaml
+  - gateway-api/install.yaml
