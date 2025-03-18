@@ -155,7 +155,7 @@ data:
             - Change Detection:
                 href: https://changedetection.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
                 siteMonitor: https://changedetection.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-                icon: changedetection-io.png
+                icon: changedetection.png
         - Storage:
             - TrueNAS:
                 href: https://ragnar.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
@@ -176,7 +176,7 @@ data:
             - EMQX:
                 href: https://emqx.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
                 siteMonitor: https://emqx.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-                icon: emqx.
+                icon: emqx.png
             - Rook (Staging):
                 href: https://rook.test.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
                 siteMonitor: https://rook.test.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
