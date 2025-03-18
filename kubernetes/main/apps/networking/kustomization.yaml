@@ -13,3 +13,4 @@ resources:
   - cloudflare-tunnel/install.yaml
   - echo-server/install.yaml
   - external-dns/install.yaml
+  - gateway-api/install.yaml
