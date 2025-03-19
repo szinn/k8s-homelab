@@ -13,6 +13,10 @@ on: # yamllint disable-line rule:truthy
         description: "Log-Level"
         default: "debug"
         required: false
+      version:
+        description: Renovate version
+        default: latest
+        required: false
   schedule:
     - cron: "0 * * * *"
   push:
