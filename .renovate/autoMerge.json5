@@ -20,12 +20,11 @@
       ignoreTests: true
     },
     {
-      description: "Auto-merge Helm/OCI Releases",
+      description: "Auto-merge Releases",
       matchDatasources: ["helm", "docker"],
       automerge: true,
-      automergeType: "pr",
       matchUpdateTypes: ["minor", "patch"],
-      matchPackageNames: ["ghcr.io/prometheus-community/charts/kube-prometheus-stack", "docker.io/library/busybox"],
+      matchDepNames: ["kube-prometheus-stack", "busybox"],
       ignoreTests: false
     },
     {
