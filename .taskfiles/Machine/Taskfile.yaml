@@ -129,13 +129,17 @@ tasks:
 
   install-artemis-adguard:
     desc: Install Artemis AdGuardHome
-    vars:
-      # renovate: datasource=github-releases depName=AdguardTeam/AdGuardHome
-      ADGUARD_VERSION: v0.107.58
     cmds:
       - ssh root@artemis.zinn.tech wget -q https://github.com/AdguardTeam/AdGuardHome/releases/download/{{.ADGUARD_VERSION}}/AdGuardHome_linux_arm64.tar.gz -O /opt/AdGuardHome_linux_arm64.tar.gz
       - ssh root@artemis.zinn.tech 'cd /opt && tar xf AdGuardHome_linux_arm64.tar.gz && rm AdGuardHome_linux_arm64.tar.gz'
       - ssh root@artemis.zinn.tech 'cd /opt/AdGuardHome && ./AdGuardHome -s install'
+
+  update-artemis-adguard:
+    desc: Update Artemis AdGuardHome
+    cmds:
+      - ssh root@artemis.zinn.tech wget -q https://github.com/AdguardTeam/AdGuardHome/releases/download/{{.ADGUARD_VERSION}}/AdGuardHome_linux_arm64.tar.gz -O /opt/AdGuardHome_linux_arm64.tar.gz
+      - ssh root@artemis.zinn.tech 'cd /opt && tar xf AdGuardHome_linux_arm64.tar.gz && rm AdGuardHome_linux_arm64.tar.gz'
+      - ssh root@artemis.zinn.tech 'systemctl restart AdGuardHome'
 
   install-artemis-docker:
     desc: Install docker
@@ -220,13 +224,17 @@ tasks:
 
   install-titan-adguard:
     desc: Install Titan AdGuardHome
-    vars:
-      # renovate: datasource=github-releases depName=AdguardTeam/AdGuardHome
-      ADGUARD_VERSION: v0.107.58
     cmds:
       - ssh root@titan.zinn.tech wget -q https://github.com/AdguardTeam/AdGuardHome/releases/download/{{.ADGUARD_VERSION}}/AdGuardHome_linux_amd64.tar.gz -O /opt/AdGuardHome_linux_amd64.tar.gz
       - ssh root@titan.zinn.tech 'cd /opt && tar xf AdGuardHome_linux_amd64.tar.gz'
       - ssh root@titan.zinn.tech 'cd /opt/AdGuardHome && ./AdGuardHome -s install'
+
+  update-titan-adguard:
+    desc: Update Titan AdGuardHome
+    cmds:
+      - ssh root@titan.zinn.tech wget -q https://github.com/AdguardTeam/AdGuardHome/releases/download/{{.ADGUARD_VERSION}}/AdGuardHome_linux_amd64.tar.gz -O /opt/AdGuardHome_linux_amd64.tar.gz
+      - ssh root@titan.zinn.tech 'cd /opt && tar xf AdGuardHome_linux_amd64.tar.gz'
+      - ssh root@titan.zinn.tech 'systemctl restart AdGuardHome'
 
   restart-titan-adguard:
     desc: Restart Titan AdGuardHome
