@@ -23,7 +23,7 @@
       description: "Auto-merge Helm/OCI Releases",
       matchDatasources: ["helm", "docker"],
       automerge: true,
-      automergeType: "pr",
+      automergeType: "branch",
       matchUpdateTypes: ["minor", "patch"],
       matchPackageNames: ["/kube-prometheus-stack/"],
       ignoreTests: false
