@@ -6,7 +6,7 @@ vars:
   FILES_DIR: "{{.MACHINE_ROOT_DIR}}/files"
   SCRIPTS_DIR: "{{.MACHINE_ROOT_DIR}}/scripts"
   # renovate: datasource=github-releases depName=AdguardTeam/AdGuardHome
-  ADGUARD_VERSION: v0.107.57
+  ADGUARD_VERSION: v0.107.58
 
 tasks:
   fetch-certificate:
@@ -131,7 +131,7 @@ tasks:
     desc: Install Artemis AdGuardHome
     vars:
       # renovate: datasource=github-releases depName=AdguardTeam/AdGuardHome
-      ADGUARD_VERSION: v0.107.57
+      ADGUARD_VERSION: v0.107.58
     cmds:
       - ssh root@artemis.zinn.tech wget -q https://github.com/AdguardTeam/AdGuardHome/releases/download/{{.ADGUARD_VERSION}}/AdGuardHome_linux_arm64.tar.gz -O /opt/AdGuardHome_linux_arm64.tar.gz
       - ssh root@artemis.zinn.tech 'cd /opt && tar xf AdGuardHome_linux_arm64.tar.gz && rm AdGuardHome_linux_arm64.tar.gz'
@@ -222,7 +222,7 @@ tasks:
     desc: Install Titan AdGuardHome
     vars:
       # renovate: datasource=github-releases depName=AdguardTeam/AdGuardHome
-      ADGUARD_VERSION: v0.107.57
+      ADGUARD_VERSION: v0.107.58
     cmds:
       - ssh root@titan.zinn.tech wget -q https://github.com/AdguardTeam/AdGuardHome/releases/download/{{.ADGUARD_VERSION}}/AdGuardHome_linux_amd64.tar.gz -O /opt/AdGuardHome_linux_amd64.tar.gz
       - ssh root@titan.zinn.tech 'cd /opt && tar xf AdGuardHome_linux_amd64.tar.gz'
