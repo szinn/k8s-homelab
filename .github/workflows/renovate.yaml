@@ -28,13 +28,13 @@ concurrency:
 
 env:
   LOG_LEVEL: debug
-  DRY_RUN: false
   RENOVATE_AUTODISCOVER: true
   RENOVATE_AUTODISCOVER_FILTER: "${{ github.repository }}"
   RENOVATE_DRY_RUN: "${{ inputs.dryRun == true }}"
   RENOVATE_INTERNAL_CHECKS_FILTER: strict
   RENOVATE_PLATFORM: github
   RENOVATE_PLATFORM_COMMIT: true
+  WORKFLOW_RENOVATE_VERSION: "${{ inputs.version || 'latest' }}"
 
 jobs:
   renovate:
@@ -63,3 +63,4 @@ jobs:
         with:
           configurationFile: .renovaterc.json5
           token: "${{ steps.app-token.outputs.token }}"
+          renovate-version: "${{ env.WORKFLOW_RENOVATE_VERSION }}"

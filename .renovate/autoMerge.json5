@@ -23,9 +23,9 @@
       description: "Auto-merge Helm/OCI Releases",
       matchDatasources: ["helm", "docker"],
       automerge: true,
-      automergeType: "branch",
+      automergeType: "pr",
       matchUpdateTypes: ["minor", "patch"],
-      matchPackageNames: ["/kube-prometheus-stack/", "/busybox/"],
+      matchPackageNames: ["ghcr.io/prometheus-community/charts/kube-prometheus-stack", "docker.io/library/busybox"],
       ignoreTests: false
     },
     {
@@ -51,7 +51,7 @@
         "ghcr.io/home-operations/radarr",
         "ghcr.io/home-operations/recyclarr",
         "ghcr.io/home-operations/sabnzbd",
-        "ghcr.io/home-operations/sonarr",
+        "ghcr.io/home-operations/sonarr"
       ]
     }
   ]
