@@ -28,7 +28,7 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Run flux-local test
-        uses: docker://ghcr.io/allenporter/flux-local:v7.2.1
+        uses: docker://ghcr.io/allenporter/flux-local:v7.2.1@sha256:2c8d7f87f6d98e189378b7fc1af3974c0d701ebbd1fabb6bd883e781170f3057
         with:
           args: test --enable-helm --all-namespaces --path /github/workspace/${{ matrix.paths }}/cluster/config -v
 
@@ -60,7 +60,7 @@ jobs:
           path: default
 
       - name: Run flux-local diff
-        uses: docker://ghcr.io/allenporter/flux-local:v7.2.1
+        uses: docker://ghcr.io/allenporter/flux-local:v7.2.1@sha256:2c8d7f87f6d98e189378b7fc1af3974c0d701ebbd1fabb6bd883e781170f3057
         with:
           args: >-
             diff ${{ matrix.resources }}
