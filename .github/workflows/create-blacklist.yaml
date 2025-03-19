@@ -98,7 +98,7 @@ jobs:
         with:
           release_name: "AdGuard Blacklist"
           repo_token: ${{ steps.app-token.outputs.token }}
-          file: ${destination_adguard}
+          file: hosts-adguard.blacklist
           asset_name: hosts-adguard.blacklist
           tag: adguard
           overwrite: true
