@@ -41,11 +41,11 @@
   },
   "prettier.configPath": ".prettierrc",
   "prettier.ignorePath": ".prettierignore",
-  "yaml.schemas": {
+  "yaml.schemaStore.enable": true,
+   "yaml.schemas": {
     "Kubernetes": "kubernetes/*.yaml"
   },
   "yaml.customTags": ["!env_var"],
-  "explorer.autoReveal": false,
   "markdownlint.config": {
     "extends": ".markdownlint.yaml"
   }
