@@ -20,12 +20,13 @@
       ignoreTests: true
     },
     {
-      description: "Auto-merge Releases",
-      matchDatasources: ["helm", "docker"],
+      description: "Auto-merge OCI Charts",
+      matchDatasources: ["docker"],
       automerge: true,
+      automergeType: "pr",
       matchUpdateTypes: ["minor", "patch"],
-      matchDepNames: ["kube-prometheus-stack", "busybox"],
-      ignoreTests: false
+      matchPackageNames: ["/kube-prometheus-stack/"],
+      ignoreTests: false,
     },
     {
       description: "Auto-merge GitHub Releases",
