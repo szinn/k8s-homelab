@@ -1,40 +1,20 @@
 ---
-# yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/source.toolkit.fluxcd.io/gitrepository_v1.json
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: GitRepository
-metadata:
-  name: gateway-api-crd
-  namespace: networking
-spec:
-  interval: 30m
-  url: https://github.com/kubernetes-sigs/gateway-api
-  ref:
-    tag: v1.2.1
-  ignore: |
-    # exclude
-    /*
-    # include
-    !config/crd/standard/gateway.networking.k8s.io_gatewayclasses.yaml
-    !config/crd/standard/gateway.networking.k8s.io_httproutes.yaml
-    !config/crd/standard/gateway.networking.k8s.io_referencegrants.yaml
-    !config/crd/experimental/gateway.networking.k8s.io_gateways.yaml
-    !config/crd/experimental/gateway.networking.k8s.io_grpcroutes.yaml
-    !config/crd/experimental/gateway.networking.k8s.io_tlsroutes.yaml
----
 # yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: gateway-api-crd
+  name: &app gateway-api-crds
   namespace: &namespace networking
 spec:
   targetNamespace: *namespace
-  prune: true
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  path: ./kubernetes/staging/apps/networking/gateway-api/crds
   sourceRef:
     kind: GitRepository
-    name: gateway-api-crd
-    namespace: networking
-  wait: true
-  interval: 15m
-  retryInterval: 1m
-  timeout: 5m
+    name: flux-system
+    namespace: flux-system
+  prune: true
+  wait: false
+  interval: 10m
