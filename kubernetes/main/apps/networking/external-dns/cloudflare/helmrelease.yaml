@@ -27,11 +27,11 @@ spec:
     name: cloudflare-dns
   maxHistory: 3
   install:
-    crds: CreateReplace
+    disableSchemaValidation: true # Ref: https://github.com/kubernetes-sigs/external-dns/issues/5206
     remediation:
       retries: 3
   upgrade:
-    crds: CreateReplace
+    disableSchemaValidation: true # Ref: https://github.com/kubernetes-sigs/external-dns/issues/5206
     cleanupOnFail: true
     remediation:
       retries: 3
@@ -39,9 +39,6 @@ spec:
     keepHistory: false
   values:
     fullnameOverride: external-dns-cloudflare
-    image: # TODO: Remove this block when new chart version is released
-      repository: registry.k8s.io/external-dns/external-dns
-      tag: v0.16.1@sha256:37d3a7a05c4638b8177382b80a627c223bd84a53c1a91be137245bd3cfdf9986
     podAnnotations:
       secret.reloader.stakater.com/reload: &secret external-dns-cloudflare-secret
     logLevel: debug
