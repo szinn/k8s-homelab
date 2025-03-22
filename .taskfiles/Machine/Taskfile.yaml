@@ -196,7 +196,7 @@ tasks:
       - ssh root@artemis.zinn.tech mkdir -p /opt/gatus
       - op inject --in-file "{{.FILES_DIR}}/artemis/gatus-config.yaml" 2>/dev/null > /tmp/gatus.yaml
       - scp /tmp/gatus.yaml root@artemis.zinn.tech:/opt/gatus/gatus.yaml
-      - scp "{{.FILES_DIR}}/artemis/gatus-docker-compose.yaml" root@artemis.zinn.tech:/opt/gatus/docker-compose.yaml
+      - scp "{{.FILES_DIR}}/artemis/docker-compose-gatus.yaml" root@artemis.zinn.tech:/opt/gatus/docker-compose.yaml
       - scp "{{.FILES_DIR}}/artemis/gatus-environment" root@artemis.zinn.tech:/opt/gatus/.env
       - scp "{{.FILES_DIR}}/artemis/gatus.service" root@artemis.zinn.tech:/etc/systemd/system/gatus.service
       - ssh root@artemis.zinn.tech systemctl enable gatus
