@@ -1,0 +1,42 @@
+---
+# yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/source.toolkit.fluxcd.io/ocirepository_v1beta2.json
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: OCIRepository
+metadata:
+  name: dragonfly-operator
+spec:
+  interval: 1h
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: v1.1.10
+  url: oci://ghcr.io/dragonflydb/dragonfly-operator/helm/dragonfly-operator
+---
+# yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: dragonfly-operator
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: dragonfly-operator
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    serviceMonitor:
+      enabled: false
+    grafanaDashboard:
+      enabled: true
+      folder: Data
+      annotations:
+        name: grafana_folder
+      labels:
+        name: grafana_dashboard
