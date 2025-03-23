@@ -11,6 +11,6 @@ resources:
   - namespace.yaml
   # Flux-Kustomizations
   - cloudnative-pg/install.yaml
-  - dragonfly-operator/install.yaml
+  - dragonfly/install.yaml
   - emqx/install.yaml
   - pgadmin/install.yaml
