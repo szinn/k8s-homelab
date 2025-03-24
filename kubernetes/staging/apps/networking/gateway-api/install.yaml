@@ -14,11 +14,7 @@ spec:
     # exclude
     /*
     # include
-    !config/crd/standard/gateway.networking.k8s.io_gatewayclasses.yaml
-    !config/crd/standard/gateway.networking.k8s.io_gateways.yaml
-    !config/crd/standard/gateway.networking.k8s.io_grpcroutes.yaml
-    !config/crd/standard/gateway.networking.k8s.io_httproutes.yaml
-    !config/crd/standard/gateway.networking.k8s.io_referencegrants.yaml
+    !config/crd/standard
 ---
 # yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
