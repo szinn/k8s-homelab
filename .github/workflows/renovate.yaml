@@ -59,13 +59,13 @@ jobs:
       - name: Renovate
         uses: renovatebot/github-action@08ed9fa83e24bfe6222557f9e221395c57972127 # v41.0.16
         env:
-          LOG_LEVEL: "${{ inputs.logLevel }}"
+          LOG_LEVEL: "${{ inputs.logLevel || 'debug' }}"
           RENOVATE_AUTODISCOVER: true
           RENOVATE_AUTODISCOVER_FILTER: "${{ github.repository }}"
-          RENOVATE_DRY_RUN: "${{ inputs.dryRun }}"
+          RENOVATE_DRY_RUN: "${{ inputs.dryRun || false }}"
           RENOVATE_INTERNAL_CHECKS_FILTER: strict
           RENOVATE_PLATFORM: github
           RENOVATE_PLATFORM_COMMIT: true
         with:
           token: "${{ steps.app-token.outputs.token }}"
-          renovate-version: "${{ inputs.version }}"
+          renovate-version: "${{ inputs.version || 'latest' }}"
