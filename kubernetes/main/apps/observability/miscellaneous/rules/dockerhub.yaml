@@ -13,7 +13,7 @@ spec:
           annotations:
             summary: Kubernetes cluster at risk of being rate limited by dockerhub on bootstrap
           expr: |
-            count(time() - container_last_seen{image=~"(docker.io).*",container!=""} < 30) > 100
+            count(time() - container_last_seen{image=~"(docker.io).*",container!=""} < 30) > 25
           for: 15m
           labels:
             severity: critical
