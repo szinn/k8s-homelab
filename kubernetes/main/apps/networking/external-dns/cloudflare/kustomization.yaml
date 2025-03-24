@@ -5,3 +5,4 @@ kind: Kustomization
 resources:
   - secrets.yaml
   - helmrelease.yaml
+  - prometheusrule.yaml
