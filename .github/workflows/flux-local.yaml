@@ -13,9 +13,23 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  filter:
+    name: Flux Local - Filter
+    runs-on: ubuntu-latest
+    outputs:
+      changed-files: ${{ steps.changed-files.outputs.changed_files }}
+    steps:
+      - name: Get Changed Files
+        id: changed-files
+        uses: bjw-s-labs/action-changed-files@2cc35474e9d534ed0d743aa122fd142afbdaa0ad # v0.3.1
+        with:
+          patterns: kubernetes/**/*
+
   test:
+    if: ${{ needs.filter.outputs.changed-files != '[]' }}
     name: Flux Local Test
     runs-on: ubuntu-latest
+    needs: filter
     strategy:
       matrix:
         paths:
@@ -33,8 +47,10 @@ jobs:
           args: test --enable-helm --all-namespaces --path /github/workspace/${{ matrix.paths }}/cluster/config -v
 
   diff:
+    if: ${{ needs.filter.outputs.changed-files != '[]' }}
     name: Flux Local Diff
     runs-on: ubuntu-latest
+    needs: filter
     permissions:
       contents: read
       pull-requests: write
