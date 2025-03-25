@@ -1,0 +1,15 @@
+---
+# yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/monitoring.coreos.com/podmonitor_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: k8s-homelab
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: runner-scale-set-listener
+      actions.github.com/scale-set-name: k8s-homelab-runner
+  podMetricsEndpoints:
+    - portNumber: 8080
+      path: /metrics
+      interval: 30s
