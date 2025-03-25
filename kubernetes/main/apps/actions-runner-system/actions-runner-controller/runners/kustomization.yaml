@@ -5,3 +5,4 @@ kind: Kustomization
 resources:
   - k8s-homelab.yaml
   - rbac.yaml
+  - secrets.yaml
