@@ -35,6 +35,11 @@ spec:
   values:
     fullnameOverride: *name
     replicaCount: 1
+    metrics:
+      controllerManagerAddr: ":8080"
+      listenerAddr: ":8080"
+      listenerEndpoint: "/metrics"
+
   # TODO: Remove on 0.11.0
   # Ref: https://github.com/actions/actions-runner-controller/pull/3729
   postRenderers:
