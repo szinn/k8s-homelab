@@ -353,12 +353,12 @@ spec:
         1-node-exporter:
           url: https://grafana.com/api/dashboards/11074/revisions/9/download
           datasource: Prometheus
-        # actions-runner-controller:
-        #   # url: https://www.kenmuse.com/blog/enabling-github-arc-metrics/downloads/dashboard.json
-        #   url: https://raw.githubusercontent.com/actions/actions-runner-controller/refs/heads/master/docs/gha-runner-scale-set-controller/samples/grafana-dashboard/ARC-Autoscaling-Runner-Set-Monitoring_1692627561838.json
-        #   datasource:
-        #     - name: DS_PROMETHEUS
-        #       value: Prometheus
+        actions-runner-controller:
+          # url: https://www.kenmuse.com/blog/enabling-github-arc-metrics/downloads/dashboard.json
+          url: https://raw.githubusercontent.com/actions/actions-runner-controller/refs/heads/master/docs/gha-runner-scale-set-controller/samples/grafana-dashboard/ARC-Autoscaling-Runner-Set-Monitoring_1692627561838.json
+          datasource:
+            - name: DS_PROMETHEUS
+              value: Prometheus
         cert-manager:
           # renovate: dashboardName="cert-manager"
           gnetId: 20340
