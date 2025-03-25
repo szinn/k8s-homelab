@@ -1,3 +1,4 @@
+# yamllint disable-line rule:document-start
 originRequest:
   originServerName: external.zinn.ca
 ingress:
