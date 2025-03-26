@@ -1,20 +1,4 @@
 ---
-# yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/source.toolkit.fluxcd.io/ocirepository_v1beta2.json
-apiVersion: source.toolkit.fluxcd.io/v1beta2
-kind: OCIRepository
-metadata:
-  name: k8s-ycl
-spec:
-  interval: 1h
-  layerSelector:
-    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
-    operation: copy
-  ref:
-    tag: 1.3.3
-  url: oci://ghcr.io/bjw-s/helm/k8s-ycl
-  verify:
-    provider: cosign
----
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease

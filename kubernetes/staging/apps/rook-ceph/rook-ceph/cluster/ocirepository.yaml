@@ -1,0 +1,19 @@
+---
+# yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/source.toolkit.fluxcd.io/ocirepository_v1beta2.json
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: OCIRepository
+metadata:
+  name: rook-ceph-cluster
+spec:
+  interval: 1h
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: v1.16.5
+  url: oci://ghcr.io/home-operations/charts-mirror/rook-ceph-cluster
+  verify:
+    provider: cosign
+    matchOIDCIdentity:
+      - issuer: "^https://token.actions.githubusercontent.com$"
+        subject: "^https://github.com/home-operations/charts-mirror.*$"
