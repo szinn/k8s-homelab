@@ -8,12 +8,12 @@ spec:
   groups:
     - name: k8s-homelab-runner.rules
       rules:
-        - alert: K8SHomelabRunnerNotRunning
+        - alert: RunnerNotRunning
           expr: |
-            gha_registered_runners < 1
+            gha_registered_runners{repository="k8s-homelab"} < 1
           for: 5m
           annotations:
             summary: >-
-              {{ $labels.job }} k8s-homelab runner not running
+              k8s-homelab runner not running
           labels:
             severity: critical
