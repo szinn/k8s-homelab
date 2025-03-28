@@ -11,9 +11,4 @@ spec:
     operation: copy
   ref:
     tag: v1.16.6
-  url: oci://ghcr.io/home-operations/charts-mirror/rook-ceph
-  verify:
-    provider: cosign
-    matchOIDCIdentity:
-      - issuer: "^https://token.actions.githubusercontent.com$"
-        subject: "^https://github.com/home-operations/charts-mirror.*$"
+  url: oci://ghcr.io/rook/rook-ceph
