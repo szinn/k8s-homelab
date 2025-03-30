@@ -46,16 +46,6 @@ tasks:
           KUSTOMIZATION: lidarr
           SERVICES: deployment/lidarr
 
-  down_prowlarr:
-    desc: Turn down Prowlarr
-    cmds:
-      - task: _down
-        vars:
-          NAMESPACE: media
-          HELMRELEASE: prowlarr
-          KUSTOMIZATION: prowlarr
-          SERVICES: deployment/prowlarr
-
   down_radarr-4k:
     desc: Turn down Radarr 4K
     cmds:
@@ -151,7 +141,6 @@ tasks:
     cmds:
       - task: down_dmarc
       - task: down_lidarr
-      - task: down_prowlarr
       - task: down_radarr-4k
       - task: down_radarr
       - task: down_shlink
@@ -181,17 +170,6 @@ tasks:
           HELMRELEASE: lidarr
           KUSTOMIZATION: lidarr
           SERVICES: deployment/lidarr
-          REPLICAS: 1
-
-  up_prowlarr:
-    desc: Turn up Prowlarr
-    cmds:
-      - task: _up
-        vars:
-          NAMESPACE: media
-          HELMRELEASE: prowlarr
-          KUSTOMIZATION: prowlarr
-          SERVICES: deployment/prowlarr
           REPLICAS: 1
 
   up_radarr-4k:
@@ -298,7 +276,6 @@ tasks:
     cmds:
       - task: up_dmarc
       - task: up_lidarr
-      - task: up_prowlarr
       - task: up_radarr-4k
       - task: up_radarr
       - task: up_shlink
@@ -325,15 +302,6 @@ tasks:
         vars:
           DATABASE: lidarr_main
       - task: up_lidarr
-
-  restore_prowlarr:
-    desc: Restore prowlarr database
-    cmds:
-      - task: down_prowlarr
-      - task: _restore_db
-        vars:
-          DATABASE: prowlarr_main
-      - task: up_prowlarr
 
   restore_radarr_4k:
     desc: Restore radarr-4k database
