@@ -36,16 +36,6 @@ tasks:
           KUSTOMIZATION: dmarc-report
           SERVICES: statefulset/dmarc-report
 
-  down_radarr:
-    desc: Turn down Radarr
-    cmds:
-      - task: _down
-        vars:
-          NAMESPACE: media
-          HELMRELEASE: radarr
-          KUSTOMIZATION: radarr
-          SERVICES: deployment/radarr
-
   down_shlink:
     desc: Turn down Shlink
     cmds:
@@ -120,7 +110,6 @@ tasks:
     desc: Turn down all applications using Postgres
     cmds:
       - task: down_dmarc
-      - task: down_radarr
       - task: down_shlink
       - task: down_sonarr
       - task: down_wikijs
@@ -137,17 +126,6 @@ tasks:
           HELMRELEASE: dmarc-report
           KUSTOMIZATION: dmarc-report
           SERVICES: statefulset/dmarc-report
-          REPLICAS: 1
-
-  up_radarr:
-    desc: Turn up Radarr
-    cmds:
-      - task: _up
-        vars:
-          NAMESPACE: media
-          HELMRELEASE: radarr
-          KUSTOMIZATION: radarr
-          SERVICES: deployment/radarr
           REPLICAS: 1
 
   up_shlink:
@@ -231,7 +209,6 @@ tasks:
     desc: Turn up all applications using Postgres
     cmds:
       - task: up_dmarc
-      - task: up_radarr
       - task: up_shlink
       - task: up_sonarr
       - task: up_wikijs
@@ -247,15 +224,6 @@ tasks:
         vars:
           DATABASE: dmarc
       - task: up_dmarc
-
-  restore_radarr:
-    desc: Restore radarr database
-    cmds:
-      - task: down_radarr
-      - task: _restore_db
-        vars:
-          DATABASE: radarr_main
-      - task: up_radarr
 
   restore_shlink:
     desc: Restore shlink database
