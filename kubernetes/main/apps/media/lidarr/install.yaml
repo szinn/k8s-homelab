@@ -16,14 +16,21 @@ spec:
     name: flux-system
     namespace: flux-system
   dependsOn:
-    - name: cloudnative-pg-cluster
-      namespace: dbms
     - name: external-secrets
       namespace: external-secrets
+    - name: volsync
+      namespace: system
   components:
+    - ../../../../components/volsync
     - ../../../../components/gatus/guarded
   postBuild:
     substitute:
+      APP: *app
+      APP_UID: "2000"
+      APP_GID: "2000"
+      VOLSYNC_CLAIM: lidarr-config
+      VOLSYNC_CAPACITY: 15Gi
+      VOLSYNC_CACHE_CAPACITY: 10Gi
       GATUS_APP: *app
       GATUS_SUBDOMAIN: lidarr
   prune: true

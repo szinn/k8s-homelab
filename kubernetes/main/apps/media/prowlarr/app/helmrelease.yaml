@@ -92,5 +92,9 @@ spec:
         globalMounts:
           - path: /config/Backups
             subPath: prowlarr
+      logs:
+        type: emptyDir
+        globalMounts:
+          - path: /config/logs
       tmp:
         type: emptyDir

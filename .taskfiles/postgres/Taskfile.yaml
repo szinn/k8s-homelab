@@ -36,16 +36,6 @@ tasks:
           KUSTOMIZATION: dmarc-report
           SERVICES: statefulset/dmarc-report
 
-  down_lidarr:
-    desc: Turn down Lidarr
-    cmds:
-      - task: _down
-        vars:
-          NAMESPACE: media
-          HELMRELEASE: lidarr
-          KUSTOMIZATION: lidarr
-          SERVICES: deployment/lidarr
-
   down_radarr-4k:
     desc: Turn down Radarr 4K
     cmds:
@@ -140,7 +130,6 @@ tasks:
     desc: Turn down all applications using Postgres
     cmds:
       - task: down_dmarc
-      - task: down_lidarr
       - task: down_radarr-4k
       - task: down_radarr
       - task: down_shlink
@@ -159,17 +148,6 @@ tasks:
           HELMRELEASE: dmarc-report
           KUSTOMIZATION: dmarc-report
           SERVICES: statefulset/dmarc-report
-          REPLICAS: 1
-
-  up_lidarr:
-    desc: Turn up Lidarr
-    cmds:
-      - task: _up
-        vars:
-          NAMESPACE: media
-          HELMRELEASE: lidarr
-          KUSTOMIZATION: lidarr
-          SERVICES: deployment/lidarr
           REPLICAS: 1
 
   up_radarr-4k:
@@ -275,7 +253,6 @@ tasks:
     desc: Turn up all applications using Postgres
     cmds:
       - task: up_dmarc
-      - task: up_lidarr
       - task: up_radarr-4k
       - task: up_radarr
       - task: up_shlink
@@ -293,15 +270,6 @@ tasks:
         vars:
           DATABASE: dmarc
       - task: up_dmarc
-
-  restore_lidarr:
-    desc: Restore lidarr database
-    cmds:
-      - task: down_lidarr
-      - task: _restore_db
-        vars:
-          DATABASE: lidarr_main
-      - task: up_lidarr
 
   restore_radarr_4k:
     desc: Restore radarr-4k database
