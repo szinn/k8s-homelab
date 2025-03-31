@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app shlink-api
+  name: &app shlink
 spec:
   interval: 1h
   chartRef:
@@ -22,18 +22,10 @@ spec:
     keepHistory: false
   values:
     controllers:
-      main:
+      api:
         replicas: 1
         annotations:
           secret.reloader.stakater.com/reload: shlink-secret
-        pod:
-          topologySpreadConstraints:
-            - maxSkew: 1
-              topologyKey: kubernetes.io/hostname
-              whenUnsatisfiable: DoNotSchedule
-              labelSelector:
-                matchLabels:
-                  app.kubernetes.io/name: *app
         initContainers:
           init-db:
             image:
@@ -50,32 +42,67 @@ spec:
               tag: 4.4.6@sha256:1a697baca56ab8821783e0ce53eb4fb22e51bb66749ec50581adc0cb6d031d7a
             env:
               DB_DRIVER: postgres
-              DEFAULT_DOMAIN: &host "ln.zinn.ca"
+              DEFAULT_DOMAIN: &api-host "ln.zinn.ca"
               DISABLE_TRACKING_FROM: 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
               ENABLE_PERIODIC_VISIT_LOCATE: "true"
               IS_HTTPS_ENABLED: "true"
-              PORT: &port 8080
+              PORT: &api-port 8080
               TIMEZONE: "America/Toronto"
             envFrom:
               - secretRef:
                   name: shlink-secret
+      web:
+        replicas: 1
+        strategy: RollingUpdate
+        rollingUpdate:
+          unavailable: 2
+          surge: 0
+        annotations:
+          secret.reloader.stakater.com/reload: shlink-secret
+        containers:
+          main:
+            image:
+              repository: ghcr.io/shlinkio/shlink-web-client
+              tag: 4.3.0@sha256:4a84d58508d0a327e6c383a0b57f624dd9a4f1a6e24f3cb538dec18dbaa9f7a1
+            env:
+              SHLINK_SERVER_URL: "https://ln.zinn.ca"
+            envFrom:
+              - secretRef:
+                  name: shlink-secret
+
     service:
-      main:
-        controller: main
+      api:
+        controller: api
         ports:
           http:
-            port: *port
+            port: *api-port
+      web:
+        controller: web
+        ports:
+          http:
+            port: &web-port 8080
+
     route:
       external:
         annotations:
           external-dns/is-public: "true"
           external-dns.alpha.kubernetes.io/target: external.zinn.ca
-        hostnames: [*host]
+        hostnames: [*api-host]
         parentRefs:
           - name: external
             namespace: kube-system
             sectionName: https
         rules:
           - backendRefs:
-              - name: main
-                port: *port
+              - name: api
+                port: *api-port
+      internal:
+        hostnames: ["shlink.zinn.ca"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: web
+                port: *web-port
