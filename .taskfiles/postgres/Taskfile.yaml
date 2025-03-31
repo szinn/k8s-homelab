@@ -46,16 +46,6 @@ tasks:
           KUSTOMIZATION: shlink
           SERVICES: deployment/shlink-api
 
-  down_sonarr:
-    desc: Turn down Sonarr
-    cmds:
-      - task: _down
-        vars:
-          NAMESPACE: media
-          HELMRELEASE: sonarr
-          KUSTOMIZATION: sonarr
-          SERVICES: deployment/sonarr
-
   down_wikijs:
     desc: Turn down WikiJS
     cmds:
@@ -111,7 +101,6 @@ tasks:
     cmds:
       - task: down_dmarc
       - task: down_shlink
-      - task: down_sonarr
       - task: down_wikijs
       - task: down_home-assistant
       - task: down_gatus
@@ -137,17 +126,6 @@ tasks:
           HELMRELEASE: shlink-api
           KUSTOMIZATION: shlink
           SERVICES: deployment/shlink-api
-          REPLICAS: 1
-
-  up_sonarr:
-    desc: Turn up Sonarr
-    cmds:
-      - task: _up
-        vars:
-          NAMESPACE: media
-          HELMRELEASE: sonarr
-          KUSTOMIZATION: sonarr
-          SERVICES: deployment/sonarr
           REPLICAS: 1
 
   up_wikijs:
@@ -210,7 +188,6 @@ tasks:
     cmds:
       - task: up_dmarc
       - task: up_shlink
-      - task: up_sonarr
       - task: up_wikijs
       - task: up_home-assistant
       - task: up_gatus
@@ -233,15 +210,6 @@ tasks:
         vars:
           DATABASE: shlink
       - task: up_shlink
-
-  restore_sonarr:
-    desc: Restore sonarr database
-    cmds:
-      - task: down_sonarr
-      - task: _restore_db
-        vars:
-          DATABASE: sonarr_main
-      - task: up_sonarr
 
   restore_wikijs:
     desc: Restore wikijs database
