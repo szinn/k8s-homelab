@@ -30,7 +30,7 @@ function apply_crds() {
 
     local -r crds=(
         # renovate: datasource=github-releases depName=kubernetes-sigs/gateway-api
-        https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.1/standard-install.yaml
+        https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.1/experimental-install.yaml
         # renovate: datasource=github-releases depName=prometheus-operator/prometheus-operator
         https://github.com/prometheus-operator/prometheus-operator/releases/download/v0.81.0/stripped-down-crds.yaml
     )
@@ -62,15 +62,14 @@ function apply_namespaces() {
         namespace=$(basename "${app}")
 
         # Check if the namespace resources are up-to-date
-        if  kubectl get namespace "${namespace}" &>/dev/null; then
+        if kubectl get namespace "${namespace}" &>/dev/null; then
             log info "Namespace resource is up-to-date" resource "${namespace}"
             continue
         fi
 
         # Apply the namespace resources
-        if kubectl create namespace "${namespace}" --dry-run=client --output=yaml \
-            | kubectl apply --server-side --filename - &>/dev/null;
-        then
+        if kubectl create namespace "${namespace}" --dry-run=client --output=yaml |
+            kubectl apply --server-side --filename - &>/dev/null; then
             log info "Namespace resource applied" resource "${namespace}"
         else
             log error "Failed to apply namespace resource" resource "${namespace}"
@@ -113,7 +112,7 @@ function wipe_rook_disks() {
     log debug "Wiping Rook disks"
 
     # Skip disk wipe if Rook is detected running in the cluster
-    if  kubectl --namespace rook-ceph get kustomization rook-ceph &>/dev/null; then
+    if kubectl --namespace rook-ceph get kustomization rook-ceph &>/dev/null; then
         log warn "Rook is detected running in the cluster, skipping disk wipe"
         return
     fi
@@ -122,9 +121,9 @@ function wipe_rook_disks() {
     for node in $(talosctl config info --output json | jq --raw-output '.nodes | .[]'); do
         disk=$(
             # | jq --raw-output 'select(.spec.model == env.ROOK_DISK_MODEL) | .metadata.id' \
-            talosctl --nodes "${node}" get disks --output json \
-                | jq --raw-output 'select(.spec.dev_path == "/dev/sdb") | .metadata.id' \
-                | xargs
+            talosctl --nodes "${node}" get disks --output json |
+                jq --raw-output 'select(.spec.dev_path == "/dev/sdb") | .metadata.id' |
+                xargs
         )
 
         if [[ -n "${disk}" ]]; then
