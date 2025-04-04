@@ -15,6 +15,7 @@ spec:
     /*
     # include
     !config/crd/standard
+    !config/crd/experimental/gateway.networking.k8s.io_tlsroutes.yaml
 ---
 # yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
