@@ -36,7 +36,7 @@ spec:
           main:
             image:
               repository: ghcr.io/bjw-s-labs/calibre-web
-              tag: 0.6.24@sha256:12cb629e42ad3e8480759d14a5b865587bef3ec8141488c9988e4838879fff5a
+              tag: 0.6.24@sha256:a0659b3cd45c4d0d6470401d2fb9483d5dd982fdeec57f08cbabeb9d0b2d479e
             env:
               TZ: America/Toronto
               CACHE_DIR: /cache
