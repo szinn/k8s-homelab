@@ -36,16 +36,6 @@ tasks:
           KUSTOMIZATION: dmarc-report
           SERVICES: statefulset/dmarc-report
 
-  down_shlink:
-    desc: Turn down Shlink
-    cmds:
-      - task: _down
-        vars:
-          NAMESPACE: self-hosted
-          HELMRELEASE: shlink-api
-          KUSTOMIZATION: shlink
-          SERVICES: deployment/shlink-api
-
   down_wikijs:
     desc: Turn down WikiJS
     cmds:
@@ -100,7 +90,6 @@ tasks:
     desc: Turn down all applications using Postgres
     cmds:
       - task: down_dmarc
-      - task: down_shlink
       - task: down_wikijs
       - task: down_home-assistant
       - task: down_gatus
@@ -115,17 +104,6 @@ tasks:
           HELMRELEASE: dmarc-report
           KUSTOMIZATION: dmarc-report
           SERVICES: statefulset/dmarc-report
-          REPLICAS: 1
-
-  up_shlink:
-    desc: Turn up Shlink
-    cmds:
-      - task: _up
-        vars:
-          NAMESPACE: self-hosted
-          HELMRELEASE: shlink-api
-          KUSTOMIZATION: shlink
-          SERVICES: deployment/shlink-api
           REPLICAS: 1
 
   up_wikijs:
@@ -187,7 +165,6 @@ tasks:
     desc: Turn up all applications using Postgres
     cmds:
       - task: up_dmarc
-      - task: up_shlink
       - task: up_wikijs
       - task: up_home-assistant
       - task: up_gatus
@@ -201,15 +178,6 @@ tasks:
         vars:
           DATABASE: dmarc
       - task: up_dmarc
-
-  restore_shlink:
-    desc: Restore shlink database
-    cmds:
-      - task: down_shlink
-      - task: _restore_db
-        vars:
-          DATABASE: shlink
-      - task: up_shlink
 
   restore_wikijs:
     desc: Restore wikijs database

@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app shlink
+  name: shlink
 spec:
   interval: 1h
   chartRef:
@@ -21,66 +21,54 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 2000
+        runAsGroup: 2000
+        runAsNonRoot: true
+        fsGroup: 2000
+        fsGroupChangePolicy: OnRootMismatch
     controllers:
-      api:
-        replicas: 1
+      main:
         annotations:
           secret.reloader.stakater.com/reload: shlink-secret
-        initContainers:
-          init-db:
-            image:
-              repository: ghcr.io/home-operations/postgres-init
-              tag: 17.4@sha256:a9f405688344a8a6f718e2c344438342ad21540986aeb5ab5fa781831eb2c597
-              pullPolicy: IfNotPresent
-            envFrom:
-              - secretRef:
-                  name: shlink-secret
         containers:
-          main:
+          api:
             image:
               repository: ghcr.io/shlinkio/shlink
               tag: 4.4.6@sha256:1a697baca56ab8821783e0ce53eb4fb22e51bb66749ec50581adc0cb6d031d7a
             env:
-              DB_DRIVER: postgres
+              USER_ID: "2000"
+              SHLINK_SERVER_NAME: "HomeLab"
               DEFAULT_DOMAIN: &api-host "ln.zinn.ca"
               DISABLE_TRACKING_FROM: 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
               ENABLE_PERIODIC_VISIT_LOCATE: "true"
               IS_HTTPS_ENABLED: "true"
-              PORT: &api-port 8080
+              PORT: &api-port 8081
               TIMEZONE: "America/Toronto"
             envFrom:
               - secretRef:
                   name: shlink-secret
-      web:
-        replicas: 1
-        strategy: RollingUpdate
-        rollingUpdate:
-          unavailable: 2
-          surge: 0
-        annotations:
-          secret.reloader.stakater.com/reload: shlink-secret
-        containers:
-          main:
+          web:
             image:
               repository: ghcr.io/shlinkio/shlink-web-client
               tag: 4.3.0@sha256:4a84d58508d0a327e6c383a0b57f624dd9a4f1a6e24f3cb538dec18dbaa9f7a1
             env:
+              UID: "2000"
               SHLINK_SERVER_URL: "https://ln.zinn.ca"
             envFrom:
               - secretRef:
                   name: shlink-secret
 
     service:
-      api:
-        controller: api
+      main:
+        controller: main
         ports:
-          http:
+          api:
             port: *api-port
-      web:
-        controller: web
-        ports:
           http:
             port: &web-port 8080
+            primary: true
 
     route:
       external:
@@ -94,7 +82,7 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: api
+              - name: shlink
                 port: *api-port
       internal:
         hostnames: ["shlink.zinn.ca"]
@@ -104,5 +92,24 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: web
+              - name: shlink
                 port: *web-port
+
+    persistence:
+      data:
+        enabled: true
+        existingClaim: "${VOLSYNC_CLAIM}"
+        advancedMounts:
+          main:
+            api:
+              - path: /etc/shlink/data
+      log:
+        type: emptyDir
+        globalMounts:
+          - path: /etc/shlink/data/log
+      nginx:
+        type: emptyDir
+        advancedMounts:
+          main:
+            web:
+              - path: /usr/share/nginx/html
