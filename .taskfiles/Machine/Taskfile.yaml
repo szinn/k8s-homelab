@@ -104,6 +104,13 @@ tasks:
       - ssh root@{{.MACHINE}}.zinn.tech chmod u+rw,g-wx,o-wx /data/unifi-core/config/unifi-core.key
       - ssh root@{{.MACHINE}}.zinn.tech systemctl restart unifi-core
 
+  install-styx-configuration:
+    desc: Install Styx configuration
+    cmds:
+      - scp "{{.FILES_DIR}}/styx/multicast-relay.service" root@styx:/etc/systemd/system/multicast-relay.service
+      - ssh root@styx systemctl enable multicast-relay
+      - ssh root@styx systemctl start multicast-relay
+
   install-artemis-certificates:
     desc: Update Artemis certificates
     cmds:
