@@ -16,14 +16,18 @@ spec:
     name: flux-system
     namespace: flux-system
   dependsOn:
-    - name: cloudnative-pg-cluster
-      namespace: dbms
     - name: external-secrets
       namespace: external-secrets
   components:
+    - ../../../../components/volsync
     - ../../../../components/gatus/external
   postBuild:
     substitute:
+      APP: *app
+      APP_UID: "2000"
+      APP_GID: "2000"
+      VOLSYNC_CLAIM: shlink-data
+      VOLSYNC_CAPACITY: 8Gi
       GATUS_APP: shlink
       GATUS_SUBDOMAIN: ln
       GATUS_PATH: /g
