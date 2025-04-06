@@ -20,8 +20,6 @@ spec:
   uninstall:
     keepHistory: false
   dependsOn:
-    - name: cloudnative-pg
-      namespace: dbms
     - name: rook-ceph-cluster
       namespace: rook-ceph
     - name: volsync
@@ -38,15 +36,6 @@ spec:
             runAsNonRoot: true
             fsGroup: 65533
             fsGroupChangePolicy: OnRootMismatch
-        initContainers:
-          init-db:
-            image:
-              repository: ghcr.io/home-operations/postgres-init
-              tag: 17.4@sha256:a9f405688344a8a6f718e2c344438342ad21540986aeb5ab5fa781831eb2c597
-              pullPolicy: IfNotPresent
-            envFrom:
-              - secretRef:
-                  name: home-assistant-secret
         containers:
           main:
             image:
