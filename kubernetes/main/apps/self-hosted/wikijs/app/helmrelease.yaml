@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -21,18 +20,17 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
     controllers:
       main:
         annotations:
           reloader.stakater.com/auto: "true"
-        initContainers:
-          init-db:
-            image:
-              repository: ghcr.io/home-operations/postgres-init
-              tag: 17.4@sha256:a9f405688344a8a6f718e2c344438342ad21540986aeb5ab5fa781831eb2c597
-            envFrom:
-              - secretRef:
-                  name: wikijs-secret
         containers:
           main:
             image:
@@ -41,12 +39,10 @@ spec:
               tag: "2.5.307@sha256:a1ac7c317a52c80da0bfc5ee57b4f009b22ed322569e435f52c57c2f24c70d8a"
             env:
               TZ: America/Toronto
+              LOG_LEVEL: debug
               APP_URL: "https://wiki.zinn.ca"
-              DB_TYPE: postgres
-              DB_HOST: postgres-rw.dbms.svc.cluster.local
-              DB_PORT: 5432
-              DB_NAME: wikijs
-              DB_USER: wikijs
+              DB_TYPE: sqlite
+              DB_FILEPATH: /wiki/data/wiki.sqlite
             envFrom:
               - secretRef:
                   name: wikijs-secret
@@ -68,6 +64,11 @@ spec:
               - name: main
                 port: *port
     persistence:
+      data:
+        enabled: true
+        existingClaim: wikijs-data
+        globalMounts:
+          - path: /wiki/data
       sshkey:
         enabled: true
         type: secret

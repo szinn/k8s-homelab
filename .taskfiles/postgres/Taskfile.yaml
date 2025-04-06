@@ -36,46 +36,6 @@ tasks:
           KUSTOMIZATION: dmarc-report
           SERVICES: statefulset/dmarc-report
 
-  down_wikijs:
-    desc: Turn down WikiJS
-    cmds:
-      - task: _down
-        vars:
-          NAMESPACE: self-hosted
-          HELMRELEASE: wikijs
-          KUSTOMIZATION: wikijs
-          SERVICES: deployment/wikijs
-
-  down_home-assistant:
-    desc: Turn down Home Assistant
-    cmds:
-      - task: _down
-        vars:
-          NAMESPACE: home
-          HELMRELEASE: home-assistant
-          KUSTOMIZATION: home-assistant
-          SERVICES: deployment/home-assistant
-
-  down_gatus:
-    desc: Turn down Gatus
-    cmds:
-      - task: _down
-        vars:
-          NAMESPACE: observability
-          HELMRELEASE: gatus
-          KUSTOMIZATION: gatus
-          SERVICES: deployment/gatus
-
-  down_grafana:
-    desc: Turn down Grafana
-    cmds:
-      - task: _down
-        vars:
-          NAMESPACE: observability
-          HELMRELEASE: grafana
-          KUSTOMIZATION: grafana
-          SERVICES: deployment/grafana
-
   down_immich:
     desc: Turn down Immich
     cmds:
@@ -90,10 +50,6 @@ tasks:
     desc: Turn down all applications using Postgres
     cmds:
       - task: down_dmarc
-      - task: down_wikijs
-      - task: down_home-assistant
-      - task: down_gatus
-      - task: down_grafana
 
   up_dmarc:
     desc: Turn up Dmarc Report
@@ -104,50 +60,6 @@ tasks:
           HELMRELEASE: dmarc-report
           KUSTOMIZATION: dmarc-report
           SERVICES: statefulset/dmarc-report
-          REPLICAS: 1
-
-  up_wikijs:
-    desc: Turn up WikiJS
-    cmds:
-      - task: _up
-        vars:
-          NAMESPACE: self-hosted
-          HELMRELEASE: wikijs
-          KUSTOMIZATION: wikijs
-          SERVICES: deployment/wikijs
-          REPLICAS: 1
-
-  up_home-assistant:
-    desc: Turn up Home Assistant
-    cmds:
-      - task: _up
-        vars:
-          NAMESPACE: home
-          HELMRELEASE: home-assistant
-          KUSTOMIZATION: home-assistant
-          SERVICES: deployment/home-assistant
-          REPLICAS: 1
-
-  up_gatus:
-    desc: Turn up Gatus
-    cmds:
-      - task: _up
-        vars:
-          NAMESPACE: observability
-          HELMRELEASE: gatus
-          KUSTOMIZATION: gatus
-          SERVICES: deployment/gatus
-          REPLICAS: 1
-
-  up_grafana:
-    desc: Turn up Grafana
-    cmds:
-      - task: _up
-        vars:
-          NAMESPACE: observability
-          HELMRELEASE: grafana
-          KUSTOMIZATION: grafana
-          SERVICES: deployment/grafana
           REPLICAS: 1
 
   up_immich:
@@ -165,10 +77,6 @@ tasks:
     desc: Turn up all applications using Postgres
     cmds:
       - task: up_dmarc
-      - task: up_wikijs
-      - task: up_home-assistant
-      - task: up_gatus
-      - task: up_grafana
 
   restore_dmarc:
     desc: Restore dmarc database
@@ -178,15 +86,6 @@ tasks:
         vars:
           DATABASE: dmarc
       - task: up_dmarc
-
-  restore_wikijs:
-    desc: Restore wikijs database
-    cmds:
-      - task: down_wikijs
-      - task: _restore_db
-        vars:
-          DATABASE: wikijs
-      - task: up_wikijs
 
   restore_immich:
     desc: Restore immich database
