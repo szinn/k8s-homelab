@@ -35,7 +35,7 @@ releases:
 
   - name: kubelet-csr-approver
     namespace: system
-    chart: oci://ghcr.io/szinn/charts-mirror/kubelet-csr-approver
+    chart: oci://ghcr.io/home-operations/charts-mirror/kubelet-csr-approver
     version: 1.2.6
     values: ['{{ requiredEnv "KUBERNETES_DIR" }}/apps/system/kubelet-csr-approver/app/values.yaml']
     needs: ["kube-system/cilium"]
