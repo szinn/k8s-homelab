@@ -12,5 +12,3 @@ spec:
   ref:
     tag: 0.23.2
   url: oci://ghcr.io/szinn/charts-mirror/cloudnative-pg
-  verify:
-    provider: cosign

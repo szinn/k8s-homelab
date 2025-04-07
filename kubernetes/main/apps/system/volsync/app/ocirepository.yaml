@@ -12,8 +12,3 @@ spec:
   ref:
     tag: 0.12.1
   url: oci://ghcr.io/home-operations/charts-mirror/volsync
-  verify:
-    provider: cosign
-    matchOIDCIdentity:
-      - issuer: "^https://token.actions.githubusercontent.com$"
-        subject: "^https://github.com/home-operations/charts-mirror.*$"
