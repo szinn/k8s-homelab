@@ -12,8 +12,3 @@ spec:
   ref:
     tag: 3.12.2
   url: oci://ghcr.io/home-operations/charts-mirror/metrics-server
-  verify:
-    provider: cosign
-    matchOIDCIdentity:
-      - issuer: "^https://token.actions.githubusercontent.com$"
-        subject: "^https://github.com/home-operations/charts-mirror.*$"

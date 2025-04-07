@@ -12,5 +12,3 @@ spec:
   ref:
     tag: 1.0.4
   url: oci://ghcr.io/szinn/charts-mirror/kube-cleanup-operator
-  verify:
-    provider: cosign

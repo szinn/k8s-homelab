@@ -12,5 +12,3 @@ spec:
   ref:
     tag: 1.2.6
   url: oci://ghcr.io/home-operations/charts-mirror/kubelet-csr-approver
-  verify:
-    provider: cosign
