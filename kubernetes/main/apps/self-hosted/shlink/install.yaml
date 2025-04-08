@@ -31,6 +31,7 @@ spec:
       GATUS_APP: shlink
       GATUS_SUBDOMAIN: ln
       GATUS_PATH: /g
+      GATUS_INTERVAL: 10m
   prune: true
   wait: false
   interval: 30m
