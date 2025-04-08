@@ -11,7 +11,7 @@ data:
       - name: "${GATUS_APP}"
         group: "${GATUS_GROUP:=external}"
         url: "https://${GATUS_SUBDOMAIN:=${APP}}.zinn.ca${GATUS_PATH:=/}"
-        interval: 1m
+        interval: "${GATUS_INTERVAL:=1m}"
         client:
           dns-resolver: tcp://1.1.1.1:53
         conditions:
