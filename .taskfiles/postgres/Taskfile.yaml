@@ -26,16 +26,6 @@ tasks:
       vars:
         - command
 
-  down_dmarc:
-    desc: Turn down Dmarc Report
-    cmds:
-      - task: _down
-        vars:
-          NAMESPACE: self-hosted
-          HELMRELEASE: dmarc-report
-          KUSTOMIZATION: dmarc-report
-          SERVICES: statefulset/dmarc-report
-
   down_immich:
     desc: Turn down Immich
     cmds:
@@ -46,21 +36,10 @@ tasks:
           KUSTOMIZATION: immich
           SERVICES: deployment/immich-server
 
-  down_all:
-    desc: Turn down all applications using Postgres
-    cmds:
-      - task: down_dmarc
-
-  up_dmarc:
-    desc: Turn up Dmarc Report
-    cmds:
-      - task: _up
-        vars:
-          NAMESPACE: self-hosted
-          HELMRELEASE: dmarc-report
-          KUSTOMIZATION: dmarc-report
-          SERVICES: statefulset/dmarc-report
-          REPLICAS: 1
+  # down_all:
+  #   desc: Turn down all applications using Postgres
+  #   cmds:
+  #     - task: down_dmarc
 
   up_immich:
     desc: Turn up Immich
@@ -73,19 +52,10 @@ tasks:
           SERVICES: deployment/immich-server
           REPLICAS: 1
 
-  up_all:
-    desc: Turn up all applications using Postgres
-    cmds:
-      - task: up_dmarc
-
-  restore_dmarc:
-    desc: Restore dmarc database
-    cmds:
-      - task: down_dmarc
-      - task: _restore_db
-        vars:
-          DATABASE: dmarc
-      - task: up_dmarc
+  # up_all:
+  #   desc: Turn up all applications using Postgres
+  #   cmds:
+  #     - task: up_dmarc
 
   restore_immich:
     desc: Restore immich database
