@@ -23,12 +23,11 @@ spec:
   values:
     controllers:
       atuin:
-        type: statefulset
         containers:
           app:
             image:
-              repository: ghcr.io/conradludgate/atuin-server-sqlite
-              tag: v18.4.0@sha256:2b89387bbf532b37c65c73aa8feebd52dd220d2bf392cd7f40d88a7b2e99d4c8
+              repository: ghcr.io/home-operations/atuin-server-sqlite
+              tag: 18.4.0@sha256:ba9807985d6d8f601f6887894b01ae65dee2280c0a0bb8b2f7bba50e7376f39a
             env:
               ATUIN_PORT: &port 8080
               ATUIN_OPEN_REGISTRATION: "true"
