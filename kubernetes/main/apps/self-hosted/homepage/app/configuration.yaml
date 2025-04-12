@@ -103,10 +103,6 @@ data:
         - Mailu:
             href: https://{{HOMEPAGE_VAR_MAILU}}/admin
             icon: mailu.png
-        - DMARC Reports:
-            href: https://dmarc-report.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            siteMonitor: https://dmarc-report.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            icon: mail-in-a-box.png
         - Echo Server:
             href: https://echo-server.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
             siteMonitor: https://echo-server.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
