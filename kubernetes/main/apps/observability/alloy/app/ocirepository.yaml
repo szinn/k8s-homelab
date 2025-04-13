@@ -3,12 +3,12 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: OCIRepository
 metadata:
-  name: promtail
+  name: alloy
 spec:
-  interval: 1h
+  interval: 5m
   layerSelector:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 6.16.6
-  url: oci://ghcr.io/grafana/helm-charts/promtail
+    tag: 1.0.1
+  url: oci://ghcr.io/home-operations/charts-mirror/alloy
