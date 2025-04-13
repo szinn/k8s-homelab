@@ -11,11 +11,11 @@ resources:
   - namespace.yaml
   # Flux-Kustomizations
   - alertmanager/install.yaml
+  - alloy/install.yaml
   - gatus/install.yaml
   - grafana/install.yaml
   - kromgo/install.yaml
   - kube-prometheus-stack/install.yaml
   - loki/install.yaml
   - miscellaneous
-  - promtail/install.yaml
   - unifi-poller/install.yaml

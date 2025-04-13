@@ -1,0 +1,30 @@
+---
+# yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: alloy
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: alloy
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    fullnameOverride: alloy
+    serviceMonitor:
+      enabled: true
+    alloy:
+      configMap:
+        create: false
+        name: alloy-configmap
+        key: config.alloy
+    controller:
+      podAnnotations:
+        configmap.reloader.stakater.com/reload: alloy-configmap
