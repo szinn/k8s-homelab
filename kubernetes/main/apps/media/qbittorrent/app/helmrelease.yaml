@@ -20,48 +20,176 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
   values:
     controllers:
-      main:
+      qbittorrent:
         annotations:
-          reloader.stakater.com/auto: "true"
+          secret.reloader.stakater.com/reload: qbittorrent-secret,qbittorrent-gluetun-secret
+          config.reloader.stakater.com/reload: qbittorrent-coredns
+
         pod:
           securityContext:
-            runAsUser: 2000
-            runAsGroup: 2000
-            runAsNonRoot: true
             fsGroup: 2000
-            fsGroupChangePolicy: OnRootMismatch
+            fsGroupChangePolicy: "OnRootMismatch"
+
+        initContainers:
+          coredns:
+            image:
+              repository: mirror.gcr.io/coredns/coredns
+              tag: 1.12.1
+            args:
+              - -conf
+              - /etc/coredns/Corefile
+            restartPolicy: Always
+
+          gluetun:
+            dependsOn:
+              - coredns
+            image:
+              repository: ghcr.io/qdm12/gluetun
+              tag: v3.40.0
+            env:
+              DOT: "off"
+              DNS_ADDRESS: "127.0.0.2"
+              HTTP_CONTROL_SERVER_AUTH_CONFIG_FILEPATH: &gluetunAuthPath /gluetun/auth.toml
+              VPN_SERVICE_PROVIDER: custom
+              VPN_TYPE: openvpn
+              OPENVPN_CUSTOM_CONFIG: &gluetunOpenvpnPath /gluetun/custom.conf
+              VPN_INTERFACE: tun0
+              # VPN_SERVICE_PROVIDER: private internet access
+              # SERVER_REGIONS: "US Chicago"
+              # VPN_PORT_FORWARDING: on
+              # VPN_PORT_FORWARDING_PROVIDER: private internet access
+              FIREWALL_INPUT_PORTS: 8080
+              FIREWALL_OUTBOUND_SUBNETS: 10.200.0.0/16,10.201.0.0/16 # Allow access to k8s subnets
+            envFrom:
+              - secretRef:
+                  name: qbittorrent-secret
+            restartPolicy: Always
+            securityContext:
+              capabilities:
+                add:
+                  - NET_ADMIN
+              allowPrivilegeEscalation: false
+
         containers:
-          main:
+          app:
+            nameOverride: qbittorrent
             image:
               repository: ghcr.io/home-operations/qbittorrent
-              tag: 5.0.4@sha256:995c561247b069c10b1fa098186f35b3155c2df63912041f70637a9232755756
+              tag: 5.0.4
             env:
-              TZ: America/Toronto
-              QBITTORRENT__PORT: &port 8080
-              QBITTORRENT__BT_PORT: &port-bt 50413
+              UMASK: "022"
+              QBT_WEBUI_PORT: &port 8080
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
+            resources:
+              requests:
+                cpu: 150m
+                memory: 2048Mi
+              limits:
+                memory: 8192Mi
+            securityContext:
+              runAsUser: 2000
+              runAsGroup: 2000
+              runAsNonRoot: true
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
+
+          # port-forward:
+          #   image:
+          #     repository: ghcr.io/bjw-s-labs/gluetun-qb-port-sync
+          #     tag: 0.0.4@sha256:5fd1da9f2d6509c00b6d6f4b3b7ada6fa097b8134040fc8965b6c1dc8584dc6b
+          #   env:
+          #     GLUETUN_CONTROL_SERVER_HOST: localhost
+          #     GLUETUN_CONTROL_SERVER_PORT: 8000
+          #     GLUETUN_CONTROL_SERVER_API_KEY:
+          #       valueFrom:
+          #         secretKeyRef:
+          #           name: qbittorrent-secret
+          #           key: GLUETUN_CONTROL_SERVER_API_KEY
+          #     QBITTORRENT_HOST: localhost
+          #     QBITTORRENT_WEBUI_PORT: *port
+          #     CRON_ENABLED: true
+          #     CRON_SCHEDULE: "*/5 * * * *"
+          #     LOG_TIMESTAMP: false
+          #   securityContext:
+          #     runAsUser: 2000
+          #     runAsGroup: 2000
+          #     runAsNonRoot: true
+          #     allowPrivilegeEscalation: false
+          #     readOnlyRootFilesystem: true
+          #     capabilities:
+          #       drop:
+          #         - ALL
+
     service:
-      main:
-        controller: main
+      app:
+        controller: qbittorrent
         ports:
           http:
             port: *port
-      bittorrent:
-        controller: main
-        type: LoadBalancer
-        annotations:
-          lbipam.cilium.io/ips: 10.11.1.13
-          prometheus.io/probe: "true"
-          prometheus.io/protocol: tcp
-        ports:
-          bittorrent:
-            enabled: true
-            port: *port-bt
-            protocol: TCP
-            targetPort: 6881
+
+    persistence:
+      config:
+        enabled: true
+        existingClaim: "${VOLSYNC_CLAIM}"
+        advancedMounts:
+          qbittorrent:
+            app:
+              - path: /config
+      empty-config:
+        type: emptyDir
+        advancedMounts:
+          qbittorrent:
+            port-forward:
+              - path: /config
+      downloads:
+        existingClaim: downloads
+        globalMounts:
+          - path: /downloads
+      gluetun-auth:
+        type: secret
+        name: qbittorrent-gluetun-secret
+        advancedMounts:
+          qbittorrent:
+            gluetun:
+              - path: *gluetunAuthPath
+                subPath: auth.toml
+      gluetun-openvpn:
+        type: secret
+        name: qbittorrent-secret
+        advancedMounts:
+          qbittorrent:
+            gluetun:
+              - path: *gluetunOpenvpnPath
+                subPath: openvpn_config
+      coredns:
+        type: configMap
+        name: qbittorrent-coredns
+        advancedMounts:
+          qbittorrent:
+            coredns:
+              - path: /etc/coredns/Corefile
+                subPath: Corefile
+                readOnly: true
+
     route:
-      internal:
+      app:
         hostnames: ["{{ .Release.Name }}.zinn.ca"]
         parentRefs:
           - name: internal
@@ -69,17 +197,5 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: main
+              - name: qbittorrent
                 port: *port
-    persistence:
-      config:
-        enabled: true
-        existingClaim: "${VOLSYNC_CLAIM}"
-        advancedMounts:
-          main:
-            main:
-              - path: /config
-      downloads:
-        existingClaim: downloads
-        globalMounts:
-          - path: /downloads
