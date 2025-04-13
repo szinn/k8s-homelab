@@ -1,0 +1,26 @@
+.:53 {
+    bind 127.0.0.2
+    rewrite stop type AAAA A
+    errors
+    health :8081 {
+        lameduck 5s
+    }
+    log {
+        class error
+    }
+    forward . /etc/resolv.conf
+    cache 30
+    loop
+    reload
+}
+
+cluster.local:53 {
+    bind 127.0.0.2
+    rewrite stop type AAAA A
+    errors
+    log {
+        class error
+    }
+    forward . 10.200.0.10
+}
+
