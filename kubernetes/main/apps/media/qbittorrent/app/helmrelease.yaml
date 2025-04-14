@@ -39,7 +39,7 @@ spec:
           coredns:
             image:
               repository: mirror.gcr.io/coredns/coredns
-              tag: 1.12.1
+              tag: 1.12.1@sha256:e8c262566636e6bc340ece6473b0eed193cad045384401529721ddbe6463d31c
             args:
               - -conf
               - /etc/coredns/Corefile
@@ -50,7 +50,7 @@ spec:
               - coredns
             image:
               repository: ghcr.io/qdm12/gluetun
-              tag: v3.40.0
+              tag: v3.40.0@sha256:2b42bfa046757145a5155acece417b65b4443c8033fb88661a8e9dcf7fda5a00
             env:
               DOT: "off"
               DNS_ADDRESS: "127.0.0.2"
@@ -80,7 +80,7 @@ spec:
             nameOverride: qbittorrent
             image:
               repository: ghcr.io/home-operations/qbittorrent
-              tag: 5.0.4
+              tag: 5.0.4@sha256:995c561247b069c10b1fa098186f35b3155c2df63912041f70637a9232755756
             env:
               UMASK: "022"
               QBT_WEBUI_PORT: &port 8080
