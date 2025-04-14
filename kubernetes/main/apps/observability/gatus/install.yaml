@@ -15,9 +15,6 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  dependsOn:
-    - name: cloudnative-pg-cluster
-      namespace: dbms
   prune: true
   wait: false
   interval: 30m
