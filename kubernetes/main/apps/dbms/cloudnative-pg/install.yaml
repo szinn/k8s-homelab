@@ -22,40 +22,40 @@ spec:
   wait: true
   interval: 30m
   timeout: 5m
----
-# yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: &app cloudnative-pg-cluster
-  namespace: &namespace dbms
-spec:
-  targetNamespace: *namespace
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
-  path: ./kubernetes/main/apps/dbms/cloudnative-pg/cluster
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-    namespace: flux-system
-  dependsOn:
-    - name: cloudnative-pg-operator
-      namespace: dbms
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
-  healthChecks:
-    - apiVersion: postgresql.cnpg.io/v1
-      kind: Cluster
-      name: postgres
-      namespace: *namespace
-  healthCheckExprs:
-    - apiVersion: postgresql.cnpg.io/v1
-      kind: Cluster
-      current: status.phase == 'Cluster in healthy state'
-  prune: true
-  interval: 30m
-  timeout: 5m
+# ---
+# # yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: &app cloudnative-pg-cluster
+#   namespace: &namespace dbms
+# spec:
+#   targetNamespace: *namespace
+#   commonMetadata:
+#     labels:
+#       app.kubernetes.io/name: *app
+#   path: ./kubernetes/main/apps/dbms/cloudnative-pg/cluster
+#   sourceRef:
+#     kind: GitRepository
+#     name: flux-system
+#     namespace: flux-system
+#   dependsOn:
+#     - name: cloudnative-pg-operator
+#       namespace: dbms
+#     - name: rook-ceph-cluster
+#       namespace: rook-ceph
+#   healthChecks:
+#     - apiVersion: postgresql.cnpg.io/v1
+#       kind: Cluster
+#       name: postgres
+#       namespace: *namespace
+#   healthCheckExprs:
+#     - apiVersion: postgresql.cnpg.io/v1
+#       kind: Cluster
+#       current: status.phase == 'Cluster in healthy state'
+#   prune: true
+#   interval: 30m
+#   timeout: 5m
 # ---
 # yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 # apiVersion: kustomize.toolkit.fluxcd.io/v1
