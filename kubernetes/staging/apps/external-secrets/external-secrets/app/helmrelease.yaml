@@ -22,6 +22,9 @@ spec:
       namespace: external-secrets
   values:
     installCRDs: true
+    crds:
+      conversion:
+        enabled: false
     image:
       repository: ghcr.io/external-secrets/external-secrets
     replicaCount: 1
