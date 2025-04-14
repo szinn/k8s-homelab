@@ -100,9 +100,6 @@ data:
               url: https://titan.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:1443
               username: {{HOMEPAGE_VAR_ADGUARD_USERNAME}}
               password: {{HOMEPAGE_VAR_ADGUARD_PASSWORD}}
-        - Mailu:
-            href: https://{{HOMEPAGE_VAR_MAILU}}/admin
-            icon: mailu.png
         - Echo Server:
             href: https://echo-server.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
             siteMonitor: https://echo-server.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
