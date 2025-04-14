@@ -16,7 +16,7 @@ spec:
     name: flux-system
     namespace: flux-system
   dependsOn:
-    - name: cloudnative-pg-cluster
+    - name: cloudnative-pg
       namespace: dbms
     - name: external-secrets
       namespace: external-secrets
