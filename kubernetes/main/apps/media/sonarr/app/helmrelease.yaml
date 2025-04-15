@@ -101,7 +101,7 @@ spec:
       config:
         existingClaim: sonarr-config
       config-cache:
-        existingClaim: radarr-cache
+        existingClaim: sonarr-cache
         globalMounts:
           - path: /config/MediaCover
       logs:
