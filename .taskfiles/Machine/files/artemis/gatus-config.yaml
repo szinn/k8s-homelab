@@ -42,7 +42,7 @@ endpoints:
         description: "Internal DNS: Cannot reach unifi"
   - name: external-dns-titan
     group: DNS
-    url: 10.0.0.7
+    url: 10.0.0.9
     dns:
       query-name: "google.com"
       query-type: "A"
@@ -52,7 +52,7 @@ endpoints:
         description: "External DNS: Cannot reach google.com"
   - name: internal-dns-titan
     group: DNS
-    url: 10.0.0.7
+    url: 10.0.0.9
     dns:
       query-name: "unifi.zinn.tech"
       query-type: "A"
@@ -115,7 +115,7 @@ endpoints:
         description: "Hera down"
   - name: Titan
     group: Servers
-    url: icmp://10.0.0.7
+    url: icmp://10.0.0.9
     conditions: ["[CONNECTED] == true"]
     alerts:
       - type: discord
