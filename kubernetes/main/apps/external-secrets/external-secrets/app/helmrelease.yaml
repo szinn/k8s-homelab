@@ -28,6 +28,8 @@ spec:
     image:
       repository: ghcr.io/external-secrets/external-secrets
     replicaCount: 1
+    log:
+      level: debug
     leaderElect: false
     serviceMonitor:
       enabled: true
