@@ -35,7 +35,7 @@ releases:
 
   - name: kubelet-csr-approver
     namespace: system
-    chart: oci://ghcr.io/home-operations/charts-mirror/kubelet-csr-approver
+    chart: oci://ghcr.io/postfinance/charts/kubelet-csr-approver
     version: 1.2.7
     values: ['{{ requiredEnv "KUBERNETES_DIR" }}/apps/system/kubelet-csr-approver/app/values.yaml']
     needs: ["kube-system/cilium"]
