@@ -13,34 +13,34 @@ spec:
   dnsNames:
     - "zinn.tech"
     - "*.zinn.tech"
----
-# yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/external-secrets.io/pushsecret_v1alpha1.json
-apiVersion: external-secrets.io/v1alpha1
-kind: PushSecret
-metadata:
-  name: tech-wildcard-tls
-spec:
-  deletionPolicy: None
-  refreshInterval: 1h
-  secretStoreRefs:
-    - name: onepassword-connect
-      kind: ClusterSecretStore
-  selector:
-    secret:
-      name: tech-wildcard-tls
-  template:
-    engineVersion: v2
-    data:
-      tls.crt: '{{ index . "tls.crt" | b64enc }}'
-      tls.key: '{{ index . "tls.key" | b64enc }}'
-  data:
-    - match:
-        secretKey: tls.crt
-        remoteRef:
-          remoteKey: cluster-main
-          property: tech-wildcard-crt
-    - match:
-        secretKey: tls.key
-        remoteRef:
-          remoteKey: cluster-main
-          property: tech-wildcard-key
+# ---
+# # yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/external-secrets.io/pushsecret_v1alpha1.json
+# apiVersion: external-secrets.io/v1alpha1
+# kind: PushSecret
+# metadata:
+#   name: tech-wildcard-tls
+# spec:
+#   deletionPolicy: None
+#   refreshInterval: 1h
+#   secretStoreRefs:
+#     - name: onepassword-connect
+#       kind: ClusterSecretStore
+#   selector:
+#     secret:
+#       name: tech-wildcard-tls
+#   template:
+#     engineVersion: v2
+#     data:
+#       tls.crt: '{{ index . "tls.crt" | b64enc }}'
+#       tls.key: '{{ index . "tls.key" | b64enc }}'
+#   data:
+#     - match:
+#         secretKey: tls.crt
+#         remoteRef:
+#           remoteKey: cluster-main
+#           property: tech-wildcard-crt
+#     - match:
+#         secretKey: tls.key
+#         remoteRef:
+#           remoteKey: cluster-main
+#           property: tech-wildcard-key
