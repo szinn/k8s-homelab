@@ -33,6 +33,7 @@
       description: "Auto-merge OCI Charts",
       matchDatasources: ["docker"],
       automerge: true,
+      automergeType: "pr",
       matchUpdateTypes: ["minor", "patch"],
       matchPackageNames: ["/kube-prometheus-stack/"],
       ignoreTests: false,
