@@ -271,6 +271,12 @@ spec:
           datasource:
             - name: DS_PROMETHEUS
               value: Prometheus
+        envoy:
+          # renovate: dashboardNam="Envoy Proxy Monitoring gRPC"
+          gnetId: 23239
+          revision: 1
+          datasource:
+            - { name: DS_AFRANET_PROMETHEUS, value: Prometheus }
         # hubble-dashboard:
         #   url: https://raw.githubusercontent.com/cilium/cilium/v1.17.3/install/kubernetes/cilium/files/hubble/dashboards/hubble-dashboard.json
         #   datasource: Prometheus
