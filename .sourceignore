@@ -1,10 +1,12 @@
 # See https://toolkit.fluxcd.io/components/source/gitrepositories/#excluding-files
 .github/
+.renovate/
 .taskfiles/
 .vscode/
+docs/
 hack/
-setup/
-utils/
-.pre-commit-config.yaml
-.sops.yaml
+scripts/
+terraform/
+README.md
 Taskfile.yaml
+config.sops.env

@@ -27,7 +27,7 @@
       automergeType: "branch",
       matchUpdateTypes: ["minor", "patch", "digest"],
       minimumReleaseAge: "1 minute",
-      ignoreTests: true,
+      ignoreTests: true
     },
     {
       description: "Auto-merge OCI Charts",
@@ -36,7 +36,7 @@
       automergeType: "pr",
       matchUpdateTypes: ["minor", "patch"],
       matchPackageNames: ["/kube-prometheus-stack/"],
-      ignoreTests: false,
+      ignoreTests: false
     },
     {
       description: "Auto-merge GitHub Releases",
