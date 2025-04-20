@@ -112,6 +112,10 @@ spec:
 
     kube-state-metrics:
       fullnameOverride: kube-state-metrics
+      prometheus:
+        monitor:
+          enabled: true
+          honorLabels: true
 
     prometheusOperator:
       fullnameOverride: prometheus-operator
