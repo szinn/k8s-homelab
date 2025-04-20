@@ -25,7 +25,6 @@
       "files": "*.json*",
       "options": {
         "quoteProps": "preserve",
-        "singleQuote": false,
         "tabWidth": 2
       }
     }
