@@ -6,7 +6,7 @@ vars:
   FILES_DIR: "{{.MACHINE_ROOT_DIR}}/files"
   SCRIPTS_DIR: "{{.MACHINE_ROOT_DIR}}/scripts"
   # renovate: datasource=github-releases depName=AdguardTeam/AdGuardHome
-  ADGUARD_VERSION: v0.107.60
+  ADGUARD_VERSION: v0.107.61
 
 tasks:
   fetch-certificate:
