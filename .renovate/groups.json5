@@ -31,6 +31,16 @@
       separateMinorPatch: true
     },
     {
+      description: "CoreDNS Group",
+      groupName: "CoreDNS",
+      matchPackageNames: ["/ghcr.io\/coredns\/charts\/coredns/", "/coredns/"],
+      matchDatasources: ["docker", "helm"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group"
+      },
+      separateMinorPatch: true
+    },
+    {
       description: "Immich Group",
       groupName: "Immich",
       matchPackagePatterns: ["immich"],
