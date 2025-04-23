@@ -26,7 +26,6 @@ spec:
   values:
     image:
       repository: ghcr.io/rook/ceph
-      tag: v1.17.1@sha256:8e028fa92fd18f08a5bcb49eb89877aa02776eb138a7c5bd0117a08710493bb7
     crds:
       enabled: true
     csi:
