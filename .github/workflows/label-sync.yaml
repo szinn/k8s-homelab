@@ -11,6 +11,7 @@ on: # yamllint disable-line rule:truthy
       - ".github/labels.yaml"
 
 permissions:
+  contents: read
   issues: write
 
 jobs:
