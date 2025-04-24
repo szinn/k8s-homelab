@@ -10,6 +10,10 @@ on: # yamllint disable-line rule:truthy
 env:
   WORKFLOW_ISSUE_TITLE: "Link Checker Dashboard 🔗"
 
+permissions:
+  contents: read
+  issues: write
+
 jobs:
   link-checker:
     name: Link Checker
