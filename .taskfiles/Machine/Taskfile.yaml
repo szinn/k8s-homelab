@@ -261,7 +261,7 @@ tasks:
     desc: Install Hera configuration
     vars:
       # renovate: datasource=github-releases depName=ryanoasis/nerd-fonts
-      FONT_VERSION: v3.3.0
+      FONT_VERSION: v3.4.0
     cmds:
       - ssh scotte@hera.zinn.tech curl -o /tmp/FiraCode.zip -L https://github.com/ryanoasis/nerd-fonts/releases/download/{{.FONT_VERSION}}/FiraCode.zip
       - ssh scotte@hera.zinn.tech unzip -o /tmp/FiraCode.zip -d /home/scotte/.local/share/fonts
