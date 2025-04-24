@@ -156,16 +156,6 @@ tasks:
       - ssh root@artemis.zinn.tech apt install -y docker-compose
       - ssh root@artemis.zinn.tech systemctl restart docker.service
 
-  install-artemis-ddns:
-    desc: Install Cloudflare DDNS
-    cmds:
-      - op inject --in-file "{{.FILES_DIR}}/artemis/cloudflare-ddns.sh" 2>/dev/null > /tmp/cloudflare-ddns.sh
-      - scp /tmp/cloudflare-ddns.sh root@artemis.zinn.tech:/usr/local/bin/cloudflare-ddns.sh
-      - rm /tmp/cloudflare-ddns.sh
-      - ssh root@artemis.zinn.tech 'chmod +x /usr/local/bin/cloudflare-ddns.sh && chmod og+rx /usr/local/bin/cloudflare-ddns.sh'
-      - scp "{{.FILES_DIR}}/artemis/cloudflare-ddns.crontab" root@artemis.zinn.tech:/etc/cron.d/cloudflare-ddns
-      - ssh root@artemis.zinn.tech chmod -x /etc/cron.d/cloudflare-ddns
-
   install-artemis-node_exporter:
     desc: Install Node Exporter
     cmds:
