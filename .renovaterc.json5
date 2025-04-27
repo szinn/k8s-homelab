@@ -13,7 +13,8 @@
     "github>szinn/k8s-homelab//.renovate/grafanaDashboards.json5",
     "github>szinn/k8s-homelab//.renovate/labels.json5",
     "github>szinn/k8s-homelab//.renovate/packageRules.json5",
-    "github>szinn/k8s-homelab//.renovate/semantic-commits.json5"
+    "github>szinn/k8s-homelab//.renovate/semantic-commits.json5",
+    ":automergeBranch"
   ],
   "ignorePaths": [
     "kubernetes/main/apps/media/recyclarr/app/config/recyclarr.yaml",
