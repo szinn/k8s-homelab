@@ -21,13 +21,6 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    defaultPodOptions:
-      securityContext:
-        runAsUser: 2000
-        runAsGroup: 2000
-        runAsNonRoot: true
-        fsGroup: 2000
-        fsGroupChangePolicy: OnRootMismatch
     controllers:
       main:
         annotations:
@@ -49,6 +42,12 @@ spec:
             envFrom:
               - secretRef:
                   name: shlink-secret
+            securityContext:
+              runAsUser: 2000
+              runAsGroup: 2000
+              runAsNonRoot: true
+              fsGroup: 2000
+              fsGroupChangePolicy: OnRootMismatch
           web:
             image:
               repository: ghcr.io/shlinkio/shlink-web-client
@@ -59,6 +58,10 @@ spec:
             envFrom:
               - secretRef:
                   name: shlink-secret
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: false
+              capabilities: { drop: ["ALL"] }
 
     service:
       main:
@@ -103,13 +106,3 @@ spec:
           main:
             api:
               - path: /etc/shlink/data
-      log:
-        type: emptyDir
-        globalMounts:
-          - path: /etc/shlink/data/log
-      nginx:
-        type: emptyDir
-        advancedMounts:
-          main:
-            web:
-              - path: /usr/share/nginx/html
