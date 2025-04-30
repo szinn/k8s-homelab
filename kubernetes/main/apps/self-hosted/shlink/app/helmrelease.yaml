@@ -106,3 +106,7 @@ spec:
           main:
             api:
               - path: /etc/shlink/data
+      log:
+        type: emptyDir
+        globalMounts:
+          - path: /etc/shlink/data/log
