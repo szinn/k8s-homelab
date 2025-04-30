@@ -66,6 +66,8 @@ nodes:
 controlPlane:
   schematic:
     customization:
+      extraKernelArgs:
+        - -selinux # Disable selinux
       systemExtensions:
         officialExtensions:
           - siderolabs/i915

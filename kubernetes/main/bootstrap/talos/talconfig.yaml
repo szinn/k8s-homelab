@@ -2,7 +2,7 @@
 clusterName: main
 
 # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
-talosVersion: v1.9.5
+talosVersion: v1.10.0
 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
 kubernetesVersion: v1.33.0
 
@@ -114,6 +114,7 @@ controlPlane:
   schematic:
     customization:
       extraKernelArgs:
+        - -selinux # Disable selinux
         - apparmor=0 # Less security, more speed
         - i915.enable_guc=3 # Meteor Lake CPU / iGPU
         - init_on_alloc=0 # Less security, more speed
@@ -296,6 +297,19 @@ controlPlane:
 worker:
   schematic:
     customization:
+      extraKernelArgs:
+        - -selinux # Disable selinux
+        - apparmor=0 # Less security, more speed
+        - i915.enable_guc=3 # Meteor Lake CPU / iGPU
+        - init_on_alloc=0 # Less security, more speed
+        - init_on_free=0 # Less security, more speed
+        - intel_iommu=on # PCI Passthrough
+        - iommu=pt # PCI Passthrough
+        - mitigations=off # Less security, more speed
+        - net.ifnames=1 # Enable predictable NIC naming
+        - security=none # Less security, more speed
+        - sysctl.kernel.kexec_load_disabled=1 # Meteor Lake CPU / iGPU
+        - talos.auditd.disabled=1 # Less security, faster puter
       systemExtensions:
         officialExtensions:
           - siderolabs/intel-ucode
