@@ -193,7 +193,6 @@ controlPlane:
       machine:
         kubelet:
           extraArgs:
-            rotate-server-certificates: true
             image-gc-high-threshold: 70
             image-gc-low-threshold: 65
           extraConfig:
