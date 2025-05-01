@@ -8,7 +8,7 @@ spec:
   interval: 1h
   chartRef:
     kind: OCIRepository
-    name: kubelet-csr-approver
+    name: kube-cleanup-operator
   install:
     createNamespace: true
     remediation:

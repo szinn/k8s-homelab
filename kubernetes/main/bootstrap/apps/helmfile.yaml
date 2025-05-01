@@ -12,7 +12,6 @@ repositories:
   - name: cilium
     url: https://helm.cilium.io
   - name: postfinance
-    url: https://postfinance.github.io/kubelet-csr-approver
 
 releases:
   - name: cilium
@@ -31,13 +30,6 @@ releases:
     chart: oci://ghcr.io/coredns/charts/coredns
     version: 1.41.0
     values: ['{{ requiredEnv "KUBERNETES_DIR" }}/apps/kube-system/coredns/app/values.yaml']
-    needs: ["kube-system/cilium"]
-
-  - name: kubelet-csr-approver
-    namespace: system
-    chart: oci://ghcr.io/postfinance/charts/kubelet-csr-approver
-    version: 1.2.7
-    values: ['{{ requiredEnv "KUBERNETES_DIR" }}/apps/system/kubelet-csr-approver/app/values.yaml']
     needs: ["kube-system/cilium"]
 
   - name: flux-operator
