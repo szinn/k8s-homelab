@@ -43,4 +43,4 @@ spec:
         secretKey: tls.key
         remoteRef:
           remoteKey: cluster-staging
-          property: wildcard-keY
+          property: wildcard-key
