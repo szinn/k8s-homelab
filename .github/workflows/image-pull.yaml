@@ -114,7 +114,7 @@ jobs:
         run: talosctl -n "${NODE_IP}" image pull ${{ matrix.image }}
 
   status:
-    if: ${{ always() }}
+    if: ${{ !cancelled() }}
     name: Image Pull - Success
     needs: pull
     runs-on: ubuntu-latest
