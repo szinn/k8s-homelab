@@ -33,10 +33,10 @@
       description: "Auto-merge OCI Charts",
       matchDatasources: ["docker"],
       automerge: true,
-      automergeType: "branch",
+      automergeType: "pr",
       matchUpdateTypes: ["minor", "patch"],
       matchPackageNames: ["/kube-prometheus-stack/"],
-      ignoreTests: false
+      ignoreTests: true
     },
     {
       description: "Auto-merge GitHub Releases",
