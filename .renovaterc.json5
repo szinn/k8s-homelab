@@ -14,25 +14,22 @@
     "github>szinn/k8s-homelab//.renovate/labels.json5",
     "github>szinn/k8s-homelab//.renovate/packageRules.json5",
     "github>szinn/k8s-homelab//.renovate/semantic-commits.json5",
-    ":automergeBranch",
+    ":automergeBranch"
   ],
   ignorePaths: [
     "kubernetes/main/apps/media/recyclarr/app/config/recyclarr.yaml",
     "kubernetes/main/apps/rook-ceph/rook-ceph/add-ons/prometheus-rules.yaml",
     "kubernetes/staging/apps/rook-ceph/rook-ceph/add-ons/rules.yaml",
     "**/archive/**",
-    "**/*.sops.*",
+    "**/*.sops.*"
   ],
   flux: {
-    managerFilePatterns: ["/kubernetes/.+\\.ya?ml$/"],
+    managerFilePatterns: ["/kubernetes/.+\\.ya?ml$/"]
   },
   "helm-values": {
-    managerFilePatterns: ["/kubernetes/.+\\.ya?ml$/"],
+    managerFilePatterns: ["/kubernetes/.+\\.ya?ml$/"]
   },
   kubernetes: {
-    managerFilePatterns: [
-      "/\\.taskfiles/.+\\.ya?ml(?:\\.j2)?$/",
-      "/kubernetes/.+\\.ya?ml$/",
-    ],
-  },
+    managerFilePatterns: ["/\\.taskfiles/.+\\.ya?ml(?:\\.j2)?$/", "/kubernetes/.+\\.ya?ml$/"]
+  }
 }

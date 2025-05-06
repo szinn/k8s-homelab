@@ -22,9 +22,10 @@
       }
     },
     {
-      "files": "*.json*",
+      "files": ["*.json", "*.json5"],
       "options": {
         "quoteProps": "preserve",
+        "singleQuote": false,
         "tabWidth": 2
       }
     }
