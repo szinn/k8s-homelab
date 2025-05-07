@@ -7,6 +7,7 @@ resources:
   # Pre Flux-Kustomizations
   - namespace.yaml
   # Flux-Kustomizations
+  - kube-cleanup-operator/install.yaml
   - node-feature-discovery/install.yaml
   - reloader/install.yaml
   - snapshot-controller/install.yaml
