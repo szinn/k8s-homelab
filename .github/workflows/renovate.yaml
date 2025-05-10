@@ -34,10 +34,15 @@ concurrency:
   group: ${{ github.ref }}-${{ github.workflow }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   renovate:
     name: Renovate
     runs-on: ubuntu-latest
+    permissions:
+      packages: read
     steps:
       - name: Generate Token
         uses: actions/create-github-app-token@df432ceedc7162793a195dd1713ff69aefc7379e # v2.0.6
@@ -50,6 +55,7 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           token: "${{ steps.app-token.outputs.token }}"
+          persist-credentials: false
 
       - name: Override default config from dispatch variables
         run: |
