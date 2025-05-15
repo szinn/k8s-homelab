@@ -264,10 +264,10 @@ spec:
           datasource: Prometheus
       cilium:
         cilium-dashboard:
-          url: https://raw.githubusercontent.com/cilium/cilium/v1.17.3/install/kubernetes/cilium/files/cilium-agent/dashboards/cilium-dashboard.json
+          url: https://raw.githubusercontent.com/cilium/cilium/v1.17.4/install/kubernetes/cilium/files/cilium-agent/dashboards/cilium-dashboard.json
           datasource: Prometheus
         cilium-operator-dashboard:
-          url: https://raw.githubusercontent.com/cilium/cilium/v1.17.3/install/kubernetes/cilium/files/cilium-operator/dashboards/cilium-operator-dashboard.json
+          url: https://raw.githubusercontent.com/cilium/cilium/v1.17.4/install/kubernetes/cilium/files/cilium-operator/dashboards/cilium-operator-dashboard.json
           datasource:
             - name: DS_PROMETHEUS
               value: Prometheus
@@ -278,7 +278,7 @@ spec:
           datasource:
             - { name: DS_AFRANET_PROMETHEUS, value: Prometheus }
         # hubble-dashboard:
-        #   url: https://raw.githubusercontent.com/cilium/cilium/v1.17.3/install/kubernetes/cilium/files/hubble/dashboards/hubble-dashboard.json
+        #   url: https://raw.githubusercontent.com/cilium/cilium/v1.17.4/install/kubernetes/cilium/files/hubble/dashboards/hubble-dashboard.json
         #   datasource: Prometheus
       data:
         cloudnative-pg:
