@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -40,6 +40,8 @@ spec:
                 memory: 200M
               limits:
                 memory: 2G
+        serviceAccount:
+          identifier: homepage
     service:
       main:
         controller: main
@@ -55,7 +57,7 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: main
+              - identifier: main
                 port: *port
     persistence:
       config:
@@ -75,5 +77,4 @@ spec:
           - subPath: widgets.yaml
             path: /app/config/widgets.yaml
     serviceAccount:
-      create: true
-      name: homepage
+      homepage: {}
