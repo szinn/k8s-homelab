@@ -14,3 +14,4 @@ resources:
   - dragonfly/install.yaml
   - emqx/install.yaml
   - pgadmin/install.yaml
+  - vernemq/install.yaml
