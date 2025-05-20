@@ -1,9 +1,9 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app home-assistant
+  name: home-assistant
 spec:
   interval: 1h
   chartRef:
@@ -101,7 +101,7 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: home-assistant
+              - identifier: main
                 port: *appPort
       external-app:
         annotations:
@@ -114,7 +114,7 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: home-assistant
+              - identifier: main
                 port: *appPort
       code-server:
         hostnames: ["ha-code.zinn.ca"]
@@ -124,7 +124,7 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: home-assistant
+              - identifier: main
                 port: *codePort
     persistence:
       config:
