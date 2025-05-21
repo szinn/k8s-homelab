@@ -39,7 +39,7 @@ spec:
           app:
             image:
               repository: vernemq/vernemq
-              tag: 2.0.1-alpine
+              tag: 2.0.1-alpine@sha256:5f2ffe9ec73c4910f9c32197414bd72d0a6b31035334ff14748185797312b47f
             env:
               MY_POD_NAME:
                 valueFrom:
