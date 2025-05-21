@@ -5,7 +5,8 @@ kind: Cluster
 metadata:
   name: immich
 spec:
-  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.3-v0.3.0
+  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:15.9-v0.3.0
+  # ghcr.io/immich-app/postgres:15-vectorchord0.3.0-pgvectors0.3.0
   instances: 3
   primaryUpdateStrategy: unsupervised
   storage:
