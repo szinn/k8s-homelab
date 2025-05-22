@@ -131,21 +131,18 @@ spec:
           server:
             main:
               - path: /usr/src/app/upload
-      geocoding-dump:
+      tmpfs:
         type: emptyDir
         advancedMounts:
           server:
             main:
               - path: /usr/src/app/.reverse-geocoding-dump
-      transformers-cache:
-        type: emptyDir
-        advancedMounts:
-          server:
-            main:
+                subPath: geocoding
               - path: /usr/src/app/.transformers_cache
-      model-cache:
-        type: emptyDir
-        advancedMounts:
+                subPath: transformers
           machine-learning:
             main:
               - path: /cache
+                subPath: cache
+              - path: /tmp
+                subPath: tmp
