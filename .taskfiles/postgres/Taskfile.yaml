@@ -65,7 +65,7 @@ tasks:
       - gzip -d /tmp/immich-latest.sql.gz
       - task: _restore_immich_db
       - rm /tmp/immich-latest.sql
-      - task: up_immish
+      - task: up_immich
 
   _restore_immich_db:
     desc: Restore a database
