@@ -5,6 +5,7 @@ kind: Kustomization
 resources:
   - secrets.yaml
   - immich-config.yaml
+  - immich-ml-cache.yaml
   - immich-pvc.yaml
   - helmrelease.yaml
 labels:
