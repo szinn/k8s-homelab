@@ -14,7 +14,7 @@ resources:
   - bazarr/install.yaml
   - bonob/install.yaml
   - calibre-web/install.yaml
-  - immich/install.yaml
+  # - immich/install.yaml
   - lidarr/install.yaml
   - navidrome/install.yaml
   - openbooks/install.yaml
