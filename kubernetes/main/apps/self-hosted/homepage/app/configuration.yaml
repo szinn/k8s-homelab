@@ -166,10 +166,6 @@ data:
                 href: https://pgadmin.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
                 siteMonitor: https://pgadmin.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
                 icon: pgadmin.png
-            - EMQX:
-                href: https://emqx.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-                siteMonitor: https://emqx.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-                icon: emqx.png
             - Rook (Staging):
                 href: https://rook.test.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
                 siteMonitor: https://rook.test.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
