@@ -77,6 +77,8 @@ spec:
                   name: immich-secret
               - configMapRef:
                   name: immich-configmap
+            env:
+              MPLCONFIGDIR: "/cache/matplotlib"
       redis:
         containers:
           main:
