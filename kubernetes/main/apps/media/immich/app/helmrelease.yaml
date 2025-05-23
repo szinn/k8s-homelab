@@ -72,7 +72,6 @@ spec:
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
               tag: v1.133.1@sha256:c1e9b4997deaefac6c2e30208410b882390a36c72b897749974594f6a9450bdb
-              # tag: v1.131.2@sha256:29836cf73146057ac388546021fff3e00c923e22a28587cceb5108a5e537987d
             envFrom:
               - secretRef:
                   name: immich-secret
@@ -138,6 +137,9 @@ spec:
           machine-learning:
             main:
               - path: /cache
+                subPath: cache
+              - path: /.cache
+                subPath: dotCache
       tmpfs:
         type: emptyDir
         advancedMounts:
