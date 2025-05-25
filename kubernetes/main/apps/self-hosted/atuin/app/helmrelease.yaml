@@ -29,7 +29,7 @@ spec:
               repository: ghcr.io/szinn/atuin
               tag: v18.6.1-sqlite-3@sha256:42488462d62bb15274986a0b3a9dafc2dfb13e39fccb1f26dcbb7e7e484d15e8
             env:
-              # RUST_LOG: "debug"
+              RUST_LOG: "debug"
               ATUIN_HOST: "0.0.0.0"
               ATUIN_PORT: &port 8080
               ATUIN_OPEN_REGISTRATION: "true"
