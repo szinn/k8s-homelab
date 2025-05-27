@@ -6,3 +6,4 @@ resources:
   - loki-scrape.yaml
   - node-exporter-scrape.yaml
   - smartctl-exporter-scrape.yaml
+  - vernemq-scrape.yaml
