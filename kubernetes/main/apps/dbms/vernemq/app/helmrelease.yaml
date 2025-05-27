@@ -112,6 +112,8 @@ spec:
         ports:
           mqtt:
             port: 1883
+          metrics:
+            port: 8888
           ws:
             port: 8080
       headless:
@@ -121,6 +123,8 @@ spec:
         ports:
           mqtt:
             port: 1883
+          metrics:
+            port: 8888
           ws:
             port: 8080
 
