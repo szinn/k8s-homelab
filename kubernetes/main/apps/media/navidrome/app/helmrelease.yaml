@@ -36,7 +36,7 @@ spec:
           main:
             image:
               repository: ghcr.io/navidrome/navidrome
-              tag: 0.56.0@sha256:f1360e0e59c7d5a6a9974d0d0626d012977033162cc49566290bc3abf7e57cd8
+              tag: 0.56.1@sha256:d8dcacba4cf48b4caa81f231f20ebba719e642b0f86a46b1b5c24bb4f27edddc
             env:
               TZ: America/Toronto
               ND_AUTHREQUESTLIMIT: 0
