@@ -42,7 +42,7 @@ spec:
           app:
             image:
               repository: docker.io/library/alpine
-              tag: "3.22@sha256:7a293e17049579e3b649f787aefe504ad17d1cf41feee5be54944e7c6cc9bd81"
+              tag: "3.22@sha256:8a1f59ffb675680d47db6337b49d22281a139e9d709335b492be023728e11715"
             command:
               - "/bin/sh"
               - "-c"
