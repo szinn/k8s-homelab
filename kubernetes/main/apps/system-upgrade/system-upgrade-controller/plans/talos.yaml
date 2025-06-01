@@ -7,13 +7,13 @@ spec:
   version: ${TALOS_VERSION}
   concurrency: 1
   exclusive: true
-  serviceAccountName: system-upgrade
+  serviceAccountName: system-upgrade-controller
   nodeSelector:
     matchExpressions:
       - key: kubernetes.io/hostname
         operator: Exists
   secrets:
-    - name: talos
+    - name: system-upgrade-controller
       path: /var/run/secrets/talos.dev
       ignoreUpdates: true
   tolerations:
