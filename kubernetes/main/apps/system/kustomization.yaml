@@ -14,6 +14,7 @@ resources:
   - fstrim/install.yaml
   - intel-device-plugin/install.yaml
   - k8s-ycl/install.yaml
+  - keda/install.yaml
   - kube-cleanup-operator/install.yaml
   - node-feature-discovery/install.yaml
   - openebs/install.yaml
