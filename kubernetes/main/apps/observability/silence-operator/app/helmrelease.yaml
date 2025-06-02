@@ -1,0 +1,25 @@
+---
+# yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: silence-operator
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: silence-operator
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    alertmanagerAddress: http://alertmanager:9093
+    image:
+      registry: quay.io
+      tag: 0.16.1-d9e8305203dd96736afb2c930999de602b1b8c39
+    networkPolicy:
+      enabled: false
