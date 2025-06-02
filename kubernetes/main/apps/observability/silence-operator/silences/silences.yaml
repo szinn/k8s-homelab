@@ -1,0 +1,42 @@
+---
+# yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/monitoring.giantswarm.io/silence_v1alpha1.json
+apiVersion: monitoring.giantswarm.io/v1alpha1
+kind: Silence
+metadata:
+  name: ceph-node-nfsmount-diskspace-warning
+spec:
+  matchers:
+    - name: alertname
+      value: CephNodeDiskspaceWarning
+      isRegex: false
+    - name: mountpoint
+      value: /etc/nfsmount.conf
+      isRegex: false
+---
+# yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/monitoring.giantswarm.io/silence_v1alpha1.json
+apiVersion: monitoring.giantswarm.io/v1alpha1
+kind: Silence
+metadata:
+  name: ceph-node-local-diskspace-warning
+spec:
+  matchers:
+    - name: alertname
+      value: CephNodeDiskspaceWarning
+      isRegex: false
+    - name: device
+      value: /dev/sd.*
+      isRegex: true
+---
+# yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/monitoring.giantswarm.io/silence_v1alpha1.json
+apiVersion: monitoring.giantswarm.io/v1alpha1
+kind: Silence
+metadata:
+  name: keda-hpa-maxed-out
+spec:
+  matchers:
+    - name: alertname
+      value: KubeHpaMaxedOut
+      isRegex: false
+    - name: horizontalpodautoscaler
+      value: keda-hpa-.*
+      isRegex: true
