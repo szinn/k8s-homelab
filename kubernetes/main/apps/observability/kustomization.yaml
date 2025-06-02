@@ -12,6 +12,7 @@ resources:
   # Flux-Kustomizations
   - alertmanager/install.yaml
   - alloy/install.yaml
+  - blackbox-exporter/install.yaml
   - gatus/install.yaml
   - grafana/install.yaml
   - kromgo/install.yaml
