@@ -20,9 +20,12 @@ spec:
       namespace: external-secrets
     - name: node-feature-discovery-rules
       namespace: system
+    - name: keda
+      namespace: system
     - name: volsync
       namespace: system
   components:
+    - ../../../../components/keda/nfs-scaler
     - ../../../../components/volsync
   postBuild:
     substitute:

@@ -52,13 +52,16 @@ spec:
   dependsOn:
     - name: immich-database
       namespace: media
+    - name: keda
+      namespace: system
     - name: external-secrets
       namespace: external-secrets
   components:
     - ../../../../components/gatus/guarded
+    - ../../../../components/keda/nfs-scaler
   postBuild:
     substitute:
-      APP: immich
+      APP: immich-server
       GATUS_APP: immich
       GATUS_SUBDOMAIN: photos
   prune: true

@@ -18,11 +18,14 @@ spec:
   dependsOn:
     - name: external-secrets
       namespace: external-secrets
+    - name: keda
+      namespace: system
     - name: volsync
       namespace: system
   components:
-    - ../../../../components/volsync
     - ../../../../components/gatus/guarded
+    - ../../../../components/keda/nfs-scaler
+    - ../../../../components/volsync
   postBuild:
     substitute:
       APP: *app
