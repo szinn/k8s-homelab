@@ -16,9 +16,12 @@ spec:
     name: flux-system
     namespace: flux-system
   dependsOn:
+    - name: keda
+      namespace: system
     - name: volsync
       namespace: system
   components:
+    - ../../../../components/keda/nfs-scaler
     - ../../../../components/volsync
   postBuild:
     substitute:
