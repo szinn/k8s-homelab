@@ -27,7 +27,7 @@ spec:
           app:
             image:
               repository: ghcr.io/szinn/atuin
-              tag: v18.6.1-sqlite-4@sha256:18a6e29c29d33b7c60e904d5e6abc2eb0dc0c505b88e0366998974e28b7f0ee8
+              tag: v18.6.1-sqlite-5
             env:
               RUST_LOG: "debug"
               ATUIN_HOST: "0.0.0.0"
