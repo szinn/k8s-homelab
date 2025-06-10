@@ -1,0 +1,27 @@
+# All clients have these unblocked
+@@||t.co^$important
+@@||slackb.com^$important
+@@||keybr.com^$important
+@@||is1-ssl.mzstatic.com^$important
+@@||cc-api-data.adobe.io^$important
+@@||ups.analytics.yahoo.com^$important
+@@||secu100.net^$important
+@@||update.ixsystems.com^$important
+@@||*.list-manage.com^$important
+
+# Sophie's whitelist
+@@||assets.adobedtm.com^$important,client=Sophie
+@@||elink.clickdimensions.com^$important,client=Sophie
+@@||www.googleadservices.com^$important,client=Sophie
+@@||fls-na.amazon.ca^$important,client=Sophie
+@@||r20.rs6.net^$important,client=Sophie
+@@||go.pardot.com^$important,client=Sophie
+@@||ssl.google-analytics.com^$important,client=Sophie
+@@||notify.bugsnag.com^$important,client=Sophie
+@@||click.emm.hermanmiller.com^$important,client=Sophie
+@@||ads.google.com^$important,client=Sophie
+@@||adwords.google.com^$important,client=Sophie
+@@||app-measurement.com^$important,client=Sophie
+@@||nexusrules.officeapps.live.com^$important,client=Sophie
+@@||clickserve.dartsearch.net^$important,client=Sophie
+@@||ad.doubleclick.net^$important,client=Sophie
