@@ -102,7 +102,7 @@ statistics:
   enabled: true
 filters:
   - enabled: true
-    url: https://raw.githubusercontent.com/szinn/nix-config/refs/heads/main/hosts/titan/config/local-whitelist-filter.txt
+    url: https://raw.githubusercontent.com/szinn/k8s-homelab/refs/heads/main/.taskfiles/Machine/files/adguard/local-whitelist-filter.txt
     name: Local allowed list
     id: 1
   - enabled: true
