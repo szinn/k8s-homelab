@@ -112,8 +112,6 @@ spec:
         ports:
           mqtt:
             port: 1883
-          metrics:
-            port: 8888
           ws:
             port: 8080
       headless:
@@ -127,6 +125,10 @@ spec:
             port: 8888
           ws:
             port: 8080
+      metrics:
+        ports:
+          http:
+            port: 8888
 
     persistence:
       data:
@@ -145,6 +147,16 @@ spec:
 
     serviceAccount:
       vernemq: {}
+
+    serviceMonitor:
+      app:
+        serviceName: "{{ .Release.Name }}-metrics"
+        endpoints:
+          - port: http
+            scheme: http
+            path: /metrics
+            interval: 10s
+            scrapeTimeout: 1s
 
     rbac:
       roles:
