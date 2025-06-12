@@ -45,9 +45,7 @@ spec:
             namespace: kube-system
             sectionName: https
         rules:
-          - backendRefs:
-              - name: main
-                port: *port
+          - backendRefs: [{}]
       external:
         annotations:
           external-dns/is-public: "true"
@@ -58,6 +56,4 @@ spec:
             namespace: kube-system
             sectionName: https
         rules:
-          - backendRefs:
-              - identifier: main
-                port: *port
+          - backendRefs: [{}]

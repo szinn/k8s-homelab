@@ -51,7 +51,7 @@ spec:
       main:
         ports:
           http:
-            port: &port 80
+            port: 80
 
     route:
       main:
@@ -61,9 +61,7 @@ spec:
             namespace: kube-system
             sectionName: https
         rules:
-          - backendRefs:
-              - identifier: main
-                port: *port
+          - backendRefs: [{}]
 
     persistence:
       config:

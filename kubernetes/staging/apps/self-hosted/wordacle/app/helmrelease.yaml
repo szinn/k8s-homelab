@@ -38,7 +38,7 @@ spec:
       main:
         ports:
           http:
-            port: &port 3000
+            port: 3000
     route:
       app:
         hostnames: ["{{ .Release.Name }}.test.zinn.ca"]
@@ -47,6 +47,4 @@ spec:
             namespace: kube-system
             sectionName: https
         rules:
-          - backendRefs:
-              - identifier: main
-                port: *port
+          - backendRefs: [{}]

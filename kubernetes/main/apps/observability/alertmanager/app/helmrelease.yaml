@@ -54,7 +54,7 @@ spec:
       app:
         ports:
           http:
-            port: &port 9093
+            port: 9093
 
     route:
       internal:
@@ -64,9 +64,7 @@ spec:
             namespace: kube-system
             sectionName: https
         rules:
-          - backendRefs:
-              - identifier: app
-                port: *port
+          - backendRefs: [{}]
 
     persistence:
       config:

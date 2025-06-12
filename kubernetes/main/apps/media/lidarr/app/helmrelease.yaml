@@ -69,7 +69,7 @@ spec:
       app:
         ports:
           http:
-            port: &port 8686
+            port: 8686
     route:
       internal:
         hostnames: ["{{ .Release.Name }}.zinn.ca"]
@@ -78,9 +78,7 @@ spec:
             namespace: kube-system
             sectionName: https
         rules:
-          - backendRefs:
-              - identifier: app
-                port: *port
+          - backendRefs: [{}]
     persistence:
       config:
         existingClaim: lidarr-config

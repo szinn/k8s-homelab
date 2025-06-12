@@ -47,7 +47,7 @@ spec:
           lbipam.cilium.io/ips: 10.11.1.15
         ports:
           http:
-            port: &port 4534
+            port: 4534
     route:
       internal:
         hostnames: ["{{ .Release.Name }}.zinn.ca"]
@@ -56,6 +56,4 @@ spec:
             namespace: kube-system
             sectionName: https
         rules:
-          - backendRefs:
-              - identifier: main
-                port: *port
+          - backendRefs: [{}]

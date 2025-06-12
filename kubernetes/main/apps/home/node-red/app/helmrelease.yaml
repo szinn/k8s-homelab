@@ -54,7 +54,7 @@ spec:
         type: ClusterIP
         ports:
           http:
-            port: &port 1880
+            port: 1880
     route:
       app:
         hostnames: ["{{ .Release.Name }}.zinn.ca"]
@@ -63,9 +63,7 @@ spec:
             namespace: kube-system
             sectionName: https
         rules:
-          - backendRefs:
-              - identifier: main
-                port: *port
+          - backendRefs: [{}]
     persistence:
       config:
         enabled: true
