@@ -40,8 +40,6 @@ spec:
                 memory: 200M
               limits:
                 memory: 2G
-        serviceAccount:
-          identifier: homepage
     service:
       main:
         ports:
