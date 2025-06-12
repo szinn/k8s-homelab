@@ -50,7 +50,7 @@ spec:
       main:
         ports:
           http:
-            port: &port 8083
+            port: 8083
     route:
       internal:
         hostnames: ["books.zinn.ca"]
@@ -59,9 +59,7 @@ spec:
             namespace: kube-system
             sectionName: https
         rules:
-          - backendRefs:
-              - identifier: main
-                port: *port
+          - backendRefs: [{}]
     persistence:
       config:
         enabled: true

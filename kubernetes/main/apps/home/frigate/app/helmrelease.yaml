@@ -104,9 +104,7 @@ spec:
             namespace: kube-system
             sectionName: https
         rules:
-          - backendRefs:
-              - identifier: main
-                port: *port
+          - backendRefs: [{}]
       go2rtc:
         hostnames: ["go2rtc.zinn.ca"]
         parentRefs:
@@ -114,9 +112,7 @@ spec:
             namespace: kube-system
             sectionName: https
         rules:
-          - backendRefs:
-              - identifier: main
-                port: *apiPort
+          - backendRefs: [{}]
 
     persistence:
       config:

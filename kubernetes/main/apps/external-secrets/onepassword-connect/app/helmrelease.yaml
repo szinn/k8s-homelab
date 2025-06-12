@@ -123,9 +123,7 @@ spec:
             namespace: kube-system
             sectionName: https
         rules:
-          - backendRefs:
-              - identifier: api
-                port: *apiPort
+          - backendRefs: [{}]
     persistence:
       config:
         type: emptyDir
