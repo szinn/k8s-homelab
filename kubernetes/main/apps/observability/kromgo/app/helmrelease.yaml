@@ -65,7 +65,6 @@ spec:
                   app.kubernetes.io/name: *app
     service:
       main:
-        controller: main
         ports:
           http:
             port: *port

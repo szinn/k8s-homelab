@@ -65,7 +65,6 @@ spec:
 
     service:
       main:
-        controller: main
         ports:
           api:
             port: *api-port

@@ -69,7 +69,6 @@ spec:
               capabilities: { drop: ["ALL"] }
     service:
       app:
-        controller: prowlarr
         ports:
           http:
             port: *port

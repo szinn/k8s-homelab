@@ -43,7 +43,6 @@ spec:
               PORT: &port 80
     service:
       main:
-        controller: main
         ports:
           http:
             port: *port

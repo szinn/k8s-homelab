@@ -44,7 +44,6 @@ spec:
           identifier: homepage
     service:
       main:
-        controller: main
         ports:
           http:
             port: &port 3000

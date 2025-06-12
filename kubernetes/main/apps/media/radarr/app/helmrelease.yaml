@@ -83,7 +83,6 @@ spec:
               capabilities: { drop: ["ALL"] }
     service:
       app:
-        controller: radarr
         ports:
           http:
             port: &port 7878

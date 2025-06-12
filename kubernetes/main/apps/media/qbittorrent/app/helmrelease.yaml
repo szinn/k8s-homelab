@@ -139,7 +139,6 @@ spec:
 
     service:
       app:
-        controller: qbittorrent
         ports:
           http:
             port: *port

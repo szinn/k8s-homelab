@@ -51,7 +51,6 @@ spec:
                 memory: 500Mi
     service:
       main:
-        controller: main
         type: ClusterIP
         ports:
           http:

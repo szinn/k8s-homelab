@@ -63,7 +63,6 @@ spec:
                 memory: 10Gi
     service:
       main:
-        controller: main
         type: LoadBalancer
         annotations:
           lbipam.cilium.io/ips: 10.11.1.14
