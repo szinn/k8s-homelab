@@ -56,12 +56,10 @@ spec:
               ]
     service:
       main:
-        controller: main
         ports:
           http:
             port: &mainPort 8080
       code-server:
-        controller: main
         ports:
           http:
             port: &codePort 8081

@@ -28,7 +28,6 @@ spec:
               pullPolicy: IfNotPresent
     service:
       main:
-        controller: main
         ports:
           http:
             port: &port 8080

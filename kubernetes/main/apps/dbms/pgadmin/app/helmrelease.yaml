@@ -49,7 +49,6 @@ spec:
 
     service:
       main:
-        controller: main
         ports:
           http:
             port: &port 80

@@ -79,7 +79,6 @@ spec:
                 enabled: false
     service:
       main:
-        controller: main
         ports:
           http:
             port: &port 8080

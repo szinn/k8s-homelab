@@ -49,7 +49,6 @@ spec:
                   name: wikijs-secret
     service:
       main:
-        controller: main
         ports:
           http:
             port: &port 3000

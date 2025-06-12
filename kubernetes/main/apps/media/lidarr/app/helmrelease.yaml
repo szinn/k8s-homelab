@@ -67,7 +67,6 @@ spec:
               capabilities: { drop: ["ALL"] }
     service:
       app:
-        controller: lidarr
         ports:
           http:
             port: &port 8686

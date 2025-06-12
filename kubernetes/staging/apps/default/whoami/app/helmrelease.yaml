@@ -29,7 +29,6 @@ spec:
               WHOAMI_PORT_NUMBER: &port 80
     service:
       main:
-        controller: main
         ports:
           http:
             port: *port

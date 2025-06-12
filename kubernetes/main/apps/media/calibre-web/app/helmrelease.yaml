@@ -48,7 +48,6 @@ spec:
                 memory: 299M
     service:
       main:
-        controller: main
         ports:
           http:
             port: &port 8083

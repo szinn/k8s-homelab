@@ -82,7 +82,6 @@ spec:
               capabilities: { drop: ["ALL"] }
     service:
       app:
-        controller: sonarr
         ports:
           http:
             port: *port

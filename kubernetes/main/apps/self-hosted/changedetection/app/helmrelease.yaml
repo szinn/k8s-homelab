@@ -51,7 +51,6 @@ spec:
               - { name: DEFAULT_STEALTH, value: "true" }
     service:
       main:
-        controller: main
         ports:
           http:
             port: *port
