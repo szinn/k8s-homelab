@@ -97,9 +97,6 @@ spec:
                 drop:
                   - ALL
 
-        serviceAccount:
-          identifier: vernemq
-
     service:
       app:
         primary: true

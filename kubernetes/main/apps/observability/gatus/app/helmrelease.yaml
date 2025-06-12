@@ -78,8 +78,6 @@ spec:
             runAsNonRoot: true
             fsGroup: 2000
             fsGroupChangePolicy: OnRootMismatch
-        serviceAccount:
-          identifier: gatus
     service:
       app:
         ports:
