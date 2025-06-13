@@ -76,10 +76,10 @@ spec:
         type: ClusterIP
         ports:
           http:
-            port: 8123
+            port: &appPort 8123
             primary: true
           code-server:
-            port: 8080
+            port: &codePort 8080
     serviceMonitor:
       main:
         serviceName: home-assistant
@@ -99,7 +99,9 @@ spec:
             namespace: kube-system
             sectionName: https
         rules:
-          - backendRefs: [{}]
+          - backendRefs:
+              - identifier: main
+                port: *appPort
       external-app:
         annotations:
           external-dns/is-public: "true"
@@ -110,7 +112,9 @@ spec:
             namespace: kube-system
             sectionName: https
         rules:
-          - backendRefs: [{}]
+          - backendRefs:
+              - identifier: main
+                port: *appPort
       code-server:
         hostnames: ["ha-code.zinn.ca"]
         parentRefs:
@@ -118,7 +122,9 @@ spec:
             namespace: kube-system
             sectionName: https
         rules:
-          - backendRefs: [{}]
+          - backendRefs:
+              - identifier: main
+                port: *codePort
     persistence:
       config:
         enabled: true
