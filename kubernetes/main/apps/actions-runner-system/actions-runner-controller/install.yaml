@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/main/apps/actions-runner-system/actions-runner-controller/app
+  path: ./kubernetes/main/apps/actions-runner-system/actions-runner-controller/operator
   prune: true
   sourceRef:
     kind: GitRepository
