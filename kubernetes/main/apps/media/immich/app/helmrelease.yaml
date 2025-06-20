@@ -71,7 +71,7 @@ spec:
           main:
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
-              tag: v1.135.2@sha256:de17a200b88d180a501fcdfed6e8f2427e4dc5ed87fa5686dc17961e1b905365
+              tag: v1.135.3@sha256:9f2f61d86af82d04926f9b896c995c502303052905517c5485dd26bf1e42a44e
             envFrom:
               - secretRef:
                   name: immich-secret
