@@ -20,6 +20,5 @@ spec:
     alertmanagerAddress: http://alertmanager:9093
     image:
       registry: quay.io
-      tag: 0.16.1-d9e8305203dd96736afb2c930999de602b1b8c39
     networkPolicy:
       enabled: false
