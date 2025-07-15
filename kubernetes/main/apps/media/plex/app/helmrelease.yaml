@@ -44,7 +44,7 @@ spec:
           main:
             image:
               repository: ghcr.io/home-operations/plex
-              tag: 1.41.8.9834@sha256:40e620ffcdc65331a0c2a7ed9a95700da7d527244f33c21bd35fc30aa25f19ea
+              tag: 1.41.9.9961@sha256:6c86319bb3275135f5da5aec71b45e48305669ecbceee0f88d335bebf0d0f218
             env:
               TZ: "America/Toronto"
               ADVERTISE_IP: "http://10.11.1.14:32400,https://{{ .Release.Name }}.zinn.ca:443"
