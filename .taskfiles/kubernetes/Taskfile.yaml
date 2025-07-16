@@ -49,3 +49,7 @@ tasks:
   redeploy-ingresses:
     desc: Redeploy ingress-nginx controllers
     cmd: kubectl rollout restart -n networking deployment nginx-external-controller nginx-internal-controller
+
+  redeploy-daemonsets:
+    desc: Relaunch all daemonsets
+    cmd: kubectl get daemonset --all-namespaces --no-headers -o=custom-columns='namespace:.metadata.namespace,name:metadata.name' | xargs -P 4 -L 1 bash -c 'kubectl -n $0 rollout restart daemonset $1'
