@@ -322,9 +322,6 @@ data:
         - YouTube:
             - icon: youtube.png
               href: 'https://youtube.com/feed/subscriptions'
-        - Navidrome:
-            - icon: navidrome.png
-              href: https://music.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
         - Spotify:
             - icon: spotify.png
               href: 'http://open.spotify.com'
