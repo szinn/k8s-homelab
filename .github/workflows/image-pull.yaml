@@ -49,7 +49,7 @@ jobs:
           persist-credentials: false
 
       - name: Gather Images
-        uses: docker://ghcr.io/allenporter/flux-local:v7.5.6@sha256:725baade5b3d01ab6b1be0fb1de0d454e4222cbe959b3bdddee1137464aa1f3e
+        uses: docker://ghcr.io/allenporter/flux-local:v7.6.0@sha256:73b596f1a66b8e197271677dd70e333f75432740d9b2a7d862db5471e682930c
         with:
           args: >-
             get cluster
