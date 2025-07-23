@@ -36,7 +36,7 @@ releases:
     namespace: flux-system
     atomic: true
     chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator
-    version: 0.24.1
+    version: 0.25.0
     values: ['{{ requiredEnv "KUBERNETES_DIR" }}/apps/flux-system/flux-operator/operator/values.yaml']
     needs: ["kube-system/coredns"]
 
@@ -44,7 +44,7 @@ releases:
     namespace: flux-system
     atomic: true
     chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-instance
-    version: 0.24.1
+    version: 0.25.0
     values: ['{{ requiredEnv "KUBERNETES_DIR" }}/apps/flux-system/flux-operator/instance/values.yaml']
     needs: ["flux-system/flux-operator"]
     wait: false
