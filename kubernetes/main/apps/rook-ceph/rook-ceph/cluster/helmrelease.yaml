@@ -84,7 +84,7 @@ spec:
             cpu: 50m
             memory: 512Mi
           limits:
-            memory: 1Gi
+            memory: 2Gi
         osd:
           requests:
             cpu: 500m
@@ -193,8 +193,7 @@ spec:
       isDefault: false
       deletionPolicy: Delete
 
-    cephObjectStores:
-      []
+    cephObjectStores: []
       # - name: ceph-objectstore
       #   spec:
       #     metadataPool:
