@@ -260,10 +260,10 @@ controlPlane:
                 [plugins."io.containerd.grpc.v1.cri"]
                   enable_unprivileged_ports = true
                   enable_unprivileged_icmp = true
-              [plugins."io.containerd.grpc.v1.cri".containerd]
+              [plugins."io.containerd.cri.v1.images"]
                 discard_unpacked_layers = false
-              [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
-                discard_unpacked_layers = false
+              [plugins."io.containerd.cri.v1.runtime"]
+                device_ownership_from_security_context = true
           - op: overwrite
             path: /etc/nfsmount.conf
             permissions: 0o644
