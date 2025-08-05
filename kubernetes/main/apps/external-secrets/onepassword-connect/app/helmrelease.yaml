@@ -26,7 +26,7 @@ spec:
         containers:
           api:
             image:
-              repository: docker.io/1password/connect-api
+              repository: ghcr.io/1password/connect-api
               tag: 1.7.4@sha256:f97189814239381e6dd88577f2b0b838a64e006a460608455b3127c15b174601
             env:
               XDG_DATA_HOME: &configDir /config
@@ -69,7 +69,7 @@ spec:
                 memory: 256M
           sync:
             image:
-              repository: docker.io/1password/connect-sync
+              repository: ghcr.io/1password/connect-sync
               tag: 1.7.4@sha256:27e7ec47e1ad8eaa2f54764fa0736954a5119d0155dea3c923c481c89c5f964c
             env:
               XDG_DATA_HOME: *configDir
