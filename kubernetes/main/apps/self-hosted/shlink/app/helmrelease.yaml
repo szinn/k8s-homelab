@@ -29,7 +29,7 @@ spec:
           api:
             image:
               repository: ghcr.io/shlinkio/shlink
-              tag: 4.5.1@sha256:bd194f427b64852f94062db1411e773f17dc4cb04d129cbb6838a3ec9f12aa7e
+              tag: 4.5.2@sha256:57df87b68a2ef9ffb7f5fa0335e22e6f08d688f661eb58bb290f5b0753a2361a
             env:
               USER_ID: "2000"
               SHLINK_SERVER_NAME: "HomeLab"
