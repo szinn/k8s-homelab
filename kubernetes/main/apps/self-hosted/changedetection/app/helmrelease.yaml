@@ -27,7 +27,7 @@ spec:
           main:
             image:
               repository: ghcr.io/dgtlmoon/changedetection.io
-              tag: 0.50.11@sha256:cbae1d9c8ce33459f521d76967a2f8ba0523e7db28cfbb536ad6441c18d204d2
+              tag: 0.50.11@sha256:31f6f64fde2699581cee4c47ffeb54b19d11866c884e2cd9bf958b5d8aad0b97
             env:
               TZ: America/Toronto
               PORT: &port 5000
