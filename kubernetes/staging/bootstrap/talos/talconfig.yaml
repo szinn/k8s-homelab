@@ -134,6 +134,19 @@ controlPlane:
     - &kubeletPatch |-
       machine:
         kubelet:
+          extraArgs:
+            image-gc-high-threshold: 70
+            image-gc-low-threshold: 65
+          extraConfig:
+            maxPods: 150
+          nodeIP:
+            validSubnets:
+                - 10.11.0.0/16
+
+    # Configure kubelet
+    - &kubeletPatch |-
+      machine:
+        kubelet:
           extraConfig:
             maxPods: 150
           nodeIP:
@@ -225,6 +238,7 @@ worker:
     - *clusterDiscoveryPatch
     - *ntpPatch
     - *kubePrismPatch
+    - *kubeletPatch
     - *containerdPatch
     - *sysctlPatch
     - *staticHostEntriesPatch
