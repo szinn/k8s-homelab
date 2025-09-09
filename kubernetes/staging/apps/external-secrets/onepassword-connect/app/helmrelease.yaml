@@ -69,7 +69,7 @@ spec:
           sync:
             image:
               repository: docker.io/1password/connect-sync
-              tag: 1.7.4@sha256:27e7ec47e1ad8eaa2f54764fa0736954a5119d0155dea3c923c481c89c5f964c
+              tag: 1.8.0@sha256:2d32eaa6c371d2a975fa3983203b5cb37b80f145c5a5bdccba4dc00e63b4e4d0
             env:
               XDG_DATA_HOME: *configDir
               OP_HTTP_PORT: &syncPort 8081
