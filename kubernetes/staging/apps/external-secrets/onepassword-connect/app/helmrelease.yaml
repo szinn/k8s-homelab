@@ -27,7 +27,7 @@ spec:
           api:
             image:
               repository: docker.io/1password/connect-api
-              tag: 1.7.4@sha256:f97189814239381e6dd88577f2b0b838a64e006a460608455b3127c15b174601
+              tag: 1.8.0@sha256:1695b2fdc6897e49fdfd80e64bdb78f4c64f7691a8d46957c0372e47f776430e
             env:
               XDG_DATA_HOME: &configDir /config
               OP_HTTP_PORT: &apiPort 8438
