@@ -107,9 +107,9 @@ tasks:
   install-styx-configuration:
     desc: Install Styx configuration
     cmds:
-      - scp "{{.FILES_DIR}}/styx/multicast-relay.service" root@styx:/etc/systemd/system/multicast-relay.service
-      - ssh root@styx systemctl enable multicast-relay
-      - ssh root@styx systemctl start multicast-relay
+      - scp "{{.FILES_DIR}}/styx/multicast-relay.service" root@styx.zinn.tech:/etc/systemd/system/multicast-relay.service
+      - ssh root@styx.zinn.tech systemctl enable multicast-relay
+      - ssh root@styx.zinn.tech systemctl start multicast-relay
 
   install-artemis-certificates:
     desc: Update Artemis certificates
