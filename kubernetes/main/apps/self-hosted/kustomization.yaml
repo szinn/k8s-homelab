@@ -11,7 +11,7 @@ resources:
   - namespace.yaml
   # Flux-Kustomizations
   - atuin/install.yaml
-  - birdnet/install.yaml
+  # - birdnet/install.yaml
   - changedetection/install.yaml
   - dashy/install.yaml
   - homepage/install.yaml
