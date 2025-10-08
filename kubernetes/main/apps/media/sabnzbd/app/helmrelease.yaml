@@ -119,3 +119,10 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /incomplete
+      tmpfs:
+        type: emptyDir
+        globalMounts:
+          - path: /config/logs
+            subPath: logs
+          - path: /tmp
+            subPath: tmp
