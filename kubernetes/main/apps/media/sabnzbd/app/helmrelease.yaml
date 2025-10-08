@@ -77,6 +77,18 @@ spec:
               readiness: *probes
               startup:
                 enabled: false
+            resources:
+              requests:
+                cpu: 5m
+                memory: 1Gi
+              limits:
+                memory: 12Gi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
     service:
       main:
         ports:
