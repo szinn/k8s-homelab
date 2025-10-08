@@ -12,4 +12,4 @@ resources:
   # Flux-Kustomizations
   # - frigate/install.yaml
   - home-assistant/install.yaml
-  - node-red/install.yaml
+  # - node-red/install.yaml

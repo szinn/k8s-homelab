@@ -206,8 +206,9 @@ controlPlane:
       cluster:
         apiServer:
           extraArgs:
-            runtime-config: admissionregistration.k8s.io/v1alpha1=true
-            feature-gates: MutatingAdmissionPolicy=true
+            enable-aggregator-routing: "true"
+            runtime-config: admissionregistration.k8s.io/v1beta1=true
+            feature-gates: ImageVolume=true,MutatingAdmissionPolicy=true
 
     # ETCD configuration
     - |-
