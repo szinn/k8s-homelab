@@ -79,6 +79,17 @@ spec:
             sectionName: https
         rules:
           - backendRefs: [{}]
+      external:
+        annotations:
+          external-dns/is-public: "true"
+          external-dns.alpha.kubernetes.io/target: external.zinn.ca
+        hostnames: ["{{ .Release.Name }}.zinn.ca"]
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs: [{}]
     persistence:
       config:
         enabled: true
