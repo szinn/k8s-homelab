@@ -10,4 +10,5 @@ resources:
   # Pre Flux-Kustomizations
   - namespace.yaml
   # Flux-Kustomizations
-  - system-upgrade-controller/install.yaml
+  - tuppr/install.yaml
+  # - system-upgrade-controller/install.yaml
