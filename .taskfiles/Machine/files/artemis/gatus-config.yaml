@@ -200,11 +200,11 @@ endpoints:
     alerts:
       - type: discord
         description: "Philips hue down"
-  - name: Bird House
-    group: IoT
-    interval: 10m
-    url: icmp://192.168.1.99
-    conditions: ["[CONNECTED] == true"]
-    alerts:
-      - type: discord
-        description: "Bird house down"
+  # - name: Bird House
+  #   group: IoT
+  #   interval: 10m
+  #   url: icmp://192.168.1.99
+  #   conditions: ["[CONNECTED] == true"]
+  #   alerts:
+  #     - type: discord
+  #       description: "Bird house down"
