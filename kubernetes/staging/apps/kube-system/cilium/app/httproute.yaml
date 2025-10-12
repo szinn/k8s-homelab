@@ -7,8 +7,8 @@ metadata:
 spec:
   hostnames: ["hubble.test.zinn.ca"]
   parentRefs:
-    - name: internal
-      namespace: kube-system
+    - name: envoy-internal
+      namespace: network
       sectionName: https
   rules:
     - backendRefs:

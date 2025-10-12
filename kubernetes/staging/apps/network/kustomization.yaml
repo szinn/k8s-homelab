@@ -2,6 +2,10 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: network
 resources:
-  - ocirepository.yaml
-  - helmrelease.yaml
+  # Pre Flux-Kustomizations
+  - namespace.yaml
+  # Flux-Kustomizations
+  - envoy-gateway/install.yaml
+  - external-dns/install.yaml

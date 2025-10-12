@@ -24,11 +24,51 @@ spec:
       remediateLastFailure: true
     cleanupOnFail: true
 
-  valuesFrom:
-    - kind: ConfigMap
-      name: cilium-values
-
   values:
+    cluster:
+      name: staging
+      id: 1
+
+    autoDirectNodeRoutes: true
+
+    bandwidthManager:
+      enabled: true
+      bbr: true
+
+    bpf:
+      datapathMode: netkit
+      masquerade: true
+      preallocateMaps: true
+      tproxy: true
+
+    bpfClockProbe: true
+
+    bgpControlPlane:
+      enabled: true
+
+    cgroup:
+      automount:
+        enabled: false
+      hostRoot: /sys/fs/cgroup
+
+    cni:
+      exclusive: false
+
+    dashboards:
+      enabled: true
+      annotations:
+        grafana_folder: Cilium
+
+    devices: bond+
+
+    enableIPv4BIGTCP: true
+
+    endpointRoutes:
+      enabled: true
+
+    envoy:
+      enabled: false
+
     hubble:
       enabled: true
       metrics:
@@ -55,3 +95,69 @@ spec:
         rollOutPods: true
         ingress:
           enabled: false
+
+    ipam:
+      mode: kubernetes
+
+    ipv4NativeRoutingCIDR: 10.211.0.0/16
+
+    k8sServiceHost: 127.0.0.1
+    k8sServicePort: 7445
+
+    kubeProxyReplacement: true
+    kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
+
+    enableRuntimeDeviceDetection: true
+
+    l2announcements:
+      enabled: false
+
+    loadBalancer:
+      algorithm: maglev
+      mode: dsr
+
+    localRedirectPolicy: true
+
+    operator:
+      enabled: true
+      dashboards:
+        enabled: false
+        annotations:
+          grafana_folder: Cilium
+      prometheus:
+        enabled: false
+        serviceMonitor:
+          enabled: false
+      replicas: 2
+      rollOutPods: true
+
+    prometheus:
+      enabled: false
+      serviceMonitor:
+        enabled: false
+        trustCRDsExist: true
+
+    rollOutCiliumPods: true
+
+    routingMode: native
+
+    securityContext:
+      capabilities:
+        ciliumAgent:
+          - CHOWN
+          - KILL
+          - NET_ADMIN
+          - NET_RAW
+          - IPC_LOCK
+          - SYS_ADMIN
+          - SYS_RESOURCE
+          - PERFMON
+          - BPF
+          - DAC_OVERRIDE
+          - FOWNER
+          - SETGID
+          - SETUID
+        cleanCiliumState:
+          - NET_ADMIN
+          - SYS_ADMIN
+          - SYS_RESOURCE

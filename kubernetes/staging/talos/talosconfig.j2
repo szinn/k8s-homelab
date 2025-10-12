@@ -1,0 +1,14 @@
+context: staging
+contexts:
+    staging:
+        endpoints:
+            - stage-1
+            - stage-2
+            - stage-3
+        nodes:
+            - stage-1
+            - stage-2
+            - stage-3
+        ca: op://Kubernetes/cluster-staging/MACHINE_CA_CRT
+        crt: op://Kubernetes/cluster-staging/ADMIN_CRT
+        key: op://Kubernetes/cluster-staging/ADMIN_KEY

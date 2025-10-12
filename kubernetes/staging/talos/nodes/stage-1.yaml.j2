@@ -1,0 +1,21 @@
+machine:
+  type: controlplane
+  install:
+    disk: /dev/sda
+  network:
+    hostname: stage-1.zinn.tech
+    interfaces:
+      - interface: bond0
+        bond:
+          deviceSelectors:
+            - hardwareAddr: de:ca:ff:10:12:10
+              driver: virtio_net
+          mode: active-backup
+        dhcp: true
+        vip:
+          ip: 10.12.0.15
+        vlans:
+          - # IOT
+            vlanId: 98
+            dhcp: false
+            mtu: 1500

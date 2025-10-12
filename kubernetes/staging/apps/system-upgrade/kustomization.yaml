@@ -10,4 +10,3 @@ resources:
   - namespace.yaml
   # Flux-Kustomizations
   - tuppr/install.yaml
-  # - system-upgrade-controller/install.yaml

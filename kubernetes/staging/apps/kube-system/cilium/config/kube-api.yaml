@@ -4,7 +4,7 @@ kind: Service
 metadata:
   name: kube-api
   annotations:
-    io.cilium/lb-ipam-ips: 10.12.0.15
+    io.cilium/lb-ipam-ips: 10.12.0.16
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Cluster

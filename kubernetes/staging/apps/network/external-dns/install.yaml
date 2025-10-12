@@ -3,19 +3,21 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app flux-operator
-  namespace: &namespace flux-system
+  name: &app external-dns-unifi
+  namespace: &namespace network
 spec:
   targetNamespace: *namespace
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/staging/apps/flux-system/flux-operator/app
+  path: ./kubernetes/staging/apps/network/external-dns/unifi
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  prune: false # never should be deleted
-  wait: true
-  interval: 30m
-  timeout: 5m
+  dependsOn:
+    - name: external-secrets
+      namespace: external-secrets
+  prune: true
+  wait: false
+  interval: 10m

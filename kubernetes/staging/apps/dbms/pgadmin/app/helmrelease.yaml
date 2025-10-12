@@ -57,11 +57,9 @@ spec:
       app:
         hostnames: ["{{ .Release.Name }}.test.zinn.ca"]
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
-        rules:
-          - backendRefs: [{}]
 
     persistence:
       config:

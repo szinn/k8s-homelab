@@ -8,3 +8,4 @@ resources:
   - namespace.yaml
   # Flux-Kustomizations
   - flux-operator/install.yaml
+  - flux-instance/install.yaml
