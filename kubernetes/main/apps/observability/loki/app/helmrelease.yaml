@@ -37,6 +37,8 @@ spec:
         chunk_encoding: snappy
       limits_config:
         retention_period: 14d
+        ingestion_rate_mb: 16
+        ingestion_burst_size_mb: 32
       schemaConfig:
         configs:
           - from: "2024-04-01"
@@ -81,14 +83,14 @@ spec:
       replicas: 0
     resultsCache:
       enabled: false
-    sidecar:
-      image:
-        repository: ghcr.io/home-operations/k8s-sidecar
-        tag: 1.30.11@sha256:d8a53f834b0fe70030df75f3f956d1c5e56fbb067b09803708b2bc26e26cfc12
-      enableUniqueFilenames: true
-      rules:
-        searchNamespace: ALL
-        folder: /rules/fake
+    # sidecar:
+    #   image:
+    #     repository: ghcr.io/home-operations/k8s-sidecar
+    #     tag: 1.30.11@sha256:d8a53f834b0fe70030df75f3f956d1c5e56fbb067b09803708b2bc26e26cfc12
+    #   enableUniqueFilenames: true
+    #   rules:
+    #     searchNamespace: ALL
+    #     folder: /rules/fake
     test:
       enabled: false
     write:
