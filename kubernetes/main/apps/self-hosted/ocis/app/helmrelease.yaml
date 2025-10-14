@@ -29,7 +29,7 @@ spec:
           init-config:
             image:
               repository: docker.io/owncloud/ocis
-              tag: 7.2.0@sha256:a4b42923f0f3c4458660e1485693bf5a8399b8354c75febfedfd07e55590b8ab
+              tag: 7.3.0@sha256:e0bc61f75c8a5a309eed547cebfa7536d90ea49abad8ce1704411911b69d3c09
             command:
               - /bin/sh
               - -c
@@ -43,7 +43,7 @@ spec:
           ocis:
             image:
               repository: docker.io/owncloud/ocis
-              tag: 7.2.0@sha256:a4b42923f0f3c4458660e1485693bf5a8399b8354c75febfedfd07e55590b8ab
+              tag: 7.3.0@sha256:e0bc61f75c8a5a309eed547cebfa7536d90ea49abad8ce1704411911b69d3c09
             env:
               DEMO_USERS: false
               OCIS_LOG_COLOR: true
