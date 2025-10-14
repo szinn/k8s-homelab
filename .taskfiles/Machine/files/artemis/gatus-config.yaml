@@ -127,13 +127,13 @@ endpoints:
     alerts:
       - type: discord
         description: "Apollo down"
-  - name: UNVR
-    group: Servers
-    url: icmp://10.0.0.32
-    conditions: ["[CONNECTED] == true"]
-    alerts:
-      - type: discord
-        description: "UNVR down"
+  # - name: UNVR
+  #   group: Servers
+  #   url: icmp://10.0.0.32
+  #   conditions: ["[CONNECTED] == true"]
+  #   alerts:
+  #     - type: discord
+  #       description: "UNVR down"
   # k8s Cluster
   - name: k8s-1
     group: Kubernetes
