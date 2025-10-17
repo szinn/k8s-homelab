@@ -7,6 +7,8 @@ metadata:
   annotations:
     external-dns/is-public: "true"
     external-dns.alpha.kubernetes.io/target: external.zinn.ca
+    gatus.home-operations.com/endpoint: |-
+      conditions: ["[STATUS] == 404"]
 spec:
   hostnames: ["flux-receiver.zinn.ca"]
   parentRefs:

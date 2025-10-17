@@ -93,6 +93,9 @@ spec:
               key: HASS_BEARER_TOKEN
     route:
       internal-app:
+        annotations:
+          gatus.home-operations.com/endpoint: |-
+            conditions: ["[STATUS] == 200"]
         hostnames: ["home.zinn.ca"]
         parentRefs:
           - name: internal
