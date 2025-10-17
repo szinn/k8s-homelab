@@ -67,10 +67,6 @@ machine:
         - 10.12.0.0/16
   network:
     disableSearchDomain: true
-    extraHostEntries:
-      - ip: 10.12.0.15
-        aliases:
-          - staging.zinn.tech
   nodeLabels:
     node.kubernetes.io/gpu: "true"
     topology.kubernetes.io/region: main
