@@ -5,9 +5,13 @@ kubernetes_dir := justfile_dir()
 bootstrap_dir := kubernetes_dir + '/bootstrap'
 
 [private]
-default: talos kubernetes (kubeconfig "node") wait
-# default: talos kubernetes (kubeconfig "node") wait namespaces resources crds apps kubeconfig
+default: talos-secrets talos kubernetes (kubeconfig "node") wait namespaces resources crds apps kubeconfig
 
+[doc('Rebuild Talos secrets')]
+talos-secrets:
+  just log info "Running stage..." "stage" "$0"
+  just talos generate-secrets
+  just talos generate-talosconfig
 
 [doc('Install Talos')]
 talos:

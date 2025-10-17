@@ -23,6 +23,10 @@ stop:
 reset:
   just proxmox reset
 
+[doc('Rebuild the staging cluster')]
+rebuild: reset
+  just bootstrap
+
 [private]
 log lvl msg *args:
   gum log -t rfc3339 -s -l "{{ lvl }}" "{{ msg }}" {{ args }}
