@@ -11,49 +11,48 @@ default:
 
 [doc('Reset staging cluster')]
 reset:
-  just log info "Running stage..." "stage" "$0"
   just proxmox destroy
   just proxmox create
   just proxmox wait-for-startup
 
 [doc('Destroy staging cluster')]
 destroy:
-  just log info "Running stage..." "stage" "$0"
+  just log info "Destroying staging cluster..."
   for vmid in {{vmids}}; do \
     just proxmox destroy-vm "$vmid"; \
   done
 
 [doc('Create staging cluster')]
 create:
-  just log info "Running stage..." "stage" "$0"
+  just log info "Creating staging cluster VMs..."
   just proxmox create-vm 1 'DE:CA:FF:10:12:10'
   just proxmox create-vm 2 'DE:CA:FF:10:12:11'
   just proxmox create-vm 3 'DE:CA:FF:10:12:12'
 
 [doc('Wait for staging cluster machines to start')]
 wait-for-startup:
-  just log info "Running stage..." "stage" "$0"
+  just log info "Waiting for staging cluster machines to start..."
   for vmip in {{vmips}}; do \
     just proxmox wait-for-startup-vm "$vmip"; \
   done
 
 [doc('Start staging cluster')]
 start:
-  just log info "Running stage..." "stage" "$0"
+  just log info "Starting staging cluster..."
   for vmid in {{vmids}}; do \
     just proxmox start-vm "$vmid"; \
   done
 
 [doc('Stop staging cluster')]
 stop:
-  just log info "Running stage..." "stage" "$0"
+  just log info "Stopping staging cluster..."
   for vmid in {{vmids}}; do \
     just proxmox stop-vm "$vmid"; \
   done
 
 [doc('Unmount CD-ROM')]
 unmount-cdrom:
-  just log info "Running stage..." "stage" "$0"
+  just log info "Unmounting staging cluster CD-ROMs..."
   for vmid in {{vmids}}; do \
     just proxmox unmount-cdrom-vm "$vmid"; \
   done

@@ -11,4 +11,4 @@ default:
 staging *args:
   export KUBECONFIG="{{ justfile_dir() }}/kubernetes/staging/kubeconfig"; \
   export TALOSCONFIG="{{ justfile_dir() }}/kubernetes/staging/talosconfig"; \
-  just kubernetes/staging/{{ args }}
+  just -f kubernetes/staging/.justfile {{ args }}
