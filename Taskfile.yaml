@@ -21,11 +21,9 @@ includes:
   machine: .taskfiles/Machine
   postgres: .taskfiles/Postgres
   pre-commit: .taskfiles/Pre-commit
-  proxmox: .taskfiles/Proxmox
   rook: .taskfiles/Rook
   secrets: .taskfiles/Secrets
   sops: .taskfiles/Sops
-  talos: .taskfiles/Talos
   volsync: .taskfiles/Volsync
 
 tasks:
