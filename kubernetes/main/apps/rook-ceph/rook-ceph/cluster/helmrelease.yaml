@@ -22,52 +22,24 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    toolbox:
-      enabled: true
-
-    monitoring:
-      enabled: true
-      createPrometheusRules: false
-
     cephClusterSpec:
-      cephVersion:
-        image: quay.io/ceph/ceph:v19.2.3@sha256:af0c5903e901e329adabe219dfc8d0c3efc1f05102a753902f33ee16c26b6cee
-
       cephConfig:
         global:
           bdev_enable_discard: "true" # quote
           bdev_async_discard_threads: "1" # quote
           osd_class_update_on_start: "false" # quote
           device_failure_prediction_mode: local # requires mgr module
-
+        mgr:
+          mgr/crash/warn_recent_interval: "7200" #2h
       cleanupPolicy:
         wipeDevicesFromOtherClusters: true
-
       crashCollector:
         disable: false
-
       dashboard:
         enabled: true
         urlPrefix: /
         ssl: false
         prometheusEndpoint: http://prometheus-operated.observability.svc.cluster.local:9090
-
-    route:
-      dashboard:
-        host:
-          name: rook.zinn.ca
-          path: /
-          pathType: PathPrefix
-        parentRefs:
-          - name: internal
-            namespace: kube-system
-            sectionName: https
-        rules:
-          - backendRefs:
-              - name: rook-ceph-mgr-dashboard
-                namespace: rook-ceph
-                port: 7000
-
       mgr:
         modules:
           - name: diskprediction_local
@@ -78,12 +50,10 @@ spec:
             enabled: true
           - name: rook
             enabled: true
-
-      # network:
-      #   provider: host
-      #   connections:
-      #     requireMsgr2: true
-
+      network:
+        provider: host
+        connections:
+          requireMsgr2: true
       resources:
         mgr:
           requests:
@@ -109,7 +79,6 @@ spec:
             memory: 128Mi
           limits:
             memory: 256Mi
-
       storage:
         useAllNodes: false
         useAllDevices: false
@@ -139,9 +108,11 @@ spec:
           reclaimPolicy: Delete
           allowVolumeExpansion: true
           volumeBindingMode: Immediate
+          mountOptions:
+            - discard
           parameters:
             imageFormat: "2"
-            imageFeatures: layering
+            imageFeatures: layering,fast-diff,object-map,deep-flatten,exclusive-lock
             csi.storage.k8s.io/provisioner-secret-name: rook-csi-rbd-provisioner
             csi.storage.k8s.io/provisioner-secret-namespace: "{{ .Release.Namespace }}"
             csi.storage.k8s.io/controller-expand-secret-name: rook-csi-rbd-provisioner
@@ -156,8 +127,6 @@ spec:
       isDefault: false
       deletionPolicy: Delete
 
-    # NOTE: After disabling the filesystem, the filesystem can be removed with the following commands:
-    # ceph fs fail ceph-filesystem && ceph fs rm ceph-filesystem --yes-i-really-mean-it
     cephFileSystems:
       - name: &cephFileSystemName ceph-filesystem
         spec:
@@ -206,40 +175,26 @@ spec:
       deletionPolicy: Delete
 
     cephObjectStores: []
-      # - name: ceph-objectstore
-      #   spec:
-      #     metadataPool:
-      #       failureDomain: host
-      #       replicated:
-      #         size: 3
-      #     dataPool:
-      #       failureDomain: host
-      #       erasureCoded:
-      #         dataChunks: 2
-      #         codingChunks: 1
-      #     preservePoolsOnDelete: true
-      #     gateway:
-      #       hostNetwork: true
-      #       port: 80
-      #       resources:
-      #         requests:
-      #           cpu: 100m
-      #           memory: 256M
-      #         limits:
-      #           memory: 2Gi
-      #       instances: 1
-      #     healthCheck:
-      #       bucket:
-      #         interval: 60s
-      #   storageClass:
-      #     enabled: true
-      #     name: ceph-bucket
-      #     reclaimPolicy: Delete
-      #     parameters:
-      #       region: us-east-1
-      #   ingress:
-      #     enabled: true
-      #     ingressClassName: internal-nginx
-      #     host:
-      #       name: s3-rook.zinn.ca
-      #       path: /
+
+    monitoring:
+      enabled: true
+      createPrometheusRules: false
+
+    toolbox:
+      enabled: true
+
+    route:
+      dashboard:
+        host:
+          name: rook.zinn.ca
+          path: /
+          pathType: PathPrefix
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: rook-ceph-mgr-dashboard
+                namespace: rook-ceph
+                port: 7000

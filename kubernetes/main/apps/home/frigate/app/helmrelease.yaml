@@ -87,11 +87,11 @@ spec:
       main:
         ports:
           http:
-            port: &port 5000
+            port: 5000
             primary: true
           go2rtc:
             enabled: true
-            port: &apiPort 1984
+            port: 1984
           rtsp:
             enabled: true
             port: 8554
@@ -100,16 +100,14 @@ spec:
       main:
         hostnames: ["frigate.zinn.ca"]
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
-        rules:
-          - backendRefs: [{}]
       go2rtc:
         hostnames: ["go2rtc.zinn.ca"]
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs: [{}]

@@ -6,6 +6,7 @@ resources:
   - secrets.yaml
   - helmrelease.yaml
   - cache-pvc.yaml
+  - resourceclaim.yaml
 configMapGenerator:
   - name: plex-loki-rules
     files:

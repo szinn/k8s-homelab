@@ -203,8 +203,8 @@ spec:
         enabled: true
         hostnames: ["grafana.zinn.ca"]
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
     imageRenderer:
       enabled: true

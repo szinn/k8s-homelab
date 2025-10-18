@@ -67,8 +67,8 @@ spec:
       main:
         hostnames: ["dashy.zinn.ca"]
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:
@@ -77,8 +77,8 @@ spec:
       code-server:
         hostnames: ["dashy-code.zinn.ca"]
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:

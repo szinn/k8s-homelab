@@ -56,11 +56,9 @@ spec:
       internal:
         hostnames: ["wiki.zinn.ca"]
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
-        rules:
-          - backendRefs: [{}]
     persistence:
       data:
         enabled: true

@@ -19,10 +19,10 @@ talos:
   for n in $(ls {{ kubernetes_dir }}/talos/nodes | sed -e 's/.yaml.j2//'); do \
     if ! op=$(just talos apply-node "$n" --insecure 2>&1); then \
       if [[ "$op" == *"certificate required"* ]]; then \
-        just log info "Talos already configured, skipping apply of config" "stage" "$0" "node" "$n"; \
+        just log info "Talos already configured, skipping apply of config" "node" "$n"; \
         continue; \
       fi; \
-      just log fatal "Failed to apply Talos configuration" "stage" "$0" "node" "$n" "output" "$op"; \
+      just log fatal "Failed to apply Talos configuration" "node" "$n" "output" "$op"; \
     fi; \
   done
   just proxmox unmount-cdrom
@@ -42,7 +42,7 @@ wait:
   just log info "Waiting for all nodes to be not-ready..."
   if ! kubectl wait nodes --for=condition=Ready=True --all --timeout=10s &>/dev/null; then \
     until kubectl wait nodes --for=condition=Ready=False --all --timeout=10s &>/dev/null; do \
-      just log info "Nodes not available, waiting for nodes to be available. Retrying in 5 seconds..." "stage" "$0"; \
+      just log info "Nodes not available, waiting for nodes to be available. Retrying in 5 seconds..."; \
       sleep 5; \
     done \
   fi

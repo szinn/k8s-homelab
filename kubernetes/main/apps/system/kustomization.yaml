@@ -12,7 +12,8 @@ resources:
   # Flux-Kustomizations
   - descheduler/install.yaml
   - fstrim/install.yaml
-  - intel-device-plugin/install.yaml
+  # - intel-device-plugin/install.yaml
+  - intel-gpu-resource-driver/install.yaml
   - k8s-ycl/install.yaml
   - keda/install.yaml
   - kube-cleanup-operator/install.yaml

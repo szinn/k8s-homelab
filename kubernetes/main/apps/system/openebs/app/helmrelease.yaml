@@ -19,29 +19,7 @@ spec:
     remediation:
       retries: 3
   values:
-    localpv-provisioner:
-      localpv:
-        image:
-          registry: quay.io/
-        basePath: &basePath /var/mnt/ssd/openebs/local
-      hostpathClass:
-        enabled: true
-        name: openebs-hostpath
-        isDefaultClass: false
-        basePath: *basePath
-      helperPod:
-        image:
-          registry: quay.io/
-    openebs-crds:
-      csi:
-        volumeSnapshots:
-          enabled: false
-          keep: false
-    zfs-localpv:
-      enabled: false
-    lvm-localpv:
-      enabled: false
-    mayastor:
+    alloy:
       enabled: false
     engines:
       local:
@@ -52,9 +30,37 @@ spec:
       replicated:
         mayastor:
           enabled: false
+    localpv-provisioner:
+      analytics:
+        enabled: false
+      helperPod:
+        image:
+          registry: quay.io/
+      hostpathClass:
+        enabled: true
+        name: openebs-hostpath
+        basePath: &basePath /var/mnt/ssd/openebs/local
+        isDefaultClass: false
+      localpv:
+        image:
+          registry: quay.io/
+        basePath: *basePath
+      rbac:
+        create: true
     loki:
+      enabled: false
+    lvm-localpv:
+      enabled: false
+    mayastor:
       enabled: false
     minio:
       enabled: false
-    alloy:
+    openebs-crds:
+      csi:
+        volumeSnapshots:
+          enabled: false
+          keep: false
+    preUpgradeHook:
+      enabled: false
+    zfs-localpv:
       enabled: false

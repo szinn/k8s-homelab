@@ -122,11 +122,9 @@ spec:
             conditions: ["[STATUS] == 404"]
         hostnames: ["onepassword-connect.zinn.ca"]
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
-        rules:
-          - backendRefs: [{}]
     persistence:
       config:
         type: emptyDir

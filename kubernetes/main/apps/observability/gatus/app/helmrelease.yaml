@@ -95,11 +95,9 @@ spec:
           gatus.home-operations.com/enabled: "false"
         hostnames: ["status.zinn.ca"]
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
-        rules:
-          - backendRefs: [{}]
     rbac:
       roles:
         gatus:

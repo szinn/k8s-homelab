@@ -7,9 +7,3 @@ resources:
   - ocirepository.yaml
   - helmrelease.yaml
   - httproute.yaml
-configMapGenerator:
-  - name: cilium-values
-    files:
-      - values.yaml=./values.yaml
-configurations:
-  - kustomizeconfig.yaml
