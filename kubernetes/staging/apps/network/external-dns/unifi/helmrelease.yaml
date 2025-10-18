@@ -20,7 +20,7 @@ spec:
       retries: 3
   values:
     fullnameOverride: *app
-    logLevel: debug
+    # logLevel: debug
     domainFilters:
       - test.zinn.ca
     podAnnotations:

@@ -1,0 +1,195 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.10/website/content/v1.10/schemas/config.schema.json
+version: v1alpha1
+machine:
+  ca:
+    crt: op://Kubernetes/cluster-main/MACHINE_CA_CRT
+    {% if ENV.IS_CONTROLPLANE %}
+    key: op://Kubernetes/cluster-main/MACHINE_CA_KEY
+    {% endif %}
+  certSANs:
+    - main.zinn.tech
+  features:
+    apidCheckExtKeyUsage: true
+    diskQuotaSupport: true
+    hostDNS:
+      enabled: true
+      forwardKubeDNSToHost: false
+      resolveMemberNames: true
+    kubePrism:
+      enabled: true
+      port: 7445
+    {% if ENV.IS_CONTROLPLANE %}
+    kubernetesTalosAPIAccess:
+      enabled: true
+      allowedKubernetesNamespaces:
+        - actions-runner-system
+        - system-upgrade
+      allowedRoles:
+        - os:admin
+    {% endif %}
+    rbac: true
+    stableHostname: true
+  files:
+    - op: create
+      path: /etc/cri/conf.d/20-customization.part
+      content: |-
+        [plugins]
+          [plugins."io.containerd.grpc.v1.cri"]
+            enable_unprivileged_ports = true
+            enable_unprivileged_icmp = true
+        [plugins."io.containerd.cri.v1.images"]
+          discard_unpacked_layers = false
+        [plugins."io.containerd.cri.v1.runtime"]
+          cdi_spec_dirs = ["/var/cdi/static", "/var/cdi/dynamic"]
+          device_ownership_from_security_context = true
+    - op: overwrite
+      path: /etc/nfsmount.conf
+      permissions: 0o644
+      content: |
+        [ NFSMount_Global_Options ]
+        nfsvers=4.2
+        hard=True
+        nconnect=16
+        noatime=True
+  install:
+    image: factory.talos.dev/metal-installer/434c91805dee2dad5a9cbeaead3672b35ee7b88954b0f6414e3e9c77e7159abd:v1.11.3
+    wipe: false
+  kubelet:
+    defaultRuntimeSeccompProfileEnabled: true
+    disableManifestsDirectory: true
+    extraArgs:
+      image-gc-high-threshold: "70"
+      image-gc-low-threshold: "65"
+    extraConfig:
+      featureGates:
+        ResourceHealthStatus: true
+      serializeImagePulls: false
+    image: ghcr.io/siderolabs/kubelet:v1.34.1
+    nodeIP:
+      validSubnets:
+        - 10.11.0.0/16
+  network:
+    disableSearchDomain: true
+  nodeLabels:
+    node.kubernetes.io/gpu: "true"
+    topology.kubernetes.io/region: main
+  sysctls:
+    fs.inotify.max_user_instances: "8192"
+    fs.inotify.max_user_watches: "1048576"
+    net.core.default_qdisc: fq
+    net.core.rmem_max: "67108864"
+    net.core.wmem_max: "67108864"
+    net.ipv4.neigh.default.gc_thresh1: "4096"
+    net.ipv4.neigh.default.gc_thresh2: "8192"
+    net.ipv4.neigh.default.gc_thresh3: "16384"
+    net.ipv4.tcp_congestion_control: bbr
+    net.ipv4.tcp_fastopen: "3"
+    net.ipv4.tcp_mtu_probing: "1"
+    net.ipv4.tcp_rmem: 4096 87380 33554432
+    net.ipv4.tcp_window_scaling: "1"
+    net.ipv4.tcp_wmem: 4096 65536 33554432
+    sunrpc.tcp_max_slot_table_entries: "128"
+    sunrpc.tcp_slot_table_entries: "128"
+    user.max_user_namespaces: "11255"
+    vm.nr_hugepages: "1024"
+  time:
+    disabled: false
+    servers:
+      - 10.10.0.2
+  token: op://Kubernetes/cluster-main/MACHINE_TOKEN
+cluster:
+  {% if ENV.IS_CONTROLPLANE %}
+  aggregatorCA:
+    crt: op://Kubernetes/cluster-main/CLUSTER_AGGREGATORCA_CRT
+    key: op://Kubernetes/cluster-main/CLUSTER_AGGREGATORCA_KEY
+  allowSchedulingOnControlPlanes: false
+  apiServer:
+    auditPolicy:
+      apiVersion: audit.k8s.io/v1
+      kind: Policy
+      rules:
+        - level: Metadata
+    certSANs:
+      - main.zinn.tech
+      - 127.0.0.1
+    disablePodSecurityPolicy: true
+    extraArgs:
+      enable-aggregator-routing: "true"
+      feature-gates: MutatingAdmissionPolicy=true,ResourceHealthStatus=true
+      runtime-config: admissionregistration.k8s.io/v1beta1=true
+    image: registry.k8s.io/kube-apiserver:v1.34.1
+  controllerManager:
+    extraArgs:
+      bind-address: 0.0.0.0
+    image: registry.k8s.io/kube-controller-manager:v1.34.1
+  coreDNS:
+    disabled: true
+  etcd:
+    advertisedSubnets:
+      - 10.11.0.0/16
+    ca:
+      crt: op://Kubernetes/cluster-main/CLUSTER_ETCD_CA_CRT
+      key: op://Kubernetes/cluster-main/CLUSTER_ETCD_CA_KEY
+    extraArgs:
+      listen-metrics-urls: http://0.0.0.0:2381
+  proxy:
+    disabled: true
+    image: registry.k8s.io/kube-proxy:v1.34.1
+  scheduler:
+    config:
+      apiVersion: kubescheduler.config.k8s.io/v1
+      kind: KubeSchedulerConfiguration
+      profiles:
+        - schedulerName: default-scheduler
+          plugins:
+            score:
+              disabled:
+                - name: ImageLocality
+          pluginConfig:
+            - name: PodTopologySpread
+              args:
+                defaultingType: List
+                defaultConstraints:
+                  - maxSkew: 1
+                    topologyKey: kubernetes.io/hostname
+                    whenUnsatisfiable: ScheduleAnyway
+    extraArgs:
+      bind-address: 0.0.0.0
+    image: registry.k8s.io/kube-scheduler:v1.34.1
+  secretboxEncryptionSecret: op://Kubernetes/cluster-main/CLUSTER_SECRETBOXENCRYPTIONSECRET
+  serviceAccount:
+    key: op://Kubernetes/cluster-main/CLUSTER_SERVICEACCOUNT_KEY
+  {% endif %}
+  ca:
+    crt: op://Kubernetes/cluster-main/CLUSTER_CA_CRT
+    {% if ENV.IS_CONTROLPLANE %}
+    key: op://Kubernetes/cluster-main/CLUSTER_CA_KEY
+    {% endif %}
+  clusterName: main
+  controlPlane:
+    endpoint: https://main.zinn.tech:6443
+  discovery:
+    enabled: true
+    registries:
+      kubernetes:
+        disabled: true
+      service:
+        disabled: false
+  id: op://Kubernetes/cluster-main/CLUSTER_ID
+  network:
+    cni:
+      name: none
+    dnsDomain: cluster.local
+    podSubnets:
+      - 10.201.0.0/16
+    serviceSubnets:
+      - 10.200.0.0/16
+  secret: op://Kubernetes/cluster-main/CLUSTER_SECRET
+  token: op://Kubernetes/cluster-main/CLUSTER_TOKEN
+---
+apiVersion: v1alpha1
+kind: WatchdogTimerConfig
+device: /dev/watchdog0
+timeout: 5m
+

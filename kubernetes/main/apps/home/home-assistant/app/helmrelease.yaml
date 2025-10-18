@@ -98,8 +98,8 @@ spec:
             conditions: ["[STATUS] == 200"]
         hostnames: ["home.zinn.ca"]
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:
@@ -111,8 +111,8 @@ spec:
           external-dns.alpha.kubernetes.io/target: external.zinn.ca
         hostnames: ["home.zinn.ca"]
         parentRefs:
-          - name: external
-            namespace: kube-system
+          - name: envoy-external
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:
@@ -121,8 +121,8 @@ spec:
       code-server:
         hostnames: ["ha-code.zinn.ca"]
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:

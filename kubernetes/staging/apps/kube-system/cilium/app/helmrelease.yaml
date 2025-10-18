@@ -107,8 +107,6 @@ spec:
     kubeProxyReplacement: true
     kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
 
-    enableRuntimeDeviceDetection: true
-
     l2announcements:
       enabled: false
 

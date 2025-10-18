@@ -1,0 +1,62 @@
+machine:
+  type: worker
+  install:
+    diskSelector:
+      model: Samsung SSD 870
+    extraKernelArgs:
+      - -selinux
+      - apparmor=0
+      - i915.enable_guc=3
+      - init_on_alloc=0
+      - init_on_free=0
+      - intel_iommu=on
+      - iommu=pt
+      - mitigations=off
+      - net.ifnames=1
+      - security=none
+      - sysctl.kernel.kexec_load_disabled=1
+      - talos.auditd.disabled=1
+  network:
+    hostname: k8s-5.zinn.tech
+    interfaces:
+      - interface: bond0
+        bond:
+          deviceSelectors:
+            - hardwareAddr: 1c:69:7a:a5:a4:a7
+              driver: igc
+          mode: active-backup
+        dhcp: true
+        vlans:
+          - # IOT
+            vlanId: 98
+            dhcp: false
+            mtu: 1500
+  kubelet:
+    extraMounts:
+      - destination: /var/mnt/ssd
+        type: bind
+        source: /var/mnt/ssd
+        options:
+          - rbind
+          - rshared
+          - rw
+  disks:
+    - device: /dev/disk/by-id/nvme-PCIe_SSD_9435070301DE01033512
+      partitions:
+        - mountpoint: /var/mnt/ssd
+# ---
+# apiVersion: v1alpha1
+# kind: VolumeConfig
+# name: EPHEMERAL
+# provisioning:
+#   diskSelector:
+#     match: system_disk
+#   maxSize: 512GiB
+# ---
+# apiVersion: v1alpha1
+# kind: UserVolumeConfig
+# name: local-hostpath
+# provisioning:
+#   diskSelector:
+#     match: system_disk
+#   maxSize: 256GiB

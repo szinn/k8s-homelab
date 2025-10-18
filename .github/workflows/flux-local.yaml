@@ -95,7 +95,6 @@ jobs:
             --limit-bytes 10000
             --all-namespaces
             --sources "flux-system"
-            --sources "gateway-api-crd"
             --output-file diff.patch
 
       - name: Generate Diff

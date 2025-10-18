@@ -12,8 +12,8 @@ metadata:
 spec:
   hostnames: ["flux-receiver.zinn.ca"]
   parentRefs:
-    - name: external
-      namespace: kube-system
+    - name: envoy-external
+      namespace: network
       sectionName: https
   rules:
     - backendRefs:

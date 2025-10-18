@@ -1,9 +1,0 @@
-# yamllint disable-line rule:document-start
-originRequest:
-  originServerName: external.zinn.ca
-ingress:
-  - hostname: "zinn.ca"
-    service: &svc https://cilium-gateway-external.kube-system.svc.cluster.local
-  - hostname: "*.zinn.ca"
-    service: *svc
-  - service: http_status:404

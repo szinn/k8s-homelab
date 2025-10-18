@@ -1,0 +1,17 @@
+context: main
+contexts:
+    main:
+        endpoints:
+            - k8s-1
+            - k8s-2
+            - k8s-3
+        nodes:
+            - k8s-1
+            - k8s-2
+            - k8s-3
+            - k8s-4
+            - k8s-5
+            - k8s-6
+        ca: op://Kubernetes/cluster-main/MACHINE_CA_CRT
+        crt: op://Kubernetes/cluster-main/ADMIN_CRT
+        key: op://Kubernetes/cluster-main/ADMIN_KEY

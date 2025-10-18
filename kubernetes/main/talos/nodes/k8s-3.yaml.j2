@@ -1,0 +1,19 @@
+machine:
+  type: controlplane
+  install:
+    disk: /dev/sda
+  network:
+    hostname: k8s-3.zinn.tech
+    interfaces:
+      - interface: bond0
+        bond:
+          deviceSelectors:
+            - hardwareAddr: 7c:83:34:b1:7b:8b
+              driver: r8169
+          mode: active-backup
+        dhcp: true
+        vlans:
+          - # IOT
+            vlanId: 98
+            dhcp: false
+            mtu: 1500

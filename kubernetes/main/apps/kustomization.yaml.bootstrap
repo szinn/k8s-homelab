@@ -8,7 +8,7 @@ resources:
   - external-secrets
   - kube-system
   - flux-system
-  - networking
+  - network
   - system
   # Step 2
   # - rook-ceph

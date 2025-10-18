@@ -80,11 +80,9 @@ spec:
             conditions: ["[STATUS] == 404"]
         hostnames: ["{{ .Release.Name }}.zinn.ca"]
         parentRefs:
-          - name: external
-            namespace: kube-system
+          - name: envoy-external
+            namespace: network
             sectionName: https
-        rules:
-          - backendRefs: [{}]
     persistence:
       config-file:
         type: configMap

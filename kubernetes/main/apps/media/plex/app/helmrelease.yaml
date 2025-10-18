@@ -24,22 +24,6 @@ spec:
       main:
         annotations:
           reloader.stakater.com/auto: "true"
-        pod:
-          securityContext:
-            runAsUser: 2000
-            runAsGroup: 2000
-            runAsNonRoot: true
-            fsGroup: 2000
-            fsGroupChangePolicy: OnRootMismatch
-          affinity:
-            nodeAffinity:
-              requiredDuringSchedulingIgnoredDuringExecution:
-                nodeSelectorTerms:
-                  - matchExpressions:
-                      - key: google.feature.node.kubernetes.io/coral
-                        operator: DoesNotExist
-          nodeSelector:
-            intel.feature.node.kubernetes.io/gpu: "true"
         containers:
           main:
             image:
@@ -47,20 +31,53 @@ spec:
               tag: 1.42.2.10156@sha256:9ad8a3506e1d8ebda873a668603c1a2c10e6887969564561be669efd65ae8871
             env:
               TZ: "America/Toronto"
-              ADVERTISE_IP: "http://10.11.1.14:32400,https://{{ .Release.Name }}.zinn.ca:443"
-              ALLOWED_NETWORKS: "10.0.0.0/8"
-              HOSTNAME: "plex"
+              # ADVERTISE_IP: "http://10.11.1.14:32400,https://{{ .Release.Name }}.zinn.ca:443"
+              # ALLOWED_NETWORKS: "10.0.0.0/8"
+              PLEX_ADVERTISE_URL: http://10.11.1.14:32400,https://{{ .Release.Name }}.zinn.ca:443
+              PLEX_NO_AUTH_NETWORKS: 10.0.0.0/8
+              HOSTNAME: plex
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /identity
+                    port: &port 32400
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 10
             envFrom:
               - secretRef:
                   name: plex-secret
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
             resources:
+              # claims:
+              #   - name: gpu
               requests:
-                gpu.intel.com/i915: 1
                 cpu: 100m
-                memory: 2Gi
               limits:
-                gpu.intel.com/i915: 1
-                memory: 10Gi
+                memory: 16Gi
+    defaultPodOptions:
+      # resourceClaims:
+      #   - name: gpu
+      #     resourceClaimTemplateName: "plex"
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 2000
+        runAsGroup: 2000
+        fsGroup: 2000
+        fsGroupChangePolicy: OnRootMismatch
     service:
       main:
         type: LoadBalancer
@@ -68,7 +85,7 @@ spec:
           lbipam.cilium.io/ips: 10.11.1.14
         ports:
           http:
-            port: 32400
+            port: *port
             protocol: TCP
     route:
       internal:
@@ -77,11 +94,9 @@ spec:
             conditions: ["[STATUS] == 401"]
         hostnames: ["{{ .Release.Name }}.zinn.ca"]
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
-        rules:
-          - backendRefs: [{}]
       external:
         annotations:
           external-dns/is-public: "true"
@@ -90,11 +105,9 @@ spec:
             conditions: ["[STATUS] == 401"]
         hostnames: ["{{ .Release.Name }}.zinn.ca"]
         parentRefs:
-          - name: external
-            namespace: kube-system
+          - name: envoy-external
+            namespace: network
             sectionName: https
-        rules:
-          - backendRefs: [{}]
     persistence:
       config:
         enabled: true

@@ -19,22 +19,22 @@ spec:
   dependsOn:
     - name: actions-runner-controller
       namespace: actions-runner-system
-    - name: openebs
-      namespace: system
+    # - name: openebs
+    #   namespace: system
   values:
     runnerScaleSetName: k8s-homelab-runner
     githubConfigUrl: https://github.com/szinn/k8s-homelab
     githubConfigSecret: k8s-homelab-runner-secret
     minRunners: 1
     maxRunners: 3
-    containerMode:
-      type: kubernetes
-      kubernetesModeWorkVolumeClaim:
-        accessModes: ["ReadWriteOnce"]
-        storageClassName: openebs-hostpath
-        resources:
-          requests:
-            storage: 25Gi
+    # containerMode:
+    #   type: kubernetes
+    #   kubernetesModeWorkVolumeClaim:
+    #     accessModes: ["ReadWriteOnce"]
+    #     storageClassName: openebs-hostpath
+    #     resources:
+    #       requests:
+    #         storage: 25Gi
     controllerServiceAccount:
       name: actions-runner-controller
       namespace: actions-runner-system
@@ -55,16 +55,16 @@ spec:
               - mountPath: /var/run/secrets/talos.dev
                 name: talos
                 readOnly: true
-              - name: cache-volume
-                mountPath: /cache
+              # - name: cache-volume
+              #   mountPath: /cache
         serviceAccountName: *name
         volumes:
           - name: talos
             secret:
               secretName: *name
-          - name: cache-volume
-            persistentVolumeClaim:
-              claimName: actions-runner-controller-cache
+          # - name: cache-volume
+          #   persistentVolumeClaim:
+          #     claimName: actions-runner-controller-cache
     listenerTemplate:
       spec:
         containers:
