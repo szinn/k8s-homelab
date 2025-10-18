@@ -117,6 +117,9 @@ spec:
             port: *apiPort
     route:
       app:
+        annotations:
+          gatus.home-operations.com/endpoint: |-
+            conditions: ["[STATUS] == 404"]
         hostnames: ["onepassword-connect.zinn.ca"]
         parentRefs:
           - name: internal
