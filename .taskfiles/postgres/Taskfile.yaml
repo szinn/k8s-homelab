@@ -79,7 +79,7 @@ tasks:
     internal: true
     cmds:
       - flux --context main suspend helmrelease -n {{.NAMESPACE}} {{.HELMRELEASE}}
-      - flux --context main suspend kustomization {{.KUSTOMIZATION}}
+      - flux --context main suspend kustomization -n {{.NAMESPACE}} {{.KUSTOMIZATION}}
       - for: { var: SERVICES }
         cmd: kubectl --context main scale --replicas=0 -n {{.NAMESPACE}} {{.ITEM}}
 
@@ -90,7 +90,7 @@ tasks:
       - for: { var: SERVICES }
         cmd: kubectl --context main  scale --replicas={{.REPLICAS}} -n {{.NAMESPACE}} {{.ITEM}}
       - flux --context main  resume helmrelease -n {{.NAMESPACE}} {{.HELMRELEASE}}
-      - flux --context main  resume kustomization {{.KUSTOMIZATION}}
+      - flux --context main  resume kustomization -n {{.NAMESPACE}} {{.KUSTOMIZATION}}
 
   _restore_db:
     desc: Restore a database
