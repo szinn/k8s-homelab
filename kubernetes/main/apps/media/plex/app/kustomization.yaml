@@ -7,6 +7,7 @@ resources:
   - helmrelease.yaml
   - cache-pvc.yaml
   - resourceclaimtemplate.yaml
+  - resource-mutator.yaml
 configMapGenerator:
   - name: plex-loki-rules
     files:
