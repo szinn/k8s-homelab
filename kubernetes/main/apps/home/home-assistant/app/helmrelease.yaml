@@ -30,6 +30,14 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         pod:
+          annotations:
+            k8s.v1.cni.cncf.io/networks: |-
+              [{
+                "name": "iot",
+                "namespace": "network",
+                "ips": ["192.168.1.16/24"],
+                "mac": "de:ca:ff:a8:01:10"
+              }]
           securityContext:
             runAsUser: 65534
             runAsGroup: 65533
@@ -51,6 +59,12 @@ spec:
                 enabled: false
               startup:
                 enabled: false
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
           code-server:
             image:
               repository: ghcr.io/coder/code-server

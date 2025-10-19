@@ -1,0 +1,21 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: multus
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: multus
+  interval: 1h
+  values:
+    cni:
+      binPath: /opt/cni/bin
+      netPath: /etc/cni/net.d
+    multus:
+      resources:
+        requests:
+          cpu: 10m
+        limits:
+          memory: 512Mi
