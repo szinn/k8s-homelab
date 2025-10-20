@@ -24,7 +24,7 @@ spec:
     - name: is-plex
       expression: >
         object.metadata.labels["app.kubernetes.io/name"] == "plex"
-  failurePolicy: Fail
+  failurePolicy: Ignore
   reinvocationPolicy: IfNeeded
   mutations:
     - patchType: JSONPatch
