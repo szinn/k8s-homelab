@@ -55,16 +55,11 @@ spec:
               - mountPath: /var/run/secrets/talos.dev
                 name: talos
                 readOnly: true
-              # - name: cache-volume
-              #   mountPath: /cache
         serviceAccountName: *name
         volumes:
           - name: talos
             secret:
               secretName: *name
-          # - name: cache-volume
-          #   persistentVolumeClaim:
-          #     claimName: actions-runner-controller-cache
     listenerTemplate:
       spec:
         containers:

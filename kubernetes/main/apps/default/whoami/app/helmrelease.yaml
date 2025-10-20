@@ -22,7 +22,7 @@ spec:
   values:
     controllers:
       main:
-        replicas: 3
+        replicas: 1
         containers:
           main:
             image:
