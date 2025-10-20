@@ -14,15 +14,12 @@ env:
   MINIJINJA_CONFIG_FILE: "{{.ROOT_DIR}}/.minijinja.toml"
 
 includes:
-  bootstrap: .taskfiles/Bootstrap
   flux: .taskfiles/Flux
   format: .taskfiles/Format
   kubernetes: .taskfiles/Kubernetes
   machine: .taskfiles/Machine
   postgres: .taskfiles/Postgres
   pre-commit: .taskfiles/Pre-commit
-  rook: .taskfiles/Rook
-  secrets: .taskfiles/Secrets
   sops: .taskfiles/Sops
   volsync: .taskfiles/Volsync
 
