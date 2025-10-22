@@ -249,10 +249,6 @@ data:
             href: https://home.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
             siteMonitor: https://home.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
             icon: home-assistant.png
-        - Node Red:
-            href: https://node-red.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            siteMonitor: https://node-red.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            icon: node-red.png
         - Wiki Recipes:
             href: https://wiki.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}/recipes/index
             siteMonitor: https://wiki.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}/recipes/index
@@ -277,10 +273,6 @@ data:
             href: https://pdf-tool.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
             siteMonitor: https://pdf-tool.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
             icon: https://raw.githubusercontent.com/Stirling-Tools/Stirling-PDF/main/docs/stirling.png
-        - BirdNet:
-            href: https://birdnet.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            siteMonitor: https://birdnet.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            icon: netbird.png
         - Home Code:
             href: https://ha-code.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
             siteMonitor: https://ha-code.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
