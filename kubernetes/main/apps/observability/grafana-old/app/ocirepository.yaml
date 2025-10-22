@@ -3,12 +3,12 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: OCIRepository
 metadata:
-  name: grafana-operator
+  name: grafana
 spec:
-  interval: 15m
+  interval: 1h
   layerSelector:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: v5.20.0
-  url: oci://ghcr.io/grafana/helm-charts/grafana-operator
+    tag: 10.1.2
+  url: oci://ghcr.io/grafana/helm-charts/grafana

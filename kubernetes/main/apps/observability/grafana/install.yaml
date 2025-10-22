@@ -3,13 +3,9 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app grafana
-  namespace: &namespace observability
+  name: grafana
 spec:
-  targetNamespace: *namespace
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
+  targetNamespace: observability
   path: ./kubernetes/main/apps/observability/grafana/app
   sourceRef:
     kind: GitRepository
@@ -19,6 +15,26 @@ spec:
     - name: external-secrets
       namespace: external-secrets
   prune: true
-  wait: false
-  interval: 30m
+  wait: true
+  interval: 1h
   timeout: 5m
+---
+# yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: grafana-instance
+spec:
+  targetNamespace: observability
+  path: ./kubernetes/main/apps/observability/grafana/instance
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  dependsOn:
+    - name: grafana
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+  interval: 1h
+  prune: true
+  wait: false
