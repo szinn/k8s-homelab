@@ -12,5 +12,5 @@ spec:
     type: loki
     name: loki
     access: proxy
-    isDefault: true
+    isDefault: false
     url: http://loki-headless.observability.svc.cluster.local:3100

@@ -12,7 +12,7 @@ spec:
     type: prometheus
     name: prometheus
     access: proxy
-    isDefault: false
+    isDefault: true
     url: http://prometheus-operated.observability.svc.cluster.local:9090
 ---
 # yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/grafana.integreatly.org/grafanadatasource_v1beta1.json
