@@ -4,43 +4,33 @@
     "grafana-dashboards": {
       defaultRegistryUrlTemplate: "https://grafana.com/api/dashboards/{{packageName}}",
       format: "json",
-      transformTemplates: ["{\"releases\":[{\"version\": $string(revision)}]}"]
-    }
+      transformTemplates: ['{"releases":[{"version": $string(revision)}], "sourceDirectory": $string(name)}'],
+    },
   },
   customManagers: [
     {
       description: "Process Grafana dashboards",
       customType: "regex",
-      fileMatch: ["(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$"],
+      managerFilePatterns: ["/grafanadashboard\\.yaml(?:\\.j2)?$/",],
       matchStrings: [
-        "# renovate: dashboardName=\"(?<depName>.*)\"\\n(?<indentation>\\s+)gnetId: (?<packageName>\\d+)\\n.+revision: (?<currentValue>\\d+)"
+        "dashboards\\/(?<depName>\\d+)\\/revisions\\/(?<currentValue>\\d+)\\/download",
       ],
-      autoReplaceStringTemplate: "# renovate: dashboardName=\"{{{depName}}}\"\n{{{indentation}}}gnetId: {{{packageName}}}\n{{{indentation}}}revision: {{{newValue}}}",
       datasourceTemplate: "custom.grafana-dashboards",
-      versioningTemplate: "regex:^(?<major>\\d+)$"
-    }
+      versioningTemplate: "regex:^(?<major>\\d+)$",
+    },
   ],
   packageRules: [
     {
       addLabels: ["renovate/grafana-dashboard"],
       automerge: true,
       automergeType: "branch",
+      commitMessageExtra: "({{currentVersion}} ➔ {{newVersion}})",
+      commitMessageTopic: "dashboard {{sourceDirectory}}",
       ignoreTests: true,
       matchDatasources: ["custom.grafana-dashboards"],
       matchUpdateTypes: ["major"],
-      semanticCommitType: "chore",
       semanticCommitScope: "grafana-dashboards",
-      commitMessageTopic: "dashboard {{depName}}",
-      commitMessageExtra: "( {{currentVersion}} → {{newVersion}} )"
+      semanticCommitType: "chore",
     },
-    {
-      description: "Grafana Dashboard Update",
-      groupName: "grafana-dashboard",
-      matchDatasources: ["custom.grafana-dashboards"],
-      group: {
-        commitMessageTopic: "{{{groupName}}} group"
-      },
-      separateMinorPatch: true
-    }
-  ]
+  ],
 }

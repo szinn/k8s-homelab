@@ -7,3 +7,4 @@ resources:
   - ocirepository.yaml
   - helmrelease.yaml
   - httproute.yaml
+  - grafanadashboard.yaml

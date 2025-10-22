@@ -7,3 +7,4 @@ resources:
   - dnsendpoint.yaml
   - secrets.yaml
   - helmrelease.yaml
+  - grafanadashboard.yaml

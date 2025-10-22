@@ -57,9 +57,7 @@ spec:
       exclusive: false
 
     dashboards:
-      enabled: false
-      annotations:
-        grafana_folder: Cilium
+      enabled: true
 
     devices: bond+
 

@@ -7,3 +7,4 @@ resources:
   - mutations
   - helmrelease.yaml
   - prometheus-rules.yaml
+  - grafanadashboard.yaml
