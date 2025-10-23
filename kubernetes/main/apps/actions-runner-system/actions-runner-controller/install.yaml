@@ -3,13 +3,9 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app actions-runner-controller
-  namespace: &namespace actions-runner-system
+  name: actions-runner-controller
 spec:
-  targetNamespace: *namespace
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
+  targetNamespace: actions-runner-system
   path: ./kubernetes/main/apps/actions-runner-system/actions-runner-controller/operator
   prune: true
   sourceRef:
@@ -24,13 +20,9 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app actions-runner-controller-runners
-  namespace: &namespace actions-runner-system
+  name: actions-runner-controller-runners
 spec:
-  targetNamespace: *namespace
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
+  targetNamespace: actions-runner-system
   path: ./kubernetes/main/apps/actions-runner-system/actions-runner-controller/runners
   sourceRef:
     kind: GitRepository

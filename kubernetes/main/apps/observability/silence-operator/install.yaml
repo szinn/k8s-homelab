@@ -3,13 +3,9 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app silence-operator
-  namespace: &namespace observability
+  name: silence-operator
 spec:
-  targetNamespace: *namespace
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
+  targetNamespace: observability
   path: ./kubernetes/main/apps/observability/silence-operator/app
   sourceRef:
     kind: GitRepository
@@ -25,13 +21,9 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app silence-operator-silences
-  namespace: &namespace observability
+  name: silence-operator-silences
 spec:
-  targetNamespace: *namespace
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
+  targetNamespace: observability
   path: ./kubernetes/main/apps/observability/silence-operator/silences
   sourceRef:
     kind: GitRepository
@@ -39,7 +31,7 @@ spec:
     namespace: flux-system
   dependsOn:
     - name: silence-operator
-      namespace: *namespace
+      namespace: observability
   prune: true
   wait: false
   interval: 1h

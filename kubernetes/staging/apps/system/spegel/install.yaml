@@ -3,13 +3,9 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app spegel
-  namespace: &namespace system
+  name: spegel
 spec:
-  targetNamespace: *namespace
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
+  targetNamespace: system
   path: ./kubernetes/staging/apps/system/spegel/app
   sourceRef:
     kind: GitRepository

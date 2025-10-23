@@ -3,13 +3,9 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app unifi-poller
-  namespace: &namespace observability
+  name: unifi-poller
 spec:
-  targetNamespace: *namespace
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
+  targetNamespace: observability
   path: ./kubernetes/main/apps/observability/unifi-poller/app
   sourceRef:
     kind: GitRepository

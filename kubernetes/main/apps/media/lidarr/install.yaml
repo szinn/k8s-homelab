@@ -3,13 +3,9 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app lidarr
-  namespace: &namespace media
+  name: lidarr
 spec:
-  targetNamespace: *namespace
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
+  targetNamespace: media
   path: ./kubernetes/main/apps/media/lidarr/app
   sourceRef:
     kind: GitRepository
@@ -28,13 +24,13 @@ spec:
     - ../../../../components/volsync
   postBuild:
     substitute:
-      APP: *app
+      APP: lidarr
       APP_UID: "2000"
       APP_GID: "2000"
       VOLSYNC_CLAIM: lidarr-config
       VOLSYNC_CAPACITY: 15Gi
       VOLSYNC_CACHE_CAPACITY: 10Gi
-      GATUS_APP: *app
+      GATUS_APP: lidarr
       GATUS_SUBDOMAIN: lidarr
   prune: true
   wait: false

@@ -2,13 +2,9 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app whoami
-  namespace: &namespace default
+  name: whoami
 spec:
-  targetNamespace: *namespace
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
+  targetNamespace: default
   path: ./kubernetes/staging/apps/default/whoami/app
   sourceRef:
     kind: GitRepository

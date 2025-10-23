@@ -3,13 +3,9 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app home-assistant
-  namespace: &namespace home
+  name: home-assistant
 spec:
-  targetNamespace: *namespace
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
+  targetNamespace: home
   path: ./kubernetes/main/apps/home/home-assistant/app
   sourceRef:
     kind: GitRepository
@@ -25,7 +21,7 @@ spec:
     - ../../../../components/gatus/external
   postBuild:
     substitute:
-      APP: *app
+      APP: home-assistant
       APP_UID: "2000"
       APP_GID: "2000"
       VOLSYNC_CLAIM: home-assistant-config

@@ -3,13 +3,9 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app changedetection
-  namespace: &namespace self-hosted
+  name: changedetection
 spec:
-  targetNamespace: *namespace
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
+  targetNamespace: self-hosted
   path: ./kubernetes/main/apps/self-hosted/changedetection/app
   sourceRef:
     kind: GitRepository
@@ -24,7 +20,7 @@ spec:
     - ../../../../components/volsync
   postBuild:
     substitute:
-      APP: *app
+      APP: changedetection
       APP_UID: "2000"
       APP_GID: "2000"
       VOLSYNC_CLAIM: changedetection-config

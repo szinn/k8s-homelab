@@ -3,13 +3,9 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app tuppr
-  namespace: &namespace system-upgrade
+  name: tuppr
 spec:
-  targetNamespace: *namespace
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
+  targetNamespace: system-upgrade
   path: ./kubernetes/main/apps/system-upgrade/tuppr/app
   sourceRef:
     kind: GitRepository
@@ -23,13 +19,9 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app tuppr-upgrades
-  namespace: &namespace system-upgrade
+  name: tuppr-upgrades
 spec:
-  targetNamespace: *namespace
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
+  targetNamespace: system-upgrade
   path: ./kubernetes/main/apps/system-upgrade/tuppr/upgrades
   sourceRef:
     kind: GitRepository

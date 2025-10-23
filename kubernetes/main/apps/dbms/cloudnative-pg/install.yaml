@@ -3,13 +3,9 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app cloudnative-pg-operator
-  namespace: &namespace dbms
+  name: cloudnative-pg-operator
 spec:
-  targetNamespace: *namespace
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
+  targetNamespace: dbms
   path: ./kubernetes/main/apps/dbms/cloudnative-pg/operator
   sourceRef:
     kind: GitRepository
@@ -27,13 +23,9 @@ spec:
 # apiVersion: kustomize.toolkit.fluxcd.io/v1
 # kind: Kustomization
 # metadata:
-#   name: &app cloudnative-pg-cluster
-#   namespace: &namespace dbms
+#   name: cloudnative-pg-cluster
 # spec:
-#   targetNamespace: *namespace
-#   commonMetadata:
-#     labels:
-#       app.kubernetes.io/name: *app
+#   targetNamespace: dbms
 #   path: ./kubernetes/main/apps/dbms/cloudnative-pg/cluster
 #   sourceRef:
 #     kind: GitRepository
@@ -61,13 +53,9 @@ spec:
 # apiVersion: kustomize.toolkit.fluxcd.io/v1
 # kind: Kustomization
 # metadata:
-#   name: &app cloudnative-pg-backup
-#   namespace: &namespace dbms
+#   name: cloudnative-pg-backup
 # spec:
-#   targetNamespace: *namespace
-#   commonMetadata:
-#     labels:
-#       app.kubernetes.io/name: *app
+#   targetNamespace: dbms
 #   path: ./kubernetes/main/apps/dbms/cloudnative-pg/backup
 #   sourceRef:
 #     kind: GitRepository

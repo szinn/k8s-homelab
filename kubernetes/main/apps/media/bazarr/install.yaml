@@ -3,13 +3,9 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app bazarr
-  namespace: &namespace media
+  name: bazarr
 spec:
-  targetNamespace: *namespace
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
+  targetNamespace: media
   path: ./kubernetes/main/apps/media/bazarr/app
   sourceRef:
     kind: GitRepository
@@ -28,9 +24,9 @@ spec:
     - ../../../../components/volsync
   postBuild:
     substitute:
-      APP: *app
-      GATUS_APP: *app
-      GATUS_SUBDOMAIN: *app
+      APP: bazarr
+      GATUS_APP: bazarr
+      GATUS_SUBDOMAIN: bazarr
       APP_UID: "2000"
       APP_GID: "2000"
       VOLSYNC_CLAIM: bazarr-config

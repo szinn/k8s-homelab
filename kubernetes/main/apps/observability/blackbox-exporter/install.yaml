@@ -3,13 +3,9 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app blackbox-exporter
-  namespace: &namespace observability
+  name: blackbox-exporter
 spec:
-  targetNamespace: *namespace
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
+  targetNamespace: observability
   path: ./kubernetes/main/apps/observability/blackbox-exporter/app
   sourceRef:
     kind: GitRepository

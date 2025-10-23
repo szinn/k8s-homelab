@@ -3,13 +3,9 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app atuin
-  namespace: &namespace self-hosted
+  name: atuin
 spec:
-  targetNamespace: *namespace
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
+  targetNamespace: self-hosted
   path: ./kubernetes/main/apps/self-hosted/atuin/app
   sourceRef:
     kind: GitRepository
@@ -23,7 +19,7 @@ spec:
     - ../../../../components/volsync
   postBuild:
     substitute:
-      APP: *app
+      APP: atuin
       APP_UID: "2000"
       APP_GID: "2000"
       VOLSYNC_CLAIM: atuin-config

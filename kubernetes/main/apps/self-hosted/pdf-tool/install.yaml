@@ -3,13 +3,9 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app pdf-tool
-  namespace: &namespace self-hosted
+  name: pdf-tool
 spec:
-  targetNamespace: *namespace
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
+  targetNamespace: self-hosted
   path: ./kubernetes/main/apps/self-hosted/pdf-tool/app
   sourceRef:
     kind: GitRepository

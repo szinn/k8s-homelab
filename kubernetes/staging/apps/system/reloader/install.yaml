@@ -3,13 +3,9 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app reloader
-  namespace: &namespace system
+  name: reloader
 spec:
-  targetNamespace: *namespace
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
+  targetNamespace: system
   path: ./kubernetes/staging/apps/system/reloader/app
   sourceRef:
     kind: GitRepository

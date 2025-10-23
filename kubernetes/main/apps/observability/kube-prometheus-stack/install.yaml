@@ -3,13 +3,9 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app kube-prometheus-stack
-  namespace: &namespace observability
+  name: kube-prometheus-stack
 spec:
-  targetNamespace: *namespace
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
+  targetNamespace: observability
   path: ./kubernetes/main/apps/observability/kube-prometheus-stack/app
   sourceRef:
     kind: GitRepository
@@ -27,13 +23,9 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app kube-prometheus-stack-config
-  namespace: &namespace observability
+  name: kube-prometheus-stack-config
 spec:
-  targetNamespace: *namespace
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
+  targetNamespace: observability
   path: ./kubernetes/main/apps/observability/kube-prometheus-stack/config
   sourceRef:
     kind: GitRepository

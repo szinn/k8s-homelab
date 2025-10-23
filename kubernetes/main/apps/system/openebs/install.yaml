@@ -3,13 +3,9 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app openebs
-  namespace: &namespace system
+  name: openebs
 spec:
-  targetNamespace: *namespace
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
+  targetNamespace: system
   path: ./kubernetes/main/apps/system/openebs/app
   sourceRef:
     kind: GitRepository

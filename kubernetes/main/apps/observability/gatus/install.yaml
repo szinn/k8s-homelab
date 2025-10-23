@@ -3,13 +3,9 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app gatus
-  namespace: &namespace observability
+  name: gatus
 spec:
-  targetNamespace: *namespace
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
+  targetNamespace: observability
   path: ./kubernetes/main/apps/observability/gatus/app
   sourceRef:
     kind: GitRepository

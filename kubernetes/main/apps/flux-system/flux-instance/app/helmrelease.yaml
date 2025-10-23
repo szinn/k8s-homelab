@@ -36,9 +36,6 @@ spec:
         url: https://github.com/szinn/k8s-homelab.git
         ref: refs/heads/main
         path: kubernetes/main/cluster/config
-      commonMetadata:
-        labels:
-          app.kubernetes.io/name: flux
       kustomize:
         patches:
           # Increase the number of workers and limits

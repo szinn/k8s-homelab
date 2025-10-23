@@ -3,13 +3,9 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app pgadmin
-  namespace: &namespace dbms
+  name: pgadmin
 spec:
-  targetNamespace: *namespace
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
+  targetNamespace: dbms
   path: ./kubernetes/main/apps/dbms/pgadmin/app
   sourceRef:
     kind: GitRepository
@@ -26,7 +22,7 @@ spec:
     - ../../../../components/volsync
   postBuild:
     substitute:
-      APP: *app
+      APP: pgadmin
       APP_UID: "5050"
       APP_GID: "5050"
       VOLSYNC_CLAIM: pgadmin-config

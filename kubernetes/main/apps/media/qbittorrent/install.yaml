@@ -3,13 +3,9 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app qbittorrent
-  namespace: &namespace media
+  name: qbittorrent
 spec:
-  targetNamespace: *namespace
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
+  targetNamespace: media
   path: ./kubernetes/main/apps/media/qbittorrent/app
   sourceRef:
     kind: GitRepository
@@ -27,7 +23,7 @@ spec:
     - ../../../../components/volsync
   postBuild:
     substitute:
-      APP: *app
+      APP: qbittorrent
       APP_UID: "2000"
       APP_GID: "2000"
       VOLSYNC_CLAIM: qbittorrent-config
