@@ -26,7 +26,5 @@ spec:
         hostPort: 29999
     grafanaDashboard:
       enabled: true
-      annotations:
-        grafana_folder: System
     serviceMonitor:
       enabled: true
