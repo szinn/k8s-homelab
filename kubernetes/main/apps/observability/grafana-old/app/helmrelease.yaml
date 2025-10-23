@@ -205,7 +205,6 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
-            sectionName: https
     imageRenderer:
       enabled: true
       replicas: 2

@@ -82,7 +82,6 @@ spec:
         parentRefs:
           - name: envoy-external
             namespace: network
-            sectionName: https
     persistence:
       config-file:
         type: configMap

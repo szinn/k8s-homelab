@@ -43,7 +43,6 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
-            sectionName: https
       external:
         annotations:
           external-dns/is-public: "true"
@@ -52,4 +51,3 @@ spec:
         parentRefs:
           - name: envoy-external
             namespace: network
-            sectionName: https

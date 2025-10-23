@@ -134,8 +134,6 @@ spec:
           parentRefs:
             - name: envoy-internal
               namespace: network
-              sectionName: https
-      prometheusSpec:
         alertingEndpoints:
           - namespace: observability
             name: alertmanager
