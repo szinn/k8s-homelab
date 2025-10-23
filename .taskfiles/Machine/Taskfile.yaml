@@ -21,7 +21,7 @@ tasks:
       - task: update-proxmox-certificate
       - task: update-ragnar-certificate
       - task: update-styx-certificate
-      - task: update-zeus-certificate
+      # - task: update-zeus-certificate
       - task: update-artemis-certificates
       - task: update-titan-certificates
 
