@@ -86,7 +86,7 @@ spec:
       enabled: false # KubeProxy is disabled in the cluster, see Cilium/Talos configs
 
     nodeExporter:
-      enabled: true
+      enabled: false
 
     prometheus-node-exporter:
       fullnameOverride: node-exporter

@@ -20,6 +20,7 @@ resources:
   - kube-prometheus-stack/install.yaml
   - loki/install.yaml
   - miscellaneous
+  - node-exporter/install.yaml
   - silence-operator/install.yaml
   - unifi-poller/install.yaml
   - victoria-logs/install.yaml
