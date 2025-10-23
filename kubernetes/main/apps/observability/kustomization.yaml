@@ -13,6 +13,7 @@ resources:
   - alertmanager/install.yaml
   - alloy/install.yaml
   - blackbox-exporter/install.yaml
+  - fluent-bit/install.yaml
   - gatus/install.yaml
   - grafana/install.yaml
   - kromgo/install.yaml
@@ -21,3 +22,4 @@ resources:
   - miscellaneous
   - silence-operator/install.yaml
   - unifi-poller/install.yaml
+  - victoria-logs/install.yaml
