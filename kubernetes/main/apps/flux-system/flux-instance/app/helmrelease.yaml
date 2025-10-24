@@ -38,9 +38,9 @@ spec:
         path: kubernetes/main/cluster/config
       kustomize:
         patches:
-          # Increase the number of workers and limits
-          # Ref: https://fluxcd.io/flux/installation/configuration/vertical-scaling/#increase-the-number-of-workers-and-limits
-          - patch: |
+          - # Increase the number of workers and limits
+            # Ref: https://fluxcd.io/flux/installation/configuration/vertical-scaling/#increase-the-number-of-workers-and-limits
+            patch: |
               - op: add
                 path: /spec/template/spec/containers/0/args/-
                 value: --concurrent=10
@@ -50,7 +50,8 @@ spec:
             target:
               kind: Deployment
               name: (kustomize-controller|helm-controller|source-controller)
-          - patch: |
+          - # Increase the memory limits
+            patch: |
               apiVersion: apps/v1
               kind: Deployment
               metadata:
@@ -66,9 +67,9 @@ spec:
             target:
               kind: Deployment
               name: (kustomize-controller|helm-controller|source-controller)
-          # Enable in-memory kustomize builds
-          # Ref: https://fluxcd.io/flux/installation/configuration/vertical-scaling/#enable-in-memory-kustomize-builds
-          - patch: |
+          - # Enable in-memory kustomize builds
+            # Ref: https://fluxcd.io/flux/installation/configuration/vertical-scaling/#enable-in-memory-kustomize-builds
+            patch: |
               - op: add
                 path: /spec/template/spec/containers/0/args/-
                 value: --concurrent=20
@@ -81,9 +82,9 @@ spec:
             target:
               kind: Deployment
               name: kustomize-controller
-          # Enable Helm repositories caching
-          # Ref: https://fluxcd.io/flux/installation/configuration/vertical-scaling/#enable-helm-repositories-caching
-          - patch: |
+          - # Enable Helm repositories caching
+            # Ref: https://fluxcd.io/flux/installation/configuration/vertical-scaling/#enable-helm-repositories-caching
+            patch: |
               - op: add
                 path: /spec/template/spec/containers/0/args/-
                 value: --helm-cache-max-size=10
@@ -96,9 +97,9 @@ spec:
             target:
               kind: Deployment
               name: source-controller
-          # Flux near OOM detection for Helm
-          # Ref: https://fluxcd.io/flux/installation/configuration/helm-oom-detection/
-          - patch: |
+          - # Flux near OOM detection for Helm
+            # Ref: https://fluxcd.io/flux/installation/configuration/helm-oom-detection/
+            patch: |
               - op: add
                 path: /spec/template/spec/containers/0/args/-
                 value: --feature-gates=OOMWatch=true
@@ -111,11 +112,35 @@ spec:
             target:
               kind: Deployment
               name: helm-controller
-          # Disable chart digest tracking
-          - patch: |
+          - # Disable chart digest tracking
+            patch: |
               - op: add
                 path: /spec/template/spec/containers/0/args/-
                 value: --feature-gates=DisableChartDigestTracking=true
             target:
               kind: Deployment
               name: helm-controller
+          # - # Controller-level SOPS decryption
+          #   patch: |-
+          #     - op: add
+          #       path: /spec/template/spec/containers/0/args/-
+          #       value: --sops-age-secret=sops-age-secret
+          #   target:
+          #     kind: Deployment
+          #     name: kustomize-controller
+          - # Watch configmaps and secrets attached to HelmReleases and Kustomizations
+            patch: |-
+              - op: add
+                path: /spec/template/spec/containers/0/args/-
+                value: --watch-configs-label-selector=owner!=helm
+            target:
+              kind: Deployment
+              name: (helm-controller|kustomize-controller)
+          - # Cancel health checks on new Kustomizations revisions
+            patch: |-
+              - op: add
+                path: /spec/template/spec/containers/0/args/-
+                value: --feature-gates=CancelHealthCheckOnNewRevision=true
+            target:
+              kind: Deployment
+              name: kustomize-controller
