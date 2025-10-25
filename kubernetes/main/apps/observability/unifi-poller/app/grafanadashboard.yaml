@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
+# yaml-language-server: $schema=https://schemas.zinn.ca/grafana.integreatly.org/grafanadashboard_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
@@ -14,7 +14,7 @@ spec:
       inputName: DS_PROMETHEUS
   url: https://grafana.com/api/dashboards/23027/revisions/1/download
 ---
-# yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
+# yaml-language-server: $schema=https://schemas.zinn.ca/grafana.integreatly.org/grafanadashboard_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
@@ -29,7 +29,7 @@ spec:
       inputName: DS_PROMETHEUS
   url: https://grafana.com/api/dashboards/11315/revisions/9/download
 ---
-# yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
+# yaml-language-server: $schema=https://schemas.zinn.ca/grafana.integreatly.org/grafanadashboard_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
@@ -44,7 +44,7 @@ spec:
       inputName: DS_PROMETHEUS
   url: https://grafana.com/api/dashboards/11311/revisions/5/download
 ---
-# yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
+# yaml-language-server: $schema=https://schemas.zinn.ca/grafana.integreatly.org/grafanadashboard_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
@@ -59,7 +59,7 @@ spec:
       inputName: DS_PROMETHEUS
   url: https://grafana.com/api/dashboards/11314/revisions/10/download
 ---
-# yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
+# yaml-language-server: $schema=https://schemas.zinn.ca/grafana.integreatly.org/grafanadashboard_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:

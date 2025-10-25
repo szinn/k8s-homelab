@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/source.toolkit.fluxcd.io/ocirepository_v1.json
+# yaml-language-server: $schema=https://schemas.zinn.ca/source.toolkit.fluxcd.io/ocirepository_v1.json
 apiVersion: tuppr.home-operations.com/v1alpha1
 kind: TalosUpgrade
 metadata:
