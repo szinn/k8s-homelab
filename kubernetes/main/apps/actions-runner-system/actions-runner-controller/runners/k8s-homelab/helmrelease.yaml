@@ -27,14 +27,14 @@ spec:
     githubConfigSecret: k8s-homelab-runner-secret
     minRunners: 1
     maxRunners: 3
-    # containerMode:
-    #   type: kubernetes
-    #   kubernetesModeWorkVolumeClaim:
-    #     accessModes: ["ReadWriteOnce"]
-    #     storageClassName: openebs-hostpath
-    #     resources:
-    #       requests:
-    #         storage: 25Gi
+    containerMode:
+      type: kubernetes
+      kubernetesModeWorkVolumeClaim:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: openebs-hostpath
+        resources:
+          requests:
+            storage: 25Gi
     controllerServiceAccount:
       name: actions-runner-controller
       namespace: actions-runner-system
@@ -60,6 +60,9 @@ spec:
           - name: talos
             secret:
               secretName: *name
+          - name: cache-volume
+            persistentVolumeClaim:
+              claimName: actions-runner-controller-cache
     listenerTemplate:
       spec:
         containers:
