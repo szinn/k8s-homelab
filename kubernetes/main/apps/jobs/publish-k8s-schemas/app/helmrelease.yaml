@@ -1,0 +1,117 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: publish-k8s-schemas
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  interval: 30m
+  values:
+    controllers:
+      publish-k8s-schemas:
+        type: cronjob
+        cronjob:
+          backoffLimit: 0
+          concurrencyPolicy: "Replace"
+          failedJobsHistory: 1
+          schedule: "0 * * * *"
+          successfulJobsHistory: 0
+        pod:
+          restartPolicy: OnFailure
+          securityContext:
+            runAsGroup: 65534
+            runAsNonRoot: true
+            runAsUser: 65534
+        initContainers:
+          generate-schemas:
+            image:
+              repository: ghcr.io/bjw-s-labs/k8s-crd-extractor
+              tag: 2025.10.8@sha256:18913f2044be5e0b14c22afafc2f8ed7443fc586cd469d10f8b9eee0e2bea6bb
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limits:
+                memory: 2Gi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
+        containers:
+          app:
+            image:
+              repository: ghcr.io/bjw-s-labs/wrangler
+              tag: 4.45.0@sha256:015fce70d8533c529f1e0ff84c4b4a40953f3a774111ff8d7022d9aae461caa4
+            envFrom:
+              - secretRef:
+                  name: publish-k8s-schemas-secret
+            args:
+              - pages
+              - deploy
+              - /data/crdSchemas
+              - --project-name
+              - kubernetes-schemas
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limits:
+                memory: 1Gi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
+    persistence:
+      tmpfs:
+        type: emptyDir
+        advancedMounts:
+          publish-k8s-schemas:
+            generate-schemas:
+              - path: /config/.datree
+                subPath: data
+              - path: /tmp
+                subPath: tmp
+            app:
+              - path: /config
+                subPath: config
+              - path: /data
+                subPath: data
+    serviceAccount:
+      publish-k8s-schemas: {}
+    rbac:
+      roles:
+        publish-k8s-schemas:
+          type: ClusterRole
+          rules:
+            - apiGroups:
+                - apiextensions.k8s.io
+              resources:
+                - customresourcedefinitions
+                - customresourcedefinitions/status
+              verbs:
+                - get
+                - list
+                - watch
+            - apiGroups:
+                - apiregistration.k8s.io
+              resources:
+                - apiservices
+                - apiservices/status
+              verbs:
+                - get
+                - list
+                - watch
+      bindings:
+        publish-k8s-schemas:
+          type: ClusterRoleBinding
+          roleRef:
+            identifier: publish-k8s-schemas
+          subjects:
+            - identifier: publish-k8s-schemas
