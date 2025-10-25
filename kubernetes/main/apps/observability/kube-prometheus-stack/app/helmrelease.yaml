@@ -130,15 +130,12 @@ spec:
       route:
         main:
           enabled: true
-          hostnames: ["prometheus.zinn.ca"]
+          hostnames:
+            - "prometheus.zinn.ca"
           parentRefs:
             - name: envoy-internal
               namespace: network
-        alertingEndpoints:
-          - namespace: observability
-            name: alertmanager
-            port: 9093
-            apiVersion: v2
+      prometheusSpec:
         podMonitorSelectorNilUsesHelmValues: false
         probeSelectorNilUsesHelmValues: false
         ruleSelectorNilUsesHelmValues: false
@@ -162,22 +159,3 @@ spec:
               resources:
                 requests:
                   storage: 50Gi
-
-  postRenderers:
-    - kustomize:
-        patches:
-          - target:
-              group: monitoring.coreos.com
-              version: v1
-              kind: ServiceMonitor
-              name: kube-prometheus-stack-kubelet
-            patch: |
-              - op: add
-                path: /spec/endpoints/0/trackTimestampsStaleness
-                value: false
-              - op: add
-                path: /spec/endpoints/1/trackTimestampsStaleness
-                value: false
-              - op: add
-                path: /spec/endpoints/2/trackTimestampsStaleness
-                value: false

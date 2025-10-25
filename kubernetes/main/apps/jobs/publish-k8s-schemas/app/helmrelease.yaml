@@ -55,7 +55,7 @@ spec:
               - deploy
               - /data/crdSchemas
               - --project-name
-              - kubernetes-schemas
+              - homelab-schemas
             resources:
               requests:
                 cpu: 10m
