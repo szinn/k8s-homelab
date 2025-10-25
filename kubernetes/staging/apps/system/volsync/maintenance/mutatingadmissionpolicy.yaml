@@ -44,8 +44,8 @@ spec:
               value: Object.spec.template.spec.volumes{
                 name: "repository",
                 nfs: Object.spec.template.spec.volumes.nfs{
-                  server: "expanse.internal",
-                  path: "/mnt/eros/VolsyncKopia"
+                  server: "ragnar.zinn.tech",
+                  path: "/mnt/atlas/k8s/staging/volsync"
                 }
               }
             },

@@ -24,7 +24,7 @@ metadata:
   name: volsync-maintenance
 spec:
   targetNamespace: system
-  path: ./kubernetes/staging/apps/system-system/volsync/maintenance
+  path: ./kubernetes/staging/apps/system/volsync/maintenance
   sourceRef:
     kind: GitRepository
     name: flux-system
