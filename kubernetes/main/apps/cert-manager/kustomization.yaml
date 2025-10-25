@@ -9,4 +9,4 @@ resources:
   # Flux-Kustomizations
   - cert-manager/install.yaml
 components:
-  - ../../components/flux/alerts
+  - ../../components/alerts

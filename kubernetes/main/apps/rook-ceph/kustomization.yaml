@@ -9,4 +9,4 @@ resources:
   # Flux-Kustomizations
   - rook-ceph/install.yaml
 components:
-  - ../../components/flux/alerts
+  - ../../components/alerts

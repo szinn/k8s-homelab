@@ -9,4 +9,4 @@ resources:
   # Flux-Kustomizations
   - actions-runner-controller/install.yaml
 components:
-  - ../../components/flux/alerts
+  - ../../components/alerts

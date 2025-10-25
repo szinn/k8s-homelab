@@ -20,7 +20,7 @@ spec:
       namespace: system
   components:
     - ../../../../components/gatus/guarded
-    - ../../../../components/keda/nfs-scaler
+    - ../../../../components/nfs-scaler
     - ../../../../components/volsync
   postBuild:
     substitute:

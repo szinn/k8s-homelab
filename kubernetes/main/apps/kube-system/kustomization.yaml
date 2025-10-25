@@ -11,4 +11,4 @@ resources:
   - coredns/install.yaml
   - metrics-server/install.yaml
 components:
-  - ../../components/flux/alerts
+  - ../../components/alerts

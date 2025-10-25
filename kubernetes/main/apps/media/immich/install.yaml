@@ -50,7 +50,7 @@ spec:
       namespace: external-secrets
   components:
     - ../../../../components/gatus/guarded
-    - ../../../../components/keda/nfs-scaler
+    - ../../../../components/nfs-scaler
   postBuild:
     substitute:
       APP: immich-server
