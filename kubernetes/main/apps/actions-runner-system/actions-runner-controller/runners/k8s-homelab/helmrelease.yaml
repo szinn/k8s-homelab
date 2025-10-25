@@ -40,6 +40,17 @@ spec:
       namespace: actions-runner-system
     template:
       spec:
+        initContainers:
+          - name: take-cache-dir-ownership
+            image: alpine:3
+            command:
+              - chown
+              - -R
+              - 1001:1001
+              - /home/runner/cache
+            volumeMounts:
+              - mountPath: /home/runner/cache
+                name: cache-volume
         containers:
           - name: runner
             image: ghcr.io/home-operations/actions-runner:2.329.0@sha256:1d26dc36431014527e0d920e7b84878dcf8fd69fb9639598de1af5ccf9210131
@@ -55,6 +66,8 @@ spec:
               - mountPath: /var/run/secrets/talos.dev
                 name: talos
                 readOnly: true
+              - mountPath: /home/runner/cache
+                name: cache-volume
         serviceAccountName: *name
         volumes:
           - name: talos
