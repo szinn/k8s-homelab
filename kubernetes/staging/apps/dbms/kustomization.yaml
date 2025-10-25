@@ -4,7 +4,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: dbms
 components:
-  - ../../components/repos/app-template
+  - ../../components/app-template
 resources:
   # Pre Flux-Kustomizations
   - namespace.yaml
