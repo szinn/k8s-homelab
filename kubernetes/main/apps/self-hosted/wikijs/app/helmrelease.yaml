@@ -73,3 +73,8 @@ spec:
             path: id_rsa
         globalMounts:
           - path: /home/node/.ssh
+      backup:
+        existingClaim: self-hosted-backups
+        globalMounts:
+          - path: /backups
+            subPath: wikijs

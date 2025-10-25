@@ -105,3 +105,10 @@ spec:
         globalMounts:
           - path: /tmp
             subPath: tmp
+      backup:
+        existingClaim: self-hosted-backups
+        advancedMounts:
+          main:
+            main:
+              - path: /backups
+                subPath: dashy

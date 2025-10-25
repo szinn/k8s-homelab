@@ -3,7 +3,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: ubuntu-shell
-  namespace: default
+  namespace: self-hosted
 spec:
   terminationGracePeriodSeconds: 5
   # nodeName: k8s-5
@@ -19,8 +19,10 @@ spec:
           name: host-var
         - mountPath: /dev/disk
           name: host-dev-disk
-      # - mountPath: /config
-      #   name: config
+        - mountPath: /config
+          name: config
+        # - mountPath: /media
+        #   name: media
       resources:
         requests:
           cpu: 100m
@@ -28,6 +30,12 @@ spec:
         limits:
           cpu: 2000m
           memory: 10Gi
+  securityContext:
+    fsGroup: 0
+    fsGroupChangePolicy: OnRootMismatch
+    runAsGroup: 0
+    runAsNonRoot: false
+    runAsUser: 0
   volumes:
     - name: host-var
       hostPath:
@@ -35,3 +43,9 @@ spec:
     - name: host-dev-disk
       hostPath:
         path: /dev/disk
+    - name: config
+      persistentVolumeClaim:
+        claimName: wikijs-data
+    # - name: media
+    #   persistentVolumeClaim:
+    #     claimName: downloads

@@ -79,3 +79,8 @@ spec:
     persistence:
       config:
         existingClaim: "${VOLSYNC_CLAIM}"
+      backup:
+        existingClaim: self-hosted-backups
+        globalMounts:
+          - path: /backups
+            subPath: atuin

@@ -68,3 +68,8 @@ spec:
           main:
             main:
               - path: /datastore
+      backup:
+        existingClaim: self-hosted-backups
+        globalMounts:
+          - path: /backups
+            subPath: changedetection

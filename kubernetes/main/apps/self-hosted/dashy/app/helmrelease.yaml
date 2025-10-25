@@ -108,3 +108,10 @@ spec:
           main:
             code-server:
               - path: /tmp/.vscode
+      backup:
+        existingClaim: self-hosted-backups
+        advancedMounts:
+          main:
+            main:
+              - path: /backups
+                subPath: dashy

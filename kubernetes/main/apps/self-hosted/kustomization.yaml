@@ -10,11 +10,12 @@ resources:
   # Pre Flux-Kustomizations
   - namespace.yaml
   # Flux-Kustomizations
+  - pvc
   - atuin/install.yaml
   - changedetection/install.yaml
   - dashy/install.yaml
   - homepage/install.yaml
-  - ocis/install.yaml
+  # - ocis/install.yaml
   - pdf-tool/install.yaml
   - shlink/install.yaml
   - wikijs/install.yaml

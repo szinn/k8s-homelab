@@ -1,0 +1,36 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: self-hosted-backups
+  namespace: self-hosted
+spec:
+  storageClassName: self-hosted-backups
+  capacity:
+    storage: 1Mi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    server: ragnar.zinn.tech
+    path: "/mnt/atlas/k8s/main/backup/self-hosted"
+  mountOptions:
+    - nfsvers=4.2
+    - nconnect=8
+    - hard
+    - noatime
+    - nodiratime
+    - nolock
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: self-hosted-backups
+  namespace: self-hosted
+spec:
+  storageClassName: self-hosted-backups
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Mi

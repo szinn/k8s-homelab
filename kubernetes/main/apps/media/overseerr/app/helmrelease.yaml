@@ -68,3 +68,8 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /app/config/logs
+      backup:
+        existingClaim: media-backups
+        globalMounts:
+          - path: /config/Backups
+            subPath: overseerr

@@ -116,5 +116,10 @@ spec:
           - path: /scripts/subcleaner.sh
             subPath: subcleaner.sh
             readOnly: true
+      backup:
+        existingClaim: media-backups
+        globalMounts:
+          - path: /config/Backups
+            subPath: bazarr
       tmp:
         type: emptyDir
