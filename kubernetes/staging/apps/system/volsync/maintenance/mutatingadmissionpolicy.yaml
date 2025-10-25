@@ -1,18 +1,17 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.0/mutatingadmissionpolicybinding-admissionregistration-v1beta1.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.34.0/mutatingadmissionpolicybinding-admissionregistration-v1beta1.json
 apiVersion: admissionregistration.k8s.io/v1beta1
 kind: MutatingAdmissionPolicyBinding
 metadata:
-  name: volsync-mover-nfs
+  name: kopia-maintenance-nfs
 spec:
-  policyName: volsync-mover-nfs
+  policyName: kopia-maintenance-nfs
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.0/mutatingadmissionpolicy-admissionregistration-v1beta1.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.34.0/mutatingadmissionpolicy-admissionregistration-v1beta1.json
 apiVersion: admissionregistration.k8s.io/v1beta1
 kind: MutatingAdmissionPolicy
 metadata:
-  name: volsync-mover-nfs
-  namespace: system
+  name: kopia-maintenance-nfs
 spec:
   matchConstraints:
     resourceRules:
@@ -26,29 +25,20 @@ spec:
         resources:
           - jobs
   matchConditions:
-    - name: has-volsync-job-name-prefix
-      expression: >-
-        object.metadata.name.startsWith("volsync-")
-    - name: has-volsync-created-by-labels
-      expression: >-
-        object.metadata.?labels["app.kubernetes.io/created-by"].orValue("") == "volsync"
+    - name: has-kopia-maint-job-name-prefix
+      expression: >
+        object.metadata.name.startsWith("kopia-maint-")
     - name: repository-volume-does-not-exist
-      expression: >-
+      expression: >
+        !has(object.spec.template.spec.volumes) ||
         !object.spec.template.spec.volumes.exists(item, item.name == "repository")
   failurePolicy: Fail
   reinvocationPolicy: IfNeeded
   mutations:
     - patchType: JSONPatch
       jsonPatch:
-        expression: >
+        expression: >-
           [
-            JSONPatch{
-              op: "add", path: "/spec/template/spec/containers/0/volumeMounts/-",
-              value: Object.spec.template.spec.containers.volumeMounts{
-                name: "repository",
-                mountPath: "/repository"
-              }
-            },
             JSONPatch{
               op: "add", path: "/spec/template/spec/volumes/-",
               value: Object.spec.template.spec.volumes{
@@ -57,6 +47,13 @@ spec:
                   server: "ragnar.zinn.tech",
                   path: "/mnt/atlas/k8s/staging/volsync"
                 }
+              }
+            },
+            JSONPatch{
+              op: "add", path: "/spec/template/spec/containers/0/volumeMounts/-",
+              value: Object.spec.template.spec.containers.volumeMounts{
+                name: "repository",
+                mountPath: "/repository"
               }
             }
           ]
