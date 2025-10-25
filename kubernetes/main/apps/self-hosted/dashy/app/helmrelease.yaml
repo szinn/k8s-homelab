@@ -32,8 +32,8 @@ spec:
               tag: 3.1.0@sha256:e0e4d344f9be6d6f0061bb4f5368efd5034e8f2cec886d8afefc89a76be830d4
             env:
               TZ: America/Toronto
-              UID: ${APP_UID}
-              GID: ${APP_GID}
+              UID: 2000
+              GID: 2000
           code-server:
             image:
               repository: ghcr.io/coder/code-server

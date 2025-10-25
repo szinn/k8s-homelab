@@ -21,8 +21,6 @@ spec:
   postBuild:
     substitute:
       APP: changedetection
-      APP_UID: "2000"
-      APP_GID: "2000"
       VOLSYNC_CLAIM: changedetection-config
       VOLSYNC_CAPACITY: 1Gi
   prune: true

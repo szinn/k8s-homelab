@@ -22,8 +22,6 @@ spec:
   postBuild:
     substitute:
       APP: home-assistant
-      APP_UID: "2000"
-      APP_GID: "2000"
       VOLSYNC_CLAIM: home-assistant-config
       VOLSYNC_CAPACITY: 8Gi
       GATUS_APP: home-assistant

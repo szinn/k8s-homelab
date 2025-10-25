@@ -16,6 +16,7 @@ resources:
   - intel-gpu-resource-driver/install.yaml
   - k8s-ycl/install.yaml
   - keda/install.yaml
+  - kopia/install.yaml
   - kube-cleanup-operator/install.yaml
   - node-feature-discovery/install.yaml
   - openebs/install.yaml

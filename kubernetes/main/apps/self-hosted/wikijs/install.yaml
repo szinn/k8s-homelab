@@ -20,11 +20,10 @@ spec:
   postBuild:
     substitute:
       APP: wikijs
-      APP_UID: "1000"
-      APP_GID: "1000"
+      VOLSYNC_PUID: "1000"
+      VOLSYNC_PGID: "1000"
       VOLSYNC_CLAIM: wikijs-data
       VOLSYNC_CAPACITY: 15Gi
-      VOLSYNC_CACHE_CAPACITY: 10Gi
       GATUS_APP: wiki
       GATUS_SUBDOMAIN: wiki
   prune: true

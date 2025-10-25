@@ -1,30 +1,32 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/volsync.backube/replicationsource_v1alpha1.json
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/volsync.backube/replicationdestination_v1alpha1.json
 apiVersion: volsync.backube/v1alpha1
-kind: ReplicationSource
+kind: ReplicationDestination
 metadata:
-  name: ${APP}
+  name: "${APP}-dst"
+  labels:
+    kustomize.toolkit.fluxcd.io/ssa: IfNotPresent
 spec:
-  sourcePVC: ${VOLSYNC_CLAIM:=${APP}}
   trigger:
-    schedule: 0 * * * *
+    manual: restore-once
   kopia:
     accessModes:
-      - ${VOLSYNC_SNAP_ACCESSMODES:=ReadWriteOnce}
+      - ${VOLSYNC_ACCESSMODES:=ReadWriteOnce}
     cacheAccessModes:
       - ${VOLSYNC_CACHE_ACCESSMODES:=ReadWriteOnce}
     cacheCapacity: ${VOLSYNC_CAPACITY:=5Gi}
-    cacheStorageClassName: ${VOLSYNC_CACHE_SNAPSHOTCLASS:=ceph-block}
-    compression: zstd-fastest
+    cacheStorageClassName: ${VOLSYNC_CACHE_SNAPSHOTCLASS:=openebs-hostpath}
+    capacity: ${VOLSYNC_CAPACITY:=5Gi}
+    cleanupCachePVC: true
+    cleanupTempPVC: true
     copyMethod: Snapshot
+    enableFileDeletion: true
     moverSecurityContext:
       runAsUser: ${VOLSYNC_PUID:=2000}
       runAsGroup: ${VOLSYNC_PGID:=2000}
       fsGroup: ${VOLSYNC_PGID:=2000}
-    parallelism: 2
     repository: ${APP}-volsync-secret
-    retain:
-      hourly: 24
-      daily: 7
+    sourceIdentity:
+      sourceName: ${APP}
     storageClassName: ${VOLSYNC_STORAGECLASS:=ceph-block}
     volumeSnapshotClassName: ${VOLSYNC_SNAPSHOTCLASS:=csi-ceph-blockpool}

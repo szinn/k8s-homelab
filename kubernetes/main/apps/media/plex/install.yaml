@@ -24,11 +24,8 @@ spec:
   postBuild:
     substitute:
       APP: plex
-      APP_UID: "2000"
-      APP_GID: "2000"
       VOLSYNC_CLAIM: plex-config
       VOLSYNC_CAPACITY: 50Gi
-      VOLSYNC_CACHE_CAPACITY: 25Gi
       GATUS_APP: plex
       GATUS_SUBDOMAIN: plex
   prune: true

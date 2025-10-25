@@ -20,8 +20,6 @@ spec:
   postBuild:
     substitute:
       APP: atuin
-      APP_UID: "2000"
-      APP_GID: "2000"
       VOLSYNC_CLAIM: atuin-config
       VOLSYNC_CAPACITY: 5Gi
       GATUS_APP: atuin

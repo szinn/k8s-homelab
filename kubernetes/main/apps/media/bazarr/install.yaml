@@ -25,12 +25,10 @@ spec:
   postBuild:
     substitute:
       APP: bazarr
-      GATUS_APP: bazarr
-      GATUS_SUBDOMAIN: bazarr
-      APP_UID: "2000"
-      APP_GID: "2000"
       VOLSYNC_CLAIM: bazarr-config
       VOLSYNC_CAPACITY: 5Gi
+      GATUS_APP: bazarr
+      GATUS_SUBDOMAIN: bazarr
   prune: true
   wait: false
   interval: 30m

@@ -25,11 +25,8 @@ spec:
   postBuild:
     substitute:
       APP: sonarr
-      APP_UID: "2000"
-      APP_GID: "2000"
       VOLSYNC_CLAIM: sonarr-config
       VOLSYNC_CAPACITY: 15Gi
-      VOLSYNC_CACHE_CAPACITY: 10Gi
       GATUS_APP: sonarr
       GATUS_SUBDOMAIN: sonarr
   prune: true

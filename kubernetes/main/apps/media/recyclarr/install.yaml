@@ -21,8 +21,6 @@ spec:
   postBuild:
     substitute:
       APP: recyclarr
-      APP_UID: "2000"
-      APP_GID: "2000"
       VOLSYNC_CLAIM: recyclarr-config
       VOLSYNC_CAPACITY: 1Gi
   prune: true

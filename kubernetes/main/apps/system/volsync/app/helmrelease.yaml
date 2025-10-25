@@ -20,6 +20,20 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    fullnameOverride: volsync # Required for volsync-perfectra1n fork
+    image: &image
+      repository: ghcr.io/perfectra1n/volsync
+      tag: v0.16.12@sha256:e297a22b38a16a3e5f7bc38d63e4d202921db6abdc5ae4781ab7b2980ec9bb46
+    kopia: *image
+    rclone: *image
+    restic: *image
+    rsync: *image
+    rsync-tls: *image
+    syncthing: *image
     manageCRDs: true
     metrics:
       disableAuth: true
+    podSecurityContext:
+      runAsNonRoot: true
+      runAsUser: 2000
+      runAsGroup: 2000
