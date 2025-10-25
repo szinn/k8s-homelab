@@ -129,7 +129,6 @@ spec:
     prometheus:
       route:
         main:
-          enabled: true
           hostnames: ["prometheus.zinn.ca"]
           parentRefs:
             - name: envoy-internal
