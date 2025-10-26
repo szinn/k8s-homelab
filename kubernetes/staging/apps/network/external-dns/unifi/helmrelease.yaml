@@ -20,9 +20,10 @@ spec:
       retries: 3
   values:
     fullnameOverride: *app
-    # logLevel: debug
+    logLevel: debug
     domainFilters:
       - test.zinn.ca
+      - zinn.tech
     podAnnotations:
       secret.reloader.stakater.com/reload: &secret external-dns-unifi-secret
     policy: sync

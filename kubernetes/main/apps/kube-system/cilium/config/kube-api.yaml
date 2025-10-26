@@ -4,7 +4,8 @@ kind: Service
 metadata:
   name: kube-api
   annotations:
-    io.cilium/lb-ipam-ips: 10.11.0.15
+    external-dns.alpha.kubernetes.io/hostname: main.zinn.tech
+    lbipam.cilium.io/ips: 10.11.0.15
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Cluster
