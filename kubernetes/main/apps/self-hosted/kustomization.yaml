@@ -15,6 +15,7 @@ resources:
   - changedetection/install.yaml
   - dashy/install.yaml
   - homepage/install.yaml
+  - it-tools/install.yaml
   # - ocis/install.yaml
   - pdf-tool/install.yaml
   - shlink/install.yaml
