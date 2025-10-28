@@ -6,3 +6,4 @@ resources:
   - ocirepository.yaml
   - secrets.yaml
   - helmrelease.yaml
+  - grafanadashboard.yaml

@@ -21,7 +21,6 @@ spec:
       enabled: false
     grafanaDashboard:
       enabled: true
-      folder: Data
       annotations:
         name: grafana_folder
       labels:

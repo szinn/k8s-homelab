@@ -1,0 +1,17 @@
+---
+# yaml-language-server: $schema=https://schemas.zinn.ca/grafana.integreatly.org/grafanadatasource_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDatasource
+metadata:
+  name: redis-datasource
+spec:
+  allowCrossNamespaceImport: true
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
+  datasource:
+    type: redis-datasource
+    name: redis
+    access: proxy
+    isDefault: false
+    url: redis://dragonfly.dbms.svc.cluster.local:6379

@@ -5,3 +5,4 @@ kind: Kustomization
 namespace: observability
 resources:
   - rules
+  - grafanadashboard.yaml
