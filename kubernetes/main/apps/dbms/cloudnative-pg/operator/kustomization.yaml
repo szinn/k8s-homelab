@@ -7,3 +7,4 @@ resources:
   - secrets.yaml
   - helmrelease.yaml
   - prometheus-rules.yaml
+  - grafanadashboard.yaml
