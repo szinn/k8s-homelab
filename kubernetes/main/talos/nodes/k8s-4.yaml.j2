@@ -1,5 +1,7 @@
 machine:
   type: worker
+  nodeLabels:
+    node.kubernetes.io/gpu: "true"
   install:
     diskSelector:
       model: Samsung SSD 870
