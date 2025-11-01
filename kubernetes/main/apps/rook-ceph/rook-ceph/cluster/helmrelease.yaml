@@ -71,7 +71,7 @@ spec:
             cpu: 500m
             memory: 2Gi
           limits:
-            memory: 6Gi
+            memory: 8Gi
         mgr-sidecar:
           requests:
             cpu: 50m
