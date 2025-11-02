@@ -11,9 +11,12 @@ spec:
   namespaceSelector:
     matchNames:
       - flux-system
+  podMetricsEndpoints:
+    - honorLabels: true
+      port: http-prom
   selector:
     matchExpressions:
-      - key: app
+      - key: app.kubernetes.io/component
         operator: In
         values:
           - helm-controller
@@ -22,10 +25,3 @@ spec:
           - notification-controller
           - image-automation-controller
           - image-reflector-controller
-  podMetricsEndpoints:
-    - port: http-prom
-      relabelings:
-        # https://github.com/prometheus-operator/prometheus-operator/issues/4816
-        - sourceLabels: [__meta_kubernetes_pod_phase]
-          action: keep
-          regex: Running
