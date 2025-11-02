@@ -21,7 +21,7 @@ resources:
   - prowlarr/install.yaml
   - qbittorrent/install.yaml
   - radarr/install.yaml
-  - radarr-4k/install.yaml
+  # - radarr-4k/install.yaml
   - recyclarr/install.yaml
   - sabnzbd/install.yaml
   - sonarr/install.yaml
