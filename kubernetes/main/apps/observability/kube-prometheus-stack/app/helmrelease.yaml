@@ -74,8 +74,9 @@ spec:
             regex: workqueue_(work|queue)_duration_seconds_bucket
 
     kubeEtcd:
-      enabled: false
-      endpoints: *cp
+      service:
+        selector:
+          component: kube-apiserver
 
     kubeScheduler:
       enabled: false

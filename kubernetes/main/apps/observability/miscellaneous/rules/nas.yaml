@@ -12,12 +12,9 @@ spec:
   groups:
     - name: zfs.rules
       rules:
-        - alert: ZfsOfflinePool
+        - alert: ZfsUnexpectedPoolState
           annotations:
-            summary: ZFS zpool {{$labels.zpool}} on {{$labels.instance}}
-              is in a unexpected state {{$labels.state}}
-          expr: |
-            node_zfs_zpool_state{state!="online"} > 0
-          for: 10m
+            summary: ZFS pool {{$labels.zpool}} on {{$labels.instance}} is in a unexpected state {{$labels.state}}
+          expr: node_zfs_zpool_state{state!="online"} > 0
           labels:
             severity: critical
