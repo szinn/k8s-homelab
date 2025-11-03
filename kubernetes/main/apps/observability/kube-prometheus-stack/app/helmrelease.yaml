@@ -26,7 +26,29 @@ spec:
     cleanPrometheusOperatorObjectNames: true
 
     alertmanager:
-      enabled: false
+      enabled: true
+      route:
+        internal:
+          enabled: true
+          hostnames:
+            - alerts.zinn.ca
+          parentRefs:
+            - name: envoy-internal
+              namespace: network
+
+      alertmanagerSpec:
+        alertmanagerConfiguration:
+          name: alertmanager
+          global:
+            resolveTimeout: 5m
+        externalUrl: https://alerts.zinn.ca
+        storage:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: ceph-block
+              resources:
+                requests:
+                  storage: 1Gi
 
     grafana:
       enabled: false
@@ -137,11 +159,6 @@ spec:
             - name: envoy-internal
               namespace: network
       prometheusSpec:
-        alertingEndpoints:
-          - namespace: observability
-            name: alertmanager
-            port: 9093
-            apiVersion: v2
         podMonitorSelectorNilUsesHelmValues: false
         probeSelectorNilUsesHelmValues: false
         ruleSelectorNilUsesHelmValues: false

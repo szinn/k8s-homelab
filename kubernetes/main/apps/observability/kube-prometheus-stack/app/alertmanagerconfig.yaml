@@ -1,0 +1,103 @@
+---
+# yaml-language-server: $schema=https://schemas.zinn.ca/monitoring.coreos.com/alertmanagerconfig_v1alpha1.json
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: alertmanager
+spec:
+  route:
+    groupBy:
+      - "alertname"
+      - "job"
+    groupInterval: 10m
+    groupWait: 1m
+    receiver: discord
+    repeatInterval: 12h
+    routes:
+      - receiver: "null"
+        matchers:
+          - name: alertname
+            value: Watchdog
+            matchType: =
+      - receiver: "null"
+        matchers:
+          - name: alertname
+            value: InfoInhibitor
+            matchType: =
+      - receiver: "null"
+        matchers:
+          - name: alertname
+            value: CPUThrottlingHigh
+            matchType: =
+      - receiver: "discord"
+        matchers:
+          - name: severity
+            value: "critical|warning"
+            matchType: =~
+
+  inhibitRules:
+    - equal:
+        - "alertname"
+        - "namespace"
+      sourceMatch:
+        - name: severity
+          value: critical
+          matchType: =
+      targetMatch:
+        - name: severity
+          value: warning
+          matchType: =
+    - equal:
+        - "alertname"
+        - "namespace"
+      sourceMatch:
+        - name: severity
+          value: critical
+          matchType: =
+      targetMatch:
+        - name: severity
+          value: info
+          matchType: =
+
+  receivers:
+    - name: "null"
+    - name: discord
+      discordConfigs:
+        - sendResolved: true
+          apiURL:
+            name: alertmanager-secret
+            key: discord-webhook-url
+          # yoinked below from onedr0p, blame him if something doesn't work
+          title: >-
+            {{ .GroupLabels.alertname }} - {{ .GroupLabels.namespace }}
+            {{- if ne .CommonLabels.severity "" }} ({{ .CommonLabels.severity}}){{- end }}
+            ({{ .GroupLabels.cluster }})
+            [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}]
+          message: |-
+            {{- $root := . }}
+            {{- $rm := stringSlice "instance" "kubernetes_node" "endpoint" "prometheus" "service" "cluster" "container" "job" "severity" }}
+            {{- $common := ( ( .CommonLabels.Remove $root.GroupLabels.Names ).Remove $rm ) }}
+            {{- if gt (len $common.SortedPairs) 0 }}
+            ## Common Labels
+            {{- range $common.SortedPairs }}
+            > {{ .Name }}: `{{ .Value }}`
+            {{- end }}
+            {{- end }}
+            ## Alerts
+            {{- range .Alerts }}
+              {{- if ne .Annotations.description "" }}
+            - **{{ .Annotations.description }}** [{{ .Fingerprint }}]({{ .GeneratorURL }})
+              {{- else if ne .Annotations.summary "" }}
+            - **{{ .Annotations.summary }}** [{{ .Fingerprint }}]({{ .GeneratorURL }})
+              {{- else if ne .Annotations.message "" }}
+            - **{{ .Annotations.message }}** [{{ .Fingerprint }}]({{ .GeneratorURL }})
+              {{- else }}
+            - **Alert description not available** [{{ .Fingerprint }}]({{ .GeneratorURL }})
+              {{- end }}
+              {{- $uniq := ( ( .Labels.Remove $root.GroupLabels.Names ).Remove $root.CommonLabels.Names ) }}
+              {{- if gt (len $uniq.SortedPairs) 0 }}
+                {{- range $uniq.SortedPairs }}
+            > {{ .Name }}: `{{ .Value }}`
+                {{- end }}
+              {{- end }}
+            {{- end }}

@@ -30,4 +30,4 @@ spec:
     access: proxy
     jsonData:
       implementation: prometheus
-    url: http://alertmanager.observability.svc.cluster.local:9093
+    url: http://alertmanager-operated.observability.svc.cluster.local:9093
