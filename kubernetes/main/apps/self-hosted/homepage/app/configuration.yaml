@@ -253,10 +253,10 @@ data:
             href: https://wiki.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}/recipes/index
             siteMonitor: https://wiki.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}/recipes/index
             icon: wikijs.png
-        - OwnCloud:
-            href: https://files.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            siteMonitor: https://files.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            icon: owncloud.png
+        # - OwnCloud:
+        #     href: https://files.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+        #     siteMonitor: https://files.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+        #     icon: owncloud.png
         - Excalidraw:
             href: https://excalidraw.com
             siteMonitor: https://excalidraw.com
