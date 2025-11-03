@@ -74,7 +74,7 @@ metrics:
       - { color: "red", min: 361, max: 9999 }
 
   - name: cluster_alert_count
-    query: alertmanager_alerts{state="active"} - 1 # Ignore Watchdog
+    query: grafana_alerting_alertmanager_alerts{state="active"} - 1 # Ignore Watchdog
     colors:
       - { color: "green", min: 0, max: 0 }
       - { color: "red", min: 1, max: 9999 }
