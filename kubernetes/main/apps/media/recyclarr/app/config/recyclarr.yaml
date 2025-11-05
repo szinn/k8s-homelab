@@ -26,6 +26,14 @@ sonarr:
 
     quality_profiles:
       - name: WEB-1080p
+        upgrade:
+          allowed: true
+          until_quality: WEBRip-1080p
+        qualities:
+          - name: WEBDL-1080p
+          - name: WEBRip-1080p
+          - name: Bluray-1080p Remux
+          - name: Bluray-1080p
 
     custom_formats:
       - trash_ids:
@@ -37,7 +45,6 @@ sonarr:
           - 1b3994c551cbb92a2c781af061f4ab44 # Scene
         assign_scores_to:
           - name: WEB-1080p
-            score: 0
 
 radarr:
   radarr:
