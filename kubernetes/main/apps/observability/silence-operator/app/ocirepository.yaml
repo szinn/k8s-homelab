@@ -5,10 +5,10 @@ kind: OCIRepository
 metadata:
   name: silence-operator
 spec:
-  interval: 5m
+  interval: 15m
   layerSelector:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
     tag: 0.20.0
-  url: oci://ghcr.io/home-operations/charts-mirror/silence-operator
+  url: oci://gsoci.azurecr.io/charts/giantswarm/silence-operator
