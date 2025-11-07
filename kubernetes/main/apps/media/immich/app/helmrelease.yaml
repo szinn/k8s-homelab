@@ -106,6 +106,18 @@ spec:
           http:
             port: 6379
 
+    serviceMonitor:
+      server:
+        enabled: true
+        serviceName: server
+        endpoints:
+          - port: metrics-api
+            scheme: http
+            path: /metrics
+          - port: metrics-ms
+            scheme: http
+            path: /metrics
+
     route:
       internal:
         hostnames: ["photos.zinn.ca"]

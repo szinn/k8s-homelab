@@ -11,5 +11,5 @@ data:
   NODE_ENV: "production"
   REDIS_HOSTNAME: immich-redis.media.svc.cluster.local
   REDIS_PORT: "6379"
-  IMMICH_SERVER_URL: http://immich-server.media.svc.cluster.local:3001
-  IMMICH_MACHINE_LEARNING_URL: http://immich-machine-learning.media.svc.cluster.local:3003
+  # IMMICH_SERVER_URL: http://immich-server.media.svc.cluster.local:2283
+  # IMMICH_MACHINE_LEARNING_URL: http://immich-machine-learning.media.svc.cluster.local:3003
