@@ -48,4 +48,3 @@ spec:
       value: NodeMemoryHighUtilization
     - name: instance
       value: ragnar.zinn.tech:9100
----
