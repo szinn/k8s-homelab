@@ -5,6 +5,11 @@
       matchDatasources: ["docker"],
       matchPackagePatterns: ["cloudnative-pg/postgresql"],
       allowedVersions: "<18"
+    },
+    {
+      matchDatasources: ["docker"],
+      matchPackagePatterns: ["home-operations/postgres-init"],
+      allowedVersions: "<18"
     }
   ]
 }
