@@ -91,4 +91,4 @@ log lvl msg *args:
 
 [private]
 template file *args:
-    minijinja-cli "{{ file }}" {{ args }} | op inject euo
+    minijinja-cli "{{ file }}" {{ args }} | op inject
