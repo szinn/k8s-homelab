@@ -42,8 +42,8 @@
       pinDigests: false
     },
     {
-      description: ["Don't pin branches for ansible files"],
-      matchFileNames: ["ansible/**", ".taskfiles/**"],
+      description: ["Don't pin branches for support files"],
+      matchFileNames: [".taskfiles/**","hack/**"],
       matchDatasources: ["docker"],
       pinDigests: false
     },
