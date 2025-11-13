@@ -9,7 +9,7 @@ spec:
   # nodeName: k8s-5
   containers:
     - name: shell
-      image: ubuntu
+      image: ubuntu@sha256:66460d557b25769b102175144d538d88219c077c678a49af4afca6fbfc1b5252
       tty: true
       stdin: true
       securityContext:
