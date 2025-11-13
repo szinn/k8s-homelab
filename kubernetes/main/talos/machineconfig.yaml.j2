@@ -117,11 +117,11 @@ cluster:
       enable-aggregator-routing: "true"
       feature-gates: MutatingAdmissionPolicy=true
       runtime-config: admissionregistration.k8s.io/v1beta1=true
-    image: registry.k8s.io/kube-apiserver:v1.34.2
+    image: registry.k8s.io/kube-apiserver:v1.34.2@sha256:e009ef63deaf797763b5bd423d04a099a2fe414a081bf7d216b43bc9e76b9077
   controllerManager:
     extraArgs:
       bind-address: 0.0.0.0
-    image: registry.k8s.io/kube-controller-manager:v1.34.2
+    image: registry.k8s.io/kube-controller-manager:v1.34.2@sha256:5c3998664b77441c09a4604f1361b230e63f7a6f299fc02fc1ebd1a12c38e3eb
   coreDNS:
     disabled: true
   etcd:
@@ -134,7 +134,7 @@ cluster:
       listen-metrics-urls: http://0.0.0.0:2381
   proxy:
     disabled: true
-    image: registry.k8s.io/kube-proxy:v1.34.2
+    image: registry.k8s.io/kube-proxy:v1.34.2@sha256:d8b843ac8a5e861238df24a4db8c2ddced89948633400c4660464472045276f5
   scheduler:
     config:
       apiVersion: kubescheduler.config.k8s.io/v1
@@ -155,7 +155,7 @@ cluster:
                     whenUnsatisfiable: ScheduleAnyway
     extraArgs:
       bind-address: 0.0.0.0
-    image: registry.k8s.io/kube-scheduler:v1.34.2
+    image: registry.k8s.io/kube-scheduler:v1.34.2@sha256:44229946c0966b07d5c0791681d803e77258949985e49b4ab0fbdff99d2a48c6
   secretboxEncryptionSecret: op://Kubernetes/cluster-main/CLUSTER_SECRETBOXENCRYPTIONSECRET
   serviceAccount:
     key: op://Kubernetes/cluster-main/CLUSTER_SERVICEACCOUNT_KEY
