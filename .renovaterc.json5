@@ -24,12 +24,12 @@
     "**/*.sops.*"
   ],
   flux: {
-    managerFilePatterns: ["/kubernetes/.+\\.ya?ml$/"]
+    managerFilePatterns: ["/\\.yaml(?:\\.j2)?$/"],
   },
   "helm-values": {
-    managerFilePatterns: ["/kubernetes/.+\\.ya?ml$/"]
+    managerFilePatterns: ["/\\.yaml(?:\\.j2)?$/"],
   },
   kubernetes: {
-    managerFilePatterns: ["/\\.taskfiles/.+\\.ya?ml(?:\\.j2)?$/", "/kubernetes/.+\\.ya?ml$/"]
+    managerFilePatterns: ["/\\.taskfiles/.+\\.ya?ml(?:\\.j2)?$/", "/\\.yaml(?:\\.j2)?$/"],
   }
 }
