@@ -23,6 +23,7 @@ tasks:
       - task: update-styx-certificate
       # - task: update-zeus-certificate
       - task: update-artemis-certificates
+      - task: update-apollo-certificates
       - task: update-titan-certificates
 
   update-octopi-certificate:
@@ -131,6 +132,7 @@ tasks:
     desc: Update linux machines
     cmds:
       - ssh root@artemis.zinn.tech 'apt update -y && apt upgrade -y && apt autoremove -y'
+      - ssh root@apollo.zinn.tech 'apt update -y && apt upgrade -y && apt autoremove -y'
       - ssh root@hera.zinn.tech 'dnf upgrade -y'
       - ssh root@titan.zinn.tech 'dnf upgrade -y'
 
@@ -203,6 +205,48 @@ tasks:
     desc: Restart Artemis AdGuardHome
     cmds:
       - ssh root@artemis.zinn.tech systemctl restart gatus
+
+  install-apollo-adguard:
+    desc: Install Apollo AdGuardHome
+    cmds:
+      - ssh root@apollo.zinn.tech wget -q https://github.com/AdguardTeam/AdGuardHome/releases/download/{{.ADGUARD_VERSION}}/AdGuardHome_linux_arm64.tar.gz -O /opt/AdGuardHome_linux_arm64.tar.gz
+      - ssh root@apollo.zinn.tech 'cd /opt && tar xf AdGuardHome_linux_arm64.tar.gz && rm AdGuardHome_linux_arm64.tar.gz'
+      - ssh root@apollo.zinn.tech 'cd /opt/AdGuardHome && ./AdGuardHome -s install'
+
+  update-apollo-adguard:
+    desc: Update Apollo AdGuardHome
+    cmds:
+      - ssh root@apollo.zinn.tech wget -q https://github.com/AdguardTeam/AdGuardHome/releases/download/{{.ADGUARD_VERSION}}/AdGuardHome_linux_arm64.tar.gz -O /opt/AdGuardHome_linux_arm64.tar.gz
+      - ssh root@apollo.zinn.tech 'cd /opt && tar xf AdGuardHome_linux_arm64.tar.gz && rm AdGuardHome_linux_arm64.tar.gz'
+      - ssh root@apollo.zinn.tech 'systemctl restart AdGuardHome'
+
+  install-apollo-certificates:
+    desc: Update Apollo certificates
+    cmds:
+      - ssh root@apollo.zinn.tech mkdir -p /opt/certificates
+      - scp "{{.FILES_DIR}}/certificates/certificate.crt" root@apollo.zinn.tech:/opt/certificates/zinn-tech.crt
+      - ssh root@apollo.zinn.tech chmod u+rw,g-wx,o-wx /opt/certificates/zinn-tech.crt
+      - scp "{{.FILES_DIR}}/certificates/certificate.key" root@apollo.zinn.tech:/opt/certificates/zinn-tech.key
+      - ssh root@apollo.zinn.tech chmod u+rw,g-wx,o-wx /opt/certificates/zinn-tech.key
+
+  update-apollo-configuration:
+    desc: Update Apollo configuration
+    cmds:
+      - task: update-apollo-adguard-configuration
+        vars:
+          machine_ip: 10.0.0.10
+
+  update-apollo-adguard-configuration:
+    desc: Update Apollo AdGuardHome configuration
+    requires:
+      vars:
+        - machine_ip
+    cmds:
+      - cat "{{.FILES_DIR}}/adguard/AdGuardHome.yaml" | sed -e "s/MACHINE_IP/{{.machine_ip}}/" > /tmp/AdGuardHome.yaml
+      - scp /tmp/AdGuardHome.yaml root@apollo.zinn.tech:/opt/AdGuardHome/AdGuardHome.yaml
+      - rm /tmp/AdGuardHome.yaml
+      - ssh root@apollo.zinn.tech chmod og-rwx /opt/AdGuardHome/AdGuardHome.yaml
+      - ssh root@apollo.zinn.tech systemctl restart AdGuardHome
 
   install-titan-certificates:
     desc: Update Titan certificates
