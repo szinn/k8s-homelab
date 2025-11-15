@@ -1,0 +1,35 @@
+---
+# yaml-language-server: $schema=https://schemas.zinn.ca/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: seerr
+spec:
+  targetNamespace: media
+  path: ./kubernetes/main/apps/media/seerr/app
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  dependsOn:
+    - name: external-secrets
+      namespace: external-secrets
+    - name: keda
+      namespace: system
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+  components:
+    - ../../../../components/gatus/guarded
+    - ../../../../components/nfs-scaler
+    - ../../../../components/volsync
+  postBuild:
+    substitute:
+      APP: seerr
+      VOLSYNC_CLAIM: seerr-config
+      VOLSYNC_CAPACITY: 5Gi
+      GATUS_APP: seerr
+      GATUS_SUBDOMAIN: seerr
+  prune: true
+  wait: false
+  interval: 1h
+  timeout: 5m

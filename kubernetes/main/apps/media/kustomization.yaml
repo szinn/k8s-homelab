@@ -24,4 +24,5 @@ resources:
   - radarr-4k/install.yaml
   - recyclarr/install.yaml
   - sabnzbd/install.yaml
+  - seerr/install.yaml
   - sonarr/install.yaml
