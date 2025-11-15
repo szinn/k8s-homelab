@@ -4,6 +4,7 @@
     "github>szinn/renovate-config",
     "docker:pinDigests",
     ":skipStatusChecks",
+    "github>szinn/k8s-homelab//.renovate/overrides.json5",
     "github>szinn/k8s-homelab//.renovate/allowedVersions.json5",
     "github>szinn/k8s-homelab//.renovate/autoMerge.json5",
     "github>szinn/k8s-homelab//.renovate/clusters.json5",
