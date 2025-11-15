@@ -26,6 +26,8 @@ sonarr:
 
     quality_profiles:
       - name: WEB-1080p
+        reset_unmatched_scores:
+          enabled: true
         upgrade:
           allowed: true
           until_quality: WEBRip-1080p
@@ -63,6 +65,8 @@ radarr:
     quality_profiles:
       - name: SQP-1 (1080p)
         min_format_score: 10
+        reset_unmatched_scores:
+          enabled: true
 
     custom_formats:
       - trash_ids:
@@ -96,6 +100,8 @@ radarr:
     quality_profiles:
       - name: SQP-1 (2160p)
         min_format_score: 10
+        reset_unmatched_scores:
+          enabled: true
 
     custom_formats:
       - trash_ids:
