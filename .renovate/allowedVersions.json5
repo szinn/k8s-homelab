@@ -12,8 +12,8 @@
       allowedVersions: "<18"
     },
     {
-      matchedDatasources: ["github-tags"],
-      matchPackagePatterns: ["aqua:helm/helm"],
+      matchDatasources: ["github-tags"],
+      matchPackagePatterns: ["helm/helm"],
       allowedVersions: "<4"
     }
   ]
