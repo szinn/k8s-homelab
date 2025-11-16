@@ -1,2 +1,1 @@
 {{ (fromYaml (readFile (printf "../../../apps/%s/%s/app/helmrelease.yaml" .Release.Namespace .Release.Name))).spec.values | toYaml }}
-

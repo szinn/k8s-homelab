@@ -10,6 +10,11 @@
       matchDatasources: ["docker"],
       matchPackagePatterns: ["home-operations/postgres-init"],
       allowedVersions: "<18"
+    },
+    {
+      matchedDatasources: ["github-tags"],
+      matchPackagePatterns: ["aqua:helm/helm"],
+      allowedVersions: "<4"
     }
   ]
 }

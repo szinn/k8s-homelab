@@ -23,4 +23,3 @@ cluster.local:53 {
     }
     forward . 10.200.0.10
 }
-
