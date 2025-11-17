@@ -16,7 +16,6 @@ resources:
   - immich/install.yaml
   - lidarr/install.yaml
   - openbooks/install.yaml
-  - overseerr/install.yaml
   - plex/install.yaml
   - prowlarr/install.yaml
   - qbittorrent/install.yaml
