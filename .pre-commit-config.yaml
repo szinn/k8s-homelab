@@ -10,6 +10,14 @@ exclude: |
   )$
 
 repos:
+  - repo: local
+    hooks:
+      - id: forbid-yml
+        name: Forbid .yml file extensions (use .yaml)
+        entry: YAML file extensions must be .yaml
+        language: fail
+        files: \.yml$
+
   - repo: https://github.com/adrienverge/yamllint
     rev: v1.37.1
     hooks:
@@ -21,14 +29,15 @@ repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:
-      - id: trailing-whitespace
+      - id: check-added-large-files
+        args: [--maxkb=2048]
+      - id: check-case-conflict
+      - id: check-executables-have-shebangs
+      - id: check-merge-conflict
       - id: end-of-file-fixer
       - id: fix-byte-order-marker
       - id: mixed-line-ending
-      - id: check-added-large-files
-        args: [--maxkb=2048]
-      - id: check-merge-conflict
-      - id: check-executables-have-shebangs
+      - id: trailing-whitespace
 
   - repo: https://github.com/Lucas-C/pre-commit-hooks
     rev: v1.5.5
