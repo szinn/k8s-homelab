@@ -23,7 +23,7 @@ spec:
   values:
     controllers:
       server:
-        strategy: RollingUpdate
+        strategy: Recreate
         annotations:
           secret.reloader.stakater.com/reload: immich-secret
           configmap.reloader.stakater.com/reload: immich-configmap
@@ -55,7 +55,7 @@ spec:
               - configMapRef:
                   name: immich-configmap
       machine-learning:
-        strategy: RollingUpdate
+        strategy: Recreate
         annotations:
           secret.reloader.stakater.com/reload: immich-secret
           configmap.reloader.stakater.com/reload: immich-configmap
