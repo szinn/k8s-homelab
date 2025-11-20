@@ -94,7 +94,7 @@ jobs:
           ls -l ${destination_adguard}
 
       - name: Upload adguard blacklist
-        uses: svenstaro/upload-release-action@81c65b7cd4de9b2570615ce3aad67a41de5b1a13 # v2
+        uses: svenstaro/upload-release-action@6b7fa9f267e90b50a19fef07b3596790bb941741 # v2
         with:
           release_name: "AdGuard Blacklist"
           repo_token: ${{ steps.app-token.outputs.token }}
