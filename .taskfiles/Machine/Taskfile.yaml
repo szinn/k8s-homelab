@@ -24,7 +24,7 @@ tasks:
       # - task: update-zeus-certificate
       - task: update-artemis-certificates
       - task: update-apollo-certificates
-      - task: update-titan-certificates
+      # - task: update-titan-certificates
 
   update-octopi-certificate:
     desc: Update OctoPi certificate
@@ -134,7 +134,7 @@ tasks:
       - ssh root@artemis.zinn.tech 'apt update -y && apt upgrade -y && apt autoremove -y'
       - ssh root@apollo.zinn.tech 'apt update -y && apt upgrade -y && apt autoremove -y'
       - ssh root@hera.zinn.tech 'dnf upgrade -y'
-      - ssh root@titan.zinn.tech 'dnf upgrade -y'
+      # - ssh root@titan.zinn.tech 'dnf upgrade -y'
 
   install-artemis-adguard:
     desc: Install Artemis AdGuardHome
@@ -248,58 +248,58 @@ tasks:
       - ssh root@apollo.zinn.tech chmod og-rwx /opt/AdGuardHome/AdGuardHome.yaml
       - ssh root@apollo.zinn.tech systemctl restart AdGuardHome
 
-  install-titan-certificates:
-    desc: Update Titan certificates
-    cmds:
-      - ssh root@titan.zinn.tech mkdir -p /opt/certificates
-      - scp "{{.FILES_DIR}}/certificates/certificate.crt" root@titan.zinn.tech:/opt/certificates/zinn-tech.crt
-      - ssh root@titan.zinn.tech chmod u+rw,g-wx,o-wx /opt/certificates/zinn-tech.crt
-      - scp "{{.FILES_DIR}}/certificates/certificate.key" root@titan.zinn.tech:/opt/certificates/zinn-tech.key
-      - ssh root@titan.zinn.tech chmod u+rw,g-wx,o-wx /opt/certificates/zinn-tech.key
+      # install-titan-certificates:
+      #   desc: Update Titan certificates
+      #   cmds:
+      #     - ssh root@titan.zinn.tech mkdir -p /opt/certificates
+      #     - scp "{{.FILES_DIR}}/certificates/certificate.crt" root@titan.zinn.tech:/opt/certificates/zinn-tech.crt
+      #     - ssh root@titan.zinn.tech chmod u+rw,g-wx,o-wx /opt/certificates/zinn-tech.crt
+      #     - scp "{{.FILES_DIR}}/certificates/certificate.key" root@titan.zinn.tech:/opt/certificates/zinn-tech.key
+      #     - ssh root@titan.zinn.tech chmod u+rw,g-wx,o-wx /opt/certificates/zinn-tech.key
 
-  update-titan-certificates:
-    desc: Update Titan certificates and restart services
-    cmds:
-      - task: install-titan-certificates
-      - task: restart-titan-adguard
+      # update-titan-certificates:
+      #   desc: Update Titan certificates and restart services
+      #   cmds:
+      #     - task: install-titan-certificates
+      #     - task: restart-titan-adguard
 
-  install-titan-adguard:
-    desc: Install Titan AdGuardHome
-    cmds:
-      - ssh root@titan.zinn.tech wget -q https://github.com/AdguardTeam/AdGuardHome/releases/download/{{.ADGUARD_VERSION}}/AdGuardHome_linux_amd64.tar.gz -O /opt/AdGuardHome_linux_amd64.tar.gz
-      - ssh root@titan.zinn.tech 'cd /opt && tar xf AdGuardHome_linux_amd64.tar.gz'
-      - ssh root@titan.zinn.tech 'cd /opt/AdGuardHome && ./AdGuardHome -s install'
+      # install-titan-adguard:
+      #   desc: Install Titan AdGuardHome
+      #   cmds:
+      #     - ssh root@titan.zinn.tech wget -q https://github.com/AdguardTeam/AdGuardHome/releases/download/{{.ADGUARD_VERSION}}/AdGuardHome_linux_amd64.tar.gz -O /opt/AdGuardHome_linux_amd64.tar.gz
+      #     - ssh root@titan.zinn.tech 'cd /opt && tar xf AdGuardHome_linux_amd64.tar.gz'
+      #     - ssh root@titan.zinn.tech 'cd /opt/AdGuardHome && ./AdGuardHome -s install'
 
-  update-titan-adguard:
-    desc: Update Titan AdGuardHome
-    cmds:
-      - ssh root@titan.zinn.tech wget -q https://github.com/AdguardTeam/AdGuardHome/releases/download/{{.ADGUARD_VERSION}}/AdGuardHome_linux_amd64.tar.gz -O /opt/AdGuardHome_linux_amd64.tar.gz
-      - ssh root@titan.zinn.tech 'cd /opt && tar xf AdGuardHome_linux_amd64.tar.gz'
+      # update-titan-adguard:
+      #   desc: Update Titan AdGuardHome
+      #   cmds:
+      #     - ssh root@titan.zinn.tech wget -q https://github.com/AdguardTeam/AdGuardHome/releases/download/{{.ADGUARD_VERSION}}/AdGuardHome_linux_amd64.tar.gz -O /opt/AdGuardHome_linux_amd64.tar.gz
+      #     - ssh root@titan.zinn.tech 'cd /opt && tar xf AdGuardHome_linux_amd64.tar.gz'
       - ssh root@titan.zinn.tech 'systemctl restart AdGuardHome'
 
-  restart-titan-adguard:
-    desc: Restart Titan AdGuardHome
-    cmds:
-      - ssh root@titan.zinn.tech systemctl restart AdGuardHome
+  # restart-titan-adguard:
+  #   desc: Restart Titan AdGuardHome
+  #   cmds:
+  #     - ssh root@titan.zinn.tech systemctl restart AdGuardHome
 
-  install-titan-node_exporter:
-    desc: Install Node Exporter
-    cmds:
-      - ssh root@titan.zinn.tech 'dnf install node-exporter'
-      - scp "{{.FILES_DIR}}/titan/node_exporter.service" root@titan.zinn.tech:/etc/systemd/system/node_exporter.service
-      - ssh root@titan.zinn.tech 'systemctl daemon-reload && systemctl enable node_exporter && systemctl start node_exporter'
+  # install-titan-node_exporter:
+  #   desc: Install Node Exporter
+  #   cmds:
+  #     - ssh root@titan.zinn.tech 'dnf install node-exporter'
+  #     - scp "{{.FILES_DIR}}/titan/node_exporter.service" root@titan.zinn.tech:/etc/systemd/system/node_exporter.service
+  #     - ssh root@titan.zinn.tech 'systemctl daemon-reload && systemctl enable node_exporter && systemctl start node_exporter'
 
-  update-titan-adguard-configuration:
-    desc: Update Titan AdGuardHome configuration
-    requires:
-      vars:
-        - machine_ip
-    cmds:
-      - cat "{{.FILES_DIR}}/adguard/AdGuardHome.yaml" | sed -e "s/MACHINE_IP/{{.machine_ip}}/" > /tmp/AdGuardHome.yaml
-      - scp /tmp/AdGuardHome.yaml root@titan.zinn.tech:/opt/AdGuardHome/AdGuardHome.yaml
-      - rm /tmp/AdGuardHome.yaml
-      - ssh root@titan.zinn.tech chmod og-rwx /opt/AdGuardHome/AdGuardHome.yaml
-      - ssh root@titan.zinn.tech systemctl restart AdGuardHome
+  # update-titan-adguard-configuration:
+  #   desc: Update Titan AdGuardHome configuration
+  #   requires:
+  #     vars:
+  #       - machine_ip
+  #   cmds:
+  #     - cat "{{.FILES_DIR}}/adguard/AdGuardHome.yaml" | sed -e "s/MACHINE_IP/{{.machine_ip}}/" > /tmp/AdGuardHome.yaml
+  #     - scp /tmp/AdGuardHome.yaml root@titan.zinn.tech:/opt/AdGuardHome/AdGuardHome.yaml
+  #     - rm /tmp/AdGuardHome.yaml
+  #     - ssh root@titan.zinn.tech chmod og-rwx /opt/AdGuardHome/AdGuardHome.yaml
+  #     - ssh root@titan.zinn.tech systemctl restart AdGuardHome
 
   install-hera-configuration:
     desc: Install Hera configuration

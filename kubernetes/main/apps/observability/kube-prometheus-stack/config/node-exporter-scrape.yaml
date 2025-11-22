@@ -9,7 +9,7 @@ spec:
     - targets:
         - "ragnar.zinn.tech:9100"
         - "artemis.zinn.tech:9100"
-        - "titan.zinn.tech:9100"
+        # - "titan.zinn.tech:9100"
   metricsPath: /metrics
   scheme: HTTP
   relabelings:

@@ -175,7 +175,7 @@ kvmd:
         - ["#k8s-4", server3_led, server3_switch|Switch]
         - ["#k8s-5", server4_led, server4_switch|Switch]
         - ["#k8s-6", server5_led, server5_switch|Switch]
-        - ["#Titan", server6_led, server6_switch|Switch]
+        # - ["#Titan", server6_led, server6_switch|Switch]
         - ["#Ragnar", server7_led, server7_switch|Switch]
         - ["#Ares", server8_led, server8_switch|Switch]
         - ["#Artemis", server9_led, server9_switch|Switch]
