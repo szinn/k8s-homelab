@@ -92,14 +92,14 @@ data:
               url: https://artemis.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:1443
               username: {{HOMEPAGE_VAR_ADGUARD_USERNAME}}
               password: {{HOMEPAGE_VAR_ADGUARD_PASSWORD}}
-        # - AdGuard Home (Titan):
-        #     href: https://titan.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:1443
-        #     siteMonitor: https://titan.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:1443
-        #     widget:
-        #       type: adguard
-        #       url: https://titan.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:1443
-        #       username: {{HOMEPAGE_VAR_ADGUARD_USERNAME}}
-        #       password: {{HOMEPAGE_VAR_ADGUARD_PASSWORD}}
+        - AdGuard Home (Apollo):
+            href: https://apollo.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:1443
+            siteMonitor: https://apollo.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:1443
+            widget:
+              type: adguard
+              url: https://apollo.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:1443
+              username: {{HOMEPAGE_VAR_ADGUARD_USERNAME}}
+              password: {{HOMEPAGE_VAR_ADGUARD_PASSWORD}}
         - Echo Server:
             href: https://echo-server.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
             siteMonitor: https://echo-server.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
@@ -171,15 +171,15 @@ data:
                 siteMonitor: https://rook.test.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
                 icon: rook.png
     - Media:
-        - Overseerr:
-            href: https://overseerr.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            siteMonitor: https://overseerr.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+        - Seerr:
+            href: https://seerr.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
+            siteMonitor: https://seerr.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
             icon: overseerr.png
             description: Media Requests
             widget:
               type: overseerr
-              url: http://overseerr.media.svc.cluster.local
-              key: {{HOMEPAGE_VAR_OVERSEERR_TOKEN}}
+              url: http://seerr.media.svc.cluster.local
+              key: {{HOMEPAGE_VAR_SEERR_TOKEN}}
         - Plex:
             href: https://plex.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
             siteMonitor: https://plex.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
