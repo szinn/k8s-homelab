@@ -13,4 +13,3 @@ resources:
   - cloudnative-pg/install.yaml
   - dragonfly/install.yaml
   - pgadmin/install.yaml
-  - vernemq/install.yaml
