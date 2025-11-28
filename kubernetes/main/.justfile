@@ -34,7 +34,7 @@ prune-pods:
 [doc('Apply local Flux Kustomization')]
 apply-ks ns ks:
     just render-local-ks "{{ ns }}" "{{ ks }}" \
-    | kubectl apply --server-side --field-manager=kustomize-controller -f /dev/stdin
+    | kubectl apply --force-confilcts --server-side --field-manager=kustomize-controller -f /dev/stdin
 
 [doc('Delete local Flux Kustomization')]
 delete-ks ns ks:
