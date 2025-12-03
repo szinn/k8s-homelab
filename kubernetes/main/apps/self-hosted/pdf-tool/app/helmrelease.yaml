@@ -24,7 +24,7 @@ spec:
           main:
             image:
               repository: ghcr.io/stirling-tools/s-pdf
-              tag: 2.0.3@sha256:8bb1bb58806c549c211ac64a8a846b39d0b2e029a6549a60ec54664333b8b833
+              tag: 2.1.0@sha256:f27e1e8616de3aacd2cfa05add2c746d701d95389e4067a60e00c89e031ec917
               pullPolicy: IfNotPresent
     service:
       main:
