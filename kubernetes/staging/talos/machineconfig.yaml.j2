@@ -177,7 +177,7 @@ cluster:
                     whenUnsatisfiable: ScheduleAnyway
     extraArgs:
       bind-address: 0.0.0.0
-    image: registry.k8s.io/kube-scheduler:v1.34.2
+    image: registry.k8s.io/kube-scheduler:v1.34.3
   secretboxEncryptionSecret: op://Kubernetes/cluster-staging/CLUSTER_SECRETBOXENCRYPTIONSECRET
   serviceAccount:
     key: op://Kubernetes/cluster-staging/CLUSTER_SERVICEACCOUNT_KEY
