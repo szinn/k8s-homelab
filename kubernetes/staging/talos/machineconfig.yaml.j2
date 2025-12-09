@@ -139,7 +139,7 @@ cluster:
       enable-aggregator-routing: "true"
       feature-gates: ImageVolume=true,MutatingAdmissionPolicy=true
       runtime-config: admissionregistration.k8s.io/v1beta1=true
-    image: registry.k8s.io/kube-apiserver:v1.34.2
+    image: registry.k8s.io/kube-apiserver:v1.34.3
   controllerManager:
     extraArgs:
       bind-address: 0.0.0.0
