@@ -13,7 +13,6 @@ resources:
   - descheduler/install.yaml
   - fstrim/install.yaml
   - intel-gpu-resource-driver/install.yaml
-  - k8s-ycl/install.yaml
   - keda/install.yaml
   - kopia/install.yaml
   - kube-cleanup-operator/install.yaml
