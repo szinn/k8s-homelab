@@ -220,6 +220,11 @@ tasks:
       - ssh root@apollo.zinn.tech 'cd /opt && tar xf AdGuardHome_linux_arm64.tar.gz && rm AdGuardHome_linux_arm64.tar.gz'
       - ssh root@apollo.zinn.tech 'systemctl restart AdGuardHome'
 
+  restart-apollo-adguard:
+    desc: Restart Artemis AdGuardHome
+    cmds:
+      - ssh root@artemis.zinn.tech systemctl restart AdGuardHome
+
   install-apollo-certificates:
     desc: Update Apollo certificates
     cmds:
@@ -228,6 +233,12 @@ tasks:
       - ssh root@apollo.zinn.tech chmod u+rw,g-wx,o-wx /opt/certificates/zinn-tech.crt
       - scp "{{.FILES_DIR}}/certificates/certificate.key" root@apollo.zinn.tech:/opt/certificates/zinn-tech.key
       - ssh root@apollo.zinn.tech chmod u+rw,g-wx,o-wx /opt/certificates/zinn-tech.key
+
+  update-apollo-certificates:
+    desc: Update Apollo certificates and restart services
+    cmds:
+      - task: install-apollo-certificates
+      - task: restart-apollo-adguard
 
   update-apollo-configuration:
     desc: Update Apollo configuration
