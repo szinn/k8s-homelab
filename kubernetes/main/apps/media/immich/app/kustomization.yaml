@@ -4,8 +4,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - secrets.yaml
-  - immich-config.yaml
-  - immich-ml-cache.yaml
   - immich-pvc.yaml
   - helmrelease.yaml
 labels:

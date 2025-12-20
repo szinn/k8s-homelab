@@ -52,8 +52,6 @@ spec:
             envFrom:
               - secretRef:
                   name: immich-secret
-              - configMapRef:
-                  name: immich-configmap
       machine-learning:
         strategy: Recreate
         annotations:
@@ -75,8 +73,6 @@ spec:
             envFrom:
               - secretRef:
                   name: immich-secret
-              - configMapRef:
-                  name: immich-configmap
             env:
               MPLCONFIGDIR: "/cache/matplotlib"
       redis:
@@ -130,6 +126,15 @@ spec:
                 port: *port
 
     persistence:
+      config:
+        type: secret
+        name: immich-secret
+        advancedMounts:
+          server:
+            main:
+              - path: /config/immich-config.yaml
+                subPath: immich-config.yaml
+                readOnly: true
       matplotlib:
         type: emptyDir
         advancedMounts:
@@ -143,7 +148,10 @@ spec:
             main:
               - path: /usr/src/app/upload
       machine-learning-cache:
-        existingClaim: immich-machine-learning-cache
+        type: persistentVolumeClaim
+        storageClass: openebs-hostpath
+        accessMode: ReadWriteOnce
+        size: 50Gi
         advancedMounts:
           machine-learning:
             main:
@@ -151,6 +159,10 @@ spec:
                 subPath: cache
               - path: /.cache
                 subPath: dotCache
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
       tmpfs:
         type: emptyDir
         advancedMounts:
@@ -160,3 +172,11 @@ spec:
                 subPath: geocoding
               - path: /usr/src/app/.transformers_cache
                 subPath: transformers
+      # Intel GPU device for QSV transcoding
+      dri:
+        type: hostPath
+        hostPath: /dev/dri
+        advancedMounts:
+          server:
+            main:
+              - path: /dev/dri
