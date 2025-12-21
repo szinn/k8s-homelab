@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "mermaid": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@probelabs/maid-mcp"],
+      "env": {}
+    }
+  }
+}

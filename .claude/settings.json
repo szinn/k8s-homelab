@@ -1,0 +1,27 @@
+{
+  "allowedTools": [],
+  "mcpContextUris": [],
+  "mcpServers": {
+    "mermaid": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@probelabs/maid-mcp"],
+      "env": {}
+    }
+  },
+  "enabledMcpjsonServers": [],
+  "disabledMcpjsonServers": [],
+  "hasTrustDialogAccepted": true,
+  "projectOnboardingSeenCount": 1,
+  "hasClaudeMdExternalIncludesApproved": false,
+  "hasClaudeMdExternalIncludesWarningShown": false,
+  "reactVulnerabilityCache": {
+    "detected": false,
+    "package": null,
+    "packageName": null,
+    "version": null,
+    "packageManager": null
+  },
+  "exampleFiles": ["helm-release.yaml", "talconfig.yaml", "Taskfile.yaml", "helmrelease.yaml", "kustomization.yaml"],
+  "exampleFilesGeneratedAt": 1766344103186
+}
