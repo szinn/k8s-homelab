@@ -7,11 +7,11 @@ shopt:
   - globstar
 
 vars:
-  ANSIBLE_DIR: "{{.ROOT_DIR}}/ansible"
   KUBERNETES_ROOT: "{{.ROOT_DIR}}/kubernetes"
 
 env:
   MINIJINJA_CONFIG_FILE: "{{.ROOT_DIR}}/.minijinja.toml"
+  SCRIPTS_DIR: "{{.ROOT_DIR}}/scripts"
 
 includes:
   flux: .taskfiles/Flux

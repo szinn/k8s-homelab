@@ -2,6 +2,9 @@
 # yaml-language-server: $schema=https://taskfile.dev/schema.json
 version: "3"
 
+vars:
+  KUBECONFORM_SCRIPT: "{{.SCRIPTS_DIR}}/kubeconform.sh"
+
 tasks:
   delete-failed-pods:
     desc: Deletes pods with a fucked status
@@ -53,3 +56,16 @@ tasks:
   redeploy-daemonsets:
     desc: Relaunch all daemonsets
     cmd: kubectl get daemonset --all-namespaces --no-headers -o=custom-columns='namespace:.metadata.namespace,name:metadata.name' | xargs -P 4 -L 1 bash -c 'kubectl -n $0 rollout restart daemonset $1'
+
+  kubeconform:
+    desc: Validate Kubernetes manifests with kubeconform
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
+    cmd: bash {{.KUBECONFORM_SCRIPT}} {{.KUBERNETES_ROOT}}/{{.cluster}}
+    preconditions:
+      - msg: Missing kubeconform script {{.KUBECONFORM_SCRIPT}}
+        sh: test -f {{.KUBECONFORM_SCRIPT}}
+    requires:
+      vars:
+        - cluster
