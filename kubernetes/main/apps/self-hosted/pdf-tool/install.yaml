@@ -11,6 +11,21 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
+  dependsOn:
+    - name: external-secrets
+      namespace: external-secrets
+    - name: keda
+      namespace: system
+    - name: volsync
+      namespace: system
+  components:
+    - ../../../../components/nfs-scaler
+    - ../../../../components/volsync
+  postBuild:
+    substitute:
+      APP: pdf-tool
+      VOLSYNC_CLAIM: pdf-tool-config
+      VOLSYNC_CAPACITY: 5Gi
   prune: true
   wait: true
   interval: 30m
