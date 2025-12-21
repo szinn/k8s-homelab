@@ -50,9 +50,9 @@ metadata:
   name: envoy
 spec:
   compression:
+    - type: Zstd
     - type: Brotli
     - type: Gzip
-    - type: Zstd
   connection:
     bufferLimit: 64Mi
   targetSelectors:
@@ -71,7 +71,8 @@ metadata:
 spec:
   clientIPDetection:
     xForwardedFor:
-      numTrustedHops: 1
+      trustedCIDRs:
+        - 10.201.0.0/16
   connection:
     bufferLimit: 8Mi
     maxAcceptPerSocketEvent: 0
