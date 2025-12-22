@@ -25,7 +25,7 @@ spec:
           app:
             image:
               repository: docker.io/rustmailer/bichon
-              tag: 0.1.5
+              tag: 0.1.5@sha256:576670754c9902b256af8fe8ff5d64f4c49318442d112809ee2bc7bb697145a4
             env:
               BICHON_HTTP_PORT: &httpPort 15630
               BICHON_LOG_LEVEL: info
