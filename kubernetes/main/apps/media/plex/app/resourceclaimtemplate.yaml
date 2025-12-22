@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://schemas.zinn.ca/resource.k8s.io/v1beta1/resourceclaimtemplate.json
 apiVersion: resource.k8s.io/v1
 kind: ResourceClaimTemplate
 metadata:

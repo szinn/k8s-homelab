@@ -85,5 +85,5 @@ When writing commits to git. Use the following for the closing comments instead 
 Pair-programmed with Claude Code - https://claude.com/claude-code
 
 Co-Authored-By: Claude <noreply@anthropic.com>
-Co-Authored-By: Gavin <gavin@nerdz.cloud>
+Co-Authored-By: Scotte <scotte@zinn.ca>
 ```

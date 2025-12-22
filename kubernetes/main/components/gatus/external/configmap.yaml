@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://schemas.zinn.ca/v1/configmap.json
 apiVersion: v1
 kind: ConfigMap
 metadata:
