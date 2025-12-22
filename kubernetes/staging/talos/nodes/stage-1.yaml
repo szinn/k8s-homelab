@@ -1,0 +1,10 @@
+---
+apiVersion: v1alpha1
+kind: HostnameConfig
+hostname: stage-1.zinn.tech
+---
+apiVersion: v1alpha1
+kind: LinkAliasConfig
+name: net0
+selector:
+  match: mac(link.permanent_addr) == "de:ca:ff:10:12:10"
