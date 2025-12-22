@@ -1,0 +1,20 @@
+---
+# yaml-language-server: $schema=https://schemas.zinn.ca/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: bichon
+spec:
+  targetNamespace: self-hosted
+  path: ./kubernetes/main/apps/self-hosted/bichon/app
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  dependsOn:
+    - name: external-secrets
+      namespace: external-secrets
+  prune: true
+  wait: false
+  interval: 30m
+  timeout: 5m
