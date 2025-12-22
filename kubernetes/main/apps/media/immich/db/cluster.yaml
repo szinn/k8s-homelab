@@ -5,24 +5,33 @@ kind: Cluster
 metadata:
   name: immich
 spec:
-  imageName: ghcr.io/tensorchord/cloudnative-vectorchord:17.5-0.3.0
+  # renovate: datasource=docker depName=ghcr.io/tensorchord/cloudnative-vectorchord versioning=loose enabled=false
+  imageName: ghcr.io/tensorchord/cloudnative-vectorchord:18.0-0.5.3@sha256:267f6cbb32af6e109e138a143c7e9dd5d44d68433ec2303f0c30e745c788d1a9
   instances: 3
   primaryUpdateStrategy: unsupervised
   storage:
     size: 20Gi
-    storageClass: ceph-block
+    storageClass: openebs-hostpath
   enableSuperuserAccess: true
   superuserSecret:
     name: immich-db-secret
   postgresql:
     parameters:
-      max_connections: "300"
+      max_connections: "500"
       shared_buffers: 512MB
     shared_preload_libraries:
       - "vchord.so"
+  affinity:
+    enablePodAntiAffinity: true
+    topologyKey: kubernetes.io/hostname
+    podAntiAffinityType: required
   bootstrap:
     initdb:
+      database: immich
+      owner: immich
       postInitSQL:
-        - CREATE EXTENSION IF NOT EXISTS vchord CASCADE;
+        - CREATE EXTENSION IF NOT EXISTS vchord CASCADE
+        - CREATE EXTENSION IF NOT EXISTS vector CASCADE
+        - CREATE EXTENSION IF NOT EXISTS earthdistance CASCADE
   monitoring:
     enablePodMonitor: true

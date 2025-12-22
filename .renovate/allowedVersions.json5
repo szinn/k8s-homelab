@@ -4,7 +4,12 @@
     {
       matchDatasources: ["docker"],
       matchPackagePatterns: ["cloudnative-pg/postgresql"],
-      allowedVersions: "<18"
+      allowedVersions: "<19"
+    },
+    {
+      matchDatasources: ["docker"],
+      matchPackagePatterns: ["tensorchord/cloudnative-vectorchord"]
+      allowedVersions: "<19"
     },
     {
       matchDatasources: ["docker"],
