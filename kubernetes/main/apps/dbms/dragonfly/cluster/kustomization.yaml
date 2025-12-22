@@ -6,5 +6,4 @@ namespace: dragonfly-operator-system
 resources:
   - cluster.yaml
   - podmonitor.yaml
-  - grafanadatasource.yaml
   - grafanadashboard.yaml
