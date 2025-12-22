@@ -29,7 +29,6 @@ machine:
         - os:admin
     {% endif %}
     rbac: true
-    stableHostname: true
   files:
     - op: create
       path: /etc/cri/conf.d/20-customization.part
@@ -92,10 +91,6 @@ machine:
     sunrpc.tcp_slot_table_entries: "128"
     user.max_user_namespaces: "11255"
     vm.nr_hugepages: "1024"
-  time:
-    disabled: false
-    servers:
-      - 10.10.0.2
   token: op://Kubernetes/cluster-main/MACHINE_TOKEN
 cluster:
   {% if ENV.IS_CONTROLPLANE %}
@@ -191,3 +186,37 @@ apiVersion: v1alpha1
 kind: WatchdogTimerConfig
 device: /dev/watchdog0
 timeout: 5m
+---
+apiVersion: v1alpha1
+kind: TimeSyncConfig
+ntp:
+  servers:
+    - 10.10.0.2
+---
+apiVersion: v1alpha1
+kind: LinkConfig
+name: net0
+mtu: 1500
+up: true
+---
+apiVersion: v1alpha1
+kind: BondConfig
+name: bond0
+links:
+  - net0
+bondMode: active-backup
+miimon: 100
+up: true
+---
+apiVersion: v1alpha1
+kind: DHCPv4Config
+name: bond0
+---
+apiVersion: v1alpha1
+kind: VLANConfig
+name: bond0.98
+vlanID: 98
+vlanMode: 802.1q
+mtu: 1500
+parent: bond0
+up: true

@@ -83,7 +83,6 @@ gen-schematic-id:
 [doc('Render Talos config for a node')]
 render-config node:
   export IS_CONTROLPLANE="$(just talos machine-controller {{ node }})"; \
-  export NODE_HOSTNAME="{{ node }}"; \
   cp "{{ talos_dir }}/machineconfig.yaml.j2" /tmp/staging.yaml.j2; \
   cat "{{ talos_dir }}/nodes/{{ node }}.yaml" >> /tmp/staging.yaml.j2; \
   talosctl machineconfig patch <(just template "/tmp/staging.yaml.j2") \
