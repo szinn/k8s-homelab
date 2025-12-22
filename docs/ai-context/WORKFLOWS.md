@@ -74,12 +74,12 @@ spec:
           app:
             image:
               repository: ghcr.io/org/myapp
-              tag: latest@sha256:abc123...  # Always pin digest
+              tag: latest@sha256:abc123... # Always pin digest
             env:
               TZ: America/New_York
             envFrom:
               - secretRef:
-                  name: myapp-secret  # Reference ExternalSecret
+                  name: myapp-secret # Reference ExternalSecret
     service:
       app:
         controller: myapp
@@ -89,7 +89,7 @@ spec:
     route:
       app:
         parentRefs:
-          - name: envoy-external  # or envoy-internal
+          - name: envoy-external # or envoy-internal
             namespace: network
             sectionName: https
         hostnames:
@@ -113,7 +113,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ./helmrelease.yaml
-  - ./secrets.yaml  # If using ExternalSecrets
+  - ./secrets.yaml # If using ExternalSecrets
 ```
 
 **3. Create ExternalSecret** (if needed):
@@ -121,7 +121,7 @@ resources:
 ```yaml
 # kubernetes/main/apps/media/myapp/app/secrets.yaml
 ---
-apiVersion: external-secrets.io/v1beta1
+apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
   name: myapp-secret
@@ -137,7 +137,7 @@ spec:
         API_KEY: "{{ .api_key }}"
   dataFrom:
     - extract:
-        key: myapp  # 1Password item name
+        key: myapp # 1Password item name
 ```
 
 **4. Create install.yaml** (Flux entry point):
@@ -170,7 +170,7 @@ spec:
 ```yaml
 # kubernetes/main/apps/media/kustomization.yaml
 resources:
-  - ./myapp/install.yaml  # Add this line
+  - ./myapp/install.yaml # Add this line
   - ./immich/install.yaml
   - ./plex/install.yaml
 ```
@@ -295,7 +295,7 @@ flux reconcile hr myapp -n media --context main --force --reset
 ```yaml
 # kubernetes/main/apps/media/myapp/app/secrets.yaml
 ---
-apiVersion: external-secrets.io/v1beta1
+apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
   name: myapp-secret
@@ -314,7 +314,7 @@ spec:
         API_KEY: "{{ .api_key }}"
   dataFrom:
     - extract:
-        key: myapp  # 1Password item name
+        key: myapp # 1Password item name
 ```
 
 **3. Reference in HelmRelease**
@@ -332,7 +332,7 @@ envFrom:
 # kubernetes/main/apps/media/myapp/app/kustomization.yaml
 resources:
   - ./helmrelease.yaml
-  - ./secrets.yaml  # Add this
+  - ./secrets.yaml # Add this
 ```
 
 **5. Deploy**
@@ -391,13 +391,13 @@ kubectl describe hr myapp -n media --context main
 
 ### Common Failure Modes
 
-| Symptom | Cause | Fix |
-|---------|-------|-----|
+| Symptom                       | Cause                              | Fix                                                                      |
+| ----------------------------- | ---------------------------------- | ------------------------------------------------------------------------ |
 | **Install Retries Exhausted** | Missing dependency, invalid values | Check controller logs (see View Logs section), verify dependencies exist |
-| **Upgrade Failed** | Chart compatibility issue | Review chart version, check breaking changes |
-| **Reconciliation Suspended** | Manual suspension | `flux resume hr myapp -n media --context main` |
-| **Secret not found** | ExternalSecret not synced | Check `kubectl get es -n media --context main` |
-| **Image pull error** | Invalid digest, registry auth | Verify image exists, check imagePullSecrets |
+| **Upgrade Failed**            | Chart compatibility issue          | Review chart version, check breaking changes                             |
+| **Reconciliation Suspended**  | Manual suspension                  | `flux resume hr myapp -n media --context main`                           |
+| **Secret not found**          | ExternalSecret not synced          | Check `kubectl get es -n media --context main`                           |
+| **Image pull error**          | Invalid digest, registry auth      | Verify image exists, check imagePullSecrets                              |
 
 ### View Logs
 
@@ -598,11 +598,11 @@ task kubernetes:kubeconform cluster=staging
 
 ### Common Validation Errors
 
-| Error | Cause | Fix |
-|-------|-------|-----|
-| **Invalid YAML** | Syntax error | Check indentation, quotes, line breaks |
-| **Unknown field** | Typo or wrong API version | Verify field names, check API version |
-| **Missing required field** | Incomplete spec | Add required fields per schema |
+| Error                      | Cause                         | Fix                                     |
+| -------------------------- | ----------------------------- | --------------------------------------- |
+| **Invalid YAML**           | Syntax error                  | Check indentation, quotes, line breaks  |
+| **Unknown field**          | Typo or wrong API version     | Verify field names, check API version   |
+| **Missing required field** | Incomplete spec               | Add required fields per schema          |
 | **Kustomize build failed** | Missing resource or bad patch | Check kustomization.yaml resources list |
 
 ---
@@ -632,7 +632,7 @@ persistence:
     enabled: true
     storageClass: rook-ceph-block
     size: 10Gi
-    retain: true  # Keep PVC on HelmRelease delete
+    retain: true # Keep PVC on HelmRelease delete
 ```
 
 **Troubleshoot PVC not binding**:
@@ -991,13 +991,13 @@ task pre-commit:update
 
 ## Evidence
 
-| Claim | Source | Confidence |
-|-------|--------|------------|
-| Task commands require cluster parameter | `.taskfiles/*/Taskfile.yaml` | Verified |
-| Kubeconform validates both clusters | `scripts/kubeconform.sh`, `kubernetes:kubeconform` task | Verified |
-| Apps use bjw-s/app-template | `kubernetes/{main,staging}/apps/*/app/helmrelease.yaml` | Verified |
-| ExternalSecrets sync from 1Password | `kubernetes/{main,staging}/apps/*/app/secrets.yaml` | Verified |
-| Flux reconciles via install.yaml entry points | `kubernetes/{main,staging}/apps/*/install.yaml` | Verified |
-| VolSync handles backups via Restic | `.taskfiles/volsync/Taskfile.yaml` | Verified |
-| Two independent clusters | `kubernetes/main/` and `kubernetes/staging/` separate | Verified |
-| Image digests required | SHA256 digests in helmrelease.yaml files | Verified |
+| Claim                                         | Source                                                  | Confidence |
+| --------------------------------------------- | ------------------------------------------------------- | ---------- |
+| Task commands require cluster parameter       | `.taskfiles/*/Taskfile.yaml`                            | Verified   |
+| Kubeconform validates both clusters           | `scripts/kubeconform.sh`, `kubernetes:kubeconform` task | Verified   |
+| Apps use bjw-s/app-template                   | `kubernetes/{main,staging}/apps/*/app/helmrelease.yaml` | Verified   |
+| ExternalSecrets sync from 1Password           | `kubernetes/{main,staging}/apps/*/app/secrets.yaml`     | Verified   |
+| Flux reconciles via install.yaml entry points | `kubernetes/{main,staging}/apps/*/install.yaml`         | Verified   |
+| VolSync handles backups via Restic            | `.taskfiles/volsync/Taskfile.yaml`                      | Verified   |
+| Two independent clusters                      | `kubernetes/main/` and `kubernetes/staging/` separate   | Verified   |
+| Image digests required                        | SHA256 digests in helmrelease.yaml files                | Verified   |
