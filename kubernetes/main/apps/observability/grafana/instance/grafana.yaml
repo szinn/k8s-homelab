@@ -17,6 +17,8 @@ spec:
       disable_login_form: "false"
     auth.anonymous:
       enabled: "true"
+    auth.basic:
+      enabled: "true"
     log:
       mode: console
     metrics:
@@ -30,7 +32,6 @@ spec:
     server:
       enable_gzip: "true"
       root_url: https://grafana.zinn.ca
-  disableDefaultAdminSecret: true
   deployment:
     spec:
       strategy:
