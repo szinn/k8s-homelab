@@ -31,3 +31,13 @@ machine:
     - device: /dev/disk/by-id/nvme-PCIe_SSD_D6EB0703018201033336
       partitions:
         - mountpoint: /var/mnt/ssd
+---
+apiVersion: v1alpha1
+kind: HostnameConfig
+hostname: k8s-4.zinn.tech
+---
+apiVersion: v1alpha1
+kind: LinkAliasConfig
+name: net0
+selector:
+  match: mac(link.permanent_addr) == "1c:69:7a:a5:63:05"
