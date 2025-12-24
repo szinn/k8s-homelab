@@ -41,7 +41,6 @@ apiVersion: renovate-operator.mogenius.com/v1alpha1
 kind: RenovateJob
 metadata:
   name: k8s-homelab
-  namespace: renovate
 spec:
   discoveryFilter: szinn/k8s-homelab
   extraEnv:
