@@ -50,7 +50,7 @@ spec:
               - coredns
             image:
               repository: ghcr.io/qdm12/gluetun
-              tag: v3.40.3@sha256:ef4a44819a60469682c7b5e69183e6401171891feaa60186652d292c59e41b30
+              tag: v3.40.4@sha256:e10584de1f82d8999e5e6c3111901d9d56a2eed21151fb96af060f390bbdfba8
             env:
               DOT: "off"
               DNS_ADDRESS: "127.0.0.2"
