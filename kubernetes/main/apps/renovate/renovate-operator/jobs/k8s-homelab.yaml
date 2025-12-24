@@ -1,0 +1,67 @@
+---
+# yaml-language-server: $schema=https://schemas.zinn.ca/generators.external-secrets.io/githubaccesstoken_v1alpha1.json
+apiVersion: generators.external-secrets.io/v1alpha1
+kind: GithubAccessToken
+metadata:
+  name: jeeves-auth-token
+spec:
+  appID: "205374"
+  installID: "26048720"
+  auth:
+    privateKey:
+      secretRef:
+        name: jeeves-pem # reference secret from step 1.
+        key: private_key_pem
+---
+# yaml-language-server: $schema=https://schemas.zinn.ca/external-secrets.io/externalsecret_v1.json
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: jeeves-auth-token
+spec:
+  refreshInterval: 30m0s
+  target:
+    name: jeeves
+    template:
+      type: Opaque
+      engineVersion: v2
+      data:
+        GITHUB_COM_TOKEN: "{{ .token }}"
+        GITHUB_COM_USER: "c3ppbm4K"
+        RENOVATE_TOKEN: "{{ .token }}"
+  dataFrom:
+    - sourceRef:
+        generatorRef:
+          apiVersion: generators.external-secrets.io/v1alpha1
+          kind: GithubAccessToken
+          name: jeeves-auth-token
+---
+# yaml-language-server: $schema=https://schemas.zinn.ca/renovate-operator.mogenius.com/renovatejob_v1alpha1.json
+apiVersion: renovate-operator.mogenius.com/v1alpha1
+kind: RenovateJob
+metadata:
+  name: k8s-homelab
+  namespace: renovate
+spec:
+  discoveryFilter: szinn/k8s-homelab
+  extraEnv:
+    - name: LOG_LEVEL
+      value: debug
+    - name: RENOVATE_ALLOWED_COMMANDS
+      value: '["pnpm run bundle"]'
+    - name: RENOVATE_ENDPOINT
+      value: https://api.github.com/
+    - name: RENOVATE_PLATFORM
+      value: github
+    - name: RENOVATE_PLATFORM_COMMIT
+      value: "true"
+  image: ghcr.io/renovatebot/renovate:42.59.1
+  parallelism: 5
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  schedule: 0 * * * *
+  secretRef: jeeves
+  webhook:
+    enabled: true
