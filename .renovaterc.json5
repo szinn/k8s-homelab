@@ -19,6 +19,7 @@
   ],
   ignorePaths: [
     "kubernetes/main/apps/media/recyclarr/app/config/recyclarr.yaml",
+    "kubernetes/main/apps/observability/kube-prometheus-stack/app/alertmanagerconfig.yaml",
     "kubernetes/main/apps/rook-ceph/rook-ceph/add-ons/prometheus-rules.yaml",
     "kubernetes/staging/apps/rook-ceph/rook-ceph/add-ons/rules.yaml",
     "**/archive/**",

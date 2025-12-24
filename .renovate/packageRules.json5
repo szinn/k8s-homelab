@@ -32,7 +32,6 @@
         "ghcr.io/siderolabs/talosctl",
         "ghcr.io/stakater/charts/reloader"
       ],
-
       pinDigests: false
     },
     {
@@ -50,6 +49,14 @@
     {
       description: ["Don't pin digests for managers that don't need a digest"],
       matchManagers: ["flux", "helmfile"],
+      pinDigests: false
+    },
+    {
+      description: ["Don't pin digests for flux manifests"],
+      matchDatasources: ["docker"],
+      matchDepNames: [
+        "ghcr.io/controlplaneio-fluxcd/flux-operator-manifests"
+      ],
       pinDigests: false
     }
   ]

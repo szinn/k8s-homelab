@@ -16,7 +16,6 @@
       automerge: true,
       automergeType: "branch",
       matchUpdateTypes: ["minor", "patch", "digest"],
-      minimumReleaseAge: "3 days",
       ignoreTests: true
     },
     {
@@ -29,7 +28,6 @@
       automerge: true,
       automergeType: "branch",
       matchUpdateTypes: ["minor", "patch", "digest"],
-      minimumReleaseAge: "1 minute",
       ignoreTests: true
     },
     {
