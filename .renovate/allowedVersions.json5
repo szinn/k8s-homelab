@@ -9,7 +9,7 @@
     {
       matchDatasources: ["docker"],
       matchPackagePatterns: ["tensorchord/cloudnative-vectorchord"],
-      allowedVersions: "<19"
+      allowedVersions: "<18.1"
     },
     {
       matchDatasources: ["docker"],
