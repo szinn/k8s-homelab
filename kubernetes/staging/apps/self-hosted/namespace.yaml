@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=https://schemas.zinn.ca/v1/namespace.json
 apiVersion: v1
 kind: Namespace
 metadata:
