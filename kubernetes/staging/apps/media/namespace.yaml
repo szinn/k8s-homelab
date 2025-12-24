@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: media
+  name: _
   annotations:
     volsync.backube/privileged-movers: "true"
     kustomize.toolkit.fluxcd.io/prune: disabled
