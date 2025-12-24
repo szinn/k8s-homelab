@@ -21,7 +21,6 @@ includes:
   postgres: .taskfiles/Postgres
   pre-commit: .taskfiles/Pre-commit
   sops: .taskfiles/Sops
-  volsync: .taskfiles/Volsync
 
 tasks:
   default:
