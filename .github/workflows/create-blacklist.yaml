@@ -100,6 +100,6 @@ jobs:
           repo_token: ${{ steps.app-token.outputs.token }}
           file: hosts-adguard.blacklist
           asset_name: hosts-adguard.blacklist
-          tag: adguard
+          # tag: adguard
           overwrite: true
           body: "Current AdGuard blacklisted sites"
