@@ -11,7 +11,7 @@
       ignoreTests: true
     },
     {
-      description: ["Auto-merge GitHub Actions"],
+      description: ["Auto-merge GitHub actions"],
       matchManagers: ["github-actions"],
       automerge: true,
       automergeType: "branch",
@@ -19,7 +19,7 @@
       ignoreTests: true
     },
     {
-      description: "Auto-merge trusted GitHub Actions",
+      description: "Auto-merge trusted GitHub actions",
       matchManagers: ["github-actions"],
       matchPackageNames: [
         "/^actions\//",
@@ -31,7 +31,7 @@
       ignoreTests: true
     },
     {
-      description: "Auto-merge OCI Charts",
+      description: "Auto-merge OCI charts",
       matchDatasources: ["docker"],
       automerge: true,
       automergeType: "pr",
@@ -40,12 +40,21 @@
       ignoreTests: true
     },
     {
-      description: "Auto-merge GitHub Releases",
+      description: "Auto-merge GitHub releases",
       matchDatasources: ["github-releases"],
       automerge: true,
       automergeType: "branch",
       matchUpdateTypes: ["minor", "patch"],
       matchPackageNames: ["/external-dns/", "/prometheus-operator/"],
+      ignoreTests: true
+    },
+    {
+      description: "Auto-merge renovate patch relases",
+      matchDatasources: ["docker"],
+      automerge: true,
+      automergeType: "branch",
+      matchUpdateTypes: ["minor", "patch"],
+      matchPackageNames: ["ghcr.io/renovatebot/renovate"],
       ignoreTests: true
     },
     {
