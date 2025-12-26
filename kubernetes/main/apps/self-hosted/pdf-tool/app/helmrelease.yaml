@@ -36,6 +36,9 @@ spec:
             port: 8080
     route:
       internal:
+        annotations:
+          gatus.home-operations.com/endpoint: |-
+            conditions: ["[STATUS] == 401"]
         hostnames: ["{{ .Release.Name }}.zinn.ca"]
         parentRefs:
           - name: envoy-internal

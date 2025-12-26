@@ -40,26 +40,6 @@ endpoints:
     alerts:
       - type: discord
         description: "Internal DNS: Cannot reach unifi"
-  # - name: external-dns-titan
-  #   group: DNS
-  #   url: 10.0.0.9
-  #   dns:
-  #     query-name: "google.com"
-  #     query-type: "A"
-  #   conditions: ["[DNS_RCODE] == NOERROR"]
-  #   alerts:
-  #     - type: discord
-  #       description: "External DNS: Cannot reach google.com"
-  # - name: internal-dns-titan
-  #   group: DNS
-  #   url: 10.0.0.9
-  #   dns:
-  #     query-name: "unifi.zinn.tech"
-  #     query-type: "A"
-  #   conditions: ["[BODY] == 10.0.0.1", "[DNS_RCODE] == NOERROR"]
-  #   alerts:
-  #     - type: discord
-  #       description: "Internal DNS: Cannot reach unifi"
   - name: external-dns-apollo
     group: DNS
     url: 10.0.0.10
@@ -80,6 +60,7 @@ endpoints:
     alerts:
       - type: discord
         description: "Internal DNS: Cannot reach unifi"
+
   # Servers
   - name: Homelab
     group: Servers
@@ -133,13 +114,6 @@ endpoints:
     alerts:
       - type: discord
         description: "Hera down"
-  # - name: Titan
-  #   group: Servers
-  #   url: icmp://10.0.0.9
-  #   conditions: ["[CONNECTED] == true"]
-  #   alerts:
-  #     - type: discord
-  #       description: "Hera down"
   - name: Apollo
     group: Servers
     url: icmp://10.0.0.10
@@ -147,13 +121,6 @@ endpoints:
     alerts:
       - type: discord
         description: "Apollo down"
-  # - name: UNVR
-  #   group: Servers
-  #   url: icmp://10.0.0.32
-  #   conditions: ["[CONNECTED] == true"]
-  #   alerts:
-  #     - type: discord
-  #       description: "UNVR down"
   # k8s Cluster
   - name: k8s-1
     group: Kubernetes
