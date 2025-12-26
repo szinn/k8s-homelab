@@ -27,18 +27,24 @@ dns:
     - "[/zinn.tech/]10.0.0.1:53"
     - "[/10.in-addr.arpa/]10.0.0.1:53"
     - "[/1.168.192.in-addr.arpa/]10.0.0.1:53"
+    # cloudflare
     - 1.1.1.1:53
+    # Canadian Shield Private
+    - 149.112.121.10:53
+    - 149.112.122.10:53
+    # Canadian Shield Protected
+    # - 149.112.121.20:53
+    # - 149.112.122.20:53
+    # Google
     - 8.8.8.8:53
-    - 9.9.9.9:53
     # - https://dns.cloudflare.com/dns-query
     # - https://dns.quad9.net/dns-query
   upstream_dns_file: ""
   bootstrap_dns:
     - 1.1.1.1
     - 1.0.0.1
-    - 9.9.9.9
   fallback_dns: []
-  upstream_mode: load_balance
+  upstream_mode: parallel
   fastest_timeout: 1s
   allowed_clients: []
   disallowed_clients: []

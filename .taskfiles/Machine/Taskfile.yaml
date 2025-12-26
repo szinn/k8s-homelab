@@ -168,17 +168,12 @@ tasks:
     desc: Update Artemis configuration
     cmds:
       - task: update-artemis-adguard-configuration
-        vars:
-          machine_ip: 10.0.0.8
       - task: update-artemis-gatus-configuration
 
   update-artemis-adguard-configuration:
     desc: Update Artemis AdGuardHome configuration
-    requires:
-      vars:
-        - machine_ip
     cmds:
-      - cat "{{.FILES_DIR}}/adguard/AdGuardHome.yaml" | sed -e "s/MACHINE_IP/{{.machine_ip}}/" > /tmp/AdGuardHome.yaml
+      - cat "{{.FILES_DIR}}/adguard/AdGuardHome.yaml" | sed -e "s/MACHINE_IP/10.0.0.8/" > /tmp/AdGuardHome.yaml
       - scp /tmp/AdGuardHome.yaml root@artemis.zinn.tech:/opt/AdGuardHome/AdGuardHome.yaml
       - rm /tmp/AdGuardHome.yaml
       - ssh root@artemis.zinn.tech chmod og-rwx /opt/AdGuardHome/AdGuardHome.yaml
@@ -244,16 +239,11 @@ tasks:
     desc: Update Apollo configuration
     cmds:
       - task: update-apollo-adguard-configuration
-        vars:
-          machine_ip: 10.0.0.10
 
   update-apollo-adguard-configuration:
     desc: Update Apollo AdGuardHome configuration
-    requires:
-      vars:
-        - machine_ip
     cmds:
-      - cat "{{.FILES_DIR}}/adguard/AdGuardHome.yaml" | sed -e "s/MACHINE_IP/{{.machine_ip}}/" > /tmp/AdGuardHome.yaml
+      - cat "{{.FILES_DIR}}/adguard/AdGuardHome.yaml" | sed -e "s/MACHINE_IP/10.0.0.10/" > /tmp/AdGuardHome.yaml
       - scp /tmp/AdGuardHome.yaml root@apollo.zinn.tech:/opt/AdGuardHome/AdGuardHome.yaml
       - rm /tmp/AdGuardHome.yaml
       - ssh root@apollo.zinn.tech chmod og-rwx /opt/AdGuardHome/AdGuardHome.yaml
@@ -286,7 +276,7 @@ tasks:
       #   cmds:
       #     - ssh root@titan.zinn.tech wget -q https://github.com/AdguardTeam/AdGuardHome/releases/download/{{.ADGUARD_VERSION}}/AdGuardHome_linux_amd64.tar.gz -O /opt/AdGuardHome_linux_amd64.tar.gz
       #     - ssh root@titan.zinn.tech 'cd /opt && tar xf AdGuardHome_linux_amd64.tar.gz'
-      - ssh root@titan.zinn.tech 'systemctl restart AdGuardHome'
+      # - ssh root@titan.zinn.tech 'systemctl restart AdGuardHome'
 
   # restart-titan-adguard:
   #   desc: Restart Titan AdGuardHome
