@@ -9,3 +9,4 @@
 @@||update.ixsystems.com^$important
 @@||*.*.list-manage.com^$important
 @@||ctrk.klclick.com^$important
+@@||swasc.homedepot.ca^$important
