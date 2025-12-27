@@ -42,8 +42,8 @@ dns:
   upstream_dns_file: ""
   bootstrap_dns:
     - 1.1.1.1
-    - 1.0.0.1
-  fallback_dns: []
+  fallback_dns:
+    - 10.0.0.1
   upstream_mode: parallel
   fastest_timeout: 1s
   allowed_clients: []
@@ -111,7 +111,7 @@ statistics:
   enabled: true
 filters:
   - enabled: true
-    url: https://raw.githubusercontent.com/szinn/k8s-homelab/refs/heads/main/.taskfiles/Machine/files/adguard/local-whitelist-filter.txt
+    url: https://raw.githubusercontent.com/szinn/k8s-homelab/refs/heads/main/.taskfiles/Machine/files/adguard/local-allow-filter.txt
     name: Local allowed list
     id: 1
   - enabled: true
@@ -143,7 +143,7 @@ filters:
     name: Big OSID
     id: 8
   - enabled: true
-    url: https://raw.githubusercontent.com/szinn/nix-config/main/hosts/titan/config/local-custom-filter.txt
+    url: https://raw.githubusercontent.com/szinn/k8s-homelab/refs/heads/main/.taskfiles/Machine/files/adguard/local-block-filter.txt
     name: Local block list
     id: 9
 whitelist_filters: []

@@ -1,0 +1,3 @@
+# Kubernetes should not be talking to Slack at all
+||slack.com^$client='k8s-main'
+||slack.com^$client='k8s-staging'
