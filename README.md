@@ -12,7 +12,7 @@ _... managed with Flux, Renovate and GitHub_ 🤖
 
 <div align="center">
 
-[![Talos](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.zinn.ca%2Ftalos_version&style=for-the-badge&logo=talos&logoColor=white&color=blue&label=%20)](https://talos.dev)&nbsp;&nbsp;
+[![Talos](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.zinn.ca%2Ftalos_version&style=for-the-badge&logo=talos&logoColor=white&color=blue&label=%20)](https://www.talos.dev)&nbsp;&nbsp;
 [![Kubernetes](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.zinn.ca%2Fkubernetes_version&style=for-the-badge&logo=kubernetes&logoColor=white&color=blue&label=%20)](https://kubernetes.io)&nbsp;&nbsp;
 [![Flux](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.zinn.ca%2Fflux_version&style=for-the-badge&logo=flux&logoColor=white&color=blue&label=%20)](https://fluxcd.io)&nbsp;&nbsp;
 [![Renovate](https://img.shields.io/github/actions/workflow/status/szinn/k8s-homelab/renovate.yaml?branch=main&label=&logo=renovatebot&style=for-the-badge&color=blue)](https://github.com/szinn/k8s-homelab/actions/workflows/renovate.yaml)
@@ -36,7 +36,7 @@ _... managed with Flux, Renovate and GitHub_ 🤖
 
 ## Overview
 
-This is my mono repo for my home infrastructure. It's based loosely on the template at [onedr0p/flux-cluster-template](https://github.com/onedr0p/flux-cluster-template) as well as many of the exemplar repos, searchable via [https://nanne.dev/k8s-at-home-search](https://nanne.dev/k8s-at-home-search/).
+This is my mono repo for my home infrastructure. It's based loosely on the template at [onedr0p/cluster-template](https://github.com/onedr0p/cluster-template) as well as many of the exemplar repos, searchable via [https://kubesearch.dev/](https://kubesearch.dev).
 
 It follows the concept of Infrastructure as Code and by using tools such [Flux](https://github.com/fluxcd/flux2),
 [Renovate](https://github.com/renovatebot/renovate),
@@ -222,7 +222,7 @@ Maintenance of the cluster is fairly minimal.
 - flux applies any merged PRs or changes to the repo to the cluster automatically.
 
 Through Wireguard and [Kubenav](https://kubenav.io), I can pretty much manage the cluster remotely from my phone.
-On my desktop/laptop, I use [Lens](https://k8slens.dev) and `k9s` to manage the cluster which works remotely through Wireguard as well.
+On my desktop/laptop, I use [k9s](https://github.com/derailed/k9s).
 
 ## Gratitude and Thanks
 
