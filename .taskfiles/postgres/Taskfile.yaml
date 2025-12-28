@@ -9,7 +9,7 @@ tasks:
       Args:
         command: 'set' or 'unset' (required)
     cmds:
-      - kubectl cnpg --context main maintenance {{.command}} --reusePVC -n dbms postgres
+      # - kubectl cnpg --context main maintenance {{.command}} --reusePVC -n dbms postgres
       - kubectl cnpg --context main maintenance {{.command}} --reusePVC -n media immich
     requires:
       vars:
@@ -36,11 +36,6 @@ tasks:
           KUSTOMIZATION: immich
           SERVICES: deployment/immich-server
 
-  # down_all:
-  #   desc: Turn down all applications using Postgres
-  #   cmds:
-  #     - task: down_dmarc
-
   up_immich:
     desc: Turn up Immich
     cmds:
@@ -51,11 +46,6 @@ tasks:
           KUSTOMIZATION: immich
           SERVICES: deployment/immich-server
           REPLICAS: 1
-
-  # up_all:
-  #   desc: Turn up all applications using Postgres
-  #   cmds:
-  #     - task: up_dmarc
 
   restore_immich:
     desc: Restore immich database
