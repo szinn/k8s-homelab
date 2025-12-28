@@ -98,10 +98,10 @@ kubernetes/main/apps/<namespace>/<app>/
 
 **Evidence**
 
-| Claim | Source | Confidence |
-|-------|--------|------------|
-| install.yaml pattern used | `kubernetes/main/apps/media/immich/install.yaml` | Verified |
-| Subdirectory organization | `kubernetes/main/apps/media/immich/app/` and `.../db/` | Verified |
+| Claim                     | Source                                                 | Confidence |
+| ------------------------- | ------------------------------------------------------ | ---------- |
+| install.yaml pattern used | `kubernetes/main/apps/media/immich/install.yaml`       | Verified   |
+| Subdirectory organization | `kubernetes/main/apps/media/immich/app/` and `.../db/` | Verified   |
 
 ---
 
@@ -247,10 +247,10 @@ tag: v2.4.1@sha256:abc123            # Truncated digest
 
 **Evidence**
 
-| Claim | Source | Confidence |
-|-------|--------|------------|
-| Images pinned with digest | `kubernetes/main/apps/media/immich/app/helmrelease.yaml:51` | Verified |
-| Renovate updates digests | `.renovaterc.json5`, automated PRs | Verified |
+| Claim                     | Source                                                      | Confidence |
+| ------------------------- | ----------------------------------------------------------- | ---------- |
+| Images pinned with digest | `kubernetes/main/apps/media/immich/app/helmrelease.yaml:51` | Verified   |
+| Renovate updates digests  | `.renovaterc.json5`, automated PRs                          | Verified   |
 
 ---
 
@@ -341,11 +341,11 @@ machine:
 
 **Evidence**
 
-| Claim | Source | Confidence |
-|-------|--------|------------|
-| Standard Jinja2 delimiters | `kubernetes/main/talos/nodes/k8s-1.yaml.j2` | Verified |
-| Environment variable access | `.minijinja.toml:5` (env = true) | Verified |
-| Limited scope usage | Only `.j2` files in `talos/` and `bootstrap/` | Verified |
+| Claim                       | Source                                        | Confidence |
+| --------------------------- | --------------------------------------------- | ---------- |
+| Standard Jinja2 delimiters  | `kubernetes/main/talos/nodes/k8s-1.yaml.j2`   | Verified   |
+| Environment variable access | `.minijinja.toml:5` (env = true)              | Verified   |
+| Limited scope usage         | Only `.j2` files in `talos/` and `bootstrap/` | Verified   |
 
 ---
 
@@ -380,13 +380,13 @@ chore(envoy-gateway): Use trustedcidrs in client traffic policy
 
 **Depth**
 
-| Type | Use For |
-|------|---------|
-| `feat` | New app or feature |
-| `fix` | Bug fix (app or container update) |
-| `chore` | Maintenance, configuration changes |
-| `docs` | Documentation |
-| `refactor` | Code restructure |
+| Type       | Use For                            |
+| ---------- | ---------------------------------- |
+| `feat`     | New app or feature                 |
+| `fix`      | Bug fix (app or container update)  |
+| `chore`    | Maintenance, configuration changes |
+| `docs`     | Documentation                      |
+| `refactor` | Code restructure                   |
 
 **Scope**: Usually the app name or component name.
 
@@ -401,10 +401,10 @@ Co-Authored-By: Gavin <gavin@nerdz.cloud>
 
 **Evidence**
 
-| Claim | Source | Confidence |
-|-------|--------|------------|
-| Conventional commits used | `git log --oneline -10` | Verified |
-| AI pair-programming footer | `.claude/CLAUDE.md:122-127` | Verified |
+| Claim                      | Source                      | Confidence |
+| -------------------------- | --------------------------- | ---------- |
+| Conventional commits used  | `git log --oneline -10`     | Verified   |
+| AI pair-programming footer | `.claude/CLAUDE.md:122-127` | Verified   |
 
 ---
 
@@ -519,8 +519,8 @@ route:
 
 **Depth**
 
-| Gateway | Name | Namespace | Purpose |
-|---------|------|-----------|---------|
+| Gateway  | Name             | Namespace | Purpose                |
+| -------- | ---------------- | --------- | ---------------------- |
 | Internal | `envoy-internal` | `network` | Private network access |
 | External | `envoy-external` | `network` | Public internet access |
 
@@ -532,10 +532,10 @@ route:
 
 **Evidence**
 
-| Claim | Source | Confidence |
-|-------|--------|------------|
-| Gateway names | `kubernetes/main/apps/network/envoy-gateway/` | Verified |
-| Section name is https | Gateway API configuration | Verified |
+| Claim                 | Source                                        | Confidence |
+| --------------------- | --------------------------------------------- | ---------- |
+| Gateway names         | `kubernetes/main/apps/network/envoy-gateway/` | Verified   |
+| Section name is https | Gateway API configuration                     | Verified   |
 
 ---
 
@@ -862,15 +862,15 @@ op://Private/immich/mySecretPassword123
 
 ## Quick Reference
 
-| Task                      | Command                                                                         |
-| ------------------------- | ------------------------------------------------------------------------------- |
-| Validate manifests        | `task kubernetes:kubeconform cluster=main`                                      |
-| Check Flux status         | `flux get helmreleases -A --context main`                                       |
-| Force reconciliation      | `flux reconcile kustomization <name> -n flux-system --context main`             |
-| Check ExternalSecrets     | `kubectl get externalsecrets -A --context main`                                 |
-| View 1Password connection | `kubectl logs -n external-secrets deploy/onepassword-connect --context main`    |
-| List apps in namespace    | `ls kubernetes/main/apps/<namespace>/`                                          |
-| Find Jinja2 templates     | `find kubernetes/main -name "*.j2"`                                             |
+| Task                      | Command                                                                      |
+| ------------------------- | ---------------------------------------------------------------------------- |
+| Validate manifests        | `task kubernetes:kubeconform cluster=main`                                   |
+| Check Flux status         | `flux get helmreleases -A --context main`                                    |
+| Force reconciliation      | `flux reconcile kustomization <name> -n flux-system --context main`          |
+| Check ExternalSecrets     | `kubectl get externalsecrets -A --context main`                              |
+| View 1Password connection | `kubectl logs -n external-secrets deploy/onepassword-connect --context main` |
+| List apps in namespace    | `ls kubernetes/main/apps/<namespace>/`                                       |
+| Find Jinja2 templates     | `find kubernetes/main -name "*.j2"`                                          |
 
 ---
 

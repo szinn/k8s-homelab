@@ -27,12 +27,14 @@ categories: ["Documentation[100%]", "Reference[95%]"]
 ### Value Proposition
 
 **Good diagrams**:
+
 - Reveal patterns instantly (architecture, flows, relationships)
 - Show multiple dimensions simultaneously (actors, time, state)
 - Make complex systems comprehensible
 - Enable pattern recognition
 
 **Bad diagrams**:
+
 - Waste tokens on information better shown in lists
 - Confuse readers with unnecessary complexity
 - Look impressive but convey little
@@ -47,12 +49,14 @@ categories: ["Documentation[100%]", "Reference[95%]"]
 This is the cardinal rule that must never be violated.
 
 **NEVER do this**:
+
 ```mermaid
 graph LR
     A[Step 1] --> B[Step 2] --> C[Step 3] --> D[Step 4]
 ```
 
 **Always use list**:
+
 ```markdown
 1. Step 1
 2. Step 2
@@ -75,6 +79,7 @@ graph LR
 ```
 
 **Characters requiring quotes**:
+
 - Spaces: `"User Request"`
 - Parentheses: `"Process (async)"`
 - Brackets: `"Array[0]"`
@@ -82,6 +87,7 @@ graph LR
 - Commas: `"Name, Inc"`
 
 **NEVER use list-like formats in labels or relationships**:
+
 ```
 BAD: A -->|1. Do thing| B
 BAD: A["1. First step"] --> B["2. Second step"]
@@ -93,12 +99,12 @@ List numbering (1. 2. 3.) breaks Mermaid syntax. Use plain text or letters if or
 
 **Escape markdown syntax in labels and relationships**:
 
-| Character | Problem | Solution |
-|-----------|---------|----------|
-| `>` | Interpreted as arrow | `\>` or quote the label |
-| `<` | Interpreted as arrow | `\<` or quote the label |
-| `-` at start | List syntax | `\-` or rephrase |
-| `1.` at start | Numbered list | `1\.` or rephrase |
+| Character     | Problem              | Solution                |
+| ------------- | -------------------- | ----------------------- |
+| `>`           | Interpreted as arrow | `\>` or quote the label |
+| `<`           | Interpreted as arrow | `\<` or quote the label |
+| `-` at start  | List syntax          | `\-` or rephrase        |
+| `1.` at start | Numbered list        | `1\.` or rephrase       |
 
 ### Rule 3: Add Meaning Comments
 
@@ -117,6 +123,7 @@ graph TD
 ```
 
 **Essential comments**:
+
 - **MEANING**: What the diagram represents
 - **TIMING**: When things happen (sync/async/sequential)
 - **GOTCHA**: Edge cases omitted for clarity
@@ -148,16 +155,19 @@ flowchart TD
 ```
 
 **Note styling pattern**:
+
 ```
 classDef note fill:#F5F5F5,stroke:#9E9E9E,color:#616161,stroke-dasharray:3
 ```
 
 **When to use notes**:
+
 - Explaining what a decision checks
 - Adding implementation details without expanding flow
 - Providing prerequisites or dependencies
 
 **When NOT to use notes**:
+
 - Information that belongs in prose below the diagram
 - So many notes that the diagram becomes cluttered
 - Critical flow information (put that in the main diagram)
@@ -175,15 +185,15 @@ classDef note fill:#F5F5F5,stroke:#9E9E9E,color:#616161,stroke-dasharray:3
 
 ### Quick Reference Matrix
 
-| Need | Use | Avoid |
-|------|-----|-------|
-| Process with branches/decisions | Flowchart | Linear sequences |
-| Multi-party interactions over time | Sequence | Single function calls |
-| State transitions | State diagram | One-way workflows |
-| Service topology with groups | Architecture diagram | Simple trees (<10 nodes) |
-| Project schedule with dependencies | Gantt | Historical events |
-| Historical events/releases | Timeline | Future planning |
-| Concept hierarchy | Mindmap | Workflows |
+| Need                               | Use                  | Avoid                    |
+| ---------------------------------- | -------------------- | ------------------------ |
+| Process with branches/decisions    | Flowchart            | Linear sequences         |
+| Multi-party interactions over time | Sequence             | Single function calls    |
+| State transitions                  | State diagram        | One-way workflows        |
+| Service topology with groups       | Architecture diagram | Simple trees (<10 nodes) |
+| Project schedule with dependencies | Gantt                | Historical events        |
+| Historical events/releases         | Timeline             | Future planning          |
+| Concept hierarchy                  | Mindmap              | Workflows                |
 
 ---
 
@@ -196,6 +206,7 @@ classDef note fill:#F5F5F5,stroke:#9E9E9E,color:#616161,stroke-dasharray:3
 **Don't use for**: Linear sequences (use list), simple hierarchies.
 
 **Example**:
+
 ```mermaid
 flowchart TD
     Start["Git Push"] --> Render{Rendered?}
@@ -219,6 +230,7 @@ flowchart TD
 ```
 
 **Best practices**:
+
 - Use diamonds `{}` for decisions (visually distinct)
 - Color-code paths (success/error/info)
 - Keep to <=12 nodes (split complex flows)
@@ -231,6 +243,7 @@ flowchart TD
 **Don't use for**: Single-function execution, linear workflows.
 
 **Example**:
+
 ```mermaid
 sequenceDiagram
     participant Dev
@@ -253,6 +266,7 @@ sequenceDiagram
 ```
 
 **Best practices**:
+
 - Use `Note` for context at key points
 - Activation boxes (`+`/`-`) show active processing
 - Keep to <=6 participants
@@ -264,6 +278,7 @@ sequenceDiagram
 **Don't use for**: Static structure, one-time processes.
 
 **Example**:
+
 ```mermaid
 stateDiagram-v2
     [*] --> Pending
@@ -283,6 +298,7 @@ stateDiagram-v2
 ```
 
 **Best practices**:
+
 - Show ALL valid transitions
 - Label transitions with trigger events
 - Include reverse transitions where valid
@@ -294,6 +310,7 @@ stateDiagram-v2
 **Don't use for**: Simple trees (<10 nodes), data flows.
 
 **Example**:
+
 ```mermaid
 architecture-beta
     group cluster(cloud)[Kubernetes Cluster]
@@ -324,6 +341,7 @@ architecture-beta
 **Color should convey meaning consistently and remain readable across all viewing conditions.**
 
 Three core principles:
+
 1. **Consistency**: Colors must mean the same thing throughout the diagram
 2. **Readability**: Must work in both light and dark modes with sufficient contrast
 3. **Documentation**: Always explain what colors represent
@@ -332,30 +350,24 @@ Three core principles:
 
 ```css
 /* Success / Valid / Ready */
---success: fill:#90EE90,stroke:#2E7D32,color:#000
-
-/* Error / Invalid / Failed */
---error: fill:#FFB6C1,stroke:#C62828,color:#000
-
-/* Warning / Conditional / Pending */
---warning: fill:#FFE082,stroke:#F57C00,color:#000
-
-/* Information / Neutral / Primary */
---info: fill:#81D4FA,stroke:#0277BD,color:#000
-
-/* Disabled / Note / Secondary */
---disabled: fill:#E0E0E0,stroke:#616161,color:#000
+--success:
+  fill: #90ee90, stroke: #2e7d32, color: #000 /* Error / Invalid / Failed */ --error: fill: #ffb6c1, stroke: #c62828,
+  color: #000 /* Warning / Conditional / Pending */ --warning: fill: #ffe082, stroke: #f57c00,
+  color: #000 /* Information / Neutral / Primary */ --info: fill: #81d4fa, stroke: #0277bd,
+  color: #000 /* Disabled / Note / Secondary */ --disabled: fill: #e0e0e0, stroke: #616161, color: #000;
 ```
 
 ### Accessibility Requirements
 
 **Non-negotiable standards**:
+
 - **Always explain colors** in `%% COLOR:` comment
 - **Never rely on color alone** - use shapes, labels, patterns as additional indicators
 - **Maintain 3:1 contrast ratio minimum** (WCAG AA)
 - **Test in both light and dark mode**
 
 **Example**:
+
 ```mermaid
 graph LR
     A[Start] --> B{Valid?}
@@ -376,6 +388,7 @@ graph LR
 Before committing any diagram:
 
 ### Content
+
 - [ ] **No linear sequences** (use list instead) - CARDINAL RULE
 - [ ] All labels with spaces are quoted
 - [ ] Meaning comment explains purpose
@@ -384,12 +397,14 @@ Before committing any diagram:
 - [ ] Right diagram type for the content
 
 ### Accessibility
+
 - [ ] Black text on light backgrounds (`color:#000`)
 - [ ] 3:1 contrast minimum (WCAG AA)
 - [ ] Not relying on color alone (shapes/labels/borders)
 - [ ] Legend provided (via comment) if colors used
 
 ### Clarity
+
 - [ ] Could this be simpler? (list, table)
 - [ ] Is relationship/flow clear?
 - [ ] Are edge labels descriptive?
@@ -397,6 +412,7 @@ Before committing any diagram:
 - [ ] One clear message/purpose
 
 ### Technical
+
 - [ ] Renders without errors
 - [ ] No overlapping edges
 - [ ] Markdown syntax escaped in labels
@@ -417,15 +433,18 @@ Before committing any diagram:
 ### When to Use Each Type
 
 **Process & Logic**:
+
 - Branches/decisions -> Flowchart
 - Multi-party interactions -> Sequence
 - State transitions -> State diagram
 
 **Structure**:
+
 - Service topology -> Architecture diagram
 - Concept breakdown -> Mindmap
 
 **Time-Based**:
+
 - Project schedule -> Gantt
 - Historical events -> Timeline
 

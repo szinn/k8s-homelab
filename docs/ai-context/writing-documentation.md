@@ -24,18 +24,22 @@ This is the foundational philosophy. Read this first, then use specialized guide
 Every documentation file includes frontmatter defining its purpose and content:
 
 **description** - One-sentence value proposition telling you if this is what you need
+
 - Format: `[What this does] - [key approach/benefit]`
 - Should be specific, not vague
 
 **tags** - Specific searchable keywords for concepts, technologies, and techniques covered
+
 - Format: List of concrete terms
 - Should NOT duplicate categories or title
 - Use capsule names from the document (preserve CamelCase for token efficiency)
 
 **audience** - Who this is written for (indicates style and density)
+
 - Options: `"LLMs"` (high-density, AI-optimized), `"Humans"` (scannable, motivational)
 
 **categories** - Document type and thematic classification with strength indicators
+
 - Format: 1-2 categories
 - Strength: `[0-100%]` indicating theme intensity
 - Common types: Philosophy, How-To, Reference, Format-Specification
@@ -56,6 +60,7 @@ Documentation is not a dump of facts but a **lattice of retrieval cues**. Both h
 ## Core Principles
 
 Each principle includes **Applicability** scores:
+
 - **Human**: How much this improves human comprehension (100% = critical)
 - **LLM**: How much this improves LLM retrieval (100% = critical)
 
@@ -71,12 +76,14 @@ Both biological and artificial minds exhibit:
 - **Associative retrieval** - Consistent cues trigger memories
 
 **Example**:
+
 ```markdown
 BAD: "The system uses various approaches depending on factors..."
 GOOD:
-  1. Secrets -> ExternalSecrets from 1Password
-  2. Config -> Jinja2 templates
-  3. Manifests -> Flux HelmReleases
+
+1. Secrets -> ExternalSecrets from 1Password
+2. Config -> Jinja2 templates
+3. Manifests -> Flux HelmReleases
 ```
 
 **Why this matters**: Both human short-term memory (7+/-2 items) and transformer attention windows benefit from chunking and structure.
@@ -93,12 +100,14 @@ Modern LLMs use subword tokenization that affects concept integrity:
 - Novel terms -> Fragment unpredictably
 
 **Example**:
+
 ```markdown
 GOOD: "HelmRelease" (1-2 tokens)
 BAD: "helm release configuration resource" (5-6 tokens)
 ```
 
 **Why this matters**: Token efficiency directly impacts:
+
 - Context window utilization
 - Retrieval precision (fewer tokens = tighter semantic encoding)
 - Embedding quality (compact concepts embed better)
@@ -121,6 +130,7 @@ Core truth in <=30 tokens, timeless, no versions/dates
 Concrete instance in <=5 lines
 
 **Depth**
+
 - Distinction: How this differs from similar concepts
 - Trade-off: What you gain vs lose
 - NotThis: Common misconceptions
@@ -141,6 +151,7 @@ Modern systems chunk documents for embedding search. Design for this:
 - **Self-contained chunks** (each under 300 tokens)
 
 **Example**:
+
 ```markdown
 ## [Secrets] 1Password Integration
 
@@ -159,6 +170,7 @@ HelmReleases consume secrets via secretRef or envFrom.
 Combine text, structure, and visuals to create multiple retrieval paths to the same wisdom.
 
 **Mermaid diagrams with assistive comments**:
+
 ```mermaid
 graph LR
     A["Git Push"] --> B["Flux Sync"]
@@ -185,6 +197,7 @@ See [mermaid-diagram-guide.md](./mermaid-diagram-guide.md) for comprehensive ref
 Comprehensive, authoritative documents on specific concepts.
 
 **Characteristics**:
+
 - Deep technical details
 - Edge cases and exceptions
 - Rationale and context
@@ -192,6 +205,7 @@ Comprehensive, authoritative documents on specific concepts.
 - Location: Specific manifests, configs, scripts
 
 **Example structure**:
+
 ```markdown
 # Flux HelmRelease Pattern
 
@@ -207,12 +221,15 @@ Flux manages Helm deployments declaratively via HelmRelease resources.
 [Distinctions, trade-offs, boundaries]
 
 ## Detailed Behavior
+
 [Comprehensive explanation]
 
 ## Configuration Guide
+
 [Patterns with examples]
 
 ## Edge Cases
+
 [What happens when...]
 ```
 
@@ -221,6 +238,7 @@ Flux manages Helm deployments declaratively via HelmRelease resources.
 Practical guides that combine multiple concepts.
 
 **Characteristics**:
+
 - 80% of value in 20% of tokens
 - Clear links to source configs
 - Unified examples showing interaction
@@ -228,6 +246,7 @@ Practical guides that combine multiple concepts.
 - Location: `docs/ai-context/`
 
 **Example structure**:
+
 ```markdown
 # Deploying an App (Synthesis)
 
@@ -237,11 +256,13 @@ Practical guides that combine multiple concepts.
 Apps deploy via the install.yaml + HelmRelease + ExternalSecret triad.
 
 **Core Components** (details in manifests):
+
 - [Install.yaml](kubernetes/main/apps/...) - Flux Kustomization wrapper
 - [HelmRelease](kubernetes/main/apps/...) - Helm configuration
 - [ExternalSecret](kubernetes/main/apps/...) - Secret population
 
 **Unified Workflow**:
+
 1. Create app folder structure
 2. Define HelmRelease with bjw-s/app-template
 3. Configure ExternalSecret for 1Password
@@ -269,18 +290,20 @@ Your documentation succeeds when:
 
 ### When to Use Each Format
 
-| Need | Format | Guide |
-|------|--------|-------|
-| Token-efficient concept | Capsule | [writing-capsules.md](./writing-capsules.md) |
-| Visual relationships/flows | Mermaid diagram | [mermaid-diagram-guide.md](./mermaid-diagram-guide.md) |
-| Comprehensive concept explanation | Knowledge Base (Tier 1) | This guide |
-| Quick task-oriented guide | Synthesis (Tier 2) | This guide |
+| Need                              | Format                  | Guide                                                  |
+| --------------------------------- | ----------------------- | ------------------------------------------------------ |
+| Token-efficient concept           | Capsule                 | [writing-capsules.md](./writing-capsules.md)           |
+| Visual relationships/flows        | Mermaid diagram         | [mermaid-diagram-guide.md](./mermaid-diagram-guide.md) |
+| Comprehensive concept explanation | Knowledge Base (Tier 1) | This guide                                             |
+| Quick task-oriented guide         | Synthesis (Tier 2)      | This guide                                             |
 
 ### Essential Patterns
 
 **Chunking** (3-7 items):
+
 ```markdown
 GOOD:
+
 1. Create folder structure
 2. Define HelmRelease
 3. Configure secrets
@@ -291,6 +314,7 @@ BAD (no structure):
 ```
 
 **Primacy/Recency** (critical info at start/end):
+
 ```markdown
 GOOD:
 **Critical**: Main and staging clusters are independent; changes affect only one cluster.
@@ -303,6 +327,7 @@ BAD:
 ```
 
 **Progressive Disclosure** (overview -> detail -> comprehensive):
+
 ```markdown
 GOOD:
 CLAUDE.md: "Two clusters: main (production) + staging (testing)" (with link)
@@ -317,13 +342,13 @@ Repeating same content at each level
 
 ### Token Optimization
 
-| Instead of | Use | Tokens Saved |
-|------------|-----|--------------|
-| "kubernetes manifest file" | manifest | 2-3 |
-| "the process of deploying" | deployment | 2-3 |
-| "in order to" | to | 2 |
-| "due to the fact that" | because | 3 |
-| "at this point in time" | now | 3 |
+| Instead of                 | Use        | Tokens Saved |
+| -------------------------- | ---------- | ------------ |
+| "kubernetes manifest file" | manifest   | 2-3          |
+| "the process of deploying" | deployment | 2-3          |
+| "in order to"              | to         | 2            |
+| "due to the fact that"     | because    | 3            |
+| "at this point in time"    | now        | 3            |
 
 ### Mermaid Quick Rules
 
@@ -340,6 +365,7 @@ See [mermaid-diagram-guide.md](./mermaid-diagram-guide.md) for complete referenc
 ## The Meta-Pattern
 
 This guide demonstrates the principles:
+
 - **Capsules** introduce each concept
 - **Examples** ground abstractions
 - **Two-tier** structure (this guide + specialized guides)
@@ -350,4 +376,4 @@ Remember: We're not writing documentation. We're encoding **wisdom triggers** th
 
 ---
 
-*Now read the specialized guides and apply these principles.*
+_Now read the specialized guides and apply these principles._

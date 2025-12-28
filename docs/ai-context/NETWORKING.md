@@ -23,6 +23,7 @@ Main cluster LoadBalancer IPs come from 10.11.1.2-127; staging cluster LoadBalan
 //BOUNDARY: Network isolation prevents accidental cross-cluster traffic.
 
 **Depth**
+
 - Distinction: Physical network separation ensures production isolation
 - Trade-off: Cannot route directly between clusters but ensures clean separation
 - Networks: Main uses VLAN 10.11.0.0/16, staging uses VLAN 10.12.0.0/16
@@ -36,36 +37,36 @@ Main cluster LoadBalancer IPs come from 10.11.1.2-127; staging cluster LoadBalan
 
 #### Cluster LoadBalancer IPs (Cilium LB-IPAM)
 
-| IP | Service | Purpose |
-|----|---------|---------|
-| 10.11.1.21 | envoy-internal | Internal/LAN traffic gateway |
+| IP         | Service        | Purpose                                   |
+| ---------- | -------------- | ----------------------------------------- |
+| 10.11.1.21 | envoy-internal | Internal/LAN traffic gateway              |
 | 10.11.1.22 | envoy-external | External traffic gateway (via Cloudflare) |
 
 #### IP Pools
 
-| Range | Purpose |
-|-------|---------|
-| 10.11.0.15/32 | Reserved single IP |
-| 10.11.1.2 - 10.11.1.127 | LoadBalancer IP pool |
-| 10.201.0.0/16 | Pod CIDR (native routing) |
-| 10.200.0.10 | CoreDNS service ClusterIP |
+| Range                   | Purpose                   |
+| ----------------------- | ------------------------- |
+| 10.11.0.15/32           | Reserved single IP        |
+| 10.11.1.2 - 10.11.1.127 | LoadBalancer IP pool      |
+| 10.201.0.0/16           | Pod CIDR (native routing) |
+| 10.200.0.10             | CoreDNS service ClusterIP |
 
 ### Staging Cluster (10.12.x.x)
 
 #### Cluster LoadBalancer IPs (Cilium LB-IPAM)
 
-| IP | Service | Purpose |
-|----|---------|---------|
+| IP         | Service        | Purpose                      |
+| ---------- | -------------- | ---------------------------- |
 | 10.12.1.21 | envoy-internal | Internal/LAN traffic gateway |
-| 10.12.1.22 | envoy-external | External traffic gateway |
+| 10.12.1.22 | envoy-external | External traffic gateway     |
 
 #### IP Pools
 
-| Range | Purpose |
-|-------|---------|
-| 10.12.0.15/32 | Reserved single IP |
-| 10.12.1.2 - 10.12.1.127 | LoadBalancer IP pool |
-| 10.202.0.0/16 | Pod CIDR (native routing) |
+| Range                   | Purpose                   |
+| ----------------------- | ------------------------- |
+| 10.12.0.15/32           | Reserved single IP        |
+| 10.12.1.2 - 10.12.1.127 | LoadBalancer IP pool      |
+| 10.202.0.0/16           | Pod CIDR (native routing) |
 
 ---
 
@@ -77,6 +78,7 @@ Main cluster LoadBalancer IPs come from 10.11.1.2-127; staging cluster LoadBalan
 Apps route through Envoy Gateway using Gateway API HTTPRoute; external gateway for public traffic, internal gateway for LAN-only traffic.
 
 **Example**
+
 ```yaml
 route:
   internal-app:
@@ -89,9 +91,11 @@ route:
           - name: home-assistant
             port: 8123
 ```
+
 //BOUNDARY: HTTPRoute without parentRefs or with wrong gateway name fails to route traffic.
 
 **Depth**
+
 - Distinction: envoy-internal (10.11.1.21) vs envoy-external (10.11.1.22) control access path
 - Trade-off: Explicit gateway selection vs implicit routing
 - NotThis: Old Kubernetes Ingress resources (Gateway API is the standard)
@@ -105,6 +109,7 @@ route:
 #### Main Cluster Gateways
 
 **envoy-external** (10.11.1.21)
+
 ```yaml
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
@@ -131,6 +136,7 @@ spec:
 ```
 
 **envoy-internal** (10.11.1.21)
+
 ```yaml
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
@@ -157,6 +163,7 @@ spec:
 ```
 
 **Key Features**:
+
 - Both gateways support HTTP (port 80) with automatic redirect to HTTPS
 - TLS termination at gateway with wildcard certificates
 - Cross-namespace routing (`from: All`) allows any namespace to route through gateways
@@ -171,6 +178,7 @@ HTTPRoute defines hostname, parent gateway, and backend service; external-dns wa
 
 **Example**
 Internal-only app (Grafana):
+
 ```yaml
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
@@ -189,6 +197,7 @@ spec:
 ```
 
 **Depth**
+
 - Components: hostnames (DNS names), parentRefs (which gateway), backendRefs (target service)
 - Annotations: No explicit external-dns annotation means no DNS record created (manual DNS required)
 - NotThis: HTTPRoute alone doesn't create DNS records without external-dns annotations
@@ -206,6 +215,7 @@ external-dns-cloudflare watches HTTPRoutes with `external-dns.alpha.kubernetes.i
 
 **Example**
 HTTPRoute with external-dns annotation:
+
 ```yaml
 metadata:
   annotations:
@@ -214,10 +224,12 @@ spec:
   hostnames:
     - app.${SECRET_DOMAIN}
 ```
+
 Creates CNAME: `app.${SECRET_DOMAIN}` → `external.${SECRET_DOMAIN}` in Cloudflare.
 //BOUNDARY: Missing annotation means no DNS record created; app unreachable from internet.
 
 **Depth**
+
 - Provider: Cloudflare DNS with API token from ExternalSecret
 - Filter: Only processes HTTPRoutes matching `gateway-name=envoy-external`
 - Proxied: Records created with Cloudflare proxy enabled (orange cloud)
@@ -235,6 +247,7 @@ CoreDNS handles cluster DNS and forwards external queries to upstream resolver.
 Pod queries `grafana.${SECRET_DOMAIN}` → CoreDNS forwards to upstream resolver → returns appropriate IP based on DNS configuration.
 
 **Depth**
+
 - Service: CoreDNS runs on control plane nodes with ClusterIP 10.200.0.10 (main) / 10.200.0.10 (staging)
 - Zones: `cluster.local` for internal cluster DNS, `.` forwarded to `/etc/resolv.conf`
 - Plugins: kubernetes, forward, cache (30s prefetch), autopath, prometheus
@@ -242,6 +255,7 @@ Pod queries `grafana.${SECRET_DOMAIN}` → CoreDNS forwards to upstream resolver
 - SeeAlso: `ExternalDNSIntegration`
 
 **CoreDNS Configuration**:
+
 ```yaml
 servers:
   - zones:
@@ -270,6 +284,7 @@ Cilium provides eBPF-based networking with native routing, LoadBalancer IP alloc
 
 **Example**
 Service with LoadBalancer type gets IP from Cilium pool:
+
 ```yaml
 apiVersion: v1
 kind: Service
@@ -280,9 +295,11 @@ metadata:
 spec:
   type: LoadBalancer
 ```
+
 Cilium assigns 10.11.1.22, traffic routes directly to service endpoints.
 
 **Depth**
+
 - Mode: Native routing with kube-proxy replacement (eBPF)
 - LoadBalancer: DSR (Direct Server Return) mode for optimal performance
 - BGP: Disabled (uses L2 announcements or relies on upstream router configuration)
@@ -292,16 +309,16 @@ Cilium assigns 10.11.1.22, traffic routes directly to service endpoints.
 
 **Key Features Enabled**:
 
-| Feature | Value | Purpose |
-|---------|-------|---------|
-| kubeProxyReplacement | true | eBPF-based service routing |
-| loadBalancer.mode | dsr | Direct Server Return for client IP preservation |
-| loadBalancer.algorithm | maglev | Consistent hashing load distribution |
-| bandwidthManager | enabled, bbr: true | TCP BBR congestion control |
-| bpf.masquerade | true | eBPF-based SNAT for pod egress |
-| bpf.datapathMode | netkit | Modern eBPF datapath |
-| routingMode | native | Native routing without encapsulation |
-| autoDirectNodeRoutes | true | Direct node-to-node routing |
+| Feature                | Value              | Purpose                                         |
+| ---------------------- | ------------------ | ----------------------------------------------- |
+| kubeProxyReplacement   | true               | eBPF-based service routing                      |
+| loadBalancer.mode      | dsr                | Direct Server Return for client IP preservation |
+| loadBalancer.algorithm | maglev             | Consistent hashing load distribution            |
+| bandwidthManager       | enabled, bbr: true | TCP BBR congestion control                      |
+| bpf.masquerade         | true               | eBPF-based SNAT for pod egress                  |
+| bpf.datapathMode       | netkit             | Modern eBPF datapath                            |
+| routingMode            | native             | Native routing without encapsulation            |
+| autoDirectNodeRoutes   | true               | Direct node-to-node routing                     |
 
 ---
 
@@ -312,6 +329,7 @@ Cilium LB-IPAM allocates LoadBalancer IPs from defined pools; services request s
 
 **Example**
 Main cluster IP pool:
+
 ```yaml
 apiVersion: cilium.io/v2
 kind: CiliumLoadBalancerIPPool
@@ -326,6 +344,7 @@ spec:
 ```
 
 **Depth**
+
 - Allocation: Services annotated with `lbipam.cilium.io/ips: <IP>` get specific IP
 - Pool: Main cluster uses 10.11.1.2-127, staging uses 10.12.1.2-127
 - Mode: DSR mode means external client IP preserved to backend pods
@@ -343,6 +362,7 @@ Cloudflared tunnel connects cluster to Cloudflare edge via QUIC; external traffi
 
 **Example**
 Cloudflared configuration:
+
 ```yaml
 ingress:
   - hostname: "*.${SECRET_DOMAIN}"
@@ -354,6 +374,7 @@ ingress:
 ```
 
 **Depth**
+
 - Protocol: QUIC transport with post-quantum encryption
 - Replicas: 2 pods for high availability
 - Target: Routes all wildcard traffic to envoy-external gateway
@@ -370,12 +391,15 @@ External-DNS creates proxied (orange cloud) Cloudflare DNS records; Cloudflare p
 
 **Example**
 external-dns creates CNAME with proxy enabled:
+
 ```
 app.${SECRET_DOMAIN} → external.${SECRET_DOMAIN} (proxied)
 ```
+
 Internet clients resolve to Cloudflare edge IP, traffic proxied through Cloudflare before tunnel.
 
 **Depth**
+
 - Flag: `--cloudflare-proxied` in external-dns configuration
 - Protection: Cloudflare WAF, DDoS protection, rate limiting applied
 - Trade-off: Extra hop but significant security and performance benefits
@@ -393,6 +417,7 @@ cert-manager issues wildcard certificates from Let's Encrypt; certificates refer
 
 **Example**
 Wildcard certificate for main cluster:
+
 ```yaml
 apiVersion: cert-manager.io/v1
 kind: Certificate
@@ -409,6 +434,7 @@ spec:
 ```
 
 **Depth**
+
 - Issuer: Let's Encrypt production (ClusterIssuer)
 - Challenge: DNS-01 via Cloudflare API (for wildcard certificates)
 - Secret: Certificate stored in Secret, referenced by Gateway listeners
@@ -425,6 +451,7 @@ TLS terminates at Envoy Gateway; backend communication uses HTTP within cluster.
 
 **Example**
 Gateway TLS configuration:
+
 ```yaml
 listeners:
   - name: https
@@ -438,6 +465,7 @@ listeners:
 ```
 
 **Depth**
+
 - Mode: Terminate (not Passthrough) - gateway decrypts traffic
 - Backend: HTTPRoute backendRefs use HTTP to cluster services
 - Certificates: Wildcard cert covers all subdomains
@@ -455,6 +483,7 @@ listeners:
 ClientTrafficPolicy configures client-facing behavior at gateway; applies to all HTTPRoutes using the gateway.
 
 **Example**
+
 ```yaml
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: ClientTrafficPolicy
@@ -464,7 +493,7 @@ spec:
   clientIPDetection:
     xForwardedFor:
       trustedCIDRs:
-        - 10.201.0.0/16  # Trust pod CIDR
+        - 10.201.0.0/16 # Trust pod CIDR
   http2:
     initialStreamWindowSize: 2Mi
     initialConnectionWindowSize: 32Mi
@@ -480,6 +509,7 @@ spec:
 ```
 
 **Depth**
+
 - Target: Applies to all Gateway resources in namespace
 - IP Detection: Trusts X-Forwarded-For from pod CIDR
 - Protocols: HTTP/2, HTTP/3 enabled
@@ -494,6 +524,7 @@ spec:
 BackendTrafficPolicy configures backend communication; applies compression, timeouts, and connection settings.
 
 **Example**
+
 ```yaml
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: BackendTrafficPolicy
@@ -508,13 +539,14 @@ spec:
     bufferLimit: 64Mi
   timeout:
     http:
-      requestTimeout: 0s  # No timeout
+      requestTimeout: 0s # No timeout
   targetSelectors:
     - group: gateway.networking.k8s.io
       kind: Gateway
 ```
 
 **Depth**
+
 - Compression: Negotiates best available (Zstd, Brotli, Gzip)
 - Buffers: 64Mi backend buffer limit
 - Timeouts: Disabled by default (0s)
@@ -532,6 +564,7 @@ External internet traffic routes via Cloudflare edge → tunnel → envoy-extern
 
 **Example**
 User requests `app.${SECRET_DOMAIN}`:
+
 1. DNS resolves to Cloudflare edge IP (proxied)
 2. Cloudflare terminates TLS, applies WAF
 3. Traffic tunnels via QUIC to cloudflared pod
@@ -540,6 +573,7 @@ User requests `app.${SECRET_DOMAIN}`:
 6. Backend service receives HTTP request
 
 **Depth**
+
 - Double TLS: Cloudflare terminates, then Envoy terminates (end-to-end encryption)
 - Protocols: QUIC (internet → cluster), HTTP/2 (tunnel → gateway), HTTP (gateway → service)
 - Protection: Cloudflare WAF, DDoS protection before reaching cluster
@@ -554,12 +588,14 @@ Internal LAN traffic routes directly to envoy-internal gateway; no tunnel traver
 
 **Example**
 LAN client requests `grafana.${SECRET_DOMAIN}`:
+
 1. DNS resolves to internal.${SECRET_DOMAIN} (manual DNS or upstream)
 2. Client connects directly to 10.11.1.21:443
 3. Envoy terminates TLS, routes via HTTPRoute
 4. Backend service receives HTTP request
 
 **Depth**
+
 - Direct: No Cloudflare, no tunnel, direct HTTPS to gateway
 - Performance: Lower latency than external path
 - Access: Requires LAN or VPN access to reach 10.11.1.21
@@ -575,6 +611,7 @@ LAN client requests `grafana.${SECRET_DOMAIN}`:
 Apps accessible only from internet via Cloudflare tunnel.
 
 **Configuration**:
+
 ```yaml
 route:
   app:
@@ -585,6 +622,7 @@ route:
 ```
 
 **Access**:
+
 - Internet: Via Cloudflare → tunnel → envoy-external ✓
 - LAN: Via Cloudflare → tunnel → envoy-external (hairpin)
 
@@ -595,6 +633,7 @@ route:
 Apps accessible only from LAN/VPN, no internet exposure.
 
 **Configuration**:
+
 ```yaml
 route:
   app:
@@ -605,6 +644,7 @@ route:
 ```
 
 **Access**:
+
 - Internet: No DNS record, unreachable ✗
 - LAN: Direct to envoy-internal ✓
 
@@ -631,6 +671,7 @@ Cluster does not use a service mesh (Istio, Linkerd); Envoy Gateway provides edg
 Pod-to-pod communication uses Cilium CNI directly; no service mesh mTLS or observability sidecars.
 
 **Depth**
+
 - Trade-off: Simpler architecture vs service mesh features (mTLS, advanced observability)
 - Routing: Gateway API provides north-south traffic; Cilium provides east-west (pod-to-pod)
 - NotThis: Envoy Gateway is not a service mesh, only an ingress/edge gateway
@@ -717,18 +758,18 @@ kubectl --context staging describe clienttrafficpolicy envoy -n network
 
 ## Evidence
 
-| Claim | Source | Cluster | Confidence |
-|-------|--------|---------|------------|
-| Main cluster uses 10.11.x.x | `kubernetes/main/apps/kube-system/cilium/config/lb-pool.yaml:10` | main | Verified |
-| Staging cluster uses 10.12.x.x | `kubernetes/staging/apps/kube-system/cilium/config/lb-pool.yaml:9` | staging | Verified |
-| envoy-external at 10.11.1.22 | `kubernetes/main/apps/network/envoy-gateway/config/external.yaml:14` | main | Verified |
-| envoy-internal at 10.11.1.21 | `kubernetes/main/apps/network/envoy-gateway/config/internal.yaml:14` | main | Verified |
-| Staging envoy-internal at 10.12.1.21 | `kubernetes/staging/apps/network/envoy-gateway/config/internal.yaml:14` | staging | Verified |
-| Cilium DSR mode | `kubernetes/main/apps/kube-system/cilium/app/helmrelease.yaml:117` | main | Verified |
-| Cilium native routing | `kubernetes/main/apps/kube-system/cilium/app/helmrelease.yaml:143` | main | Verified |
-| CoreDNS ClusterIP 10.200.0.10 | `kubernetes/main/apps/kube-system/coredns/app/helmrelease.yaml:22` | main | Verified |
-| External-DNS Cloudflare proxied | `kubernetes/main/apps/network/external-dns/cloudflare/helmrelease.yaml:41` | main | Verified |
-| Cloudflared QUIC transport | `kubernetes/main/apps/network/cloudflare-tunnel/app/helmrelease.yaml:47` | main | Verified |
-| ClientTrafficPolicy trusts pod CIDR | `kubernetes/main/apps/network/envoy-gateway/config/envoy.yaml:75` | main | Verified |
-| BackendTrafficPolicy compression | `kubernetes/main/apps/network/envoy-gateway/config/envoy.yaml:52-55` | main | Verified |
-| Gateway wildcard TLS | `kubernetes/main/apps/network/envoy-gateway/config/internal.yaml:31` | main | Verified |
+| Claim                                | Source                                                                     | Cluster | Confidence |
+| ------------------------------------ | -------------------------------------------------------------------------- | ------- | ---------- |
+| Main cluster uses 10.11.x.x          | `kubernetes/main/apps/kube-system/cilium/config/lb-pool.yaml:10`           | main    | Verified   |
+| Staging cluster uses 10.12.x.x       | `kubernetes/staging/apps/kube-system/cilium/config/lb-pool.yaml:9`         | staging | Verified   |
+| envoy-external at 10.11.1.22         | `kubernetes/main/apps/network/envoy-gateway/config/external.yaml:14`       | main    | Verified   |
+| envoy-internal at 10.11.1.21         | `kubernetes/main/apps/network/envoy-gateway/config/internal.yaml:14`       | main    | Verified   |
+| Staging envoy-internal at 10.12.1.21 | `kubernetes/staging/apps/network/envoy-gateway/config/internal.yaml:14`    | staging | Verified   |
+| Cilium DSR mode                      | `kubernetes/main/apps/kube-system/cilium/app/helmrelease.yaml:117`         | main    | Verified   |
+| Cilium native routing                | `kubernetes/main/apps/kube-system/cilium/app/helmrelease.yaml:143`         | main    | Verified   |
+| CoreDNS ClusterIP 10.200.0.10        | `kubernetes/main/apps/kube-system/coredns/app/helmrelease.yaml:22`         | main    | Verified   |
+| External-DNS Cloudflare proxied      | `kubernetes/main/apps/network/external-dns/cloudflare/helmrelease.yaml:41` | main    | Verified   |
+| Cloudflared QUIC transport           | `kubernetes/main/apps/network/cloudflare-tunnel/app/helmrelease.yaml:47`   | main    | Verified   |
+| ClientTrafficPolicy trusts pod CIDR  | `kubernetes/main/apps/network/envoy-gateway/config/envoy.yaml:75`          | main    | Verified   |
+| BackendTrafficPolicy compression     | `kubernetes/main/apps/network/envoy-gateway/config/envoy.yaml:52-55`       | main    | Verified   |
+| Gateway wildcard TLS                 | `kubernetes/main/apps/network/envoy-gateway/config/internal.yaml:31`       | main    | Verified   |

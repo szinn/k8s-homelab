@@ -22,6 +22,7 @@ Configured in `mcp.json`:
 **Purpose**: Validate and auto-fix Mermaid diagrams.
 
 **Configuration**:
+
 ```json
 {
   "mcpServers": {
@@ -35,11 +36,13 @@ Configured in `mcp.json`:
 ```
 
 **Use For**:
+
 - Validating diagrams in documentation
 - Auto-fixing syntax errors before commit
 - See @docs/ai-context/mermaid-diagram-guide.md for diagram standards
 
 **Potential Future MCP Servers**:
+
 - **GitHub MCP**: Pull request management, issue tracking
 - **Filesystem MCP**: Enhanced file operations and searches
 - **RepoQL**: Query codebase as database (semantic search, file inventory)
@@ -53,6 +56,7 @@ Configured in `mcp.json`:
 **Location**: `Taskfile.yaml`, `.taskfiles/`
 
 **Discovery**:
+
 ```bash
 task --list                    # See all available tasks
 task --list-all                # Include internal tasks
@@ -61,28 +65,28 @@ task <namespace>: --list       # List tasks in specific namespace
 
 #### Quick Reference
 
-| Command | Purpose | Cluster |
-|---------|---------|---------|
-| `task configure` | Render Jinja2 templates | Both |
-| `task kubernetes:kubeconform cluster=main` | Validate manifests | Specified |
-| `task kubernetes:delete-failed-pods cluster=main` | Clean up failed pods | Specified |
-| `task kubernetes:approve-certs cluster=staging` | Approve pending CSRs | Specified |
-| `task kubernetes:netshoot cluster=main` | Run netshoot debug pod | Specified |
-| `task flux:sync cluster=main` | Sync flux-cluster with Git | Specified |
-| `task flux:gr-sync cluster=staging` | Sync GitRepositories | Specified |
-| `task flux:ks-sync cluster=main` | Sync Kustomizations | Specified |
-| `task flux:hr-sync cluster=main` | Sync HelmReleases | Specified |
-| `task flux:force-hr-sync cluster=staging` | Force sync with reset | Specified |
-| `task sops:re-encrypt` | Re-encrypt all SOPS files | Both |
-| `task volsync:snapshot cluster=main app=immich ns=media` | Trigger backup snapshot | Specified |
-| `task volsync:restore cluster=main app=immich ns=media previous=<id>` | Restore from backup | Specified |
-| `task volsync:unlock cluster=main` | Unlock Restic repos | Specified |
-| `task postgres:maintenance-main command=set` | Set maintenance mode | Main |
-| `task postgres:down_immich` | Suspend Immich app | Main |
-| `task postgres:up_immich` | Resume Immich app | Main |
-| `task pre-commit:init` | Initialize pre-commit hooks | Both |
-| `task pre-commit:run` | Run pre-commit checks | Both |
-| `task format:all` | Format all files | Both |
+| Command                                                               | Purpose                     | Cluster   |
+| --------------------------------------------------------------------- | --------------------------- | --------- |
+| `task configure`                                                      | Render Jinja2 templates     | Both      |
+| `task kubernetes:kubeconform cluster=main`                            | Validate manifests          | Specified |
+| `task kubernetes:delete-failed-pods cluster=main`                     | Clean up failed pods        | Specified |
+| `task kubernetes:approve-certs cluster=staging`                       | Approve pending CSRs        | Specified |
+| `task kubernetes:netshoot cluster=main`                               | Run netshoot debug pod      | Specified |
+| `task flux:sync cluster=main`                                         | Sync flux-cluster with Git  | Specified |
+| `task flux:gr-sync cluster=staging`                                   | Sync GitRepositories        | Specified |
+| `task flux:ks-sync cluster=main`                                      | Sync Kustomizations         | Specified |
+| `task flux:hr-sync cluster=main`                                      | Sync HelmReleases           | Specified |
+| `task flux:force-hr-sync cluster=staging`                             | Force sync with reset       | Specified |
+| `task sops:re-encrypt`                                                | Re-encrypt all SOPS files   | Both      |
+| `task volsync:snapshot cluster=main app=immich ns=media`              | Trigger backup snapshot     | Specified |
+| `task volsync:restore cluster=main app=immich ns=media previous=<id>` | Restore from backup         | Specified |
+| `task volsync:unlock cluster=main`                                    | Unlock Restic repos         | Specified |
+| `task postgres:maintenance-main command=set`                          | Set maintenance mode        | Main      |
+| `task postgres:down_immich`                                           | Suspend Immich app          | Main      |
+| `task postgres:up_immich`                                             | Resume Immich app           | Main      |
+| `task pre-commit:init`                                                | Initialize pre-commit hooks | Both      |
+| `task pre-commit:run`                                                 | Run pre-commit checks       | Both      |
+| `task format:all`                                                     | Format all files            | Both      |
 
 #### Flux Tasks
 
@@ -169,6 +173,7 @@ task volsync:unlock cluster=main
 ```
 
 **Requirements**:
+
 - Assumes ReplicationSource exists with same name as app
 - Assumes single PVC per app
 - For restore: suspends app, restores data, resumes app
@@ -249,16 +254,19 @@ task machine:update-linux-packages
 **Why**: This repo manages two independent clusters with different purposes and infrastructure.
 
 **Pattern**:
+
 - **kubectl**: `kubectl --context <main|staging> <command>`
 - **flux**: `flux --context <main|staging> <command>`
 - **talosctl**: `talosctl --talosconfig kubernetes/<main|staging>/talosconfig <command>`
 - **task**: `task <namespace>:<command> cluster=<main|staging>` (for cluster-specific tasks)
 
 **Kubeconfig Locations**:
+
 - Main cluster: `kubernetes/main/kubeconfig`
 - Staging cluster: `kubernetes/staging/kubeconfig`
 
 **Talosconfig Locations**:
+
 - Main cluster: `kubernetes/main/talosconfig`
 - Staging cluster: `kubernetes/staging/talosconfig`
 
@@ -273,21 +281,22 @@ task machine:update-linux-packages
 
 ## Flux CLI
 
-| Command | Purpose |
-|---------|---------|
-| `flux get kustomizations --context <main\|staging>` | List all kustomizations |
-| `flux get helmreleases -A --context <main\|staging>` | List all HelmReleases |
-| `flux get helmrelease <name> -n <ns> --context <main\|staging>` | Check specific release |
-| `flux reconcile kustomization <name> --context <main\|staging>` | Force sync kustomization |
-| `flux reconcile helmrelease <name> -n <ns> --context <main\|staging>` | Force sync HelmRelease |
-| `flux reconcile source git flux-system --context <main\|staging>` | Sync Git source |
-| `flux logs --context <main\|staging>` | View controller logs |
-| `flux suspend helmrelease <name> -n <ns> --context <main\|staging>` | Suspend release |
-| `flux resume helmrelease <name> -n <ns> --context <main\|staging>` | Resume release |
+| Command                                                               | Purpose                  |
+| --------------------------------------------------------------------- | ------------------------ |
+| `flux get kustomizations --context <main\|staging>`                   | List all kustomizations  |
+| `flux get helmreleases -A --context <main\|staging>`                  | List all HelmReleases    |
+| `flux get helmrelease <name> -n <ns> --context <main\|staging>`       | Check specific release   |
+| `flux reconcile kustomization <name> --context <main\|staging>`       | Force sync kustomization |
+| `flux reconcile helmrelease <name> -n <ns> --context <main\|staging>` | Force sync HelmRelease   |
+| `flux reconcile source git flux-system --context <main\|staging>`     | Sync Git source          |
+| `flux logs --context <main\|staging>`                                 | View controller logs     |
+| `flux suspend helmrelease <name> -n <ns> --context <main\|staging>`   | Suspend release          |
+| `flux resume helmrelease <name> -n <ns> --context <main\|staging>`    | Resume release           |
 
 **Pattern**: Flux operations ALWAYS need `--context <main|staging>`.
 
 **Common Workflows**:
+
 ```bash
 # Check cluster status (specify cluster)
 flux get kustomizations --context <main|staging>
@@ -306,19 +315,20 @@ kubectl logs -n flux-system deploy/helm-controller --context <main|staging> | gr
 
 ## kubectl
 
-| Command | Purpose |
-|---------|---------|
-| `kubectl get pods -A --context <main\|staging>` | List all pods |
-| `kubectl get hr -A --context <main\|staging>` | List HelmReleases |
-| `kubectl logs -n <ns> <pod> --context <main\|staging>` | View pod logs |
-| `kubectl describe hr <name> -n <ns> --context <main\|staging>` | HelmRelease details |
-| `kubectl get events -A --sort-by=.lastTimestamp --context <main\|staging>` | Recent events |
-| `kubectl get pvc -A --context <main\|staging>` | List persistent volumes |
-| `kubectl get externalsecrets -A --context <main\|staging>` | List external secrets |
+| Command                                                                    | Purpose                 |
+| -------------------------------------------------------------------------- | ----------------------- |
+| `kubectl get pods -A --context <main\|staging>`                            | List all pods           |
+| `kubectl get hr -A --context <main\|staging>`                              | List HelmReleases       |
+| `kubectl logs -n <ns> <pod> --context <main\|staging>`                     | View pod logs           |
+| `kubectl describe hr <name> -n <ns> --context <main\|staging>`             | HelmRelease details     |
+| `kubectl get events -A --sort-by=.lastTimestamp --context <main\|staging>` | Recent events           |
+| `kubectl get pvc -A --context <main\|staging>`                             | List persistent volumes |
+| `kubectl get externalsecrets -A --context <main\|staging>`                 | List external secrets   |
 
 **Pattern**: All kubectl operations REQUIRE `--context <main|staging>`.
 
 **Cluster-Specific Operations**:
+
 ```bash
 # Main cluster (physical hardware)
 kubectl get nodes --context main
@@ -338,21 +348,23 @@ kubectl --context staging --kubeconfig kubernetes/staging/kubeconfig get nodes
 **Purpose**: Manage Talos Linux nodes for both clusters.
 
 **Configuration Files**:
+
 - Main: `kubernetes/main/talosconfig`
 - Staging: `kubernetes/staging/talosconfig`
 
-| Command | Purpose |
-|---------|---------|
-| `talosctl --talosconfig kubernetes/<main\|staging>/talosconfig dashboard` | Node dashboard |
-| `talosctl --talosconfig kubernetes/<main\|staging>/talosconfig health` | Cluster health |
-| `talosctl --talosconfig kubernetes/<main\|staging>/talosconfig logs -f kubelet` | Node logs |
-| `talosctl --talosconfig kubernetes/<main\|staging>/talosconfig get members` | Cluster members |
-| `talosctl --talosconfig kubernetes/<main\|staging>/talosconfig upgrade` | Upgrade nodes |
-| `talosctl --talosconfig kubernetes/<main\|staging>/talosconfig reset` | Reset node |
+| Command                                                                         | Purpose         |
+| ------------------------------------------------------------------------------- | --------------- |
+| `talosctl --talosconfig kubernetes/<main\|staging>/talosconfig dashboard`       | Node dashboard  |
+| `talosctl --talosconfig kubernetes/<main\|staging>/talosconfig health`          | Cluster health  |
+| `talosctl --talosconfig kubernetes/<main\|staging>/talosconfig logs -f kubelet` | Node logs       |
+| `talosctl --talosconfig kubernetes/<main\|staging>/talosconfig get members`     | Cluster members |
+| `talosctl --talosconfig kubernetes/<main\|staging>/talosconfig upgrade`         | Upgrade nodes   |
+| `talosctl --talosconfig kubernetes/<main\|staging>/talosconfig reset`           | Reset node      |
 
 **Pattern**: Always specify `--talosconfig kubernetes/<main|staging>/talosconfig` path for explicit cluster targeting.
 
 **Common Operations**:
+
 ```bash
 # Check cluster health (main)
 talosctl --talosconfig kubernetes/main/talosconfig health
@@ -458,22 +470,23 @@ flux get helmreleases -A --context <main|staging>
 
 ### When to Use What
 
-| Task | Tool |
-|------|------|
-| Understand repo structure | `task --list`, directory navigation |
-| Find specific pattern | `grep -r` or `Grep` tool |
-| Read a file | `Read` tool or `cat` |
-| Validate YAML | `task kubernetes:kubeconform cluster=<main\|staging>` |
-| Check cluster state | `flux get` / `kubectl get` with `--context` |
-| Debug app | `kubectl logs` / `kubectl describe` with `--context` |
-| Force deployment | `task flux:sync cluster=<main\|staging>` |
-| Render templates | `task configure` (no cluster needed) |
-| Create backup | `task volsync:snapshot cluster=<main\|staging> app=<name> ns=<namespace>` |
-| Restore backup | `task volsync:restore cluster=<main\|staging> app=<name> ns=<namespace> previous=<id>` |
+| Task                      | Tool                                                                                   |
+| ------------------------- | -------------------------------------------------------------------------------------- |
+| Understand repo structure | `task --list`, directory navigation                                                    |
+| Find specific pattern     | `grep -r` or `Grep` tool                                                               |
+| Read a file               | `Read` tool or `cat`                                                                   |
+| Validate YAML             | `task kubernetes:kubeconform cluster=<main\|staging>`                                  |
+| Check cluster state       | `flux get` / `kubectl get` with `--context`                                            |
+| Debug app                 | `kubectl logs` / `kubectl describe` with `--context`                                   |
+| Force deployment          | `task flux:sync cluster=<main\|staging>`                                               |
+| Render templates          | `task configure` (no cluster needed)                                                   |
+| Create backup             | `task volsync:snapshot cluster=<main\|staging> app=<name> ns=<namespace>`              |
+| Restore backup            | `task volsync:restore cluster=<main\|staging> app=<name> ns=<namespace> previous=<id>` |
 
 ### Common Command Patterns
 
 #### Template Workflow
+
 ```bash
 # 1. Edit templates in bootstrap/templates/
 # 2. Render with Jinja2
@@ -489,6 +502,7 @@ git commit -m "feat: Add new application"
 ```
 
 #### Deployment Workflow
+
 ```bash
 # 1. Push to Git
 git push
@@ -505,6 +519,7 @@ kubectl get pods -A --context <main|staging>
 ```
 
 #### Troubleshooting Workflow
+
 ```bash
 # 1. Identify failed resource
 flux get hr -A --context <main|staging>
@@ -529,6 +544,7 @@ flux reconcile hr <name> -n <namespace> --context <main|staging> --force
 ### Required for Full Functionality
 
 **Direnv** (recommended):
+
 ```bash
 # Enable direnv
 direnv allow .
@@ -541,6 +557,7 @@ direnv allow .
 ```
 
 **Manual Setup**:
+
 ```bash
 # Kubeconfig for cluster access
 export KUBECONFIG=~/k8s-homelab/kubernetes/main/kubeconfig     # Main cluster
@@ -557,6 +574,7 @@ export DBBACKUP=~/Ragnar/k8s/main/backup/dbms
 ```
 
 **Direnv Configuration** (`.envrc`):
+
 ```bash
 use_sops() {
   local path=${1:-$PWD/secrets.yaml}
@@ -579,6 +597,7 @@ use_sops config.sops.env
 **Configuration**: `.pre-commit-config.yaml`
 
 **Installed Hooks**:
+
 - **forbid-yml**: Enforce `.yaml` extension (not `.yml`)
 - **yamllint**: YAML syntax validation
 - **check-added-large-files**: Prevent large file commits (max 2MB)
@@ -592,6 +611,7 @@ use_sops config.sops.env
 - **shellcheck**: Shell script validation
 
 **Usage**:
+
 ```bash
 # Initialize (one-time setup)
 task pre-commit:init
@@ -607,6 +627,7 @@ git commit -m "message"  # Hooks run automatically
 ```
 
 **SOPS Secret Detection**:
+
 - Files ending in `.sops.yaml` must be encrypted
 - Prevents accidental secret leaks
 - Configured in `.sops.yaml` for encryption rules
@@ -619,10 +640,12 @@ git commit -m "message"  # Hooks run automatically
 
 **Tool Installation**:
 Tools are expected to be installed via system package managers:
+
 - **macOS**: Homebrew (`brew install flux kubectl talosctl`)
 - **Linux**: Package manager or direct downloads
 
 **Required Tools**:
+
 - `flux` - Flux CLI for GitOps operations
 - `kubectl` - Kubernetes CLI
 - `talosctl` - Talos Linux CLI
@@ -635,6 +658,7 @@ Tools are expected to be installed via system package managers:
 - `direnv` - Environment variable management
 
 **Version Checking**:
+
 ```bash
 flux version
 kubectl version --client
@@ -693,21 +717,21 @@ talosctl --talosconfig kubernetes/staging/talosconfig health
 
 ## Evidence
 
-| Claim | Source | Confidence |
-|-------|--------|------------|
-| Mermaid MCP server configured | `mcp.json` | Verified |
-| Taskfile commands available | `Taskfile.yaml`, `.taskfiles/` | Verified |
-| Flux tasks require cluster parameter | `.taskfiles/Flux/Taskfile.yaml` | Verified |
-| Kubernetes tasks require cluster parameter | `.taskfiles/Kubernetes/Taskfile.yaml` | Verified |
-| Two independent clusters exist | `kubernetes/main/`, `kubernetes/staging/` | Verified |
-| Kubeconfig per cluster | `kubernetes/main/kubeconfig`, `kubernetes/staging/kubeconfig` | Verified |
-| Talosconfig per cluster | `kubernetes/main/talosconfig`, `kubernetes/staging/talosconfig` | Verified |
-| Direnv configuration exists | `.envrc` | Verified |
-| Pre-commit hooks configured | `.pre-commit-config.yaml` | Verified |
-| Kubeconform validation script | `scripts/kubeconform.sh` | Verified |
-| SOPS encryption required for secrets | `.taskfiles/Sops/Taskfile.yaml`, pre-commit hooks | Verified |
-| Volsync for backup/restore | `.taskfiles/Volsync/Taskfile.yaml` | Verified |
-| CloudNativePG database operations | `.taskfiles/Postgres/Taskfile.yaml` | Verified |
+| Claim                                      | Source                                                          | Confidence |
+| ------------------------------------------ | --------------------------------------------------------------- | ---------- |
+| Mermaid MCP server configured              | `mcp.json`                                                      | Verified   |
+| Taskfile commands available                | `Taskfile.yaml`, `.taskfiles/`                                  | Verified   |
+| Flux tasks require cluster parameter       | `.taskfiles/Flux/Taskfile.yaml`                                 | Verified   |
+| Kubernetes tasks require cluster parameter | `.taskfiles/Kubernetes/Taskfile.yaml`                           | Verified   |
+| Two independent clusters exist             | `kubernetes/main/`, `kubernetes/staging/`                       | Verified   |
+| Kubeconfig per cluster                     | `kubernetes/main/kubeconfig`, `kubernetes/staging/kubeconfig`   | Verified   |
+| Talosconfig per cluster                    | `kubernetes/main/talosconfig`, `kubernetes/staging/talosconfig` | Verified   |
+| Direnv configuration exists                | `.envrc`                                                        | Verified   |
+| Pre-commit hooks configured                | `.pre-commit-config.yaml`                                       | Verified   |
+| Kubeconform validation script              | `scripts/kubeconform.sh`                                        | Verified   |
+| SOPS encryption required for secrets       | `.taskfiles/Sops/Taskfile.yaml`, pre-commit hooks               | Verified   |
+| Volsync for backup/restore                 | `.taskfiles/Volsync/Taskfile.yaml`                              | Verified   |
+| CloudNativePG database operations          | `.taskfiles/Postgres/Taskfile.yaml`                             | Verified   |
 
 ---
 

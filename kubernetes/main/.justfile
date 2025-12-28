@@ -83,13 +83,13 @@ snapshot-all:
 
 [doc('Suspend or resume Keda ScaledObjects')]
 keda state ns name:
-  kubectl -n "{{ ns }}" annotate --field-manager flux-client-side-apply --overwrite so "{{ name }}" autoscaling.keda.sh/paused{{ if state != "suspend" { "-" } else { "=true" } }}; \
+    kubectl -n "{{ ns }}" annotate --field-manager flux-client-side-apply --overwrite so "{{ name }}" autoscaling.keda.sh/paused{{ if state != "suspend" { "-" } else { "=true" } }}; \
 
 [doc('Suspend or resume Keda ScaledObjects')]
 keda-all state:
-  kubectl get scaledobjects --no-headers -A | while read -r ns name _; do \
-    just k8s keda "{{ state }}" "$ns" "$name"; \
-  done
+    kubectl get scaledobjects --no-headers -A | while read -r ns name _; do \
+      just k8s keda "{{ state }}" "$ns" "$name"; \
+    done
 
 [private]
 render-local-ks ns ks:

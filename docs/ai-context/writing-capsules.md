@@ -21,10 +21,10 @@ Depth: differences vs imperative kubectl; trade-offs; near-miss clarifications.
 
 **Depth**
 
-* Structure is always **Invariant -> Example -> Depth**.
-* No versions, release notes, dates, or timeline facts.
-* One idea per capsule; split if you need "and."
-* Titles are short `CamelCase` nouns.
+- Structure is always **Invariant -> Example -> Depth**.
+- No versions, release notes, dates, or timeline facts.
+- One idea per capsule; split if you need "and."
+- Titles are short `CamelCase` nouns.
 
 ---
 
@@ -39,10 +39,10 @@ Good: "Templates must render before Flux can apply them."
 
 **Depth**
 
-* Prefer general verbs and nouns; avoid version numbers.
-* Use plain words; do not embed config values or paths.
-* Keep <= ~30 tokens (approx <= 25 short words). Shorter is better.
-* Do not include examples, caveats, or procedure inside the invariant.
+- Prefer general verbs and nouns; avoid version numbers.
+- Use plain words; do not embed config values or paths.
+- Keep <= ~30 tokens (approx <= 25 short words). Shorter is better.
+- Do not include examples, caveats, or procedure inside the invariant.
 
 ---
 
@@ -57,9 +57,9 @@ HelmRelease uses `${SECRET_DOMAIN}` placeholder; ExternalSecret populates it fro
 
 **Depth**
 
-* Prefer typical case; add exactly one boundary if misuse is common.
-* Use neutral references or plain steps; no specific versions.
-* Keep the example readable in <= 5 lines.
+- Prefer typical case; add exactly one boundary if misuse is common.
+- Use neutral references or plain steps; no specific versions.
+- Keep the example readable in <= 5 lines.
 
 ---
 
@@ -70,16 +70,16 @@ Depth clarifies terms, trade-offs, and distinctions without changing the idea.
 
 **Example**
 
-* Distinction: ExternalSecrets pull from 1Password; Kubernetes secrets consume values.
-* Trade-off: More ExternalSecrets means more 1Password entries, but explicit secret documentation.
-* NotThis: Hardcoded secrets in manifests bypass the pattern entirely.
-* SeeAlso: `SecretManagement`, `OnePasswordIntegration`.
+- Distinction: ExternalSecrets pull from 1Password; Kubernetes secrets consume values.
+- Trade-off: More ExternalSecrets means more 1Password entries, but explicit secret documentation.
+- NotThis: Hardcoded secrets in manifests bypass the pattern entirely.
+- SeeAlso: `SecretManagement`, `OnePasswordIntegration`.
 
 **Depth**
 
-* Use bulleted lines; each line is self-contained.
-* No version history or changelogs; keep it evergreen.
-* Keep links as plain capsule names; no external refs required.
+- Use bulleted lines; each line is self-contained.
+- No version history or changelogs; keep it evergreen.
+- Keep links as plain capsule names; no external refs required.
 
 ---
 
@@ -94,9 +94,9 @@ Flux applies what Git contains; if HelmRelease references missing secret, pod st
 
 **Depth**
 
-* The boundary is conceptual, not a specific error message.
-* Include only when the edge is a common failure mode.
-* Keep one boundary per capsule to avoid over-anchoring.
+- The boundary is conceptual, not a specific error message.
+- Include only when the edge is a common failure mode.
+- Keep one boundary per capsule to avoid over-anchoring.
 
 ---
 
@@ -110,9 +110,9 @@ For "app deployment," select `HelmReleasePattern` and `SecretManagement`; reject
 
 **Depth**
 
-* Prefer the more specific invariant when two apply.
-* If two invariants genuinely conflict, pick one and state why.
-* Cite capsule names in brackets to make composition explicit.
+- Prefer the more specific invariant when two apply.
+- If two invariants genuinely conflict, pick one and state why.
+- Cite capsule names in brackets to make composition explicit.
 
 ---
 
@@ -126,9 +126,9 @@ If GitOps semantics change with a new Flux version, write `GitOpsReconciliationV
 
 **Depth**
 
-* Do not retcon invariants; stability is the retrieval anchor.
-* Cull duplicates by merging examples under the clearer invariant.
-* Keep names stable and short.
+- Do not retcon invariants; stability is the retrieval anchor.
+- Cull duplicates by merging examples under the clearer invariant.
+- Keep names stable and short.
 
 ---
 
@@ -143,15 +143,15 @@ Avoid: `helm-release-config`, `flux_sync`, `External Secret`.
 
 **Depth**
 
-* Prefer `CamelCase` for names; avoid hyphens and underscores.
-* Use short, common words in invariants; avoid rare jargon if a common term exists.
-* Keep ASCII; avoid emoji and decorative punctuation.
-* Favor singular nouns for names: `HelmRelease` not `HelmReleases`.
-* Avoid quotes, parentheses, and slashes in invariants.
-* Use digits sparingly; keep numbers out of invariants when possible.
-* Trim function words that add no meaning: "that," "very," "really."
-* If two phrasings are equally clear, pick the one with fewer tokens.
-* Do not add synonym lists; use one canonical name.
+- Prefer `CamelCase` for names; avoid hyphens and underscores.
+- Use short, common words in invariants; avoid rare jargon if a common term exists.
+- Keep ASCII; avoid emoji and decorative punctuation.
+- Favor singular nouns for names: `HelmRelease` not `HelmReleases`.
+- Avoid quotes, parentheses, and slashes in invariants.
+- Use digits sparingly; keep numbers out of invariants when possible.
+- Trim function words that add no meaning: "that," "very," "really."
+- If two phrasings are equally clear, pick the one with fewer tokens.
+- Do not add synonym lists; use one canonical name.
 
 ---
 
@@ -165,8 +165,8 @@ Each capsule starts with the invariant line; this guide ends with a checklist of
 
 **Depth**
 
-* Repeat the invariant verbatim once after a long Depth section only if needed for clarity.
-* Keep the closing checklist stable across documents.
+- Repeat the invariant verbatim once after a long Depth section only if needed for clarity.
+- Keep the closing checklist stable across documents.
 
 ---
 
@@ -188,6 +188,7 @@ A minimal template keeps capsules uniform and easy to scan.
 <Optional> //BOUNDARY: <Edge that marks the safe limit.>
 
 **Depth**
+
 - <Distinction>
 - <Trade-off>
 - <NotThis>
@@ -196,9 +197,9 @@ A minimal template keeps capsules uniform and easy to scan.
 
 **Depth**
 
-* Keep visible text compact; avoid long paragraphs.
-* Prefer line-broken bullets over prose walls.
-* Keep names stable; reuse them exactly when referenced.
+- Keep visible text compact; avoid long paragraphs.
+- Prefer line-broken bullets over prose walls.
+- Keep names stable; reuse them exactly when referenced.
 
 ---
 
@@ -215,9 +216,9 @@ Developer runs kubectl edit on deployment; Flux reconciles 1 hour later; deploym
 
 **Depth**
 
-* Distinction: GitOps is declarative; imperative kubectl is procedural.
-* Trade-off: Consistency and auditability vs immediate manual intervention.
-* SeeAlso: `FluxSync`, `HelmReleasePattern`.
+- Distinction: GitOps is declarative; imperative kubectl is procedural.
+- Trade-off: Consistency and auditability vs immediate manual intervention.
+- SeeAlso: `FluxSync`, `HelmReleasePattern`.
 
 ---
 
@@ -232,9 +233,9 @@ HelmRelease references `app-secret`; ExternalSecret pulls from `op://Private/app
 
 **Depth**
 
-* NotThis: Hardcoding secrets in manifests defeats the pattern.
-* Trade-off: More indirection, but repo stays public safely.
-* SeeAlso: `OnePasswordIntegration`, `SecretManagement`.
+- NotThis: Hardcoding secrets in manifests defeats the pattern.
+- Trade-off: More indirection, but repo stays public safely.
+- SeeAlso: `OnePasswordIntegration`, `SecretManagement`.
 
 ---
 
@@ -249,9 +250,9 @@ Developer edits `.j2` template; renders locally; commits manifests to `kubernete
 
 **Depth**
 
-* Distinction: Templates define structure; rendered manifests define state.
-* Trade-off: Extra local step, but ensures manifests are valid before commit.
-* SeeAlso: `GitOpsReconciliation`, `ManifestValidation`.
+- Distinction: Templates define structure; rendered manifests define state.
+- Trade-off: Extra local step, but ensures manifests are valid before commit.
+- SeeAlso: `GitOpsReconciliation`, `ManifestValidation`.
 
 ---
 
@@ -266,10 +267,10 @@ Main cluster at `kubernetes/main/`; staging cluster at `kubernetes/staging/`; ch
 
 **Depth**
 
-* Distinction: Separate roots prevent accidental cross-cluster changes.
-* Trade-off: Duplicate configuration for safety vs shared code for consistency.
-* NotThis: They're not branches or environments; they're completely separate infrastructures.
-* SeeAlso: `ClusterOrganization`, `GitOpsReconciliation`.
+- Distinction: Separate roots prevent accidental cross-cluster changes.
+- Trade-off: Duplicate configuration for safety vs shared code for consistency.
+- NotThis: They're not branches or environments; they're completely separate infrastructures.
+- SeeAlso: `ClusterOrganization`, `GitOpsReconciliation`.
 
 ---
 

@@ -12,6 +12,7 @@ This directory contains the single source of truth for AI assistant context acro
 ## Critical Invariant
 
 **This repository manages TWO independent Kubernetes clusters**:
+
 - **Main cluster** (`kubernetes/main/`) - Production workloads on physical hardware
 - **Staging cluster** (`kubernetes/staging/`) - Testing workloads on Proxmox
 
@@ -44,14 +45,14 @@ Clusters do NOT share code. Always specify which cluster you're working on.
 
 ### System Context
 
-| Document                           | Purpose                                                  |
-| ---------------------------------- | -------------------------------------------------------- |
-| [ARCHITECTURE.md](ARCHITECTURE.md) | Dual-cluster GitOps architecture, key decisions          |
-| [NETWORKING.md](NETWORKING.md)     | Traffic flows, DNS, Envoy Gateway, network isolation     |
-| [DOMAIN.md](DOMAIN.md)             | Business rules, state machines, entity relationships     |
-| [WORKFLOWS.md](WORKFLOWS.md)       | Operational workflows for both clusters                  |
-| [TOOLS.md](TOOLS.md)               | Task commands, kubectl, flux, talosctl patterns          |
-| [CONVENTIONS.md](CONVENTIONS.md)   | Naming standards, file structure, commit guidelines      |
+| Document                           | Purpose                                              |
+| ---------------------------------- | ---------------------------------------------------- |
+| [ARCHITECTURE.md](ARCHITECTURE.md) | Dual-cluster GitOps architecture, key decisions      |
+| [NETWORKING.md](NETWORKING.md)     | Traffic flows, DNS, Envoy Gateway, network isolation |
+| [DOMAIN.md](DOMAIN.md)             | Business rules, state machines, entity relationships |
+| [WORKFLOWS.md](WORKFLOWS.md)       | Operational workflows for both clusters              |
+| [TOOLS.md](TOOLS.md)               | Task commands, kubectl, flux, talosctl patterns      |
+| [CONVENTIONS.md](CONVENTIONS.md)   | Naming standards, file structure, commit guidelines  |
 
 ---
 

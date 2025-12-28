@@ -112,14 +112,14 @@ stateDiagram-v2
 
 **State Transitions**:
 
-| From | To | Trigger | Duration |
-|------|-----|---------|----------|
-| Pending | Reconciling | Chart and values resolved | Seconds |
-| Reconciling | Ready | Helm install/upgrade success | 30s-5m |
-| Reconciling | Failed | Chart error, missing secret, invalid values | Variable |
-| Ready | Reconciling | Git push with changed values | Immediate |
-| Failed | Reconciling | Remediation retry (max 3) | Exponential backoff |
-| Ready/Failed | Deleting | HelmRelease deleted from Git | Immediate |
+| From         | To          | Trigger                                     | Duration            |
+| ------------ | ----------- | ------------------------------------------- | ------------------- |
+| Pending      | Reconciling | Chart and values resolved                   | Seconds             |
+| Reconciling  | Ready       | Helm install/upgrade success                | 30s-5m              |
+| Reconciling  | Failed      | Chart error, missing secret, invalid values | Variable            |
+| Ready        | Reconciling | Git push with changed values                | Immediate           |
+| Failed       | Reconciling | Remediation retry (max 3)                   | Exponential backoff |
+| Ready/Failed | Deleting    | HelmRelease deleted from Git                | Immediate           |
 
 **Critical Insight**: `Ready` state means Helm succeeded, NOT that pods are healthy. Pod failures appear in `kubectl get pods --context main`, not HelmRelease status.
 
@@ -152,15 +152,16 @@ stateDiagram-v2
 
 **State Transitions**:
 
-| From | To | Trigger | Blocks Pods? |
-|------|-----|---------|--------------|
-| Pending | Syncing | ClusterSecretStore ready | Yes |
-| Syncing | Ready | 1Password entry found and pulled | No |
-| Syncing | Failed | Missing entry, wrong path, store down | Yes |
-| Ready | Refreshing | 12h interval or manual refresh | No |
-| Failed | Syncing | Retry after exponential backoff | Yes |
+| From    | To         | Trigger                               | Blocks Pods? |
+| ------- | ---------- | ------------------------------------- | ------------ |
+| Pending | Syncing    | ClusterSecretStore ready              | Yes          |
+| Syncing | Ready      | 1Password entry found and pulled      | No           |
+| Syncing | Failed     | Missing entry, wrong path, store down | Yes          |
+| Ready   | Refreshing | 12h interval or manual refresh        | No           |
+| Failed  | Syncing    | Retry after exponential backoff       | Yes          |
 
 **Critical Dependencies**:
+
 - ExternalSecret MUST be Ready before pods referencing the secret can start
 - onepassword-connect MUST be running before any ExternalSecret can sync
 - 1Password vault MUST contain entry at specified path
@@ -198,12 +199,12 @@ stateDiagram-v2
 
 **Common Failure Points**:
 
-| State | Common Causes | Fix |
-|-------|---------------|-----|
-| WaitingSecrets | ExternalSecret not Ready | Check ExternalSecret status, verify 1Password entry |
-| PullingImages | Wrong image tag, missing digest | Verify image exists, check registry auth |
-| CrashLoop | App config error, missing env vars | Check logs, verify ExternalSecret template |
-| Pending | PVC not bound, node affinity | Check PVC status, verify node labels |
+| State          | Common Causes                      | Fix                                                 |
+| -------------- | ---------------------------------- | --------------------------------------------------- |
+| WaitingSecrets | ExternalSecret not Ready           | Check ExternalSecret status, verify 1Password entry |
+| PullingImages  | Wrong image tag, missing digest    | Verify image exists, check registry auth            |
+| CrashLoop      | App config error, missing env vars | Check logs, verify ExternalSecret template          |
+| Pending        | PVC not bound, node affinity       | Check PVC status, verify node labels                |
 
 ---
 
@@ -234,6 +235,7 @@ stateDiagram-v2
 ```
 
 **Timing**:
+
 - Default interval: 1 hour
 - Webhook trigger: Immediate (if configured)
 - Manual trigger: `flux reconcile kustomization <name> --context main`
@@ -278,22 +280,22 @@ flowchart TD
 
 ### Resource Dependencies
 
-| Resource | Depends On | Blocks | Prune Behavior |
-|----------|------------|--------|----------------|
-| HelmRelease | Chart source, ExternalSecret (if referenced) | Pods | Cascade delete |
-| ExternalSecret | ClusterSecretStore, 1Password entry | Pods | Delete secret |
-| HTTPRoute | Gateway, Service | DNS records | Delete route |
-| PVC | StorageClass | Pods | Retained |
-| Pod | Secret, PVC, Image | Nothing | Immediate |
+| Resource       | Depends On                                   | Blocks      | Prune Behavior |
+| -------------- | -------------------------------------------- | ----------- | -------------- |
+| HelmRelease    | Chart source, ExternalSecret (if referenced) | Pods        | Cascade delete |
+| ExternalSecret | ClusterSecretStore, 1Password entry          | Pods        | Delete secret  |
+| HTTPRoute      | Gateway, Service                             | DNS records | Delete route   |
+| PVC            | StorageClass                                 | Pods        | Retained       |
+| Pod            | Secret, PVC, Image                           | Nothing     | Immediate      |
 
 ### Secret Flow
 
-| Stage | State | Location | Encrypted? |
-|-------|-------|----------|------------|
-| Source | 1Password vault entry | 1Password cloud | Yes |
-| Pull | ExternalSecret syncing | Cluster memory | No |
-| Store | Kubernetes Secret | etcd | Yes (at rest) |
-| Mount | Pod environment/volume | Container | No |
+| Stage  | State                  | Location        | Encrypted?    |
+| ------ | ---------------------- | --------------- | ------------- |
+| Source | 1Password vault entry  | 1Password cloud | Yes           |
+| Pull   | ExternalSecret syncing | Cluster memory  | No            |
+| Store  | Kubernetes Secret      | etcd            | Yes (at rest) |
+| Mount  | Pod environment/volume | Container       | No            |
 
 **Critical Path**: 1Password → onepassword-connect → ExternalSecret controller → Kubernetes Secret → Pod
 
@@ -329,6 +331,7 @@ flowchart LR
 ```
 
 **Pattern**:
+
 ```
 kubernetes/{main,staging}/apps/<namespace>/<app>/
 ├── install.yaml           # Flux Kustomization (entry)
@@ -351,6 +354,7 @@ kubernetes/{main,staging}/apps/<namespace>/<app>/
 **Invariant**: Infrastructure components must start before applications; dependencies enforce order.
 
 **Bootstrap Order**:
+
 1. Cilium (networking) - Nothing works without CNI
 2. CoreDNS (DNS) - Required for service discovery
 3. Spegel (image cache) - Accelerates image pulls
@@ -363,6 +367,7 @@ kubernetes/{main,staging}/apps/<namespace>/<app>/
 **Enforcement**: `dependsOn` in install.yaml files create dependency graph.
 
 **Example**:
+
 ```yaml
 # immich install.yaml
 dependsOn:
@@ -382,20 +387,22 @@ dependsOn:
 
 **Decision Matrix**:
 
-| Use Case | StorageClass | Backed By | Performance | Capacity | Redundancy |
-|----------|--------------|-----------|-------------|----------|------------|
-| Database, fast I/O | `rook-ceph-block` | NVMe SSD | High | Limited | 3x replica |
-| Shared files | `rook-ceph-filesystem` | NVMe SSD | Medium | Limited | 3x replica |
-| Large media | NFS mounts | Synology NAS | Low | Multi-TB | RAID |
-| Cache, temp | `emptyDir` | Node memory | Highest | Tiny | None |
+| Use Case           | StorageClass           | Backed By    | Performance | Capacity | Redundancy |
+| ------------------ | ---------------------- | ------------ | ----------- | -------- | ---------- |
+| Database, fast I/O | `rook-ceph-block`      | NVMe SSD     | High        | Limited  | 3x replica |
+| Shared files       | `rook-ceph-filesystem` | NVMe SSD     | Medium      | Limited  | 3x replica |
+| Large media        | NFS mounts             | Synology NAS | Low         | Multi-TB | RAID       |
+| Cache, temp        | `emptyDir`             | Node memory  | Highest     | Tiny     | None       |
 
 **Rules**:
+
 - Databases → rook-ceph-block (fast, replicated)
 - App configs → rook-ceph-block (small, persistent)
 - Media downloads → NFS (large capacity)
 - Caches → emptyDir or tmpfs (ephemeral)
 
 **Trade-offs**:
+
 - Ceph: Fast but limited capacity
 - NFS: Large but slower
 - emptyDir: Fastest but lost on pod restart
@@ -408,19 +415,21 @@ dependsOn:
 
 **Decision Matrix**:
 
-| Access Pattern | Gateway | IP Address | DNS | Authentication |
-|----------------|---------|------------|-----|----------------|
-| Public internet | `envoy-external` | 10.11.1.22 (main) | Public DNS | App-level |
-| Private LAN only | `envoy-internal` | 10.11.1.21 (main) | Private DNS | Network-level |
-| VPN only | Cloudflare Tunnel | N/A | CNAME | Cloudflare |
+| Access Pattern   | Gateway           | IP Address        | DNS         | Authentication |
+| ---------------- | ----------------- | ----------------- | ----------- | -------------- |
+| Public internet  | `envoy-external`  | 10.11.1.22 (main) | Public DNS  | App-level      |
+| Private LAN only | `envoy-internal`  | 10.11.1.21 (main) | Private DNS | Network-level  |
+| VPN only         | Cloudflare Tunnel | N/A               | CNAME       | Cloudflare     |
 
 **Rules**:
+
 - Home Assistant → envoy-internal (LAN only)
 - Immich → envoy-external (accessible remotely)
 - Plex → envoy-external (Plex apps need external)
 - Internal tools → envoy-internal (security)
 
 **Gateway Configuration**:
+
 ```yaml
 # Internal LAN access
 route:
@@ -448,6 +457,7 @@ route:
 **Pattern**: Complex secrets (database URLs, multi-value configs) built from individual fields.
 
 **Example**:
+
 ```yaml
 target:
   template:
@@ -464,9 +474,9 @@ target:
           url: postgres://{{ .DB_USERNAME }}:{{ .DB_PASSWORD }}@host:5432/db
 dataFrom:
   - extract:
-      key: immich  # 1Password item name
+      key: immich # 1Password item name
   - extract:
-      key: cloudnative-pg-superuser  # Additional item
+      key: cloudnative-pg-superuser # Additional item
 ```
 
 **Why**: Secrets in 1Password stored as individual fields; apps need composed values.
@@ -478,6 +488,7 @@ dataFrom:
 **Invariant**: Spegel mirrors images across cluster nodes to reduce external registry pulls.
 
 **Flow**:
+
 1. First pod on cluster pulls from registry (e.g., ghcr.io)
 2. Spegel caches image on that node
 3. Spegel peers share image across cluster
@@ -494,6 +505,7 @@ dataFrom:
 ### HelmRelease Specification
 
 **Properties**:
+
 - `namespace`: Where resources deploy
 - `name`: Release name (typically matches app)
 - `chartRef`: Reference to OCIRepository or HelmRepository
@@ -502,12 +514,14 @@ dataFrom:
 - `dependsOn`: Deployment dependencies
 
 **Constraints**:
+
 - Name must be unique within namespace
 - ChartRef must reference existing source
 - Values must match chart schema
 - Interval must be duration format (e.g., "1h", "30m")
 
 **Standard Fields**:
+
 ```yaml
 spec:
   interval: 1h
@@ -529,6 +543,7 @@ spec:
 ### ExternalSecret Specification
 
 **Properties**:
+
 - `secretStoreRef`: ClusterSecretStore reference
 - `target`: Kubernetes Secret to create
 - `refreshInterval`: How often to sync (12h default)
@@ -536,12 +551,14 @@ spec:
 - `template`: Optional templating for composed values
 
 **Constraints**:
+
 - secretStoreRef must be `onepassword-connect` (ClusterSecretStore)
 - 1Password item must exist at specified path
 - Template syntax is Go template
 - Refresh interval minimum: 1m
 
 **Standard Pattern**:
+
 ```yaml
 spec:
   refreshInterval: 12h
@@ -553,7 +570,7 @@ spec:
     creationPolicy: Owner
   dataFrom:
     - extract:
-        key: app-name  # 1Password item
+        key: app-name # 1Password item
 ```
 
 ---
@@ -561,24 +578,27 @@ spec:
 ### HTTPRoute Specification
 
 **Properties**:
+
 - `hostnames`: DNS names for route
 - `parentRefs`: Gateway(s) to attach to
 - `rules`: Routing rules and backend services
 
 **Constraints**:
+
 - Hostnames must be valid DNS names
 - ParentRefs must reference existing Gateway
 - Namespace must match Gateway or use ReferenceGrant
 - Backend service must exist
 
 **Standard Pattern**:
+
 ```yaml
 route:
   main:
     hostnames:
       - "{{ .Release.Name }}.${SECRET_DOMAIN}"
     parentRefs:
-      - name: envoy-internal  # or envoy-external
+      - name: envoy-internal # or envoy-external
         namespace: network
         sectionName: https
     rules:
@@ -596,6 +616,7 @@ route:
 **Trigger**: Git push webhook or 1h interval expires
 
 **Contains**:
+
 - Kustomization name
 - Applied resources count
 - Status (Ready/Failed)
@@ -604,6 +625,7 @@ route:
 **Consumers**: All HelmReleases in Kustomization scope
 
 **Effects**:
+
 - HelmReleases check for value changes
 - Outdated resources pruned (if prune enabled)
 - Status reported to GitHub (via flux-config)
@@ -615,15 +637,18 @@ route:
 **Trigger**: ExternalSecret successfully pulls from 1Password
 
 **Contains**:
+
 - Secret name and namespace
 - Sync timestamp
 - Source (1Password item path)
 
 **Consumers**:
+
 - Pods waiting for secret
 - Reloader (triggers pod restart if secret changed)
 
 **Effects**:
+
 - Kubernetes Secret created/updated
 - Pods unblocked and start
 - Reloader annotation triggers rolling restart
@@ -635,6 +660,7 @@ route:
 **Trigger**: Helm install/upgrade completes successfully
 
 **Contains**:
+
 - Release name and namespace
 - Chart version
 - Applied values
@@ -643,6 +669,7 @@ route:
 **Consumers**: Dependent HelmReleases (via `dependsOn`)
 
 **Effects**:
+
 - Blocked HelmReleases can proceed
 - Resources created in cluster
 - Status updated in Git (via Flux)
@@ -654,15 +681,18 @@ route:
 **Trigger**: HTTPRoute applied to cluster
 
 **Contains**:
+
 - Hostnames
 - Gateway references
 - Backend services
 
 **Consumers**:
+
 - Envoy Gateway (configures routing)
 - External-DNS (creates DNS records)
 
 **Effects**:
+
 - Envoy adds routes to gateway
 - DNS A/CNAME records created in Cloudflare
 - Traffic flows to services
@@ -673,14 +703,15 @@ route:
 
 ### Reconciliation Timing
 
-| Component | Interval | Trigger | Jitter |
-|-----------|----------|---------|--------|
-| Flux Kustomization | 1h | Webhook, manual | None |
-| HelmRelease | 1h | Values change | None |
-| ExternalSecret | 12h | Manual refresh | Up to 1m |
-| Renovate | Daily 2AM | Scheduled | None |
+| Component          | Interval  | Trigger         | Jitter   |
+| ------------------ | --------- | --------------- | -------- |
+| Flux Kustomization | 1h        | Webhook, manual | None     |
+| HelmRelease        | 1h        | Values change   | None     |
+| ExternalSecret     | 12h       | Manual refresh  | Up to 1m |
+| Renovate           | Daily 2AM | Scheduled       | None     |
 
 **Why Different Intervals**:
+
 - Flux: Hourly catches Git changes if webhook fails
 - HelmRelease: Matches Flux (parent Kustomization drives it)
 - ExternalSecret: Infrequent to reduce 1Password API load
@@ -690,14 +721,15 @@ route:
 
 ### Retry Behavior
 
-| Resource | Max Retries | Backoff | Timeout |
-|----------|-------------|---------|---------|
-| HelmRelease | 3 | Exponential | 5m |
-| ExternalSecret | Infinite | Exponential | None |
-| Pod | Infinite | Exponential (max 5m) | None |
-| Image pull | 3 | None | 1m |
+| Resource       | Max Retries | Backoff              | Timeout |
+| -------------- | ----------- | -------------------- | ------- |
+| HelmRelease    | 3           | Exponential          | 5m      |
+| ExternalSecret | Infinite    | Exponential          | None    |
+| Pod            | Infinite    | Exponential (max 5m) | None    |
+| Image pull     | 3           | None                 | 1m      |
 
 **Key Differences**:
+
 - HelmRelease gives up after 3 failures (requires manual fix)
 - ExternalSecret retries forever (eventual consistency)
 - Pods restart forever with increasing backoff (CrashLoopBackOff)
@@ -706,14 +738,14 @@ route:
 
 ### Lifecycle Durations
 
-| Operation | Typical Duration | Timeout |
-|-----------|------------------|---------|
-| Flux reconcile | 10-30s | 5m |
-| HelmRelease install | 1-5m | 10m |
-| ExternalSecret sync | 2-10s | 1m |
-| Image pull (cached) | 1-5s | 1m |
-| Image pull (uncached) | 10s-2m | 5m |
-| Pod startup | 10s-1m | Variable |
+| Operation             | Typical Duration | Timeout  |
+| --------------------- | ---------------- | -------- |
+| Flux reconcile        | 10-30s           | 5m       |
+| HelmRelease install   | 1-5m             | 10m      |
+| ExternalSecret sync   | 2-10s            | 1m       |
+| Image pull (cached)   | 1-5s             | 1m       |
+| Image pull (uncached) | 10s-2m           | 5m       |
+| Pod startup           | 10s-1m           | Variable |
 
 ---
 
@@ -722,6 +754,7 @@ route:
 ### Don't: Edit Generated Files
 
 **Wrong**:
+
 ```bash
 # Editing Talos config after it's been rendered
 vim kubernetes/main/talos/nodes/k8s-1.yaml  # Generated from .j2
@@ -729,6 +762,7 @@ git commit -m "Changed hostname"
 ```
 
 **Right**:
+
 ```bash
 # Edit the template source
 vim kubernetes/main/talos/nodes/k8s-1.yaml.j2
@@ -744,6 +778,7 @@ git commit -m "Changed hostname"
 ### Don't: Use kubectl for Permanent Changes
 
 **Wrong**:
+
 ```bash
 kubectl edit deployment immich-server -n media --context main
 # Change image tag
@@ -751,6 +786,7 @@ kubectl edit deployment immich-server -n media --context main
 ```
 
 **Right**:
+
 ```bash
 # Edit HelmRelease in Git
 vim kubernetes/main/apps/media/immich/app/helmrelease.yaml
@@ -768,12 +804,14 @@ flux reconcile kustomization media -n flux-system --context main
 ### Don't: Share Code Between Clusters
 
 **Wrong**:
+
 ```yaml
 # Symlinking staging to main
 kubernetes/staging/apps/media -> ../../main/apps/media
 ```
 
 **Right**:
+
 ```bash
 # Copy and modify explicitly
 cp -r kubernetes/main/apps/media/immich kubernetes/staging/apps/media/immich
@@ -788,6 +826,7 @@ vim kubernetes/staging/apps/media/immich/app/helmrelease.yaml
 ### Don't: Use :latest Tag
 
 **Wrong**:
+
 ```yaml
 image:
   repository: ghcr.io/immich-app/immich-server
@@ -795,6 +834,7 @@ image:
 ```
 
 **Right**:
+
 ```yaml
 image:
   repository: ghcr.io/immich-app/immich-server
@@ -808,12 +848,14 @@ image:
 ### Don't: Hardcode Secrets
 
 **Wrong**:
+
 ```yaml
 env:
   DB_PASSWORD: "mySecretPassword123"
 ```
 
 **Right**:
+
 ```yaml
 # In secrets.yaml (ExternalSecret)
 target:
@@ -822,7 +864,7 @@ target:
       DB_PASSWORD: "{{ .DB_PASSWORD }}"
 dataFrom:
   - extract:
-      key: immich  # From 1Password
+      key: immich # From 1Password
 
 # In helmrelease.yaml
 envFrom:
@@ -837,6 +879,7 @@ envFrom:
 ### Don't: Skip Dependencies
 
 **Wrong**:
+
 ```yaml
 # install.yaml with no dependsOn
 # But app uses ExternalSecret and CloudNativePG database
@@ -845,6 +888,7 @@ spec:
 ```
 
 **Right**:
+
 ```yaml
 spec:
   dependsOn:
@@ -861,46 +905,46 @@ spec:
 
 ## Glossary
 
-| Term | Definition |
-|------|------------|
-| **app-template** | bjw-s Helm chart providing consistent app deployment patterns |
-| **Cilium** | CNI and network policy provider (L3/L4 networking) |
-| **ClusterSecretStore** | External-Secrets resource defining 1Password connection |
-| **CloudNative-PG** | PostgreSQL operator for managed database clusters |
-| **Envoy Gateway** | Gateway API implementation for HTTP/HTTPS routing |
-| **ExternalSecret** | External-Secrets resource syncing from 1Password to Kubernetes Secret |
-| **Flux** | GitOps operator synchronizing cluster state to Git |
-| **Gateway API** | Kubernetes routing API replacing Ingress (HTTPRoute, Gateway) |
-| **GitOps** | Infrastructure as code pattern where Git is source of truth |
-| **HelmRelease** | Flux resource managing Helm chart deployment |
-| **HTTPRoute** | Gateway API resource defining HTTP routing rules |
-| **Kustomization** | Flux resource defining what to apply from Git path |
-| **OCIRepository** | Flux resource for OCI registry-hosted Helm charts |
-| **onepassword-connect** | 1Password service providing API access to vaults |
-| **Renovate** | Automation bot updating dependencies (images, charts, actions) |
-| **Rook-Ceph** | Distributed storage system on NVMe drives |
-| **Spegel** | Peer-to-peer image cache across cluster nodes |
-| **Talos** | Immutable Linux OS for Kubernetes nodes |
-| **VolSync** | Backup replication using Restic or Rclone |
+| Term                    | Definition                                                            |
+| ----------------------- | --------------------------------------------------------------------- |
+| **app-template**        | bjw-s Helm chart providing consistent app deployment patterns         |
+| **Cilium**              | CNI and network policy provider (L3/L4 networking)                    |
+| **ClusterSecretStore**  | External-Secrets resource defining 1Password connection               |
+| **CloudNative-PG**      | PostgreSQL operator for managed database clusters                     |
+| **Envoy Gateway**       | Gateway API implementation for HTTP/HTTPS routing                     |
+| **ExternalSecret**      | External-Secrets resource syncing from 1Password to Kubernetes Secret |
+| **Flux**                | GitOps operator synchronizing cluster state to Git                    |
+| **Gateway API**         | Kubernetes routing API replacing Ingress (HTTPRoute, Gateway)         |
+| **GitOps**              | Infrastructure as code pattern where Git is source of truth           |
+| **HelmRelease**         | Flux resource managing Helm chart deployment                          |
+| **HTTPRoute**           | Gateway API resource defining HTTP routing rules                      |
+| **Kustomization**       | Flux resource defining what to apply from Git path                    |
+| **OCIRepository**       | Flux resource for OCI registry-hosted Helm charts                     |
+| **onepassword-connect** | 1Password service providing API access to vaults                      |
+| **Renovate**            | Automation bot updating dependencies (images, charts, actions)        |
+| **Rook-Ceph**           | Distributed storage system on NVMe drives                             |
+| **Spegel**              | Peer-to-peer image cache across cluster nodes                         |
+| **Talos**               | Immutable Linux OS for Kubernetes nodes                               |
+| **VolSync**             | Backup replication using Restic or Rclone                             |
 
 ---
 
 ## Evidence
 
-| Claim | Source | Confidence |
-|-------|--------|------------|
-| Flux reconciles every 1h | `kubernetes/main/apps/*/install.yaml` interval field | Verified |
-| HelmRelease retries 3 times | `kubernetes/main/apps/*/app/helmrelease.yaml` remediation | Verified |
-| ExternalSecret refresh 12h | `kubernetes/main/apps/*/app/secrets.yaml` refreshInterval | Verified |
-| ClusterSecretStore is onepassword-connect | ExternalSecret secretStoreRef in all secrets.yaml | Verified |
-| Two independent clusters | `kubernetes/main/` and `kubernetes/staging/` directories | Verified |
-| App-template chart standard | HelmRelease chartRef across 80+ apps | Verified |
-| Image digest pinning | SHA256 in helmrelease.yaml image tags | Verified |
-| Gateway names | envoy-internal (10.11.1.21), envoy-external (10.11.1.22) | Verified |
-| Storage classes | rook-ceph-block, rook-ceph-filesystem in PVC specs | Verified |
-| Renovate automation | `.renovaterc.json5`, automated PRs | Verified |
-| Jinja2 for Talos only | `*.j2` files only in `talos/` and `bootstrap/` dirs | Verified |
-| Dependencies enforced | `dependsOn` in install.yaml files | Verified |
+| Claim                                     | Source                                                    | Confidence |
+| ----------------------------------------- | --------------------------------------------------------- | ---------- |
+| Flux reconciles every 1h                  | `kubernetes/main/apps/*/install.yaml` interval field      | Verified   |
+| HelmRelease retries 3 times               | `kubernetes/main/apps/*/app/helmrelease.yaml` remediation | Verified   |
+| ExternalSecret refresh 12h                | `kubernetes/main/apps/*/app/secrets.yaml` refreshInterval | Verified   |
+| ClusterSecretStore is onepassword-connect | ExternalSecret secretStoreRef in all secrets.yaml         | Verified   |
+| Two independent clusters                  | `kubernetes/main/` and `kubernetes/staging/` directories  | Verified   |
+| App-template chart standard               | HelmRelease chartRef across 80+ apps                      | Verified   |
+| Image digest pinning                      | SHA256 in helmrelease.yaml image tags                     | Verified   |
+| Gateway names                             | envoy-internal (10.11.1.21), envoy-external (10.11.1.22)  | Verified   |
+| Storage classes                           | rook-ceph-block, rook-ceph-filesystem in PVC specs        | Verified   |
+| Renovate automation                       | `.renovaterc.json5`, automated PRs                        | Verified   |
+| Jinja2 for Talos only                     | `*.j2` files only in `talos/` and `bootstrap/` dirs       | Verified   |
+| Dependencies enforced                     | `dependsOn` in install.yaml files                         | Verified   |
 
 ---
 
@@ -913,6 +957,7 @@ spec:
 **Pattern**: Infrastructure → Operators → Databases → Applications
 
 **Example Dependency Chain**:
+
 ```
 Cilium (networking)
   ↓
@@ -940,6 +985,7 @@ immich app (photo management)
 **Invariant**: ExternalSecrets refresh from 1Password every 12 hours; changes trigger pod restarts via Reloader.
 
 **Flow**:
+
 1. ExternalSecret syncs from 1Password (12h interval)
 2. Kubernetes Secret updated if values changed
 3. Reloader detects Secret change (annotation monitoring)
@@ -947,6 +993,7 @@ immich app (photo management)
 5. Pods pick up new secret values
 
 **Annotation**:
+
 ```yaml
 controllers:
   server:
@@ -963,6 +1010,7 @@ controllers:
 **Invariant**: Renovate detects new images, creates PR with updated tag+digest, auto-merges if tests pass.
 
 **Flow**:
+
 1. Renovate scans HelmRelease files (daily 2AM)
 2. Detects new image version (e.g., immich v2.4.1 → v2.4.2)
 3. Fetches new SHA256 digest from registry
@@ -983,11 +1031,13 @@ controllers:
 **Symptoms**: Pod restarts repeatedly, back-off increases to 5m
 
 **Root Causes**:
+
 1. **App configuration error** - Invalid config file, missing required env var
 2. **Database unreachable** - DB_URL wrong, database not ready
 3. **Missing secret value** - ExternalSecret template has undefined field
 
 **Diagnosis**:
+
 ```bash
 kubectl logs -n media pod/immich-server-xyz --previous --context main  # Last crash
 kubectl describe pod -n media immich-server-xyz --context main  # Events
@@ -995,6 +1045,7 @@ kubectl get externalsecret -n media immich --context main  # Secret status
 ```
 
 **Resolution**:
+
 - Check ExternalSecret is Ready
 - Verify 1Password has all required fields
 - Check logs for specific error
@@ -1007,12 +1058,14 @@ kubectl get externalsecret -n media immich --context main  # Secret status
 **Symptoms**: HelmRelease shows "Reconciling" for >5 minutes
 
 **Root Causes**:
+
 1. **Missing ExternalSecret** - Referenced secret not Ready
 2. **Invalid chart values** - Schema validation failure
 3. **Timeout** - Large image download or slow storage
 4. **Dependency not met** - dependsOn target not Ready
 
 **Diagnosis**:
+
 ```bash
 flux get helmrelease -n media immich --context main  # Status
 kubectl describe helmrelease -n media immich --context main  # Events
@@ -1021,6 +1074,7 @@ flux get kustomization --context main  # Check dependencies
 ```
 
 **Resolution**:
+
 - Ensure ExternalSecrets are Ready
 - Validate HelmRelease values against schema
 - Check dependsOn targets are Ready
@@ -1033,12 +1087,14 @@ flux get kustomization --context main  # Check dependencies
 **Symptoms**: ExternalSecret shows "Failed" status, pod pending
 
 **Root Causes**:
+
 1. **Missing 1Password entry** - Item doesn't exist at specified path
 2. **Wrong path** - Typo in 1Password item name
 3. **onepassword-connect down** - Service not running
 4. **Template error** - Invalid Go template syntax
 
 **Diagnosis**:
+
 ```bash
 kubectl describe externalsecret -n media immich --context main  # Error details
 kubectl logs -n external-secrets deploy/external-secrets --context main  # Controller logs
@@ -1046,6 +1102,7 @@ kubectl logs -n external-secrets deploy/onepassword-connect --context main  # 1P
 ```
 
 **Resolution**:
+
 - Verify 1Password item exists (check vault in 1Password app)
 - Correct path in ExternalSecret dataFrom.extract.key
 - Restart onepassword-connect if crashed
@@ -1058,12 +1115,14 @@ kubectl logs -n external-secrets deploy/onepassword-connect --context main  # 1P
 **Symptoms**: DNS resolves but connection refused or 404
 
 **Root Causes**:
+
 1. **Gateway not ready** - Envoy Gateway pods not running
 2. **Wrong parentRefs** - Gateway name or namespace incorrect
 3. **Backend service missing** - Service doesn't exist
 4. **External-DNS not synced** - DNS record not created
 
 **Diagnosis**:
+
 ```bash
 kubectl get gateway -n network --context main  # Check gateways
 kubectl describe httproute -n media immich-main --context main  # Route status
@@ -1072,6 +1131,7 @@ kubectl logs -n network deploy/external-dns --context main  # DNS sync logs
 ```
 
 **Resolution**:
+
 - Verify gateway exists and is Ready
 - Check parentRefs match gateway name/namespace
 - Ensure backend service exists with correct port
@@ -1080,6 +1140,7 @@ kubectl logs -n network deploy/external-dns --context main  # DNS sync logs
 ---
 
 **See Also**:
+
 - `ARCHITECTURE.md` - System architecture and implementation details
 - `NETWORKING.md` - Traffic flows, DNS, and routing configuration
 - `WORKFLOWS.md` - Operational procedures and troubleshooting
