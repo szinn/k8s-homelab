@@ -17,7 +17,7 @@ spec:
       value: github
     - name: RENOVATE_PLATFORM_COMMIT
       value: "true"
-  image: ghcr.io/renovatebot/renovate:42.68.1@sha256:93bb76d5c4c54ad657d57d935dcd19746cf9f1ad749e1d7a46d4a0960eb0e0da
+  image: ghcr.io/renovatebot/renovate:42.68.2@sha256:eec497df1ca6ebe8bccf577c5dab8825ab5f3673a42a58f066e31dbf070664e6
   parallelism: 5
   resources:
     requests:
