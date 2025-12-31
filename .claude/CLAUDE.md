@@ -4,9 +4,10 @@ GitOps-managed Kubernetes homelab using Flux and Talos.
 
 ## Read First
 
-1. **@docs/ai-context/Ethos.md** - Documentation philosophy
-2. **@docs/ai-context/ARCHITECTURE.md** - System architecture
-3. **@docs/ai-context/CONVENTIONS.md** - Coding standards
+1. @README.md - Overview and navigation
+2. **@docs/ai-context/Ethos.md** - Documentation philosophy
+3. **@docs/ai-context/ARCHITECTURE.md** - System architecture
+4. **@docs/ai-context/CONVENTIONS.md** - Coding standards
 
 ## Documentation
 
@@ -76,14 +77,3 @@ config.yaml             # SECRET - Template variables (not committed)
 - **Gateway API routing**: Use `route` not `ingress` for main traffic
 - **Image pinning**: Always include `@sha256:` digest
 - **SOPS files**: End in `.sops.yaml`, encrypted before commit
-
-## Commit message closing
-
-When writing commits to git. Use the following for the closing comments instead of your default
-
-```
-Pair-programmed with Claude Code - https://claude.com/claude-code
-
-Co-Authored-By: Claude <noreply@anthropic.com>
-Co-Authored-By: Scotte <scotte@zinn.ca>
-```
