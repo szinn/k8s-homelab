@@ -4,7 +4,7 @@ GitOps-managed Kubernetes homelab using Flux and Talos.
 
 ## Read First
 
-1. @README.md - Overview and navigation
+1. **@docs/ai-context/README.md** - Overview and navigation
 2. **@docs/ai-context/Ethos.md** - Documentation philosophy
 3. **@docs/ai-context/ARCHITECTURE.md** - System architecture
 4. **@docs/ai-context/CONVENTIONS.md** - Coding standards
