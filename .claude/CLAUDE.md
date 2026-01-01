@@ -30,7 +30,7 @@ GitOps-managed Kubernetes homelab using Flux and Talos.
 
 ## Critical Invariants
 
-### Clustes: Location of Source
+### Clusters: Location of Source
 
 There are two independent clusters:
 
@@ -41,13 +41,9 @@ The clusters do not share code. When making changes, it is important
 to know which cluster is being worked on. Make sure to know this in advance
 of any planning or changes.
 
-n### Capsule: GitOpsReconciliation
+### Capsule: GitOpsReconciliation
 
 **Invariant**: Cluster state converges to match Git; Flux reverts manual changes.
-
-### Capsule: MakejinjaTemplates
-
-**Invariant**: Edit templates in `bootstrap/templates/`, run `task configure`; don't edit generated files.
 
 ### Capsule: AppTemplateChart
 
@@ -55,13 +51,12 @@ n### Capsule: GitOpsReconciliation
 
 ## Quick Reference
 
-| Task             | Command                           |
-| ---------------- | --------------------------------- |
-| Render templates | `task configure`                  |
-| Validate         | `task kubernetes:kubeconform`     |
-| Check status     | `flux get helmreleases -A`        |
-| Force sync       | `task flux:reconcile`             |
-| Find apps        | `ls kubernetes/apps/<namespace>/` |
+| Task         | Command                           |
+| ------------ | --------------------------------- |
+| Validate     | `task kubernetes:kubeconform`     |
+| Check status | `flux get helmreleases -A`        |
+| Force sync   | `task flux:reconcile`             |
+| Find apps    | `ls kubernetes/apps/<namespace>/` |
 
 ## Directory Structure
 
