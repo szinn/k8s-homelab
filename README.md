@@ -70,13 +70,14 @@ My HomeLab consists of a bunch of machines and Ubiquity networking.
 | USW-Enterprise-8-PoE                               | 2     |              |                       |      |                           |
 | USW-Flex XG                                        | 1     |              |                       |      | Office Hub                |
 | USW-Flex                                           | 1     |              |                       |      | Office Hub                |
-| UNVR                                               | 1     |              | 3x4TB SATA            |      |                           |
+| U7 Pro Wall                                        | 2     |              |                       |      | Access points             |
+| U6 Mesh                                            | 1     |              |                       |      | Access point              |
 | USP-PDU Pro                                        | 2     |              |                       |      |                           |
 | 6-port NUC                                         | 1     | 512GB SSD    |                       | 32GB | Titan - AdGuardHome DNS   |
 | Intel NUC11TNHi7                                   | 1     | 1Tb          |                       | 64GB | Proxmox                   |
 | Intel NUC13 Pro                                    | 1     | 1Tb          |                       | 32GB | Fedora - Hera             |
 | UVC G4 Doorbell                                    | 1     |              |                       |      | Front Door Camera         |
-| UVC G4 Pro                                         | 3     |              |                       |      | Additional Cameras        |
+| UVC G4 Pro                                         | 1     |              |                       |      | Additional Camera         |
 
 The Proxmox Intel NUC runs a 3-node Talos staging cluster where I can try out various patterns before deploying in the main cluster.
 
