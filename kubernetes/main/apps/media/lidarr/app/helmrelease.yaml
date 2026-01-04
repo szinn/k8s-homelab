@@ -35,7 +35,7 @@ spec:
           app:
             image:
               repository: ghcr.io/home-operations/lidarr
-              tag: 3.1.1.4876@sha256:0982783dcc1ede8d45458ffc1d0d96607503035d743f6d18f9c2676a765d5dfe
+              tag: 3.1.1.4900@sha256:42d80518516235c1dd6dc3f6843ba4b530fe081ff6ad1b0ac94da80503924ff1
             env:
               TZ: America/Toronto
               LIDARR__APP__INSTANCENAME: Lidarr
