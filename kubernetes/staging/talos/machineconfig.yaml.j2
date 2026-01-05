@@ -205,5 +205,10 @@ parent: bond0
 up: true
 ---
 apiVersion: v1alpha1
+kind: ResolverConfig
+searchDomains:
+    disableDefault: true
+---
+apiVersion: v1alpha1
 kind: OOMConfig
 triggerExpression: "false"
