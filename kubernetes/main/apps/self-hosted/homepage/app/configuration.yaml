@@ -266,10 +266,6 @@ data:
             href: https://shlink.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
             siteMonitor: https://shlink.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
             icon: shlink.png
-        - Octoprint:
-            href: https://octopi.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
-            siteMonitor: https://octopi.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
-            icon: octoprint.png
         - Stirling PDF:
             href: https://pdf-tool.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
             siteMonitor: https://pdf-tool.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
