@@ -22,7 +22,7 @@ releases:
   - name: grafana-operator
     namespace: observability
     chart: oci://ghcr.io/grafana/helm-charts/grafana-operator
-    version: 5.21.3
+    version: 5.21.4
 
   - name: kube-prometheus-stack
     namespace: observability
