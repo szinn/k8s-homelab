@@ -62,7 +62,7 @@ tasks:
     prompt: Ready to restore database immich?
     internal: true
     cmds:
-      - cat /tmp/immich-latest.sql | sed "s/SELECT pg_catalog.set_config('search_path', '', false);/SELECT pg_catalog.set_config('search_path', 'public, pg_catalog', true);/g" | psql -h immich.zinn.ca
+      - cat /tmp/immich-latest.sql | sed "s/SELECT pg_catalog.set_config('search_path', '', false);/SELECT pg_catalog.set_config('search_path', 'public, pg_catalog', true);/g" | psql-18 -h immich.zinn.ca
 
   _down:
     desc: Bring a service down
@@ -89,5 +89,5 @@ tasks:
     cmds:
       - cp {{.DBBACKUP}}/last/{{.DATABASE}}-latest.sql.gz /tmp
       - gzip -d /tmp/{{.DATABASE}}-latest.sql.gz
-      - psql < /tmp/{{.DATABASE}}-latest.sql
+      - psql-18 < /tmp/{{.DATABASE}}-latest.sql
       - rm /tmp/{{.DATABASE}}-latest.sql

@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=https://schemas.zinn.ca/v1/service.json
 apiVersion: v1
 kind: Service
 metadata:
@@ -20,4 +19,4 @@ spec:
       targetPort: 5432
   selector:
     cnpg.io/cluster: postgres
-    role: primary
+    cnbg.io/instanceRole: primary
