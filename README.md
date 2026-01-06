@@ -4,8 +4,6 @@
 
 <!-- markdownlint-disable no-trailing-punctuation -->
 
-### My home operations repository :octocat:
-
 _... managed with Flux, Renovate and GitHub_ 🤖
 
 </div>
@@ -56,9 +54,8 @@ My HomeLab consists of a bunch of machines and Ubiquity networking.
 | Device                                             | Count | OS Disk Size | Data Disk Size        | RAM  | Operating System          |
 | -------------------------------------------------- | ----- | ------------ | --------------------- | ---- | ------------------------- |
 | Ryzen 3900 12c24t NAS server                       | 1     | 1TB          | 1TB NVME, 6x16Tb SATA | 64GB | TrueNAS Scale - Ragnar    |
-| Raspberry Pi                                       | 1     |              |                       |      | OctoPrint                 |
 | Raspberry Pi 4B                                    | 1     |              |                       |      | Artemis - AdGuardHome DNS |
-| Raspberry Pi 5                                     | 1     |              |                       |      | Apollo - Raspberry PiOS   |
+| Raspberry Pi 5                                     | 1     |              |                       |      | Apollo - AdGuardHome DNS  |
 | TESmart 16-port HDMI Switch                        | 1     |              |                       |      |                           |
 | PiKVM                                              | 1     |              |                       |      |                           |
 | Intel NUC11PAHi7 (worker nodes)                    | 3     | 500GB SSD    | 1TB NVMe              | 64GB | Talos                     |
@@ -71,25 +68,23 @@ My HomeLab consists of a bunch of machines and Ubiquity networking.
 | USW-Flex XG                                        | 1     |              |                       |      | Office Hub                |
 | USW-Flex                                           | 1     |              |                       |      | Office Hub                |
 | U7 Pro Wall                                        | 2     |              |                       |      | Access points             |
-| U6 Mesh                                            | 1     |              |                       |      | Access point              |
+| U6 Mesh                                            | 1     |              |                       |      | Offic access point        |
 | USP-PDU Pro                                        | 2     |              |                       |      |                           |
-| 6-port NUC                                         | 1     | 512GB SSD    |                       | 32GB | Titan - AdGuardHome DNS   |
 | Intel NUC11TNHi7                                   | 1     | 1Tb          |                       | 64GB | Proxmox                   |
-| Intel NUC13 Pro                                    | 1     | 1Tb          |                       | 32GB | Fedora - Hera             |
+| Intel NUC13 Pro                                    | 1     | 1Tb          |                       | 32GB | Hera Fedora               |
 | UVC G4 Doorbell                                    | 1     |              |                       |      | Front Door Camera         |
-| UVC G4 Pro                                         | 1     |              |                       |      | Additional Camera         |
+| UVC G4 Pro                                         | 1     |              |                       |      | Basement Camera           |
 
 The Proxmox Intel NUC runs a 3-node Talos staging cluster where I can try out various patterns before deploying in the main cluster.
 
 The Intel NUC13 (Hera) is a spare NUC that I'm currently using as a Fedora platform with a graphical UI.
 
-Titan used to be the VyOS router which has since gone out of favour. It now runs AdGuardHome DNS as a secondary DNS on Fedora.
-
 Artemis runs services that need to be outside the cluster:
 
 - DNS (AdGuard Home)
-- Cloudflare DDNS
 - gatus to track machine and non-cluster services
+
+Apollo serves as a DNS server as well. Both Artemis and Apollo are served up as DNS servers to the appropriate VLANs.
 
 ## Kubernetes
 
