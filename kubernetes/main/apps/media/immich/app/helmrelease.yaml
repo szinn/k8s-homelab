@@ -52,11 +52,13 @@ spec:
             env:
               TZ: "America/Toronto"
               IMMICH_CONFIG_FILE: /config/immich-config.yaml
-              IMMICH_TRUSTED_PROXIES: "10.11.0.0/16,10.20.0.0/16"
-              IMMICH_MEDIA_LOCATION: &mediaLocation /usr/src/app/upload
+              IMMICH_MEDIA_LOCATION: &mediaLocation /library
+              IMMICH_MACHINE_LEARNING_URL: "http://immich-machine-learning.media.svc.cluster.local:3003"
+              # Prevent NFS mount check failures
+              IMMICH_IGNORE_MOUNT_CHECK_ERRORS: "true"
               DISABLE_REVERSE_GEOCODING: "true"
-              REDIS_HOSTNAME: &redisHost "dragonfly.dbms.svc.cluster.local"
-              REDIS_DBINDEX: &redisDB "1"
+              REDIS_HOSTNAME: &redisHost "immich-redis"
+              REDIS_DBINDEX: &redisDB "0"
             envFrom:
               - secretRef:
                   name: immich-secret
@@ -73,6 +75,22 @@ spec:
             runAsNonRoot: true
             fsGroup: 2000
             fsGroupChangePolicy: OnRootMismatch
+          # ML can run on any node, doesn't need GPU (CPU inference is fine)
+          affinity:
+            podAntiAffinity:
+              preferredDuringSchedulingIgnoredDuringExecution:
+                - weight: 100
+                  podAffinityTerm:
+                    labelSelector:
+                      matchLabels:
+                        app.kubernetes.io/name: plex
+                    topologyKey: kubernetes.io/hostname
+                - weight: 50
+                  podAffinityTerm:
+                    labelSelector:
+                      matchLabels:
+                        app.kubernetes.io/name: fileflows
+                    topologyKey: kubernetes.io/hostname
         containers:
           main:
             image:
@@ -87,9 +105,46 @@ spec:
               MACHINE_LEARNING_CACHE_FOLDER: "/cache"
               TRANSFORMERS_CACHE: "/cache"
               IMMICH_MEDIA_LOCATION: *mediaLocation
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
             envFrom:
               - secretRef:
                   name: immich-secret
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: &mlPort 3003
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: *mlPort
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 60
+      redis:
+        containers:
+          main:
+            image:
+              repository: public.ecr.aws/docker/library/redis
+              tag: 8.4.0@sha256:47200b04138293fae39737e50878a238b13ec0781083126b1b0c63cf5d992e8d
+            env:
+              REDIS_REPLICATION_MODE: master
+            command: ["redis-server"]
 
     service:
       server:
@@ -97,11 +152,20 @@ spec:
         ports:
           http:
             port: &port 2283
+          metrics-api:
+            port: 8081
+          metrics-ms:
+            port: 8082
       machine-learning:
         controller: machine-learning
         ports:
           http:
-            port: 3003
+            port: *mlPort
+      redis:
+        controller: redis
+        ports:
+          http:
+            port: 6379
 
     serviceMonitor:
       server:
