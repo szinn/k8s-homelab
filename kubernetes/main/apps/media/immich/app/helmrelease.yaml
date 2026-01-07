@@ -49,6 +49,14 @@ spec:
             image:
               repository: ghcr.io/immich-app/immich-server
               tag: v2.4.1@sha256:e6a6298e67ae077808fdb7d8d5565955f60b0708191576143fc02d30ab1389d1
+            env:
+              TZ: "America/Toronto"
+              IMMICH_CONFIG_FILE: /config/immich-config.yaml
+              IMMICH_TRUSTED_PROXIES: "10.11.0.0/16,10.20.0.0/16"
+              IMMICH_MEDIA_LOCATION: &mediaLocation /usr/src/app/upload
+              DISABLE_REVERSE_GEOCODING: "true"
+              REDIS_HOSTNAME: &redisHost "dragonfly.dbms.svc.cluster.local"
+              REDIS_DBINDEX: &redisDB "1"
             envFrom:
               - secretRef:
                   name: immich-secret
@@ -70,20 +78,18 @@ spec:
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
               tag: v2.4.1@sha256:b3deefd1826f113824e9d7bc30d905e7f823535887d03f869330946b6db3b44a
+            env:
+              TZ: "America/Toronto"
+              REDIS_HOSTNAME: *redisHost
+              REDIS_DBINDEX: *redisDB
+              MPLCONFIGDIR: "/cache/matplotlib"
+              # ML cache folder paths
+              MACHINE_LEARNING_CACHE_FOLDER: "/cache"
+              TRANSFORMERS_CACHE: "/cache"
+              IMMICH_MEDIA_LOCATION: *mediaLocation
             envFrom:
               - secretRef:
                   name: immich-secret
-            env:
-              MPLCONFIGDIR: "/cache/matplotlib"
-      redis:
-        containers:
-          main:
-            image:
-              repository: public.ecr.aws/docker/library/redis
-              tag: 8.4.0@sha256:47200b04138293fae39737e50878a238b13ec0781083126b1b0c63cf5d992e8d
-            env:
-              REDIS_REPLICATION_MODE: master
-            command: ["redis-server"]
 
     service:
       server:
@@ -96,11 +102,6 @@ spec:
         ports:
           http:
             port: 3003
-      redis:
-        controller: redis
-        ports:
-          http:
-            port: 6379
 
     serviceMonitor:
       server:
@@ -143,10 +144,8 @@ spec:
               - path: /config/matplotlib
       library:
         existingClaim: immich-nfs
-        advancedMounts:
-          server:
-            main:
-              - path: /usr/src/app/upload
+        globalMounts:
+          - path: *mediaLocation
       machine-learning-cache:
         type: persistentVolumeClaim
         storageClass: openebs-hostpath
