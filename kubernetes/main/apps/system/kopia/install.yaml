@@ -11,8 +11,12 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  interval: 1h
   dependsOn:
+    - name: rook-ceph-operator
+      namespace: rook-ceph
+    - name: external-secrets
+      namespace: external-secrets
     - name: volsync
+  interval: 1h
   prune: true
   wait: false
