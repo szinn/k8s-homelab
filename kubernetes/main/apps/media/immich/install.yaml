@@ -44,8 +44,6 @@ spec:
   dependsOn:
     - name: immich-database
       namespace: media
-    - name: keda
-      namespace: system
     - name: external-secrets
       namespace: external-secrets
   components:

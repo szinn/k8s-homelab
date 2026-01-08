@@ -12,7 +12,7 @@ spec:
     name: flux-system
     namespace: flux-system
   dependsOn:
-    - name: rook-ceph-operator
+    - name: rook-ceph-cluster
       namespace: rook-ceph
     - name: external-secrets
       namespace: external-secrets
