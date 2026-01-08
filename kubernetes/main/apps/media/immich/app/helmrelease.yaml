@@ -57,8 +57,9 @@ spec:
               # Prevent NFS mount check failures
               IMMICH_IGNORE_MOUNT_CHECK_ERRORS: "true"
               DISABLE_REVERSE_GEOCODING: "true"
-              REDIS_HOSTNAME: &redisHost "immich-redis"
-              REDIS_DBINDEX: &redisDB "0"
+              # REDIS_HOSTNAME: &redisHost "immich-redis"
+              REDIS_HOSTNAME: &redisHost "dragonfly.dbms.svc.cluster.local"
+              REDIS_DBINDEX: &redisDB "1"
             envFrom:
               - secretRef:
                   name: immich-secret
@@ -136,15 +137,15 @@ spec:
                   periodSeconds: 10
                   timeoutSeconds: 1
                   failureThreshold: 60
-      redis:
-        containers:
-          main:
-            image:
-              repository: public.ecr.aws/docker/library/redis
-              tag: 8.4.0@sha256:47200b04138293fae39737e50878a238b13ec0781083126b1b0c63cf5d992e8d
-            env:
-              REDIS_REPLICATION_MODE: master
-            command: ["redis-server"]
+      # redis:
+      #   containers:
+      #     main:
+      #       image:
+      #         repository: public.ecr.aws/docker/library/redis
+      #         tag: 8.4.0@sha256:47200b04138293fae39737e50878a238b13ec0781083126b1b0c63cf5d992e8d
+      #       env:
+      #         REDIS_REPLICATION_MODE: master
+      #       command: ["redis-server"]
 
     service:
       server:
@@ -161,11 +162,11 @@ spec:
         ports:
           http:
             port: *mlPort
-      redis:
-        controller: redis
-        ports:
-          http:
-            port: 6379
+      # redis:
+      #   controller: redis
+      #   ports:
+      #     http:
+      #       port: 6379
 
     serviceMonitor:
       server:
