@@ -5,3 +5,4 @@ kind: Kustomization
 resources:
   - cluster.yaml
   - prometheus-rule.yaml
+  - service.yaml
