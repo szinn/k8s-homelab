@@ -26,7 +26,7 @@
       customType: "regex",
       description: "Process OCI dependencies",
       managerFilePatterns: [
-        "/^kubernetes/.+\\.yaml(?:\\.j2)?$/"
+        "kubernetes/.+\\.yaml(?:\\.j2)?$/"
       ],
       matchStrings: [
         "oci://(?<depName>[^:]+):(?<currentValue>\\S+)",
@@ -37,7 +37,7 @@
       customType: "regex",
       "description": "Process imageName values",
       "fileMatch": [
-        "kubernetes/.+\\.ya?ml$"
+        "kubernetes/.+\\.yaml$"
       ],
       "matchStrings": [
         "imageName: (?<depName>\\S+):(?<currentValue>.*\\-.*)"
