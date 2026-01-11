@@ -8,7 +8,7 @@
         "\\/.+\\.yaml(?:\\.j2)?$/"
       ],
       matchStrings: [
-        "imageName: (?<depName>\\S+):(?<currentValue>\\S+)"
+        "imageName: (?<depName>\\S+):(?<currentValue>\\S+?)"
       ],
       datasourceTemplate: "docker",
       versioningTemplate: "redhat"
