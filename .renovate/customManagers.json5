@@ -36,7 +36,7 @@
     {
       customType: "regex",
       description: ["Process cnpg"],
-      fileMatch: ["kubernetes/.+\\.ya?ml(?:\\.j2)?$"],
+      fileMatch: ["kubernetes/.+\\.yaml$"],
       matchStrings: [
         "imageName:\\s+ghcr\\.io\\/cloudnative-pg\\/postgresql:(?<currentValue>\\d+(?:\\.\\d+)*)"
       ],
