@@ -3,12 +3,12 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: postgres-18
+  name: postgres-test
   labels:
     app.kubernetes.io/name: postgres-db
 spec:
-  imageName: ghcr.io/cloudnative-pg/postgresql:18.1
-  instances: 3
+  imageName: ghcr.io/cloudnative-pg/postgresql:18.0
+  instances: 1
   primaryUpdateStrategy: unsupervised
 
   storage:
@@ -32,3 +32,4 @@ spec:
 
   monitoring:
     enablePodMonitor: true
+

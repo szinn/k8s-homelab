@@ -5,3 +5,4 @@ kind: Kustomization
 resources:
   - cluster.yaml
   - service.yaml
+  - cluster-test.yaml

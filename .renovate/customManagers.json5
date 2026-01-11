@@ -32,6 +32,16 @@
         "oci://(?<depName>[^:]+):(?<currentValue>\\S+)",
       ],
       datasourceTemplate: "docker",
+    },
+    {
+      customType: "regex",
+      description: ["Process cnpg"],
+      fileMatch: ["kubernetes/.+\\.ya?ml(?:\\.j2)?$"],
+      matchStrings: [
+        "imageName:\\s+ghcr\\.io\\/cloudnative-pg\\/postgresql:(?<currentValue>\\d+(?:\\.\\d+)*)"
+      ],
+      depNameTemplate: "ghcr.io/cloudnative-pg/postgresql",
+      datasourceTemplate: "docker"
     }
   ]
 }
