@@ -7,3 +7,5 @@ pipx_uvx = true
 "aqua:astral-sh/uv" = "latest"
 "pipx:flux-local" = "latest"
 "kubeconform" = "latest"
+"npm:renovate" = "latest"
+node = "24"

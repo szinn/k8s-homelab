@@ -3,8 +3,22 @@
   customManagers: [
     {
       customType: "regex",
+      description: "Process imageName values",
+      managerFilePatterns: [
+        "kubernetes\\/.+\\.yaml(?:\\.j2)?$/"
+      ],
+      matchStrings: [
+        "imageName: (?<depName>\\S+):(?<currentValue>.*\\-.*)"
+      ],
+      datasourceTemplate: "docker",
+      versioningTemplate: "redhat"
+    },
+    {
+      customType: "regex",
       description: "Process raw GitHub URLs",
-      fileMatch: ["kubernetes/.+\\.ya?ml(?:\\.j2)?$"],
+      managerFilePatterns: [
+        "kubernetes\\/.+\\.yaml(?:\\.j2)?$/"
+      ],
       matchStrings: [
         "https:\\/\\/raw.githubusercontent.com\\/(?<depName>[\\w\\d\\-_]+\\/[\\w\\d\\-_]+)\\/(?<currentValue>[\\w\\d\\.\\-_]+)\\/.*"
       ],
@@ -14,7 +28,9 @@
     {
       customType: "regex",
       description: "Process GitHub release URLs",
-      fileMatch: ["kubernetes/.+\\.ya?ml(?:\\.j2)?$"],
+      managerFilePatterns: [
+        "kubernetes\\/.+\\.yaml(?:\\.j2)?$/"
+      ],
       matchStrings: [
         "https:\\/\\/github.com\\/(?<depName>[\\w\\d\\-_]+\\/[\\w\\d\\-_]+)\\/releases\\/download\\/v(?<currentValue>[\\w\\d\\.\\-_]+)\\/.*",
         "https:\\/\\/github.com\\/(?<depName>[\\w\\d\\-_]+\\/[\\w\\d\\-_]+)\\/releases\\/download\\/(?<currentValue>[\\w\\d\\.\\-_]+)\\/.*"
@@ -26,25 +42,12 @@
       customType: "regex",
       description: "Process OCI dependencies",
       managerFilePatterns: [
-        "kubernetes/.+\\.yaml(?:\\.j2)?$/"
+        "kubernetes\\/.+\\.yaml(?:\\.j2)?$/"
       ],
       matchStrings: [
         "oci://(?<depName>[^:]+):(?<currentValue>\\S+)",
       ],
-      datasourceTemplate: "docker",
-    }
-  ],
-  regexManagers: [
-    {
-      description: "Process imageName values",
-      fileMatch: [
-        "kubernetes/.+\\.yaml$"
-      ],
-      matchStrings: [
-        "imageName: (?<depName>\\S+):(?<currentValue>.*\\-.*)"
-      ],
-      datasourceTemplate: "docker",
-      versioningTemplate: "redhat"
+      datasourceTemplate: "docker"
     }
   ]
 }

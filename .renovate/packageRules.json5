@@ -24,7 +24,6 @@
       matchDatasources: ["docker"],
       matchDepNames: [
         "ghcr.io/bjw-s/helm/app-template",
-        // "ghcr.io/cloudnative-pg/postgresql",
         "ghcr.io/deedee-ops/spegel",
         "ghcr.io/fluxcd/flux-manifests",
         "ghcr.io/siderolabs/installer",
