@@ -41,7 +41,7 @@ spec:
   healthChecks:
     - apiVersion: postgresql.cnpg.io/v1
       kind: Cluster
-      name: postgres
+      name: postgres-18
       namespace: dbms
   healthCheckExprs:
     - apiVersion: postgresql.cnpg.io/v1

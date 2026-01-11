@@ -3,13 +3,12 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: postgres
+  name: postgres-18
   labels:
     app.kubernetes.io/name: postgres-db
 spec:
   # renovate: datasource=docker depName=ghcr.io/cloudnative-pg/postgresql versioning=redhat
-  imageName: ghcr.io/cloudnative-pg/postgresql:17.5-1
-  # imageName: ghcr.io/cloudnative-pg/postgresql:18.1
+  imageName: ghcr.io/cloudnative-pg/postgresql:18.1
   instances: 3
   primaryUpdateStrategy: unsupervised
 
