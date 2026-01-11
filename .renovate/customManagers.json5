@@ -5,7 +5,7 @@
       customType: "regex",
       description: "Process imageName values",
       managerFilePatterns: [
-        "kubernetes\\/.+\\.yaml(?:\\.j2)?$/"
+        "\\/.+\\.yaml(?:\\.j2)?$/"
       ],
       matchStrings: [
         "imageName: (?<depName>\\S+):(?<currentValue>\\S+)"
