@@ -34,14 +34,15 @@
       datasourceTemplate: "docker",
     },
     {
-      customType: "regex",
-      description: "Process cnpg",
-      fileMatch: ["kubernetes/.+\\.ya?ml$"],
-      matchStrings: [
-        "imageName:\\s+(?<depName>ghcr\\.io\\/cloudnative-pg\\/postgresql):(?<currentValue>\\S+)"
+      "description": "Process imageName values",
+      "fileMatch": [
+        "kubernetes/.+\\.ya?ml$"
       ],
-      datasourceTemplate: "docker",
-      versioningTemplate: "docker"
+      "matchStrings": [
+        "imageName: (?<depName>\\S+):(?<currentValue>.*\\-.*)"
+      ],
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "redhat"
     }
   ]
 }
