@@ -32,9 +32,10 @@
         "oci://(?<depName>[^:]+):(?<currentValue>\\S+)",
       ],
       datasourceTemplate: "docker",
-    },
+    }
+  ],
+  regexManagers: [
     {
-      customType: "regex",
       description: "Process imageName values",
       fileMatch: [
         "kubernetes/.+\\.yaml$"
