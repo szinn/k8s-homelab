@@ -8,4 +8,4 @@ pipx_uvx = true
 "pipx:flux-local" = "latest"
 "kubeconform" = "latest"
 "npm:renovate" = "latest"
-node = "24"
+"node" = "24"
