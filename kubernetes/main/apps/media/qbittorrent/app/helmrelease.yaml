@@ -39,7 +39,7 @@ spec:
           coredns:
             image:
               repository: mirror.gcr.io/coredns/coredns
-              tag: 1.13.2@sha256:94caebb89dcfb9d2c4be45bfda34410a3e1092458fbbbc0284365c9e4c9a7818
+              tag: 1.14.0@sha256:4fbdd8fb53c5d1748aeb98f0799798fb073bb11128c13e8415aa254ad1ae0203
             args:
               - -conf
               - /etc/coredns/Corefile
