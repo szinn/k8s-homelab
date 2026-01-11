@@ -36,12 +36,12 @@
     {
       customType: "regex",
       description: "Process cnpg",
-      fileMatch: ["kubernetes/.+\\.yaml$"],
+      fileMatch: ["kubernetes/.+\\.ya?ml$"],
       matchStrings: [
-        "imageName:\\s+ghcr\\.io\\/cloudnative-pg\\/postgresql:(?<currentValue>\\d+(?:\\.\\d+)*)"
+        "imageName:\\s+(?<depName>ghcr\\.io\\/cloudnative-pg\\/postgresql):(?<currentValue>\\S+)"
       ],
-      depNameTemplate: "ghcr.io/cloudnative-pg/postgresql",
-      datasourceTemplate: "docker"
+      datasourceTemplate: "docker",
+      versioningTemplate: "docker"
     }
   ]
 }
