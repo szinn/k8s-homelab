@@ -35,15 +35,15 @@
     },
     {
       customType: "regex",
-      "description": "Process imageName values",
-      "fileMatch": [
+      description: "Process imageName values",
+      fileMatch: [
         "kubernetes/.+\\.yaml$"
       ],
-      "matchStrings": [
+      matchStrings: [
         "imageName: (?<depName>\\S+):(?<currentValue>.*\\-.*)"
       ],
-      "datasourceTemplate": "docker",
-      "versioningTemplate": "redhat"
+      datasourceTemplate: "docker",
+      versioningTemplate: "redhat"
     }
   ]
 }
