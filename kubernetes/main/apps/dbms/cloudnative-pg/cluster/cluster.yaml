@@ -3,23 +3,32 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: postgres
+  name: postgres-18
   labels:
     app.kubernetes.io/name: postgres-db
 spec:
   # renovate: datasource=docker depName=ghcr.io/cloudnative-pg/postgresql versioning=redhat
-  imageName: ghcr.io/cloudnative-pg/postgresql:17.5-1
+  imageName: ghcr.io/cloudnative-pg/postgresql:18.1
   instances: 3
   primaryUpdateStrategy: unsupervised
+
   storage:
     size: 100Gi
-    storageClass: ceph-block
+    storageClass: openebs-hostpath
+
   enableSuperuserAccess: true
   superuserSecret:
     name: postgres-superuser
+
   postgresql:
     parameters:
       max_connections: "300"
       shared_buffers: 512MB
+
+  affinity:
+    enablePodAntiAffinity: true
+    topologyKey: kubernetes.io/hostname
+    podAntiAffinityType: required
+
   monitoring:
     enablePodMonitor: true
