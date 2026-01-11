@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/name: postgres-db
 spec:
   # cnpg: datasource=docker
-  imageName: ghcr.io/cloudnative-pg/postgresql:18.0
+  imageName: ghcr.io/cloudnative-pg/postgresql:18.1
   instances: 1
   primaryUpdateStrategy: unsupervised
 
