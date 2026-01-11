@@ -18,5 +18,5 @@ spec:
       protocol: TCP
       targetPort: 5432
   selector:
-    cnpg.io/cluster: postgres-18
-    cnbg.io/instanceRole: primary
+    cnpg.io/cluster: postgres
+    cnpg.io/instanceRole: primary
