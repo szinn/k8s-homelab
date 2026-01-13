@@ -15,7 +15,35 @@ categories: ["Reference[100%]", "Tools[95%]"]
 
 ## MCP Servers
 
-Configured in `mcp.json`:
+Configured in `@.mcp.json`:
+
+### GitHub
+
+**Purpose**: Pull request management, issue tracking, and GitHub operations.
+
+**Configuration**:
+
+```json
+{
+  "mcpServers": {
+    "github": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp",
+      "headers": {
+        "Authorization": "Bearer ${CLAUDE_GITHUB_PAT}"
+      }
+    }
+  }
+}
+```
+
+**Use For**:
+
+- Creating and managing pull requests
+- Issue tracking and management
+- Repository operations
+
+**Requires**: `CLAUDE_GITHUB_PAT` environment variable with a valid GitHub personal access token.
 
 ### Mermaid Validator
 
@@ -43,7 +71,6 @@ Configured in `mcp.json`:
 
 **Potential Future MCP Servers**:
 
-- **GitHub MCP**: Pull request management, issue tracking
 - **Filesystem MCP**: Enhanced file operations and searches
 - **RepoQL**: Query codebase as database (semantic search, file inventory)
 
@@ -271,11 +298,12 @@ task machine:update-linux-packages
 - Staging cluster: `kubernetes/staging/talosconfig`
 
 **Evidence**:
-| Claim | Source | Confidence |
-|-------|--------|------------|
-| Two independent clusters exist | `kubernetes/main/` and `kubernetes/staging/` directories | Verified |
-| Taskfiles require cluster parameter | `.taskfiles/Flux/Taskfile.yaml`, `.taskfiles/Kubernetes/Taskfile.yaml` | Verified |
-| Separate kubeconfigs per cluster | `kubernetes/main/kubeconfig`, `kubernetes/staging/kubeconfig` | Verified |
+
+| Claim                               | Source                                                                 | Confidence |
+| ----------------------------------- | ---------------------------------------------------------------------- | ---------- |
+| Two independent clusters exist      | `kubernetes/main/` and `kubernetes/staging/` directories               | Verified   |
+| Taskfiles require cluster parameter | `.taskfiles/Flux/Taskfile.yaml`, `.taskfiles/Kubernetes/Taskfile.yaml` | Verified   |
+| Separate kubeconfigs per cluster    | `kubernetes/main/kubeconfig`, `kubernetes/staging/kubeconfig`          | Verified   |
 
 ---
 
@@ -719,7 +747,8 @@ talosctl --talosconfig kubernetes/staging/talosconfig health
 
 | Claim                                      | Source                                                          | Confidence |
 | ------------------------------------------ | --------------------------------------------------------------- | ---------- |
-| Mermaid MCP server configured              | `mcp.json`                                                      | Verified   |
+| GitHub MCP server configured               | `.mcp.json`                                                     | Verified   |
+| Mermaid MCP server configured              | `.mcp.json`                                                     | Verified   |
 | Taskfile commands available                | `Taskfile.yaml`, `.taskfiles/`                                  | Verified   |
 | Flux tasks require cluster parameter       | `.taskfiles/Flux/Taskfile.yaml`                                 | Verified   |
 | Kubernetes tasks require cluster parameter | `.taskfiles/Kubernetes/Taskfile.yaml`                           | Verified   |
