@@ -1,0 +1,33 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: agregarr
+spec:
+  targetNamespace: media
+  path: ./kubernetes/main/apps/media/agregarr/app
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  dependsOn:
+    - name: keda
+      namespace: system
+    - name: volsync
+      namespace: system
+  components:
+    - ../../../../components/gatus/guarded
+    - ../../../../components/nfs-scaler
+    - ../../../../components/volsync
+  postBuild:
+    substitute:
+      APP: agregarr
+      VOLSYNC_CLAIM: agregarr-config
+      VOLSYNC_CAPACITY: 5Gi
+      GATUS_APP: agregarr
+      GATUS_SUBDOMAIN: agregarr
+  prune: true
+  wait: false
+  interval: 1h
+  timeout: 5m

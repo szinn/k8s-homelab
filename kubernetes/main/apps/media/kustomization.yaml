@@ -11,6 +11,7 @@ resources:
   - namespace.yaml
   # Flux-Kustomizations
   - pvc
+  - agregarr/install.yaml
   - bazarr/install.yaml
   - calibre-web/install.yaml
   - immich/install.yaml
