@@ -12,10 +12,6 @@
       "command": "npx",
       "args": ["-y", "@probelabs/maid-mcp"],
       "env": {}
-    },
-    "devonthink": {
-      "command": "npx",
-      "args": ["-y", "mcp-server-devonthink"]
     }
   }
 }
