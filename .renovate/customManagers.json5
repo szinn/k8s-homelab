@@ -8,7 +8,7 @@
         "/kubernetes\\/.+\\.yaml$/"
       ],
       matchStrings: [
-        "imageName: +(?<depName>[^:]+):(?<currentValue>[^@\\n]+)(@(?<currentDigest>sha256:[0-9a-f]+))?"
+        "imageName: +(?<depName>[^:]+):(?<currentValue>[0-9\\.\\-]+)(@(?<currentDigest>sha256:[0-9a-f]+))?"
       ],
       datasourceTemplate: "docker",
       versioningTemplate: "redhat"
