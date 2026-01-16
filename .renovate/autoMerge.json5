@@ -82,6 +82,15 @@
         "ghcr.io/home-operations/sabnzbd",
         "ghcr.io/home-operations/sonarr"
       ]
+    },
+    {
+      description: "Auto-merge seerr",
+      matchDatasources: ["docker"],
+      automerge: true,
+      automergeType: "branch",
+      matchUpdateTypes: ["minor", "patch", "digest"],
+      matchPackageNames: ["ghcr.io/seerr-team/seerr"],
+      ignoreTests: true
     }
   ]
 }
