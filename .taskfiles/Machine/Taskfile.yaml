@@ -16,20 +16,12 @@ tasks:
   update-certificates:
     desc: Update machine certificates
     cmds:
-      - task: update-octopi-certificate
       - task: update-pikvm-certificate
       - task: update-proxmox-certificate
       - task: update-ragnar-certificate
       - task: update-styx-certificate
       - task: update-artemis-certificates
       - task: update-apollo-certificates
-
-  update-octopi-certificate:
-    desc: Update OctoPi certificate
-    cmds:
-      - scp "{{.FILES_DIR}}/certificates/certificate.pem" root@octopi.zinn.tech:/etc/ssl/snakeoil.pem
-      - ssh root@octopi.zinn.tech systemctl restart haproxy
-      - ssh root@octopi.zinn.tech chmod u+rw,g-rwx,o-rwx /etc/ssl/snakeoil.pem
 
   update-pikvm-certificate:
     desc: Update PiKVM certificate
