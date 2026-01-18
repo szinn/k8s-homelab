@@ -83,7 +83,7 @@ dns:
   serve_plain_dns: true
   hostsfile_enabled: true
 tls:
-  enabled: true
+  enabled: false
   server_name: ""
   force_https: false
   port_https: 1443
@@ -94,8 +94,8 @@ tls:
   allow_unencrypted_doh: false
   certificate_chain: ""
   private_key: ""
-  certificate_path: "/opt/certificates/zinn-tech.crt"
-  private_key_path: "/opt/certificates/zinn-tech.key"
+  # certificate_path: "/opt/certificates/zinn-tech.crt"
+  # private_key_path: "/opt/certificates/zinn-tech.key"
   strict_sni_check: false
 querylog:
   dir_path: ""

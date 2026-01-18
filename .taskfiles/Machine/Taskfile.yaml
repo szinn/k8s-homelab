@@ -9,30 +9,30 @@ vars:
   ADGUARD_VERSION: v0.107.71
 
 tasks:
-  fetch-certificate:
-    desc: Fetch domain certificate from cluster
-    cmd: "{{.SCRIPTS_DIR}}/fetch-certificate.sh {{.FILES_DIR}}/certificates"
+  # fetch-certificate:
+  #   desc: Fetch domain certificate from cluster
+  #   cmd: "{{.SCRIPTS_DIR}}/fetch-certificate.sh {{.FILES_DIR}}/certificates"
 
-  update-certificates:
-    desc: Update machine certificates
-    cmds:
-      - task: update-pikvm-certificate
-      - task: update-proxmox-certificate
-      - task: update-ragnar-certificate
-      - task: update-styx-certificate
-      - task: update-artemis-certificates
-      - task: update-apollo-certificates
+  # update-certificates:
+  #   desc: Update machine certificates
+  #   cmds:
+  #     - task: update-pikvm-certificate
+  #     - task: update-proxmox-certificate
+  #     - task: update-ragnar-certificate
+  #     - task: update-styx-certificate
+  #     - task: update-artemis-certificates
+  #     - task: update-apollo-certificates
 
-  update-pikvm-certificate:
-    desc: Update PiKVM certificate
-    cmds:
-      - ssh root@pikvm.zinn.tech rw
-      - scp "{{.FILES_DIR}}/certificates/certificate.crt" root@pikvm.zinn.tech:/etc/kvmd/nginx/ssl/server.crt
-      - ssh root@pikvm.zinn.tech chmod u+rw,g-wx,o-wx /etc/kvmd/nginx/ssl/server.crt
-      - scp "{{.FILES_DIR}}/certificates/certificate.key" root@pikvm.zinn.tech:/etc/kvmd/nginx/ssl/server.key
-      - ssh root@pikvm.zinn.tech chmod u+rw,g-wx,o-wx /etc/kvmd/nginx/ssl/server.key
-      - ssh root@pikvm.zinn.tech ro
-      - ssh root@pikvm.zinn.tech systemctl restart kvmd-nginx
+  # update-pikvm-certificate:
+  #   desc: Update PiKVM certificate
+  #   cmds:
+  #     - ssh root@pikvm.zinn.tech rw
+  #     - scp "{{.FILES_DIR}}/certificates/certificate.crt" root@pikvm.zinn.tech:/etc/kvmd/nginx/ssl/server.crt
+  #     - ssh root@pikvm.zinn.tech chmod u+rw,g-wx,o-wx /etc/kvmd/nginx/ssl/server.crt
+  #     - scp "{{.FILES_DIR}}/certificates/certificate.key" root@pikvm.zinn.tech:/etc/kvmd/nginx/ssl/server.key
+  #     - ssh root@pikvm.zinn.tech chmod u+rw,g-wx,o-wx /etc/kvmd/nginx/ssl/server.key
+  #     - ssh root@pikvm.zinn.tech ro
+  #     - ssh root@pikvm.zinn.tech systemctl restart kvmd-nginx
 
   update-pikvm-configuration:
     desc: Update PiKVM configuration
@@ -42,25 +42,25 @@ tasks:
       - ssh root@pikvm.zinn.tech ro
       - ssh root@pikvm.zinn.tech systemctl restart kvmd
 
-  update-proxmox-certificate:
-    desc: Update Proxmox certificate
-    cmds:
-      - scp "{{.FILES_DIR}}/certificates/certificate.crt" root@ares.zinn.tech:/etc/pve/nodes/ares/pve-ssl.pem
-      - ssh root@ares.zinn.tech chown root:www-data /etc/pve/nodes/ares/pve-ssl.pem
-      - ssh root@ares.zinn.tech chmod u+rw,g-wx,o-wx /etc/pve/nodes/ares/pve-ssl.pem
-      - scp "{{.FILES_DIR}}/certificates/certificate.key" root@ares.zinn.tech:/etc/pve/nodes/ares/pve-ssl.key
-      - ssh root@ares.zinn.tech chown root:www-data /etc/pve/nodes/ares/pve-ssl.key
-      - ssh root@ares.zinn.tech chmod u+rw,g-wx,o-wx /etc/pve/nodes/ares/pve-ssl.key
-      - ssh root@ares.zinn.tech systemctl restart pveproxy
+  # update-proxmox-certificate:
+  #   desc: Update Proxmox certificate
+  #   cmds:
+  #     - scp "{{.FILES_DIR}}/certificates/certificate.crt" root@ares.zinn.tech:/etc/pve/nodes/ares/pve-ssl.pem
+  #     - ssh root@ares.zinn.tech chown root:www-data /etc/pve/nodes/ares/pve-ssl.pem
+  #     - ssh root@ares.zinn.tech chmod u+rw,g-wx,o-wx /etc/pve/nodes/ares/pve-ssl.pem
+  #     - scp "{{.FILES_DIR}}/certificates/certificate.key" root@ares.zinn.tech:/etc/pve/nodes/ares/pve-ssl.key
+  #     - ssh root@ares.zinn.tech chown root:www-data /etc/pve/nodes/ares/pve-ssl.key
+  #     - ssh root@ares.zinn.tech chmod u+rw,g-wx,o-wx /etc/pve/nodes/ares/pve-ssl.key
+  #     - ssh root@ares.zinn.tech systemctl restart pveproxy
 
-  update-ragnar-certificate:
-    desc: Update Ragnar certificate
-    cmds:
-      - scp "{{.FILES_DIR}}/certificates/certificate.crt" root@ragnar.zinn.tech:/etc/certificates/ZinnTech.crt
-      - ssh root@ragnar.zinn.tech chmod u+rw,g-wx,o-wx /etc/certificates/ZinnTech.crt
-      - scp "{{.FILES_DIR}}/certificates/certificate.key" root@ragnar.zinn.tech:/etc/certificates/ZinnTech.key
-      - ssh root@ragnar.zinn.tech chmod u+rw,g-wx,o-wx /etc/certificates/ZinnTech.key
-      - ssh root@ragnar.zinn.tech /mnt/atlas/support/update-certificate.sh
+  # update-ragnar-certificate:
+  #   desc: Update Ragnar certificate
+  #   cmds:
+  #     - scp "{{.FILES_DIR}}/certificates/certificate.crt" root@ragnar.zinn.tech:/etc/certificates/ZinnTech.crt
+  #     - ssh root@ragnar.zinn.tech chmod u+rw,g-wx,o-wx /etc/certificates/ZinnTech.crt
+  #     - scp "{{.FILES_DIR}}/certificates/certificate.key" root@ragnar.zinn.tech:/etc/certificates/ZinnTech.key
+  #     - ssh root@ragnar.zinn.tech chmod u+rw,g-wx,o-wx /etc/certificates/ZinnTech.key
+  #     - ssh root@ragnar.zinn.tech /mnt/atlas/support/update-certificate.sh
 
   update-ragnar-configuration:
     desc: Update Ragnar configuration
@@ -69,31 +69,31 @@ tasks:
       - ssh root@ragnar.zinn.tech chmod u+rw,g-wx,o-wx /etc/chrony/conf.d/0-ntp-allow.conf
       - ssh root@ragnar.zinn.tech systemctl restart chrony
 
-  update-styx-certificate:
-    desc: Update Styx certificate
-    cmds:
-      - task: update-unifi-certificate
-        vars:
-          MACHINE: styx
+  # update-styx-certificate:
+  #   desc: Update Styx certificate
+  #   cmds:
+  #     - task: update-unifi-certificate
+  #       vars:
+  #         MACHINE: styx
 
-  update-zeus-certificate:
-    desc: Update Zeus certificate
-    cmds:
-      - task: update-unifi-certificate
-        vars:
-          MACHINE: zeus
+  # update-zeus-certificate:
+  #   desc: Update Zeus certificate
+  #   cmds:
+  #     - task: update-unifi-certificate
+  #       vars:
+  #         MACHINE: zeus
 
-  update-unifi-certificate:
-    desc: Update UniFi certificate
-    requires:
-      vars:
-        - MACHINE
-    cmds:
-      - scp "{{.FILES_DIR}}/certificates/certificate.crt" root@{{.MACHINE}}.zinn.tech:/data/unifi-core/config/unifi-core.crt
-      - ssh root@{{.MACHINE}}.zinn.tech chmod u+rw,g-wx,o-wx /data/unifi-core/config/unifi-core.crt
-      - scp "{{.FILES_DIR}}/certificates/certificate.key" root@{{.MACHINE}}.zinn.tech:/data/unifi-core/config/unifi-core.key
-      - ssh root@{{.MACHINE}}.zinn.tech chmod u+rw,g-wx,o-wx /data/unifi-core/config/unifi-core.key
-      - ssh root@{{.MACHINE}}.zinn.tech systemctl restart unifi-core
+  # update-unifi-certificate:
+  #   desc: Update UniFi certificate
+  #   requires:
+  #     vars:
+  #       - MACHINE
+  #   cmds:
+  #     - scp "{{.FILES_DIR}}/certificates/certificate.crt" root@{{.MACHINE}}.zinn.tech:/data/unifi-core/config/unifi-core.crt
+  #     - ssh root@{{.MACHINE}}.zinn.tech chmod u+rw,g-wx,o-wx /data/unifi-core/config/unifi-core.crt
+  #     - scp "{{.FILES_DIR}}/certificates/certificate.key" root@{{.MACHINE}}.zinn.tech:/data/unifi-core/config/unifi-core.key
+  #     - ssh root@{{.MACHINE}}.zinn.tech chmod u+rw,g-wx,o-wx /data/unifi-core/config/unifi-core.key
+  #     - ssh root@{{.MACHINE}}.zinn.tech systemctl restart unifi-core
 
   install-styx-configuration:
     desc: Install Styx configuration
@@ -102,21 +102,21 @@ tasks:
       - ssh root@styx.zinn.tech systemctl enable multicast-relay
       - ssh root@styx.zinn.tech systemctl start multicast-relay
 
-  install-artemis-certificates:
-    desc: Update Artemis certificates
-    cmds:
-      - ssh root@artemis.zinn.tech mkdir -p /opt/certificates
-      - scp "{{.FILES_DIR}}/certificates/certificate.crt" root@artemis.zinn.tech:/opt/certificates/zinn-tech.crt
-      - ssh root@artemis.zinn.tech chmod u+rw,g-wx,o-wx /opt/certificates/zinn-tech.crt
-      - scp "{{.FILES_DIR}}/certificates/certificate.key" root@artemis.zinn.tech:/opt/certificates/zinn-tech.key
-      - ssh root@artemis.zinn.tech chmod u+rw,g-wx,o-wx /opt/certificates/zinn-tech.key
+  # install-artemis-certificates:
+  #   desc: Update Artemis certificates
+  #   cmds:
+  #     - ssh root@artemis.zinn.tech mkdir -p /opt/certificates
+  #     - scp "{{.FILES_DIR}}/certificates/certificate.crt" root@artemis.zinn.tech:/opt/certificates/zinn-tech.crt
+  #     - ssh root@artemis.zinn.tech chmod u+rw,g-wx,o-wx /opt/certificates/zinn-tech.crt
+  #     - scp "{{.FILES_DIR}}/certificates/certificate.key" root@artemis.zinn.tech:/opt/certificates/zinn-tech.key
+  #     - ssh root@artemis.zinn.tech chmod u+rw,g-wx,o-wx /opt/certificates/zinn-tech.key
 
-  update-artemis-certificates:
-    desc: Update Artemis certificates and restart services
-    cmds:
-      - task: install-artemis-certificates
-      - task: restart-artemis-adguard
-      - task: restart-artemis-gatus
+  # update-artemis-certificates:
+  #   desc: Update Artemis certificates and restart services
+  #   cmds:
+  #     - task: install-artemis-certificates
+  #     - task: restart-artemis-adguard
+  #     - task: restart-artemis-gatus
 
   update-linux-packages:
     desc: Update linux machines
@@ -209,20 +209,20 @@ tasks:
     cmds:
       - ssh root@artemis.zinn.tech systemctl restart AdGuardHome
 
-  install-apollo-certificates:
-    desc: Update Apollo certificates
-    cmds:
-      - ssh root@apollo.zinn.tech mkdir -p /opt/certificates
-      - scp "{{.FILES_DIR}}/certificates/certificate.crt" root@apollo.zinn.tech:/opt/certificates/zinn-tech.crt
-      - ssh root@apollo.zinn.tech chmod u+rw,g-wx,o-wx /opt/certificates/zinn-tech.crt
-      - scp "{{.FILES_DIR}}/certificates/certificate.key" root@apollo.zinn.tech:/opt/certificates/zinn-tech.key
-      - ssh root@apollo.zinn.tech chmod u+rw,g-wx,o-wx /opt/certificates/zinn-tech.key
+  # install-apollo-certificates:
+  #   desc: Update Apollo certificates
+  #   cmds:
+  #     - ssh root@apollo.zinn.tech mkdir -p /opt/certificates
+  #     - scp "{{.FILES_DIR}}/certificates/certificate.crt" root@apollo.zinn.tech:/opt/certificates/zinn-tech.crt
+  #     - ssh root@apollo.zinn.tech chmod u+rw,g-wx,o-wx /opt/certificates/zinn-tech.crt
+  #     - scp "{{.FILES_DIR}}/certificates/certificate.key" root@apollo.zinn.tech:/opt/certificates/zinn-tech.key
+  #     - ssh root@apollo.zinn.tech chmod u+rw,g-wx,o-wx /opt/certificates/zinn-tech.key
 
-  update-apollo-certificates:
-    desc: Update Apollo certificates and restart services
-    cmds:
-      - task: install-apollo-certificates
-      - task: restart-apollo-adguard
+  # update-apollo-certificates:
+  #   desc: Update Apollo certificates and restart services
+  #   cmds:
+  #     - task: install-apollo-certificates
+  #     - task: restart-apollo-adguard
 
   update-apollo-configuration:
     desc: Update Apollo configuration

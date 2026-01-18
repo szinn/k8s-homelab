@@ -86,19 +86,19 @@ data:
             siteMonitor: https://pikvm.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}
             icon: pikvm.png
         - AdGuard Home (Artemis):
-            href: https://artemis.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:1443
-            siteMonitor: https://artemis.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:1443
+            href: http://artemis.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:3000
+            siteMonitor: http://artemis.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:3000
             widget:
               type: adguard
-              url: https://artemis.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:1443
+              url: http://artemis.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:3000
               username: {{HOMEPAGE_VAR_ADGUARD_USERNAME}}
               password: {{HOMEPAGE_VAR_ADGUARD_PASSWORD}}
         - AdGuard Home (Apollo):
-            href: https://apollo.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:1443
-            siteMonitor: https://apollo.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:1443
+            href: http://apollo.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:3000
+            siteMonitor: http://apollo.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:3000
             widget:
               type: adguard
-              url: https://apollo.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:1443
+              url: http://apollo.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:3000
               username: {{HOMEPAGE_VAR_ADGUARD_USERNAME}}
               password: {{HOMEPAGE_VAR_ADGUARD_PASSWORD}}
         - Echo Server:
@@ -139,8 +139,8 @@ data:
                 siteMonitor: https://prometheus.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}/alerts?state=pending&state=firing&showEmptyGroups=0
                 icon: prometheus.png
             - Gatus (Gateway):
-                href: https://gatus.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:8443
-                siteMonitor: https://gatus.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:8443
+                href: http://gatus.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:8443
+                siteMonitor: http://gatus.{{HOMEPAGE_VAR_SECRET_TECH_DOMAIN_NAME}}:8443
                 icon: gatus.png
             - Gatus (Cluster):
                 href: https://status.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
