@@ -6,10 +6,10 @@ metadata:
   name: letsencrypt-prod
 spec:
   acme:
-    server: https://acme-v02.api.letsencrypt.org/directory
-    email: postmaster@zinn.tech
+    profile: shortlived
     privateKeySecretRef:
       name: letsencrypt-prod
+    server: https://acme-v02.api.letsencrypt.org/directory
     solvers:
       - dns01:
           cloudflare:

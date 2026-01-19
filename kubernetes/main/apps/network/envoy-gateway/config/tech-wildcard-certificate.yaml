@@ -5,14 +5,16 @@ kind: Certificate
 metadata:
   name: tech-wildcard
 spec:
-  secretName: tech-wildcard-tls
-  issuerRef:
-    name: letsencrypt-prod
-    kind: ClusterIssuer
-  commonName: "zinn.tech"
   dnsNames:
     - "zinn.tech"
     - "*.zinn.tech"
+  duration: 160h
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  secretName: tech-wildcard-tls
+  usages:
+    - digital signature
 ---
 # yaml-language-server: $schema=https://schemas.zinn.ca/external-secrets.io/pushsecret_v1alpha1.json
 apiVersion: external-secrets.io/v1alpha1
