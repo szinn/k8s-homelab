@@ -12,6 +12,10 @@ spec:
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
+  privateKey:
+    algorithm: ECDSA
+    size: 384
+    rotationPolicy: Always
   secretName: tech-wildcard-tls
   usages:
     - digital signature
