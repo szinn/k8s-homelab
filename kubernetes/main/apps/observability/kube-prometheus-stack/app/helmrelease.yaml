@@ -159,22 +159,21 @@ spec:
             - name: envoy-internal
               namespace: network
       prometheusSpec:
-        podMonitorSelectorNilUsesHelmValues: false
-        probeSelectorNilUsesHelmValues: false
-        ruleSelectorNilUsesHelmValues: false
-        scrapeConfigSelectorNilUsesHelmValues: false
-        serviceMonitorSelectorNilUsesHelmValues: false
         enableAdminAPI: true
-        walCompression: true
         enableFeatures:
           - memory-snapshot-on-shutdown
-        retention: 14d
-        retentionSize: 50GB
+        podMonitorSelectorNilUsesHelmValues: false
+        probeSelectorNilUsesHelmValues: false
         resources:
           requests:
             cpu: 100m
           limits:
             memory: 2000Mi
+        retention: 14d
+        retentionSize: 50GB
+        ruleSelectorNilUsesHelmValues: false
+        scrapeConfigSelectorNilUsesHelmValues: false
+        serviceMonitorSelectorNilUsesHelmValues: false
         storageSpec:
           volumeClaimTemplate:
             spec:
@@ -182,3 +181,4 @@ spec:
               resources:
                 requests:
                   storage: 50Gi
+        walCompression: true
