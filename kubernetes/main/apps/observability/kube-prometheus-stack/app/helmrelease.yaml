@@ -57,18 +57,15 @@ spec:
       enabled: true
       serviceMonitor:
         metricRelabelings:
+          # Drop high cardinality labels
           - action: drop
-            sourceLabels: ["__name__"]
+            sourceLabels:
+              - "__name__"
             regex: (apiserver|etcd|rest_client)_request(|_sli|_slo)_duration_seconds_bucket
           - action: drop
-            sourceLabels: ["__name__"]
-            regex: apiserver_(response|watch_events)_sizes_bucket
-          - action: drop
-            sourceLabels: ["__name__"]
-            regex: apiserver_request_body_size_bytes_bucket
-          - action: drop
-            sourceLabels: ["__name__"]
-            regex: workqueue_(work|queue)_duration_seconds_bucket
+            sourceLabels:
+              - "__name__"
+            regex: (apiserver_response_sizes_bucket|apiserver_watch_events_sizes_bucket)
 
     kubelet:
       enabled: true
@@ -84,26 +81,27 @@ spec:
             regex: (rest_client_request_duration_seconds_bucket|rest_client_request_duration_seconds_sum|rest_client_request_duration_seconds_count)
 
     kubeControllerManager:
-      enabled: true
-      endpoints: &cp
-        - 10.11.0.16
-        - 10.11.0.17
-        - 10.11.0.18
-      serviceMonitor: &sm
-        metricRelabelings:
-          - action: drop
-            sourceLabels: ["__name__"]
-            regex: workqueue_(work|queue)_duration_seconds_bucket
+      enabled: false
+      # endpoints: &cp
+      #   - 10.11.0.16
+      #   - 10.11.0.17
+      #   - 10.11.0.18
+      # serviceMonitor: &sm
+      #   metricRelabelings:
+      #     - action: drop
+      #       sourceLabels: ["__name__"]
+      #       regex: workqueue_(work|queue)_duration_seconds_bucket
 
     kubeEtcd:
-      service:
-        selector:
-          component: kube-apiserver
+      enabled: false
+      # service:
+      #   selector:
+      #     component: kube-apiserver
 
     kubeScheduler:
       enabled: false
-      endpoints: *cp
-      serviceMonitor: *sm
+      # endpoints: *cp
+      # serviceMonitor: *sm
 
     kubeProxy:
       enabled: false # KubeProxy is disabled in the cluster, see Cilium/Talos configs
