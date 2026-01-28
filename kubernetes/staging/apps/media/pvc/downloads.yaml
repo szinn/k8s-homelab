@@ -1,12 +1,11 @@
 ---
-# yaml-language-server: $schema=https://schemas.zinn.ca/v1/persistentvolume.json
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: incomplete
+  name: downloads
   namespace: media
 spec:
-  storageClassName: incomplete
+  storageClassName: downloads
   capacity:
     storage: 1Mi
   accessModes:
@@ -14,10 +13,10 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: ragnar.zinn.tech
-    path: "/mnt/atlas/media/Downloads/incomplete"
+    path: /mnt/nvme/downloads
   mountOptions:
-    - nfsvers=4.2
-    - nconnect=8
+    - nfsvers=4
+    - tcp
     - hard
     - noatime
     - nodiratime
@@ -26,10 +25,10 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: incomplete
+  name: downloads
   namespace: media
 spec:
-  storageClassName: incomplete
+  storageClassName: downloads
   accessModes:
     - ReadWriteMany
   resources:

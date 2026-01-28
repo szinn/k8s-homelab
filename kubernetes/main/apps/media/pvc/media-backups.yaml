@@ -1,12 +1,11 @@
 ---
-# yaml-language-server: $schema=https://schemas.zinn.ca/v1/persistentvolume.json
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: media-datastore
+  name: media-backups
   namespace: media
 spec:
-  storageClassName: media-datastore
+  storageClassName: media-backups
   capacity:
     storage: 1Mi
   accessModes:
@@ -14,10 +13,10 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: ragnar.zinn.tech
-    path: /mnt/atlas/media
+    path: "/mnt/atlas/k8s/main/backup/media"
   mountOptions:
-    - nfsvers=4
-    - tcp
+    - nfsvers=4.2
+    - nconnect=8
     - hard
     - noatime
     - nodiratime
@@ -26,12 +25,12 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: media-datastore
+  name: media-backups
   namespace: media
 spec:
+  storageClassName: media-backups
   accessModes:
     - ReadWriteMany
-  storageClassName: media-datastore
   resources:
     requests:
       storage: 1Mi
