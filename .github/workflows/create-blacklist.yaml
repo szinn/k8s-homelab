@@ -48,7 +48,7 @@ jobs:
           download "https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt"
           # download "https://hosts-file.net/ad_servers.txt"
           download "https://v.firebog.net/hosts/Easylist.txt"
-          download "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts;showintro=0"
+          # download "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts;showintro=0"
           download "https://raw.githubusercontent.com/StevenBlack/hosts/master/data/UncheckyAds/hosts"
           ## tracking & telemetry domains
           download "https://v.firebog.net/hosts/Easyprivacy.txt"
