@@ -10,18 +10,6 @@ resources:
   # Pre Flux-Kustomizations
   - namespace.yaml
   # Flux-Kustomizations
-  - pvc
-  - bazarr/install.yaml
   - calibre-web/install.yaml
   - immich/install.yaml
-  - lidarr/install.yaml
-  - openbooks/install.yaml
   - plex/install.yaml
-  - prowlarr/install.yaml
-  - qbittorrent/install.yaml
-  - radarr/install.yaml
-  - radarr-4k/install.yaml
-  - recyclarr/install.yaml
-  - sabnzbd/install.yaml
-  - seerr/install.yaml
-  - sonarr/install.yaml

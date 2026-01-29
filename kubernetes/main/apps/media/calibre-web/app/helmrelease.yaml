@@ -66,11 +66,11 @@ spec:
             main:
               - path: /config
       media:
-        existingClaim: media-datastore
-        advancedMounts:
-          main:
-            main:
-              - path: /media
+        type: nfs
+        server: ragnar.zinn.tech
+        path: /mnt/atlas/media/
+        globalMounts:
+          - path: /media
       cache:
         type: emptyDir
         globalMounts:
