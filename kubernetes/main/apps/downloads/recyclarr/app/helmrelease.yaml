@@ -22,11 +22,11 @@ spec:
     keepHistory: false
   dependsOn:
     - name: radarr
-      namespace: media
+      namespace: downloads
     - name: radarr-4k
-      namespace: media
+      namespace: downloads
     - name: sonarr
-      namespace: media
+      namespace: downloads
   values:
     controllers:
       main:

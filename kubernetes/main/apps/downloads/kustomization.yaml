@@ -11,14 +11,14 @@ resources:
   - namespace.yaml
   # Flux-Kustomizations
   - pvc
-  # - bazarr/install.yaml
-  # - lidarr/install.yaml
-  # - openbooks/install.yaml
+  - bazarr/install.yaml
+  - lidarr/install.yaml
+  - openbooks/install.yaml
   - prowlarr/install.yaml
-  # - qbittorrent/install.yaml
-  # - radarr/install.yaml
-  # - radarr-4k/install.yaml
-  # - recyclarr/install.yaml
-  # - sabnzbd/install.yaml
-  # - seerr/install.yaml
-  # - sonarr/install.yaml
+  - qbittorrent/install.yaml
+  - radarr/install.yaml
+  - radarr-4k/install.yaml
+  - recyclarr/install.yaml
+  - sabnzbd/install.yaml
+  - seerr/install.yaml
+  - sonarr/install.yaml
