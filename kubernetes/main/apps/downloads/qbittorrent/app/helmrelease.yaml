@@ -145,12 +145,7 @@ spec:
 
     persistence:
       config:
-        enabled: true
-        existingClaim: "${VOLSYNC_CLAIM}"
-        advancedMounts:
-          qbittorrent:
-            app:
-              - path: /config
+        existingClaim: qbittorrent-config
       empty-config:
         type: emptyDir
         advancedMounts:
@@ -158,7 +153,9 @@ spec:
             port-forward:
               - path: /config
       downloads:
-        existingClaim: downloads
+        type: nfs
+        server: ragnar.zinn.tech
+        path: /mnt/atlas/media/Downloads
         globalMounts:
           - path: /downloads
       gluetun-auth:

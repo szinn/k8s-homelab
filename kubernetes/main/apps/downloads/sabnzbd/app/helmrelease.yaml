@@ -102,18 +102,17 @@ spec:
             namespace: network
     persistence:
       config:
-        enabled: true
-        existingClaim: "${VOLSYNC_CLAIM}"
-        advancedMounts:
-          main:
-            main:
-              - path: /config
+        existingClaim: sabnzbd-config
       downloads:
-        existingClaim: downloads
+        type: nfs
+        server: ragnar.zinn.tech
+        path: /mnt/atlas/media/Downloads
         globalMounts:
           - path: /downloads
       incomplete:
-        type: emptyDir
+        type: nfs
+        server: ragnar.zinn.tech
+        path: /mnt/atlas/media/Downloads/incomplete
         globalMounts:
           - path: /incomplete
       tmpfs:

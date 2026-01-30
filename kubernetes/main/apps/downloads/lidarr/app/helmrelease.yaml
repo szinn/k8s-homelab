@@ -86,15 +86,20 @@ spec:
         globalMounts:
           - path: /config/logs
       media:
-        existingClaim: media-datastore
+        type: nfs
+        server: ragnar.zinn.tech
+        path: /mnt/atlas/media
         globalMounts:
           - path: /media
       downloads:
-        existingClaim: downloads
+        type: nfs
+        server: ragnar.zinn.tech
+        path: /mnt/atlas/media/Downloads
         globalMounts:
           - path: /downloads
       backup:
-        existingClaim: media-backups
+        type: nfs
+        server: ragnar.zinn.tech
+        path: /mnt/atlas/k8s/main/backup/media/lidarr
         globalMounts:
           - path: /config/Backups
-            subPath: lidarr
