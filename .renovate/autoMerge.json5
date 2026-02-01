@@ -74,6 +74,7 @@
       requiredStatusChecks: null,
       matchUpdateTypes: ["minor", "patch"],
       matchDepNames: [
+        "ghcr.io/home-operations/bazarr",
         "ghcr.io/home-operations/lidarr",
         "ghcr.io/home-operations/prowlarr",
         "ghcr.io/home-operations/qbittorrent",
