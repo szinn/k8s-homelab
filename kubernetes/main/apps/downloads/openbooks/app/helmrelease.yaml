@@ -66,9 +66,6 @@ spec:
             namespace: network
     persistence:
       config:
-        enabled: true
         existingClaim: "${VOLSYNC_CLAIM}"
-        advancedMounts:
-          main:
-            main:
-              - path: /books
+        globalMounts:
+          - path: /books

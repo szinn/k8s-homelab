@@ -105,7 +105,7 @@ spec:
       media:
         type: nfs
         server: ragnar.zinn.tech
-        path: /mnt/atlas/media/
+        path: /mnt/atlas/media
         globalMounts:
           - path: /media
       scripts:
@@ -117,9 +117,10 @@ spec:
             subPath: subcleaner.sh
             readOnly: true
       backup:
-        existingClaim: media-backups
+        type: nfs
+        server: ragnar.zinn.tech
+        path: /mnt/atlas/k8s/main/backup/media/bazarr
         globalMounts:
           - path: /config/Backups
-            subPath: bazarr
       tmp:
         type: emptyDir

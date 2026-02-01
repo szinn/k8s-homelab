@@ -82,10 +82,11 @@ spec:
       config:
         existingClaim: prowlarr-config
       backup:
-        existingClaim: media-backups
+        type: nfs
+        server: ragnar.zinn.tech
+        path: /mnt/atlas/k8s/main/backup/media/prowlarr
         globalMounts:
           - path: /config/Backups
-            subPath: prowlarr
       logs:
         type: emptyDir
         globalMounts:

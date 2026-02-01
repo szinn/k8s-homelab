@@ -55,12 +55,7 @@ spec:
                 memory: 500Mi
     persistence:
       config:
-        enabled: true
-        existingClaim: "${VOLSYNC_CLAIM}"
-        advancedMounts:
-          main:
-            main:
-              - path: /config
+        existingClaim: recyclarr-config
       config-file:
         type: configMap
         name: recyclarr-configmap
