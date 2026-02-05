@@ -179,7 +179,7 @@ data:
             description: Media Requests
             widget:
               type: overseerr
-              url: http://seerr.media.svc.cluster.local
+              url: http://seerr.downloads.svc.cluster.local
               key: {{HOMEPAGE_VAR_SEERR_TOKEN}}
         - Plex:
             href: https://plex.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
@@ -197,7 +197,7 @@ data:
             description: TV Shows
             widget:
               type: sonarr
-              url: http://sonarr.media.svc.cluster.local:8989
+              url: http://sonarr.downloads.svc.cluster.local:8989
               key: {{HOMEPAGE_VAR_SONARR_TOKEN}}
         - Radarr-4k:
             href: https://radarr-4k.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
@@ -206,7 +206,7 @@ data:
             description: 4K Movies
             widget:
               type: radarr
-              url: http://radarr-4k.media.svc.cluster.local:7878
+              url: http://radarr-4k.downloads.svc.cluster.local:7878
               key: {{HOMEPAGE_VAR_RADARR_4K_TOKEN}}
         - Radarr:
             href: https://radarr.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
@@ -215,7 +215,7 @@ data:
             description: Movies
             widget:
               type: radarr
-              url: http://radarr.media.svc.cluster.local:7878
+              url: http://radarr.downloads.svc.cluster.local:7878
               key: {{HOMEPAGE_VAR_RADARR_TOKEN}}
         - Lidarr:
             href: https://lidarr.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
@@ -224,7 +224,7 @@ data:
             description: Music
             widget:
               type: lidarr
-              url: http://lidarr.media.svc.cluster.local:8686
+              url: http://lidarr.downloads.svc.cluster.local:8686
               key: {{HOMEPAGE_VAR_LIDARR_TOKEN}}
         - Sabnzbd:
             href: https://sabnzbd.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
@@ -233,7 +233,7 @@ data:
             description: NZB Downloader
             widget:
               type: sabnzbd
-              url: http://sabnzbd.media.svc.cluster.local:8080
+              url: http://sabnzbd.downloads.svc.cluster.local:8080
               key: {{HOMEPAGE_VAR_SABNZBD_TOKEN}}
         - qBitTorrent:
             href: https://qbittorrent.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
