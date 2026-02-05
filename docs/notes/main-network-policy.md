@@ -2,46 +2,37 @@
 
 ## Current State
 
-The main cluster has **minimal network policy enforcement** - only one permissive NetworkPolicy exists for the flux-operator. Cilium v1.19.0 is running in allow-all mode by default.
-
-### Existing Policy
-
-```
-kubernetes/main/apps/flux-system/flux-operator/app/networkpolicy.yaml
-```
-- Ingress only, allows traffic from all namespaces on ports 8080/9080
-
 ### Deployed Namespaces (67 apps total)
 
-| Namespace | Key Workloads | Sensitivity |
-|-----------|---------------|-------------|
-| `kube-system` | cilium, coredns, metrics-server | Critical |
-| `flux-system` | flux-operator, flux-instance | Critical |
-| `cert-manager` | cert-manager | High |
-| `external-secrets` | external-secrets, onepassword-connect | Critical |
-| `dbms` | cloudnative-pg (3 replicas), dragonfly, pgadmin | Critical |
-| `network` | envoy-gateway, cloudflare-tunnel, external-dns, multus | High |
-| `observability` | prometheus, grafana, loki, hubble-ui, alloy | Medium |
-| `media` | immich (with dedicated postgres), calibre-web, plex | Medium |
-| `downloads` | sonarr, radarr, prowlarr, sabnzbd, qbittorrent, etc. (13 apps) | Low |
-| `self-hosted` | homepage, wikijs, atuin, shlink, etc. (10 apps) | Medium |
-| `home` | home-assistant | Medium |
-| `system` | kopia, volsync, openebs, keda, spegel, etc. | High |
-| `rook-ceph` | ceph cluster | Critical |
-| `actions-runner-system` | github-actions-runner (cluster-admin!) | Critical |
-| `renovate` | renovate-operator | Medium |
-| `system-upgrade` | tuppr | High |
+| Namespace               | Key Workloads                                                  | Sensitivity |
+| ----------------------- | -------------------------------------------------------------- | ----------- |
+| `kube-system`           | cilium, coredns, metrics-server                                | Critical    |
+| `flux-system`           | flux-operator, flux-instance                                   | Critical    |
+| `cert-manager`          | cert-manager                                                   | High        |
+| `external-secrets`      | external-secrets, onepassword-connect                          | Critical    |
+| `dbms`                  | cloudnative-pg (3 replicas), dragonfly, pgadmin                | Critical    |
+| `network`               | envoy-gateway, cloudflare-tunnel, external-dns, multus         | High        |
+| `observability`         | prometheus, grafana, loki, hubble-ui, alloy                    | Medium      |
+| `media`                 | immich (with dedicated postgres), calibre-web, plex            | Medium      |
+| `downloads`             | sonarr, radarr, prowlarr, sabnzbd, qbittorrent, etc. (13 apps) | Low         |
+| `self-hosted`           | homepage, wikijs, atuin, shlink, etc. (10 apps)                | Medium      |
+| `home`                  | home-assistant                                                 | Medium      |
+| `system`                | kopia, volsync, openebs, keda, spegel, etc.                    | High        |
+| `rook-ceph`             | ceph cluster                                                   | Critical    |
+| `actions-runner-system` | github-actions-runner (cluster-admin!)                         | Critical    |
+| `renovate`              | renovate-operator                                              | Medium      |
+| `system-upgrade`        | tuppr                                                          | High        |
 
 ### LoadBalancer IP Assignments (External Exposure)
 
-| IP | Service | Risk |
-|----|---------|------|
-| 10.11.0.15 | Kubernetes API (main.zinn.tech) | Critical |
-| 10.11.1.10 | PostgreSQL (postgres.zinn.ca) | Critical |
-| 10.11.1.12 | Dragonfly/Redis (redis.zinn.ca) | High |
-| 10.11.1.19 | Immich PostgreSQL (immich.zinn.ca) | High |
-| 10.11.1.21 | Envoy Internal Gateway | Medium |
-| 10.11.1.22 | Envoy External Gateway | Medium |
+| IP         | Service                            | Risk     |
+| ---------- | ---------------------------------- | -------- |
+| 10.11.0.15 | Kubernetes API (main.zinn.tech)    | Critical |
+| 10.11.1.10 | PostgreSQL (postgres.zinn.ca)      | Critical |
+| 10.11.1.12 | Dragonfly/Redis (redis.zinn.ca)    | High     |
+| 10.11.1.19 | Immich PostgreSQL (immich.zinn.ca) | High     |
+| 10.11.1.21 | Envoy Internal Gateway             | Medium   |
+| 10.11.1.22 | Envoy External Gateway             | Medium   |
 
 ---
 
@@ -96,10 +87,10 @@ spec:
   endpointSelector: {}
   ingress:
     - fromEndpoints:
-        - {}  # Same namespace only (implicit)
+        - {} # Same namespace only (implicit)
   egress:
     - toEndpoints:
-        - {}  # Same namespace only (implicit)
+        - {} # Same namespace only (implicit)
 ```
 
 ### 2. Critical Infrastructure Policies
@@ -274,7 +265,7 @@ spec:
   ingress:
     # Webhook from GitHub
     - fromCIDR:
-        - 0.0.0.0/0  # GitHub webhooks
+        - 0.0.0.0/0 # GitHub webhooks
       toPorts:
         - ports:
             - port: "8080"
@@ -340,7 +331,7 @@ spec:
   endpointSelector:
     matchLabels:
       app.kubernetes.io/name: cloudflare-tunnel
-  ingress: []  # No ingress needed
+  ingress: [] # No ingress needed
   egress:
     # Cloudflare edge
     - toFQDNs:
@@ -510,12 +501,12 @@ spec:
 
 ### Phase 3: Critical Infrastructure (Week 3-4)
 
-| Priority | Namespace | Policy |
-|----------|-----------|--------|
-| 1 | `external-secrets` | Isolate 1Password Connect |
-| 2 | `dbms` | PostgreSQL and Dragonfly access control |
-| 3 | `actions-runner-system` | Restrict runner egress |
-| 4 | `flux-system` | Tighten existing policy |
+| Priority | Namespace               | Policy                                  |
+| -------- | ----------------------- | --------------------------------------- |
+| 1        | `external-secrets`      | Isolate 1Password Connect               |
+| 2        | `dbms`                  | PostgreSQL and Dragonfly access control |
+| 3        | `actions-runner-system` | Restrict runner egress                  |
+| 4        | `flux-system`           | Tighten existing policy                 |
 
 ### Phase 4: Application Namespaces (Week 5+)
 
