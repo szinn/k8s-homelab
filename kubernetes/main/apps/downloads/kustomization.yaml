@@ -20,4 +20,5 @@ resources:
   - recyclarr/install.yaml
   - sabnzbd/install.yaml
   - seerr/install.yaml
+  - shelfmark/install.yaml
   - sonarr/install.yaml

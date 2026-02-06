@@ -1,0 +1,165 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: shelfmark
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  interval: 1h
+  values:
+    controllers:
+      shelfmark:
+        annotations:
+          secret.reloader.stakater.com/reload: shelfmark-secret,shelfmark-gluetun-secret
+          config.reloader.stakater.com/reload: shelfmark-coredns
+
+        pod:
+          securityContext:
+            fsGroup: 2000
+            fsGroupChangePolicy: "OnRootMismatch"
+
+        initContainers:
+          coredns:
+            image:
+              repository: mirror.gcr.io/coredns/coredns
+              tag: 1.14.1@sha256:82b57287b29beb757c740dbbe68f2d4723da94715b563fffad5c13438b71b14a
+            args:
+              - -conf
+              - /etc/coredns/Corefile
+            restartPolicy: Always
+
+          gluetun:
+            dependsOn:
+              - coredns
+            image:
+              repository: ghcr.io/qdm12/gluetun
+              tag: v3.41.0@sha256:6b54856716d0de56e5bb00a77029b0adea57284cf5a466f23aad5979257d3045
+            env:
+              DOT: "off"
+              DNS_ADDRESS: "127.0.0.2"
+              HTTP_CONTROL_SERVER_AUTH_CONFIG_FILEPATH: &gluetunAuthPath /gluetun/auth.toml
+              VPN_SERVICE_PROVIDER: custom
+              VPN_TYPE: openvpn
+              OPENVPN_CUSTOM_CONFIG: &gluetunOpenvpnPath /gluetun/custom.conf
+              VPN_INTERFACE: tun0
+              # VPN_SERVICE_PROVIDER: private internet access
+              # SERVER_REGIONS: "US Chicago"
+              # VPN_PORT_FORWARDING: on
+              # VPN_PORT_FORWARDING_PROVIDER: private internet access
+              FIREWALL_INPUT_PORTS: 8084
+              FIREWALL_OUTBOUND_SUBNETS: 10.200.0.0/16,10.201.0.0/16 # Allow access to k8s subnets
+            envFrom:
+              - secretRef:
+                  name: shelfmark-secret
+            restartPolicy: Always
+            securityContext:
+              capabilities:
+                add:
+                  - NET_ADMIN
+              allowPrivilegeEscalation: false
+
+        containers:
+          shelfmark:
+            image:
+              repository: ghcr.io/calibrain/shelfmark
+              tag: v1.0.4@sha256:53e80dc62c1720d15ee59e44c8b98c4aea2a9a456fdd978e87e882c14eb55361
+            command:
+              - gunicorn
+            args:
+              # - --log-level=debug
+              - --access-logfile=-
+              - --error-logfile=-
+              - --worker-class=geventwebsocket.gunicorn.workers.GeventWebSocketWorker
+              - --workers=1
+              - -t
+              - "300"
+              - -b
+              - 0.0.0.0:8084
+              - shelfmark.main:app
+            probes:
+              liveness: &probe
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/health
+                    port: &port 8084
+              readiness: *probe
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limits:
+                memory: 512Mi
+            securityContext:
+              runAsUser: 2000
+              runAsGroup: 2000
+              runAsNonRoot: true
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
+    persistence:
+      config:
+        existingClaim: shelfmark-config
+      nfs-nas-media:
+        type: nfs
+        server: ragnar.zinn.tech
+        path: /mnt/atlas/media
+        advancedMounts:
+          shelfmark:
+            shelfmark:
+              - path: /bookdrop
+                subPath: BookLibrary/Bookdrop
+      tmpfs:
+        type: emptyDir
+        sizeLimit: 1Gi
+        globalMounts:
+          - path: /tmp
+            subPath: tmp
+          - path: /var/log
+            subPath: var-log
+
+      gluetun-auth:
+        type: secret
+        name: shelfmark-gluetun-secret
+        advancedMounts:
+          shelfmark:
+            gluetun:
+              - path: *gluetunAuthPath
+                subPath: auth.toml
+
+      gluetun-openvpn:
+        type: secret
+        name: shelfmark-secret
+        advancedMounts:
+          shelfmark:
+            gluetun:
+              - path: *gluetunOpenvpnPath
+                subPath: openvpn_config
+
+      coredns:
+        type: configMap
+        name: shelfmark-coredns
+        advancedMounts:
+          shelfmark:
+            coredns:
+              - path: /etc/coredns/Corefile
+                subPath: Corefile
+                readOnly: true
+    route:
+      app:
+        hostnames:
+          - "{{ .Release.Name }}.zinn.ca"
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+    service:
+      app:
+        ports:
+          http:
+            port: *port
