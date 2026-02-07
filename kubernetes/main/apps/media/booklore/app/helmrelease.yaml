@@ -27,7 +27,7 @@ spec:
               repository: docker.io/library/mariadb
               tag: 12.1.2-noble@sha256:f54db0cb3ccfe9431aba6d08c65a1763c499789b116b4cb651dd7fcf325965b3
             env:
-              TZ: Etc/UTC
+              TZ: America/Toronto
               MARIADB_DATABASE: booklore
               MARIADB_PASSWORD:
                 valueFrom:
@@ -73,7 +73,6 @@ spec:
             args:
               - "envsubst '$${BOOKLORE_PORT}' < /etc/nginx/nginx.conf > /config/nginx.conf"
             env:
-              TZ: Etc/UTC
               BOOKLORE_PORT: &httpPort 6060
             securityContext:
               allowPrivilegeEscalation: false
@@ -95,7 +94,8 @@ spec:
               - -jar
               - /app/app.jar
             env:
-              TZ: Etc/UTC
+              TZ: America/Toronto
+              LOG_LEVEL: "DEBUG"
               DATABASE_PASSWORD:
                 valueFrom:
                   secretKeyRef:
@@ -130,8 +130,6 @@ spec:
             image:
               repository: ghcr.io/booklore-app/booklore
               tag: v1.18.5@sha256:44a39097fcf69e7373b51df0459da052640d07459fb02b429f2c47cceaa32485
-            env:
-              TZ: Etc/UTC
             command:
               - nginx
             args:
@@ -139,6 +137,8 @@ spec:
               - /config/nginx.conf
               - -g
               - "daemon off;"
+            env:
+              TZ: America/Toronto
             probes:
               liveness: &probe
                 enabled: true
@@ -179,6 +179,8 @@ spec:
                 subPath: BookLibrary/Books
               - path: /bookdrop
                 subPath: BookLibrary/Bookdrop
+              - path: /tmp
+                subPath: BookLibrary/tmp
       mysqld:
         type: emptyDir
         medium: Memory
@@ -216,9 +218,9 @@ spec:
         sizeLimit: 100Mi
         advancedMounts:
           booklore:
-            booklore:
-              - path: /tmp
-                subPath: app
+            # booklore:
+            #   - path: /tmp
+            #     subPath: app
             mariadb:
               - path: /tmp
                 subPath: mysql
