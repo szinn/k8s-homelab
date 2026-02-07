@@ -110,6 +110,7 @@ spec:
       enabled: false
 
     loadBalancer:
+      acceleration: best-effort
       algorithm: maglev
       mode: dsr
 
@@ -158,3 +159,5 @@ spec:
           - NET_ADMIN
           - SYS_ADMIN
           - SYS_RESOURCE
+          - PERFMON
+          - BPF
