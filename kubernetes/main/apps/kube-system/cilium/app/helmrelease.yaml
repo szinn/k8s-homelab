@@ -83,8 +83,6 @@ spec:
           enabled: true
         dashboards:
           enabled: false
-          annotations:
-            grafana_folder: Cilium
       relay:
         enabled: true
         rollOutPods: true
@@ -123,14 +121,14 @@ spec:
       enabled: true
       replicas: 2
       rollOutPods: true
-      prometheus:
-        enabled: true
-        serviceMonitor:
-          enabled: true
       dashboards:
         enabled: true
         annotations:
           grafana_folder: Cilium
+      prometheus:
+        enabled: true
+        serviceMonitor:
+          enabled: true
 
     prometheus:
       enabled: true
