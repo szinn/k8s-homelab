@@ -25,7 +25,7 @@ spec:
           mariadb:
             image:
               repository: docker.io/library/mariadb
-              tag: 12.1.2-noble@sha256:f54db0cb3ccfe9431aba6d08c65a1763c499789b116b4cb651dd7fcf325965b3
+              tag: 12.1.2-noble@sha256:e487701b1f7e3f47319fe005b417c72becb67824a58b7bd35c6505f070f66dcd
             env:
               TZ: America/Toronto
               MARIADB_DATABASE: booklore
