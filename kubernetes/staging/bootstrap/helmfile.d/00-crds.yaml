@@ -14,10 +14,10 @@ helmDefaults:
     - yq ea -e 'select(.kind == "CustomResourceDefinition")'
 
 releases:
-  - name: envoy-gateway
-    namespace: network
-    chart: oci://mirror.gcr.io/envoyproxy/gateway-helm
-    version: 1.7.0
+  - name: gateway-api-crds
+    namespace: kube-system
+    chart: oci://ghcr.io/wiremind/wiremind-helm-charts/gateway-api-crds
+    version: 1.4.0
 
   - name: kube-prometheus-stack
     namespace: observability

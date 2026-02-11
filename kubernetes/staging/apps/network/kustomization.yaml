@@ -9,3 +9,4 @@ resources:
   # Flux-Kustomizations
   - envoy-gateway/install.yaml
   - external-dns/install.yaml
+  - gateway-api-crds/install.yaml
