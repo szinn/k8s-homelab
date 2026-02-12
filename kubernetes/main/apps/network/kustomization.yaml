@@ -13,7 +13,6 @@ resources:
   - certificates
   - cloudflare-tunnel/install.yaml
   - echo-server/install.yaml
-  - envoy-gateway/install.yaml
   - external-dns/install.yaml
   - gateway-api-crds/install.yaml
   - multus/install.yaml
