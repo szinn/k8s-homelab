@@ -7,7 +7,7 @@ metadata:
 spec:
   hostnames: ["hubble.zinn.ca"]
   parentRefs:
-    - name: envoy-internal
+    - name: kgateway-internal
       namespace: network
   rules:
     - backendRefs:

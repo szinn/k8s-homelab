@@ -122,7 +122,7 @@ spec:
             conditions: ["[STATUS] == 404"]
         hostnames: ["onepassword-connect.zinn.ca"]
         parentRefs:
-          - name: envoy-internal
+          - name: kgateway-internal
             namespace: network
     persistence:
       config:

@@ -22,7 +22,7 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    fullnameOverride: &name external-dns-cloudflare
+    fullnameOverride: external-dns-cloudflare
     logLevel: debug
     domainFilters:
       - zinn.ca
@@ -41,7 +41,7 @@ spec:
       - --cloudflare-proxied
       - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
       - --crd-source-kind=DNSEndpoint
-      - --gateway-name=envoy-external
+      - --gateway-name=kgateway-external
       - --annotation-filter=external-dns.alpha.kubernetes.io/target
     policy: sync
     sources:

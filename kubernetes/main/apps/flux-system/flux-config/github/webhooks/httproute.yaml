@@ -12,7 +12,7 @@ metadata:
 spec:
   hostnames: ["flux-receiver.zinn.ca"]
   parentRefs:
-    - name: envoy-external
+    - name: kgateway-external
       namespace: network
   rules:
     - backendRefs:

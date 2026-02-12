@@ -15,4 +15,5 @@ resources:
   - echo-server/install.yaml
   - external-dns/install.yaml
   - gateway-api-crds/install.yaml
+  - kgateway/install.yaml
   - multus/install.yaml

@@ -49,7 +49,7 @@ spec:
       internal:
         hostnames: [*host]
         parentRefs:
-          - name: envoy-internal
+          - name: kgateway-internal
             namespace: network
     persistence:
       config:

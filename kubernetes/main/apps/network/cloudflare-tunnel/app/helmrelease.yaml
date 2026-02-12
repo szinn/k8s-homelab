@@ -26,7 +26,7 @@ spec:
                 originRequest:
                   http2Origin: true
                   originServerName: external.zinn.ca
-                service: https://envoy-external.{{ .Release.Namespace }}.svc.cluster.local:443
+                service: https://kgateway-external.{{ .Release.Namespace }}.svc.cluster.local:443
               - service: http_status:404
     controllers:
       cloudflare-tunnel:
