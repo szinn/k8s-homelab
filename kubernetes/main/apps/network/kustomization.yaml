@@ -10,6 +10,7 @@ resources:
   # Pre Flux-Kustomizations
   - namespace.yaml
   # Flux-Kustomizations
+  - certificates
   - cloudflare-tunnel/install.yaml
   - echo-server/install.yaml
   - envoy-gateway/install.yaml
