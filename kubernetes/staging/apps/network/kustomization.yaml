@@ -7,6 +7,7 @@ resources:
   # Pre Flux-Kustomizations
   - namespace.yaml
   # Flux-Kustomizations
+  - certificates
   - envoy-gateway/install.yaml
   - external-dns/install.yaml
   - gateway-api-crds/install.yaml
