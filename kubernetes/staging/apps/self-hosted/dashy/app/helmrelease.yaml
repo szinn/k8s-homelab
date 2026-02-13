@@ -1,0 +1,110 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: dashy
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      main:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: ghcr.io/lissy93/dashy
+              tag: 3.1.0@sha256:e0e4d344f9be6d6f0061bb4f5368efd5034e8f2cec886d8afefc89a76be830d4
+            env:
+              TZ: America/Toronto
+              UID: 2000
+              GID: 2000
+          code-server:
+            image:
+              repository: ghcr.io/coder/code-server
+              tag: 4.108.2@sha256:31ad23cda720476e7eb3371a9b02fd7a5738843f6ef43beef97e9edf1960fc47
+            securityContext:
+              runAsUser: 0
+            args:
+              [
+                "--auth",
+                "none",
+                "--disable-telemetry",
+                "--disable-update-check",
+                "--user-data-dir",
+                "/tmp/.vscode",
+                "--extensions-dir",
+                "/tmp/.vs1ode",
+                "--port",
+                "8081",
+                "/config"
+              ]
+    service:
+      main:
+        ports:
+          http:
+            port: &mainPort 8080
+      code-server:
+        ports:
+          http:
+            port: &codePort 8081
+    route:
+      main:
+        hostnames: ["dashy.test.zinn.ca"]
+        parentRefs:
+          - name: kgateway-internal
+            namespace: network
+        rules:
+          - backendRefs:
+              - identifier: main
+                port: *mainPort
+      code-server:
+        hostnames: ["dashy-code.test.zinn.ca"]
+        parentRefs:
+          - name: kgateway-internal
+            namespace: network
+        rules:
+          - backendRefs:
+              - identifier: code-server
+                port: *codePort
+    persistence:
+      config:
+        enabled: true
+        existingClaim: "${VOLSYNC_CLAIM}"
+        advancedMounts:
+          main:
+            main:
+              - path: /app/user-data
+            code-server:
+              - path: /config
+      icons:
+        enabled: true
+        type: configMap
+        name: dashy-icons
+        advancedMounts:
+          main:
+            main:
+              - path: /app/user-data/item-icons
+                readOnly: true
+      temp:
+        enabled: true
+        type: emptyDir
+        advancedMounts:
+          main:
+            code-server:
+              - path: /tmp/.vscode
