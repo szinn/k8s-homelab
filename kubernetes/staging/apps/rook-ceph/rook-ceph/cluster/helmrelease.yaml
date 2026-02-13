@@ -62,7 +62,7 @@ spec:
           path: /
           pathType: PathPrefix
         parentRefs:
-          - name: kgateway-internal
+          - name: envoy-internal
             namespace: network
         rules:
           - backendRefs:

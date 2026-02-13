@@ -67,7 +67,7 @@ spec:
         hostnames:
           - "{{ .Release.Name }}.test.zinn.ca"
         parentRefs:
-          - name: kgateway-internal
+          - name: envoy-internal
             namespace: network
     configMaps:
       config:
