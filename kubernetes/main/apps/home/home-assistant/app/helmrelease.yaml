@@ -112,7 +112,7 @@ spec:
             conditions: ["[STATUS] == 200"]
         hostnames: ["home.zinn.ca"]
         parentRefs:
-          - name: kgateway-internal
+          - name: envoy-internal
             namespace: network
         rules:
           - backendRefs:
@@ -124,7 +124,7 @@ spec:
           external-dns.alpha.kubernetes.io/target: external.zinn.ca
         hostnames: ["home.zinn.ca"]
         parentRefs:
-          - name: kgateway-external
+          - name: envoy-external
             namespace: network
         rules:
           - backendRefs:
@@ -133,7 +133,7 @@ spec:
       code-server:
         hostnames: ["ha-code.zinn.ca"]
         parentRefs:
-          - name: kgateway-internal
+          - name: envoy-internal
             namespace: network
         rules:
           - backendRefs:

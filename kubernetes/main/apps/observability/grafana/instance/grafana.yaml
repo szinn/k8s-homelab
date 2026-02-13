@@ -65,7 +65,7 @@ spec:
       hostnames:
         - grafana.zinn.ca
       parentRefs:
-        - name: kgateway-internal
+        - name: envoy-internal
           namespace: network
       rules:
         - backendRefs:

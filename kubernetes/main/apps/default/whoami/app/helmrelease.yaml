@@ -41,7 +41,7 @@ spec:
       internal:
         hostnames: ["{{ .Release.Name }}.zinn.ca"]
         parentRefs:
-          - name: kgateway-internal
+          - name: envoy-internal
             namespace: network
       external:
         annotations:
@@ -49,5 +49,5 @@ spec:
           external-dns.alpha.kubernetes.io/target: external.zinn.ca
         hostnames: ["{{ .Release.Name }}.zinn.ca"]
         parentRefs:
-          - name: kgateway-external
+          - name: envoy-external
             namespace: network

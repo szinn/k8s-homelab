@@ -33,7 +33,7 @@ spec:
           hostnames:
             - alerts.zinn.ca
           parentRefs:
-            - name: kgateway-internal
+            - name: envoy-internal
               namespace: network
 
       alertmanagerSpec:
@@ -154,7 +154,7 @@ spec:
           hostnames:
             - "prometheus.zinn.ca"
           parentRefs:
-            - name: kgateway-internal
+            - name: envoy-internal
               namespace: network
       prometheusSpec:
         enableAdminAPI: true

@@ -8,7 +8,7 @@ spec:
   hostnames:
     - flux-operator.zinn.ca
   parentRefs:
-    - name: kgateway-internal
+    - name: envoy-internal
       namespace: network
   rules:
     - backendRefs:

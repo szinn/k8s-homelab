@@ -94,7 +94,7 @@ spec:
             conditions: ["[STATUS] == 401"]
         hostnames: ["{{ .Release.Name }}.zinn.ca"]
         parentRefs:
-          - name: kgateway-internal
+          - name: envoy-internal
             namespace: network
       external:
         annotations:
@@ -104,7 +104,7 @@ spec:
             conditions: ["[STATUS] == 401"]
         hostnames: ["{{ .Release.Name }}.zinn.ca"]
         parentRefs:
-          - name: kgateway-external
+          - name: envoy-external
             namespace: network
     persistence:
       config:

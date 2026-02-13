@@ -22,7 +22,7 @@ spec:
         hostnames:
           - logs.zinn.ca
         parentRefs:
-          - name: kgateway-internal
+          - name: envoy-internal
             namespace: network
         extraRules:
           - filters:

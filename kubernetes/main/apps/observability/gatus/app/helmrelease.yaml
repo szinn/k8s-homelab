@@ -96,7 +96,7 @@ spec:
           gatus.home-operations.com/enabled: "false"
         hostnames: ["status.zinn.ca"]
         parentRefs:
-          - name: kgateway-internal
+          - name: envoy-internal
             namespace: network
     rbac:
       roles:

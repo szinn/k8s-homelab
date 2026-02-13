@@ -81,7 +81,7 @@ spec:
             conditions: ["[STATUS] == 404"]
         hostnames: [*api-host]
         parentRefs:
-          - name: kgateway-external
+          - name: envoy-external
             namespace: network
         rules:
           - backendRefs:
@@ -90,7 +90,7 @@ spec:
       internal:
         hostnames: ["shlink.zinn.ca"]
         parentRefs:
-          - name: kgateway-internal
+          - name: envoy-internal
             namespace: network
         rules:
           - backendRefs:

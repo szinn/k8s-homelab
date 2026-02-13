@@ -56,7 +56,7 @@ spec:
       internal:
         hostnames: ["wiki.zinn.ca"]
         parentRefs:
-          - name: kgateway-internal
+          - name: envoy-internal
             namespace: network
     persistence:
       data:

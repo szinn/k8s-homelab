@@ -55,7 +55,7 @@ spec:
       internal:
         hostnames: ["books.zinn.ca"]
         parentRefs:
-          - name: kgateway-internal
+          - name: envoy-internal
             namespace: network
     persistence:
       config:

@@ -73,5 +73,5 @@ spec:
         hostnames:
           - bichon.zinn.ca
         parentRefs:
-          - name: kgateway-internal
+          - name: envoy-internal
             namespace: network

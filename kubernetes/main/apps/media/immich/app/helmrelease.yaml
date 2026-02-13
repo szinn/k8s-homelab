@@ -184,7 +184,7 @@ spec:
       internal:
         hostnames: ["photos.zinn.ca"]
         parentRefs:
-          - name: kgateway-internal
+          - name: envoy-internal
             namespace: network
         rules:
           - backendRefs:
