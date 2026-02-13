@@ -19,4 +19,4 @@ resources:
   - it-tools/install.yaml
   - pdf-tool/install.yaml
   - shlink/install.yaml
-  - wikijs/install.yam
+  - wikijs/install.yaml
