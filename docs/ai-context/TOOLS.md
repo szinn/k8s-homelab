@@ -92,28 +92,25 @@ task <namespace>: --list       # List tasks in specific namespace
 
 #### Quick Reference
 
-| Command                                                               | Purpose                     | Cluster   |
-| --------------------------------------------------------------------- | --------------------------- | --------- |
-| `task configure`                                                      | Render Jinja2 templates     | Both      |
-| `task kubernetes:kubeconform cluster=main`                            | Validate manifests          | Specified |
-| `task kubernetes:delete-failed-pods cluster=main`                     | Clean up failed pods        | Specified |
-| `task kubernetes:approve-certs cluster=staging`                       | Approve pending CSRs        | Specified |
-| `task kubernetes:netshoot cluster=main`                               | Run netshoot debug pod      | Specified |
-| `task flux:sync cluster=main`                                         | Sync flux-cluster with Git  | Specified |
-| `task flux:gr-sync cluster=staging`                                   | Sync GitRepositories        | Specified |
-| `task flux:ks-sync cluster=main`                                      | Sync Kustomizations         | Specified |
-| `task flux:hr-sync cluster=main`                                      | Sync HelmReleases           | Specified |
-| `task flux:force-hr-sync cluster=staging`                             | Force sync with reset       | Specified |
-| `task sops:re-encrypt`                                                | Re-encrypt all SOPS files   | Both      |
-| `task volsync:snapshot cluster=main app=immich ns=media`              | Trigger backup snapshot     | Specified |
-| `task volsync:restore cluster=main app=immich ns=media previous=<id>` | Restore from backup         | Specified |
-| `task volsync:unlock cluster=main`                                    | Unlock Restic repos         | Specified |
-| `task postgres:maintenance-main command=set`                          | Set maintenance mode        | Main      |
-| `task postgres:down_immich`                                           | Suspend Immich app          | Main      |
-| `task postgres:up_immich`                                             | Resume Immich app           | Main      |
-| `task pre-commit:init`                                                | Initialize pre-commit hooks | Both      |
-| `task pre-commit:run`                                                 | Run pre-commit checks       | Both      |
-| `task format:all`                                                     | Format all files            | Both      |
+| Command                                           | Purpose                     | Cluster   |
+| ------------------------------------------------- | --------------------------- | --------- |
+| `task configure`                                  | Render Jinja2 templates     | Both      |
+| `task kubernetes:kubeconform cluster=main`        | Validate manifests          | Specified |
+| `task kubernetes:delete-failed-pods cluster=main` | Clean up failed pods        | Specified |
+| `task kubernetes:approve-certs cluster=staging`   | Approve pending CSRs        | Specified |
+| `task kubernetes:netshoot cluster=main`           | Run netshoot debug pod      | Specified |
+| `task flux:sync cluster=main`                     | Sync flux-cluster with Git  | Specified |
+| `task flux:gr-sync cluster=staging`               | Sync GitRepositories        | Specified |
+| `task flux:ks-sync cluster=main`                  | Sync Kustomizations         | Specified |
+| `task flux:hr-sync cluster=main`                  | Sync HelmReleases           | Specified |
+| `task flux:force-hr-sync cluster=staging`         | Force sync with reset       | Specified |
+| `task sops:re-encrypt`                            | Re-encrypt all SOPS files   | Both      |
+| `task postgres:maintenance-main command=set`      | Set maintenance mode        | Main      |
+| `task postgres:down_immich`                       | Suspend Immich app          | Main      |
+| `task postgres:up_immich`                         | Resume Immich app           | Main      |
+| `task pre-commit:init`                            | Initialize pre-commit hooks | Both      |
+| `task pre-commit:run`                             | Run pre-commit checks       | Both      |
+| `task format:all`                                 | Format all files            | Both      |
 
 #### Flux Tasks
 
@@ -177,33 +174,6 @@ task sops:re-encrypt
 ```
 
 **Pattern**: Finds all `*.sops.yaml` files, decrypts, then re-encrypts with current keys.
-
-#### Volsync Tasks
-
-**File**: `.taskfiles/Volsync/Taskfile.yaml`
-
-```bash
-# List snapshots
-task volsync:list cluster=main app=immich ns=media
-
-# Create snapshot
-task volsync:snapshot cluster=main app=immich ns=media
-
-# Create all snapshots (parallel)
-task volsync:snapshot-all cluster=main
-
-# Restore from snapshot
-task volsync:restore cluster=main app=immich ns=media previous=<snapshot-id>
-
-# Unlock stuck Restic repositories
-task volsync:unlock cluster=main
-```
-
-**Requirements**:
-
-- Assumes ReplicationSource exists with same name as app
-- Assumes single PVC per app
-- For restore: suspends app, restores data, resumes app
 
 #### Postgres Tasks
 
