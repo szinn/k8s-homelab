@@ -17,6 +17,7 @@ resources:
   - grafana/install.yaml
   - kromgo/install.yaml
   - kube-prometheus-stack/install.yaml
+  - kube-state-metrics/install.yaml
   - loki/install.yaml
   - miscellaneous
   - node-exporter/install.yaml
