@@ -9,13 +9,6 @@ spec:
   chartRef:
     kind: OCIRepository
     name: app-template
-  maxHistory: 3
-  install:
-    remediation:
-      retries: 5
-  upgrade:
-    remediation:
-      retries: 5
   values:
     controllers:
       main:

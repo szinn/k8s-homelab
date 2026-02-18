@@ -9,13 +9,6 @@ spec:
   chartRef:
     kind: OCIRepository
     name: kube-cleanup-operator
-  install:
-    createNamespace: true
-    remediation:
-      retries: 5
-  upgrade:
-    remediation:
-      retries: 5
   values:
     rbac:
       create: true

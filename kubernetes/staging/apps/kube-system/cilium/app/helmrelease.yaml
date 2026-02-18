@@ -14,16 +14,6 @@ spec:
   chartRef:
     kind: OCIRepository
     name: cilium
-  maxHistory: 3
-  install:
-    remediation:
-      retries: 3
-  upgrade:
-    remediation:
-      retries: 3
-      remediateLastFailure: true
-    cleanupOnFail: true
-
   values:
     cluster:
       name: staging

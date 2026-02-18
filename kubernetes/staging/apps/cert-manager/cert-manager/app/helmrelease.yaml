@@ -9,18 +9,6 @@ spec:
   chartRef:
     kind: OCIRepository
     name: cert-manager
-  maxHistory: 3
-  install:
-    crds: CreateReplace
-    remediation:
-      retries: 3
-  upgrade:
-    crds: CreateReplace
-    remediation:
-      retries: 3
-  dependsOn:
-    - name: external-secrets
-      namespace: external-secrets
   values:
     crds:
       enabled: true

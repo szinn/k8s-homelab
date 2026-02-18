@@ -9,14 +9,6 @@ spec:
   chartRef:
     kind: OCIRepository
     name: external-secrets
-  maxHistory: 3
-  install:
-    createNamespace: true
-    remediation:
-      retries: 3
-  upgrade:
-    remediation:
-      retries: 3
   dependsOn:
     - name: onepassword-connect
       namespace: external-secrets

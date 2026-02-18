@@ -6,18 +6,9 @@ metadata:
   name: rook-ceph-cluster
 spec:
   interval: 1h
-  timeout: 15m
   chartRef:
     kind: OCIRepository
     name: rook-ceph-cluster
-  maxHistory: 3
-  install:
-    createNamespace: true
-    remediation:
-      retries: 5
-  upgrade:
-    remediation:
-      retries: 5
   dependsOn:
     - name: rook-ceph-operator
       namespace: rook-ceph
