@@ -9,18 +9,11 @@ spec:
   chartRef:
     kind: OCIRepository
     name: gha-runner-scale-set
-  install:
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
   dependsOn:
     - name: actions-runner-controller
       namespace: actions-runner-system
-    # - name: openebs
-    #   namespace: system
+    - name: openebs
+      namespace: system
   values:
     runnerScaleSetName: k8s-homelab-runner
     githubConfigUrl: https://github.com/szinn/k8s-homelab

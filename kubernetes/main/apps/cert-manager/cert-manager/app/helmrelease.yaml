@@ -9,17 +9,6 @@ spec:
   chartRef:
     kind: OCIRepository
     name: cert-manager
-  maxHistory: 3
-  install:
-    crds: CreateReplace
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
-  uninstall:
-    keepHistory: false
   values:
     crds:
       enabled: true

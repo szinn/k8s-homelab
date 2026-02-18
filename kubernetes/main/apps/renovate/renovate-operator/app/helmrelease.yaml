@@ -5,10 +5,10 @@ kind: HelmRelease
 metadata:
   name: renovate-operator
 spec:
+  interval: 1h
   chartRef:
     kind: OCIRepository
     name: renovate-operator
-  interval: 30m
   values:
     fullnameOverride: renovate-operator
     webhook:

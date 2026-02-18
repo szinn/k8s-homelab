@@ -9,16 +9,6 @@ spec:
   chartRef:
     kind: OCIRepository
     name: flux-instance
-  install:
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
-  dependsOn:
-    - name: flux-operator
-      namespace: flux-system
   values:
     instance:
       distribution:

@@ -5,10 +5,10 @@ kind: HelmRelease
 metadata:
   name: it-tools
 spec:
+  interval: 1h
   chartRef:
     kind: OCIRepository
     name: app-template
-  interval: 30m
 
   values:
     controllers:

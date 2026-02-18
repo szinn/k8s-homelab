@@ -9,16 +9,6 @@ spec:
   chartRef:
     kind: OCIRepository
     name: metrics-server
-  maxHistory: 3
-  install:
-    createNamespace: true
-    remediation:
-      retries: 3
-  upgrade:
-    remediation:
-      retries: 3
-  uninstall:
-    keepHistory: false
   values:
     args:
       - --kubelet-insecure-tls

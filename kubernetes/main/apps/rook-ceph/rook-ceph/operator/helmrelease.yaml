@@ -6,20 +6,9 @@ metadata:
   name: rook-ceph-operator
 spec:
   interval: 1h
-  timeout: 15m
   chartRef:
     kind: OCIRepository
     name: rook-ceph
-  maxHistory: 3
-  install:
-    createNamespace: true
-    crds: CreateReplace
-    remediation:
-      retries: 3
-  upgrade:
-    crds: CreateReplace
-    remediation:
-      retries: 3
   dependsOn:
     - name: snapshot-controller
       namespace: system
