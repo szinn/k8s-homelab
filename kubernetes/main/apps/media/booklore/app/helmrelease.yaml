@@ -66,7 +66,7 @@ spec:
           wait-for-mariadb:
             image:
               repository: wait4x/wait4x
-              tag: 3.6.0
+              tag: 3.6.0@sha256:bec7ac18547781d854562c3729d3195c3880116d6758c49fdf4573ad58805f14
             args:
               - "mysql"
               - "booklore:$(DB_PASSWORD)@tcp(localhost:3306)/booklore"
