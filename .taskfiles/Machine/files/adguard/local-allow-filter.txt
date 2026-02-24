@@ -26,3 +26,5 @@
 @@||update.ixsystems.com^$important
 @@||ups.analytics.yahoo.com^$important
 @@||html-load.com^$important
+@@||*.*.braze.com^$important
+@@||browser-intake-datadoghq.com^$important
