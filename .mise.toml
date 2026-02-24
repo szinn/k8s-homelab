@@ -3,7 +3,7 @@ pipx_uvx = true
 
 [tools]
 "aqua:helm/helm" = "3.20.0"
-"aqua:helmfile/helmfile" = "1.3.0"
+"aqua:helmfile/helmfile" = "1.3.1"
 "aqua:astral-sh/uv" = "latest"
 "pipx:flux-local" = "latest"
 "kubeconform" = "latest"
