@@ -28,3 +28,4 @@
 @@||html-load.com^$important
 @@||*.*.braze.com^$important
 @@||browser-intake-datadoghq.com^$important
+@@||m.castle.io^$important
