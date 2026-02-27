@@ -13,7 +13,7 @@ spec:
     fullnameOverride: volsync # Required for volsync-perfectra1n fork
     image: &image
       repository: ghcr.io/perfectra1n/volsync
-      tag: v0.17.8@sha256:8370a5c875bb20140b826407fce5d535e83b89e3dcf17b0658d283c37d04ae46
+      tag: v0.17.9@sha256:65fdcc6bfe2cf128687798c7fd692957e05983191ba94ea22e61362db4db4483
     kopia: *image
     rclone: *image
     restic: *image
