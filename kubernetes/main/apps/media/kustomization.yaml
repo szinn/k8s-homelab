@@ -10,6 +10,7 @@ resources:
   # Pre Flux-Kustomizations
   - namespace.yaml
   # Flux-Kustomizations
+  - bookboss/install.yaml
   - booklore/install.yaml
   - calibre-web/install.yaml
   - immich/install.yaml

@@ -1,0 +1,74 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: bookboss
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  values:
+    controllers:
+      bookboss:
+        strategy: Recreate
+        annotations:
+          secret.reloader.stakater.com/reload: bookboss-secret
+        pod:
+          enableServiceLinks: false
+          securityContext:
+            runAsUser: 2000
+            runAsGroup: 2000
+            runAsNonRoot: true
+            fsGroup: 2000
+            fsGroupChangePolicy: OnRootMismatch
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/home-operations/postgres-init
+              tag: 18.3@sha256:6fa1f331cddd2eb0b6afa7b8d3685c864127a81ab01c3d9400bc3ff5263a51cf
+              pullPolicy: IfNotPresent
+            envFrom:
+              - secretRef:
+                  name: bookboss-secret
+        containers:
+          main:
+            image:
+              repository: ghcr.io/szinn/bookboss
+              tag: v0.10.1
+            env:
+              TZ: "America/Toronto"
+            envFrom:
+              - secretRef:
+                  name: bookboss-secret
+    service:
+      bookboss:
+        ports:
+          http:
+            port: &port 8080
+
+    route:
+      internal:
+        hostnames:
+          - "{{ .Release.Name }}.zinn.ca"
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+
+    persistence:
+      library:
+        type: nfs
+        server: ragnar.zinn.tech
+        path: /mnt/atlas/media
+        advancedMounts:
+          bookboss:
+            bookboss:
+              - path: /library/books
+                subPath: BookLibrary/Books
+              - path: /library/bookdrop
+                subPath: BookLibrary/Bookdrop
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
