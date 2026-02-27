@@ -29,3 +29,4 @@
 @@||*.*.braze.com^$important
 @@||browser-intake-datadoghq.com^$important
 @@||m.castle.io^$important
+@@||cookie-cdn.cookiepro.com^$important
