@@ -1,26 +1,49 @@
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/recyclarr/recyclarr/refs/tags/v8.0.0/schemas/config-schema.json
 sonarr:
-  sonarr:
+  shows:
     base_url: http://sonarr.downloads.svc.cluster.local:8989
-    # https://github.com/recyclarr/recyclarr/issues/180
     api_key: !env_var SONARR_APIKEY
-
     delete_old_custom_formats: true
-
     media_management:
       propers_and_repacks: do_not_prefer
-
     quality_definition:
       type: series
-
     quality_profiles:
-      - trash_id: 72dae194fc92bf828f32cde7744e51a1 # WEB-1080p
+      - name: WEB-1080p
+        trash_id: 72dae194fc92bf828f32cde7744e51a1 # WEB-1080p
         reset_unmatched_scores:
           enabled: true
-
+        qualities:
+          - name: Bluray|WEB-1080p
+            qualities:
+              - Bluray-1080p
+              - WEBRip-1080p
+              - WEBDL-1080p
+      - name: WEB-2160p (Combined)
+        trash_id: c4cadd6b35b95f62c3d47a408e53e2f7
+        reset_unmatched_scores:
+          enabled: true
+        qualities:
+          - name: Bluray|WEB-2160p
+            qualities:
+              - Bluray-2160p
+              - WEBRip-2160p
+              - WEBDL-2160p
+          - name: Bluray|WEB-1080p
+            qualities:
+              - Bluray-1080p
+              - WEBRip-1080p
+              - WEBDL-1080p
     custom_formats:
-      - trash_ids:
+      - # FLUX trumps REPACKS
+        trash_ids:
+          - 5d9fd1b1e06cd8a475462f40214b7df6 # FLUX
+        assign_scores_to:
+          - name: WEB-1080p
+            score: 100
+          - name: WEB-2160p (Combined)
+            score: 100
+      - # Unwanted
+        trash_ids:
           - 32b367365729d530ca1c124a0b180c64 # Bad Dual Groups
           - 82d40da2bc6923f41e14394075dd4b03 # No-RlsGroup
           - e1a997ddb54e3ecbfe06341ad323c458 # Obfuscated
@@ -29,65 +52,68 @@ sonarr:
           - 1b3994c551cbb92a2c781af061f4ab44 # Scene
         assign_scores_to:
           - name: WEB-1080p
+          - name: WEB-2160p (Combined)
 
 radarr:
-  radarr:
+  movies:
     base_url: http://radarr.downloads.svc.cluster.local:7878
-    # https://github.com/recyclarr/recyclarr/issues/180
     api_key: !env_var RADARR_APIKEY
-
     delete_old_custom_formats: true
-
     media_management:
       propers_and_repacks: do_not_prefer
-    media_naming:
-      folder: plex-imdb
-      movie:
-        rename: true
-        standard: plex-imdb
     quality_definition:
       type: movie
-
     quality_profiles:
-      - trash_id: 0896c29d74de619df168d23b98104b22 # [SQP] SQP-1 (1080p)
+      - name: SQP-1 (1080p)
+        trash_id: 0896c29d74de619df168d23b98104b22
         reset_unmatched_scores:
           enabled: true
-
+        qualities:
+          - name: Bluray|WEB-1080p
+            qualities:
+              - Bluray-1080p
+              - WEBRip-1080p
+              - WEBDL-1080p
     custom_formats:
       - trash_ids:
           - 839bea857ed2c0a8e084f3cbdbd65ecb # x265 (no HDR/DV)
         assign_scores_to:
-          - name: "[SQP] SQP-1 (1080p)"
+          - name: "SQP-1 (1080p)"
             score: 0
-      - trash_ids:
+      - # Unwanted
+        trash_ids:
           - b6832f586342ef70d9c128d40c07b872 # Bad Dual Groups
           - ae9b7c9ebde1f3bd336a8cbd1ec4c5e5 # No-RlsGroup
           - 7357cf5161efbf8c4d5d0c30b4815ee2 # Obfuscated
           - 5c44f52a8714fdd79bb4d98e2673be1f # Retags
           - f537cf427b64c38c8e36298f657e4828 # Scene
         assign_scores_to:
-          - name: "[SQP] SQP-1 (1080p)"
+          - name: "SQP-1 (1080p)"
 
-  radarr_4k:
+  movies-4k:
     base_url: http://radarr-4k.downloads.svc.cluster.local:7878
-    # https://github.com/recyclarr/recyclarr/issues/180
     api_key: !env_var RADARR_4K_APIKEY
-
     delete_old_custom_formats: true
-
     media_management:
       propers_and_repacks: do_not_prefer
-    media_naming:
-      folder: plex-imdb
-      movie:
-        rename: true
-        standard: plex-imdb
     quality_definition:
       type: sqp-uhd
     quality_profiles:
-      - trash_id: 5128baeb2b081b72126bc8482b2a86a0 # [SQP] SQP-1 (2160p)
+      - name: SQP-1 (2160p)
+        trash_id: 5128baeb2b081b72126bc8482b2a86a0
         reset_unmatched_scores:
           enabled: true
+        qualities:
+          - name: Bluray-2160p
+          - name: WEB 2160p
+            qualities:
+              - WEBRip-2160p
+              - WEBDL-2160p
+          - name: Bluray|WEB-1080p
+            qualities:
+              - Bluray-1080p
+              - WEBRip-1080p
+              - WEBDL-1080p
     custom_formats:
       - trash_ids:
           - 957d0f44b592285f26449575e8b1167e # Special Edition
@@ -97,4 +123,4 @@ radarr:
           - 7357cf5161efbf8c4d5d0c30b4815ee2 # Obfuscated
           - 5c44f52a8714fdd79bb4d98e2673be1f # Retags
         assign_scores_to:
-          - name: "[SQP] SQP-1 (2160p)"
+          - name: "SQP-1 (2160p)"
