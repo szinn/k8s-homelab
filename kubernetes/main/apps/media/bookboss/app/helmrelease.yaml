@@ -39,6 +39,7 @@ spec:
               tag: v0.1.5@sha256:163d8040930e8e2a7345dbef68684eb8f4102ec0be7fa260a9e4347443be72a2
             env:
               TZ: "America/Toronto"
+              RUST_LOG: "TRACE"
             envFrom:
               - secretRef:
                   name: bookboss-secret
@@ -46,7 +47,7 @@ spec:
       bookboss:
         ports:
           http:
-            port: &port 8080
+            port: 8080
 
     route:
       internal:
