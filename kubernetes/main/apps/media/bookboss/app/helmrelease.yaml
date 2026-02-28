@@ -36,7 +36,7 @@ spec:
           main:
             image:
               repository: ghcr.io/szinn/bookboss
-              tag: v0.1.2@sha256:2af843dce186c7275cb7582426af21a4649deb38a60e210b21573fa9c9f91d26
+              tag: v0.1.3@sha256:8658c0a3f501879394a5e9d584fc1d56edffb7f6c952b12614e70adb4fa0914b
             env:
               TZ: "America/Toronto"
             envFrom:
