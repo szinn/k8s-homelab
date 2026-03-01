@@ -36,7 +36,7 @@ spec:
           main:
             image:
               repository: ghcr.io/szinn/bookboss
-              tag: v0.1.6@sha256:92d58d1827f6ad2d1259d38d02a2a26e0056d71373c8106ad4f551a58d3842b0
+              tag: v0.1.7@sha256:387e93152cda5a044fb0b12abae39784d86b80269d091cb48d784855ede7321c
             env:
               TZ: "America/Toronto"
               RUST_LOG: "TRACE"
