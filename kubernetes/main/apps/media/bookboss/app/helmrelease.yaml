@@ -38,6 +38,7 @@ spec:
               repository: ghcr.io/szinn/bookboss
               tag: v0.1.10@sha256:b07fe27987cb76835b28b2da55c5861ebe8893d620ff924128dcf2c610ccc69a
             env:
+              BOOKBOSS__LIBRARY__LIBRARY_PATH: "/library/books"
               TZ: "America/Toronto"
               RUST_LOG: "TRACE"
             envFrom:
