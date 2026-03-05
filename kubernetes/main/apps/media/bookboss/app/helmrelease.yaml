@@ -49,6 +49,9 @@ spec:
         ports:
           http:
             port: 8080
+            primary: true
+          grpc:
+            port: 8081
 
     route:
       internal:
