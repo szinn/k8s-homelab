@@ -25,7 +25,23 @@ spec:
       allowedRoutes:
         namespaces:
           from: All
+        kinds:
+          - kind: HTTPRoute
       tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            name: wildcard-tls
+    - name: grpc
+      protocol: HTTPS
+      port: 8443
+      allowedRoutes:
+        namespaces:
+          from: All
+        kinds:
+          - kind: GRPCRoute
+      tls:
+        mode: Terminate
         certificateRefs:
           - kind: Secret
             name: wildcard-tls

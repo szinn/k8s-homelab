@@ -52,6 +52,8 @@ spec:
             primary: true
           grpc:
             port: 8081
+            targetPort: 8081
+            appProtocol: grpc
 
     route:
       internal:
