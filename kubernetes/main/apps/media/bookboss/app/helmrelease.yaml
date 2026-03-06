@@ -39,6 +39,8 @@ spec:
               tag: v0.1.12@sha256:5946aa335e88cc645e11fcdce6cce49a1ce9ba5fad43b7c24bd87a9ae320746a
             env:
               BOOKBOSS__LIBRARY__LIBRARY_PATH: "/library/books"
+              BOOKBOSS__IMPORT__WATCH_DIRECTORY: "/library/bookdrop"
+              BOOKBOSS__IMPORT__POLL_INTERVAL_SECS: 60
               TZ: "America/Toronto"
               RUST_LOG: "TRACE"
             envFrom:

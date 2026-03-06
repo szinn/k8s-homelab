@@ -3,6 +3,8 @@ kind: GRPCRoute
 metadata:
   name: bookboss
 spec:
+  hostnames:
+    - bookboss.zinn.ca
   parentRefs:
     - name: envoy-internal
       namespace: network
