@@ -33,14 +33,15 @@ spec:
               - secretRef:
                   name: bookboss-secret
         containers:
-          main:
+          bookboss:
             image:
               repository: ghcr.io/szinn/bookboss
-              tag: v0.1.14@sha256:18765dee7fcd6e9c34cd80a9e78fba6252b36ff13181713d3fd950a049e18782
+              tag: v0.1.16@sha256:00ec46d90a8280cce7fa0bd46d143e91dd7e19767a84ebadb7c699b38d9b1b47
             env:
               BOOKBOSS__LIBRARY__LIBRARY_PATH: "/library/books"
               BOOKBOSS__IMPORT__WATCH_DIRECTORY: "/library/bookdrop"
               BOOKBOSS__IMPORT__POLL_INTERVAL_SECS: 60
+              BOOKBOSS__IMPORT__WORKER_POLL_INTERVAL_SECS: 5
               TZ: "America/Toronto"
               RUST_LOG: "TRACE"
             envFrom:
