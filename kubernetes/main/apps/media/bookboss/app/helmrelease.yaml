@@ -36,7 +36,7 @@ spec:
           bookboss:
             image:
               repository: ghcr.io/szinn/bookboss
-              tag: v0.2.0@sha256:53e67b6deb065c60c252497222e586e0b970b104cc4e104f9f61048ae5f155bb
+              tag: v0.2.1@sha256:345a4befcfae35f97a79b1d98146926280c09ea7d67067cc61919f30f1f05f1e
             env:
               BOOKBOSS__LIBRARY__LIBRARY_PATH: "/library/books"
               BOOKBOSS__IMPORT__WATCH_DIRECTORY: "/library/bookdrop"
