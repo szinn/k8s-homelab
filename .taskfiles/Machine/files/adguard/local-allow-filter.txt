@@ -32,3 +32,4 @@
 @@||cookie-cdn.cookiepro.com^$important
 @@||*.ynab.com^$important
 @@||*.rollbar.com^$important
+@@||sr-client-cfg.amplitude.com^$important
