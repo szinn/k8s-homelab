@@ -39,7 +39,7 @@ spec:
               tag: v0.2.4@sha256:d7fcf8422bbd5958e406042557823804330146e76f64f208f7a6178329a12efd
             env:
               BOOKBOSS__LIBRARY__LIBRARY_PATH: "/library/books"
-              BOOKBOSS__IMPORT__WATCH_DIRECTORY: "/library/bookdrop"
+              BOOKBOSS__IMPORT__BOOKDROP_PATH: "/library/bookdrop"
               BOOKBOSS__IMPORT__POLL_INTERVAL_SECS: 60
               BOOKBOSS__IMPORT__WORKER_POLL_INTERVAL_SECS: 5
               TZ: "America/Toronto"
