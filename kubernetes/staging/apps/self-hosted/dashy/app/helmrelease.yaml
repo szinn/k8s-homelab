@@ -18,7 +18,7 @@ spec:
           main:
             image:
               repository: ghcr.io/lissy93/dashy
-              tag: 3.1.5@sha256:e44a415feaad60514f307a4b2bf37990e40ad8052d81095dd3a91e6faeab1fed
+              tag: 3.1.6@sha256:bafd92fec37cfcee754b7bf02b5b9217993b14ed0fc5835fad772f824e77d81f
             env:
               TZ: America/Toronto
               UID: 2000
