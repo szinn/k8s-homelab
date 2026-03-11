@@ -20,7 +20,7 @@ spec:
           api:
             image:
               repository: ghcr.io/1password/connect-api
-              tag: 1.8.1@sha256:ac6e9efe4f54cc351393fcb8f01b10e667b08b68ff47ebf6024ff93eae642e5c
+              tag: 1.8.2@sha256:fabf0a353791f7d70851767c6d58595eb386a86ba4ada4a8ca41b3668a096b5d
             env:
               XDG_DATA_HOME: &configDir /config
               # OP_LOG_LEVEL: debug
