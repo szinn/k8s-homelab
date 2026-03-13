@@ -14,7 +14,7 @@ spec:
         [pnpm ["pnpm run bundle"]
     - name: RENOVATE_PLATFORM_COMMIT
       value: "true"
-  image: ghcr.io/renovatebot/renovate:43.70.0@sha256:d40767a053658aa24c5c6037569b66cc846aee812758557493972cc109ac4044
+  image: ghcr.io/renovatebot/renovate:43.71.0@sha256:fc21a7f46903dd0e362db0ea77517792e19b48edb64ee7ea845ae1fcae5c8050
   parallelism: 5
   provider:
     name: github
