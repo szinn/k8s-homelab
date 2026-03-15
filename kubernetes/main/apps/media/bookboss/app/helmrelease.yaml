@@ -38,6 +38,7 @@ spec:
               repository: ghcr.io/szinn/bookboss
               tag: v0.3.4@sha256:8aabfab42708f15244dd8361cf6d45856142492496a259fe65735602b25415a9
             env:
+              BOOKBOSS__FRONTEND__BASE_URL: "https://bookboss.zinn.ca"
               BOOKBOSS__LIBRARY__LIBRARY_PATH: "/library/books"
               BOOKBOSS__IMPORT__BOOKDROP_PATH: "/library/bookdrop"
               BOOKBOSS__IMPORT__POLL_INTERVAL_SECS: 60
