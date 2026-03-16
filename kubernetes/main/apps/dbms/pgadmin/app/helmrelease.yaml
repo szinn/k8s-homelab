@@ -26,6 +26,8 @@ spec:
             image:
               repository: docker.io/dpage/pgadmin4
               tag: "9.13@sha256:d243a4bcc02d2ee6b447c601692813531d2d0fbca18b583d9f7f9658da835d81"
+            env:
+              PGADMIN_REPLACE_SERVERS_ON_STARTUP: "True"
             envFrom:
               - secretRef:
                   name: pgadmin-secret

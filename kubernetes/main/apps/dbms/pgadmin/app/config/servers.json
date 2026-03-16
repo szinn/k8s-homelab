@@ -7,10 +7,10 @@
       "Port": 5432,
       "MaintenanceDB": "postgres",
       "Username": "postgres",
-      "SSLMode": "prefer",
-      "SSLCert": "<STORAGE_DIR>/.postgresql/postgresql.crt",
-      "SSLKey": "<STORAGE_DIR>/.postgresql/postgresql.key",
-      "SSLCompression": 0,
+      "ConnectionParameters": {
+        "sslmode": "prefer",
+        "connect_timeout": 10
+      },
       "Timeout": 10,
       "UseSSHTunnel": 0,
       "TunnelPort": "22",
@@ -23,10 +23,10 @@
       "Port": 5432,
       "MaintenanceDB": "postgres",
       "Username": "postgres",
-      "SSLMode": "prefer",
-      "SSLCert": "<STORAGE_DIR>/.postgresql/postgresql.crt",
-      "SSLKey": "<STORAGE_DIR>/.postgresql/postgresql.key",
-      "SSLCompression": 0,
+      "ConnectionParameters": {
+        "sslmode": "prefer",
+        "connect_timeout": 10
+      },
       "Timeout": 10,
       "UseSSHTunnel": 0,
       "TunnelPort": "22",
@@ -39,10 +39,10 @@
       "Port": 5432,
       "MaintenanceDB": "postgres",
       "Username": "postgres",
-      "SSLMode": "prefer",
-      "SSLCert": "<STORAGE_DIR>/.postgresql/postgresql.crt",
-      "SSLKey": "<STORAGE_DIR>/.postgresql/postgresql.key",
-      "SSLCompression": 0,
+      "ConnectionParameters": {
+        "sslmode": "prefer",
+        "connect_timeout": 10
+      },
       "Timeout": 10,
       "UseSSHTunnel": 0,
       "TunnelPort": "22",
