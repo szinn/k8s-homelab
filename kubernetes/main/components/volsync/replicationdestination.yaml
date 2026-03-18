@@ -25,6 +25,12 @@ spec:
       runAsUser: ${VOLSYNC_PUID:=2000}
       runAsGroup: ${VOLSYNC_PGID:=2000}
       fsGroup: ${VOLSYNC_PGID:=2000}
+    moverVolumes:
+      - mountPath: repository
+        volumeSource:
+          nfs:
+            path: /mnt/atlas/k8s/main/volsync
+            server: ragnar.zinn.tech
     repository: ${APP}-volsync-secret
     sourceIdentity:
       sourceName: ${APP}

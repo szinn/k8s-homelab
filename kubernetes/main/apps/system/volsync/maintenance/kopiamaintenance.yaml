@@ -9,5 +9,11 @@ spec:
   enabled: true
   trigger:
     schedule: 30 */8 * * *
+  moverVolumes:
+    - mountPath: repository
+      volumeSource:
+        nfs:
+          path: /mnt/atlas/k8s/main/volsync
+          server: ragnar.zinn.tech
   repository:
     repository: volsync-maintenance-secret
