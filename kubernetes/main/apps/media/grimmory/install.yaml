@@ -3,10 +3,10 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: booklore
+  name: grimmory
 spec:
   targetNamespace: media
-  path: ./kubernetes/main/apps/media/booklore/app
+  path: ./kubernetes/main/apps/media/grimmory/app
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -23,13 +23,13 @@ spec:
   interval: 1h
   postBuild:
     substitute:
-      APP: booklore
-      VOLSYNC_CLAIM: booklore-config
+      APP: grimmory
+      VOLSYNC_CLAIM: grimmory-config
       VOLSYNC_CAPACITY: 5Gi
       VOLSYNC_PUID: "1000"
       VOLSYNC_PGID: "1000"
-      GATUS_APP: booklore
-      GATUS_SUBDOMAIN: booklore
+      GATUS_APP: grimmory
+      GATUS_SUBDOMAIN: grimmory
   prune: true
   wait: false
   timeout: 5m

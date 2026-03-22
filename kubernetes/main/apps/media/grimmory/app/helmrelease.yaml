@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: booklore
+  name: grimmory
 spec:
   interval: 1h
   chartRef:
@@ -11,7 +11,7 @@ spec:
     name: app-template
   values:
     controllers:
-      booklore:
+      grimmory:
         annotations:
           reloader.stakater.com/auto: "true"
         pod:
@@ -28,18 +28,18 @@ spec:
               tag: 12.2.2-noble@sha256:e16f61b8f6ed25111adbb1c5c19bbc2904efc8ed14029999af0cbe1c7ae18bf1
             env:
               TZ: America/Toronto
-              MARIADB_DATABASE: booklore
+              MARIADB_DATABASE: grimmory
               MARIADB_PASSWORD:
                 valueFrom:
                   secretKeyRef:
-                    name: booklore-secret
-                    key: booklore_mariadb_password
+                    name: grimmory-secret
+                    key: grimmory_mariadb_password
               MARIADB_ROOT_PASSWORD:
                 valueFrom:
                   secretKeyRef:
-                    name: booklore-secret
-                    key: booklore_mariadb_root_password
-              MARIADB_USER: booklore
+                    name: grimmory-secret
+                    key: grimmory_mariadb_root_password
+              MARIADB_USER: grimmory
               PGID: 1000
               PUID: 1000
             probes:
@@ -69,17 +69,17 @@ spec:
               tag: 3.6.0@sha256:bec7ac18547781d854562c3729d3195c3880116d6758c49fdf4573ad58805f14
             args:
               - "mysql"
-              - "booklore:$(DB_PASSWORD)@tcp(localhost:3306)/booklore"
+              - "grimmory:$(DB_PASSWORD)@tcp(localhost:3306)/grimmory"
             env:
               DB_PASSWORD:
                 valueFrom:
                   secretKeyRef:
-                    name: booklore-secret
-                    key: booklore_mariadb_password
+                    name: grimmory-secret
+                    key: grimmory_mariadb_password
         containers:
-          booklore:
+          grimmory:
             image:
-              repository: ghcr.io/booklore-app/booklore
+              repository: ghcr.io/grimmory-app/grimmory
               tag: v2.2.1@sha256:252586c469ff6d07a06469fd1d49f19af932f4d323713d253c5d29e33b6ec97a
             command:
               - java
@@ -92,10 +92,10 @@ spec:
               DATABASE_PASSWORD:
                 valueFrom:
                   secretKeyRef:
-                    name: booklore-secret
-                    key: booklore_mariadb_password
-              DATABASE_URL: jdbc:mariadb://localhost:3306/booklore
-              DATABASE_USERNAME: booklore
+                    name: grimmory-secret
+                    key: grimmory_mariadb_password
+              DATABASE_URL: jdbc:mariadb://localhost:3306/grimmory
+              DATABASE_USERNAME: grimmory
             probes:
               liveness:
                 enabled: true
@@ -130,10 +130,10 @@ spec:
               readOnlyRootFilesystem: true
     persistence:
       data:
-        existingClaim: booklore-config
+        existingClaim: grimmory-config
         advancedMounts:
-          booklore:
-            booklore:
+          grimmory:
+            grimmory:
               - path: /app/data
                 subPath: app
             mariadb:
@@ -144,8 +144,8 @@ spec:
         server: ragnar.zinn.tech
         path: /mnt/atlas/media
         advancedMounts:
-          booklore:
-            booklore:
+          grimmory:
+            grimmory:
               - path: /books
                 subPath: BookLibrary/Books
               - path: /bookdrop
@@ -157,7 +157,7 @@ spec:
         medium: Memory
         sizeLimit: 1Mi
         advancedMounts:
-          booklore:
+          grimmory:
             mariadb:
               - path: /run/mysqld
       tmpfs:
@@ -165,22 +165,22 @@ spec:
         medium: Memory
         sizeLimit: 100Mi
         advancedMounts:
-          booklore:
-            # booklore:
+          grimmory:
+            # grimmory:
             #   - path: /tmp
             #     subPath: app
             mariadb:
               - path: /tmp
                 subPath: mysql
     route:
-      booklore:
+      grimmory:
         hostnames:
           - "{{ .Release.Name }}.zinn.ca"
         parentRefs:
           - name: envoy-internal
             namespace: network
     service:
-      booklore:
+      grimmory:
         ports:
           http:
             port: *httpPort
