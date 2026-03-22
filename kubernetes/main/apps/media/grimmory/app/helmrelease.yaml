@@ -147,11 +147,11 @@ spec:
           grimmory:
             grimmory:
               - path: /books
-                subPath: BookLibrary/Books
+                subPath: Grimmory/Books
               - path: /bookdrop
-                subPath: BookLibrary/Bookdrop
+                subPath: Grimmory/Bookdrop
               - path: /tmp
-                subPath: BookLibrary/tmp
+                subPath: Grimmory/tmp
       mysqld:
         type: emptyDir
         medium: Memory
