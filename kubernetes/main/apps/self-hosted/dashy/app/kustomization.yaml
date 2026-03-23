@@ -8,6 +8,7 @@ resources:
 configMapGenerator:
   - name: dashy-icons
     files:
+      - bookboss.png=./icons/bookboss.png
       - connect.jpg=./icons/connect.jpg
       - database-storage.png=./icons/database-storage.png
       - pikvm.png=./icons/pikvm.png
