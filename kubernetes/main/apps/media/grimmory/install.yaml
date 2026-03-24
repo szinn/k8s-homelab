@@ -17,7 +17,6 @@ spec:
     - name: rook-ceph-cluster
       namespace: rook-ceph
   components:
-    - ../../../../components/gatus/guarded
     # - ../../../../components/nfs-scaler
     - ../../../../components/volsync
   interval: 1h
@@ -28,8 +27,6 @@ spec:
       VOLSYNC_CAPACITY: 5Gi
       VOLSYNC_PUID: "1000"
       VOLSYNC_PGID: "1000"
-      GATUS_APP: grimmory
-      GATUS_SUBDOMAIN: grimmory
   prune: true
   wait: false
   timeout: 5m

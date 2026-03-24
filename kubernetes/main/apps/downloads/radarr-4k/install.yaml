@@ -17,7 +17,6 @@ spec:
     - name: keda
       namespace: system
   components:
-    - ../../../../components/gatus/guarded
     - ../../../../components/nfs-scaler
     - ../../../../components/volsync
   postBuild:
@@ -25,8 +24,6 @@ spec:
       APP: radarr-4k
       VOLSYNC_CLAIM: radarr-4k-config
       VOLSYNC_CAPACITY: 15Gi
-      GATUS_APP: radarr-4k
-      GATUS_SUBDOMAIN: radarr-4k
   prune: true
   wait: false
   interval: 30m

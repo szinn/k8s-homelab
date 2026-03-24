@@ -46,13 +46,9 @@ spec:
       namespace: media
     - name: external-secrets
       namespace: external-secrets
-  components:
-    - ../../../../components/gatus/guarded
   postBuild:
     substitute:
       APP: immich-server
-      GATUS_APP: immich
-      GATUS_SUBDOMAIN: photos
   prune: true
   wait: false
   interval: 30m

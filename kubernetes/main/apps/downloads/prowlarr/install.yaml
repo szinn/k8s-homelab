@@ -19,7 +19,6 @@ spec:
     - name: volsync
       namespace: system
   components:
-    - ../../../../components/gatus/guarded
     - ../../../../components/nfs-scaler
     - ../../../../components/volsync
   postBuild:
@@ -27,8 +26,6 @@ spec:
       APP: prowlarr
       VOLSYNC_CLAIM: prowlarr-config
       VOLSYNC_CAPACITY: 1Gi
-      GATUS_APP: prowlarr
-      GATUS_SUBDOMAIN: prowlarr
   prune: true
   wait: false
   interval: 30m

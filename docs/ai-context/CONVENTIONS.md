@@ -741,7 +741,6 @@ Reusable Kustomize components live in `kubernetes/{main,staging}/components/` an
 ```yaml
 # In install.yaml
 components:
-  - ../../../../components/gatus/guarded
   - ../../../../components/nfs-scaler
 ```
 
@@ -749,7 +748,6 @@ components:
 
 - `components/alerts/` - Alert configurations
 - `components/app-template/` - App template OCI repository
-- `components/gatus/` - Healthcheck monitoring
 - `components/volsync/` - Backup replication
 - `components/nfs-scaler/` - NFS-based autoscaling
 

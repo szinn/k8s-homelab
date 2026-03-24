@@ -19,7 +19,6 @@ spec:
     - name: volsync
       namespace: system
   components:
-    - ../../../../components/gatus/guarded
     - ../../../../components/nfs-scaler
     - ../../../../components/volsync
   postBuild:
@@ -27,8 +26,6 @@ spec:
       APP: bazarr
       VOLSYNC_CLAIM: bazarr-config
       VOLSYNC_CAPACITY: 5Gi
-      GATUS_APP: bazarr
-      GATUS_SUBDOMAIN: bazarr
   prune: true
   wait: false
   interval: 30m

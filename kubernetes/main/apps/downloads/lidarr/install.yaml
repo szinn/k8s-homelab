@@ -19,7 +19,6 @@ spec:
     - name: volsync
       namespace: system
   components:
-    - ../../../../components/gatus/guarded
     - ../../../../components/nfs-scaler
     - ../../../../components/volsync
   postBuild:
@@ -27,8 +26,6 @@ spec:
       APP: lidarr
       VOLSYNC_CLAIM: lidarr-config
       VOLSYNC_CAPACITY: 15Gi
-      GATUS_APP: lidarr
-      GATUS_SUBDOMAIN: lidarr
   prune: true
   wait: false
   interval: 30m

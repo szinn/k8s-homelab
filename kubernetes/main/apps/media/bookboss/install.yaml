@@ -16,15 +16,10 @@ spec:
       namespace: dbms
     - name: external-secrets
       namespace: external-secrets
-  components:
-    - ../../../../components/gatus/guarded
   postBuild:
     substitute:
       APP: bookboss
-      GATUS_APP: bookboss
-      GATUS_SUBDOMAIN: bookboss
   prune: true
   wait: false
   interval: 30m
   timeout: 5m
-

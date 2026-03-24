@@ -19,7 +19,6 @@ spec:
     - name: rook-ceph-cluster
       namespace: rook-ceph
   components:
-    - ../../../../components/gatus/guarded
     - ../../../../components/nfs-scaler
     - ../../../../components/volsync
   postBuild:
@@ -27,8 +26,6 @@ spec:
       APP: seerr
       VOLSYNC_CLAIM: seerr-config
       VOLSYNC_CAPACITY: 5Gi
-      GATUS_APP: seerr
-      GATUS_SUBDOMAIN: seerr
   prune: true
   wait: false
   interval: 1h

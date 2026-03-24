@@ -15,18 +15,6 @@ connectivity:
     target: 1.1.1.1:53
     interval: 1m
 endpoints:
-  - name: status
-    group: guarded
-    url: 1.1.1.1
-    interval: 1m
-    ui:
-      hide-hostname: true
-      hide-url: true
-    dns:
-      query-name: "status.zinn.ca"
-      query-type: A
-    conditions:
-      - "len([BODY]) == 0"
   - name: external
     group: external
     url: 1.1.1.1

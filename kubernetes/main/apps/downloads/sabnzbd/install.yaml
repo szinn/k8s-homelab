@@ -19,7 +19,6 @@ spec:
     - name: volsync
       namespace: system
   components:
-    - ../../../../components/gatus/guarded
     - ../../../../components/nfs-scaler
     - ../../../../components/volsync
   postBuild:
@@ -27,8 +26,6 @@ spec:
       APP: sabnzbd
       VOLSYNC_CLAIM: sabnzbd-config
       VOLSYNC_CAPACITY: 1Gi
-      GATUS_APP: sabnzbd
-      GATUS_SUBDOMAIN: sabnzbd
   prune: true
   wait: false
   interval: 30m

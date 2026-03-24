@@ -19,7 +19,6 @@ spec:
     - name: volsync
       namespace: system
   components:
-    - ../../../../components/gatus/guarded
     - ../../../../components/nfs-scaler
     - ../../../../components/volsync
   postBuild:
@@ -27,8 +26,6 @@ spec:
       APP: sonarr
       VOLSYNC_CLAIM: sonarr-config
       VOLSYNC_CAPACITY: 15Gi
-      GATUS_APP: sonarr
-      GATUS_SUBDOMAIN: sonarr
   prune: true
   wait: false
   interval: 30m

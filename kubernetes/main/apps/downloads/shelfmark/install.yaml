@@ -17,7 +17,6 @@ spec:
     - name: rook-ceph-cluster
       namespace: rook-ceph
   components:
-    - ../../../../components/gatus/guarded
     - ../../../../components/nfs-scaler
     - ../../../../components/volsync
   interval: 1h
@@ -26,8 +25,6 @@ spec:
       APP: shelfmark
       VOLSYNC_CLAIM: shelfmark-config
       VOLSYNC_CAPACITY: 5Gi
-      GATUS_APP: shelfmark
-      GATUS_SUBDOMAIN: shelfmark
   prune: true
   wait: false
   timeout: 5m
