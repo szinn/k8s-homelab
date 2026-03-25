@@ -17,7 +17,7 @@ releases:
   - name: gateway-api-crds
     namespace: kube-system
     chart: oci://ghcr.io/wiremind/wiremind-helm-charts/gateway-api-crds
-    version: 1.4.1
+    version: 1.5.1
 
   - name: kube-prometheus-stack
     namespace: observability
