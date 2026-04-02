@@ -35,9 +35,9 @@ spec:
                   name: postgres-backups-secret
             env:
               - name: POSTGRES_HOST
-                value: postgres-ro.dbms.svc.cluster.local
+                value: postgres-18-ro.dbms.svc.cluster.local
               - name: POSTGRES_DB
-                value: "dmarc"
+                value: "bookboss"
               - name: BACKUP_KEEP_DAYS
                 value: "7"
               - name: BACKUP_KEEP_WEEKS
