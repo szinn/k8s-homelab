@@ -5,7 +5,8 @@ kind: RenovateJob
 metadata:
   name: k8s-homelab
 spec:
-  discoveryFilter: szinn/k8s-homelab
+  discoveryFilters:
+    - szinn/k8s-homelab
   extraEnv:
     - name: LOG_LEVEL
       value: debug
