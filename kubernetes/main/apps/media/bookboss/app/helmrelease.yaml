@@ -44,7 +44,7 @@ spec:
               BOOKBOSS__IMPORT__POLL_INTERVAL_SECS: 60
               BOOKBOSS__IMPORT__WORKER_POLL_INTERVAL_SECS: 5
               TZ: "America/Toronto"
-              RUST_LOG: "TRACE"
+              RUST_LOG: "DEBUG"
             envFrom:
               - secretRef:
                   name: bookboss-secret
