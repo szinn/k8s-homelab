@@ -1,5 +1,5 @@
 [settings]
-pipx_uvx = true
+pipx.uvx = true
 
 [tools]
 "aqua:helm/helm" = "3.20.1"
