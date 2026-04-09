@@ -13,8 +13,10 @@ spec:
     - name: RENOVATE_ALLOWED_COMMANDS
       value: |-
         [pnpm ["pnpm run bundle"]
+    - name: RENOVATE_GIT_AUTHOR
+      value: "Jeeves <jeeves@noreply.github.com>"
     - name: RENOVATE_PLATFORM_COMMIT
-      value: "true"
+      value: enabled
   image: ghcr.io/renovatebot/renovate:43.110.7@sha256:5aca97f44f057d2d6dd4f53c4e6c6725063f0185c221edb6699bfb350a44899e
   parallelism: 5
   provider:
