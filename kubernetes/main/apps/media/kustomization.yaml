@@ -11,7 +11,5 @@ resources:
   - namespace.yaml
   # Flux-Kustomizations
   - bookboss/install.yaml
-  # - calibre-web/install.yaml
-  # - grimmory/install.yaml
   - immich/install.yaml
   - plex/install.yaml
