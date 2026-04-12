@@ -36,7 +36,7 @@ spec:
           issueboss:
             image:
               repository: ghcr.io/szinn/issueboss
-              tag: v0.2.4
+              tag: v0.2.11
             env:
               TZ: "America/Toronto"
               RUST_LOG: "DEBUG"
