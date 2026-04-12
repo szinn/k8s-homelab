@@ -1,0 +1,25 @@
+---
+# yaml-language-server: $schema=https://schemas.zinn.ca/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: issueboss
+spec:
+  targetNamespace: self-hosted
+  path: ./kubernetes/main/apps/self-hosted/issueboss/app
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  dependsOn:
+    - name: cloudnative-pg-cluster
+      namespace: dbms
+    - name: external-secrets
+      namespace: external-secrets
+  postBuild:
+    substitute:
+      APP: issueboss
+  prune: true
+  wait: false
+  interval: 30m
+  timeout: 5m

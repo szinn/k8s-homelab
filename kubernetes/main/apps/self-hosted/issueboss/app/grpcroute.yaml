@@ -1,0 +1,15 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: GRPCRoute
+metadata:
+  name: issueboss
+spec:
+  hostnames:
+    - issueboss.zinn.ca
+  parentRefs:
+    - name: envoy-internal
+      namespace: network
+      sectionName: grpc
+  rules:
+    - backendRefs:
+        - name: issueboss
+          port: 8443

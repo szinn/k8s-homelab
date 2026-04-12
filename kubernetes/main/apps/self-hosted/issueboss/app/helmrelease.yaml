@@ -1,0 +1,112 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: issueboss
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  values:
+    controllers:
+      issueboss:
+        strategy: Recreate
+        annotations:
+          secret.reloader.stakater.com/reload: issueboss-secret
+        pod:
+          enableServiceLinks: false
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            runAsNonRoot: true
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/home-operations/postgres-init
+              tag: 18.3@sha256:6fa1f331cddd2eb0b6afa7b8d3685c864127a81ab01c3d9400bc3ff5263a51cf
+              pullPolicy: IfNotPresent
+            envFrom:
+              - secretRef:
+                  name: issueboss-secret
+        containers:
+          issueboss:
+            image:
+              repository: ghcr.io/szinn/issueboss
+              tag: v0.2.4
+            env:
+              TZ: "America/Toronto"
+              RUST_LOG: "DEBUG"
+            envFrom:
+              - secretRef:
+                  name: issueboss-secret
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /healthz
+                    port: &port 8080
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /readyz
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+    service:
+      issueboss:
+        ports:
+          http:
+            port: *port
+            primary: true
+          mcp:
+            port: 8090
+            targetPort: 8090
+          grpc:
+            port: 8443
+            targetPort: 9090
+            appProtocol: grpc
+
+    route:
+      internal:
+        annotations:
+          gatus.home-operations.com/endpoint: |
+            url: "https://{{ .Release.Name }}.zinn.ca/healthz"
+            conditions: ["[STATUS] == 200"]
+        hostnames:
+          - "{{ .Release.Name }}.zinn.ca"
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+      mcp:
+        enabled: true
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: mcp
+        hostnames:
+          - "{{ .Release.Name }}.zinn.ca"
+        rules:
+          - backendRefs:
+              - identifier: issueboss
+                port: 8090
+
+    persistence:
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp

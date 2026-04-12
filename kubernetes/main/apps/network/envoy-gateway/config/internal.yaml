@@ -45,6 +45,19 @@ spec:
         certificateRefs:
           - kind: Secret
             name: wildcard-tls
+    - name: mcp
+      protocol: HTTPS
+      port: 8090
+      allowedRoutes:
+        namespaces:
+          from: All
+        kinds:
+          - kind: HTTPRoute
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            name: wildcard-tls
 ---
 # yaml-language-server: $schema=https://schemas.zinn.ca/gateway.networking.k8s.io/httproute_v1.json
 apiVersion: gateway.networking.k8s.io/v1
