@@ -22,6 +22,21 @@ spec:
       clusterIP: 10.210.0.10
     servers:
       - zones:
+          - zone: zinn.ca
+          - zone: zinn.tech
+        port: 53
+        plugins:
+          - name: errors
+          - name: forward
+            parameters: . 10.12.0.1
+          - name: cache
+            configBlock: |-
+              prefetch 20
+              serve_stale
+          - name: log
+            configBlock: |-
+              class error
+      - zones:
           - zone: .
             scheme: dns://
             use_tcp: true
@@ -40,11 +55,14 @@ spec:
           - name: autopath
             parameters: "@kubernetes"
           - name: forward
-            parameters: . /etc/resolv.conf
+            parameters: . 1.1.1.1 1.0.0.1
+            configBlock: |-
+              health_check 5s
           - name: cache
             configBlock: |-
               prefetch 20
               serve_stale
+              success 3600
           - name: loop
           - name: reload
           - name: loadbalance
