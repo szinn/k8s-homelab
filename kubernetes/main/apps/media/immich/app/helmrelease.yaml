@@ -37,7 +37,7 @@ spec:
           main:
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v2.7.4@sha256:040b2fed8f7f6b7405f9b4b26348b4656355e4d4ed0852b8e966d453dd6635cc
+              tag: v2.7.5@sha256:c15bff75068effb03f4355997d03dc7e0fc58720c2b54ad6f7f10d1bc57efaa5
             env:
               TZ: "America/Toronto"
               IMMICH_CONFIG_FILE: /config/immich-config.yaml
@@ -85,7 +85,7 @@ spec:
           main:
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
-              tag: v2.7.4@sha256:e25a410b99567c369da14508c7e874dfbeee1bcf06adda2c4148ab2f32f9463d
+              tag: v2.7.5@sha256:a2501141440f10516d329fdfba2c68082e19eb9ba6016c061ac80d23beadf7f3
             env:
               TZ: "America/Toronto"
               REDIS_HOSTNAME: *redisHost
