@@ -375,5 +375,4 @@ kubectl get configmaps -n <namespace> --context main
 ## Sources
 
 - [Atlassian Pre-Mortem Play](https://www.atlassian.com/team-playbook/plays/pre-mortem) - Risk identification methodology
-- [Etsy Debriefing Facilitation Guide](https://www.etsy.com/codeascraft/debriefing-facilitation-guide) - Blameless postmortem philosophy
 - [PagerDuty Blameless Postmortem](https://postmortems.pagerduty.com/culture/blameless/) - "What/how" questioning techniques
