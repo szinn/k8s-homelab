@@ -26,6 +26,66 @@ tasks:
       vars:
         - command
 
+  down_bookboss:
+    desc: Turn down BookBoss
+    cmds:
+      - task: _down
+        vars:
+          NAMESPACE: media
+          HELMRELEASE: bookboss
+          KUSTOMIZATION: bookboss
+          SERVICES: deployment/bookboss
+
+  up_bookboss:
+    desc: Turn up BookBoss
+    cmds:
+      - task: _up
+        vars:
+          NAMESPACE: media
+          HELMRELEASE: bookboss
+          KUSTOMIZATION: bookboss
+          SERVICES: deployment/bookboss
+          REPLICAS: 1
+
+  restore_bookboss:
+    desc: Restore bookboss database
+    cmds:
+      - task: down_bookboss
+      - task: _restore_db
+        vars:
+          DATABASE: bookboss
+      - task: up_bookboss
+
+  down_issueboss:
+    desc: Turn down IssueBoss
+    cmds:
+      - task: _down
+        vars:
+          NAMESPACE: self-hosted
+          HELMRELEASE: issueboss
+          KUSTOMIZATION: issueboss
+          SERVICES: deployment/issueboss
+
+  up_issueboss:
+    desc: Turn up IssueBoss
+    cmds:
+      - task: _up
+        vars:
+          NAMESPACE: self-hosted
+          HELMRELEASE: issueboss
+          KUSTOMIZATION: issueboss
+          SERVICES: deployment/issueboss
+          REPLICAS: 1
+
+  restore_issueboss:
+    desc: Restore issueboss database
+    cmds:
+      - task: down_issueboss
+      - task: _restore_db
+        vars:
+          DATABASE: issueboss
+      - task: up_issueboss
+
   down_immich:
     desc: Turn down Immich
     cmds:

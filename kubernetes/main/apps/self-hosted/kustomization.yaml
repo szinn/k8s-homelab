@@ -19,5 +19,5 @@ resources:
   - issueboss/install.yaml
   - it-tools/install.yaml
   - pdf-tool/install.yaml
-  - shlink/install.yaml
+  # - shlink/install.yaml
   - wikijs/install.yaml
