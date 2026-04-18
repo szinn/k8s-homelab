@@ -12,7 +12,7 @@ spec:
   values:
     connect:
       api:
-        httpPort: 80
+        httpPort: 8436
         imageRepository: ghcr.io/1password/connect-api
         serviceMonitor:
           enabled: true
