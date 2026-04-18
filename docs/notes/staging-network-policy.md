@@ -6,20 +6,20 @@ The staging cluster currently has **no Cilium network policies** deployed. Ciliu
 
 ### Deployed Namespaces
 
-| Namespace | Key Workloads |
-|-----------|---------------|
-| `flux-system` | flux-operator, flux-instance |
-| `kube-system` | cilium, coredns, metrics-server |
-| `network` | envoy-gateway, external-dns |
-| `cert-manager` | cert-manager |
-| `external-secrets` | external-secrets, onepassword-connect |
-| `dbms` | cloudnative-pg, dragonfly, pgadmin |
-| `rook-ceph` | rook-ceph |
-| `system` | kopia, reloader, spegel, volsync, etc. |
-| `system-upgrade` | tuppr |
-| `default` | whoami |
-| `media` | (namespace only) |
-| `self-hosted` | (namespace only) |
+| Namespace          | Key Workloads                          |
+| ------------------ | -------------------------------------- |
+| `flux-system`      | flux-operator, flux-instance           |
+| `kube-system`      | cilium, coredns, metrics-server        |
+| `network`          | envoy-gateway, external-dns            |
+| `cert-manager`     | cert-manager                           |
+| `external-secrets` | external-secrets, onepassword-connect  |
+| `dbms`             | cloudnative-pg, dragonfly, pgadmin     |
+| `rook-ceph`        | rook-ceph                              |
+| `system`           | kopia, reloader, spegel, volsync, etc. |
+| `system-upgrade`   | tuppr                                  |
+| `default`          | whoami                                 |
+| `media`            | (namespace only)                       |
+| `self-hosted`      | (namespace only)                       |
 
 ---
 
@@ -160,7 +160,7 @@ spec:
       app.kubernetes.io/name: envoy-gateway
   ingress:
     - fromCIDR:
-        - 10.0.0.0/8  # Internal network
+        - 10.0.0.0/8 # Internal network
   egress:
     - toEndpoints:
         - {} # Allow to backend services
@@ -184,13 +184,13 @@ Since Hubble is already enabled, use an **observe-then-enforce** approach:
 
 ### Priority Order
 
-| Priority | Namespace | Reason |
-|----------|-----------|--------|
-| 1 | `dbms` | Database access is most sensitive |
-| 2 | `external-secrets` | Secrets provider needs isolation |
-| 3 | `flux-system` | GitOps controller - high privilege |
-| 4 | `rook-ceph` | Storage backend isolation |
-| 5 | `network` | Gateway ingress rules |
+| Priority | Namespace          | Reason                             |
+| -------- | ------------------ | ---------------------------------- |
+| 1        | `dbms`             | Database access is most sensitive  |
+| 2        | `external-secrets` | Secrets provider needs isolation   |
+| 3        | `flux-system`      | GitOps controller - high privilege |
+| 4        | `rook-ceph`        | Storage backend isolation          |
+| 5        | `network`          | Gateway ingress rules              |
 
 ---
 

@@ -6,7 +6,6 @@ tasks:
   all:
     - task: markdown
     - task: yaml
-    - task: terraform
     - task: just
 
   markdown:
@@ -36,13 +35,7 @@ tasks:
         '**/*.y*ml'
     ignore_error: true
 
-  terraform:
-    desc: Format Terraform
-    cmds:
-      - terraform fmt -recursive
-    ignore_error: true
-
   just:
     desc: Format Justfiles
     cmds:
-      - find . -name "*.just" -o -name ".justfile" -exec just --justfile \{\} --fmt --unstable \;
+      - find . -name "*.just" -o -name ".justfile" -exec just --justfile {} --fmt --unstable \;
