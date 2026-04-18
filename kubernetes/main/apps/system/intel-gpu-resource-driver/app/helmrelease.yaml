@@ -10,6 +10,21 @@ spec:
     kind: OCIRepository
     name: intel-gpu-resource-driver
   values:
+    kubeletPlugin:
+      privileged: true
+      healthMonitoring:
+        enabled: false
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values:
+                      - k8s-4
+                      - k8s-5
+                      - k8s-6
     cdi:
       staticPath: /var/cdi/static
       dynamicPath: /var/cdi/dynamic
