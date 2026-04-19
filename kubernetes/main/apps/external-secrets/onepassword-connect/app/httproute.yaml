@@ -1,0 +1,19 @@
+---
+# yaml-language-server: $schema=https://schemas.zinn.ca/gateway.networking.k8s.io/httproute_v1.json
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: hubble
+  annotations:
+    gatus.home-operations.com/endpoint: |-
+      conditions: ["[STATUS] == 404"]
+spec:
+  hostnames: ["onepassword-connect.zinn.ca"]
+  parentRefs:
+    - name: envoy-internal
+      namespace: network
+  rules:
+    - backendRefs:
+        - name: onepassword-connect
+          namespace: external-secrets
+          port: 8436
