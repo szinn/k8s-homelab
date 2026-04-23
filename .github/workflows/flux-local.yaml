@@ -123,7 +123,7 @@ jobs:
 
       - name: Add comment
         if: ${{ steps.diff.outputs.diff != '' }}
-        uses: mshick/add-pr-comment@64b8e914979889d746c99dea15a76e77ef64580a # v3.10.0
+        uses: mshick/add-pr-comment@be5d48d9b695983ee841f45434104a1419ba6231 # v3.10.1
         with:
           repo-token: "${{ steps.app-token.outputs.token }}"
           message-id: "${{ github.event.pull_request.number }}/${{ matrix.paths }}/${{ matrix.resources }}"
