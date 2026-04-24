@@ -232,7 +232,7 @@ kubernetes/main/
 │   ├── observability/     # Prometheus, Grafana, Loki
 │   ├── rook-ceph/         # Distributed storage
 │   ├── self-hosted/       # Homepage, WikiJS, PDF tools
-│   ├── system/            # KEDA, kopia, volsync, descheduler
+│   ├── system/            # kopia, volsync, descheduler
 │   ├── system-upgrade/
 │   └── actions-runner-system/
 ├── bootstrap/             # Helmfile-based bootstrap
@@ -244,7 +244,7 @@ kubernetes/main/
 │   ├── app-template/
 │   ├── gatus/
 │   ├── volsync/
-│   └── nfs-scaler/
+│   └── zeroscaler/
 ├── talos/                 # Talos OS configuration
 │   ├── nodes/             # k8s-1 through k8s-6 (.j2 templates)
 │   ├── machineconfig.yaml.j2
@@ -286,7 +286,7 @@ kubernetes/staging/
 | observability         | Monitoring           | prometheus, grafana, loki, alloy, victoria-logs                 |
 | rook-ceph             | Distributed storage  | rook-ceph-cluster, operators                                    |
 | self-hosted           | Self-hosted services | homepage, wikijs, shlink, pdf-tools, change-detection           |
-| system                | System tools         | keda, kopia, volsync, descheduler, reloader, spegel             |
+| system                | System tools         | kopia, volsync, descheduler, reloader, spegel                   |
 | system-upgrade        | OS updates           | system-upgrade-controller                                       |
 
 ---

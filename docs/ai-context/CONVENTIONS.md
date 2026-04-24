@@ -123,7 +123,7 @@ kubernetes/main/apps/<namespace>/<app>/
 | `observability`         | Monitoring           | prometheus, grafana, loki, alloy               |
 | `rook-ceph`             | Distributed storage  | rook-ceph-cluster, operators                   |
 | `self-hosted`           | Self-hosted services | homepage, wikijs, pdf-tools                    |
-| `system`                | System tools         | keda, kopia, volsync, reloader, spegel         |
+| `system`                | System tools         | kopia, volsync, reloader, spegel               |
 | `system-upgrade`        | OS updates           | system-upgrade-controller                      |
 
 ---
@@ -741,7 +741,7 @@ Reusable Kustomize components live in `kubernetes/{main,staging}/components/` an
 ```yaml
 # In install.yaml
 components:
-  - ../../../../components/nfs-scaler
+  - ../../../../components/zeroscaler
 ```
 
 **Available Components**:
@@ -749,7 +749,7 @@ components:
 - `components/alerts/` - Alert configurations
 - `components/app-template/` - App template OCI repository
 - `components/volsync/` - Backup replication
-- `components/nfs-scaler/` - NFS-based autoscaling
+- `components/zeroscaler/` - NFS-based autoscaling
 
 **Depth**
 
@@ -775,8 +775,6 @@ spec:
   dependsOn:
     - name: immich-database
       namespace: media
-    - name: keda
-      namespace: system
     - name: external-secrets
       namespace: external-secrets
 ```

@@ -12,13 +12,11 @@ spec:
     name: flux-system
     namespace: flux-system
   dependsOn:
-    - name: keda
-      namespace: system
     - name: rook-ceph-cluster
       namespace: rook-ceph
   components:
-    - ../../../../components/nfs-scaler
     - ../../../../components/volsync
+    - ../../../../components/zeroscaler
   interval: 1h
   postBuild:
     substitute:

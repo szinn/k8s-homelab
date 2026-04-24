@@ -21,6 +21,7 @@ resources:
   - loki/install.yaml
   - miscellaneous
   - node-exporter/install.yaml
+  - prometheus-adapter/install.yaml
   - silence-operator/install.yaml
   - unifi-poller/install.yaml
   - victoria-logs/install.yaml

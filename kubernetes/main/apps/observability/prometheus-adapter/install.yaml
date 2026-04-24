@@ -3,15 +3,15 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: keda
+  name: prometheus-adapter
 spec:
-  targetNamespace: system
-  path: ./kubernetes/main/apps/system/keda/app
+  targetNamespace: observability
+  path: ./kubernetes/main/apps/observability/prometheus-adapter/app
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  interval: 30m
+  interval: 1h
   timeout: 5m
   prune: true
   wait: false
