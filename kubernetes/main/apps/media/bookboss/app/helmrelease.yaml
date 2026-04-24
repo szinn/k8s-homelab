@@ -36,7 +36,7 @@ spec:
           bookboss:
             image:
               repository: ghcr.io/szinn/bookboss
-              tag: v0.8.16@sha256:f12eca313c33876bc5f3aced762a4033120075d73ecc1a23d319498cf9e540b5
+              tag: v0.8.17@sha256:9d1f2d9a2536ac08e7d2a54e360bc93ca2db5b31b7658256c57d69aa994d6513
             env:
               BOOKBOSS__FRONTEND__BASE_URL: "https://bookboss.zinn.ca"
               BOOKBOSS__LIBRARY__LIBRARY_PATH: "/library/books"
