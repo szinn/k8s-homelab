@@ -26,5 +26,5 @@ spec:
                       - k8s-5
                       - k8s-6
     cdi:
-      staticPath: /var/cdi/static
-      dynamicPath: /var/cdi/dynamic
+      staticPath: /run/cdi
+      dynamicPath: /run/cdi
