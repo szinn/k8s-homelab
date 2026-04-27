@@ -2,3 +2,4 @@
 .venv
 **/.terraform/*
 **/terraform.tfstate*
+.insights/

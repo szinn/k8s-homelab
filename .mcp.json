@@ -12,6 +12,13 @@
       "command": "npx",
       "args": ["-y", "@probelabs/maid-mcp"],
       "env": {}
+    },
+    "issueboss": {
+      "type": "http",
+      "url": "${ISSUEBOSS_GRPC_HOST}:${ISSUEBOSS_MCP_PORT}/mcp",
+      "headers": {
+        "Authorization": "Bearer ${ISSUEBOSS_API_KEY}"
+      }
     }
   }
 }

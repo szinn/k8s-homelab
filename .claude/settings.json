@@ -2,7 +2,6 @@
   "allowedTools": [],
   "mcpContextUris": [],
   "mcpServers": [],
-  "enabledMcpjsonServers": [],
   "disabledMcpjsonServers": [],
   "hasTrustDialogAccepted": true,
   "projectOnboardingSeenCount": 1,
@@ -16,5 +15,73 @@
     "packageManager": null
   },
   "exampleFiles": ["helm-release.yaml", "talconfig.yaml", "Taskfile.yaml", "helmrelease.yaml", "kustomization.yaml"],
-  "exampleFilesGeneratedAt": 1766344103186
+  "exampleFilesGeneratedAt": 1766344103186,
+  "permissions": {
+    "additionalDirectories": ["/Users/scotte/Development/Projects/Insights"],
+    "allow": [
+      "Bash(cat /Users/scotte/.claude/plugins/marketplaces/superpowers-extended-cc-marketplace/*.json)",
+      "Bash(curl:*)",
+      "Bash(direnv allow:*)",
+      "Bash(find:*)",
+      "Bash(gh api:*)",
+      "Bash(grep:*)",
+      "Bash(jj desc:*)",
+      "Bash(jj describe:*)",
+      "Bash(jj diff:*)",
+      "Bash(jj log:*)",
+      "Bash(jj new:*)",
+      "Bash(jj show:*)",
+      "Bash(jj status:*)",
+      "Bash(jj untrack:*)",
+      "Bash(jj:*)",
+      "Bash(ls:*)",
+      "Bash(mv /Users/scotte/Development/Projects/llm-wiki/docs/superpowers/plans/2026-04-25-llm-wiki.md /Users/scotte/Development/Projects/llm-wiki/.insights/shared/plans/LW-1-plan-llm-wiki-phase-1-ingest.md)",
+      "Bash(mv /Users/scotte/Development/Projects/llm-wiki/docs/superpowers/plans/2026-04-25-llm-wiki.md.tasks.json /Users/scotte/Development/Projects/llm-wiki/.insights/shared/plans/LW-1-plan-llm-wiki-phase-1-ingest.md.tasks.json)",
+      "Bash(mv /Users/scotte/Development/Projects/llm-wiki/docs/superpowers/specs/2026-04-25-llm-wiki-design.md /Users/scotte/Development/Projects/llm-wiki/.insights/shared/specs/LW-1-spec-llm-wiki-design.md)",
+      "Bash(python3 *)",
+      "Bash(sed -n '*,*p' *)",
+      "Edit(./**)",
+      "Read(//Users/scotte/Development/Projects/IssueBoss/.claude-plugin/**)",
+      "Read(//Users/scotte/Development/Projects/IssueBoss/.claude/**)",
+      "Read(//Users/scotte/Development/Projects/IssueBoss/skills/**)",
+      "WebFetch(domain:gist.github.com)",
+      "WebFetch(domain:omni-automation.com)",
+      "mcp__devonthink__add_tags",
+      "mcp__devonthink__create_record",
+      "mcp__devonthink__delete_record",
+      "mcp__devonthink__get_open_databases",
+      "mcp__devonthink__get_record_content",
+      "mcp__devonthink__get_record_properties",
+      "mcp__devonthink__list_group_content",
+      "mcp__devonthink__move_record",
+      "mcp__devonthink__replicate_record",
+      "mcp__devonthink__search",
+      "mcp__devonthink__update_record_content",
+      "mcp__issueboss__add_artifact",
+      "mcp__issueboss__add_relationship",
+      "mcp__issueboss__create_issue",
+      "mcp__issueboss__list_artifacts",
+      "mcp__issueboss__list_issues",
+      "mcp__issueboss__list_relationships",
+      "mcp__issueboss__move_artifact",
+      "mcp__issueboss__transition_issue",
+      "mcp__issueboss__update_artifact",
+      "mcp__issueboss__update_issue"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": ["github", "issueboss", "mermaid"],
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -Rs '{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":(\"# jj Skill\\n\\n\" + .)}}' ~/.claude/skills/jj/SKILL.md 2>/dev/null || true",
+            "statusMessage": "Loading jj skill..."
+          }
+        ]
+      }
+    ]
+  }
 }
