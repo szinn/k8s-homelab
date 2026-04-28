@@ -27,7 +27,7 @@ spec:
           app:
             image:
               repository: docker.io/kanidm/server
-              tag: "1.9.2"
+              tag: "1.9.2@sha256:b2600b42dd4a91bcea66eb067b74a180b9ffaff322c3785ea0b411d12c51c7b2"
             env:
               KANIDM_ADMIN_BIND_PATH: /var/run/kanidmd.sock
               KANIDM_DOMAIN: auth.zinn.ca
