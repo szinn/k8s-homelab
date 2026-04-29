@@ -21,14 +21,13 @@ spec:
               tag: 4.0.3@sha256:d5c1ad9da23a8d5f6f20b344cf744f10fe5833f16e8a35fe7acd0c5c6587db02
             env:
               TZ: America/Toronto
-              UID: 2000
-              GID: 2000
+              DISABLE_CONFIG_BACKUPS: true
           code-server:
             image:
               repository: ghcr.io/coder/code-server
               tag: 4.117.0@sha256:e6702766518b961c7e3c41095c129c7c9a82b041578c53326c52fa363a057727
             securityContext:
-              runAsUser: 0
+              runAsUser: 1000
             args:
               [
                 "--auth",
