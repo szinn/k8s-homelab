@@ -17,7 +17,7 @@ spec:
       value: "Jeeves <jeeves@noreply.github.com>"
     - name: RENOVATE_PLATFORM_COMMIT
       value: enabled
-  image: ghcr.io/renovatebot/renovate:43.158.3@sha256:63b96592f6e82ffc27b23c59e301dcf489bcf3adc5cecd7350547b031039b395
+  image: ghcr.io/renovatebot/renovate:43.159.0@sha256:c80842690cf53b7c2191235f3107cb63e2e3c85a63d51ae64f0f42b440c31f05
   parallelism: 5
   provider:
     name: github
