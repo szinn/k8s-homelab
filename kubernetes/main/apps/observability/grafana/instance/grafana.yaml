@@ -19,6 +19,21 @@ spec:
       enabled: "true"
     auth.basic:
       enabled: "true"
+    auth.generic_oauth:
+      enabled: "true"
+      name: "Kanidm"
+      client_id: "grafana"
+      scopes: "openid,profile,email,groups"
+      auth_url: "https://auth.zinn.ca/ui/oauth2"
+      token_url: "https://auth.zinn.ca/oauth2/token"
+      api_url: "https://auth.zinn.ca/oauth2/openid/grafana/userinfo"
+      use_pkce: "true"
+      use_refresh_token: "true"
+      allow_sign_up: "true"
+      login_attribute_path: "preferred_username"
+      groups_attribute_path: "groups"
+      role_attribute_path: "contains(grafana_role[*], 'GrafanaAdmin') && 'GrafanaAdmin' || contains(grafana_role[*], 'Admin') && 'Admin' || contains(grafana_role[*], 'Editor') && 'Editor' || 'Viewer'"
+      allow_assign_grafana_admin: "true"
     log:
       mode: console
     metrics:
@@ -46,6 +61,11 @@ spec:
                     secretKeyRef:
                       name: grafana-admin-password-secret
                       key: GF_SECURITY_ADMIN_PASSWORD
+                - name: GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET
+                  valueFrom:
+                    secretKeyRef:
+                      name: grafana-admin-password-secret
+                      key: GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET
               securityContext:
                 allowPrivilegeEscalation: false
                 readOnlyRootFilesystem: true
