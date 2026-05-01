@@ -10,6 +10,11 @@ spec:
     kind: OCIRepository
     name: app-template
   values:
+    defaultPodOptions:
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
     controllers:
       bookboss:
         strategy: Recreate

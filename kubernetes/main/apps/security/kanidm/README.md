@@ -46,9 +46,10 @@ kanidm system oauth2 show-basic-secret bookboss-dev
 
 kanidm group create 'bookboss_users'
 kanidm group add-members bookboss_users scotte
+
 kanidm system oauth2 create bookboss 'bookboss.zinn.ca' https://bookboss.zinn.ca
 kanidm system oauth2 set-landing-url bookboss 'https://bookboss.zinn.ca/auth/oidc/callback'
-kanidm system oauth2 update-scope-map bookboss-dev bookboss_dev_users email openid
+kanidm system oauth2 update-scope-map bookboss bookboss_users email openid
 kanidm system oauth2 enable-pkce bookboss
 kanidm system oauth2 get bookboss
 
