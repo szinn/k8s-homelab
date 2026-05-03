@@ -15,9 +15,9 @@ resources:
   - bichon/install.yaml
   - changedetection/install.yaml
   - dashy/install.yaml
+  - freshrss/install.yaml
   - homepage/install.yaml
   - issueboss/install.yaml
   - it-tools/install.yaml
   - pdf-tool/install.yaml
-  # - shlink/install.yaml
   - wikijs/install.yaml
