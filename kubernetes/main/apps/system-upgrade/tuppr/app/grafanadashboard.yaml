@@ -1,0 +1,17 @@
+---
+# yaml-language-server: $schema=https://schemas.zinn.ca/grafana.integreatly.org/grafanadashboard_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: tuppr
+spec:
+  allowCrossNamespaceImport: true
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
+  datasources:
+    - datasourceName: prometheus
+      inputName: datasource
+  configMapRef:
+    name: tuppr-dashboard
+    key: tuppr.json
