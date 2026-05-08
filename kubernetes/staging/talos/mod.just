@@ -1,4 +1,7 @@
-set quiet := true
+set lazy
+set positional-arguments
+set quiet
+set script-interpreter := ['bash', '-euo', 'pipefail']
 set shell := ['bash', '-euo', 'pipefail', '-c']
 
 kubernetes_dir := justfile_dir()
@@ -8,10 +11,12 @@ secret_id := 'cluster-staging'
 controller := `talosctl config info --output json | jq -e '.endpoints[0]'`
 
 [private]
+[script]
 default:
   just -l talos
 
 [doc('Generate Talos secrets and update 1Password')]
+[script]
 generate-secrets:
   talosctl gen secrets --force -o '{{ secrets_file }}'
   op item edit --vault Kubernetes {{ secret_id }} "MACHINE_TOKEN[text]=$(cat {{ secrets_file }} | yq .trustdinfo.token)" > /dev/null
@@ -31,6 +36,7 @@ generate-secrets:
   -rm {{ secrets_file }}
 
 [doc('Generate talosconfig for the cluster')]
+[script]
 generate-talosconfig:
   op read op://Kubernetes/cluster-staging/MACHINE_CA_CRT | base64 -d > ca.crt
   op read op://Kubernetes/cluster-staging/MACHINE_CA_KEY | base64 -d > ca.key
@@ -45,73 +51,82 @@ generate-talosconfig:
   op item edit --vault Kubernetes {{ secret_id }} "talosconfig[text]=$(cat $TALOSCONFIG)" > /dev/null
 
 [doc('Bootstrap the cluster for Kubernetes')]
+[script]
 bootstrap:
-  until op=$(talosctl -n "{{ controller }}" bootstrap 2>&1 || true) && [[ "$op" == *"AlreadyExists"* ]]; do \
-    just log info "Kubernetes bootstrap in progress. Retrying in 5 seconds..." "stage" "$0"; \
-    sleep 5; \
+  until op=$(talosctl -n "{{ controller }}" bootstrap 2>&1 || true) && [[ "$op" == *"AlreadyExists"* ]]; do
+    just log info "Kubernetes bootstrap in progress. Retrying in 5 seconds..." "stage" "$0"
+    sleep 5
   done
 
 [doc('Fetch kubeconfig')]
+[script]
 fetch-kubeconfig lb="cilium":
   -rm $KUBECONFIG
-  if ! talosctl kubeconfig -n "{{ controller }}" -f --force-context-name staging $KUBECONFIG; then \
-    just log fatal "Failed to fetch kubeconfig"; \
+  if ! talosctl kubeconfig -n "{{ controller }}" -f --force-context-name staging $KUBECONFIG; then
+    just log fatal "Failed to fetch kubeconfig"
   fi
   -kubectl config rename-context admin@staging staging
-  if [[ "{{ lb }}" != "cilium" ]]; then \
-    if ! kubectl config set-cluster staging --server "https://{{ controller }}:6443"; then \
-      just log fatal "Failed to set kubectl cluster server address"; \
-    fi; \
+  if [[ "{{ lb }}" != "cilium" ]]; then
+    if ! kubectl config set-cluster staging --server "https://{{ controller }}:6443"; then
+      just log fatal "Failed to set kubectl cluster server address"
+    fi
   fi
   op item edit --vault Kubernetes {{ secret_id }} "kubeconfig[text]=$(cat $KUBECONFIG)" > /dev/null
 
 [doc('Apply Talos config to a node')]
+[script]
 apply-node node *args:
   just talos render-config "{{ node }}" | talosctl -n "{{ node }}" apply-config -f /dev/stdin {{ args }}
 
 [doc('Apply Talos config to all nodes in the cluster')]
+[script]
 apply-cluster *args:
-  kubectl get nodes --no-headers | while read -r node _; do \
-    just log info "Applying Talos config to node ${node}"; \
-    just talos apply-node ${node} {{ args }}; \
+  kubectl get nodes --no-headers | while read -r node _; do
+    just log info "Applying Talos config to node ${node}"
+    just talos apply-node ${node} {{ args }}
   done
 
 [doc('Generate schematic ID from Talos schematic')]
+[script]
 gen-schematic-id:
   curl -sX POST --data-binary "@{{ talos_dir }}/schematic.yaml" "https://factory.talos.dev/schematics" | jq -r '.id'
 
 [doc('Render Talos config for a node')]
+[script]
 render-config node:
-  export IS_CONTROLPLANE="$(just talos machine-controller {{ node }})"; \
-  talosctl machineconfig patch <(just template "{{ talos_dir }}/machineconfig.yaml.j2") \
-    -p @<(just template "{{ talos_dir }}/nodes/{{ node }}.yaml.j2")
+  export IS_CONTROLPLANE="$(just talos machine-controller {{ node }})"
+  talosctl machineconfig patch <(just template "{{ talos_dir }}/machineconfig.yaml.j2") -p @<(just template "{{ talos_dir }}/nodes/{{ node }}.yaml.j2")
 
 [doc('Reboot a node')]
+[script]
 reboot-node node:
-  gum confirm "Reboot node {{ node }}?" && \
-    talosctl -n {{ node }} reboot -m powercycle || exit 0
+  gum confirm "Reboot node {{ node }}?" && talosctl -n {{ node }} reboot -m powercycle || exit 0
 
 [doc('Reset a node')]
+[script]
 reset-node node mode="reboot":
-  gum confirm "Reset node {{ node }}?" && \
-    talosctl -n "{{ node }}" reset --graceful=false {{ if mode == "reboot" { "--reboot" } else { "" } }} || exit 0
+  gum confirm "Reset node {{ node }}?" && talosctl -n "{{ node }}" reset --graceful=false {{ if mode == "reboot" { "--reboot" } else { "" } }} || exit 0
 
 [doc('Reset all nodes in the cluster')]
+[script]
 reset-cluster mode="reboot":
-  kubectl get nodes --no-headers | while read -r node _; do \
-    just log info "Resetting Talos node ${node}";\
-    just talos reset-node ${node} {{ mode }};\
+  kubectl get nodes --no-headers | while read -r node _; do
+    just log info "Resetting Talos node ${node}
+    just talos reset-node ${node} {{ mode }}
   done
 
 [doc('Upgrade Kubernetes version on the cluster')]
+[script]
 upgrade-k8s version:
   talosctl -n "{{ controller }}" upgrade-k8s --to {{ version }}
 
 [doc('Upgrade Talos version on a node')]
+[script]
 upgrade-node node:
   talosctl -n "{{ node }}" upgrade -i "$(just talos machine-image {{ node }})" -m powercycle --timeout=10m
 
 [doc('Download Talos machine image')]
+[script]
 download-image version schematic:
   gum spin --title "Downloading Talos {{ version }} ..." -- \
   curl -sfL --remove-on-error --retry 5 --retry-delay 5 --retry-all-errors \
@@ -120,10 +135,12 @@ download-image version schematic:
   just log info "Downloaded Talos" version "{{ version }}" schematic "{{ schematic }}"
 
 [private]
+[script]
 machine-controller node:
   just template "{{ talos_dir }}/nodes/{{ node }}.yaml.j2" | yq -e 'select(.machine) | (.machine.type == "controlplane") // ""'
 
 [doc('Get the machine image for a given node')]
 [private]
+[script]
 machine-image node:
   talosctl --nodes {{ node }} get machineconfig -o yaml | yq -e 'select(.metadata.id == "v1alpha1") | .spec' | yq -e 'select(.machine) | .machine.install.image'

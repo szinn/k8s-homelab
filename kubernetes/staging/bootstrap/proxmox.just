@@ -1,4 +1,7 @@
-set quiet := true
+set lazy
+set positional-arguments
+set quiet
+set script-interpreter := ['bash', '-euo', 'pipefail']
 set shell := ['bash', '-euo', 'pipefail', '-c']
 
 vmids := '1 2 3'
@@ -6,23 +9,27 @@ vmips := '10.12.0.16 10.12.0.17 10.12.0.18'
 vmid-prefix := '20'
 
 [private]
+[script]
 default:
   just -l proxmox
 
 [doc('Reset staging cluster')]
+[script]
 reset:
   just proxmox destroy
   just proxmox create
   just proxmox wait-for-startup
 
 [doc('Destroy staging cluster')]
+[script]
 destroy:
   just log info "Destroying staging cluster..."
-  for vmid in {{vmids}}; do \
-    just proxmox destroy-vm "$vmid"; \
+  for vmid in {{vmids}}; do
+    just proxmox destroy-vm "$vmid"
   done
 
 [doc('Create staging cluster')]
+[script]
 create:
   just log info "Creating staging cluster VMs..."
   just proxmox create-vm 1 'DE:CA:FF:10:12:10'
@@ -30,39 +37,45 @@ create:
   just proxmox create-vm 3 'DE:CA:FF:10:12:12'
 
 [doc('Wait for staging cluster machines to start')]
+[script]
 wait-for-startup:
   just log info "Waiting for staging cluster machines to start..."
-  for vmip in {{vmips}}; do \
-    just proxmox wait-for-startup-vm "$vmip"; \
+  for vmip in {{vmips}}; do
+    just proxmox wait-for-startup-vm "$vmip"
   done
 
 [doc('Start staging cluster')]
+[script]
 start:
   just log info "Starting staging cluster..."
-  for vmid in {{vmids}}; do \
-    just proxmox start-vm "$vmid"; \
+  for vmid in {{vmids}}; do
+    just proxmox start-vm "$vmid"
   done
 
 [doc('Stop staging cluster')]
+[script]
 stop:
   just log info "Stopping staging cluster..."
-  for vmid in {{vmids}}; do \
-    just proxmox stop-vm "$vmid"; \
+  for vmid in {{vmids}}; do
+    just proxmox stop-vm "$vmid"
   done
 
 [doc('Unmount CD-ROM')]
+[script]
 unmount-cdrom:
   just log info "Unmounting staging cluster CD-ROMs..."
-  for vmid in {{vmids}}; do \
-    just proxmox unmount-cdrom-vm "$vmid"; \
+  for vmid in {{vmids}}; do
+    just proxmox unmount-cdrom-vm "$vmid"
   done
 
 [private]
+[script]
 destroy-vm vmid:
   just proxmox stop-vm {{vmid}}
   -ssh ares -- qm destroy {{vmid-prefix}}{{vmid}}
 
 [private]
+[script]
 create-vm vmid mac:
   ssh ares -- qm create {{vmid-prefix}}{{vmid}} \
     --name stage-{{vmid}} \
@@ -83,17 +96,21 @@ create-vm vmid mac:
 
 
 [private]
+[script]
 wait-for-startup-vm ip:
   ping -o -q {{ip}}
 
 [private]
+[script]
 stop-vm vmid:
   -ssh ares -- qm stop {{vmid-prefix}}{{vmid}}
 
 [private]
+[script]
 start-vm vmid:
   -ssh ares -- qm start {{vmid-prefix}}{{vmid}}
 
 [private]
+[script]
 unmount-cdrom-vm vmid:
   -ssh ares -- qm set {{vmid-prefix}}{{vmid}} -ide0 media=cdrom,file=none
