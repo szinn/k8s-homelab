@@ -23,7 +23,7 @@ spec:
           app:
             image:
               repository: ghcr.io/unpoller/unpoller
-              tag: v3.1.1@sha256:7df3080cd8895055327d5776497015645d14eab7ed1a6558073f97072cbc6411
+              tag: v3.1.2@sha256:d63bd939ea46cbf76f3a5d21c668426202a389ebaa89e200c4906712f9b8dd22
             env:
               TZ: "America/Toronto"
               UP_UNIFI_DEFAULT_ROLE: "homelab-controller"
