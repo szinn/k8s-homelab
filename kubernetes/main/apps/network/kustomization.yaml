@@ -16,3 +16,4 @@ resources:
   - envoy-gateway/install.yaml
   - external-dns/install.yaml
   - multus/install.yaml
+  - external-services
