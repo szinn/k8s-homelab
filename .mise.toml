@@ -1,6 +1,6 @@
 [tools]
 "aqua:helm/helm" = "3.20.2"
-"aqua:helmfile/helmfile" = "1.5.0"
+"aqua:helmfile/helmfile" = "1.5.1"
 "pipx:flux-local" = "latest"
 "kubeconform" = "latest"
 "npm:renovate" = "latest"
