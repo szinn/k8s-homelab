@@ -27,7 +27,7 @@ spec:
       bbr: true
 
     bpf:
-      # datapathMode: netkit
+      datapathMode: netkit
       masquerade: true
       preallocateMaps: true
 
