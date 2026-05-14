@@ -31,8 +31,6 @@ spec:
       masquerade: true
       preallocateMaps: true
 
-    bpfClockProbe: true
-
     bgpControlPlane:
       enabled: true
 
@@ -95,16 +93,9 @@ spec:
     kubeProxyReplacement: true
     kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
 
-    l2announcements:
-      enabled: false
-
     loadBalancer:
-      acceleration: best-effort
       algorithm: maglev
       mode: dsr
-
-    localRedirectPolicies:
-      enabled: true
 
     operator:
       enabled: true
