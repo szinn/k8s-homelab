@@ -16,16 +16,16 @@ spec:
           reloader.stakater.com/auto: "true"
         pod:
           securityContext:
-            fsGroup: 2000
+            fsGroup: 4000
             fsGroupChangePolicy: OnRootMismatch
-            runAsGroup: 2000
+            runAsGroup: 4000
             runAsNonRoot: true
-            runAsUser: 2000
+            runAsUser: 4000
         containers:
           app:
             image:
               repository: docker.io/rustmailer/bichon
-              tag: 0.3.7@sha256:d88d4807689dcc22358d341b5ce66cb0783e74946857a32362c021a2e8154430
+              tag: 1.0.0
             env:
               BICHON_HTTP_PORT: &httpPort 15630
               BICHON_LOG_LEVEL: info
@@ -34,6 +34,10 @@ spec:
             envFrom:
               - secretRef:
                   name: bichon-secret
+            command:
+              - /usr/bin/bash
+              - -c
+              - sleep 2000000
             probes:
               liveness: &probes
                 enabled: true
