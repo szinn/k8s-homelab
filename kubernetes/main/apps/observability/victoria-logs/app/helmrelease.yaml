@@ -40,3 +40,7 @@ spec:
         enabled: true
     dashboards:
       enabled: true
+      grafanaOperator:
+        enabled: true
+        spec:
+          folderRef: victoria-logs
