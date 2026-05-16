@@ -11,9 +11,9 @@ spec:
     name: app-template
   values:
     controllers:
-      main:
+      pdf-tool:
         containers:
-          main:
+          pdf-tool:
             image:
               repository: ghcr.io/stirling-tools/s-pdf
               tag: 2.10.1@sha256:950c596db26e0764f642def2fd4f9ee904ff2ac16d83fe621ff731b771d9b385
@@ -22,7 +22,7 @@ spec:
               - secretRef:
                   name: pdf-tool-secret
     service:
-      main:
+      pdf-tool:
         ports:
           http:
             port: 8080

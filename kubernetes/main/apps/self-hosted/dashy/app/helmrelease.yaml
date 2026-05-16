@@ -11,11 +11,11 @@ spec:
     name: app-template
   values:
     controllers:
-      main:
+      dashy:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          main:
+          dashy:
             image:
               repository: ghcr.io/lissy93/dashy
               tag: 4.0.9@sha256:d7b6848b12e4a9c7f4f865d810e2563e44037915ca2e1ee10ef866b20844b494
@@ -43,7 +43,7 @@ spec:
                 "/config"
               ]
     service:
-      main:
+      dashy:
         ports:
           http:
             port: &mainPort 8080
@@ -52,14 +52,14 @@ spec:
           http:
             port: &codePort 8081
     route:
-      main:
+      dashy:
         hostnames: ["dashy.zinn.ca"]
         parentRefs:
           - name: envoy-internal
             namespace: network
         rules:
           - backendRefs:
-              - identifier: main
+              - identifier: dashy
                 port: *mainPort
       code-server:
         hostnames: ["dashy-code.zinn.ca"]
@@ -75,8 +75,8 @@ spec:
         enabled: true
         existingClaim: "${VOLSYNC_CLAIM}"
         advancedMounts:
-          main:
-            main:
+          dashy:
+            dashy:
               - path: /app/user-data
             code-server:
               - path: /config
@@ -85,21 +85,21 @@ spec:
         type: configMap
         name: dashy-icons
         advancedMounts:
-          main:
-            main:
+          dashy:
+            dashy:
               - path: /app/user-data/item-icons
                 readOnly: true
       temp:
         enabled: true
         type: emptyDir
         advancedMounts:
-          main:
+          dashy:
             code-server:
               - path: /tmp/.vscode
       backup:
         existingClaim: self-hosted-backups
         advancedMounts:
-          main:
-            main:
+          dashy:
+            dashy:
               - path: /backups
                 subPath: dashy

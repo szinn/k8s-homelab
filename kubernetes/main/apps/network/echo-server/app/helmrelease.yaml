@@ -11,11 +11,11 @@ spec:
     name: app-template
   values:
     controllers:
-      main:
+      echo-server:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          main:
+          echo-server:
             image:
               repository: ghcr.io/mendhak/http-https-echo
               tag: 40@sha256:d072446da821a767d05dc19fa5ab6a27b1150bfb5c6ecfaecf3a2e5f9812794c
@@ -41,7 +41,7 @@ spec:
                 memory: 64M
 
     service:
-      main:
+      echo-server:
         ports:
           http:
             port: *port
@@ -57,5 +57,5 @@ spec:
             namespace: network
         rules:
           - backendRefs:
-              - identifier: main
+              - identifier: echo-server
                 port: *port

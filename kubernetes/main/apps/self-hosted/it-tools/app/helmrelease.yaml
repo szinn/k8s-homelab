@@ -27,7 +27,7 @@ spec:
             runAsUser: 2000
 
         containers:
-          app:
+          it-tools:
             image:
               repository: ghcr.io/sharevb/it-tools
               tag: 2026.1.4@sha256:6d335b5d6f7d28a540ef36c0ab2e20cbf7df2c0d8b7adb16585ccd3ebcfeed59
@@ -45,7 +45,7 @@ spec:
               readOnlyRootFilesystem: true
 
     service:
-      app:
+      it-tools:
         ports:
           http:
             port: 8080
@@ -58,7 +58,7 @@ spec:
             subPath: tmp
 
     route:
-      app:
+      it-tools:
         hostnames: ["{{ .Release.Name }}.zinn.ca"]
         parentRefs:
           - name: envoy-internal

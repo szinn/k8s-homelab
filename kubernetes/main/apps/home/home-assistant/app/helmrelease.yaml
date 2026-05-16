@@ -16,7 +16,7 @@ spec:
       namespace: system
   values:
     controllers:
-      main:
+      home-assistant:
         annotations:
           reloader.stakater.com/auto: "true"
         pod:
@@ -35,7 +35,7 @@ spec:
             fsGroup: 65533
             fsGroupChangePolicy: OnRootMismatch
         containers:
-          main:
+          home-assistant:
             image:
               repository: ghcr.io/home-operations/home-assistant
               tag: 2026.5.1@sha256:516ae5c85089b3f2960cf2a21dc3c105356969499964fabf0b0358e5f3a7e0a2
@@ -76,7 +76,7 @@ spec:
             env:
               TZ: "America/Toronto"
     service:
-      main:
+      home-assistant:
         type: ClusterIP
         ports:
           http:
@@ -85,7 +85,7 @@ spec:
           code-server:
             port: &codePort 8080
     serviceMonitor:
-      main:
+      home-assistant:
         serviceName: home-assistant
         enabled: true
         endpoints:
@@ -106,7 +106,7 @@ spec:
             namespace: network
         rules:
           - backendRefs:
-              - identifier: main
+              - identifier: home-assistant
                 port: *appPort
       external-app:
         annotations:
@@ -118,7 +118,7 @@ spec:
             namespace: network
         rules:
           - backendRefs:
-              - identifier: main
+              - identifier: home-assistant
                 port: *appPort
       code-server:
         hostnames: ["ha-code.zinn.ca"]
@@ -127,23 +127,23 @@ spec:
             namespace: network
         rules:
           - backendRefs:
-              - identifier: main
+              - identifier: home-assistant
                 port: *codePort
     persistence:
       config:
         enabled: true
         existingClaim: "${VOLSYNC_CLAIM}"
         advancedMounts:
-          main:
-            main:
+          home-assistant:
+            home-assistant:
               - path: /config
             code-server:
               - path: /config
       tmpfs:
         type: emptyDir
         advancedMounts:
-          main:
-            main:
+          home-assistant:
+            home-assistant:
               - path: /tmp
                 subPath: hass-tmp
             code-server:

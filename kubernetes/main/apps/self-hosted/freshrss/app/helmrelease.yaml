@@ -17,7 +17,7 @@ spec:
         pod:
           hostUsers: false
         containers:
-          app:
+          freshrss:
             image:
               repository: freshrss/freshrss
               tag: 1.29.0-alpine@sha256:6e60e5ab638dc2c3b310f7c8d85c2e8fbf8dd133c9711af6bc9ba4fcdffac086
@@ -43,7 +43,7 @@ spec:
         existingClaim: "${VOLSYNC_CLAIM}"
         advancedMounts:
           freshrss:
-            app:
+            freshrss:
               - path: /var/www/FreshRSS/data
                 subPath: data
                 readOnly: false
@@ -54,17 +54,17 @@ spec:
         type: emptyDir
         advancedMounts:
           freshrss:
-            app:
+            freshrss:
               - path: /var/www/FreshRSS/data/cache
                 subPath: cache
     route:
-      app:
+      freshrss:
         hostnames: ["{{ .Release.Name }}.zinn.ca"]
         parentRefs:
           - name: envoy-internal
             namespace: network
     service:
-      app:
+      freshrss:
         ports:
           http:
             port: *port

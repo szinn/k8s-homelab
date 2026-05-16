@@ -11,11 +11,11 @@ spec:
     name: app-template
   values:
     controllers:
-      main:
+      plex:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          main:
+          plex:
             image:
               repository: ghcr.io/home-operations/plex
               tag: 1.43.1.10611@sha256:a9c3723cb31cc9621df27cf5801184c290293adf1df2bfaea4b8b6fc01dbfd96
@@ -69,7 +69,7 @@ spec:
         fsGroup: 2000
         fsGroupChangePolicy: OnRootMismatch
     service:
-      main:
+      plex:
         type: LoadBalancer
         annotations:
           lbipam.cilium.io/ips: 10.11.1.14
@@ -101,8 +101,8 @@ spec:
         enabled: true
         existingClaim: "${VOLSYNC_CLAIM}"
         advancedMounts:
-          main:
-            main:
+          plex:
+            plex:
               - path: /config
       media:
         type: nfs
@@ -123,12 +123,12 @@ spec:
       logs:
         type: emptyDir
         advancedMounts:
-          main:
-            main:
+          plex:
+            plex:
               - path: /config/Library/Application Support/Plex Media Server/Logs
       plex-cache:
         existingClaim: plex-cache
         advancedMounts:
-          main:
-            main:
+          plex:
+            plex:
               - path: /config/Library/Application Support/Plex Media Server/Cache

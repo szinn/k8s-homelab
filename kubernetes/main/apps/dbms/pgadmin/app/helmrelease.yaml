@@ -11,7 +11,7 @@ spec:
     name: app-template
   values:
     controllers:
-      main:
+      pgadmin:
         strategy: Recreate
         annotations:
           reloader.stakater.com/auto: "true"
@@ -22,7 +22,7 @@ spec:
             fsGroup: 5050
             fsGroupChangePolicy: OnRootMismatch
         containers:
-          main:
+          pgadmin:
             image:
               repository: docker.io/dpage/pgadmin4
               tag: "9.15@sha256:cefc4cc6b7d9d71a9e81e76fb9d7e14038ab5661b539a190eea1b63fa612589a"
@@ -39,13 +39,13 @@ spec:
                 memory: 512M
 
     service:
-      main:
+      pgadmin:
         ports:
           http:
             port: 80
 
     route:
-      main:
+      pgadmin:
         hostnames: ["{{ .Release.Name }}.zinn.ca"]
         parentRefs:
           - name: envoy-internal
@@ -56,8 +56,8 @@ spec:
         enabled: true
         existingClaim: "${VOLSYNC_CLAIM}"
         advancedMounts:
-          main:
-            main:
+          pgadmin:
+            pgadmin:
               - path: /var/lib/pgadmin
       server-json:
         enabled: true

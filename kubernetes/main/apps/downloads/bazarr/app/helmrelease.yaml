@@ -18,7 +18,7 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          app:
+          bazarr:
             image:
               repository: ghcr.io/home-operations/bazarr
               tag: 1.5.6@sha256:79fc37491f55c7e24427bcd669bce3df2d7415ca432a47ce9d53cc5988af8411
@@ -72,7 +72,7 @@ spec:
         fsGroup: 2000
         fsGroupChangePolicy: OnRootMismatch
     service:
-      app:
+      bazarr:
         ports:
           http:
             port: *port

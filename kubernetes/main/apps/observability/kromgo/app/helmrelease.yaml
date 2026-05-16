@@ -11,13 +11,13 @@ spec:
     name: app-template
   values:
     controllers:
-      main:
+      kromgo:
         replicas: 1
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          main:
+          kromgo:
             image:
               repository: ghcr.io/kashalls/kromgo
               tag: v0.9.1@sha256:1624b1a10009978243d7d54e83269cbf9e3a4ec7f14c2548bdd11e63db5c4ad7
@@ -55,7 +55,7 @@ spec:
                 matchLabels:
                   app.kubernetes.io/name: *app
     service:
-      main:
+      kromgo:
         ports:
           http:
             port: *port

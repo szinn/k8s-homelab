@@ -28,7 +28,7 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          app:
+          cloudflared:
             image:
               repository: docker.io/cloudflare/cloudflared
               tag: 2026.5.0@sha256:59bab8d3aceec09bf6bdb07d6beca0225ca5cd7ab79436a87ea97978fe1dc4f9
@@ -70,12 +70,12 @@ spec:
         runAsUser: 1000
         runAsGroup: 1000
     service:
-      app:
+      cloudflared:
         ports:
           http:
             port: *port
     serviceMonitor:
-      app:
+      cloudflared:
         serviceName: cloudflare-tunnel
         endpoints:
           - port: http

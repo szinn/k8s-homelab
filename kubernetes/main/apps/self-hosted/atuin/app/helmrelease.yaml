@@ -16,7 +16,7 @@ spec:
     controllers:
       atuin:
         containers:
-          app:
+          atuin:
             image:
               repository: ghcr.io/atuinsh/atuin
               tag: 18.16.1@sha256:9d4d79507b51be6d292b218f5cc791d79ca0a72f51ab48f786b091bd6eafb39f
@@ -58,7 +58,7 @@ spec:
         fsGroup: 2000
         fsGroupChangePolicy: OnRootMismatch
     service:
-      app:
+      atuin:
         ports:
           http:
             port: *port

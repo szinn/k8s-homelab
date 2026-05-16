@@ -18,11 +18,11 @@ spec:
         fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
     controllers:
-      main:
+      wikijs:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          main:
+          wikijs:
             image:
               repository: ghcr.io/requarks/wiki
               pullPolicy: IfNotPresent
@@ -37,7 +37,7 @@ spec:
               - secretRef:
                   name: wikijs-secret
     service:
-      main:
+      wikijs:
         ports:
           http:
             port: 3000

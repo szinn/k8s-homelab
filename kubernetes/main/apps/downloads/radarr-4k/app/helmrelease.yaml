@@ -36,7 +36,7 @@ spec:
                             - radarr-4k
                     topologyKey: kubernetes.io/hostname
         containers:
-          app:
+          radarr-4k:
             image:
               repository: ghcr.io/home-operations/radarr
               tag: 6.2.0.10390@sha256:be596a2f896fdf15077af027f44500f73e1f6fb7b450a6494b37dd25b7cc5927
@@ -71,7 +71,7 @@ spec:
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
     service:
-      app:
+      radarr-4k:
         ports:
           http:
             port: 7878

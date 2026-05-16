@@ -152,14 +152,14 @@ spec:
                 subPath: Corefile
                 readOnly: true
     route:
-      app:
+      shelfmark:
         hostnames:
           - "{{ .Release.Name }}.zinn.ca"
         parentRefs:
           - name: envoy-internal
             namespace: network
     service:
-      app:
+      shelfmark:
         ports:
           http:
             port: *port

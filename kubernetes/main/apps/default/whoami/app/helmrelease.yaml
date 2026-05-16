@@ -11,10 +11,10 @@ spec:
     name: app-template
   values:
     controllers:
-      main:
+      whoami:
         replicas: 1
         containers:
-          main:
+          whoami:
             image:
               repository: ghcr.io/traefik/whoami
               tag: v1.11.0@sha256:200689790a0a0ea48ca45992e0450bc26ccab5307375b41c84dfc4f2475937ab
@@ -22,7 +22,7 @@ spec:
               WHOAMI_PORT_NUMBER: &port 80
 
     service:
-      main:
+      whoami:
         ports:
           http:
             port: *port

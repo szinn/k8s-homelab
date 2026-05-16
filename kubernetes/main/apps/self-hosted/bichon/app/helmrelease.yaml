@@ -22,7 +22,7 @@ spec:
             runAsNonRoot: true
             runAsUser: 4000
         containers:
-          app:
+          bichon:
             image:
               repository: docker.io/rustmailer/bichon
               tag: 1.0.0@sha256:6d4432603ef40d9753341ca356eebd429d01b848ccffa1b6edd3a65f04af0c03
@@ -63,7 +63,7 @@ spec:
                 drop:
                   - ALL
     service:
-      app:
+      bichon:
         ports:
           http:
             port: *httpPort
@@ -73,7 +73,7 @@ spec:
         path: /mnt/atlas/k8s/main/bichon
         server: ragnar.zinn.tech
     route:
-      app:
+      bichon:
         hostnames:
           - bichon.zinn.ca
         parentRefs:

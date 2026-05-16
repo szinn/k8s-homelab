@@ -35,7 +35,7 @@ spec:
                             - sabnzbd
                     topologyKey: kubernetes.io/hostname
         containers:
-          app:
+          sonarr:
             image:
               repository: ghcr.io/home-operations/sonarr
               tag: 4.0.17.2967@sha256:4ff5667a371e08b098858fa2457a99a5fef5f6a32640eb8567efe979d13ac9fc
@@ -70,7 +70,7 @@ spec:
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
     service:
-      app:
+      sonarr:
         ports:
           http:
             port: *port

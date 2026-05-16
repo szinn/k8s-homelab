@@ -11,7 +11,7 @@ spec:
     name: app-template
   values:
     controllers:
-      main:
+      postgres-backup:
         type: cronjob
         cronjob:
           schedule: "@daily"
@@ -25,7 +25,7 @@ spec:
             fsGroupChangePolicy: OnRootMismatch
           enableServiceLinks: false
         containers:
-          main:
+          postgres-backup:
             image:
               repository: docker.io/prodrigestivill/postgres-backup-local
               tag: 18@sha256:f70742ebe42b2277689b028d1fd15aa80f77cffa01da163cc9f85a6ff1866e7f

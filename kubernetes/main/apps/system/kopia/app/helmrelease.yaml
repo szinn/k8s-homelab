@@ -15,7 +15,7 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          app:
+          kopia:
             image:
               repository: ghcr.io/home-operations/kopia
               tag: 0.23.0@sha256:76865b421548b1d7bb26a8268f0f0bc828be4eec3f8d8b9c8ece991c99878f94
@@ -59,12 +59,12 @@ spec:
         fsGroup: 2000
         fsGroupChangePolicy: OnRootMismatch
     service:
-      app:
+      kopia:
         ports:
           http:
             port: *port
     route:
-      app:
+      kopia:
         hostnames:
           - "{{ .Release.Name }}.zinn.ca"
         parentRefs:
@@ -103,7 +103,7 @@ spec:
         type: emptyDir
         advancedMounts:
           kopia:
-            app:
+            kopia:
               - path: /config/cache
                 subPath: cache
               - path: /config/logs

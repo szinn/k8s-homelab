@@ -15,7 +15,7 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          app:
+          seerr:
             image:
               repository: ghcr.io/seerr-team/seerr
               tag: v3.2.0@sha256:c4cbd5121236ac2f70a843a0b920b68a27976be57917555f1c45b08a1e6b2aad
@@ -56,12 +56,12 @@ spec:
         fsGroup: 2000
         fsGroupChangePolicy: OnRootMismatch
     service:
-      app:
+      seerr:
         ports:
           http:
             port: *port
     route:
-      app:
+      seerr:
         annotations:
           gatus.home-operations.com/endpoint: |-
             conditions: ["[STATUS] == 200"]

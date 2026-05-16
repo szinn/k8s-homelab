@@ -23,7 +23,7 @@ spec:
             runAsNonRoot: true
             runAsUser: 2000
         containers:
-          app:
+          kanidm:
             image:
               repository: docker.io/kanidm/server
               tag: 1.10.2@sha256:5d671b5ecb47bc0b5f37d3306f9e7b9b387998bdf5aa451d76a4e764cc05f0fb
@@ -65,14 +65,14 @@ spec:
           - path: /var/run
             subPath: var-run
     route:
-      app:
+      kanidm:
         hostnames:
           - auth.zinn.ca
         parentRefs:
           - name: envoy-internal
             namespace: network
     service:
-      app:
+      kanidm:
         ports:
           http:
             port: 8443

@@ -20,7 +20,7 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          app:
+          unpoller:
             image:
               repository: ghcr.io/unpoller/unpoller
               tag: v3.2.0@sha256:bf7bdcc59fcdaa4699687007aa3ec24ddb3c9d9521f392d8c7aa2bea1bdb781a
@@ -51,12 +51,12 @@ spec:
               limits:
                 memory: 128Mi
     service:
-      app:
+      unpoller:
         ports:
           http:
             port: 9130
     serviceMonitor:
-      app:
+      unpoller:
         serviceName: unifi-poller
         enabled: true
         endpoints:

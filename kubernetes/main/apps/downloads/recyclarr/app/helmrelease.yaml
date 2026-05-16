@@ -18,7 +18,7 @@ spec:
       namespace: downloads
   values:
     controllers:
-      main:
+      recyclarr:
         annotations:
           reloader.stakater.com/auto: "true"
         pod:
@@ -29,7 +29,7 @@ spec:
             fsGroup: 2000
             fsGroupChangePolicy: OnRootMismatch
         containers:
-          main:
+          recyclarr:
             image:
               repository: ghcr.io/recyclarr/recyclarr
               tag: 8.6.0@sha256:3c38ceeb54438dd8327e4e65c9b48ba601a6d20fff833342d93c9b0bc4b1930b
