@@ -1,0 +1,20 @@
+---
+# yaml-language-server: $schema=https://schemas.zinn.ca/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: k8tz
+spec:
+  targetNamespace: system
+  path: ./kubernetes/main/apps/system/k8tz/app
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  dependsOn:
+    - name: cert-manager
+      namespace: cert-manager
+  interval: 1h
+  timeout: 5m
+  prune: true
+  wait: false

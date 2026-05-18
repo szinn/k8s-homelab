@@ -1,0 +1,9 @@
+---
+# Create a selfsigned Issuer, in order to create a root CA certificate for
+# signing webhook serving certificates
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: k8tz-webhook-issuer
+spec:
+  selfSigned: {}

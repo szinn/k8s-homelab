@@ -13,6 +13,7 @@ resources:
   - descheduler/install.yaml
   - fstrim/install.yaml
   - intel-gpu-resource-driver/install.yaml
+  - k8tz/install.yaml
   - kopia/install.yaml
   - node-feature-discovery/install.yaml
   - openebs/install.yaml
