@@ -7,7 +7,7 @@ metadata:
   labels:
     app.kubernetes.io/name: postgres-db
 spec:
-  imageName: ghcr.io/cloudnative-pg/postgresql:18.4@sha256:70516d5620512874419f653939ea6c672a354172a10ffc6c90c073334b1423ec
+  imageName: ghcr.io/cloudnative-pg/postgresql:18.4@sha256:7a9a68272eb5f192c5826fdd72b1ebc81c185fea21678993c5583610c7e59739
   instances: 3
   primaryUpdateStrategy: unsupervised
 
