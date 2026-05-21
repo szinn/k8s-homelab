@@ -20,7 +20,7 @@ spec:
           freshrss:
             image:
               repository: freshrss/freshrss
-              tag: 1.29.0-alpine@sha256:6e60e5ab638dc2c3b310f7c8d85c2e8fbf8dd133c9711af6bc9ba4fcdffac086
+              tag: 1.29.1-alpine@sha256:e1c956e586ae20ba7f9a0c6582043172ee084af43f17ff48b8de22ade026b6c4
             env:
               CRON_MIN: "*"
               DOMAIN: freshrss.zinn.ca
