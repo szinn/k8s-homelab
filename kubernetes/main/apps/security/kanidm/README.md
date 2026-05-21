@@ -23,7 +23,6 @@ kanidm system oauth2 get grafana
 # Need to copy this secret to 1Password for Grafana
 kanidm system oauth2 show-basic-secret grafana
 
-
 kanidm system oauth2 update-claim-map-join 'grafana' 'grafana_role' array
 kanidm system oauth2 update-claim-map 'grafana' 'grafana_role' 'grafana_superadmins' 'GrafanaAdmin'
 kanidm system oauth2 update-claim-map 'grafana' 'grafana_role' 'grafana_admins' 'Admin'
@@ -55,4 +54,17 @@ kanidm system oauth2 get bookboss
 
 # Need to copy this secret to 1Password for BookBoss
 kanidm system oauth2 show-basic-secret bookboss
+
+kanidm group create 'mailkeep_dev_users'
+kanidm group add-members mailkeep_dev_users scotte
+
+kanidm system oauth2 create mailkeep-dev 'odin.zinn.tech' http://odin.zinn.tech:8083
+kanidm system oauth2 set-landing-url mailkeep-dev 'http://odin:8083/auth/oidc/callback'
+kanidm system oauth2 update-scope-map mailkeep-dev mailkeep_dev_users email openid
+kanidm system oauth2 enable-pkce mailkeep-dev
+kanidm system oauth2 get mailkeep-dev
+
+# Need to copy this secret to dev environment
+kanidm system oauth2 show-basic-secret mailkeep-dev
+
 ```
