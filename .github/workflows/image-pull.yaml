@@ -4,13 +4,11 @@ name: Image Pull
 
 on:
   pull_request:
-    branches: ["main"]
-    paths:
-      - "kubernetes/main/**"
-      - "kubernetes/repositories/**"
+    branches:
+      - main
 
 concurrency:
-  group: ${{ github.ref }}-${{ github.workflow }}
+  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
   cancel-in-progress: true
 
 permissions:
@@ -27,99 +25,70 @@ jobs:
         id: changed-files
         uses: bjw-s-labs/action-changed-files@a9a36fb08ce06db9b02fbd8026cc2c0945eb9841 # v0.6.0
         with:
-          patterns: kubernetes/main/**/*
+          patterns: kubernetes/**/*
 
   extract:
     if: ${{ needs.filter.outputs.changed-files != '[]' }}
-    name: Image Pull - Extract Images
     needs: filter
+    name: Image Pull - Extract Images
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        branch: ["default", "pull"]
-      fail-fast: false
     outputs:
-      default: ${{ steps.extract.outputs.default }}
-      pull: ${{ steps.extract.outputs.pull }}
+      images: ${{ steps.extract.outputs.images }}
     steps:
-      - name: Checkout
+      - name: Checkout Pull Request Branch
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
-          ref: "${{ matrix.branch == 'default' && github.event.repository.default_branch || '' }}"
           persist-credentials: false
+          path: pull
+
+      - name: Checkout Default Branch
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.repository.default_branch }}
+          path: default
+
+      - name: Setup Mise
+        uses: jdx/mise-action@1648a7812b9aeae629881980618f079932869151 # v4.0.1
+        with:
+          tool_versions: |
+            github:home-operations/flate latest
 
       - name: Gather Images
-        uses: docker://ghcr.io/allenporter/flux-local:v8.2.0@sha256:9c77739d8d7c71b808311693ea52d603d1ddb5190d3d4f23e47f6f33d5254602
-        with:
-          args: >-
-            get cluster
-            --all-namespaces
-            --path /github/workspace/kubernetes/main/cluster/config
-            --enable-images
-            --only-images
-            --output json
-            --output-file images.json
+        run: >-
+          flate diff images
+          --output json
+          --output-file images.json
+          --path ./pull
+          --path-orig ./default
 
       - name: Extract Images
         id: extract
-        run: |
-          echo "${{ matrix.branch }}=$(jq --compact-output '.' images.json)" >> "${GITHUB_OUTPUT}"
-
-          {
-            echo '## Branch ${{ matrix.branch }} images'
-            echo '```json'
-            jq '.' images.json
-            echo '```'
-          } >> "${GITHUB_STEP_SUMMARY}"
-
-  diff:
-    if: ${{ needs.extract.outputs.default != needs.extract.outputs.pull }}
-    name: Image Pull - Diff Images
-    runs-on: ubuntu-latest
-    needs: extract
-    outputs:
-      images: ${{ steps.diff.outputs.images }}
-    steps:
-      - name: Diff Images
-        id: diff
-        run: |
-          images=$(jq --compact-output --null-input \
-              --argjson f1 '${{ needs.extract.outputs.default }}' \
-              --argjson f2 '${{ needs.extract.outputs.pull }}' \
-              '$f2 - $f1' \
-          )
-          echo "images=${images}" >> "${GITHUB_OUTPUT}"
-
-          {
-            echo '## New images to Pull'
-            echo '```json'
-            echo "${images}" | jq
-            echo '```'
-          } >> "${GITHUB_STEP_SUMMARY}"
+        run: echo "images=$(jq --compact-output '.' images.json)" >> $GITHUB_OUTPUT
 
   pull:
-    if: ${{ needs.diff.outputs.images != '[]' }}
+    if: ${{ needs.extract.outputs.images != '[]' }}
+    needs: extract
     name: Image Pull - Pull Images
     runs-on: k8s-homelab-runner
-    needs: diff
     strategy:
       matrix:
-        image: ${{ fromJSON(needs.diff.outputs.images) }}
+        image: ${{ fromJSON(needs.extract.outputs.images) }}
       max-parallel: 4
       fail-fast: false
-    env:
-      MATRIX_IMAGE: ${{ matrix.image }}
     steps:
       - name: Install talosctl
         run: curl -fsSL https://talos.dev/install | sh
 
       - name: Pull Image
-        run: talosctl -n "${NODE_IP}" image pull "${MATRIX_IMAGE}"
+        env:
+          IMAGE: ${{ matrix.image }}
+        run: talosctl -n "${NODE_IP}" image pull "${IMAGE}"
 
-  status:
+  success:
     if: ${{ !cancelled() }}
-    name: Image Pull - Success
     needs: pull
+    name: Image Pull - Success
     runs-on: ubuntu-latest
     steps:
       - name: Any jobs failed?
