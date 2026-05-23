@@ -12,7 +12,6 @@ resources:
   # Flux-Kustomizations
   - pvc
   - atuin/install.yaml
-  # - bichon/install.yaml
   - changedetection/install.yaml
   - dashy/install.yaml
   - freshrss/install.yaml
