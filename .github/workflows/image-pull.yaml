@@ -54,17 +54,14 @@ jobs:
           tool_versions: |
             github:home-operations/flate latest
 
-      - name: Gather Images
-        run: >-
-          flate diff images
-          --output json
-          --output-file images.json
-          --path ./pull
-          --path-orig ./default
-
       - name: Extract Images
         id: extract
-        run: echo "images=$(jq --compact-output '.' images.json)" >> $GITHUB_OUTPUT
+        run: |
+          {
+            echo 'images<<EOF'
+            flate diff images --output json --path ./pull/kubernetes/main --path-orig ./default/kubernetes/main
+            echo 'EOF'
+          } >> $GITHUB_OUTPUT
 
   pull:
     if: ${{ needs.extract.outputs.images != '[]' }}
