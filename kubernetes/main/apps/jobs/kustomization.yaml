@@ -8,4 +8,3 @@ components:
   - ../../components/app-template
 resources:
   - namespace.yaml
-  - publish-k8s-schemas/install.yaml

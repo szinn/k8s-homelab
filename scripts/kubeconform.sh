@@ -20,7 +20,7 @@ kubeconform_args=(
     "-schema-location"
     "default"
     "-schema-location"
-    "https://schemas.zinn.ca/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json"
+    "https://k8s-schemas.home-operations.com/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json"
     "-verbose"
 )
 

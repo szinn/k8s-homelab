@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://schemas.zinn.ca/v1/serviceaccount.json
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/v1/serviceaccount.json
 apiVersion: v1
 kind: ServiceAccount
 metadata:
