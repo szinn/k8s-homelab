@@ -7,6 +7,6 @@ components:
   - ../../components/alerts
 resources:
   # Pre Flux-Kustomizations
-  - ./namespace.yaml
+  - namespace.yaml
   # Flux-Kustomizations
-  - ./renovate-operator/install.yaml
+  # - renovate-operator/install.yaml
