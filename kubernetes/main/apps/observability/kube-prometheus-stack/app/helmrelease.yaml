@@ -18,6 +18,17 @@ spec:
         forceConflicts: true
     cleanPrometheusOperatorObjectNames: true
 
+    defaultRules:
+      # Disable apiserver SLO rule groups: their rate(...[1d]/[3d]) expressions
+      # over apiserver bucket metrics evaluate slower than the group interval
+      # and triggered PrometheusMissingRuleEvaluations. Disabled as a coupled
+      # set — slos/histogram depend on availability/burnrate recording rules.
+      rules:
+        kubeApiserverAvailability: false
+        kubeApiserverBurnrate: false
+        kubeApiserverHistogram: false
+        kubeApiserverSlos: false
+
     alertmanager:
       enabled: true
       route:
@@ -159,7 +170,7 @@ spec:
           requests:
             cpu: 100m
           limits:
-            memory: 2000Mi
+            memory: 4Gi
         retention: 14d
         retentionSize: 50GB
         ruleSelectorNilUsesHelmValues: false
