@@ -89,8 +89,8 @@ jobs:
         uses: 1password/load-secrets-action@92467eb28f72e8255933372f1e0707c567ce2259 # v4.0.0 # zizmor: ignore[unpinned-tools]
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
-          GITHUB_BOT_APP_CLIENT_ID: op://Kubernetes/github-bot/GITHUB_APP_CLIENT_ID
-          GITHUB_BOT_APP_PRIVATE_KEY: op://Kubernetes/github-bot/GITHUB_APP_PRIVATE_KEY
+          GITHUB_BOT_APP_CLIENT_ID: op://Kubernetes/github-jeeves/GITHUB_APP_CLIENT_ID
+          GITHUB_BOT_APP_PRIVATE_KEY: op://Kubernetes/github-jeeves/GITHUB_APP_PRIVATE_KEY
 
       - if: ${{ steps.diff.outputs.diff != '' }}
         name: Generate Token
