@@ -18,7 +18,7 @@ spec:
           main:
             image:
               repository: ghcr.io/lissy93/dashy
-              tag: 4.2.0@sha256:994b5a5b7090b94263b5971793e6982664fc0f4ce4fde46cae6eeab12ff692e7
+              tag: 4.2.1@sha256:dd02c4cd11bc2bb1b40a086640560d083313c466a649ac5a890f397fb6f5b4c9
             env:
               TZ: America/Toronto
               DISABLE_CONFIG_BACKUPS: true
