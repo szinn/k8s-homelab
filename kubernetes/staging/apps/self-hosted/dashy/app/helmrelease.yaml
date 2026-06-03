@@ -22,35 +22,11 @@ spec:
             env:
               TZ: America/Toronto
               DISABLE_CONFIG_BACKUPS: true
-          code-server:
-            image:
-              repository: ghcr.io/coder/code-server
-              tag: 4.122.1@sha256:31d3bd4039b9d41fde24ae17cc170a769a025df0782bd3bd99f0ea86f8e415a4
-            securityContext:
-              runAsUser: 1000
-            args:
-              [
-                "--auth",
-                "none",
-                "--disable-telemetry",
-                "--disable-update-check",
-                "--user-data-dir",
-                "/tmp/.vscode",
-                "--extensions-dir",
-                "/tmp/.vs1ode",
-                "--port",
-                "8081",
-                "/config"
-              ]
     service:
       main:
         ports:
           http:
             port: &mainPort 8080
-      code-server:
-        ports:
-          http:
-            port: &codePort 8081
     route:
       main:
         hostnames: ["dashy.test.zinn.ca"]
@@ -61,15 +37,6 @@ spec:
           - backendRefs:
               - identifier: main
                 port: *mainPort
-      code-server:
-        hostnames: ["dashy-code.test.zinn.ca"]
-        parentRefs:
-          - name: envoy-internal
-            namespace: network
-        rules:
-          - backendRefs:
-              - identifier: code-server
-                port: *codePort
     persistence:
       config:
         enabled: true
@@ -78,8 +45,6 @@ spec:
           main:
             main:
               - path: /app/user-data
-            code-server:
-              - path: /config
       icons:
         enabled: true
         type: configMap
@@ -89,10 +54,3 @@ spec:
             main:
               - path: /app/user-data/item-icons
                 readOnly: true
-      temp:
-        enabled: true
-        type: emptyDir
-        advancedMounts:
-          main:
-            code-server:
-              - path: /tmp/.vscode
