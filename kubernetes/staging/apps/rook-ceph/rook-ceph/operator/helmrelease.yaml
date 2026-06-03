@@ -17,15 +17,6 @@ spec:
       repository: ghcr.io/rook/ceph
     crds:
       enabled: true
-    csi:
-      # NOTE: Enable the driver and shapshotter if you want to use CephFS
-      # enableCephfsDriver: false
-      # enableCephfsSnapshotter: false
-      csiAddons:
-        enabled: false
-      enableLiveness: true
-      serviceMonitor:
-        enabled: false
     monitoring:
       enabled: true
     resources:
