@@ -160,6 +160,9 @@ spec:
             csi.storage.k8s.io/node-stage-secret-name: rook-csi-cephfs-node
             csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
             csi.storage.k8s.io/fstype: ext4
+            # Talos 6.18.29-talos has no in-tree or built-in ceph kernel module;
+            # force ceph-fuse so cephfs mounts work without the host module.
+            mounter: fuse
 
     cephFileSystemVolumeSnapshotClass:
       enabled: true
