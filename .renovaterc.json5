@@ -11,44 +11,41 @@
     "kubernetes/main/apps/rook-ceph/rook-ceph/add-ons/prometheus-rules.yaml",
     "kubernetes/staging/apps/rook-ceph/rook-ceph/add-ons/rules.yaml",
     "**/archive/**",
-    "**/*.sops.*"
+    "**/*.sops.*",
   ],
-  "commitBodyTable": true,
-  "prBodyTemplate": "{{{header}}}{{{table}}}{{{warnings}}}{{{notes}}}{{{changelogs}}}",
+  commitBodyTable: true,
+  prBodyTemplate: "{{{header}}}{{{table}}}{{{warnings}}}{{{notes}}}{{{changelogs}}}",
   packageRules: [
-    // Cluster prefixes
     {
       description: "Separate PRs for main cluster",
       matchFileNames: ["**/kubernetes/main/**"],
-      additionalBranchPrefix: "main-"
+      additionalBranchPrefix: "main-",
     },
     {
       description: "Separate PRs for staging cluster",
       matchFileNames: ["**/kubernetes/staging/**"],
-      additionalBranchPrefix: "staging-"
-    },
-    // Allowed version rules
-    {
-      matchDatasources: ["docker"],
-      matchPackagePatterns: ["cloudnative-pg/postgresql"],
-      allowedVersions: "<19"
+      additionalBranchPrefix: "staging-",
     },
     {
       matchDatasources: ["docker"],
-      matchPackagePatterns: ["tensorchord/cloudnative-vectorchord"],
-      allowedVersions: "<18.1"
+      allowedVersions: "<19",
+      matchPackageNames: ["/cloudnative-pg/postgresql/"],
     },
     {
       matchDatasources: ["docker"],
-      matchPackagePatterns: ["home-operations/postgres-init"],
-      allowedVersions: "<19"
+      allowedVersions: "<18.1",
+      matchPackageNames: ["/tensorchord/cloudnative-vectorchord/"],
+    },
+    {
+      matchDatasources: ["docker"],
+      allowedVersions: "<19",
+      matchPackageNames: ["/home-operations/postgres-init/"],
     },
     {
       matchDatasources: ["github-tags"],
-      matchPackagePatterns: ["helm/helm"],
-      allowedVersions: "<4"
+      allowedVersions: "<4",
+      matchPackageNames: ["/helm/helm/"],
     },
-    // Auto-merge rules
     {
       description: "Auto-merge trusted OCI digests",
       matchDatasources: ["docker"],
@@ -108,7 +105,7 @@
       matchDatasources: ["docker", "github-releases", "github-tags", "helm"],
       automerge: true,
       automergeType: "branch",
-      requiredStatusChecks: null,
+      ignoreTests: true,
       matchUpdateTypes: ["minor", "patch"],
       matchDepNames: [
         "ghcr.io/home-operations/bazarr",
@@ -118,12 +115,13 @@
         "ghcr.io/home-operations/radarr",
         "ghcr.io/home-operations/recyclarr",
         "ghcr.io/home-operations/sabnzbd",
-        "ghcr.io/home-operations/sonarr"
-      ]
+        "ghcr.io/home-operations/sonarr",
+      ],
     },
-    // Digest pinning overrides
     {
-      description: ["Don't pin digests for packages that don't have/need a digest"],
+      description: [
+        "Don't pin digests for packages that don't have/need a digest",
+      ],
       matchDatasources: ["docker"],
       matchDepNames: [
         "ghcr.io/bjw-s/helm/app-template",
@@ -133,41 +131,41 @@
         "ghcr.io/siderolabs/installer",
         "ghcr.io/siderolabs/kubelet",
         "ghcr.io/siderolabs/talosctl",
-        "ghcr.io/stakater/charts/reloader"
+        "ghcr.io/stakater/charts/reloader",
       ],
-      pinDigests: false
+      pinDigests: false,
     },
     {
       description: ["Don't pin branches for machineconfig"],
       matchFileNames: ["**/machineconfig.yaml.j2"],
       matchDatasources: ["docker"],
-      pinDigests: false
+      pinDigests: false,
     },
     {
       description: ["Don't pin branches for support files"],
-      matchFileNames: [".taskfiles/**","hack/**"],
+      matchFileNames: [".taskfiles/**", "hack/**"],
       matchDatasources: ["docker"],
-      pinDigests: false
+      pinDigests: false,
     },
     {
       description: ["Don't pin digests for managers that don't need a digest"],
       matchManagers: ["flux", "helmfile"],
-      pinDigests: false
+      pinDigests: false,
     },
     {
       description: ["Don't pin digests for flux manifests"],
       matchDatasources: ["docker"],
-      matchDepNames: [
-        "ghcr.io/controlplaneio-fluxcd/flux-operator-manifests"
-      ],
-      pinDigests: false
+      matchDepNames: ["ghcr.io/controlplaneio-fluxcd/flux-operator-manifests"],
+      pinDigests: false,
     },
-    // Grouping rules
     {
       description: "Actions Runner Controller Group",
       groupName: "actions-runner-controller",
       matchDatasources: ["docker"],
-      matchPackageNames: ["/gha-runner-scale-set-controller/", "/gha-runner-scale-set/"],
+      matchPackageNames: [
+        "/gha-runner-scale-set-controller/",
+        "/gha-runner-scale-set/",
+      ],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
       },
@@ -209,7 +207,6 @@
       },
       minimumGroupSize: 2,
     },
-    // Labeling rules
     {
       matchUpdateTypes: ["major"],
       addLabels: ["type/major"],
