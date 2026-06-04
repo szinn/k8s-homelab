@@ -95,6 +95,7 @@ gen-schematic-id:
 [script]
 render-config node:
   export IS_CONTROLPLANE="$(just talos machine-controller {{ node }})"
+  export SCHEMATIC="$(just talos schematic-id)"
   talosctl machineconfig patch <(just template "{{ talos_dir }}/machineconfig.yaml.j2") -p @<(just template "{{ talos_dir }}/nodes/{{ node }}.yaml.j2")
 
 [doc('Reboot a node')]
@@ -133,6 +134,10 @@ download-image version schematic:
       -o "{{ talos_dir }}/talos-{{ version }}-{{ replace_regex(schematic, '^(.{8}).*', '$1') }}.iso" \
       "https://factory.talos.dev/image/{{ schematic }}/{{ version }}/metal-amd64.iso"
   just log info "Downloaded Talos" version "{{ version }}" schematic "{{ schematic }}"
+
+[private]
+schematic-id:
+    curl -sX POST --data-binary @<(just template "{{ source_directory() }}/schematic.yaml") "https://factory.talos.dev/schematics" | jq -r '.id'
 
 [private]
 [script]
