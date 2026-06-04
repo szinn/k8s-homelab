@@ -13,6 +13,8 @@
     "**/archive/**",
     "**/*.sops.*"
   ],
+  "commitBodyTable": true,
+  "prBodyTemplate": "{{{header}}}{{{table}}}{{{warnings}}}{{{notes}}}{{{changelogs}}}",
   packageRules: [
     // Cluster prefixes
     {
