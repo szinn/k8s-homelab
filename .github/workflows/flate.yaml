@@ -30,7 +30,7 @@ jobs:
   flate:
     if: ${{ needs.filter.outputs.changed-files != '[]' }}
     needs: filter
-    name: Flate
+    name: Flate - ${{ matrix.cluster }} - ${{ matrix.kind }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -48,55 +48,21 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Setup Mise
-        uses: jdx/mise-action@1648a7812b9aeae629881980618f079932869151 # v4.0.1
-        with:
-          cache: false
-          tool_versions: |
-            github:home-operations/flate latest
+      - name: Install Flate
+        uses: home-operations/flate/action@1109b9ff85a55dcc47576d73e3ffc92336ad4513 # 0.2.10
 
-      - name: Run flate test
+      - name: Run Flate
+        id: flate
         env:
+          FLATE_OUTPUT: github
+          FLATE_PATH: ./kubernetes/${{ matrix.cluster }}
           KIND: ${{ matrix.kind }}
-        run: flate test "$KIND" --path ./kubernetes/${{ matrix.cluster }} --base ${{ github.event.repository.default_branch }}
+        run: |-
+          echo 'diff<<EOF' >> $GITHUB_OUTPUT
+          flate diff $KIND --allow-missing-secrets --skip-schema-validation >> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
 
-      - name: Run flate diff
-        env:
-          KIND: ${{ matrix.kind }}
-          CLUSTER: ${{ matrix.cluster }}
-        run: |
-          flate diff "$KIND" --path ./kubernetes/$CLUSTER > "$CLUSTER-$KIND.diff"
-          [ -s "$CLUSTER-$KIND.diff" ] || rm "$CLUSTER-$KIND.diff"
-
-      - if: ${{ hashFiles(format('{0}-{1}.diff', matrix.cluster, matrix.kind)) != '' }}
-        name: Upload diff
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          name: flate-diff-${{ matrix.cluster }}-${{ matrix.kind }}
-          path: ${{ matrix.cluster }}-${{ matrix.kind }}.diff
-          retention-days: 1
-
-  comment:
-    if: ${{ !cancelled() && needs.flate.result != 'skipped' }}
-    needs: flate
-    name: Flate - Comment
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
-    strategy:
-      matrix:
-        cluster:
-          - main
-          - staging
-    steps:
-      - name: Download diffs
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
-        with:
-          pattern: flate-diff-*
-          merge-multiple: true
-
-      - if: ${{ hashFiles('${{ matxic.cluster }}-helmrelease.diff', '${{ matxic.cluster }}-kustomization.diff') != '' }}
+      - if: ${{ steps.flate.outputs.diff != '' }}
         name: Load Secrets
         id: load-secrets
         uses: 1password/load-secrets-action@92467eb28f72e8255933372f1e0707c567ce2259 # v4.0.0 # zizmor: ignore[unpinned-tools]
@@ -105,7 +71,7 @@ jobs:
           GITHUB_BOT_APP_CLIENT_ID: op://Kubernetes/github-jeeves/GITHUB_APP_CLIENT_ID
           GITHUB_BOT_APP_PRIVATE_KEY: op://Kubernetes/github-jeeves/GITHUB_APP_PRIVATE_KEY
 
-      - if: ${{ hashFiles('${{ matrix.cluster }}-helmrelease.diff', '${{ matrix.cluster }}-kustomization.diff') != '' }}
+      - if: ${{ steps.flate.outputs.diff != '' }}
         name: Generate Token
         uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
         id: app-token
@@ -114,70 +80,19 @@ jobs:
           private-key: ${{ steps.load-secrets.outputs.GITHUB_BOT_APP_PRIVATE_KEY }}
           permission-pull-requests: write
 
-      - if: ${{ hashFiles('${{ matrix.cluster }}-helmrelease.diff', '${{ matrix.cluster }}-kustomization.diff') != '' }}
-        name: Add or Update Comment
-        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+      - if: ${{ steps.flate.outputs.diff != '' }}
+        name: Add Comment
+        uses: mshick/add-pr-comment@8e4927817251f1ff60c001f04568532b38e0b4a0 # v3.11.0
         with:
-          github-token: ${{ steps.app-token.outputs.token }}
-          script: |
-            const fs = require('fs');
-            const read = (path) => { try { return fs.readFileSync(path, 'utf8'); } catch { return ''; } };
-            const { owner, repo } = context.repo;
-            const issue_number = context.issue.number;
-            const marker = `<!-- Sticky Pull Request Comment${issue_number}/kubernetes/flate -->`;
-            const runUrl = `${context.serverUrl}/${owner}/${repo}/actions/runs/${context.runId}`;
-
-            const diffs = {
-              HelmRelease: read("${{ matrix.cluster }}-helmrelease.diff"),
-              Kustomization: read("${{ matrix.cluster }}-kustomization.diff"),
-            };
-            const active = Object.values(diffs).filter(d => d.trim()).length;
-            const budget = active > 0 ? Math.floor(60000 / active) : 0;
-
-            const section = (label, diff) => {
-              if (!diff.trim()) return [];
-              if (diff.length > budget) return [
-                `<details><summary>${label} diff (${diff.length.toLocaleString()} chars — too large to post)</summary>`,
-                ``,
-                `Diff exceeds GitHub's comment size limit. Download the artifact from the [workflow run](${runUrl}).`,
-                ``,
-                `</details>`,
-              ];
-              return [
-                `<details open><summary>${label} diff</summary>`,
-                ``,
-                "```diff",
-                diff,
-                "```",
-                ``,
-                `</details>`,
-              ];
-            };
-
-            const body = [
-              marker,
-              ...section("HelmRelease", diffs.HelmRelease),
-              ...section("Kustomization", diffs.Kustomization),
-              ``,
-              `<sub>Diff created by [flate](https://github.com/home-operations/flate) — [Workflow run](${runUrl})</sub>`,
-            ].join("\n");
-
-            const comments = await github.paginate(github.rest.issues.listComments, {
-              owner, repo, issue_number, per_page: 100,
-            });
-            const existing = comments.find(c => c.body?.includes(marker));
-
-            if (existing) {
-              await github.rest.issues.updateComment({ owner, repo, comment_id: existing.id, body });
-            } else {
-              await github.rest.issues.createComment({ owner, repo, issue_number, body });
-            }
-
+          repo-token: ${{ steps.app-token.outputs.token }}
+          message-id: ${{ github.event.pull_request.number }}/kubernetes/${{ matrix.kind }}/${{ matrix.cluster }}
+          message: |-
+            ```diff
+            ${{ steps.flate.outputs.diff }}
+            ```
   success:
     if: ${{ !cancelled() }}
-    needs:
-      - flate
-      - comment
+    needs: flate
     name: Flate - Success
     runs-on: ubuntu-latest
     steps:
