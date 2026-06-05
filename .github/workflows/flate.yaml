@@ -48,8 +48,12 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Install Flate
-        uses: home-operations/flate/action@44bc78c430160353ef331d4b1cf382774f07c9ab # 0.2.11
+      - name: Setup Mise
+        uses: jdx/mise-action@1648a7812b9aeae629881980618f079932869151 # v4.0.1
+        with:
+          cache: false
+          tool_versions: |
+            github:home-operations/flate 0.2.12
 
       - name: Run Flate
         id: flate
