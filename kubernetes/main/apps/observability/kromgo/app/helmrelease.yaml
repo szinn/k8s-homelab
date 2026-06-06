@@ -8,76 +8,87 @@ spec:
   interval: 1h
   chartRef:
     kind: OCIRepository
-    name: app-template
+    name: kromgo
   values:
-    controllers:
-      kromgo:
-        replicas: 1
-        strategy: RollingUpdate
-        annotations:
-          reloader.stakater.com/auto: "true"
-        containers:
-          kromgo:
-            image:
-              repository: ghcr.io/home-operations/kromgo
-              tag: 0.14.3@sha256:c91e3b4e8a85668006d6223da67eb4b479d52f75fa89a1582a390fd4a0d1454a
-            env:
-              PROMETHEUS_URL: http://prometheus-operated.observability.svc.cluster.local:9090
-              SERVER_HOST: 0.0.0.0
-              SERVER_PORT: &port 8080
-              HEALTH_HOST: 0.0.0.0
-              HEALTH_PORT: &hport 8888
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
-            resources:
-              limits: &resources
-                memory: 64Mi
-              requests:
-                <<: *resources
-                cpu: 10m
-            probes:
-              liveness: &probes
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /healthz
-                    port: *hport
-              readiness: *probes
-        pod:
-          topologySpreadConstraints:
-            - maxSkew: 1
-              topologyKey: kubernetes.io/hostname
-              whenUnsatisfiable: DoNotSchedule
-              labelSelector:
-                matchLabels:
-                  app.kubernetes.io/name: *app
-    service:
-      kromgo:
-        ports:
-          http:
-            port: *port
-            primary: true
-          health:
-            port: *hport
-    route:
-      external:
-        annotations:
-          external-dns/is-public: "true"
-          external-dns.alpha.kubernetes.io/target: external.zinn.ca
-          gatus.home-operations.com/endpoint: |-
-            conditions: ["[STATUS] == 200"]
-        hostnames: ["{{ .Release.Name }}.zinn.ca"]
-        parentRefs:
-          - name: envoy-external
-            namespace: network
-    persistence:
-      config-file:
-        type: configMap
-        name: kromgo-configmap
-        globalMounts:
-          - path: /config/config.yaml
-            subPath: config.yaml
-            readOnly: true
+    config:
+      prometheus: http://prometheus-operated.observability.svc.cluster.local:9090
+      badges:
+        - id: talos_version
+          icon: si:talos
+          query: label_replace(node_os_info{name="Talos"}, "version_id", "$1", "version_id", "v(.+)")
+          title: Talos
+          valueExpr: labels["version_id"]
+
+        - id: kubernetes_version
+          icon: si:kubernetes
+          query: label_replace(kubernetes_build_info{service="kubernetes"}, "git_version", "$1", "git_version", "v(.+)")
+          title: Kubernetes
+          valueExpr: labels["git_version"]
+
+        - id: flux_version
+          icon: si:flux
+          query: label_replace(flux_instance_info, "revision", "$1", "revision", "v(.+)@sha256:.+")
+          title: Flux
+          valueExpr: labels["revision"]
+
+        - id: cluster_node_count
+          colorExpr: '"green"'
+          query: count(count by (node) (kube_node_status_condition{condition="Ready"}))
+          title: Nodes
+
+        - id: cluster_pod_count
+          colorExpr: '"green"'
+          query: sum(kube_pod_status_phase{phase="Running"})
+          title: Pods
+          valueExpr: humanizeCommas(result)
+
+        - id: cluster_cpu_usage
+          colorExpr: 'colorScale(result, [35.0, 75.0], ["green", "orange", "red"])'
+          query: round(avg(instance:node_cpu_utilisation:rate5m{pod!=""}) * 100, 0.1)
+          valueExpr: string(result) + "%"
+          title: CPU
+
+        - id: cluster_memory_usage
+          colorExpr: 'colorScale(result, [400.0, 750.0], ["green", "orange", "red"])'
+          query: round(sum(node_memory_MemTotal_bytes{pod!=""} - node_memory_MemAvailable_bytes{pod!=""}) / sum(node_memory_MemTotal_bytes{pod!=""}) * 100, 0.1)
+          title: Memory
+          valueExpr: string(result) + "%"
+
+        - id: cluster_age_days
+          colorExpr: 'colorScale(result, [15552000.0, 31104000.0], ["green", "orange", "red"])'
+          query: round(time() - min(kube_node_created))
+          title: Age
+          valueExpr: humanizeDurationDays(result)
+
+        - id: cluster_uptime_days
+          colorExpr: 'colorScale(result, [15552000.0, 31104000.0], ["green", "orange", "red"])'
+          query: round(avg(node_time_seconds{pod!=""} - node_boot_time_seconds{pod!=""}))
+          title: Uptime
+          valueExpr: humanizeDurationDays(result)
+
+        - id: cluster_alert_count
+          query: alertmanager_alerts{state="active"} - 1 # Ignore Watchdog
+          colorExpr: 'colorScale(result, [1.0], ["green", "red"])'
+          title: Alerts
+
+        - id: cluster_power_usage
+          colorExpr: 'colorScale(result, [400.0, 750.0], ["green", "orange", "red"])'
+          query: round(sum(unpoller_device_outlet_ac_power_consumption), 0.1)
+          title: Power
+
+    httpRoute:
+      enabled: true
+      annotations:
+        external-dns/is-public: "true"
+        external-dns.alpha.kubernetes.io/target: external.zinn.ca
+        gatus.home-operations.com/endpoint: |-
+          conditions: ["[STATUS] == 200"]
+      hostnames: ["{{ .Release.Name }}.zinn.ca"]
+      parentRefs:
+        - name: envoy-external
+          namespace: network
+    resources:
+      requests:
+        cpu: 10m
+      limits:
+        memory: 64Mi
