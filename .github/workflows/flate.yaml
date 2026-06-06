@@ -30,16 +30,13 @@ jobs:
   flate:
     if: ${{ needs.filter.outputs.changed-files != '[]' }}
     needs: filter
-    name: Flate - ${{ matrix.cluster }} - ${{ matrix.kind }}
+    name: Flate - ${{ matrix.cluster }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
         cluster:
           - main
           - staging
-        kind:
-          - helmrelease
-          - kustomization
       fail-fast: false
     steps:
       - name: Checkout
@@ -59,11 +56,9 @@ jobs:
         id: flate
         env:
           FLATE_OUTPUT: github
-          FLATE_PATH: ./kubernetes/${{ matrix.cluster }}
-          KIND: ${{ matrix.kind }}
         run: |-
           echo 'diff<<EOF' >> $GITHUB_OUTPUT
-          flate diff $KIND --allow-missing-secrets --skip-schema-validation >> $GITHUB_OUTPUT
+          flate diff all --allow-missing-secrets --skip-schema-validation -p kubernetes/${{ matrix.cluster }}/cluster/config >> $GITHUB_OUTPUT
           echo 'EOF' >> $GITHUB_OUTPUT
 
       - if: ${{ steps.flate.outputs.diff != '' }}
@@ -89,7 +84,7 @@ jobs:
         uses: mshick/add-pr-comment@8e4927817251f1ff60c001f04568532b38e0b4a0 # v3.11.0
         with:
           repo-token: ${{ steps.app-token.outputs.token }}
-          message-id: ${{ github.event.pull_request.number }}/kubernetes/${{ matrix.kind }}/${{ matrix.cluster }}
+          message-id: ${{ github.event.pull_request.number }}/kubernetes/${{ matrix.cluster }}
           message: |-
             ```diff
             ${{ steps.flate.outputs.diff }}
