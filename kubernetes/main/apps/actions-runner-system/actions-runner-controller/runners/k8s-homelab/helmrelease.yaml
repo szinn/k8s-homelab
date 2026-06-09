@@ -46,7 +46,7 @@ spec:
                 name: cache-volume
         containers:
           - name: runner
-            image: ghcr.io/home-operations/actions-runner:2.335.0@sha256:654a8934aec6160f6df20e9e1265a509c9b57b3956ee8446db66a183cea82da1
+            image: ghcr.io/home-operations/actions-runner:2.335.1@sha256:3d544e5eed58722c0b6a97212a31eada0f9f2e99f189c41911a5573a23d7386a
             command: ["/home/runner/run.sh"]
             env:
               - name: ACTIONS_RUNNER_REQUIRE_JOB_CONTAINER
