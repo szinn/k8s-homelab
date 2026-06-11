@@ -57,9 +57,11 @@ jobs:
         env:
           FLATE_OUTPUT: github
         run: |-
-          echo 'diff<<EOF' >> $GITHUB_OUTPUT
-          flate diff all --allow-missing-secrets --skip-schema-validation -p kubernetes/${{ matrix.cluster }}/cluster/config >> $GITHUB_OUTPUT
-          echo 'EOF' >> $GITHUB_OUTPUT
+          {
+            echo 'diff<<EOF'
+            flate diff all --allow-missing-secrets --skip-schema-validation -p kubernetes/${{ matrix.cluster }}/cluster/config
+            echo 'EOF'
+          } >> "${GITHUB_OUTPUT}"
 
       - if: ${{ steps.flate.outputs.diff != '' }}
         name: Load Secrets

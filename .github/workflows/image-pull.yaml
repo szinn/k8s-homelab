@@ -54,7 +54,7 @@ jobs:
             echo 'images<<EOF'
             flate diff images --output json --path ./kubernetes/main
             echo 'EOF'
-          } >> $GITHUB_OUTPUT
+          } >> "${GITHUB_OUTPUT}"
 
   pull:
     if: ${{ needs.extract.outputs.images != '[]' }}
