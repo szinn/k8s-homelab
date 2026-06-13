@@ -5,4 +5,5 @@ kind: Kustomization
 namespace: dragonfly-operator-system
 resources:
   - cluster.yaml
+  - networkpolicy.yaml
   - podmonitor.yaml
