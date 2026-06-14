@@ -50,7 +50,7 @@ jobs:
         with:
           cache: false
           tool_versions: |
-            github:home-operations/flate 0.4.5
+            github:home-operations/flate 0.4.6
 
       - name: Run Flate
         id: flate
