@@ -9,12 +9,10 @@ vmips := '10.12.0.16 10.12.0.17 10.12.0.18'
 vmid-prefix := '20'
 
 [private]
-[script]
 default:
   just -l proxmox
 
 [doc('Reset staging cluster')]
-[script]
 reset:
   just proxmox destroy
   just proxmox create
@@ -29,7 +27,6 @@ destroy:
   done
 
 [doc('Create staging cluster')]
-[script]
 create:
   just log info "Creating staging cluster VMs..."
   just proxmox create-vm 1 'DE:CA:FF:10:12:10'
@@ -69,13 +66,11 @@ unmount-cdrom:
   done
 
 [private]
-[script]
 destroy-vm vmid:
   just proxmox stop-vm {{vmid}}
   -ssh ares -- qm destroy {{vmid-prefix}}{{vmid}}
 
 [private]
-[script]
 create-vm vmid mac:
   ssh ares -- qm create {{vmid-prefix}}{{vmid}} \
     --name stage-{{vmid}} \
@@ -96,21 +91,17 @@ create-vm vmid mac:
 
 
 [private]
-[script]
 wait-for-startup-vm ip:
   ping -o -q {{ip}}
 
 [private]
-[script]
 stop-vm vmid:
   -ssh ares -- qm stop {{vmid-prefix}}{{vmid}}
 
 [private]
-[script]
 start-vm vmid:
   -ssh ares -- qm start {{vmid-prefix}}{{vmid}}
 
 [private]
-[script]
 unmount-cdrom-vm vmid:
   -ssh ares -- qm set {{vmid-prefix}}{{vmid}} -ide0 media=cdrom,file=none

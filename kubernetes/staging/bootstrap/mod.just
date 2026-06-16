@@ -12,7 +12,6 @@ bootstrap_dir := kubernetes_dir + '/bootstrap'
 default: talos-secrets talos kubernetes (kubeconfig "node") wait namespaces resources crds apps kubeconfig
 
 [doc('Rebuild Talos secrets')]
-[script]
 talos-secrets:
   just log info "Generating Talos secrets..."
   just talos generate-secrets
@@ -34,13 +33,11 @@ talos:
   just proxmox unmount-cdrom
 
 [doc('Install Kubernetes')]
-[script]
 kubernetes:
   just log info "Bootstrapping Talos Kubernetes..."
   just talos bootstrap
 
 [doc('Fetch kubeconfig')]
-[script]
 kubeconfig lb="cilium":
   just log info "Fetching kubeconfig..."
   just talos fetch-kubeconfig {{ lb }}

@@ -16,7 +16,6 @@ default:
   just -l talos
 
 [doc('Generate Talos secrets and update 1Password')]
-[script]
 generate-secrets:
   talosctl gen secrets --force -o '{{ secrets_file }}'
   op item edit --vault Kubernetes {{ secret_id }} "MACHINE_TOKEN[text]=$(cat {{ secrets_file }} | yq .trustdinfo.token)" > /dev/null
@@ -36,7 +35,6 @@ generate-secrets:
   -rm {{ secrets_file }}
 
 [doc('Generate talosconfig for the cluster')]
-[script]
 generate-talosconfig:
   op read op://Kubernetes/cluster-staging/MACHINE_CA_CRT | base64 -d > ca.crt
   op read op://Kubernetes/cluster-staging/MACHINE_CA_KEY | base64 -d > ca.key
@@ -61,11 +59,13 @@ bootstrap:
 [doc('Fetch kubeconfig')]
 [script]
 fetch-kubeconfig lb="cilium":
-  -rm $KUBECONFIG
+  if test -e $KUBECONFIG; then
+    rm $KUBECONFIG
+  fi
   if ! talosctl kubeconfig -n "{{ controller }}" -f --force-context-name staging $KUBECONFIG; then
     just log fatal "Failed to fetch kubeconfig"
   fi
-  -kubectl config rename-context admin@staging staging
+  kubectl config rename-context admin@staging staging
   if [[ "{{ lb }}" != "cilium" ]]; then
     if ! kubectl config set-cluster staging --server "https://{{ controller }}:6443"; then
       just log fatal "Failed to set kubectl cluster server address"
@@ -74,7 +74,6 @@ fetch-kubeconfig lb="cilium":
   op item edit --vault Kubernetes {{ secret_id }} "kubeconfig[text]=$(cat $KUBECONFIG)" > /dev/null
 
 [doc('Apply Talos config to a node')]
-[script]
 apply-node node *args:
   just talos render-config "{{ node }}" | talosctl -n "{{ node }}" apply-config -f /dev/stdin {{ args }}
 
@@ -87,7 +86,6 @@ apply-cluster *args:
   done
 
 [doc('Generate schematic ID from Talos schematic')]
-[script]
 gen-schematic-id:
   curl -sX POST --data-binary "@{{ talos_dir }}/schematic.yaml" "https://factory.talos.dev/schematics" | jq -r '.id'
 
@@ -99,12 +97,10 @@ render-config node:
   talosctl machineconfig patch <(just template "{{ talos_dir }}/machineconfig.yaml.j2") -p @<(just template "{{ talos_dir }}/nodes/{{ node }}.yaml.j2")
 
 [doc('Reboot a node')]
-[script]
 reboot-node node:
   gum confirm "Reboot node {{ node }}?" && talosctl -n {{ node }} reboot -m powercycle || exit 0
 
 [doc('Reset a node')]
-[script]
 reset-node node mode="reboot":
   gum confirm "Reset node {{ node }}?" && talosctl -n "{{ node }}" reset --graceful=false {{ if mode == "reboot" { "--reboot" } else { "" } }} || exit 0
 
@@ -112,7 +108,7 @@ reset-node node mode="reboot":
 [script]
 reset-cluster mode="reboot":
   kubectl get nodes --no-headers | while read -r node _; do
-    just log info "Resetting Talos node ${node}
+    just log info "Resetting Talos node ${node}"
     just talos reset-node ${node} {{ mode }}
   done
 
