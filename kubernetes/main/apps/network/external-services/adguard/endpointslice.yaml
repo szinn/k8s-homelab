@@ -1,0 +1,40 @@
+---
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: adguard-apollo
+  labels:
+    kubernetes.io/service-name: adguard-apollo
+addressType: IPv4
+endpoints:
+  - addresses:
+      - 10.0.0.10
+    conditions:
+      ready: true
+      serving: true
+      terminating: false
+ports:
+  - name: http
+    port: 3000
+    protocol: TCP
+    appProtocol: http
+---
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: adguard-artemis
+  labels:
+    kubernetes.io/service-name: adguard-artemis
+addressType: IPv4
+endpoints:
+  - addresses:
+      - 10.0.0.8
+    conditions:
+      ready: true
+      serving: true
+      terminating: false
+ports:
+  - name: http
+    port: 3000
+    protocol: TCP
+    appProtocol: http

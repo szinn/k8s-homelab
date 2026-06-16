@@ -1,0 +1,30 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: adguard-apollo
+  annotations:
+    gatus.home-operations.com/enabled: "false"
+spec:
+  ports:
+    - name: http
+      port: 3000
+      protocol: TCP
+      targetPort: 3000
+      appProtocol: http
+  clusterIP: None
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: adguard-artemis
+  annotations:
+    gatus.home-operations.com/enabled: "false"
+spec:
+  ports:
+    - name: http
+      port: 3000
+      protocol: TCP
+      targetPort: 3000
+      appProtocol: http
+  clusterIP: None
