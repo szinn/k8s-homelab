@@ -23,7 +23,7 @@ spec:
       webhook:
         image:
           repository: ghcr.io/home-operations/external-dns-unifi-webhook
-          tag: 0.10.4@sha256:ffb5dab38e52f8eaa714dd9e9e43575cd2cac7f68191b2d077940f13e397bed7
+          tag: 0.10.5@sha256:541ae465c2c06de867dfddb5446b1006556adda9e00307af556aa8c41f11dc1d
         env:
           - name: LOG_LEVEL
             value: "debug"
