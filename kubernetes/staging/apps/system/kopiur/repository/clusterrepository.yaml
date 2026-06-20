@@ -1,0 +1,36 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/kopiur.home-operations.com/clusterrepository_v1alpha1.json
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: ClusterRepository
+metadata:
+  name: ragnar
+spec:
+  backend:
+    filesystem:
+      path: /repo
+      volume:
+        nfs:
+          server: ragnar.zinn.tech
+          path: /mnt/atlas/k8s/staging/kopiur
+  encryption:
+    passwordSecretRef:
+      name: kopiur-ragnar-secret
+      namespace: system
+      key: KOPIA_PASSWORD
+  create:
+    enabled: true
+  allowedNamespaces:
+    all: true
+  identityDefaults:
+    hostnameExpr: namespace
+    usernameExpr: namespace + '-' + policyName
+  moverDefaults:
+    securityContext:
+      runAsUser: 2000
+      runAsGroup: 2000
+    podSecurityContext:
+      fsGroup: 2000
+      fsGroupChangePolicy: OnRootMismatch
+    ttlSecondsAfterFinished: 86400
+  maintenance:
+    enabled: true
