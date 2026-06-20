@@ -23,7 +23,7 @@ spec:
               - service: http_status:404
     controllers:
       cloudflare-tunnel:
-        replicas: 2
+        replicas: 1
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"

@@ -10,5 +10,6 @@ resources:
   - flux-operator/install.yaml
   - flux-instance/install.yaml
   - flux-config/install.yaml
+  - konflate/install.yaml
 components:
   - ../../components/alerts
