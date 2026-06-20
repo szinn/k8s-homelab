@@ -1,5 +1,5 @@
 [tools]
-"aqua:helm/helm" = "3.21.1"
+"aqua:helm/helm" = "3.21.2"
 "aqua:helmfile/helmfile" = "1.5.5"
 "kubeconform" = "latest"
 "npm:renovate" = "latest"
