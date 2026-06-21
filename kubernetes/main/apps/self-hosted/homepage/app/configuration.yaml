@@ -254,18 +254,10 @@ data:
             href: https://wiki.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}/recipes/index
             siteMonitor: https://wiki.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}/recipes/index
             icon: wikijs.png
-        # - OwnCloud:
-        #     href: https://files.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-        #     siteMonitor: https://files.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-        #     icon: owncloud.png
         - Excalidraw:
             href: https://excalidraw.com
             siteMonitor: https://excalidraw.com
             icon: excalidraw.png
-        - Shlink:
-            href: https://shlink.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            siteMonitor: https://shlink.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            icon: shlink.png
         - Stirling PDF:
             href: https://pdf-tool.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
             siteMonitor: https://pdf-tool.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
@@ -274,10 +266,6 @@ data:
             href: https://ha-code.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
             siteMonitor: https://ha-code.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
             icon: home-assistant.png
-        - Dashy Code:
-            href: https://dashy-code.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            siteMonitor: https://dashy-code.{{HOMEPAGE_VAR_SECRET_DOMAIN_NAME}}
-            icon: etcd.png
 
     - Calendar:
         - Agenda:
