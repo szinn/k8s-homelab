@@ -14,11 +14,12 @@ spec:
   dependsOn:
     - name: external-secrets
       namespace: external-secrets
-    - name: volsync
+    - name: kopiur
       namespace: system
     - name: cloudnative-pg-cluster
       namespace: dbms
   components:
+    - ../../../../components/kopiur
     - ../../../../components/volsync
   postBuild:
     substitute:
@@ -27,6 +28,10 @@ spec:
       VOLSYNC_CLAIM: pgadmin-config
       VOLSYNC_PUID: "5050"
       VOLSYNC_PGID: "5050"
+      KOPIUR_CLAIM: pgadmin-config
+      KOPIUR_CAPACITY: 1Gi
+      KOPIUR_PUID: "5050"
+      KOPIUR_PGID: "5050"
   prune: true
   wait: false
   interval: 30m

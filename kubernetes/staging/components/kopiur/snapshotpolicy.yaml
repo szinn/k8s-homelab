@@ -17,6 +17,14 @@ spec:
   sources:
     - pvc:
         name: ${KOPIUR_CLAIM:=${APP}}
+  mover:
+    podSecurityContext:
+      fsGroup: ${KOPIUR_PGID:=2000}
+    securityContext:
+      runAsUser: ${KOPIUR_PUID:=2000}
+      runAsGroup: ${KOPIUR_PGID:=2000}
+      runAsNonRoot: true
+    privilegedMode: true
   verification:
     deep:
       schedule:
