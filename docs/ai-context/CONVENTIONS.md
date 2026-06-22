@@ -123,7 +123,7 @@ kubernetes/main/apps/<namespace>/<app>/
 | `observability`         | Monitoring           | prometheus, grafana, loki, alloy               |
 | `rook-ceph`             | Distributed storage  | rook-ceph-cluster, operators                   |
 | `self-hosted`           | Self-hosted services | homepage, wikijs, pdf-tools                    |
-| `system`                | System tools         | kopia, volsync, reloader                       |
+| `system`                | System tools         | kopia, volsync, reloader, spegel               |
 | `system-upgrade`        | OS updates           | system-upgrade-controller                      |
 
 ---

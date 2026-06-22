@@ -286,7 +286,7 @@ kubernetes/staging/
 | observability         | Monitoring           | prometheus, grafana, loki, alloy, victoria-logs                 |
 | rook-ceph             | Distributed storage  | rook-ceph-cluster, operators                                    |
 | self-hosted           | Self-hosted services | homepage, wikijs, shlink, pdf-tools, change-detection           |
-| system                | System tools         | kopia, volsync, descheduler, reloader                           |
+| system                | System tools         | kopia, volsync, descheduler, reloader, spegel                   |
 | system-upgrade        | OS updates           | system-upgrade-controller                                       |
 
 ---
@@ -306,11 +306,12 @@ kubernetes/staging/
 
 ## Operational Limits
 
-| Resource               | Behavior                         |
-| ---------------------- | -------------------------------- |
-| Flux reconciliation    | Every 1 hour or on Git push      |
-| HelmRelease retry      | Retries with exponential backoff |
-| ExternalSecret refresh | Every 12 hours                   |
+| Resource               | Behavior                                       |
+| ---------------------- | ---------------------------------------------- |
+| Flux reconciliation    | Every 1 hour or on Git push                    |
+| HelmRelease retry      | Retries with exponential backoff               |
+| ExternalSecret refresh | Every 12 hours                                 |
+| Image pull             | Cached by Spegel (distributed registry mirror) |
 
 ---
 
@@ -385,6 +386,7 @@ persistence:
 3. **Dependency Order**
    - Cilium (networking)
    - CoreDNS (cluster DNS)
+   - Spegel (image mirroring)
    - Cert-Manager (certificates)
    - Flux (GitOps)
 

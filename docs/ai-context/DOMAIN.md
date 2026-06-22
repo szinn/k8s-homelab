@@ -357,11 +357,12 @@ kubernetes/{main,staging}/apps/<namespace>/<app>/
 
 1. Cilium (networking) - Nothing works without CNI
 2. CoreDNS (DNS) - Required for service discovery
-3. Cert-Manager (certificates) - Required for HTTPS
-4. External-Secrets (secrets) - Required for app secrets
-5. CloudNative-PG (database operator) - Required for databases
-6. Envoy Gateway (routing) - Required for HTTPRoutes
-7. Applications - Can start after infrastructure ready
+3. Spegel (image cache) - Accelerates image pulls
+4. Cert-Manager (certificates) - Required for HTTPS
+5. External-Secrets (secrets) - Required for app secrets
+6. CloudNative-PG (database operator) - Required for databases
+7. Envoy Gateway (routing) - Required for HTTPRoutes
+8. Applications - Can start after infrastructure ready
 
 **Enforcement**: `dependsOn` in install.yaml files create dependency graph.
 
@@ -479,6 +480,23 @@ dataFrom:
 ```
 
 **Why**: Secrets in 1Password stored as individual fields; apps need composed values.
+
+---
+
+### Capsule: ImagePullOptimization
+
+**Invariant**: Spegel mirrors images across cluster nodes to reduce external registry pulls.
+
+**Flow**:
+
+1. First pod on cluster pulls from registry (e.g., ghcr.io)
+2. Spegel caches image on that node
+3. Spegel peers share image across cluster
+4. Subsequent pods pull from local Spegel mirror
+
+**Why**: Faster deployments, reduced bandwidth, resilience to registry outages.
+
+**Limitation**: Cold starts still hit external registry; no pre-warming.
 
 ---
 
@@ -905,6 +923,7 @@ spec:
 | **onepassword-connect** | 1Password service providing API access to vaults                      |
 | **Renovate**            | Automation bot updating dependencies (images, charts, actions)        |
 | **Rook-Ceph**           | Distributed storage system on NVMe drives                             |
+| **Spegel**              | Peer-to-peer image cache across cluster nodes                         |
 | **Talos**               | Immutable Linux OS for Kubernetes nodes                               |
 | **VolSync**             | Backup replication using Restic or Rclone                             |
 
