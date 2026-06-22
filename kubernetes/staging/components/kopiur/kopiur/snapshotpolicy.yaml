@@ -8,6 +8,10 @@ spec:
   copyMethod: Snapshot
   credentialProjection:
     enabled: true
+  files:
+    ignoreRules:
+      - "lost+found"
+      - "*/lost+found"
   repository:
     kind: ClusterRepository
     name: ragnar

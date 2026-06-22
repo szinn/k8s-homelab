@@ -37,4 +37,4 @@ spec:
     securityContext:
       runAsUser: 2000
       runAsGroup: 2000
-    ttlSecondsAfterFinished: 300
+    ttlSecondsAfterFinished: 86400
