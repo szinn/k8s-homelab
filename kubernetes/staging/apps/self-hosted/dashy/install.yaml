@@ -17,7 +17,7 @@ spec:
     - name: kopiur
       namespace: system
   components:
-    - ../../../../components/kopiur
+    - ../../../../components/kopiur/kopiur
     - ../../../../components/kopiur/pvc
   postBuild:
     substitute:

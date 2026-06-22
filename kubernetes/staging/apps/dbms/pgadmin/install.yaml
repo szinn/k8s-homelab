@@ -19,7 +19,7 @@ spec:
     - name: cloudnative-pg-cluster
       namespace: dbms
   components:
-    - ../../../../components/kopiur
+    - ../../../../components/kopiur/kopiur
     - ../../../../components/kopiur/pvc
   postBuild:
     substitute:
