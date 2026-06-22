@@ -80,9 +80,9 @@ spec:
                   "path": "/repository"
                 }
               },
-              "hostname": "volsync.{{ .Release.Namespace }}.svc.cluster.local",
-              "username": "volsync",
-              "description": "volsync",
+              "hostname": "kopiur.{{ .Release.Namespace }}.svc.cluster.local",
+              "username": "kopiur",
+              "description": "kopiur",
               "enableActions": false
             }
     persistence:
@@ -95,7 +95,7 @@ spec:
       repository:
         type: nfs
         server: ragnar.zinn.tech
-        path: /mnt/atlas/k8s/staging/volsync
+        path: /mnt/atlas/k8s/staging/kopiur
         globalMounts:
           - path: /repository
       tmpfs:

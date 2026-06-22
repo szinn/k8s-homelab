@@ -16,7 +16,7 @@ spec:
     keepHourly: 24
   sources:
     - pvc:
-        name: ${VOLSYNC_CLAIM:=${APP}}
+        name: ${KOPIUR_CLAIM:=${APP}}
   verification:
     deep:
       schedule:
