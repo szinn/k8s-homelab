@@ -47,7 +47,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: "${VOLSYNC_CLAIM}"
+        existingClaim: "${KOPIUR_CLAIM}"
         advancedMounts:
           main:
             main:

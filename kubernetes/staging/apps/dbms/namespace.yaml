@@ -5,5 +5,4 @@ metadata:
   name: _
   annotations:
     kustomize.toolkit.fluxcd.io/prune: disabled
-    volsync.backube/privileged-movers: "true"
     kopiur.home-operations.com/privileged-movers: "true"
