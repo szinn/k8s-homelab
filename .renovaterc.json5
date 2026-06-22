@@ -128,7 +128,7 @@
       automerge: true,
       automergeType: "branch",
       ignoreTests: true,
-      matchUpdateTypes: ["minor", "patch"],
+      matchUpdateTypes: ["minor", "patch", "digests"],
       matchDepNames: [
         "ghcr.io/home-operations/bazarr",
         "ghcr.io/home-operations/lidarr",
