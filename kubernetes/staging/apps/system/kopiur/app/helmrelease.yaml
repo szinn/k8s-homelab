@@ -19,8 +19,8 @@ spec:
       extraVolumeMounts:
         - name: repo
           mountPath: /repo
-      logging:
-        level: debug,kopia=debug
+      # logging:
+      #   level: debug,kopia=debug
       resources:
         requests:
           cpu: 100m
