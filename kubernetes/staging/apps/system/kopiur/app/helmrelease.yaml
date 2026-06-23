@@ -19,6 +19,8 @@ spec:
       extraVolumeMounts:
         - name: repo
           mountPath: /repo
+      logging:
+        level: debug,kopia=debug
       resources:
         requests:
           cpu: 100m
@@ -46,6 +48,8 @@ spec:
       runAsGroup: 2000
       fsGroup: 2000
       fsGroupChangePolicy: OnRootMismatch
+      seccompProfile:
+        type: RuntimeDefault
     webhook:
       tls:
         mode: self
