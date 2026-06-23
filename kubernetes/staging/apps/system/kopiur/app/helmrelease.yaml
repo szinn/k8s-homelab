@@ -10,6 +10,8 @@ spec:
     name: kopiur
   interval: 1h
   values:
+    # logging:
+    #   level: debug,kopia=debug
     controller:
       extraVolumes:
         - name: repo
@@ -19,8 +21,6 @@ spec:
       extraVolumeMounts:
         - name: repo
           mountPath: /repo
-      # logging:
-      #   level: debug,kopia=debug
       resources:
         requests:
           cpu: 100m
