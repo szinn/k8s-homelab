@@ -16,6 +16,8 @@ spec:
       namespace: external-secrets
     - name: volsync
       namespace: system
+    - name: kopiur
+      namespace: system
   components:
     # - ../../../../components/volsync
     - ../../../../components/kopiur/kopiur

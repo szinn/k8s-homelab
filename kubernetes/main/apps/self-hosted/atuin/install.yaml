@@ -14,13 +14,19 @@ spec:
   dependsOn:
     - name: volsync
       namespace: system
+    - name: kopiur
+      namespace: system
   components:
-    - ../../../../components/volsync
+    # - ../../../../components/volsync
+    - ../../../../components/kopiur/kopiur
+    - ../../../../components/kopiur/pvc
   postBuild:
     substitute:
       APP: atuin
       VOLSYNC_CLAIM: atuin-config
       VOLSYNC_CAPACITY: 5Gi
+      KOPIUR_CLAIM: atuin-config
+      KOPIUR_CAPACITY: 5Gi
   prune: true
   wait: false
   interval: 30m

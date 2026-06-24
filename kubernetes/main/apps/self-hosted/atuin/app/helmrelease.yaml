@@ -70,7 +70,7 @@ spec:
             namespace: network
     persistence:
       config:
-        existingClaim: "${VOLSYNC_CLAIM}"
+        existingClaim: atuin-config
       backup:
         existingClaim: self-hosted-backups
         globalMounts:
