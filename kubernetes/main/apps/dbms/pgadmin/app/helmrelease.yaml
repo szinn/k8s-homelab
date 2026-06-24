@@ -59,7 +59,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: "${KOPIUR_CLAIM}"
+        existingClaim: pgadmin-config
         advancedMounts:
           pgadmin:
             pgadmin:
