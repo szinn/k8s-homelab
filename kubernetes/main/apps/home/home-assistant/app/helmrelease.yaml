@@ -136,7 +136,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: "${VOLSYNC_CLAIM}"
+        existingClaim: home-assistant-config
         advancedMounts:
           home-assistant:
             home-assistant:
