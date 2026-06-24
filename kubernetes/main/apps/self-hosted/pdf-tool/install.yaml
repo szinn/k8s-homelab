@@ -17,13 +17,19 @@ spec:
     - name: volsync
       namespace: system
   components:
-    - ../../../../components/volsync
     - ../../../../components/zeroscaler
+    # - ../../../../components/volsync
+    - ../../../../components/kopiur/kopiur
+    - ../../../../components/kopiur/pvc
   postBuild:
     substitute:
       APP: pdf-tool
       VOLSYNC_CLAIM: pdf-tool-config
       VOLSYNC_CAPACITY: 5Gi
+      KOPIUR_CLAIM: pdf-tool-config
+      KOPIUR_CAPACITY: 5Gi
+      KOPIUR_PUID: "1000"
+      KOPIUR_PGID: "1000"
   prune: true
   wait: true
   interval: 30m
