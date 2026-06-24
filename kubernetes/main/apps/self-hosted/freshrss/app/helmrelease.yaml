@@ -40,7 +40,7 @@ spec:
                 memory: 512M
     persistence:
       data:
-        existingClaim: "${VOLSYNC_CLAIM}"
+        existingClaim: freshrss-config
         advancedMounts:
           freshrss:
             freshrss:

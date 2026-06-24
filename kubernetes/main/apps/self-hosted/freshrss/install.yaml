@@ -12,10 +12,14 @@ spec:
     name: flux-system
     namespace: flux-system
   dependsOn:
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
+    - name: volsync
+      namespace: system
+    - name: kopiur
+      namespace: system
   components:
-    - ../../../../components/volsync
+    # - ../../../../components/volsync
+    - ../../../../components/kopiur/kopiur
+    - ../../../../components/kopiur/pvc
   postBuild:
     substitute:
       APP: freshrss
@@ -23,6 +27,11 @@ spec:
       APP_GID: "82"
       VOLSYNC_CLAIM: freshrss-config
       VOLSYNC_CAPACITY: 2Gi
+      KOPIUR_CLAIM: freshrss-config
+      KOPIUR_CAPACITY: 2Gi
+      KOPIUR_PUID: "0"
+      KOPIUR_PGID: "82"
+      KOPIUR_RUNASNONROOT: "false"
   prune: true
   wait: false
   interval: 30m
