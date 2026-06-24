@@ -4,4 +4,6 @@ kind: Namespace
 metadata:
   name: _
   annotations:
+    kopiur.home-operations.com/privileged-movers: "true"
     kustomize.toolkit.fluxcd.io/prune: disabled
+    volsync.backube/privileged-movers: "true"

@@ -12,15 +12,21 @@ spec:
     name: flux-system
     namespace: flux-system
   dependsOn:
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
+    - name: volsync
+      namespace: system
+    - name: kopiur
+      namespace: system
   components:
-    - ../../../../components/volsync
+    # - ../../../../components/volsync
+    - ../../../../components/kopiur/kopiur
+    - ../../../../components/kopiur/pvc
   postBuild:
     substitute:
       APP: kanidm
       VOLSYNC_CLAIM: kanidm
       VOLSYNC_CAPACITY: 5Gi
+      KOPIUR_CLAIM: kanidm
+      KOPIUR_CAPACITY: 5Gi
   prune: true
   wait: false
   interval: 30m
