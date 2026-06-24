@@ -17,12 +17,16 @@ spec:
     - name: volsync
       namespace: system
   components:
-    - ../../../../components/volsync
+    # - ../../../../components/volsync
+    - ../../../../components/kopiur/kopiur
+    - ../../../../components/kopiur/pvc
   postBuild:
     substitute:
       APP: dashy
       VOLSYNC_CLAIM: dashy-config
       VOLSYNC_CAPACITY: 1Gi
+      KOPIUR_CLAIM: dashy-config
+      KOPIUR_CAPACITY: 1Gi
   prune: true
   wait: false
   interval: 30m

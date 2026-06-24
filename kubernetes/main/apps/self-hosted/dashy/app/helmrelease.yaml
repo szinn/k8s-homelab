@@ -40,7 +40,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: "${VOLSYNC_CLAIM}"
+        existingClaim: dashy-config
         advancedMounts:
           dashy:
             dashy:
