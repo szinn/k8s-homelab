@@ -16,13 +16,22 @@ spec:
       namespace: external-secrets
     - name: volsync
       namespace: system
+    - name: kopiur
+      namespace: system
   components:
-    - ../../../../components/volsync
+    # - ../../../../components/volsync
+    - ../../../../components/kopiur/kopiur
+    - ../../../../components/kopiur/pvc
   postBuild:
     substitute:
       APP: changedetection
       VOLSYNC_CLAIM: changedetection-config
       VOLSYNC_CAPACITY: 1Gi
+      KOPIUR_CLAIM: changedetection-config
+      KOPIUR_CAPACITY: 1Gi
+      KOPIUR_PUID: "0"
+      KOPIUR_PGID: "0"
+      KOPIUR_RUNASNONROOT: "false"
   prune: true
   wait: false
   interval: 30m

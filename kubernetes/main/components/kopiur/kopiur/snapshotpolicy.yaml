@@ -27,7 +27,7 @@ spec:
     securityContext:
       runAsUser: ${KOPIUR_PUID:=2000}
       runAsGroup: ${KOPIUR_PGID:=2000}
-      runAsNonRoot: true
+      runAsNonRoot: ${KOPIUR_RUNASNONROOT:=true}
     privilegedMode: true
   verification:
     deep:
