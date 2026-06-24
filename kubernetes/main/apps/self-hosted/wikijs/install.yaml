@@ -15,7 +15,9 @@ spec:
     - name: external-secrets
       namespace: external-secrets
   components:
-    - ../../../../components/volsync
+    # - ../../../../components/volsync
+    - ../../../../components/kopiur/kopiur
+    - ../../../../components/kopiur/pvc
   postBuild:
     substitute:
       APP: wikijs
@@ -23,6 +25,10 @@ spec:
       VOLSYNC_PGID: "1000"
       VOLSYNC_CLAIM: wikijs-data
       VOLSYNC_CAPACITY: 15Gi
+      KOPIUR_CLAIM: wikijs-data
+      KOPIUR_CAPACITY: 15Gi
+      KOPIUR_PUID: "1000"
+      KOPIUR_PGID: "1000"
   prune: true
   wait: false
   interval: 30m
