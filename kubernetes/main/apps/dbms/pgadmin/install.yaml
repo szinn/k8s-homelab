@@ -20,6 +20,8 @@ spec:
       namespace: system
   components:
     - ../../../../components/volsync
+    # - ../../../../components/kopiur/kopiur
+    # - ../../../../components/kopiur/pvc
   postBuild:
     substitute:
       APP: pgadmin
@@ -27,6 +29,10 @@ spec:
       VOLSYNC_CAPACITY: 1Gi
       VOLSYNC_PUID: "5050"
       VOLSYNC_PGID: "5050"
+      KOPIUR_CLAIM: pgadmin-config
+      KOPIUR_CAPACITY: 1Gi
+      KOPIUR_PUID: "5050"
+      KOPIUR_PGID: "5050"
   prune: true
   wait: false
   interval: 30m

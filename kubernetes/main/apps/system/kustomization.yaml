@@ -15,6 +15,7 @@ resources:
   - intel-gpu-resource-driver/install.yaml
   - k8tz/install.yaml
   - kopia/install.yaml
+  - kopiur/install.yaml
   - node-feature-discovery/install.yaml
   - openebs/install.yaml
   - reloader/install.yaml

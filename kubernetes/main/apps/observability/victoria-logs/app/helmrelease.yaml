@@ -43,4 +43,4 @@ spec:
       grafanaOperator:
         enabled: true
         spec:
-          folderRef: victoria-logs
+          allowCrossNamespaceImport: true
