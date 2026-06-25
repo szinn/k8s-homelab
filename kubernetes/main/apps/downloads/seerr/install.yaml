@@ -14,16 +14,22 @@ spec:
   dependsOn:
     - name: external-secrets
       namespace: external-secrets
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
+    - name: volsync
+      namespace: system
+    - name: kopiur
+      namespace: system
   components:
-    - ../../../../components/volsync
+    # - ../../../../components/volsync
     - ../../../../components/zeroscaler
+    - ../../../../components/kopiur/kopiur
+    - ../../../../components/kopiur/pvc
   postBuild:
     substitute:
       APP: seerr
       VOLSYNC_CLAIM: seerr-config
       VOLSYNC_CAPACITY: 5Gi
+      KOPIUR_CLAIM: seerr-config
+      KOPIUR_CAPACITY: 5Gi
   prune: true
   wait: false
   interval: 1h
