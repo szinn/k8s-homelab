@@ -27,10 +27,10 @@ spec:
     hostnameExpr: namespace
     usernameExpr: namespace + '-' + policyName
   moverDefaults:
-    # cache:
-    #   capacity: 1Mi
-    #   mode: Ephemeral
-    #   storageClassName: ceph-block
+    cache:
+      capacity: 1Mi
+      mode: Ephemeral
+      storageClassName: openebs-hostpath
     podSecurityContext:
       fsGroup: 2000
       fsGroupChangePolicy: OnRootMismatch
