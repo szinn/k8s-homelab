@@ -15,12 +15,16 @@ spec:
     - name: volsync
       namespace: system
   components:
-    - ../../../../components/volsync
+    # - ../../../../components/volsync
+    - ../../../../components/kopiur/kopiur
+    - ../../../../components/kopiur/pvc
   postBuild:
     substitute:
       APP: openbooks
       VOLSYNC_CLAIM: openbooks-config
       VOLSYNC_CAPACITY: 2Gi
+      KOPIUR_CLAIM: openbooks-config
+      KOPIUR_CAPACITY: 2Gi
   prune: true
   wait: false
   interval: 30m

@@ -55,6 +55,6 @@ spec:
             namespace: network
     persistence:
       config:
-        existingClaim: "${VOLSYNC_CLAIM}"
+        existingClaim: openbooks-config
         globalMounts:
           - path: /books
