@@ -14,6 +14,8 @@ spec:
   dependsOn:
     - name: volsync
       namespace: system
+    - name: kopiur
+      namespace: system
   components:
     # - ../../../../components/volsync
     - ../../../../components/kopiur/kopiur
