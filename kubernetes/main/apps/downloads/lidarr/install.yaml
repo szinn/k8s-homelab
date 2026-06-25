@@ -16,14 +16,20 @@ spec:
       namespace: external-secrets
     - name: volsync
       namespace: system
+    - name: kopiur
+      namespace: system
   components:
-    - ../../../../components/volsync
+    # - ../../../../components/volsync
     - ../../../../components/zeroscaler
+    - ../../../../components/kopiur/kopiur
+    - ../../../../components/kopiur/pvc
   postBuild:
     substitute:
       APP: lidarr
       VOLSYNC_CLAIM: lidarr-config
       VOLSYNC_CAPACITY: 15Gi
+      KOPIUR_CLAIM: lidarr-config
+      KOPIUR_CAPACITY: 15Gi
   prune: true
   wait: false
   interval: 30m
