@@ -171,7 +171,7 @@ spec:
             cpu: 100m
           limits:
             memory: 4Gi
-        retention: 14d
+        retention: 30d
         retentionSize: 50GB
         ruleSelectorNilUsesHelmValues: false
         scrapeConfigSelectorNilUsesHelmValues: false
