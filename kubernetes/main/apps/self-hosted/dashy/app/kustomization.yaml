@@ -11,6 +11,7 @@ configMapGenerator:
       - bookboss.png=./icons/bookboss.png
       - connect.jpg=./icons/connect.jpg
       - database-storage.png=./icons/database-storage.png
+      - mailkeep.png=./icons/mailkeep.png
       - pikvm.png=./icons/pikvm.png
       - pikvm-light.png=./icons/pikvm-light.png
 generatorOptions:
