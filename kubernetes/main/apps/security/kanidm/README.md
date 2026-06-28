@@ -67,4 +67,15 @@ kanidm system oauth2 get mailkeep-dev
 # Need to copy this secret to dev environment
 kanidm system oauth2 show-basic-secret mailkeep-dev
 
+kanidm group create 'mailkeep_users'
+kanidm group add-members mailkeep_users scotte
+
+kanidm system oauth2 create mailkeep 'mailkeep.zinn.ca' https://mailkeep.zinn.ca
+kanidm system oauth2 set-landing-url mailkeep 'https://mailkeep.zinn.ca/auth/oidc/callback'
+kanidm system oauth2 update-scope-map mailkeep mailkeep_users email openid
+kanidm system oauth2 enable-pkce mailkeep
+kanidm system oauth2 get mailkeep
+
+# Need to copy this secret to 1Password for MailKeep
+kanidm system oauth2 show-basic-secret mailkeep
 ```

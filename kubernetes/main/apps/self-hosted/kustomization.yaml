@@ -18,5 +18,6 @@ resources:
   - homepage/install.yaml
   - issueboss/install.yaml
   - it-tools/install.yaml
+  - mailkeep/install.yaml
   - pdf-tool/install.yaml
   - wikijs/install.yaml
