@@ -14,8 +14,8 @@ spec:
   dependsOn:
     - name: external-secrets
       namespace: external-secrets
-    - name: volsync
-      namespace: system
+    # - name: volsync
+    #   namespace: system
     - name: kopiur
       namespace: system
     - name: cloudnative-pg-cluster

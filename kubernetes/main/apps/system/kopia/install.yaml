@@ -16,7 +16,7 @@ spec:
       namespace: rook-ceph
     - name: external-secrets
       namespace: external-secrets
-    - name: volsync
+    # - name: volsync
   interval: 1h
   prune: true
   wait: false

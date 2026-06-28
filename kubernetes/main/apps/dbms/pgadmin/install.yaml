@@ -16,8 +16,8 @@ spec:
       namespace: dbms
     - name: external-secrets
       namespace: external-secrets
-    - name: volsync
-      namespace: system
+    # - name: volsync
+    #   namespace: system
     - name: kopiur
       namespace: system
   components:
