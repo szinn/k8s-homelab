@@ -32,7 +32,7 @@ spec:
           mailkeep:
             image:
               repository: ghcr.io/szinn/mailkeep
-              tag: v0.1.3@sha256:d16bbc141f57f1057f5db457a8c330f62aa0d1be09b47fa86953a31141bfc67f
+              tag: v0.1.4@sha256:560a7694cd149e247dddfd3365d3d2de0f5537847be32e817bf7527daf47dd94
             env:
               MAILKEEP__METADATA_PATH: /data
               MAILKEEP__STORAGE_PATH: /storage
