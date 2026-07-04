@@ -5,6 +5,11 @@ kubectl exec -n security -it statefulset/kanidm -- kanidmd recover-account admin
 kubectl exec -n security -it statefulset/kanidm -- kanidmd recover-account idm_admin
 
 kanidm login --name idm_admin
+
+# Session lifetime (SSO auth session). Default is short; set to 30 days.
+# Applies to idm_all_persons so all persons inherit it. Takes effect on next login.
+# Leave privilege-expiry (short read/write window for sensitive ops) alone.
+kanidm group account-policy auth-expiry idm_all_persons 2592000  # 30 days in seconds
 kanidm person create scotte 'Scotte Zinn'
 kanidm person update scotte --mail 'scotte@zinn.ca' —legalname 'Scotte Zinn'
 kanidm person credential create-reset-token scotte
