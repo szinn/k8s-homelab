@@ -9,5 +9,4 @@ spec:
     name: ${APP}
   schedule:
     cron: H * * * *
-    jitter: 2m
     timezone: America/New_York
