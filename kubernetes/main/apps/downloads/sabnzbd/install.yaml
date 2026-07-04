@@ -19,15 +19,15 @@ spec:
     - name: kopiur
       namespace: system
   components:
-    # - ../../../../components/volsync
-    - ../../../../components/zeroscaler
     - ../../../../components/kopiur/kopiur
     - ../../../../components/kopiur/pvc
+    # - ../../../../components/volsync
+    - ../../../../components/zeroscaler
   postBuild:
     substitute:
       APP: sabnzbd
-      VOLSYNC_CLAIM: sabnzbd-config
-      VOLSYNC_CAPACITY: 1Gi
+      # VOLSYNC_CLAIM: sabnzbd-config
+      # VOLSYNC_CAPACITY: 1Gi
       KOPIUR_CLAIM: sabnzbd-config
       KOPIUR_CAPACITY: 1Gi
   prune: true

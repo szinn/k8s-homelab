@@ -19,15 +19,15 @@ spec:
     - name: kopiur
       namespace: system
   components:
-    - ../../../../components/zeroscaler
-    # - ../../../../components/volsync
     - ../../../../components/kopiur/kopiur
     - ../../../../components/kopiur/pvc
+    # - ../../../../components/volsync
+    - ../../../../components/zeroscaler
   postBuild:
     substitute:
       APP: pdf-tool
-      VOLSYNC_CLAIM: pdf-tool-config
-      VOLSYNC_CAPACITY: 5Gi
+      # VOLSYNC_CLAIM: pdf-tool-config
+      # VOLSYNC_CAPACITY: 5Gi
       KOPIUR_CLAIM: pdf-tool-config
       KOPIUR_CAPACITY: 5Gi
       KOPIUR_PUID: "1000"

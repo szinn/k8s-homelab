@@ -25,8 +25,8 @@ spec:
   postBuild:
     substitute:
       APP: recyclarr
-      VOLSYNC_CLAIM: recyclarr-config
-      VOLSYNC_CAPACITY: 1Gi
+      # VOLSYNC_CLAIM: recyclarr-config
+      # VOLSYNC_CAPACITY: 1Gi
       KOPIUR_CLAIM: recyclarr-config
       KOPIUR_CAPACITY: 1Gi
   prune: true

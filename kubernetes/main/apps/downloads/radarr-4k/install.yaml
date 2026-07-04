@@ -19,15 +19,15 @@ spec:
     - name: kopiur
       namespace: system
   components:
-    # - ../../../../components/volsync
-    - ../../../../components/zeroscaler
     - ../../../../components/kopiur/kopiur
     - ../../../../components/kopiur/pvc
+    # - ../../../../components/volsync
+    - ../../../../components/zeroscaler
   postBuild:
     substitute:
       APP: radarr-4k
-      VOLSYNC_CLAIM: radarr-4k-config
-      VOLSYNC_CAPACITY: 15Gi
+      # VOLSYNC_CLAIM: radarr-4k-config
+      # VOLSYNC_CAPACITY: 15Gi
       KOPIUR_CLAIM: radarr-4k-config
       KOPIUR_CAPACITY: 15Gi
   prune: true

@@ -25,8 +25,8 @@ spec:
   postBuild:
     substitute:
       APP: dashy
-      VOLSYNC_CLAIM: dashy-config
-      VOLSYNC_CAPACITY: 1Gi
+      # VOLSYNC_CLAIM: dashy-config
+      # VOLSYNC_CAPACITY: 1Gi
       KOPIUR_CLAIM: dashy-config
       KOPIUR_CAPACITY: 1Gi
   prune: true

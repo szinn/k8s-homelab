@@ -25,10 +25,10 @@ spec:
   postBuild:
     substitute:
       APP: wikijs
-      VOLSYNC_PUID: "1000"
-      VOLSYNC_PGID: "1000"
-      VOLSYNC_CLAIM: wikijs-data
-      VOLSYNC_CAPACITY: 15Gi
+      # VOLSYNC_PUID: "1000"
+      # VOLSYNC_PGID: "1000"
+      # VOLSYNC_CLAIM: wikijs-data
+      # VOLSYNC_CAPACITY: 15Gi
       KOPIUR_CLAIM: wikijs-data
       KOPIUR_CAPACITY: 15Gi
       KOPIUR_PUID: "1000"

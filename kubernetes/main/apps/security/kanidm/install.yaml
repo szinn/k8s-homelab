@@ -23,8 +23,8 @@ spec:
   postBuild:
     substitute:
       APP: kanidm
-      VOLSYNC_CLAIM: kanidm
-      VOLSYNC_CAPACITY: 5Gi
+      # VOLSYNC_CLAIM: kanidm
+      # VOLSYNC_CAPACITY: 5Gi
       KOPIUR_CLAIM: kanidm
       KOPIUR_CAPACITY: 5Gi
   prune: true

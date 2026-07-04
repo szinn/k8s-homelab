@@ -25,8 +25,8 @@ spec:
       APP: freshrss
       APP_UID: "0"
       APP_GID: "82"
-      VOLSYNC_CLAIM: freshrss-config
-      VOLSYNC_CAPACITY: 2Gi
+      # VOLSYNC_CLAIM: freshrss-config
+      # VOLSYNC_CAPACITY: 2Gi
       KOPIUR_CLAIM: freshrss-config
       KOPIUR_CAPACITY: 2Gi
       KOPIUR_PUID: "0"

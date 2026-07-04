@@ -23,8 +23,8 @@ spec:
   postBuild:
     substitute:
       APP: atuin
-      VOLSYNC_CLAIM: atuin-config
-      VOLSYNC_CAPACITY: 5Gi
+      # VOLSYNC_CLAIM: atuin-config
+      # VOLSYNC_CAPACITY: 5Gi
       KOPIUR_CLAIM: atuin-config
       KOPIUR_CAPACITY: 5Gi
   prune: true

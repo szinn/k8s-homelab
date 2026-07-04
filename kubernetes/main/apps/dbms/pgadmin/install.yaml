@@ -27,10 +27,10 @@ spec:
   postBuild:
     substitute:
       APP: pgadmin
-      VOLSYNC_CLAIM: pgadmin-config
-      VOLSYNC_CAPACITY: 1Gi
-      VOLSYNC_PUID: "5050"
-      VOLSYNC_PGID: "5050"
+      # VOLSYNC_CLAIM: pgadmin-config
+      # VOLSYNC_CAPACITY: 1Gi
+      # VOLSYNC_PUID: "5050"
+      # VOLSYNC_PGID: "5050"
       KOPIUR_CLAIM: pgadmin-config
       KOPIUR_CAPACITY: 1Gi
       KOPIUR_PUID: "5050"

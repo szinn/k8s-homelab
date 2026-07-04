@@ -19,15 +19,15 @@ spec:
     - name: kopiur
       namespace: system
   components:
-    # - ../../../../components/volsync
-    - ../../../../components/zeroscaler
     - ../../../../components/kopiur/kopiur
     - ../../../../components/kopiur/pvc
+    # - ../../../../components/volsync
+    - ../../../../components/zeroscaler
   postBuild:
     substitute:
       APP: sonarr
-      VOLSYNC_CLAIM: sonarr-config
-      VOLSYNC_CAPACITY: 15Gi
+      # VOLSYNC_CLAIM: sonarr-config
+      # VOLSYNC_CAPACITY: 15Gi
       KOPIUR_CLAIM: sonarr-config
       KOPIUR_CAPACITY: 15Gi
   prune: true

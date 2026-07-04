@@ -17,9 +17,9 @@ spec:
     - name: external-secrets
       namespace: external-secrets
   components:
-    - ../../../../components/zeroscaler
     - ../../../../components/kopiur/kopiur
     - ../../../../components/kopiur/pvc
+    - ../../../../components/zeroscaler
   postBuild:
     substitute:
       APP: mailkeep
