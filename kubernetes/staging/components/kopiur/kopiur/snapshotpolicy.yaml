@@ -33,10 +33,9 @@ spec:
     deep:
       schedule:
         cron: H 5 * * 0
-        jitter: 1h
         timezone: America/New_York
     quick:
-      cron: H 5 * * *
-      jitter: 1h
-      timezone: America/New_York
+      schedule:
+        cron: H 5 * * *
+        timezone: America/New_York
   volumeSnapshotClassName: ${KOPIUR_SNAPSHOTCLASS:=csi-ceph-blockpool}
