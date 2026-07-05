@@ -33,6 +33,6 @@ spec:
       KOPIUR_PUID: "1000"
       KOPIUR_PGID: "1000"
   prune: true
-  wait: true
+  wait: false
   interval: 30m
   timeout: 5m
