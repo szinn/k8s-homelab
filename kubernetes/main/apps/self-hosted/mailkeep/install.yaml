@@ -25,6 +25,9 @@ spec:
       APP: mailkeep
       KOPIUR_CLAIM: mailkeep-config
       KOPIUR_CAPACITY: 50Gi
+      KOPIUR_PUID: "1234"
+      KOPIUR_PGID: "1234"
+      KOPIUR_RUNASNONROOT: "true"
   prune: true
   wait: false
   interval: 30m
