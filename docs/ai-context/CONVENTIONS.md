@@ -123,7 +123,7 @@ kubernetes/main/apps/<namespace>/<app>/
 | `observability`         | Monitoring           | prometheus, grafana, loki, alloy               |
 | `rook-ceph`             | Distributed storage  | rook-ceph-cluster, operators                   |
 | `self-hosted`           | Self-hosted services | homepage, wikijs, pdf-tools                    |
-| `system`                | System tools         | kopia, volsync, reloader, spegel               |
+| `system`                | System tools         | kopia, kopiur, reloader, spegel                |
 | `system-upgrade`        | OS updates           | system-upgrade-controller                      |
 
 ---
@@ -140,7 +140,7 @@ kubernetes/main/apps/<namespace>/<app>/
 | ExternalSecret     | `secrets.yaml`       | `kubernetes/main/apps/media/immich/app/secrets.yaml`       |
 | PVC                | `<name>-pvc.yaml`    | `kubernetes/main/apps/media/immich/app/immich-pvc.yaml`    |
 | Jinja2 template    | `*.yaml.j2`          | `kubernetes/main/talos/nodes/k8s-1.yaml.j2`                |
-| Component          | `components/<name>/` | `kubernetes/main/components/volsync/`                      |
+| Component          | `components/<name>/` | `kubernetes/main/components/kopiur/`                       |
 
 ### Resources
 
@@ -748,7 +748,7 @@ components:
 
 - `components/alerts/` - Alert configurations
 - `components/app-template/` - App template OCI repository
-- `components/volsync/` - Backup replication
+- `components/kopiur/` - Backup replication
 - `components/zeroscaler/` - NFS-based autoscaling
 
 **Depth**

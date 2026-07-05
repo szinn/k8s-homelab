@@ -12,7 +12,5 @@ spec:
     name: flux-system
     namespace: flux-system
   interval: 1h
-  # dependsOn:
-  #   - name: volsync
   prune: true
   wait: false

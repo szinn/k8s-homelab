@@ -468,18 +468,16 @@ flux get helmreleases -A --context <main|staging>
 
 ### When to Use What
 
-| Task                      | Tool                                                                                   |
-| ------------------------- | -------------------------------------------------------------------------------------- |
-| Understand repo structure | `task --list`, directory navigation                                                    |
-| Find specific pattern     | `grep -r` or `Grep` tool                                                               |
-| Read a file               | `Read` tool or `cat`                                                                   |
-| Validate YAML             | `task kubernetes:kubeconform cluster=<main\|staging>`                                  |
-| Check cluster state       | `flux get` / `kubectl get` with `--context`                                            |
-| Debug app                 | `kubectl logs` / `kubectl describe` with `--context`                                   |
-| Force deployment          | `task flux:sync cluster=<main\|staging>`                                               |
-| Render templates          | `task configure` (no cluster needed)                                                   |
-| Create backup             | `task volsync:snapshot cluster=<main\|staging> app=<name> ns=<namespace>`              |
-| Restore backup            | `task volsync:restore cluster=<main\|staging> app=<name> ns=<namespace> previous=<id>` |
+| Task                      | Tool                                                  |
+| ------------------------- | ----------------------------------------------------- |
+| Understand repo structure | `task --list`, directory navigation                   |
+| Find specific pattern     | `grep -r` or `Grep` tool                              |
+| Read a file               | `Read` tool or `cat`                                  |
+| Validate YAML             | `task kubernetes:kubeconform cluster=<main\|staging>` |
+| Check cluster state       | `flux get` / `kubectl get` with `--context`           |
+| Debug app                 | `kubectl logs` / `kubectl describe` with `--context`  |
+| Force deployment          | `task flux:sync cluster=<main\|staging>`              |
+| Render templates          | `task configure` (no cluster needed)                  |
 
 ### Common Command Patterns
 
@@ -729,7 +727,6 @@ talosctl --talosconfig kubernetes/staging/talosconfig health
 | Pre-commit hooks configured                | `.pre-commit-config.yaml`                                       | Verified   |
 | Kubeconform validation script              | `scripts/kubeconform.sh`                                        | Verified   |
 | SOPS encryption required for secrets       | `.taskfiles/Sops/Taskfile.yaml`, pre-commit hooks               | Verified   |
-| Volsync for backup/restore                 | `.taskfiles/Volsync/Taskfile.yaml`                              | Verified   |
 | CloudNativePG database operations          | `.taskfiles/Postgres/Taskfile.yaml`                             | Verified   |
 
 ---
@@ -743,7 +740,7 @@ talosctl --talosconfig kubernetes/staging/talosconfig health
 - **SOPS files must be encrypted**: Pre-commit hook prevents unencrypted `*.sops.yaml` files
 - **Template rendering is cluster-agnostic**: `task configure` renders both clusters simultaneously
 - **Direnv loads secrets**: `.envrc` decrypts `config.sops.env` for environment variables
-- **Volsync requires specific naming**: App, HelmRelease, PVC, and ReplicationSource must share the same name
+- **Kopiur requires specific naming**: App, HelmRelease, PVC, and ReplicationSource must share the same name
 - **Postgres operations target main**: Database tasks primarily work with main cluster
 - **Pre-commit runs automatically**: After `task pre-commit:init`, hooks run on every commit
 

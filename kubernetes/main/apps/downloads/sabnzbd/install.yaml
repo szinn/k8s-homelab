@@ -14,20 +14,15 @@ spec:
   dependsOn:
     - name: external-secrets
       namespace: external-secrets
-    # - name: volsync
-    #   namespace: system
     - name: kopiur
       namespace: system
   components:
     - ../../../../components/kopiur/kopiur
     - ../../../../components/kopiur/pvc
-    # - ../../../../components/volsync
     - ../../../../components/zeroscaler
   postBuild:
     substitute:
       APP: sabnzbd
-      # VOLSYNC_CLAIM: sabnzbd-config
-      # VOLSYNC_CAPACITY: 1Gi
       KOPIUR_CLAIM: sabnzbd-config
       KOPIUR_CAPACITY: 1Gi
   prune: true

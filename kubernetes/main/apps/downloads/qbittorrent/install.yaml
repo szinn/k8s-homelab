@@ -14,20 +14,15 @@ spec:
   dependsOn:
     - name: external-secrets
       namespace: external-secrets
-    # - name: volsync
-    #   namespace: system
     - name: kopiur
       namespace: system
   components:
     - ../../../../components/kopiur/kopiur
     - ../../../../components/kopiur/pvc
-    # - ../../../../components/volsync
     - ../../../../components/zeroscaler
   postBuild:
     substitute:
       APP: qbittorrent
-      # VOLSYNC_CLAIM: qbittorrent-config
-      # VOLSYNC_CAPACITY: 2Gi
       KOPIUR_CLAIM: qbittorrent-config
       KOPIUR_CAPACITY: 2Gi
   prune: true

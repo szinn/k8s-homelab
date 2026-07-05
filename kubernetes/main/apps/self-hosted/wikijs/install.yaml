@@ -14,21 +14,14 @@ spec:
   dependsOn:
     - name: external-secrets
       namespace: external-secrets
-    # - name: volsync
-    #   namespace: system
     - name: kopiur
       namespace: system
   components:
-    # - ../../../../components/volsync
     - ../../../../components/kopiur/kopiur
     - ../../../../components/kopiur/pvc
   postBuild:
     substitute:
       APP: wikijs
-      # VOLSYNC_PUID: "1000"
-      # VOLSYNC_PGID: "1000"
-      # VOLSYNC_CLAIM: wikijs-data
-      # VOLSYNC_CAPACITY: 15Gi
       KOPIUR_CLAIM: wikijs-data
       KOPIUR_CAPACITY: 15Gi
       KOPIUR_PUID: "1000"

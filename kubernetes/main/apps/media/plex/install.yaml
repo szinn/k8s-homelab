@@ -14,20 +14,15 @@ spec:
   dependsOn:
     - name: external-secrets
       namespace: external-secrets
-    # - name: volsync
-    #   namespace: system
     - name: kopiur
       namespace: system
   components:
     - ../../../../components/kopiur/kopiur
     - ../../../../components/kopiur/pvc
-    # - ../../../../components/volsync
     - ../../../../components/zeroscaler
   postBuild:
     substitute:
       APP: plex
-      # VOLSYNC_CLAIM: plex-config
-      # VOLSYNC_CAPACITY: 50Gi
       KOPIUR_CLAIM: plex-config
       KOPIUR_CAPACITY: 50Gi
   prune: true

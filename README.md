@@ -185,7 +185,7 @@ The NFS drives are available across the cluster but are at a slower speed than t
 
 Currently, I use a combination of built-in application backups (e.g., \*arr applications will backup weekly),
 a backup job in cluster that will backup databases (mysql and postgres),
-I am also using volsync to backup the PVCs to NFS that will automatically restore the most recent backup (if it exists) .
+I am also using kopiur to backup the PVCs to NFS that will automatically restore the most recent backup (if it exists) .
 
 ## Installation
 

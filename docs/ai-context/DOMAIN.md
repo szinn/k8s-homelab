@@ -925,7 +925,7 @@ spec:
 | **Rook-Ceph**           | Distributed storage system on NVMe drives                             |
 | **Spegel**              | Peer-to-peer image cache across cluster nodes                         |
 | **Talos**               | Immutable Linux OS for Kubernetes nodes                               |
-| **VolSync**             | Backup replication using Restic or Rclone                             |
+| **Kopiur**              | Backup replication using Kopia                                        |
 
 ---
 

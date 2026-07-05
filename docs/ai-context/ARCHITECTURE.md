@@ -232,7 +232,7 @@ kubernetes/main/
 │   ├── observability/     # Prometheus, Grafana, Loki
 │   ├── rook-ceph/         # Distributed storage
 │   ├── self-hosted/       # Homepage, WikiJS, PDF tools
-│   ├── system/            # kopia, volsync, descheduler
+│   ├── system/            # kopia, kopiur, descheduler
 │   ├── system-upgrade/
 │   └── actions-runner-system/
 ├── bootstrap/             # Helmfile-based bootstrap
@@ -243,7 +243,7 @@ kubernetes/main/
 │   ├── alerts/
 │   ├── app-template/
 │   ├── gatus/
-│   ├── volsync/
+│   ├── kopiur/
 │   └── zeroscaler/
 ├── talos/                 # Talos OS configuration
 │   ├── nodes/             # k8s-1 through k8s-6 (.j2 templates)
@@ -286,7 +286,7 @@ kubernetes/staging/
 | observability         | Monitoring           | prometheus, grafana, loki, alloy, victoria-logs                 |
 | rook-ceph             | Distributed storage  | rook-ceph-cluster, operators                                    |
 | self-hosted           | Self-hosted services | homepage, wikijs, shlink, pdf-tools, change-detection           |
-| system                | System tools         | kopia, volsync, descheduler, reloader, spegel                   |
+| system                | System tools         | kopia, kopiur, descheduler, reloader, spegel                    |
 | system-upgrade        | OS updates           | system-upgrade-controller                                       |
 
 ---
@@ -366,7 +366,7 @@ persistence:
 - Performance: Slower than Ceph but massive capacity
 - Trade-off: Capacity vs speed
 - NotThis: Not for databases or apps requiring fast I/O
-- SeeAlso: `RookCephFast`, `VolSyncBackup`
+- SeeAlso: `RookCephFast`
 
 ---
 

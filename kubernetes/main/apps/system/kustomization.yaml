@@ -22,4 +22,3 @@ resources:
   - reloader/install.yaml
   - snapshot-controller/install.yaml
   - spegel/install.yaml
-  # - volsync/install.yaml

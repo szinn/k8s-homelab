@@ -686,36 +686,6 @@ task kubernetes:netshoot cluster=main
 mount -t nfs synology.internal:/volume1/media /mnt
 ```
 
-### VolSync Backups
-
-**Trigger snapshot**:
-
-```bash
-# Single app
-task volsync:snapshot cluster=main ns=media app=immich
-
-# All apps
-task volsync:snapshot-all cluster=main
-```
-
-**List snapshots**:
-
-```bash
-task volsync:list cluster=main ns=media app=immich
-```
-
-**Restore from snapshot**:
-
-```bash
-task volsync:restore cluster=main ns=media app=immich previous=<snapshot-name>
-```
-
-**Unlock stuck repository**:
-
-```bash
-task volsync:unlock cluster=main
-```
-
 ---
 
 ## Checking Cluster Health
@@ -998,6 +968,5 @@ task pre-commit:update
 | Apps use bjw-s/app-template                   | `kubernetes/{main,staging}/apps/*/app/helmrelease.yaml` | Verified   |
 | ExternalSecrets sync from 1Password           | `kubernetes/{main,staging}/apps/*/app/secrets.yaml`     | Verified   |
 | Flux reconciles via install.yaml entry points | `kubernetes/{main,staging}/apps/*/install.yaml`         | Verified   |
-| VolSync handles backups via Restic            | `.taskfiles/volsync/Taskfile.yaml`                      | Verified   |
 | Two independent clusters                      | `kubernetes/main/` and `kubernetes/staging/` separate   | Verified   |
 | Image digests required                        | SHA256 digests in helmrelease.yaml files                | Verified   |

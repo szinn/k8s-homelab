@@ -14,19 +14,14 @@ spec:
   dependsOn:
     - name: external-secrets
       namespace: external-secrets
-    # - name: volsync
-    #   namespace: system
     - name: kopiur
       namespace: system
   components:
-    # - ../../../../components/volsync
     - ../../../../components/kopiur/kopiur
     - ../../../../components/kopiur/pvc
   postBuild:
     substitute:
       APP: recyclarr
-      # VOLSYNC_CLAIM: recyclarr-config
-      # VOLSYNC_CAPACITY: 1Gi
       KOPIUR_CLAIM: recyclarr-config
       KOPIUR_CAPACITY: 1Gi
   prune: true

@@ -14,21 +14,16 @@ spec:
   dependsOn:
     - name: external-secrets
       namespace: external-secrets
-    # - name: volsync
-    #   namespace: system
     - name: kopiur
       namespace: system
   components:
     - ../../../../components/kopiur/kopiur
     - ../../../../components/kopiur/pvc
-    # - ../../../../components/volsync
     - ../../../../components/zeroscaler
   interval: 1h
   postBuild:
     substitute:
       APP: shelfmark
-      # VOLSYNC_CLAIM: shelfmark-config
-      # VOLSYNC_CAPACITY: 5Gi
       KOPIUR_CLAIM: shelfmark-config
       KOPIUR_CAPACITY: 5Gi
   prune: true

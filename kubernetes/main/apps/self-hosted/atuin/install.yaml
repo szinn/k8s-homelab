@@ -12,19 +12,14 @@ spec:
     name: flux-system
     namespace: flux-system
   dependsOn:
-    # - name: volsync
-    #   namespace: system
     - name: kopiur
       namespace: system
   components:
-    # - ../../../../components/volsync
     - ../../../../components/kopiur/kopiur
     - ../../../../components/kopiur/pvc
   postBuild:
     substitute:
       APP: atuin
-      # VOLSYNC_CLAIM: atuin-config
-      # VOLSYNC_CAPACITY: 5Gi
       KOPIUR_CLAIM: atuin-config
       KOPIUR_CAPACITY: 5Gi
   prune: true

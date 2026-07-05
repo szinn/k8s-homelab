@@ -97,7 +97,6 @@ spec:
         type: nfs
         server: ragnar.zinn.tech
         path: /mnt/atlas/k8s/main/kopiur
-        # path: /mnt/atlas/k8s/main/volsync
         globalMounts:
           - path: /repository
       tmpfs:

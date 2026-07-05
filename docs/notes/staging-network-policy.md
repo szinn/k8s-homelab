@@ -6,20 +6,20 @@ The staging cluster currently has **no Cilium network policies** deployed. Ciliu
 
 ### Deployed Namespaces
 
-| Namespace          | Key Workloads                          |
-| ------------------ | -------------------------------------- |
-| `flux-system`      | flux-operator, flux-instance           |
-| `kube-system`      | cilium, coredns, metrics-server        |
-| `network`          | envoy-gateway, external-dns            |
-| `cert-manager`     | cert-manager                           |
-| `external-secrets` | external-secrets, onepassword-connect  |
-| `dbms`             | cloudnative-pg, dragonfly, pgadmin     |
-| `rook-ceph`        | rook-ceph                              |
-| `system`           | kopia, reloader, spegel, volsync, etc. |
-| `system-upgrade`   | tuppr                                  |
-| `default`          | whoami                                 |
-| `media`            | (namespace only)                       |
-| `self-hosted`      | (namespace only)                       |
+| Namespace          | Key Workloads                         |
+| ------------------ | ------------------------------------- |
+| `flux-system`      | flux-operator, flux-instance          |
+| `kube-system`      | cilium, coredns, metrics-server       |
+| `network`          | envoy-gateway, external-dns           |
+| `cert-manager`     | cert-manager                          |
+| `external-secrets` | external-secrets, onepassword-connect |
+| `dbms`             | cloudnative-pg, dragonfly, pgadmin    |
+| `rook-ceph`        | rook-ceph                             |
+| `system`           | kopia, reloader, spegel, kopiur, etc. |
+| `system-upgrade`   | tuppr                                 |
+| `default`          | whoami                                |
+| `media`            | (namespace only)                      |
+| `self-hosted`      | (namespace only)                      |
 
 ---
 
@@ -176,10 +176,12 @@ Since Hubble is already enabled, use an **observe-then-enforce** approach:
 
 1. **Observe traffic first** using Hubble UI
 2. **Generate policies** from observed flows:
+
    ```bash
    hubble observe --namespace <ns> -o jsonpb | \
      cilium policy trace --from-file -
    ```
+
 3. **Start with audit mode** before enforcing
 
 ### Priority Order

@@ -14,19 +14,14 @@ spec:
   dependsOn:
     - name: external-secrets
       namespace: external-secrets
-    # - name: volsync
-    #   namespace: system
     - name: kopiur
       namespace: system
   components:
-    # - ../../../../components/volsync
     - ../../../../components/kopiur/kopiur
     - ../../../../components/kopiur/pvc
   postBuild:
     substitute:
       APP: home-assistant
-      # VOLSYNC_CLAIM: home-assistant-config
-      # VOLSYNC_CAPACITY: 8Gi
       KOPIUR_CLAIM: home-assistant-config
       KOPIUR_CAPACITY: 8Gi
       KOPIUR_PUID: "65534"
