@@ -16,8 +16,6 @@ spec:
           path: /mnt/atlas/k8s/staging/kopiur
   create:
     enabled: true
-  credentialProjection:
-    allowed: true
   encryption:
     passwordSecretRef:
       name: kopiur-ragnar-secret

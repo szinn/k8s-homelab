@@ -6,8 +6,6 @@ metadata:
   name: ${APP}
 spec:
   copyMethod: Snapshot
-  credentialProjection:
-    enabled: true
   files:
     ignoreRules:
       - "lost+found"

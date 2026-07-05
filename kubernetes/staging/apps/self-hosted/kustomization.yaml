@@ -5,6 +5,7 @@ kind: Kustomization
 namespace: self-hosted
 components:
   - ../../components/app-template
+  - ../../components/kopiur/secret
 resources:
   # Pre Flux-Kustomizations
   - namespace.yaml

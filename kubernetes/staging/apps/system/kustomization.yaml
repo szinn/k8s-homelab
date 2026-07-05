@@ -5,6 +5,7 @@ kind: Kustomization
 namespace: system
 components:
   - ../../components/app-template
+  - ../../components/kopiur/secret
 resources:
   # Pre Flux-Kustomizations
   - namespace.yaml
