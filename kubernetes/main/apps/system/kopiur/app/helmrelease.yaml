@@ -27,9 +27,6 @@ spec:
         limits:
           memory: 2Gi
       streamingLists: true
-    features:
-      credentialProjection:
-        enabled: true
     grafanaDashboard:
       enabled: true
       grafanaOperator:
@@ -53,5 +50,3 @@ spec:
     webhook:
       tls:
         mode: self
-      serviceMonitor:
-        enabled: true

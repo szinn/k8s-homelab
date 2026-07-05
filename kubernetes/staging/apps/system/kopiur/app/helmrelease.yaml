@@ -53,5 +53,3 @@ spec:
     webhook:
       tls:
         mode: self
-      serviceMonitor:
-        enabled: false
