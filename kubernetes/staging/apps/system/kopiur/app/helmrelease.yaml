@@ -12,32 +12,24 @@ spec:
   values:
     # logging:
     #   level: debug,kopia=debug
-    controller:
-      extraVolumes:
-        - name: repo
-          nfs:
-            server: ragnar.zinn.tech
-            path: /mnt/atlas/k8s/staging/kopiur
-      extraVolumeMounts:
-        - name: repo
-          mountPath: /repo
-      resources:
-        requests:
-          cpu: 100m
-        limits:
-          memory: 2Gi
-      streamingLists: true
-    grafanaDashboard:
-      enabled: false
-      grafanaOperator:
+    extraVolumes:
+      - name: repo
+        nfs:
+          server: ragnar.zinn.tech
+          path: /mnt/atlas/k8s/staging/kopiur
+    extraVolumeMounts:
+      - name: repo
+        mountPath: /repo
+    monitoring:
+      dashboards:
         enabled: false
-        matchLabels:
-          dashboards: grafana
-    installScope: cluster
-    metrics:
-      serviceMonitor:
-        enabled: false
+        grafanaOperator:
+          enabled: false
+          matchLabels:
+            dashboards: grafana
       prometheusRule:
+        enabled: false
+      serviceMonitor:
         enabled: false
     podSecurityContext:
       runAsNonRoot: true
@@ -45,8 +37,8 @@ spec:
       runAsGroup: 2000
       fsGroup: 2000
       fsGroupChangePolicy: OnRootMismatch
-      seccompProfile:
-        type: RuntimeDefault
-    webhook:
-      tls:
-        mode: self
+    resources:
+      requests:
+        cpu: 100m
+      limits:
+        memory: 2Gi
