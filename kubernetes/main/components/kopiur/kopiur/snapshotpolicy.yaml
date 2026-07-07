@@ -14,8 +14,10 @@ spec:
     kind: ClusterRepository
     name: ragnar
   retention:
-    keepDaily: 7
+    keepLatest: 3
     keepHourly: 24
+    keepDaily: 7
+    keepWeekly: 4
   sources:
     - pvc:
         name: ${KOPIUR_CLAIM:=${APP}}
