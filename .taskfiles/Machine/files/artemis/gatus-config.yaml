@@ -107,13 +107,13 @@ endpoints:
     alerts:
       - type: discord
         description: "Artemis down"
-  - name: Hera
-    group: Servers
-    url: icmp://10.10.0.8
-    conditions: ["[CONNECTED] == true"]
-    alerts:
-      - type: discord
-        description: "Hera down"
+  # - name: Hera
+  #   group: Servers
+  #   url: icmp://10.10.0.8
+  #   conditions: ["[CONNECTED] == true"]
+  #   alerts:
+  #     - type: discord
+  #       description: "Hera down"
   - name: Apollo
     group: Servers
     url: icmp://10.0.0.10
