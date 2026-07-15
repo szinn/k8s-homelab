@@ -47,7 +47,7 @@ releases:
   - name: spegel
     namespace: system
     chart: oci://ghcr.io/spegel-org/helm-charts/spegel
-    version: 0.7.3
+    version: 0.7.4
     values:
       - templates/values.yaml.gotmpl
     needs:
