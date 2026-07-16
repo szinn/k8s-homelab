@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hera-cockpit
+  annotations:
+    gatus.home-operations.com/enabled: "false"
+spec:
+  ports:
+    - name: http
+      port: 9090
+      protocol: TCP
+      targetPort: 9090
+      appProtocol: http
+  clusterIP: None

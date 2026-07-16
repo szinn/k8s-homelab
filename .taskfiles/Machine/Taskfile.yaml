@@ -69,6 +69,13 @@ tasks:
       - ssh root@ragnar.zinn.tech chmod u+rw,g-wx,o-wx /etc/chrony/conf.d/0-ntp-allow.conf
       - ssh root@ragnar.zinn.tech systemctl restart chrony
 
+  update-hera-configuration:
+    desc: Update Hera configuration
+    cmds:
+      - scp "{{.FILES_DIR}}/hera/cockpit.conf" root@hera.zinn.tech:/etc/cockpit/cockpit.conf
+      - ssh root@hera.zinn.tech systemctl enable --now cockpit.socket
+      - ssh root@hera.zinn.tech systemctl restart cockpit.socket
+
   # update-styx-certificate:
   #   desc: Update Styx certificate
   #   cmds:
