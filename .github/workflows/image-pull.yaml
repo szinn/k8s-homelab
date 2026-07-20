@@ -45,7 +45,7 @@ jobs:
         uses: jdx/mise-action@dad1bfd3df957f44999b559dd69dc1671cb4e9ea # v4.2.1
         with:
           tool_versions: |
-            github:home-operations/flate 0.4.10
+            github:home-operations/flate 0.4.12
 
       - name: Extract Images
         id: extract
