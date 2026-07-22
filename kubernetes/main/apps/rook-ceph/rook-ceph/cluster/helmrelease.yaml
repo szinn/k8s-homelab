@@ -12,7 +12,7 @@ spec:
   values:
     cephImage:
       repository: quay.io/ceph/ceph
-      tag: v20.2.2@sha256:6b4b5ae33acd3d736eb26d2a19238bce71a22f9cfb99cca887ba6312d0957644
+      tag: v21.1.0@sha256:5ff3692d2f3f4bf47ca7717de6f8f8556440ce3e15efaa680b62cb924eec0541
     cephClusterSpec:
       cephConfig:
         global:
