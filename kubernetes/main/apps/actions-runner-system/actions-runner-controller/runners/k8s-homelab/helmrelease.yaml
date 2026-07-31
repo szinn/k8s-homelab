@@ -81,17 +81,17 @@ spec:
                 add:
                   - NET_ADMIN
                   - SYS_ADMIN
-            # volumeMounts:
+            volumeMounts:
+              - mountPath: /var/run/secrets/talos.dev
+                name: talos
+                readOnly: true
             #   - mountPath: /home/runner/cache
             #     name: cache-volume
-            # - mountPath: /var/run/secrets/talos.dev
-            #   name: talos
-            #   readOnly: true
         serviceAccountName: *name
-        # volumes:
-        # - name: talos
-        #   secret:
-        #     secretName: *name
+        volumes:
+          - name: talos
+            secret:
+              secretName: *name
         # - name: cache-volume
         #   persistentVolumeClaim:
         #   claimName: actions-runner-controller-cache
