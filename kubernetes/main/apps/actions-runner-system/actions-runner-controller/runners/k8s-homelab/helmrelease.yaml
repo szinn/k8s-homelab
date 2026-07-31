@@ -18,21 +18,43 @@ spec:
     runnerScaleSetName: k8s-homelab-runner
     githubConfigUrl: https://github.com/szinn/k8s-homelab
     githubConfigSecret: k8s-homelab-runner-secret
+    runnerGroup: k8e-homelab
     minRunners: 1
     maxRunners: 3
     containerMode:
       type: dind
-      kubernetesModeWorkVolumeClaim:
-        accessModes: ["ReadWriteOnce"]
-        storageClassName: openebs-hostpath
-        resources:
-          requests:
-            storage: 25Gi
+      # kubernetesModeWorkVolumeClaim:
+      #   accessModes: ["ReadWriteOnce"]
+      #   storageClassName: openebs-hostpath
+      #   resources:
+      #     requests:
+      #       storage: 25Gi
     controllerServiceAccount:
       name: actions-runner-controller
       namespace: actions-runner-system
     template:
+      metadata:
+        labels:
+          runner: *name
       spec:
+        # initContainers:
+        #   - name: take-cache-dir-ownership
+        #     image: alpine:3@sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b
+        #     command:
+        #       - chown
+        #       - -R
+        #       - 1001:1001
+        #       - /home/runner/cache
+        #     volumeMounts:
+        #       - mountPath: /home/runner/cache
+        #         name: cache-volume
+        affinity:
+          podAntiAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              - labelSelector:
+                  matchLabels:
+                    runner: *name
+                topologyKey: kubernetes.io/hostname
         # initContainers:
         #   - name: take-cache-dir-ownership
         #     image: alpine:3@sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b
