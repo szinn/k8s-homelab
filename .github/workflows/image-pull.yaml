@@ -78,7 +78,7 @@ jobs:
       - name: Pull Image
         env:
           IMAGE: ${{ matrix.image }}
-        run: talosctl --nodes "$NODE_IP" image pull "${IMAGE}"
+        run: talosctl --nodes "$NODE_IP" --endpoints 10.11.0.16,10.11.0.17,10.11.0.18 image pull "${IMAGE}"
 
   success:
     if: ${{ !cancelled() }}
