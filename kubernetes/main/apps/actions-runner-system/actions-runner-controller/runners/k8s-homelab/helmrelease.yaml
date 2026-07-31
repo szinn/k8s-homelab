@@ -81,19 +81,19 @@ spec:
                 add:
                   - NET_ADMIN
                   - SYS_ADMIN
-            volumeMounts:
-              #   - mountPath: /home/runner/cache
-              #     name: cache-volume
-              - mountPath: /var/run/secrets/talos.dev
-                name: talos
-                readOnly: true
-        volumes:
-          - name: talos
-            secret:
-              secretName: *name
-        #   - name: cache-volume
-        #     persistentVolumeClaim:
-        #       claimName: actions-runner-controller-cache
+            # volumeMounts:
+            #   - mountPath: /home/runner/cache
+            #     name: cache-volume
+            # - mountPath: /var/run/secrets/talos.dev
+            #   name: talos
+            #   readOnly: true
+        # volumes:
+        # - name: talos
+        #   secret:
+        #     secretName: *name
+        # - name: cache-volume
+        #   persistentVolumeClaim:
+        #   claimName: actions-runner-controller-cache
         securityContext:
           fsGroup: 1001
           fsGroupChangePolicy: OnRootMismatch
