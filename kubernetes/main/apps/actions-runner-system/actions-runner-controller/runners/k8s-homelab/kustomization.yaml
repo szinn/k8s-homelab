@@ -7,5 +7,4 @@ resources:
   - helmrelease.yaml
   - podmonitor.yaml
   - prometheusrule.yaml
-  - rbac.yaml
   - secrets.yaml

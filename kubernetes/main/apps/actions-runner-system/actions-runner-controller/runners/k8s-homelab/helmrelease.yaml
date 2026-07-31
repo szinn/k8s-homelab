@@ -18,10 +18,10 @@ spec:
     runnerScaleSetName: k8s-homelab-runner
     githubConfigUrl: https://github.com/szinn/k8s-homelab
     githubConfigSecret: k8s-homelab-runner-secret
-    minRunners: 1
+    minRunners: 0
     maxRunners: 3
     containerMode:
-      type: kubernetes
+      type: dind
       kubernetesModeWorkVolumeClaim:
         accessModes: ["ReadWriteOnce"]
         storageClassName: openebs-hostpath
@@ -55,17 +55,16 @@ spec:
                 valueFrom:
                   fieldRef:
                     fieldPath: status.hostIP
+            securityContext:
+              capabilities:
+                add:
+                  - NET_ADMIN
+                  - SYS_ADMIN
             volumeMounts:
-              - mountPath: /var/run/secrets/talos.dev
-                name: talos
-                readOnly: true
               - mountPath: /home/runner/cache
                 name: cache-volume
         serviceAccountName: *name
         volumes:
-          - name: talos
-            secret:
-              secretName: *name
           - name: cache-volume
             persistentVolumeClaim:
               claimName: actions-runner-controller-cache
