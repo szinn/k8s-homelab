@@ -18,7 +18,7 @@ spec:
     runnerScaleSetName: k8s-homelab-runner
     githubConfigUrl: https://github.com/szinn/k8s-homelab
     githubConfigSecret: k8s-homelab-runner-secret
-    minRunners: 0
+    minRunners: 1
     maxRunners: 3
     containerMode:
       type: dind
@@ -33,17 +33,17 @@ spec:
       namespace: actions-runner-system
     template:
       spec:
-        initContainers:
-          - name: take-cache-dir-ownership
-            image: alpine:3@sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b
-            command:
-              - chown
-              - -R
-              - 1001:1001
-              - /home/runner/cache
-            volumeMounts:
-              - mountPath: /home/runner/cache
-                name: cache-volume
+        # initContainers:
+        #   - name: take-cache-dir-ownership
+        #     image: alpine:3@sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b
+        #     command:
+        #       - chown
+        #       - -R
+        #       - 1001:1001
+        #       - /home/runner/cache
+        #     volumeMounts:
+        #       - mountPath: /home/runner/cache
+        #         name: cache-volume
         containers:
           - name: runner
             image: ghcr.io/home-operations/actions-runner:2.336.0@sha256:281a9a090522fafbf4967f158b8c97d03552b1978b688893c5f7cb1944bc5fe5
@@ -60,11 +60,13 @@ spec:
                 add:
                   - NET_ADMIN
                   - SYS_ADMIN
-            volumeMounts:
-              - mountPath: /home/runner/cache
-                name: cache-volume
-        serviceAccountName: *name
-        volumes:
-          - name: cache-volume
-            persistentVolumeClaim:
-              claimName: actions-runner-controller-cache
+            # volumeMounts:
+            #   - mountPath: /home/runner/cache
+            #     name: cache-volume
+        # volumes:
+        #   - name: cache-volume
+        #     persistentVolumeClaim:
+        #       claimName: actions-runner-controller-cache
+        securityContext:
+          fsGroup: 1001
+          fsGroupChangePolicy: OnRootMismatch

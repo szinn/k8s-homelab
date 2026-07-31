@@ -7,10 +7,14 @@ on:
   schedule:
     - cron: "0 0/2 * * *"
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   blacklist:
     name: Build Blacklist
-    runs-on: k8s-homelab-runner
+    runs-on: ubuntu-latest
     steps:
       - name: Load Secrets
         id: load-secrets
