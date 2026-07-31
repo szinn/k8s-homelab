@@ -18,7 +18,6 @@ spec:
     runnerScaleSetName: k8s-homelab-runner
     githubConfigUrl: https://github.com/szinn/k8s-homelab
     githubConfigSecret: k8s-homelab-runner-secret
-    runnerGroup: k8e-homelab
     minRunners: 1
     maxRunners: 3
     containerMode:
