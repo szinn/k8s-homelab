@@ -13,4 +13,4 @@ resources:
   # Flux-Kustomizations
   - bookboss/install.yaml
   - immich/install.yaml
-  - plex/install.yaml
+  # - plex/install.yaml
