@@ -1,8 +1,10 @@
 {
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
   extends: [
-    "github>home-operations/renovate-presets#5.0.0",
+    "github>home-operations/renovate-presets#7.0.0",
     ":timezone(America/New_York)",
+    "github>home-operations/renovate-presets//apps/grafanaDashboards.json5#7.0.0",
+    "github>home-operations/renovate-presets//apps/talosFactory.json5#7.0.0",
     "docker:pinDigests",
   ],
   ignorePaths: [
@@ -106,14 +108,14 @@
       minimumReleaseAge: "1 minute",
       ignoreTests: true,
     },
-    {
-      description: "Auto-merge Grafana dashboards",
-      matchDatasources: ["custom.grafana-dashboards"],
-      matchUpdateTypes: ["major"],
-      automerge: true,
-      automergeType: "branch",
-      ignoreTests: true,
-    },
+    // {
+    //   description: "Auto-merge Grafana dashboards",
+    //   matchDatasources: ["custom.grafana-dashboards"],
+    //   matchUpdateTypes: ["major"],
+    //   automerge: true,
+    //   automergeType: "branch",
+    //   ignoreTests: true,
+    // },
     {
       description: "Auto-merge Renovate Presents",
       matchManagers: ["renovate-config"],
