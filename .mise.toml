@@ -1,6 +1,6 @@
 [tools]
 "aqua:helm/helm" = "3.21.4"
-"aqua:helmfile/helmfile" = "1.7.3"
+"aqua:helmfile/helmfile" = "1.7.4"
 "kubeconform" = "latest"
 cilium-cli = "latest"
 cilium-hubble = "latest"
