@@ -43,7 +43,9 @@ spec:
           - name: pg_autoscaler
             enabled: true
           - name: rook
-            enabled: true
+            enabled: false # https://github.com/rook/rook/issues/18124 - prometheus module's
+            # node_proxy_fullreport() call crashes the rook orchestrator module every scrape
+            # interval (~15s), flooding `ceph crash ls`. Re-enable once ceph/ceph#70967 ships.
       network:
         provider: host
         connections:
