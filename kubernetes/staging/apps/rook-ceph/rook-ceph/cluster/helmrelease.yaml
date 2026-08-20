@@ -19,8 +19,8 @@ spec:
       enabled: true
 
     monitoring:
-      enabled: true
-      createPrometheusRules: true
+      enabled: false
+      createPrometheusRules: false
 
     cephClusterSpec:
       cephConfig:
