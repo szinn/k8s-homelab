@@ -47,6 +47,10 @@ spec:
             configBlock: |-
               lameduck 5s
           - name: ready
+          - name: template
+            parameters: IN AAAA .
+            configBlock: |-
+              rcode NXDOMAIN
           - name: kubernetes
             parameters: cluster.local in-addr.arpa ip6.arpa
             configBlock: |-
