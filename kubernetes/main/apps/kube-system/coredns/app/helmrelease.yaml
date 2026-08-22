@@ -50,7 +50,7 @@ spec:
           - name: template
             parameters: IN AAAA .
             configBlock: |-
-              rcode NXDOMAIN
+              rcode NOERROR
           - name: kubernetes
             parameters: cluster.local in-addr.arpa ip6.arpa
             configBlock: |-
