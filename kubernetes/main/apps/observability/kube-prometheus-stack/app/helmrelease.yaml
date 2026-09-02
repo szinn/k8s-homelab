@@ -172,7 +172,7 @@ spec:
           limits:
             memory: 4Gi
         retention: 30d
-        retentionSize: 50GB
+        retentionSize: 65GB
         ruleSelectorNilUsesHelmValues: false
         scrapeConfigSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
@@ -182,5 +182,5 @@ spec:
               storageClassName: ceph-block
               resources:
                 requests:
-                  storage: 50Gi
+                  storage: 75Gi
         walCompression: true
