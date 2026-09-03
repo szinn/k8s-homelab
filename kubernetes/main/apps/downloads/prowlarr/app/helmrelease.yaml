@@ -34,7 +34,8 @@ spec:
               PROWLARR__AUTH__REQUIRED: DisabledForLocalAddresses
               PROWLARR__LOG__DBENABLED: "False"
               PROWLARR__LOG_LEVEL: info
-              PROWLARR__PORT: &port 9696
+              PROWLARR__SERVER__ALLOWEDHOSTS: "*"
+              PROWLARR__SERVER__PORT: &port 9696
             envFrom:
               - secretRef:
                   name: prowlarr-secret
