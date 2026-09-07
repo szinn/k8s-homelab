@@ -40,45 +40,46 @@ spec:
                 drop:
                   - ALL
 
-          coredns:
-            image:
-              repository: mirror.gcr.io/coredns/coredns
-              tag: 1.14.7@sha256:7efd3c635b03efd68c4e8398fc45f0d993d0e9ab016f72c1cefb0fd6d01aa286
-            args:
-              - -conf
-              - /etc/coredns/Corefile
-            restartPolicy: Always
+          # coredns:
+          #   image:
+          #     repository: mirror.gcr.io/coredns/coredns
+          #     tag: 1.14.7@sha256:7efd3c635b03efd68c4e8398fc45f0d993d0e9ab016f72c1cefb0fd6d01aa286
+          #   args:
+          #     - -conf
+          #     - /etc/coredns/Corefile
+          #   restartPolicy: Always
 
-          gluetun:
-            dependsOn:
-              - coredns
-            image:
-              repository: ghcr.io/qdm12/gluetun
-              tag: v3.41.3@sha256:fa19cc76b2af13d57a8d3dc3066f2ada061b1c761b8aecf989b3877c0486e027
-            env:
-              DOT: "off"
-              DNS_ADDRESS: "127.0.0.2"
-              HTTP_CONTROL_SERVER_AUTH_CONFIG_FILEPATH: &gluetunAuthPath /gluetun/auth.toml
-              VPN_SERVICE_PROVIDER: custom
-              VPN_TYPE: openvpn
-              OPENVPN_CUSTOM_CONFIG: &gluetunOpenvpnPath /gluetun/custom.conf
-              VPN_INTERFACE: tun0
-              HEALTH_TARGET_ADDRESS: "www.google.com:443"
-              # VPN_SERVICE_PROVIDER: private internet access
-              # SERVER_REGIONS: "US Chicago"
-              # VPN_PORT_FORWARDING: on
-              # VPN_PORT_FORWARDING_PROVIDER: private internet access
-              FIREWALL_INPUT_PORTS: 8084
-              FIREWALL_OUTBOUND_SUBNETS: 10.200.0.0/16,10.201.0.0/16 # Allow access to k8s subnets
-            envFrom:
-              - secretRef:
-                  name: shelfmark-secret
-            restartPolicy: Always
-            securityContext:
-              capabilities:
-                add:
-                  - NET_ADMIN
-              allowPrivilegeEscalation: false
+          # gluetun:
+          #   dependsOn:
+          #     - coredns
+          #   image:
+          #     repository: ghcr.io/qdm12/gluetun
+          #     tag: v3.41.3@sha256:fa19cc76b2af13d57a8d3dc3066f2ada061b1c761b8aecf989b3877c0486e027
+          #   env:
+          #     DOT: "off"
+          #     DNS_ADDRESS: "127.0.0.2"
+          #     HTTP_CONTROL_SERVER_AUTH_CONFIG_FILEPATH: &gluetunAuthPath /gluetun/auth.toml
+          #     VPN_SERVICE_PROVIDER: custom
+          #     VPN_TYPE: openvpn
+          #     OPENVPN_CUSTOM_CONFIG: &gluetunOpenvpnPath /gluetun/custom.conf
+          #     VPN_INTERFACE: tun0
+          #     # VPN_SERVICE_PROVIDER: private internet access
+          #     # SERVER_REGIONS: "US Chicago"
+          #     # VPN_PORT_FORWARDING: on
+          #     # VPN_PORT_FORWARDING_PROVIDER: private internet access
+          #     FIREWALL_INPUT_PORTS: 8084
+          #     FIREWALL_OUTBOUND_SUBNETS: 10.200.0.0/16,10.201.0.0/16 # Allow access to k8s subnets
+          #   envFrom:
+          #     - secretRef:
+          #         name: shelfmark-secret
+          #   restartPolicy: Always
+          #   securityContext:
+          #     capabilities:
+          #       add:
+          #         - NET_ADMIN
+          #       drop:
+          #         - NET_RAW
+          #     allowPrivilegeEscalation: false
 
         containers:
           shelfmark:
@@ -143,33 +144,34 @@ spec:
           - path: /var/log
             subPath: var-log
 
-      gluetun-auth:
-        type: secret
-        name: shelfmark-gluetun-secret
-        advancedMounts:
-          shelfmark:
-            gluetun:
-              - path: *gluetunAuthPath
-                subPath: auth.toml
+      # gluetun-auth:
+      #   type: secret
+      #   name: shelfmark-gluetun-secret
+      #   advancedMounts:
+      #     shelfmark:
+      #       gluetun:
+      #         - path: *gluetunAuthPath
+      #           subPath: auth.toml
 
-      gluetun-openvpn:
-        type: secret
-        name: shelfmark-secret
-        advancedMounts:
-          shelfmark:
-            gluetun:
-              - path: *gluetunOpenvpnPath
-                subPath: openvpn_config
+      # gluetun-openvpn:
+      #   type: secret
+      #   name: shelfmark-secret
+      #   advancedMounts:
+      #     shelfmark:
+      #       gluetun:
+      #         - path: *gluetunOpenvpnPath
+      #           subPath: openvpn_config
 
-      coredns:
-        type: configMap
-        name: shelfmark-coredns
-        advancedMounts:
-          shelfmark:
-            coredns:
-              - path: /etc/coredns/Corefile
-                subPath: Corefile
-                readOnly: true
+      # coredns:
+      #   type: configMap
+      #   name: shelfmark-coredns
+      #   advancedMounts:
+      #     shelfmark:
+      #       coredns:
+      #         - path: /etc/coredns/Corefile
+      #           subPath: Corefile
+      #           readOnly: true
+
     route:
       shelfmark:
         hostnames:
@@ -177,6 +179,7 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
+
     service:
       shelfmark:
         ports:
