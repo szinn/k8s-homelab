@@ -18,7 +18,7 @@ spec:
 
         pod:
           securityContext:
-            fsGroup: 2000
+            fsGroup: 1000
             fsGroupChangePolicy: "OnRootMismatch"
 
         initContainers:
@@ -31,8 +31,8 @@ spec:
               - -c
               - mkdir -p /tmp/shelfmark/seleniumbase/downloaded_files
             securityContext:
-              runAsUser: 2000
-              runAsGroup: 2000
+              runAsUser: 1000
+              runAsGroup: 1000
               runAsNonRoot: true
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -40,66 +40,46 @@ spec:
                 drop:
                   - ALL
 
-          install-socksio:
+          coredns:
             image:
-              repository: ghcr.io/calibrain/shelfmark
-              tag: v1.3.15@sha256:9602290324993c801b319d3166b202b96bd9039af2416f0916dae03a5bdca815
-            command:
-              - /app/.venv/bin/pip
-              - install
-              - --no-cache-dir
-              - --target=/extra-packages
-              - socksio
+              repository: mirror.gcr.io/coredns/coredns
+              tag: 1.14.7@sha256:7efd3c635b03efd68c4e8398fc45f0d993d0e9ab016f72c1cefb0fd6d01aa286
+            args:
+              - -conf
+              - /etc/coredns/Corefile
+            restartPolicy: Always
+
+          gluetun:
+            dependsOn:
+              - coredns
+            image:
+              repository: ghcr.io/qdm12/gluetun
+              tag: v3.41.3@sha256:fa19cc76b2af13d57a8d3dc3066f2ada061b1c761b8aecf989b3877c0486e027
+            env:
+              DOT: "off"
+              DNS_ADDRESS: "127.0.0.2"
+              HTTP_CONTROL_SERVER_AUTH_CONFIG_FILEPATH: &gluetunAuthPath /gluetun/auth.toml
+              VPN_SERVICE_PROVIDER: custom
+              VPN_TYPE: openvpn
+              OPENVPN_CUSTOM_CONFIG: &gluetunOpenvpnPath /gluetun/custom.conf
+              VPN_INTERFACE: tun0
+              # VPN_SERVICE_PROVIDER: private internet access
+              # SERVER_REGIONS: "US Chicago"
+              # VPN_PORT_FORWARDING: on
+              # VPN_PORT_FORWARDING_PROVIDER: private internet access
+              FIREWALL_INPUT_PORTS: 8084
+              FIREWALL_OUTBOUND_SUBNETS: 10.200.0.0/16,10.201.0.0/16 # Allow access to k8s subnets
+            envFrom:
+              - secretRef:
+                  name: shelfmark-secret
+            restartPolicy: Always
             securityContext:
-              runAsUser: 2000
-              runAsGroup: 2000
-              runAsNonRoot: true
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
               capabilities:
+                add:
+                  - NET_ADMIN
                 drop:
-                  - ALL
-
-          # coredns:
-          #   image:
-          #     repository: mirror.gcr.io/coredns/coredns
-          #     tag: 1.14.7@sha256:7efd3c635b03efd68c4e8398fc45f0d993d0e9ab016f72c1cefb0fd6d01aa286
-          #   args:
-          #     - -conf
-          #     - /etc/coredns/Corefile
-          #   restartPolicy: Always
-
-          # gluetun:
-          #   dependsOn:
-          #     - coredns
-          #   image:
-          #     repository: ghcr.io/qdm12/gluetun
-          #     tag: v3.41.3@sha256:fa19cc76b2af13d57a8d3dc3066f2ada061b1c761b8aecf989b3877c0486e027
-          #   env:
-          #     DOT: "off"
-          #     DNS_ADDRESS: "127.0.0.2"
-          #     HTTP_CONTROL_SERVER_AUTH_CONFIG_FILEPATH: &gluetunAuthPath /gluetun/auth.toml
-          #     VPN_SERVICE_PROVIDER: custom
-          #     VPN_TYPE: openvpn
-          #     OPENVPN_CUSTOM_CONFIG: &gluetunOpenvpnPath /gluetun/custom.conf
-          #     VPN_INTERFACE: tun0
-          #     # VPN_SERVICE_PROVIDER: private internet access
-          #     # SERVER_REGIONS: "US Chicago"
-          #     # VPN_PORT_FORWARDING: on
-          #     # VPN_PORT_FORWARDING_PROVIDER: private internet access
-          #     FIREWALL_INPUT_PORTS: 8084
-          #     FIREWALL_OUTBOUND_SUBNETS: 10.200.0.0/16,10.201.0.0/16 # Allow access to k8s subnets
-          #   envFrom:
-          #     - secretRef:
-          #         name: shelfmark-secret
-          #   restartPolicy: Always
-          #   securityContext:
-          #     capabilities:
-          #       add:
-          #         - NET_ADMIN
-          #       drop:
-          #         - NET_RAW
-          #     allowPrivilegeEscalation: false
+                  - NET_RAW
+              allowPrivilegeEscalation: false
 
         containers:
           shelfmark:
@@ -109,9 +89,10 @@ spec:
             command:
               - gunicorn
             env:
-              PYTHONPATH: /extra-packages
+              CACHE_DIR: /cache
+              INGEST_DIR: /bookdrop
             args:
-              # - --log-level=debug
+              - --log-level=debug
               - --access-logfile=-
               - --error-logfile=-
               - --worker-class=geventwebsocket.gunicorn.workers.GeventWebSocketWorker
@@ -137,8 +118,8 @@ spec:
               limits:
                 memory: 2Gi
             securityContext:
-              runAsUser: 2000
-              runAsGroup: 2000
+              runAsUser: 1000
+              runAsGroup: 1000
               runAsNonRoot: true
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -148,59 +129,54 @@ spec:
     persistence:
       config:
         existingClaim: shelfmark-config
-      extra-packages:
-        type: emptyDir
-        advancedMounts:
-          shelfmark:
-            install-socksio:
-              - path: /extra-packages
-            shelfmark:
-              - path: /extra-packages
       nfs-nas-media:
         type: nfs
         server: ragnar.zinn.tech
-        path: /mnt/atlas/media
-        advancedMounts:
-          shelfmark:
-            shelfmark:
-              - path: /bookdrop
-                subPath: BookLibrary/Bookdrop
+        path: /mnt/atlas/media/BookLibrary/Bookdrop
+        globalMounts:
+          - path: /bookdrop
       tmpfs:
         type: emptyDir
         sizeLimit: 1Gi
         globalMounts:
+          - path: /home/shelfmark/.gunicorn
+            subPath: gunicorn
+          - path: /cache
+            subPath: cache
           - path: /tmp
             subPath: tmp
+          - path: /run
+            subPath: run
           - path: /var/log
-            subPath: var-log
+            subPath: log
 
-      # gluetun-auth:
-      #   type: secret
-      #   name: shelfmark-gluetun-secret
-      #   advancedMounts:
-      #     shelfmark:
-      #       gluetun:
-      #         - path: *gluetunAuthPath
-      #           subPath: auth.toml
+      gluetun-auth:
+        type: secret
+        name: shelfmark-gluetun-secret
+        advancedMounts:
+          shelfmark:
+            gluetun:
+              - path: *gluetunAuthPath
+                subPath: auth.toml
 
-      # gluetun-openvpn:
-      #   type: secret
-      #   name: shelfmark-secret
-      #   advancedMounts:
-      #     shelfmark:
-      #       gluetun:
-      #         - path: *gluetunOpenvpnPath
-      #           subPath: openvpn_config
+      gluetun-openvpn:
+        type: secret
+        name: shelfmark-secret
+        advancedMounts:
+          shelfmark:
+            gluetun:
+              - path: *gluetunOpenvpnPath
+                subPath: openvpn_config
 
-      # coredns:
-      #   type: configMap
-      #   name: shelfmark-coredns
-      #   advancedMounts:
-      #     shelfmark:
-      #       coredns:
-      #         - path: /etc/coredns/Corefile
-      #           subPath: Corefile
-      #           readOnly: true
+      coredns:
+        type: configMap
+        name: shelfmark-coredns
+        advancedMounts:
+          shelfmark:
+            coredns:
+              - path: /etc/coredns/Corefile
+                subPath: Corefile
+                readOnly: true
 
     route:
       shelfmark:
