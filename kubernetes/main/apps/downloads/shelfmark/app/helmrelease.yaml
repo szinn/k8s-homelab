@@ -40,6 +40,26 @@ spec:
                 drop:
                   - ALL
 
+          install-socksio:
+            image:
+              repository: ghcr.io/calibrain/shelfmark
+              tag: v1.3.15@sha256:9602290324993c801b319d3166b202b96bd9039af2416f0916dae03a5bdca815
+            command:
+              - /app/.venv/bin/pip
+              - install
+              - --no-cache-dir
+              - --target=/extra-packages
+              - socksio
+            securityContext:
+              runAsUser: 2000
+              runAsGroup: 2000
+              runAsNonRoot: true
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
+
           # coredns:
           #   image:
           #     repository: mirror.gcr.io/coredns/coredns
@@ -88,6 +108,8 @@ spec:
               tag: v1.3.15@sha256:9602290324993c801b319d3166b202b96bd9039af2416f0916dae03a5bdca815
             command:
               - gunicorn
+            env:
+              PYTHONPATH: /extra-packages
             args:
               # - --log-level=debug
               - --access-logfile=-
@@ -126,6 +148,14 @@ spec:
     persistence:
       config:
         existingClaim: shelfmark-config
+      extra-packages:
+        type: emptyDir
+        advancedMounts:
+          shelfmark:
+            install-socksio:
+              - path: /extra-packages
+            shelfmark:
+              - path: /extra-packages
       nfs-nas-media:
         type: nfs
         server: ragnar.zinn.tech
