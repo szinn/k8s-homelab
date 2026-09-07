@@ -63,6 +63,7 @@ spec:
               VPN_TYPE: openvpn
               OPENVPN_CUSTOM_CONFIG: &gluetunOpenvpnPath /gluetun/custom.conf
               VPN_INTERFACE: tun0
+              HEALTH_TARGET_ADDRESS: "www.google.com:443"
               # VPN_SERVICE_PROVIDER: private internet access
               # SERVER_REGIONS: "US Chicago"
               # VPN_PORT_FORWARDING: on
