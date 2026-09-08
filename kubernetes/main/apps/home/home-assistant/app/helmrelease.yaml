@@ -57,7 +57,7 @@ spec:
           code-server:
             image:
               repository: ghcr.io/coder/code-server
-              tag: 4.136.1@sha256:c6eec5b3d5035fc121661fb6179c61bcb4dc14c81e410efc5a779e7ee0e20cdf
+              tag: 4.136.2@sha256:c5124f5066506cfff7ac2dfa6bab254ea55062dd24aac9a3693bb3d9caa9b90e
             args:
               [
                 "--auth",
