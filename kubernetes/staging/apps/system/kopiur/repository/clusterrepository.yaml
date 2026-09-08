@@ -23,8 +23,23 @@ spec:
       key: KOPIA_PASSWORD
   identityDefaults:
     hostnameExpr: namespace
-    usernameExpr: namespace + '-' + policyName
+    usernameExpr: policyName
+  maintenance:
+    schedule:
+      quick:
+        cron: 0 * * * *
+        jitter: 10m
+      full:
+        cron: 0 3 * * *
+        jitter: 1h
   moverDefaults:
+    cache:
+      # Every cache PVC is 5Gi or larger (KOPIUR_CAPACITY default). Kopia's own
+      # defaults are 5000 MiB per budget, larger than the whole PVC, so the
+      # sweeper never runs and the cache fills the volume. The metadata budget
+      # applies twice: kopia caps the index-blobs cache at the same size.
+      contentCacheSizeMb: 512
+      metadataCacheSizeMb: 1024
     podSecurityContext:
       fsGroup: 2000
       fsGroupChangePolicy: OnRootMismatch
@@ -32,3 +47,8 @@ spec:
       runAsUser: 2000
       runAsGroup: 2000
     ttlSecondsAfterFinished: 300
+  parameters:
+    epoch:
+      minDuration: 1h
+  scheduleDefaults:
+    timezone: America/Toronto
