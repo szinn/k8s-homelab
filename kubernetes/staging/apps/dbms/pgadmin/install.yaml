@@ -15,7 +15,7 @@ spec:
     - name: external-secrets
       namespace: external-secrets
     - name: kopiur
-      namespace: system
+      namespace: kopiur-system
     - name: cloudnative-pg-cluster
       namespace: dbms
   components:

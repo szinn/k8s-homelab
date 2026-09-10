@@ -5,8 +5,8 @@ kind: Kustomization
 metadata:
   name: kopiur
 spec:
-  targetNamespace: system
-  path: ./kubernetes/staging/apps/system/kopiur/app
+  targetNamespace: kopiur-system
+  path: ./kubernetes/staging/apps/kopiur-system/kopiur/app
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -26,8 +26,8 @@ kind: Kustomization
 metadata:
   name: kopiur-repository
 spec:
-  targetNamespace: system
-  path: ./kubernetes/staging/apps/system/kopiur/repository
+  targetNamespace: kopiur-system
+  path: ./kubernetes/staging/apps/kopiur-system/kopiur/repository
   sourceRef:
     kind: GitRepository
     name: flux-system

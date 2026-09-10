@@ -4,6 +4,8 @@ apiVersion: kopiur.home-operations.com/v1alpha1
 kind: ClusterRepository
 metadata:
   name: ragnar
+  annotations:
+    kustomize.toolkit.fluxcd.io/prune: disabled
 spec:
   allowedNamespaces:
     all: true
