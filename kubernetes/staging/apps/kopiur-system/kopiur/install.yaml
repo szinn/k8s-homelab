@@ -15,7 +15,7 @@ spec:
     - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
       name: kopiur
-      namespace: system
+      namespace: kopiur-system
   interval: 1h
   prune: true
   wait: false
