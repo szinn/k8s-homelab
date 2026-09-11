@@ -5,7 +5,7 @@ kind: DNSEndpoint
 metadata:
   name: cloudflared-tunnel
   annotations:
-    external-dns.alpha.kubernetes.io/target: external.zinn.ca
+    external-dns.kubernetes.io/target: external.zinn.ca
 spec:
   endpoints:
     - dnsName: external.zinn.ca

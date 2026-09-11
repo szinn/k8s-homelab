@@ -31,7 +31,7 @@ spec:
     type: LoadBalancer
     annotations:
       lbipam.cilium.io/ips: 10.11.1.12
-      external-dns.alpha.kubernetes.io/hostname: redis.zinn.ca
+      external-dns.kubernetes.io/hostname: redis.zinn.ca
   topologySpreadConstraints:
     - maxSkew: 1
       topologyKey: kubernetes.io/hostname

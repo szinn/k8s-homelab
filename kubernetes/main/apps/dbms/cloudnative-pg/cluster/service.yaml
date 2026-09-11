@@ -7,7 +7,7 @@ metadata:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: postgres.zinn.ca
+    external-dns.kubernetes.io/hostname: postgres.zinn.ca
     lbipam.cilium.io/ips: 10.11.1.10
 spec:
   type: LoadBalancer

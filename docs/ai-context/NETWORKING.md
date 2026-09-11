@@ -116,7 +116,7 @@ kind: Gateway
 metadata:
   name: envoy-external
   annotations:
-    external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+    external-dns.kubernetes.io/target: external.${SECRET_DOMAIN}
 spec:
   gatewayClassName: envoy
   infrastructure:
@@ -143,7 +143,7 @@ kind: Gateway
 metadata:
   name: envoy-internal
   annotations:
-    external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
+    external-dns.kubernetes.io/target: internal.${SECRET_DOMAIN}
 spec:
   gatewayClassName: envoy
   infrastructure:
@@ -211,7 +211,7 @@ spec:
 ### Capsule: ExternalDNSIntegration
 
 **Invariant**
-external-dns-cloudflare watches HTTPRoutes with `external-dns.alpha.kubernetes.io/target` annotation and creates DNS records in Cloudflare.
+external-dns-cloudflare watches HTTPRoutes with `external-dns.kubernetes.io/target` annotation and creates DNS records in Cloudflare.
 
 **Example**
 HTTPRoute with external-dns annotation:
@@ -219,7 +219,7 @@ HTTPRoute with external-dns annotation:
 ```yaml
 metadata:
   annotations:
-    external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+    external-dns.kubernetes.io/target: external.${SECRET_DOMAIN}
 spec:
   hostnames:
     - app.${SECRET_DOMAIN}

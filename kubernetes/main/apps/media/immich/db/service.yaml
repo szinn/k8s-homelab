@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: immich.zinn.ca
+    external-dns.kubernetes.io/hostname: immich.zinn.ca
     lbipam.cilium.io/ips: 10.11.1.19
 spec:
   type: LoadBalancer
