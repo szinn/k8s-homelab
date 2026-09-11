@@ -5,7 +5,7 @@ kind: Service
 metadata:
   name: kube-api
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: staging.zinn.tech
+    external-dns.kubernetes.io/hostname: staging.zinn.tech
     lbipam.cilium.io/ips: 10.12.0.15
 spec:
   type: LoadBalancer

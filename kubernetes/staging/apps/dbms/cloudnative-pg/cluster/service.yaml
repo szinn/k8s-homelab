@@ -7,7 +7,7 @@ metadata:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: postgres.test.zinn.ca
+    external-dns.kubernetes.io/hostname: postgres.test.zinn.ca
     coredns.io/hostname: postgres.test.zinn.ca
     lbipam.cilium.io/ips: 10.12.1.10
 spec:
