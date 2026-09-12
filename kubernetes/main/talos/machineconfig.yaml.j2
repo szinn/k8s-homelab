@@ -51,7 +51,7 @@ machine:
         nconnect=16
         noatime=True
   install:
-    image: factory.talos.dev/metal-installer/{{ ENV.SCHEMATIC }}:v1.13.9
+    image: factory.talos.dev/metal-installer/{{ ENV.SCHEMATIC }}:v1.14.0
     wipe: false
   kubelet:
     defaultRuntimeSeccompProfileEnabled: true
