@@ -1,9 +1,10 @@
 [tools]
 "aqua:helm/helm" = "3.22.0"
 "aqua:helmfile/helmfile" = "1.8.0"
-"kubeconform" = "latest"
+kubeconform = "latest"
 cilium-cli = "latest"
 cilium-hubble = "latest"
+helm-diff = "latest"
 helm-docs = "latest"
 helm-ls = "latest"
 kustomize = "latest"
