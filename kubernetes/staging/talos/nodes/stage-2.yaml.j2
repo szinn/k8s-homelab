@@ -1,11 +1,26 @@
 machine:
   type: controlplane
-  install:
-    disk: /dev/sda
 ---
 apiVersion: v1alpha1
 kind: HostnameConfig
 hostname: stage-2.zinn.tech
+---
+apiVersion: v1alpha1
+kind: UnattendedInstallConfig
+installer:
+  image: factory.talos.dev/metal-installer/{{ ENV.SCHEMATIC }}:v1.14.0
+provisioning:
+  diskSelector:
+    match: disk.symlinks.exists(s, s.startsWith("/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0"))
+  wipe: false
+---
+apiVersion: v1alpha1
+kind: RawVolumeConfig
+name: miroir-slow
+provisioning:
+  diskSelector:
+    match: disk.symlinks.exists(s, s.startsWith("/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi2"))
+  minSize: 100GB
 ---
 apiVersion: v1alpha1
 kind: LinkAliasConfig

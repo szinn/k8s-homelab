@@ -2,5 +2,6 @@
 customization:
   systemExtensions:
     officialExtensions:
-      - siderolabs/i915
-      - siderolabs/intel-ucode
+      - siderolabs/drbd # Miroir DRBD9 Replication
+      - siderolabs/i915 # Intel iGPU
+      - siderolabs/intel-ucode # Intel iGPU

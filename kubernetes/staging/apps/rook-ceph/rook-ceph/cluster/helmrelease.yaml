@@ -88,11 +88,6 @@ spec:
             # node_proxy_fullreport() call crashes the rook orchestrator module every scrape
             # interval (~15s), flooding `ceph crash ls`. Re-enable once ceph/ceph#70967 ships.
 
-      # network:
-      #   provider: host
-      #   connections:
-      #     requireMsgr2: true
-
       resources:
         mgr:
           requests:
@@ -127,13 +122,13 @@ spec:
         nodes:
           - name: "stage-1"
             devices:
-              - name: "sdb"
+              - name: "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi1"
           - name: "stage-2"
             devices:
-              - name: "sdb"
+              - name: "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi1"
           - name: "stage-3"
             devices:
-              - name: "sdb"
+              - name: "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi1"
 
     cephBlockPools:
       - name: ceph-blockpool

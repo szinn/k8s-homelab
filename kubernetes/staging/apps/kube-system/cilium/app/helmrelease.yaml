@@ -151,3 +151,6 @@ spec:
           - SYS_RESOURCE
           - PERFMON
           - BPF
+    socketLB:
+      enabled: true
+      hostNamespaceOnly: true

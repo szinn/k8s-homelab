@@ -86,6 +86,7 @@ create-vm vmid mac:
     --vga type=virtio,memory=32 \
     --scsi0 local-lvm:50,backup=0 \
     --scsi1 local-lvm:100,backup=0 \
+    --scsi2 local-lvm:100,backup=0 \
     --net0 model=virtio,bridge=vmbr0,macaddr={{mac}},mtu=1500,firewall=0,tag=12,queues=0,rate=0 \
     --start 1
 

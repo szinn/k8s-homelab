@@ -44,10 +44,6 @@ machine:
         hard=True
         nconnect=16
         noatime=True
-  install:
-    disk: /dev/sda
-    image: factory.talos.dev/metal-installer/{{ ENV.SCHEMATIC }}:v1.14.0
-    wipe: false
   kubelet:
     defaultRuntimeSeccompProfileEnabled: true
     disableManifestsDirectory: true
@@ -210,3 +206,21 @@ searchDomains:
 apiVersion: v1alpha1
 kind: OOMConfig
 triggerExpression: "false"
+---
+apiVersion: v1alpha1
+kind: KernelModuleConfig
+name: dm_thin_pool
+---
+apiVersion: v1alpha1
+kind: KernelModuleConfig
+name: drbd
+parameters:
+  - usermode_helper=disabled
+---
+apiVersion: v1alpha1
+kind: KernelModuleConfig
+name: drbd_transport_tcp
+---
+apiVersion: v1alpha1
+kind: KernelModuleConfig
+name: nbd
