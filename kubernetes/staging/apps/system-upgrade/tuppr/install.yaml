@@ -32,3 +32,4 @@ spec:
   interval: 1h
   dependsOn:
     - name: tuppr
+      namespace: system-upgrade

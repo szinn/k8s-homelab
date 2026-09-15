@@ -34,8 +34,6 @@ spec:
     name: flux-system
     namespace: flux-system
   dependsOn:
-    - name: external-secrets
-      namespace: external-secrets
     - name: envoy-gateway
       namespace: network
   prune: true

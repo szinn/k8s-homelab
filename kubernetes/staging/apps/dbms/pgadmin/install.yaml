@@ -11,11 +11,6 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  dependsOn:
-    - name: external-secrets
-      namespace: external-secrets
-    - name: cloudnative-pg-cluster
-      namespace: dbms
   components:
     - ../../../../components/kopiur/kopiur
     - ../../../../components/kopiur/pvc

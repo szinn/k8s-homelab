@@ -11,11 +11,6 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  dependsOn:
-    - name: external-secrets
-      namespace: external-secrets
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
   prune: true
   wait: true
   timeout: 30m
@@ -36,8 +31,6 @@ spec:
   dependsOn:
     - name: cloudnative-pg-operator
       namespace: dbms
-    - name: external-secrets
-      namespace: external-secrets
   healthChecks:
     - apiVersion: postgresql.cnpg.io/v1
       kind: Cluster

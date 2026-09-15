@@ -31,8 +31,6 @@ spec:
   dependsOn:
     - name: cert-manager
       namespace: cert-manager
-    - name: external-secrets
-      namespace: external-secrets
   prune: true
   wait: false
   interval: 30m
