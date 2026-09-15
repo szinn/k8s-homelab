@@ -20,6 +20,10 @@ spec:
     - pvc:
         name: ${KOPIUR_CLAIM:=${APP}}
   mover:
+    cache:
+      capacity: ${KOPIUR_CAPACITY:=5Gi}
+      mode: Persistent
+      storageClassName: miroir-slow
     podSecurityContext:
       fsGroup: ${KOPIUR_PGID:=2000}
     securityContext:
