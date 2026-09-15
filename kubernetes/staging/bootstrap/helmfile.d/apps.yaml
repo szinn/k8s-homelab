@@ -3,7 +3,6 @@
 
 helmDefaults:
   cleanupOnFail: true
-  forceConflicts: true
   wait: true
   waitForJobs: true
 
@@ -17,7 +16,7 @@ releases:
     namespace: kube-system
     hooks:
       - # Wait for Cilium CRDs to be available
-        command: bash
+        command: kubectl
         args:
           - wait
           - --for=create
@@ -62,10 +61,36 @@ releases:
     needs:
       - cert-manager/cert-manager
 
+  - name: onepassword-connect
+    namespace: external-secrets
+    hooks:
+      - # Wait for CRDs to be available
+        command: kubectl
+        args:
+          - wait
+          - --for=create
+          - crd/clustersecretstores.external-secrets.io
+          - --timeout=2m
+        events:
+          - postsync
+        showlogs: true
+      - # Apply Resources
+        command: kubectl
+        args:
+          - apply
+          - --server-side
+          - --force-conflicts
+          - --filename=../../apps/{{ .Release.Namespace }}/{{ .Release.Name }}/app/clustersecretstore.yaml
+        events:
+          - postsync
+        showlogs: true
+    needs:
+      - external-secrets/external-secrets
+
   - name: flux-operator
     namespace: flux-system
     needs:
-      - external-secrets/external-secrets
+      - external-secrets/onepassword-connect
 
   - name: flux-instance
     namespace: flux-system

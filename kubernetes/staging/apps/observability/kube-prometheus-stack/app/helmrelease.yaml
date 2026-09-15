@@ -1,0 +1,186 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app kube-prometheus-stack
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: kube-prometheus-stack
+  values:
+    nameOverride: *app
+    crds:
+      enabled: true
+      upgradeJob:
+        enabled: true
+        forceConflicts: true
+    cleanPrometheusOperatorObjectNames: true
+
+    defaultRules:
+      # Disable apiserver SLO rule groups: their rate(...[1d]/[3d]) expressions
+      # over apiserver bucket metrics evaluate slower than the group interval
+      # and triggered PrometheusMissingRuleEvaluations. Disabled as a coupled
+      # set — slos/histogram depend on availability/burnrate recording rules.
+      rules:
+        kubeApiserverAvailability: false
+        kubeApiserverBurnrate: false
+        kubeApiserverHistogram: false
+        kubeApiserverSlos: false
+
+    alertmanager:
+      enabled: true
+      route:
+        internal:
+          enabled: true
+          hostnames:
+            - alerts.zinn.ca
+          parentRefs:
+            - name: envoy-internal
+              namespace: network
+
+      alertmanagerSpec:
+        alertmanagerConfiguration:
+          name: alertmanager
+          global:
+            resolveTimeout: 5m
+        externalUrl: https://alerts.zinn.ca
+        storage:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: ceph-block
+              resources:
+                requests:
+                  storage: 1Gi
+
+    grafana:
+      enabled: false
+
+    kubeApiServer:
+      enabled: true
+      serviceMonitor:
+        metricRelabelings:
+          # Drop high cardinality labels
+          - action: drop
+            sourceLabels:
+              - "__name__"
+            regex: (apiserver|etcd|rest_client)_request(|_sli|_slo)_duration_seconds_bucket
+          - action: drop
+            sourceLabels:
+              - "__name__"
+            regex: (apiserver_response_sizes_bucket|apiserver_watch_events_sizes_bucket)
+
+    kubelet:
+      enabled: true
+      serviceMonitor:
+        metricRelabelings:
+          # Drop high cardinality labels
+          - action: labeldrop
+            regex: (uid)
+          - action: labeldrop
+            regex: (id|name)
+          - action: drop
+            sourceLabels: ["__name__"]
+            regex: (rest_client_request_duration_seconds_bucket|rest_client_request_duration_seconds_sum|rest_client_request_duration_seconds_count)
+
+    kubeControllerManager:
+      enabled: false
+      # endpoints: &cp
+      #   - 10.11.0.16
+      #   - 10.11.0.17
+      #   - 10.11.0.18
+      # serviceMonitor: &sm
+      #   metricRelabelings:
+      #     - action: drop
+      #       sourceLabels: ["__name__"]
+      #       regex: workqueue_(work|queue)_duration_seconds_bucket
+
+    kubeEtcd:
+      enabled: false
+      # service:
+      #   selector:
+      #     component: kube-apiserver
+
+    kubeScheduler:
+      enabled: false
+      # endpoints: *cp
+      # serviceMonitor: *sm
+
+    kubeProxy:
+      enabled: false # KubeProxy is disabled in the cluster, see Cilium/Talos configs
+
+    nodeExporter:
+      enabled: false
+
+    prometheus-node-exporter:
+      fullnameOverride: node-exporter
+      prometheus:
+        monitor:
+          enabled: true
+          relabelings:
+            - action: replace
+              regex: (.*)
+              replacement: $1
+              sourceLabels:
+                - __meta_kubernetes_pod_node_name
+              targetLabel: kubernetes_node
+            - action: replace
+              regex: (.*)
+              replacement: $1
+              sourceLabels:
+                - __meta_kubernetes_pod_node_name
+              targetLabel: nodename
+            - action: replace
+              regex: (.*)
+              replacement: $1.zinn.tech:9100
+              sourceLabels:
+                - kubernetes_node
+              targetLabel: instance
+
+    kubeStateMetrics:
+      enabled: false
+
+    # kube-state-metrics:
+    #   fullnameOverride: kube-state-metrics
+    #   prometheus:
+    #     monitor:
+    #       enabled: true
+    #       honorLabels: true
+    #
+    prometheusOperator:
+      fullnameOverride: prometheus-operator
+
+    prometheus:
+      route:
+        main:
+          enabled: true
+          hostnames:
+            - "prometheus.zinn.ca"
+          parentRefs:
+            - name: envoy-internal
+              namespace: network
+      prometheusSpec:
+        enableAdminAPI: true
+        enableFeatures:
+          - memory-snapshot-on-shutdown
+        podMonitorSelectorNilUsesHelmValues: false
+        probeSelectorNilUsesHelmValues: false
+        resources:
+          requests:
+            cpu: 100m
+          limits:
+            memory: 4Gi
+        retention: 30d
+        retentionSize: 65GB
+        ruleSelectorNilUsesHelmValues: false
+        scrapeConfigSelectorNilUsesHelmValues: false
+        serviceMonitorSelectorNilUsesHelmValues: false
+        storageSpec:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: ceph-block
+              resources:
+                requests:
+                  storage: 75Gi
+        walCompression: true

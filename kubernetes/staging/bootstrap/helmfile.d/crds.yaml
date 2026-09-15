@@ -19,10 +19,13 @@ releases:
     namespace: network
 
   - name: kopiur
-    namespace: system
+    namespace: kopiur-system
 
   - name: kube-prometheus-stack
     namespace: observability
+    chart: oci://ghcr.io/prometheus-community/charts/kube-prometheus-stack
+    version: 91.2.1
+    values: []
 
   - name: snapshot-controller
     namespace: system
