@@ -8,7 +8,7 @@ hostname: stage-1.zinn.tech
 apiVersion: v1alpha1
 kind: UnattendedInstallConfig
 installer:
-  image: factory.talos.dev/metal-installer/{{ ENV.SCHEMATIC }}:v1.14.0
+  image: factory.talos.dev/metal-installer/{{ ENV.SCHEMATIC }}:v1.14.1
 provisioning:
   diskSelector:
     match: disk.symlinks.exists(s, s.startsWith("/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0"))
