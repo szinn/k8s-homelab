@@ -1,5 +1,5 @@
-set lazy
-set positional-arguments
+set default-script
+set no-exit-message
 set quiet
 set script-interpreter := ['bash', '-euo', 'pipefail']
 set shell := ['bash', '-euo', 'pipefail', '-c']
@@ -8,18 +8,15 @@ kubernetes_dir := justfile_dir()
 bootstrap_dir := kubernetes_dir + '/bootstrap'
 
 [private]
-[script]
 default: talos kubernetes (kubeconfig "node") wait namespaces resources crds apps kubeconfig
 
 [doc('Rebuild Talos secrets')]
-[script]
 talos-secrets:
   just log info "Generating Talos secrets..."
   just talos generate-secrets
   just talos generate-talosconfig
 
 [doc('Install Talos')]
-[script]
 talos:
   just log info "Installing Talos on all nodes..."
   for n in $(ls {{ kubernetes_dir }}/talos/nodes | sed -e 's/.yaml.j2//'); do
@@ -33,19 +30,16 @@ talos:
   done
 
 [doc('Install Kubernetes')]
-[script]
 kubernetes:
   just log info "Bootstrapping Talos Kubernetes..."
   just talos bootstrap
 
 [doc('Fetch kubeconfig')]
-[script]
 kubeconfig lb="cilium":
   just log info "Fetching kubeconfig..."
   just talos fetch-kubeconfig {{ lb }}
 
 [doc('Wait for nodes to be not-ready')]
-[script]
 wait:
   just log info "Waiting for all nodes to be not-ready..."
   if ! kubectl wait nodes --for=condition=Ready=True --all --timeout=10s &>/dev/null; then
@@ -56,7 +50,6 @@ wait:
   fi
 
 [doc('Apply Kubernetes namespaces')]
-[script]
 namespaces:
   just log info "Creating namespaces..."
   find "{{ kubernetes_dir }}/apps" -mindepth 1 -maxdepth 1 -type d -printf "%f\n" | while IFS= read -r ns; do
@@ -66,7 +59,6 @@ namespaces:
   done
 
 [doc('Apply Kubernetes resources')]
-[script]
 resources:
   just log info "Applying resources..."
   if ! just template "{{ bootstrap_dir }}/resources.yaml.j2" | kubectl apply --server-side -f -; then
@@ -74,17 +66,15 @@ resources:
   fi
 
 [doc('Apply Helmfile CRDs')]
-[script]
 crds:
   just log info "Installing CRDs..."
-  if ! helmfile -f "{{ bootstrap_dir }}/helmfile.d/00-crds.yaml" template -q | yq ea -e 'select(.kind == "CustomResourceDefinition")' | kubectl apply --server-side --field-manager bootstrap --force-conflicts -f -; then
+  if ! helmfile -f "{{ bootstrap_dir }}/helmfile.d/crds.yaml" template -q | yq ea -e 'select(.kind == "CustomResourceDefinition")' | kubectl apply --server-side --field-manager bootstrap --force-conflicts -f -; then
     just log fatal "Failed to apply crds"
   fi;
 
 [doc('Apply Helmfile Apps')]
-[script]
 apps:
   just log info "Installing applications..."
-  if ! helmfile -f "{{ bootstrap_dir }}/helmfile.d/01-apps.yaml" sync --hide-notes; then
+  if ! helmfile -f "{{ bootstrap_dir }}/helmfile.d/apps.yaml" sync --hide-notes; then
     just log fatal "Failed to sync helmfile"
   fi
