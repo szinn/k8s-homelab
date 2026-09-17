@@ -18,3 +18,4 @@ customization:
     officialExtensions:
       - siderolabs/i915
       - siderolabs/intel-ucode
+      - siderolabs/drbd # Miroir DRBD9 Replication

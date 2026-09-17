@@ -144,4 +144,4 @@ machine-controller node:
 [private]
 [script]
 machine-image node:
-  talosctl --nodes {{ node }} get machineconfig -o yaml | yq -e 'select(.metadata.id == "v1alpha1") | .spec' | yq -e 'select(.machine) | .machine.install.image'
+  just talos render-config "{{ node }}" | yq -r -e 'select(.kind == "UnattendedInstallConfig") | .installer.image'

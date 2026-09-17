@@ -176,12 +176,6 @@ labels:
 {% if ENV.IS_CONTROLPLANE %}
   node-role.kubernetes.io/control-plane: ""
 {% endif %}
-{% if ENV.FOR_NO_SCHEDULING_ON_CONTROL_PLANE %}
-taints:
-  - key: node-role.kubernetes.io/control-plane
-    value: ""
-    effect: NoSchedule
-{% endif %}
 ---
 apiVersion: v1alpha1
 kind: KubeletConfig

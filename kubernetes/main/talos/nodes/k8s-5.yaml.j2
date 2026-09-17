@@ -1,23 +1,5 @@
 machine:
   type: worker
-  nodeLabels:
-    node.kubernetes.io/gpu: "true"
-  install:
-    diskSelector:
-      model: Samsung SSD 870
-    extraKernelArgs:
-      - -selinux
-      - apparmor=0
-      - i915.enable_guc=3
-      - init_on_alloc=0
-      - init_on_free=0
-      - intel_iommu=on
-      - iommu=pt
-      - mitigations=off
-      - net.ifnames=1
-      - security=none
-      - sysctl.kernel.kexec_load_disabled=1
-      - talos.auditd.disabled=1
   kubelet:
     extraMounts:
       - destination: /var/mnt/ssd
@@ -35,6 +17,15 @@ machine:
 apiVersion: v1alpha1
 kind: HostnameConfig
 hostname: k8s-5.zinn.tech
+---
+apiVersion: v1alpha1
+kind: UnattendedInstallConfig
+installer:
+  image: factory.talos.dev/metal-installer/{{ ENV.SCHEMATIC }}:v1.14.1
+provisioning:
+  diskSelector:
+    match: disk.symlinks.exists(s, s.startsWith("/dev/disk/by-id/ata-Samsung_SSD_870_EVO_500GB_S6PXNZ0RC13462A"))
+  wipe: false
 ---
 apiVersion: v1alpha1
 kind: LinkAliasConfig

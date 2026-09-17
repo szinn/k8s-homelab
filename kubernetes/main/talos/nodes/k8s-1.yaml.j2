@@ -1,11 +1,18 @@
 machine:
   type: controlplane
-  install:
-    disk: /dev/sda
 ---
 apiVersion: v1alpha1
 kind: HostnameConfig
 hostname: k8s-1.zinn.tech
+---
+apiVersion: v1alpha1
+kind: UnattendedInstallConfig
+installer:
+  image: factory.talos.dev/metal-installer/{{ ENV.SCHEMATIC }}:v1.14.1
+provisioning:
+  diskSelector:
+    match: disk.symlinks.exists(s, s.startsWith("/dev/disk/by-id/ata-NGFF_2280_256GB_SSD_2021121401472"))
+  wipe: false
 ---
 apiVersion: v1alpha1
 kind: LinkAliasConfig
