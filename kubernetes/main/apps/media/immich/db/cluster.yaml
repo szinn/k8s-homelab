@@ -11,7 +11,7 @@ spec:
   primaryUpdateStrategy: unsupervised
   storage:
     size: 20Gi
-    storageClass: openebs-hostpath
+    storageClass: ceph-block
   enableSuperuserAccess: true
   superuserSecret:
     name: immich-db-secret

@@ -8,10 +8,10 @@ set shell := ['bash', '-euo', 'pipefail', '-c']
 
 kubernetes_dir := justfile_dir()
 
-[group: 'k8s-bootstrap']
+[group('k8s-bootstrap')]
 mod bootstrap "bootstrap"
 
-[group: 'talos']
+[group('talos')]
 mod talos "talos"
 
 [private]

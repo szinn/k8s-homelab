@@ -12,8 +12,6 @@ spec:
   dependsOn:
     - name: actions-runner-controller
       namespace: actions-runner-system
-    - name: openebs
-      namespace: system
   values:
     runnerScaleSetName: k8s-homelab-runner
     githubConfigUrl: https://github.com/szinn/k8s-homelab

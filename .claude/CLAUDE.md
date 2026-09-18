@@ -85,6 +85,7 @@ managed by the `insights` CLI.
 skill to orchestrate both and save a research document.
 
 Directory layout:
+
 - `.insights/issues/` — triage documents (IB-XX-triage-*.md)
 - `.insights/shared/specs/` — specs (IB-XX-spec-*.md)
 - `.insights/shared/plans/` — plans (IB-XX-plan-*.md)

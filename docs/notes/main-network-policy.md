@@ -17,7 +17,8 @@
 | `downloads`             | sonarr, radarr, prowlarr, sabnzbd, qbittorrent, etc. (13 apps) | Low         |
 | `self-hosted`           | homepage, wikijs, atuin, shlink, etc. (10 apps)                | Medium      |
 | `home`                  | home-assistant                                                 | Medium      |
-| `system`                | kopia, kopiur, openebs, spegel, etc.                           | High        |
+| `kopiur-system`         | kopiur                                                         | High        |
+| `system`                | kopia, spegel, etc.                                            | High        |
 | `rook-ceph`             | ceph cluster                                                   | Critical    |
 | `actions-runner-system` | github-actions-runner (cluster-admin!)                         | Critical    |
 | `renovate`              | renovate-operator                                              | Medium      |

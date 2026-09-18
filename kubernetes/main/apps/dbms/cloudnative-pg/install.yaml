@@ -34,8 +34,6 @@ spec:
   dependsOn:
     - name: cloudnative-pg-operator
       namespace: dbms
-    - name: openebs
-      namespace: system
   healthChecks:
     - apiVersion: postgresql.cnpg.io/v1
       kind: Cluster

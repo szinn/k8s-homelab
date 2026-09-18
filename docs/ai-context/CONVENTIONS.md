@@ -232,9 +232,9 @@ image:
   tag: v2.4.1@sha256:e6a6298e67ae077808fdb7d8d5565955f60b0708191576143fc02d30ab1389d1
 
 # WRONG
-tag: latest                          # Never use
-tag: v2.4.1                          # Missing digest
-tag: v2.4.1@sha256:abc123            # Truncated digest
+tag: latest # Never use
+tag: v2.4.1 # Missing digest
+tag: v2.4.1@sha256:abc123 # Truncated digest
 ```
 
 **Depth**
@@ -617,12 +617,12 @@ route:
 
 ```yaml
 # CORRECT
-storageClassName: rook-ceph-block       # Single-instance apps, databases
-storageClassName: rook-ceph-filesystem  # Shared/multi-instance
+storageClassName: rook-ceph-block # Single-instance apps, databases
+storageClassName: rook-ceph-filesystem # Shared/multi-instance
 
 # WRONG
-storageClassName: ceph-block-storage    # Does not exist
-storageClassName: cephfs                # Wrong name
+storageClassName: ceph-block-storage # Does not exist
+storageClassName: cephfs # Wrong name
 ```
 
 ---
@@ -638,8 +638,8 @@ secretStoreRef:
   name: onepassword-connect
 
 # WRONG
-name: onepassword         # Missing "-connect"
-name: 1password-connect   # Wrong prefix
+name: onepassword # Missing "-connect"
+name: 1password-connect # Wrong prefix
 ```
 
 ---
@@ -659,7 +659,7 @@ hostnames:
 
 # WRONG - Creates drift if app renamed
 hostnames:
-  - immich.${SECRET_DOMAIN}  # When .Release.Name is "immich"
+  - immich.${SECRET_DOMAIN} # When .Release.Name is "immich"
 ```
 
 ---

@@ -202,7 +202,7 @@ spec:
           - path: *mediaLocation
       machine-learning-cache:
         type: persistentVolumeClaim
-        storageClass: openebs-hostpath
+        storageClass: ceph-block
         accessMode: ReadWriteOnce
         size: 50Gi
         advancedMounts:
