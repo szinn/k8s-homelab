@@ -12,8 +12,6 @@ spec:
     name: flux-system
     namespace: flux-system
   dependsOn:
-    - name: kopiur
-      namespace: system
     - name: external-secrets
       namespace: external-secrets
   components:

@@ -5,8 +5,8 @@ kind: Kustomization
 metadata:
   name: kopiur
 spec:
-  targetNamespace: system
-  path: ./kubernetes/main/apps/system/kopiur/app
+  targetNamespace: kopiur-system
+  path: ./kubernetes/main/apps/kopiur-system/kopiur/app
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -15,7 +15,7 @@ spec:
     - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
       name: kopiur
-      namespace: system
+      namespace: kopiur-system
   interval: 1h
   prune: true
   wait: false
@@ -27,7 +27,7 @@ metadata:
   name: kopiur-repository
 spec:
   targetNamespace: system
-  path: ./kubernetes/main/apps/system/kopiur/repository
+  path: ./kubernetes/main/apps/kopiur-system/kopiur/repository
   sourceRef:
     kind: GitRepository
     name: flux-system

@@ -14,8 +14,6 @@ spec:
   dependsOn:
     - name: external-secrets
       namespace: external-secrets
-    - name: kopiur
-      namespace: system
   components:
     - ../../../../components/kopiur/kopiur
     - ../../../../components/kopiur/pvc
