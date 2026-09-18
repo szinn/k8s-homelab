@@ -31,8 +31,6 @@ spec:
   dependsOn:
     - name: dragonfly-operator
       namespace: dbms
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
   prune: true
   wait: false
   interval: 30m

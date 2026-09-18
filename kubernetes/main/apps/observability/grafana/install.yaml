@@ -30,8 +30,6 @@ spec:
     namespace: flux-system
   dependsOn:
     - name: grafana
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
   interval: 1h
   prune: true
   wait: false
