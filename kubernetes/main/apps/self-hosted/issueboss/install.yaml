@@ -14,8 +14,6 @@ spec:
   dependsOn:
     - name: cloudnative-pg-cluster
       namespace: dbms
-    - name: external-secrets
-      namespace: external-secrets
   postBuild:
     substitute:
       APP: issueboss

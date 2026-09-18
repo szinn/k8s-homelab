@@ -14,8 +14,6 @@ spec:
   dependsOn:
     - name: external-dns-cloudflare
       namespace: network
-    - name: external-secrets
-      namespace: external-secrets
   prune: true
   wait: false
   interval: 30m

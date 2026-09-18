@@ -31,8 +31,6 @@ spec:
   dependsOn:
     - name: actions-runner-controller
       namespace: actions-runner-system
-    - name: external-secrets
-      namespace: external-secrets
   prune: true
   wait: false
   interval: 30m

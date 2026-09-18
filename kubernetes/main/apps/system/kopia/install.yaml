@@ -14,8 +14,6 @@ spec:
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
-    - name: external-secrets
-      namespace: external-secrets
   interval: 1h
   prune: true
   wait: false

@@ -14,8 +14,6 @@ spec:
   dependsOn:
     - name: flux-operator
       namespace: flux-system
-    - name: external-secrets
-      namespace: external-secrets
   prune: true
   wait: true
   interval: 30m
