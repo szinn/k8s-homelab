@@ -19,13 +19,14 @@ spec:
     minRunners: 1
     maxRunners: 3
     containerMode:
-      type: dind
-      # kubernetesModeWorkVolumeClaim:
-      #   accessModes: ["ReadWriteOnce"]
-      #   storageClassName: openebs-hostpath
-      #   resources:
-      #     requests:
-      #       storage: 25Gi
+      type: kubernetes
+      kubernetesModeWorkVolumeClaim:
+        accessModes:
+          - ReadWriteOnce
+        storageClassName: miroir-slow-local
+        resources:
+          requests:
+            storage: 10Gi
     controllerServiceAccount:
       name: actions-runner-controller
       namespace: actions-runner-system
@@ -34,17 +35,17 @@ spec:
         labels:
           runner: *name
       spec:
-        # initContainers:
-        #   - name: take-cache-dir-ownership
-        #     image: alpine:3@sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b
-        #     command:
-        #       - chown
-        #       - -R
-        #       - 1001:1001
-        #       - /home/runner/cache
-        #     volumeMounts:
-        #       - mountPath: /home/runner/cache
-        #         name: cache-volume
+        initContainers:
+          - name: take-cache-dir-ownership
+            image: alpine:3@sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b
+            command:
+              - chown
+              - -R
+              - 1001:1001
+              - /home/runner/cache
+            volumeMounts:
+              - mountPath: /home/runner/cache
+                name: cache-volume
         affinity:
           podAntiAffinity:
             requiredDuringSchedulingIgnoredDuringExecution:
@@ -52,17 +53,6 @@ spec:
                   matchLabels:
                     runner: *name
                 topologyKey: kubernetes.io/hostname
-        # initContainers:
-        #   - name: take-cache-dir-ownership
-        #     image: alpine:3@sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b
-        #     command:
-        #       - chown
-        #       - -R
-        #       - 1001:1001
-        #       - /home/runner/cache
-        #     volumeMounts:
-        #       - mountPath: /home/runner/cache
-        #         name: cache-volume
         containers:
           - name: runner
             image: ghcr.io/home-operations/actions-runner:2.337.0@sha256:8b8e8326b5a08e658a0a41cfd2867afab69ca4194a152f986aa6fcd5430d09e7
@@ -83,16 +73,16 @@ spec:
               - mountPath: /var/run/secrets/talos.dev
                 name: talos
                 readOnly: true
-            #   - mountPath: /home/runner/cache
-            #     name: cache-volume
+              - mountPath: /home/runner/cache
+                name: cache-volume
         serviceAccountName: *name
         volumes:
           - name: talos
             secret:
               secretName: *name
-        # - name: cache-volume
-        #   persistentVolumeClaim:
-        #   claimName: actions-runner-controller-cache
+          - name: cache-volume
+            persistentVolumeClaim:
+              claimName: actions-runner-controller-cache
         securityContext:
           fsGroup: 1001
           fsGroupChangePolicy: OnRootMismatch
