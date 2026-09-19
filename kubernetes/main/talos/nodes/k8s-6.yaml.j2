@@ -1,18 +1,5 @@
 machine:
   type: worker
-  kubelet:
-    extraMounts:
-      - destination: /var/mnt/ssd
-        type: bind
-        source: /var/mnt/ssd
-        options:
-          - rbind
-          - rshared
-          - rw
-  disks:
-    - device: /dev/disk/by-id/nvme-PCIe_SSD_0546070401F302575079
-      partitions:
-        - mountpoint: /var/mnt/ssd
 ---
 apiVersion: v1alpha1
 kind: HostnameConfig
@@ -26,6 +13,14 @@ provisioning:
   diskSelector:
     match: disk.symlinks.exists(s, s.startsWith("/dev/disk/by-id/ata-Samsung_SSD_870_EVO_500GB_S6PXNZ0RC11937J"))
   wipe: false
+---
+apiVersion: v1alpha1
+kind: RawVolumeConfig
+name: miroir-slow
+provisioning:
+  diskSelector:
+    match: disk.symlinks.exists(s, s.startsWith("/dev/disk/by-id/nvme-PCIe_SSD_0546070401F302575079"))
+  minSize: 512GB
 ---
 apiVersion: v1alpha1
 kind: LinkAliasConfig

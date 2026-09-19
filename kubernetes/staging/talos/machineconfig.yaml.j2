@@ -11,10 +11,6 @@ machine:
     diskQuotaSupport: true
     rbac: true
   token: op://Kubernetes/cluster-staging/MACHINE_TOKEN
-  {% if ENV.REMOVED %}
-  certSANs:
-    - staging.zinn.tech
-  {% endif %}
 cluster:
   ca:
     crt: op://Kubernetes/cluster-staging/CLUSTER_CA_CRT
@@ -39,11 +35,6 @@ cluster:
       listen-metrics-urls: http://0.0.0.0:2381
   serviceAccount:
     key: op://Kubernetes/cluster-staging/CLUSTER_SERVICEACCOUNT_KEY
-  {% endif %}
-  {% if ENV.REMOVED %}
-  network:
-    cni:
-      name: none
   {% endif %}
 ---
 apiVersion: v1alpha1

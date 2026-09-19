@@ -7,97 +7,12 @@ machine:
     {% if ENV.IS_CONTROLPLANE %}
     key: op://Kubernetes/cluster-main/MACHINE_CA_KEY
     {% endif %}
-  certSANs:
-    - main.zinn.tech
   features:
     apidCheckExtKeyUsage: true
     diskQuotaSupport: true
-    kubePrism:
-      enabled: true
-      port: 7445
-    {% if ENV.IS_CONTROLPLANE %}
-    kubernetesTalosAPIAccess:
-      enabled: true
-      allowedKubernetesNamespaces:
-        - actions-runner-system
-        - system-upgrade
-      allowedRoles:
-        - os:admin
-    {% endif %}
     rbac: true
   token: op://Kubernetes/cluster-main/MACHINE_TOKEN
-  kubelet:
-    defaultRuntimeSeccompProfileEnabled: true
-    disableManifestsDirectory: true
-    extraArgs:
-      image-gc-high-threshold: "70"
-      image-gc-low-threshold: "65"
-    extraConfig:
-      featureGates:
-        ResourceHealthStatus: true
-      serializeImagePulls: false
-    image: ghcr.io/siderolabs/kubelet:v1.37.0
 cluster:
-  {% if ENV.IS_CONTROLPLANE %}
-  aggregatorCA:
-    crt: op://Kubernetes/cluster-main/CLUSTER_AGGREGATORCA_CRT
-    key: op://Kubernetes/cluster-main/CLUSTER_AGGREGATORCA_KEY
-  apiServer:
-    auditPolicy:
-      apiVersion: audit.k8s.io/v1
-      kind: Policy
-      rules:
-        - level: Metadata
-    certSANs:
-      - main.zinn.tech
-      - 127.0.0.1
-    disablePodSecurityPolicy: true
-    extraArgs:
-      enable-aggregator-routing: "true"
-      feature-gates: HPAScaleToZero=true
-    image: registry.k8s.io/kube-apiserver:v1.37.0
-  controllerManager:
-    extraArgs:
-      bind-address: 0.0.0.0
-    image: registry.k8s.io/kube-controller-manager:v1.37.0
-  coreDNS:
-    disabled: true
-  etcd:
-    advertisedSubnets:
-      - 10.11.0.0/16
-    ca:
-      crt: op://Kubernetes/cluster-main/CLUSTER_ETCD_CA_CRT
-      key: op://Kubernetes/cluster-main/CLUSTER_ETCD_CA_KEY
-    extraArgs:
-      listen-metrics-urls: http://0.0.0.0:2381
-  proxy:
-    disabled: true
-    image: registry.k8s.io/kube-proxy:v1.37.0
-  scheduler:
-    config:
-      apiVersion: kubescheduler.config.k8s.io/v1
-      kind: KubeSchedulerConfiguration
-      profiles:
-        - schedulerName: default-scheduler
-          plugins:
-            score:
-              disabled:
-                - name: ImageLocality
-          pluginConfig:
-            - name: PodTopologySpread
-              args:
-                defaultingType: List
-                defaultConstraints:
-                  - maxSkew: 1
-                    topologyKey: kubernetes.io/hostname
-                    whenUnsatisfiable: ScheduleAnyway
-    extraArgs:
-      bind-address: 0.0.0.0
-    image: registry.k8s.io/kube-scheduler:v1.37.0
-  secretboxEncryptionSecret: op://Kubernetes/cluster-main/CLUSTER_SECRETBOXENCRYPTIONSECRET
-  serviceAccount:
-    key: op://Kubernetes/cluster-main/CLUSTER_SERVICEACCOUNT_KEY
-  {% endif %}
   ca:
     crt: op://Kubernetes/cluster-main/CLUSTER_CA_CRT
     {% if ENV.IS_CONTROLPLANE %}
@@ -106,15 +21,22 @@ cluster:
   clusterName: main
   controlPlane:
     endpoint: https://main.zinn.tech:6443
-  network:
-    cni:
-      name: none
-    dnsDomain: cluster.local
-    podSubnets:
-      - 10.201.0.0/16
-    serviceSubnets:
-      - 10.200.0.0/16
   token: op://Kubernetes/cluster-main/CLUSTER_TOKEN
+  {% if ENV.IS_CONTROLPLANE %}
+  aggregatorCA:
+    crt: op://Kubernetes/cluster-main/CLUSTER_AGGREGATORCA_CRT
+    key: op://Kubernetes/cluster-main/CLUSTER_AGGREGATORCA_KEY
+  etcd:
+    advertisedSubnets:
+      - 10.11.0.0/16
+    ca:
+      crt: op://Kubernetes/cluster-main/CLUSTER_ETCD_CA_CRT
+      key: op://Kubernetes/cluster-main/CLUSTER_ETCD_CA_KEY
+    extraArgs:
+      listen-metrics-urls: http://0.0.0.0:2381
+  serviceAccount:
+    key: op://Kubernetes/cluster-main/CLUSTER_SERVICEACCOUNT_KEY
+  {% endif %}
 ---
 apiVersion: v1alpha1
 kind: WatchdogTimerConfig
@@ -187,8 +109,8 @@ endpoint: https://discovery.talos.dev/
 ---
 apiVersion: v1alpha1
 kind: DiscoveryIdentityConfig
-clusterID: op://Kubernetes/cluster-staging/CLUSTER_ID
-clusterSecret: op://Kubernetes/cluster-staging/CLUSTER_SECRET
+clusterID: op://Kubernetes/cluster-main/CLUSTER_ID
+clusterSecret: op://Kubernetes/cluster-main/CLUSTER_SECRET
 ---
 apiVersion: v1alpha1
 kind: FilesystemTrimConfig
@@ -252,4 +174,130 @@ labels:
   node-role.kubernetes.io/control-plane: ""
 taints:
   node-role.kubernetes.io/control-plane: NoSchedule
+{% endif %}
+---
+apiVersion: v1alpha1
+kind: KubeletConfig
+config:
+  crashLoopBackOff:
+    maxContainerRestartPeriod: 60s
+  imageMaximumGCAge: 168h
+  maxParallelImagePulls: 3
+  serializeImagePulls: false
+  shutdownGracePeriod: 90s
+  shutdownGracePeriodCriticalPods: 60s
+extraArgs:
+  image-gc-high-threshold: "70"
+  image-gc-low-threshold: "65"
+defaultRuntimeSeccompProfileEnabled: true
+image: ghcr.io/siderolabs/kubelet:v1.37.0
+---
+apiVersion: v1alpha1
+kind: KubeNetworkConfig
+dnsDomain: cluster.local
+podSubnets:
+  - 10.201.0.0/16
+serviceSubnets:
+  - 10.200.0.0/16
+---
+apiVersion: v1alpha1
+kind: KubePrismConfig
+port: 7445
+{% if ENV.IS_CONTROLPLANE %}
+---
+apiVersion: v1alpha1
+kind: KubeAPIServerConfig
+certExtraSANs:
+  - main.zinn.tech
+extraArgs:
+  enable-aggregator-routing: "true"
+  feature-gates: HPAScaleToZero=true
+image: registry.k8s.io/kube-apiserver:v1.37.0
+---
+apiVersion: v1alpha1
+kind: KubeAuditPolicyConfig
+configuration:
+  apiVersion: audit.k8s.io/v1
+  kind: Policy
+  rules:
+    - level: Metadata
+---
+apiVersion: v1alpha1
+kind: KubeAuthenticationConfig
+configuration:
+  anonymous:
+    conditions:
+      - path: /livez
+      - path: /readyz
+      - path: /healthz
+    enabled: true
+  jwt: []
+---
+apiVersion: v1alpha1
+kind: KubeAuthorizerConfig
+name: node
+type: Node
+---
+apiVersion: v1alpha1
+kind: KubeAuthorizerConfig
+name: rbac
+type: RBAC
+---
+apiVersion: v1alpha1
+kind: KubeControllerManagerConfig
+extraArgs:
+  bind-address: 0.0.0.0
+  feature-gates: HPAScaleToZero=true
+image: registry.k8s.io/kube-controller-manager:v1.37.0
+---
+apiVersion: v1alpha1
+kind: KubeCoreDNSConfig
+enabled: false
+---
+apiVersion: v1alpha1
+kind: KubeEtcdEncryptionConfig
+config:
+  resources:
+    - providers:
+        - secretbox:
+            keys:
+              - name: key2
+                secret: op://Kubernetes/cluster-main/CLUSTER_SECRETBOXENCRYPTIONSECRET
+        - identity: {}
+      resources:
+        - secrets
+---
+apiVersion: v1alpha1
+kind: KubeProxyConfig
+enabled: false
+image: registry.k8s.io/kube-proxy:v1.37.0
+---
+apiVersion: v1alpha1
+kind: KubeSchedulerConfig
+config:
+  profiles:
+    - schedulerName: default-scheduler
+      plugins:
+        score:
+          disabled:
+            - name: ImageLocality
+      pluginConfig:
+        - name: PodTopologySpread
+          args:
+            defaultingType: List
+            defaultConstraints:
+              - maxSkew: 1
+                topologyKey: kubernetes.io/hostname
+                whenUnsatisfiable: ScheduleAnyway
+extraArgs:
+  bind-address: 0.0.0.0
+image: registry.k8s.io/kube-scheduler:v1.37.0
+---
+apiVersion: v1alpha1
+kind: KubeTalosAPIAccessConfig
+allowedRoles:
+  - os:admin
+allowedKubernetesNamespaces:
+  - actions-runner-system
+  - system-upgrade
 {% endif %}
