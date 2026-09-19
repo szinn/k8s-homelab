@@ -32,6 +32,7 @@ spec:
       dashboard:
         enabled: true
         urlPrefix: /
+        port: 8443
         ssl: false
         prometheusEndpoint: http://prometheus-operated.observability.svc.cluster.local:9090
       mgr:
@@ -187,4 +188,4 @@ spec:
           - backendRefs:
               - name: rook-ceph-mgr-dashboard
                 namespace: rook-ceph
-                port: 7000
+                port: 8443
