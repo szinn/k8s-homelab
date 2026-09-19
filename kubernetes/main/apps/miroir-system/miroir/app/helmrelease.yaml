@@ -17,13 +17,13 @@ spec:
       enabled: true
     monitoring:
       dashboards:
-        enabled: false
+        enabled: true
         grafanaOperator:
           enabled: true
           matchLabels:
             dashboards: grafana
       podMonitor:
-        enabled: false
+        enabled: true
       prometheusRule:
-        enabled: false
+        enabled: true
     replicaCount: 2
