@@ -12,7 +12,6 @@ resources:
   - namespace.yaml
   # Flux-Kustomizations
   - descheduler/install.yaml
-  - fstrim/install.yaml
   - intel-gpu-resource-driver/install.yaml
   - k8tz/install.yaml
   - kopia/install.yaml
