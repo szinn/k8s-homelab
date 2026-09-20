@@ -10,3 +10,5 @@ terraform/
 README.md
 Taskfile.yaml
 config.sops.env
+!*.png
+!*.jpg
