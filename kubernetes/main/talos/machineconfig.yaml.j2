@@ -191,7 +191,7 @@ extraArgs:
   image-gc-high-threshold: "70"
   image-gc-low-threshold: "65"
 defaultRuntimeSeccompProfileEnabled: true
-image: ghcr.io/siderolabs/kubelet:v1.37.0
+image: ghcr.io/siderolabs/kubelet:v1.37.1
 ---
 apiVersion: v1alpha1
 kind: KubeNetworkConfig
@@ -213,7 +213,7 @@ certExtraSANs:
 extraArgs:
   enable-aggregator-routing: "true"
   feature-gates: HPAScaleToZero=true
-image: registry.k8s.io/kube-apiserver:v1.37.0
+image: registry.k8s.io/kube-apiserver:v1.37.1
 ---
 apiVersion: v1alpha1
 kind: KubeAuditPolicyConfig
@@ -249,7 +249,7 @@ kind: KubeControllerManagerConfig
 extraArgs:
   bind-address: 0.0.0.0
   feature-gates: HPAScaleToZero=true
-image: registry.k8s.io/kube-controller-manager:v1.37.0
+image: registry.k8s.io/kube-controller-manager:v1.37.1
 ---
 apiVersion: v1alpha1
 kind: KubeCoreDNSConfig
@@ -271,7 +271,7 @@ config:
 apiVersion: v1alpha1
 kind: KubeProxyConfig
 enabled: false
-image: registry.k8s.io/kube-proxy:v1.37.0
+image: registry.k8s.io/kube-proxy:v1.37.1
 ---
 apiVersion: v1alpha1
 kind: KubeSchedulerConfig
@@ -292,7 +292,7 @@ config:
                 whenUnsatisfiable: ScheduleAnyway
 extraArgs:
   bind-address: 0.0.0.0
-image: registry.k8s.io/kube-scheduler:v1.37.0
+image: registry.k8s.io/kube-scheduler:v1.37.1
 ---
 apiVersion: v1alpha1
 kind: KubeTalosAPIAccessConfig
