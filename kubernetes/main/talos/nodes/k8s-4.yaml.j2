@@ -8,7 +8,7 @@ hostname: k8s-4.zinn.tech
 apiVersion: v1alpha1
 kind: UnattendedInstallConfig
 installer:
-  image: factory.talos.dev/metal-installer/{{ ENV.SCHEMATIC }}:v1.14.1
+  image: factory.talos.dev/metal-installer/{{ ENV.SCHEMATIC }}:v1.14.2
 provisioning:
   diskSelector:
     match: disk.symlinks.exists(s, s.startsWith("/dev/disk/by-id/ata-Samsung_SSD_870_EVO_500GB_S6PWNJ0R504206H"))

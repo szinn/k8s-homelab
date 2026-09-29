@@ -8,7 +8,7 @@ hostname: k8s-1.zinn.tech
 apiVersion: v1alpha1
 kind: UnattendedInstallConfig
 installer:
-  image: factory.talos.dev/metal-installer/{{ ENV.SCHEMATIC }}:v1.14.1
+  image: factory.talos.dev/metal-installer/{{ ENV.SCHEMATIC }}:v1.14.2
 provisioning:
   diskSelector:
     match: disk.symlinks.exists(s, s.startsWith("/dev/disk/by-id/ata-NGFF_2280_256GB_SSD_2021121401472"))
