@@ -35,17 +35,17 @@ spec:
         labels:
           runner: *name
       spec:
-        initContainers:
-          - name: take-cache-dir-ownership
-            image: alpine:3@sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b
-            command:
-              - chown
-              - -R
-              - 1001:1001
-              - /home/runner/cache
-            volumeMounts:
-              - mountPath: /home/runner/cache
-                name: cache-volume
+        # initContainers:
+        #   - name: take-cache-dir-ownership
+        #     image: alpine:3@sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b
+        #     command:
+        #       - chown
+        #       - -R
+        #       - 1001:1001
+        #       - /home/runner/cache
+        #     volumeMounts:
+        #       - mountPath: /home/runner/cache
+        #         name: cache-volume
         affinity:
           podAntiAffinity:
             requiredDuringSchedulingIgnoredDuringExecution:
@@ -73,16 +73,16 @@ spec:
               - mountPath: /var/run/secrets/talos.dev
                 name: talos
                 readOnly: true
-              - mountPath: /home/runner/cache
-                name: cache-volume
+              # - mountPath: /home/runner/cache
+              #   name: cache-volume
         serviceAccountName: *name
         volumes:
           - name: talos
             secret:
               secretName: *name
-          - name: cache-volume
-            persistentVolumeClaim:
-              claimName: actions-runner-controller-cache
+          # - name: cache-volume
+          #   persistentVolumeClaim:
+          #     claimName: actions-runner-controller-cache
         securityContext:
           fsGroup: 1001
           fsGroupChangePolicy: OnRootMismatch

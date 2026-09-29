@@ -7,4 +7,4 @@ resources:
   - ocirepository.yaml
   - helmrelease.yaml
   - podmonitor.yaml
-  - pvc.yaml
+  # - pvc.yaml
