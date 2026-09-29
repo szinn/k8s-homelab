@@ -13,6 +13,7 @@ resources:
   # Flux-Kustomizations
   - pvc
   - atuin/install.yaml
+  - cardigan/install.yaml
   - changedetection/install.yaml
   - dashy/install.yaml
   - freshrss/install.yaml
