@@ -33,7 +33,7 @@ spec:
           cardigan:
             image:
               repository: ghcr.io/szinn/cardigan
-              tag: v0.1.0
+              tag: v0.1.0@sha256:e558cf59fe550f530a771e75409e2007807c433dbe97f4d636f3a9048fc38899
             env:
               CARDIGAN_DATABASE_PATH: /data
               TZ: "America/Toronto"
