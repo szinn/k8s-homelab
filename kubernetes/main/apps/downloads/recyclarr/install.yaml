@@ -18,7 +18,6 @@ spec:
     substitute:
       APP: recyclarr
       KOPIUR_CLAIM: recyclarr-config
-      KOPIUR_CAPACITY: 1Gi
   prune: true
   wait: false
   interval: 30m
