@@ -128,8 +128,23 @@ tasks:
   update-linux-packages:
     desc: Update linux machines
     cmds:
+      - task: update-artemis-linux-packages
+      - task: update-apollo-linux-packages
+      - task: update-hera-linux-packages
+
+  update-artemis-linux-packages:
+    desc: Update artemis linux machines
+    cmds:
       - ssh root@artemis.zinn.tech 'apt update -y && apt upgrade -y && apt autoremove -y'
+
+  update-apollo-linux-packages:
+    desc: Update apollo linux machines
+    cmds:
       - ssh root@apollo.zinn.tech 'apt update -y && apt upgrade -y && apt autoremove -y'
+
+  update-hera-linux-packages:
+    desc: Update hera linux machines
+    cmds:
       - ssh root@hera.zinn.tech 'dnf upgrade -y'
 
   install-artemis-adguard:
