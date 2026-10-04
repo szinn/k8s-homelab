@@ -27,18 +27,20 @@ jobs:
 
       - name: Get changed files
         id: changed-files
-        uses: bjw-s-labs/action-changed-files@147be9638332cf68fd60714a610509d7a9360d60 # v0.7.0
+        uses: tj-actions/changed-files@9426d40962ed5378910ee2e21d5f8c6fcbf2dd96 # v47.0.6
         with:
-          patterns: |-
+          files: |-
             .github/workflows/*.yaml
             .github/workflows/*.yml
+          json: true
+          escape_json: false
 
       - name: Run actionlint
-        if: steps.changed-files.outputs.changed_files != '[]'
+        if: steps.changed-files.outputs.any_changed == 'true'
         uses: bjw-s/action-actionlint@b346813e82708106544f48a93a5b3fbeeb8e37eb # v0.1.1
         with:
           actionlint_config: .github/actionlint.yaml
-          file_pattern: ${{ join(fromJSON(steps.changed-files.outputs.changed_files), ' ') }}
+          file_pattern: ${{ join(fromJSON(steps.changed-files.outputs.all_changed_files), ' ') }}
 
   yamllint:
     name: yamllint
@@ -51,23 +53,28 @@ jobs:
 
       - name: Get changed files
         id: changed-files
-        uses: bjw-s-labs/action-changed-files@147be9638332cf68fd60714a610509d7a9360d60 # v0.7.0
+        uses: tj-actions/changed-files@9426d40962ed5378910ee2e21d5f8c6fcbf2dd96 # v47.0.6
         with:
-          patterns: |-
+          files: |-
             **/*.yaml
             **/*.yml
+          json: true
+          escape_json: false
 
       - name: Install yamllint
-        if: steps.changed-files.outputs.changed_files != '[]'
+        if: steps.changed-files.outputs.any_changed == 'true'
         shell: bash
         run: |
           pip install --user yamllint
 
       - name: Run yamllint
-        if: steps.changed-files.outputs.changed_files != '[]'
+        if: steps.changed-files.outputs.any_changed == 'true'
         shell: bash
+        env:
+          FILES: ${{ steps.changed-files.outputs.all_changed_files }}
         run: |
-          yamllint --config-file .yamllint.yaml --format github ${{ join(fromJSON(steps.changed-files.outputs.changed_files), ' ') }}
+          mapfile -t files < <(jq -r '.[]' <<<"$FILES")
+          yamllint --config-file .yamllint.yaml --format github "${files[@]}"
 
   markdownlint:
     name: markdownlint
@@ -80,17 +87,19 @@ jobs:
 
       - name: Get changed files
         id: changed-files
-        uses: bjw-s-labs/action-changed-files@147be9638332cf68fd60714a610509d7a9360d60 # v0.7.0
+        uses: tj-actions/changed-files@9426d40962ed5378910ee2e21d5f8c6fcbf2dd96 # v47.0.6
         with:
-          patterns: |-
+          files: |-
             **/*.md
+          json: true
+          escape_json: false
 
       - name: Run markdownlint-cli2
-        if: steps.changed-files.outputs.changed_files != '[]'
+        if: steps.changed-files.outputs.any_changed == 'true'
         uses: bjw-s/action-markdownlint-cli2@c3c44cc6f77516007f1a85d982ed6276e840dcec # v0.1.0
         with:
           markdownlint_config: .markdownlint.yaml
-          file_pattern: ${{ join(fromJSON(steps.changed-files.outputs.changed_files), ' ') }}
+          file_pattern: ${{ join(fromJSON(steps.changed-files.outputs.all_changed_files), ' ') }}
 
   prettier:
     name: prettier
@@ -103,15 +112,23 @@ jobs:
 
       - name: Get changed files
         id: changed-files
-        uses: bjw-s-labs/action-changed-files@147be9638332cf68fd60714a610509d7a9360d60 # v0.7.0
+        uses: tj-actions/changed-files@9426d40962ed5378910ee2e21d5f8c6fcbf2dd96 # v47.0.6
+        with:
+          files: |-
+            **/*.yaml
+            **/*.yml
+            **/*.json
+            **/*.md
+          json: true
+          escape_json: false
 
       - name: Run prettier
-        if: steps.changed-files.outputs.changed_files != '[]'
+        if: steps.changed-files.outputs.any_changed == 'true'
         uses: bjw-s/action-prettier-lint@1014e6a3453ff28a8b746715f44a75306d223266 # v0.1.1
         with:
           prettier_ignore: .prettierignore
           prettier_config: .prettierrc.yaml
-          file_pattern: ${{ join(fromJSON(steps.changed-files.outputs.changed_files), ' ') }}
+          file_pattern: ${{ join(fromJSON(steps.changed-files.outputs.all_changed_files), ' ') }}
 
   lint_success:
     needs:
