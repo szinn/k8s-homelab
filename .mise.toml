@@ -1,5 +1,5 @@
 [tools]
-"aqua:helm/helm" = "3.22.0"
+"aqua:helm/helm" = "3.22.1"
 "aqua:helmfile/helmfile" = "1.8.1"
 kubeconform = "latest"
 cilium-cli = "latest"
