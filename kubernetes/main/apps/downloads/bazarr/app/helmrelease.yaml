@@ -55,6 +55,8 @@ spec:
               GITSYNC_REF: master
               GITSYNC_PERIOD: 24h
               GITSYNC_ROOT: /subcleaner
+              # emptyDir root is owned by uid 0; git rejects it as "dubious ownership"
+              GITSYNC_GIT_CONFIG: safe.directory:*
             resources:
               requests:
                 cpu: 10m
