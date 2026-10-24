@@ -13,8 +13,6 @@ spec:
     - name: snapshot-controller
       namespace: system
   values:
-    crds:
-      enabled: true
     csi:
       serviceMonitor:
         enabled: true
@@ -24,6 +22,5 @@ spec:
       enabled: true
     resources:
       requests:
-        memory: 128Mi # unchangable
         cpu: 100m # unchangable
       limits: {}

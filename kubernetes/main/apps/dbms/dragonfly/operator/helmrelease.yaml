@@ -10,11 +10,5 @@ spec:
     kind: OCIRepository
     name: dragonfly-operator
   values:
-    serviceMonitor:
-      enabled: false
     grafanaDashboard:
       enabled: true
-      annotations:
-        name: grafana_folder
-      labels:
-        name: grafana_dashboard

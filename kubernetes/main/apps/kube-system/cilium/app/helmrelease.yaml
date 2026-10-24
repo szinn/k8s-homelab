@@ -56,7 +56,6 @@ spec:
       enabled: false
 
     hubble:
-      enabled: true
       metrics:
         enabled:
           - dns:query;ignoreAAAA
@@ -68,8 +67,6 @@ spec:
           - http
         serviceMonitor:
           enabled: true
-        dashboards:
-          enabled: false
       relay:
         enabled: true
         rollOutPods: true
@@ -79,8 +76,6 @@ spec:
       ui:
         enabled: true
         rollOutPods: true
-        ingress:
-          enabled: false
 
     ipam:
       mode: kubernetes
@@ -99,15 +94,12 @@ spec:
       serviceTopology: true # spegel-registry relies on trafficDistribution: PreferSameNode
 
     operator:
-      enabled: true
-      replicas: 2
       rollOutPods: true
       dashboards:
         enabled: true
         annotations:
           grafana_folder: Cilium
       prometheus:
-        enabled: true
         serviceMonitor:
           enabled: true
 

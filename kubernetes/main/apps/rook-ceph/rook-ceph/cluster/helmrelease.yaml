@@ -24,13 +24,10 @@ spec:
           mon_cluster_log_level: info
       cleanupPolicy:
         wipeDevicesFromOtherClusters: true
-      crashCollector:
-        disable: false
       csi:
         readAffinity:
           enabled: false
       dashboard:
-        enabled: true
         urlPrefix: /
         port: 8443
         ssl: false
@@ -45,8 +42,6 @@ spec:
             # interval (~15s), flooding `ceph crash ls`. Re-enable once ceph/ceph#70967 ships.
       network:
         provider: host
-        connections:
-          requireMsgr2: true
       resources:
         osd:
           limits:
@@ -67,8 +62,6 @@ spec:
           daemon:
             keyRotationPolicy: KeyGeneration
             keyGeneration: 2
-          csi:
-            keyType: aes # aes256k requires kernel 7.0+
       storage:
         useAllNodes: false
         useAllDevices: false
@@ -114,8 +107,6 @@ spec:
     cephBlockPoolsVolumeSnapshotClass:
       enabled: true
       name: csi-ceph-blockpool
-      isDefault: false
-      deletionPolicy: Delete
 
     cephFileSystems:
       - name: &cephFileSystemName ceph-filesystem
@@ -164,13 +155,11 @@ spec:
       enabled: true
       name: csi-ceph-filesystem
       isDefault: false
-      deletionPolicy: Delete
 
     cephObjectStores: []
 
     monitoring:
       enabled: true
-      createPrometheusRules: false
 
     toolbox:
       enabled: true

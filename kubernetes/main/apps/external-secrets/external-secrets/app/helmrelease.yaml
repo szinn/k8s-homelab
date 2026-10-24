@@ -15,8 +15,6 @@ spec:
   values:
     # log:
     #   level: debug
-    installCRDs: true
-    leaderElect: false
     serviceMonitor:
       enabled: true
     grafanaDashboard:

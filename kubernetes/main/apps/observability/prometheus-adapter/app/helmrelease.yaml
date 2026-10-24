@@ -12,7 +12,6 @@ spec:
   values:
     prometheus:
       url: http://prometheus-operated.observability.svc.cluster.local
-      port: 9090
     rules:
       default: false
       external:

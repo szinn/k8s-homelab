@@ -16,7 +16,6 @@ spec:
           enableBackend: true
           enableEnvoyPatchPolicy: true
         provider:
-          type: Kubernetes
           kubernetes:
             deploy:
               type: GatewayNamespace

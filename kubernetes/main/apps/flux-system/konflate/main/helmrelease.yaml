@@ -35,8 +35,3 @@ spec:
     monitoring:
       serviceMonitor:
         enabled: true
-    resources:
-      requests:
-        cpu: 50m
-      limits:
-        memory: 1Gi

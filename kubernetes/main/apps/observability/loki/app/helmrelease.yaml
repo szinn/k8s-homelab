@@ -58,7 +58,6 @@ spec:
     singleBinary:
       replicas: 1
       persistence:
-        enabled: true
         storageClass: ceph-block
         size: 50Gi
 

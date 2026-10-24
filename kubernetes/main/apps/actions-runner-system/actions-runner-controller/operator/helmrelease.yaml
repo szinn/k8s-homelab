@@ -11,7 +11,6 @@ spec:
     name: gha-runner-scale-set-controller
   values:
     fullnameOverride: *name
-    replicaCount: 1
     metrics:
       controllerManagerAddr: ":8080"
       listenerAddr: ":8080"

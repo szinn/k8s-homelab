@@ -12,13 +12,11 @@ spec:
   values:
     drivers:
       cephfs:
-        enabled: true
         name: rook-ceph.cephfs.csi.ceph.com
       nfs:
         enabled: false
       nvmeof:
         enabled: false
       rbd:
-        enabled: true
         name: rook-ceph.rbd.csi.ceph.com
         snapshotPolicy: volumeSnapshot
