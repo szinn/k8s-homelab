@@ -10,8 +10,6 @@ spec:
     kind: OCIRepository
     name: cloudnative-pg
   values:
-    crds:
-      create: true
     config:
       data:
         INHERITED_LABELS: app.kubernetes.io/*

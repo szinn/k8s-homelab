@@ -59,7 +59,6 @@ spec:
       enabled: false
 
     hubble:
-      enabled: true
       metrics:
         enabled:
           - dns:query;ignoreAAAA
@@ -69,21 +68,12 @@ spec:
           - port-distribution
           - icmp
           - http
-        serviceMonitor:
-          enabled: false
-        dashboards:
-          enabled: false
       relay:
         enabled: true
         rollOutPods: true
-        prometheus:
-          serviceMonitor:
-            enabled: false
       ui:
         enabled: true
         rollOutPods: true
-        ingress:
-          enabled: false
 
     ipam:
       mode: kubernetes
@@ -96,8 +86,6 @@ spec:
     kubeProxyReplacement: true
     kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
 
-    l2announcements:
-      enabled: false
 
     loadBalancer:
       acceleration: best-effort
@@ -108,22 +96,15 @@ spec:
     localRedirectPolicy: true
 
     operator:
-      enabled: true
       dashboards:
-        enabled: false
         annotations:
           grafana_folder: Cilium
       prometheus:
         enabled: false
-        serviceMonitor:
-          enabled: false
-      replicas: 2
       rollOutPods: true
 
     prometheus:
-      enabled: false
       serviceMonitor:
-        enabled: false
         trustCRDsExist: true
 
     rollOutCiliumPods: true

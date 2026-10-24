@@ -12,10 +12,8 @@ spec:
   values:
     nameOverride: *app
     crds:
-      enabled: true
       upgradeJob:
         enabled: true
-        forceConflicts: true
     cleanPrometheusOperatorObjectNames: true
 
     defaultRules:
@@ -30,7 +28,6 @@ spec:
         kubeApiserverSlos: false
 
     alertmanager:
-      enabled: true
       route:
         internal:
           enabled: true
@@ -58,7 +55,6 @@ spec:
       enabled: false
 
     kubeApiServer:
-      enabled: true
       serviceMonitor:
         metricRelabelings:
           # Drop high cardinality labels
@@ -72,7 +68,6 @@ spec:
             regex: (apiserver_response_sizes_bucket|apiserver_watch_events_sizes_bucket)
 
     kubelet:
-      enabled: true
       serviceMonitor:
         metricRelabelings:
           # Drop high cardinality labels
@@ -117,7 +112,6 @@ spec:
       fullnameOverride: node-exporter
       prometheus:
         monitor:
-          enabled: true
           relabelings:
             - action: replace
               regex: (.*)
@@ -183,4 +177,3 @@ spec:
               resources:
                 requests:
                   storage: 75Gi
-        walCompression: true

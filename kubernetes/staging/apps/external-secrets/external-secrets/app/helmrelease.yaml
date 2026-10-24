@@ -15,11 +15,5 @@ spec:
   values:
     # log:
     #   level: debug
-    installCRDs: true
-    leaderElect: false
-    serviceMonitor:
-      enabled: false
-    grafanaDashboard:
-      enabled: false
     webhook:
       replicaCount: 2

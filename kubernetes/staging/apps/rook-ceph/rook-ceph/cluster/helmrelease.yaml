@@ -18,9 +18,6 @@ spec:
     toolbox:
       enabled: true
 
-    monitoring:
-      enabled: false
-      createPrometheusRules: false
 
     cephClusterSpec:
       cephConfig:
@@ -30,8 +27,6 @@ spec:
           osd_class_update_on_start: "false" # quote
           device_failure_prediction_mode: local # requires mgr module
 
-      crashCollector:
-        disable: false
 
       csi:
         readAffinity:
@@ -54,13 +49,10 @@ spec:
           daemon:
             keyRotationPolicy: KeyGeneration
             keyGeneration: 2
-          csi:
-            keyType: aes # aes256k requires kernel 7.0+
         keyRotation:
           enabled: true
 
       dashboard:
-        enabled: true
         urlPrefix: /
         ssl: false
 
@@ -156,8 +148,6 @@ spec:
     cephBlockPoolsVolumeSnapshotClass:
       enabled: true
       name: csi-ceph-blockpool
-      isDefault: false
-      deletionPolicy: Delete
 
     # NOTE: After disabling the filesystem, the filesystem can be removed with the following commands:
     # ceph fs fail ceph-filesystem && ceph fs rm ceph-filesystem --yes-i-really-mean-it

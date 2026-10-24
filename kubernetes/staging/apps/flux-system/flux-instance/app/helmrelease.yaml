@@ -13,16 +13,9 @@ spec:
     instance:
       distribution:
         artifact: oci://ghcr.io/controlplaneio-fluxcd/flux-operator-manifests:v0.61.0
-        version: 2.x
       cluster:
         networkPolicy: false
-      components:
-        - source-controller
-        - kustomize-controller
-        - helm-controller
-        - notification-controller
       sync:
-        kind: GitRepository
         url: https://github.com/szinn/k8s-homelab.git
         ref: refs/heads/main
         path: kubernetes/staging/cluster/config

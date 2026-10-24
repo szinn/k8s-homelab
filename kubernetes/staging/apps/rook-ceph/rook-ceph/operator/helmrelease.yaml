@@ -15,10 +15,6 @@ spec:
   values:
     image:
       repository: ghcr.io/rook/ceph
-    crds:
-      enabled: true
-    monitoring:
-      enabled: false
     resources:
       requests:
         cpu: 109m
