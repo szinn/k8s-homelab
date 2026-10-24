@@ -305,7 +305,7 @@ spec:
                       - url
             - groupVersionKind:
                 group: notification.toolkit.fluxcd.io
-                version: v1beta3
+                version: v1
                 kind: Alert
               metricNamePrefix: gotk
               metrics:
@@ -327,7 +327,7 @@ spec:
                       - suspend
             - groupVersionKind:
                 group: notification.toolkit.fluxcd.io
-                version: v1beta3
+                version: v1
                 kind: Provider
               metricNamePrefix: gotk
               metrics:
