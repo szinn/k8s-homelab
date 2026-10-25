@@ -39,7 +39,7 @@ spec:
           radarr-4k:
             image:
               repository: ghcr.io/home-operations/radarr
-              tag: 7.0.0.10815@sha256:3ba59eb24204da78476590c31a7c72bf9c28227b78d8a412c6f608d71a402506
+              tag: 7.0.0.10815@sha256:c044b4df8e7b2546ef389481626a56fabe291575ff2d65481b1555432d6161ff
             env:
               TZ: America/Toronto
               RADARR__APP__INSTANCENAME: Radarr-4k
