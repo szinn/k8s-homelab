@@ -12,7 +12,6 @@ resources:
   # Flux-Kustomizations
   - kopia/install.yaml
   - kube-cleanup-operator/install.yaml
-  # - node-feature-discovery/install.yaml
   - reloader/install.yaml
   - snapshot-controller/install.yaml
   - spegel/install.yaml
