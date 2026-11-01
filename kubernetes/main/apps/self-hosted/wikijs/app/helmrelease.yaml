@@ -35,7 +35,7 @@ spec:
             image:
               repository: ghcr.io/requarks/wiki
               pullPolicy: IfNotPresent
-              tag: 3.0.1
+              tag: 3.0.1@sha256:6e9987cc7f0f583f73591fbdf318fe94c6ba76616913e6c8f833b7a1960cd31d
             env:
               TZ: America/Toronto
               LOG_LEVEL: info
