@@ -21,18 +21,30 @@ spec:
       wikijs:
         annotations:
           reloader.stakater.com/auto: "true"
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/home-operations/postgres-init
+              tag: 18.6@sha256:87627baaddb0cabed4ebe033e75038e5c7b6b081c18e86514c99067179a90719
+              pullPolicy: IfNotPresent
+            envFrom:
+              - secretRef:
+                  name: wikijs-secret
         containers:
           wikijs:
             image:
               repository: ghcr.io/requarks/wiki
               pullPolicy: IfNotPresent
-              tag: "2.5.317@sha256:e4708eed80c014449c0c8426c8d466c7a52a62131555bb44372fa48378b448b8"
+              tag: 3.0.1
             env:
               TZ: America/Toronto
-              LOG_LEVEL: debug
+              LOG_LEVEL: info
               APP_URL: "https://wiki.zinn.ca"
-              DB_TYPE: sqlite
-              DB_FILEPATH: /wiki/data/wiki.sqlite
+              DB_HOST: postgres-18-rw.dbms.svc.cluster.local
+              DB_PORT: "5432"
+              DB_NAME: wikijs
+              DB_SCHEMA: wiki
+              DB_SSL: "false"
             envFrom:
               - secretRef:
                   name: wikijs-secret
