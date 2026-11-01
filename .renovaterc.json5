@@ -66,6 +66,12 @@
       matchPackageNames: ["/home-operations/postgres-init/"],
     },
     {
+      description: "Wiki.js 3 is PostgreSQL-only; stay on 2.x while on SQLite",
+      matchDatasources: ["docker"],
+      allowedVersions: "<3",
+      matchPackageNames: ["ghcr.io/requarks/wiki"],
+    },
+    {
       matchDatasources: ["github-tags"],
       allowedVersions: "<4",
       matchPackageNames: ["/helm/helm/"],
