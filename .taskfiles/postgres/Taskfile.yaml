@@ -86,6 +86,36 @@ tasks:
           DATABASE: issueboss
       - task: up_issueboss
 
+  down_wikijs:
+    desc: Turn down WikiJS
+    cmds:
+      - task: _down
+        vars:
+          NAMESPACE: self-hosted
+          HELMRELEASE: wikijs
+          KUSTOMIZATION: wikijs
+          SERVICES: deployment/wikijs
+
+  up_wikijs:
+    desc: Turn up WikiJS
+    cmds:
+      - task: _up
+        vars:
+          NAMESPACE: self-hosted
+          HELMRELEASE: wikijs
+          KUSTOMIZATION: wikijs
+          SERVICES: deployment/wikijs
+          REPLICAS: 1
+
+  restore_wikijs:
+    desc: Restore wikijs database
+    cmds:
+      - task: down_wikijs
+      - task: _restore_db
+        vars:
+          DATABASE: wikijs
+      - task: up_wikijs
+
   down_immich:
     desc: Turn down Immich
     cmds:
