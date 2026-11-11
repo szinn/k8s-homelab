@@ -13,8 +13,7 @@ spec:
     controllers:
       shelfmark:
         annotations:
-          secret.reloader.stakater.com/reload: shelfmark-secret,shelfmark-gluetun-secret
-          config.reloader.stakater.com/reload: shelfmark-coredns
+          secret.reloader.stakater.com/reload: shelfmark-secret
 
         pod:
           securityContext:
@@ -22,86 +21,56 @@ spec:
             fsGroupChangePolicy: "OnRootMismatch"
 
         initContainers:
-          prepare-tmp:
-            image:
-              repository: busybox
-              tag: 1.38.0@sha256:a46257e06c82ad85242d0d38077d0a52d9896389ca60a1a59d3463db586e5fa4
-            command:
-              - sh
-              - -c
-              - mkdir -p /tmp/shelfmark/seleniumbase/downloaded_files
-            securityContext:
-              runAsUser: 1000
-              runAsGroup: 1000
-              runAsNonRoot: true
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities:
-                drop:
-                  - ALL
-
-          coredns:
-            image:
-              repository: mirror.gcr.io/coredns/coredns
-              tag: 1.15.0@sha256:0a9d8c8ddf34347eb59aad9a8784f0710de88d6d112726d11d271f9bc6daca26
-            args:
-              - -conf
-              - /etc/coredns/Corefile
-            restartPolicy: Always
-
-          gluetun:
-            dependsOn:
-              - coredns
-            image:
-              repository: ghcr.io/qdm12/gluetun
-              tag: v3.41.3@sha256:fa19cc76b2af13d57a8d3dc3066f2ada061b1c761b8aecf989b3877c0486e027
-            env:
-              DOT: "off"
-              DNS_ADDRESS: "127.0.0.2"
-              HTTP_CONTROL_SERVER_AUTH_CONFIG_FILEPATH: &gluetunAuthPath /gluetun/auth.toml
-              VPN_SERVICE_PROVIDER: custom
-              VPN_TYPE: openvpn
-              OPENVPN_CUSTOM_CONFIG: &gluetunOpenvpnPath /gluetun/custom.conf
-              VPN_INTERFACE: tun0
-              # VPN_SERVICE_PROVIDER: private internet access
-              # SERVER_REGIONS: "US Chicago"
-              # VPN_PORT_FORWARDING: on
-              # VPN_PORT_FORWARDING_PROVIDER: private internet access
-              FIREWALL_INPUT_PORTS: 8084
-              FIREWALL_OUTBOUND_SUBNETS: 10.200.0.0/16,10.201.0.0/16 # Allow access to k8s subnets
-            envFrom:
-              - secretRef:
-                  name: shelfmark-secret
-            restartPolicy: Always
-            securityContext:
-              capabilities:
-                add:
-                  - NET_ADMIN
-                drop:
-                  - NET_RAW
-              allowPrivilegeEscalation: false
-
-        containers:
-          shelfmark:
-            image:
+          # wg-quick needs src_valid_mark=1 in the pod netns; /proc/sys is
+          # read-only for unprivileged containers and the sysctl is not on
+          # kubelet's safe list, so set it here.
+          sysctl:
+            image: &image
               repository: ghcr.io/calibrain/shelfmark
               tag: v1.6.2@sha256:0b400a5d58951b35bfede3d9943b632551259c31e130316fe56c5cc0e2e4faea
             command:
-              - gunicorn
+              - sysctl
+              - -w
+              - net.ipv4.conf.all.src_valid_mark=1
+            securityContext:
+              privileged: true
+              runAsUser: 0
+
+        containers:
+          shelfmark:
+            image: *image
+            # Image defaults to iptables-legacy; Talos only supports nftables,
+            # so wg-quick fails on the legacy 'raw' table. Switch to nft first.
+            # The pod netns outlives container restarts, so clear any wg0,
+            # policy rules and firewall state left by a previous attempt.
+            command:
+              - /bin/sh
+              - -c
+              - |
+                for t in iptables ip6tables; do
+                  update-alternatives --set "$t" "/usr/sbin/$t-nft" >/dev/null
+                done
+                ip link delete wg0 2>/dev/null || true
+                while ip -4 rule delete table 51820 2>/dev/null; do :; done
+                while ip -4 rule delete table main suppress_prefixlength 0 2>/dev/null; do :; done
+                for tbl in filter nat mangle raw; do
+                  iptables -t "$tbl" -F 2>/dev/null || true
+                  iptables -t "$tbl" -X 2>/dev/null || true
+                done
+                iptables -P OUTPUT ACCEPT 2>/dev/null || true
+                exec /app/entrypoint.sh
             env:
               CACHE_DIR: /cache
               INGEST_DIR: /bookdrop
-            args:
-              - --log-level=debug
-              - --access-logfile=-
-              - --error-logfile=-
-              - --worker-class=geventwebsocket.gunicorn.workers.GeventWebSocketWorker
-              - --workers=1
-              - -t
-              - "300"
-              - -b
-              - 0.0.0.0:8084
-              - shelfmark.main:app
+              LOG_LEVEL: DEBUG
+              PUID: 1000
+              PGID: 1000
+              USING_WIREGUARD: true
+              WIREGUARD_DNS: "1.1.1.1,8.8.8.8"
+              # Keep only cluster + node networks off-tunnel. The default
+              # (all RFC1918) also catches PIA's in-tunnel DNS (10.0.0.243),
+              # sending it out eth0 where nothing answers.
+              LAN_NETWORK: "10.200.0.0/16,10.201.0.0/16,10.11.0.0/16"
             probes:
               liveness: &probe
                 enabled: true
@@ -111,30 +80,57 @@ spec:
                     path: /api/health
                     port: &port 8084
               readiness: *probe
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/health
+                    port: *port
+                  periodSeconds: 10
+                  failureThreshold: 30
             resources:
               requests:
                 cpu: 10m
                 memory: 128Mi
               limits:
                 memory: 2Gi
+            # entrypoint.sh must start as root to bring up wg0 and the
+            # kill-switch, then drops to PUID/PGID via gosu. It writes to
+            # /etc/wireguard, /etc/resolv.conf and /app, so the rootfs is rw.
             securityContext:
-              runAsUser: 1000
-              runAsGroup: 1000
-              runAsNonRoot: true
+              runAsUser: 0
+              runAsGroup: 0
               allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
+              readOnlyRootFilesystem: false
               capabilities:
-                drop:
-                  - ALL
+                add:
+                  - NET_ADMIN
+                  - NET_RAW
     persistence:
       config:
         existingClaim: shelfmark-config
+
       nfs-nas-media:
         type: nfs
         server: ragnar.zinn.tech
         path: /mnt/atlas/media/BookLibrary/Bookdrop
         globalMounts:
           - path: /bookdrop
+
+      wireguard-config:
+        enabled: true
+        type: secret
+        name: shelfmark-secret
+        items:
+          - key: wireguard_config
+            path: wg0.conf
+        defaultMode: 256
+        globalMounts:
+          - path: /config/wg0.conf
+            subPath: wg0.conf
+            readOnly: true
+
       tmpfs:
         type: emptyDir
         sizeLimit: 1Gi
@@ -149,34 +145,6 @@ spec:
             subPath: run
           - path: /var/log
             subPath: log
-
-      gluetun-auth:
-        type: secret
-        name: shelfmark-gluetun-secret
-        advancedMounts:
-          shelfmark:
-            gluetun:
-              - path: *gluetunAuthPath
-                subPath: auth.toml
-
-      gluetun-openvpn:
-        type: secret
-        name: shelfmark-secret
-        advancedMounts:
-          shelfmark:
-            gluetun:
-              - path: *gluetunOpenvpnPath
-                subPath: openvpn_config
-
-      coredns:
-        type: configMap
-        name: shelfmark-coredns
-        advancedMounts:
-          shelfmark:
-            coredns:
-              - path: /etc/coredns/Corefile
-                subPath: Corefile
-                readOnly: true
 
     route:
       shelfmark:
