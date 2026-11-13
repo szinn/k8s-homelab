@@ -1,0 +1,49 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/external-secrets.io/externalsecret_v1.json
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: wikijs-pg-role
+spec:
+  refreshInterval: 12h
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: onepassword-connect
+  target:
+    name: wikijs-pg-role
+    creationPolicy: Owner
+    deletionPolicy: "Delete"
+    template:
+      type: kubernetes.io/basic-auth
+      data:
+        username: wikijs
+        password: "{{ .POSTGRES_PASS }}"
+  dataFrom:
+    - extract:
+        key: wikijs
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/postgresql.cnpg.io/databaserole_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: DatabaseRole
+metadata:
+  name: wikijs
+spec:
+  cluster:
+    name: postgres-18
+  name: wikijs
+  login: true
+  passwordSecret:
+    name: wikijs-pg-role
+  databaseRoleReclaimPolicy: retain
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/postgresql.cnpg.io/database_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: wikijs
+spec:
+  cluster:
+    name: postgres-18
+  name: wikijs
+  owner: wikijs
+  databaseReclaimPolicy: retain

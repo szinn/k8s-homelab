@@ -21,15 +21,6 @@ spec:
       wikijs:
         annotations:
           reloader.stakater.com/auto: "true"
-        initContainers:
-          init-db:
-            image:
-              repository: ghcr.io/home-operations/postgres-init
-              tag: 18.7@sha256:6d4cfa4b8d343eb6fa0de8dd9ec416a2007f346bb631fc8e246e1f39eee6c4aa
-              pullPolicy: IfNotPresent
-            envFrom:
-              - secretRef:
-                  name: wikijs-secret
         containers:
           wikijs:
             image:
