@@ -1,0 +1,52 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/generators.external-secrets.io/password_v1alpha1.json
+apiVersion: generators.external-secrets.io/v1alpha1
+kind: Password
+metadata:
+  name: immich-backup-password
+spec:
+  length: 32
+  digits: 6
+  symbols: 0
+  noUpper: false
+  allowRepeat: true
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/external-secrets.io/externalsecret_v1.json
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: immich-backup-pg-role
+spec:
+  refreshPolicy: CreatedOnce
+  target:
+    name: immich-backup-pg-role
+    creationPolicy: Owner
+    deletionPolicy: "Delete"
+    template:
+      type: kubernetes.io/basic-auth
+      data:
+        username: immich_backup
+        password: "{{ .password }}"
+  dataFrom:
+    - sourceRef:
+        generatorRef:
+          apiVersion: generators.external-secrets.io/v1alpha1
+          kind: Password
+          name: immich-backup-password
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/postgresql.cnpg.io/databaserole_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: DatabaseRole
+metadata:
+  name: immich-backup
+spec:
+  cluster:
+    name: immich
+  name: immich_backup
+  comment: Read-only role for the daily pg_dump backup job
+  login: true
+  inRoles:
+    - pg_read_all_data
+  passwordSecret:
+    name: immich-backup-pg-role
+  databaseRoleReclaimPolicy: delete

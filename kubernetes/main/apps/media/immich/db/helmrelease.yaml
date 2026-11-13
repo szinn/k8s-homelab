@@ -30,9 +30,6 @@ spec:
               repository: docker.io/prodrigestivill/postgres-backup-local
               tag: 18@sha256:f70742ebe42b2277689b028d1fd15aa80f77cffa01da163cc9f85a6ff1866e7f
             command: ["/backup.sh"]
-            envFrom:
-              - secretRef:
-                  name: immich-db-secret
             env:
               - name: POSTGRES_HOST
                 value: immich-ro.media.svc.cluster.local
@@ -40,12 +37,12 @@ spec:
                 value: "immich"
               - name: POSTGRES_USER
                 secretKeyRef:
-                  name: immich-db-secret
-                  key: POSTGRES_SUPER_USER
+                  name: immich-backup-pg-role
+                  key: username
               - name: POSTGRES_PASSWORD
                 secretKeyRef:
-                  name: immich-db-secret
-                  key: POSTGRES_SUPER_PASS
+                  name: immich-backup-pg-role
+                  key: password
               - name: BACKUP_KEEP_DAYS
                 value: "7"
               - name: BACKUP_KEEP_WEEKS

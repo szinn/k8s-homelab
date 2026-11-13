@@ -24,6 +24,10 @@ spec:
       name: immich
       namespace: *namespace
     - apiVersion: postgresql.cnpg.io/v1
+      kind: DatabaseRole
+      name: immich-backup
+      namespace: *namespace
+    - apiVersion: postgresql.cnpg.io/v1
       kind: Database
       name: immich
       namespace: *namespace
