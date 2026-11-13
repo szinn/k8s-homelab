@@ -28,15 +28,6 @@ spec:
             runAsNonRoot: true
             fsGroup: 1000
             fsGroupChangePolicy: OnRootMismatch
-        initContainers:
-          init-db:
-            image:
-              repository: ghcr.io/home-operations/postgres-init
-              tag: 18.7@sha256:6d4cfa4b8d343eb6fa0de8dd9ec416a2007f346bb631fc8e246e1f39eee6c4aa
-              pullPolicy: IfNotPresent
-            envFrom:
-              - secretRef:
-                  name: bookboss-secret
         containers:
           bookboss:
             image:
