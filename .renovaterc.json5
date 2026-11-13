@@ -62,11 +62,6 @@
       matchPackageNames: ["/tensorchord/cloudnative-vectorchord/"],
     },
     {
-      matchDatasources: ["docker"],
-      allowedVersions: "<19",
-      matchPackageNames: ["/home-operations/postgres-init/"],
-    },
-    {
       description: "Wiki.js 3 is PostgreSQL-only; stay on 2.x while on SQLite",
       matchDatasources: ["docker"],
       allowedVersions: "<3",
