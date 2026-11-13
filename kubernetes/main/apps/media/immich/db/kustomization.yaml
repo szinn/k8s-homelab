@@ -5,6 +5,7 @@ kind: Kustomization
 resources:
   - backups-nfs.yaml
   - cluster.yaml
+  - database.yaml
   - helmrelease.yaml
   - secrets.yaml
   - service.yaml

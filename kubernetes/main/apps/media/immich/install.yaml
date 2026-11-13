@@ -19,10 +19,24 @@ spec:
       kind: Cluster
       name: immich
       namespace: *namespace
+    - apiVersion: postgresql.cnpg.io/v1
+      kind: DatabaseRole
+      name: immich
+      namespace: *namespace
+    - apiVersion: postgresql.cnpg.io/v1
+      kind: Database
+      name: immich
+      namespace: *namespace
   healthCheckExprs:
     - apiVersion: postgresql.cnpg.io/v1
       kind: Cluster
       current: status.phase == 'Cluster in healthy state'
+    - apiVersion: postgresql.cnpg.io/v1
+      kind: DatabaseRole
+      current: has(status.applied) && status.applied
+    - apiVersion: postgresql.cnpg.io/v1
+      kind: Database
+      current: has(status.applied) && status.applied
   prune: true
   interval: 30m
   timeout: 5m
