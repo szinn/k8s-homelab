@@ -10,6 +10,21 @@ spec:
     kind: OCIRepository
     name: app-template
   values:
+    externalSecrets:
+      sabnzbd:
+        refreshInterval: 12h
+        secretStoreRef:
+          kind: ClusterSecretStore
+          name: onepassword-connect
+        data:
+          - secretKey: SABNZBD__API_KEY
+            remoteRef:
+              key: sabnzbd
+              property: API_KEY
+          - secretKey: SABNZBD__NZB_KEY
+            remoteRef:
+              key: sabnzbd
+              property: NZB_KEY
     controllers:
       sabnzbd:
         annotations:
@@ -50,7 +65,7 @@ spec:
                 sabnzbd.zinn.ca
             envFrom:
               - secretRef:
-                  name: sabnzbd-secret
+                  name: sabnzbd
             probes:
               liveness: &probes
                 enabled: true
