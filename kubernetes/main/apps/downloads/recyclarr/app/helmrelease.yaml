@@ -9,14 +9,26 @@ spec:
   chartRef:
     kind: OCIRepository
     name: app-template
-  dependsOn:
-    - name: radarr
-      namespace: downloads
-    - name: radarr-4k
-      namespace: downloads
-    - name: sonarr
-      namespace: downloads
   values:
+    externalSecrets:
+      recyclarr:
+        refreshInterval: 12h
+        secretStoreRef:
+          kind: ClusterSecretStore
+          name: onepassword-connect
+        data:
+          - secretKey: RADARR_APIKEY
+            remoteRef:
+              key: radarr
+              property: API_KEY
+          - secretKey: RADARR_4K_APIKEY
+            remoteRef:
+              key: radarr-4k
+              property: API_KEY
+          - secretKey: SONARR_APIKEY
+            remoteRef:
+              key: sonarr
+              property: API_KEY
     controllers:
       recyclarr:
         annotations:
