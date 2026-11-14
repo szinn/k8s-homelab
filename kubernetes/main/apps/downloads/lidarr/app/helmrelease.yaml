@@ -10,6 +10,17 @@ spec:
     kind: OCIRepository
     name: app-template
   values:
+    externalSecrets:
+      lidarr:
+        refreshInterval: 12h
+        secretStoreRef:
+          kind: ClusterSecretStore
+          name: onepassword-connect
+        data:
+          - secretKey: api_key
+            remoteRef:
+              key: lidarr
+              property: API_KEY
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -29,15 +40,17 @@ spec:
             env:
               TZ: America/Toronto
               LIDARR__APP__INSTANCENAME: Lidarr
+              LIDARR__AUTH__APIKEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: lidarr
+                    key: api_key
               LIDARR__APP__THEME: dark
               LIDARR__AUTH__METHOD: External
               LIDARR__AUTH__REQUIRED: Enabled
               LIDARR__LOG__DBENABLED: "False"
               LIDARR__LOG_LEVEL: info
               LIDARR__SERVER__PORT: &port 8686
-            envFrom:
-              - secretRef:
-                  name: lidarr-secret
             probes:
               liveness: &probes
                 enabled: true
