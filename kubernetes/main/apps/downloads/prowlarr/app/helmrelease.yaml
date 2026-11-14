@@ -10,6 +10,17 @@ spec:
     kind: OCIRepository
     name: app-template
   values:
+    externalSecrets:
+      prowlarr:
+        refreshInterval: 12h
+        secretStoreRef:
+          kind: ClusterSecretStore
+          name: onepassword-connect
+        data:
+          - secretKey: api_key
+            remoteRef:
+              key: prowlarr
+              property: API_KEY
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -29,15 +40,17 @@ spec:
             env:
               TZ: America/Toronto
               PROWLARR__APP__INSTANCENAME: Prowlarr
+              PROWLARR__AUTH__APIKEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: prowlarr
+                    key: api_key
               PROWLARR__THEME: dark
               PROWLARR__AUTH__METHOD: External
               PROWLARR__AUTH__REQUIRED: Enabled
               PROWLARR__LOG__DBENABLED: "False"
               PROWLARR__LOG_LEVEL: info
               PROWLARR__SERVER__PORT: &port 9696
-            envFrom:
-              - secretRef:
-                  name: prowlarr-secret
             probes:
               liveness: &probes
                 enabled: true
