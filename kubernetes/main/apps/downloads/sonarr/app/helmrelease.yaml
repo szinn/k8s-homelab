@@ -10,6 +10,17 @@ spec:
     kind: OCIRepository
     name: app-template
   values:
+    externalSecrets:
+      sonarr:
+        refreshInterval: 12h
+        secretStoreRef:
+          kind: ClusterSecretStore
+          name: onepassword-connect
+        data:
+          - secretKey: api_key
+            remoteRef:
+              key: sonarr
+              property: API_KEY
     defaultPodOptions:
       securityContext:
         runAsUser: 2000
@@ -42,6 +53,11 @@ spec:
             env:
               TZ: America/Toronto
               SONARR__APP__INSTANCENAME: Sonarr
+              SONARR__AUTH__APIKEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: sonarr
+                    key: api_key
               SONARR__APP__THEME: dark
               SONARR__AUTH__METHOD: External
               SONARR__AUTH__REQUIRED: DisabledForLocalAddresses
@@ -51,9 +67,6 @@ spec:
               SONARR__SERVER__TRUSTEDNETWORKS: 10.201.0.0/16
               SONARR__SERVER__PORT: &port 8989
               SONARR__UPDATE__BRANCH: develop
-            envFrom:
-              - secretRef:
-                  name: sonarr-secret
             probes:
               liveness:
                 enabled: true
