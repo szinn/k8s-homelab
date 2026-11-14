@@ -9,18 +9,18 @@ spec:
   chartRef:
     kind: OCIRepository
     name: app-template
-  maxHistory: 3
-  install:
-    createNamespace: true
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
-  uninstall:
-    keepHistory: false
   values:
+    externalSecrets:
+      radarr:
+        refreshInterval: 12h
+        secretStoreRef:
+          kind: ClusterSecretStore
+          name: onepassword-connect
+        data:
+          - secretKey: api_key
+            remoteRef:
+              key: radarr
+              property: API_KEY
     defaultPodOptions:
       securityContext:
         runAsUser: 2000
@@ -54,6 +54,11 @@ spec:
             env:
               TZ: America/Toronto
               RADARR__APP__INSTANCENAME: Radarr
+              RADARR__AUTH__APIKEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: radarr
+                    key: api_key
               RADARR__APP__THEME: dark
               RADARR__AUTH__METHOD: External
               RADARR__AUTH__REQUIRED: Enabled
@@ -61,9 +66,6 @@ spec:
               RADARR__LOG__LEVEL: info
               RADARR__SERVER__PORT: &port 7878
               RADARR__UPDATE__BRANCH: develop
-            envFrom:
-              - secretRef:
-                  name: radarr-secret
             probes:
               liveness: &probes
                 enabled: true

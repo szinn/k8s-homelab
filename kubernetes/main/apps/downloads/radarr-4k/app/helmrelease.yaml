@@ -10,6 +10,17 @@ spec:
     kind: OCIRepository
     name: app-template
   values:
+    externalSecrets:
+      radarr-4k:
+        refreshInterval: 12h
+        secretStoreRef:
+          kind: ClusterSecretStore
+          name: onepassword-connect
+        data:
+          - secretKey: api_key
+            remoteRef:
+              key: radarr-4k
+              property: API_KEY
     defaultPodOptions:
       securityContext:
         runAsUser: 2000
@@ -43,6 +54,11 @@ spec:
             env:
               TZ: America/Toronto
               RADARR__APP__INSTANCENAME: Radarr-4k
+              RADARR__AUTH__APIKEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: radarr-4k
+                    key: api_key
               RADARR__APP__THEME: dark
               RADARR__AUTH__METHOD: External
               RADARR__AUTH__REQUIRED: Enabled
@@ -50,9 +66,6 @@ spec:
               RADARR__LOG__LEVEL: info
               RADARR__SERVER__PORT: &port 7878
               RADARR__UPDATE__BRANCH: develop
-            envFrom:
-              - secretRef:
-                  name: radarr-4k-secret
             probes:
               liveness: &probes
                 enabled: true
