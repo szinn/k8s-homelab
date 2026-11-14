@@ -10,6 +10,17 @@ spec:
     kind: OCIRepository
     name: app-template
   values:
+    externalSecrets:
+      seerr:
+        refreshInterval: 12h
+        secretStoreRef:
+          kind: ClusterSecretStore
+          name: onepassword-connect
+        data:
+          - secretKey: api_key
+            remoteRef:
+              key: seerr
+              property: API_KEY
     controllers:
       seerr:
         annotations:
@@ -21,11 +32,13 @@ spec:
               tag: v3.5.2@sha256:aadee014b40e28cf9aa4928bc9d1183a6eb08f8c44d543cddc9efdcb16549be2
             env:
               TZ: America/Toronto
+              API_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: seerr
+                    key: api_key
               LOG_LEVEL: "info"
               PORT: &port 80
-            envFrom:
-              - secretRef:
-                  name: "{{ .Release.Name }}-secret"
             probes:
               liveness: &probes
                 enabled: true
