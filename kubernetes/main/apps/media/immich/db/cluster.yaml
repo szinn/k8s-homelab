@@ -29,6 +29,11 @@ spec:
     initdb:
       database: immich
       owner: immich
+      # Must match the DatabaseRole's passwordSecret: CNPG reconciles the
+      # initdb owner's password from this secret (default: immich-app) and
+      # would otherwise overwrite the password the DatabaseRole sets.
+      secret:
+        name: immich-pg-role
       postInitSQL:
         - CREATE EXTENSION IF NOT EXISTS vchord CASCADE
         - CREATE EXTENSION IF NOT EXISTS vector CASCADE
