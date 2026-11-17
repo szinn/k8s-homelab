@@ -18,6 +18,9 @@ kvmd:
         type: tesmart
         host: 192.168.1.10
         port: 5000
+        timeout: 10
+        switch_delay: 2
+        state_poll: 30
     scheme:
       server0_led:
         driver: tes
