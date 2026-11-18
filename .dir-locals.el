@@ -7,7 +7,9 @@
 ((nil
   . ((scotte/yaml-eglot . t)
      (eglot-workspace-configuration
-      . (:yaml (:schemas (:kubernetes "kubernetes/**/*.yaml")
+      . (:yaml (:schemas (:kubernetes ["kubernetes/**/*.yaml"
+                                       "!kubernetes/**/helmrelease*.yaml"
+                                       "!kubernetes/**/*helmrelease*.yaml"])
                 :schemaStore (:enable t)
                 :customTags ["!env_var"]
                 :validate t
