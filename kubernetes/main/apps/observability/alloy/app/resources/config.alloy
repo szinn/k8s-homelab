@@ -100,7 +100,33 @@ loki.process "pod_logs" {
       }
   }
 
-  forward_to = [loki.write.default.receiver]
+  forward_to = [
+    loki.write.default.receiver,
+    loki.process.victorialogs_level.receiver,
+  ]
+}
+
+// VictoriaLogs' UI only reads the level from a field, so derive a `level`
+// label for the VictoriaLogs copy only; the Loki branch is unchanged.
+// Later stages win: JSON beats logfmt beats a bare level word in the line.
+loki.process "victorialogs_level" {
+  stage.regex {
+    expression = "\\b(?P<level>TRACE|DEBUG|INFO|WARN(?:ING)?|ERROR|FATAL|PANIC)\\b"
+  }
+
+  stage.logfmt {
+    mapping = { level = "" }
+  }
+
+  stage.json {
+    expressions = { level = "" }
+  }
+
+  stage.labels {
+    values = { level = "" }
+  }
+
+  forward_to = [loki.write.victorialogs.receiver]
 }
 
 // loki.source.kubernetes_events tails events from the Kubernetes API and converts them
@@ -134,5 +160,13 @@ loki.process "cluster_events" {
 loki.write "default" {
   endpoint {
     url = "http://loki-headless.observability.svc.cluster.local:3100/loki/api/v1/push"
+  }
+}
+
+loki.write "victorialogs" {
+  endpoint {
+    // VictoriaLogs unpacks JSON lines into fields; tell it which one is the
+    // message (first non-empty wins), otherwise _msg is a placeholder.
+    url = "http://victoria-logs-server.observability.svc.cluster.local:9428/insert/loki/api/v1/push?_msg_field=msg,message,log,log_message"
   }
 }
