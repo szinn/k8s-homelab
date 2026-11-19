@@ -13,6 +13,35 @@ spec:
     name: victoria-logs
     access: proxy
     url: http://victoria-logs-server.observability.svc.cluster.local:9428
+    jsonData:
+      # Plain-text logs carry the level inside _msg; JSON logs already get a
+      # `level` field, which the plugin prefers over these rules.
+      # First match wins; uppercase-only words avoid matching "error" prose.
+      logLevelRules:
+        - field: _msg
+          operator: regex
+          value: '\b(FATAL|CRITICAL|PANIC)\b|level=(fatal|critical|panic)'
+          level: critical
+        - field: _msg
+          operator: regex
+          value: '\b(ERROR|ERR)\b|level=error'
+          level: error
+        - field: _msg
+          operator: regex
+          value: '\bWARN(ING)?\b|level=warn'
+          level: warning
+        - field: _msg
+          operator: regex
+          value: '\bINFO\b|level=info'
+          level: info
+        - field: _msg
+          operator: regex
+          value: '\b(DEBUG|DBG)\b|level=debug'
+          level: debug
+        - field: _msg
+          operator: regex
+          value: '\bTRACE\b|level=trace'
+          level: trace
   plugins:
     - name: victoriametrics-logs-datasource
       version: 0.26.3
