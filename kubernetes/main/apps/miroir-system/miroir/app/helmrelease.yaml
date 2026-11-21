@@ -27,16 +27,3 @@ spec:
       prometheusRule:
         enabled: true
     replicaCount: 2
-  # Chart has no knob for this. Agent readiness doesn't reflect DRBD state, so
-  # without a hold the DaemonSet restarts every node's agent ~15s apart and
-  # diskless replicas can rejoin with a stale exposed UUID mid-rollout.
-  postRenderers:
-    - kustomize:
-        patches:
-          - target:
-              kind: DaemonSet
-              name: miroir-agent
-            patch: |-
-              - op: add
-                path: /spec/minReadySeconds
-                value: 120
