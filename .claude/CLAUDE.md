@@ -1,76 +1,46 @@
 # Homelab Repository Context
 
-GitOps-managed Kubernetes homelab using Flux and Talos.
+Flux reconciles Talos Kubernetes clusters from this repo. Git is the source of truth; Flux reverts manual `kubectl` changes.
 
-## Documentation
+## Clusters
 
-@docs/ai-context/README.md
+Two independent clusters that share no code. Confirm which one a task targets before planning or editing.
 
-The rest of `docs/ai-context/` is read on demand - open the file that matches the task.
+- **main**: `kubernetes/main/`
+- **staging**: `kubernetes/staging/` (Proxmox VMs; a subset of main's namespaces)
 
-### System Context
+## Layout (per cluster)
 
-- `docs/ai-context/ARCHITECTURE.md` - Architecture, capsules, patterns
-- `docs/ai-context/NETWORKING.md` - Traffic flows, DNS, gateways, OIDC
-- `docs/ai-context/DOMAIN.md` - Rules, state machines, glossary
-- `docs/ai-context/WORKFLOWS.md` - How to deploy, update, troubleshoot
-- `docs/ai-context/TOOLS.md` - MCP servers, CLI commands
-- `docs/ai-context/CONVENTIONS.md` - Naming, structure, style
-
-### Writing Guides
-
-Read these before writing or editing anything in `docs/ai-context/`.
-
-- `docs/ai-context/Ethos.md` - Hard rules, guidance, values
-- `docs/ai-context/PLANNING.md` - Collaborative planning lifecycle
-- `docs/ai-context/writing-documentation.md` - Wisdom triggers
-- `docs/ai-context/writing-capsules.md` - Capsule format
-- `docs/ai-context/mermaid-diagram-guide.md` - Diagram rules
-
-## Critical Invariants
-
-### Clusters: Location of Source
-
-There are two independent clusters:
-
-main: root of the main cluster is `kubernetes/main`
-staging: root of the staging cluster is `kubernetes/staging`
-
-The clusters do not share code. When making changes, it is important
-to know which cluster is being worked on. Make sure to know this in advance
-of any planning or changes.
-
-### Capsule: GitOpsReconciliation
-
-**Invariant**: Cluster state converges to match Git; Flux reverts manual changes.
-
-### Capsule: AppTemplateChart
-
-**Invariant**: Apps use `bjw-s/app-template` chart; vendor charts are exceptions.
-
-## Quick Reference
-
-| Task         | Command                                         |
-| ------------ | ----------------------------------------------- |
-| Validate     | `task kubernetes:kubeconform cluster=main` (or `staging`) |
-| Check status | `flux get helmreleases -A`                      |
-| Force sync   | `task flux:sync cluster=main` (or `staging`)    |
-| Find apps    | `ls kubernetes/<cluster>/apps/<namespace>/`     |
-
-## Directory Structure
-
-```
-kubernetes/<cluster>/apps/          # Static app manifests - edit directly
-kubernetes/<cluster>/talos/**/*.j2  # Jinja2 sources for Talos node configs
-kubernetes/<cluster>/bootstrap/     # resources.yaml.j2 + helmfile.d for bootstrap
+```text
+apps/<namespace>/kustomization.yaml   # lists namespace.yaml + each <app>/install.yaml; pulls in components
+apps/<namespace>/<app>/install.yaml   # Flux Kustomization(s) -> app/ (and db/ when the app has a CNPG database)
+apps/<namespace>/<app>/app/           # HelmRelease, ExternalSecret, PVCs, etc.
+cluster/config/cluster.yaml           # root `cluster-apps` Kustomization; patches HelmRelease defaults onto every child
+components/                           # Kustomize components (app-template OCIRepository, alerts, kopiur, ...)
+talos/                                # Talos machine config (*.j2) + mod.just
+bootstrap/                            # helmfile.d + resources.yaml.j2
 ```
 
-## Non-Obvious Truths
+A new app has to be added to its namespace's `kustomization.yaml` `resources:`, or Flux won't deploy it.
 
-- **Jinja2 scope**: only the Talos and bootstrap `.j2` files are templates (minijinja, standard `{{ }}`/`{% %}`, variables from the environment); app manifests are plain YAML
-- **Gateway API routing**: Use `route` not `ingress` for main traffic
-- **Image tags**: Use plain version tags; don't add `@sha256:` digests to new or changed tags
-- **SOPS files**: End in `.sops.yaml`, encrypted before commit
+## Conventions
+
+- **Charts**: apps use bjw-s `app-template` through `chartRef: {kind: OCIRepository, name: app-template}`. Vendor charts are the exception.
+- **Routing**: use app-template's `route:` (Gateway API), not Ingress. Gateways are `envoy-internal` and `envoy-external` in namespace `network`.
+- **Hostnames**: real domains are hardcoded. There is no `${SECRET_DOMAIN}` substitution.
+- **Secrets**: an `ExternalSecret` reads from the ClusterSecretStore `onepassword-connect` (1Password). SOPS files end in `.sops.yaml` and are encrypted before commit.
+- **Storage classes**: `ceph-block`, `ceph-filesystem`, `miroir-slow`, `openebs-hostpath`, plus per-app NFS classes.
+- **Image tags**: plain version tags. Don't add `@sha256:` digests.
+- **Jinja2**: only the `talos/` and `bootstrap/` `.j2` files are templates (minijinja, standard `{{ }}`, variables from the environment). Everything under `apps/` is plain YAML.
+
+## Commands
+
+| Task | Command |
+| --- | --- |
+| Validate | `task kubernetes:kubeconform cluster=<main\|staging>` |
+| Force sync | `task flux:sync cluster=<main\|staging>` |
+| Talos/bootstrap recipes | `just <main\|staging> <recipe>` (sets KUBECONFIG/TALOSCONFIG) |
+| kubectl/flux | pass `--context main` or `--context staging` |
 
 ## Insights
 
