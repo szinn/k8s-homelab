@@ -4,14 +4,15 @@ version: "3"
 vars:
   MACHINE_ROOT_DIR: "{{.ROOT_DIR}}/.taskfiles/Machine"
   FILES_DIR: "{{.MACHINE_ROOT_DIR}}/files"
-  SCRIPTS_DIR: "{{.MACHINE_ROOT_DIR}}/scripts"
+  # Not SCRIPTS_DIR: included vars are global and would shadow the root one
+  MACHINE_SCRIPTS_DIR: "{{.MACHINE_ROOT_DIR}}/scripts"
   # renovate: datasource=github-releases depName=AdguardTeam/AdGuardHome
   ADGUARD_VERSION: v1.0.0
 
 tasks:
   # fetch-certificate:
   #   desc: Fetch domain certificate from cluster
-  #   cmd: "{{.SCRIPTS_DIR}}/fetch-certificate.sh {{.FILES_DIR}}/certificates"
+  #   cmd: "{{.MACHINE_SCRIPTS_DIR}}/fetch-certificate.sh {{.FILES_DIR}}/certificates"
 
   # update-certificates:
   #   desc: Update machine certificates

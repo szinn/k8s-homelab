@@ -54,7 +54,7 @@ kubernetes/
 | Location                                         | Type             | Edit?        | Purpose                   |
 | ------------------------------------------------ | ---------------- | ------------ | ------------------------- |
 | `kubernetes/{main,staging}/talos/**/*.j2`        | Jinja2 templates | Yes - source | Node configurations       |
-| `kubernetes/{main,staging}/bootstrap/templates/` | Jinja2 templates | Yes - source | Bootstrap manifests       |
+| `kubernetes/{main,staging}/bootstrap/*.j2`       | Jinja2 templates | Yes - source | Bootstrap manifests       |
 | `kubernetes/{main,staging}/apps/`                | Static YAML      | Yes          | Application manifests     |
 | `kubernetes/{main,staging}/cluster/`             | Static YAML      | Yes          | Flux configuration        |
 | `.minijinja.toml`                                | Config           | Yes          | Template rendering config |

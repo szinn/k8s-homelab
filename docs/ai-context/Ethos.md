@@ -193,7 +193,7 @@ Examples:
 - Flux reverts manual kubectl changes (GitOps fundamental)
 - ExternalSecrets must sync before pods can start (ordering dependency)
 - Main and staging clusters don't share code (critical invariant)
-- Jinja2 uses `#{var}#` delimiters not `{{var}}` (avoids Helm conflicts)
+- Jinja2 renders only Talos and bootstrap `.j2` files; app manifests are static YAML
 
 ### We Create Maps, Not Transcripts
 

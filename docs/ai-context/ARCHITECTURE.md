@@ -57,7 +57,7 @@ Edit `kubernetes/main/talos/nodes/k8s-1.yaml.j2` -> render locally with Jinja2 -
 
 **Depth**
 
-- Distinction: Templates use `#{variable}#` syntax (not `{{}}` to avoid Helm conflicts)
+- Distinction: Templates use standard minijinja `{{ }}`/`{% %}` syntax, with variables from the environment
 - Trade-off: Extra local step but enables dynamic configuration
 - NotThis: Pushing `.j2` files directly to Git
 - Tools: `.minijinja.toml` configures rendering

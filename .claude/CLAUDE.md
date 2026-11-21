@@ -2,32 +2,30 @@
 
 GitOps-managed Kubernetes homelab using Flux and Talos.
 
-## Read First
-
-1. **@.mcp.json** - MCP servers
-2. **@docs/ai-context/README.md** - Overview and navigation
-3. **@docs/ai-context/Ethos.md** - Documentation philosophy
-4. **@docs/ai-context/ARCHITECTURE.md** - System architecture
-5. **@docs/ai-context/CONVENTIONS.md** - Coding standards
-
 ## Documentation
+
+@docs/ai-context/README.md
+
+The rest of `docs/ai-context/` is read on demand - open the file that matches the task.
 
 ### System Context
 
-- @docs/ai-context/ARCHITECTURE.md - Architecture, capsules, patterns
-- @docs/ai-context/NETWORKING.md - Traffic flows, DNS, gateways, OIDC
-- @docs/ai-context/DOMAIN.md - Rules, state machines, glossary
-- @docs/ai-context/WORKFLOWS.md - How to deploy, update, troubleshoot
-- @docs/ai-context/TOOLS.md - MCP servers, CLI commands
-- @docs/ai-context/CONVENTIONS.md - Naming, structure, style
+- `docs/ai-context/ARCHITECTURE.md` - Architecture, capsules, patterns
+- `docs/ai-context/NETWORKING.md` - Traffic flows, DNS, gateways, OIDC
+- `docs/ai-context/DOMAIN.md` - Rules, state machines, glossary
+- `docs/ai-context/WORKFLOWS.md` - How to deploy, update, troubleshoot
+- `docs/ai-context/TOOLS.md` - MCP servers, CLI commands
+- `docs/ai-context/CONVENTIONS.md` - Naming, structure, style
 
 ### Writing Guides
 
-- @docs/ai-context/Ethos.md - Hard rules, guidance, values
-- @docs/ai-context/PLANNING.md - Collaborative planning lifecycle
-- @docs/ai-context/writing-documentation.md - Wisdom triggers
-- @docs/ai-context/writing-capsules.md - Capsule format
-- @docs/ai-context/mermaid-diagram-guide.md - Diagram rules
+Read these before writing or editing anything in `docs/ai-context/`.
+
+- `docs/ai-context/Ethos.md` - Hard rules, guidance, values
+- `docs/ai-context/PLANNING.md` - Collaborative planning lifecycle
+- `docs/ai-context/writing-documentation.md` - Wisdom triggers
+- `docs/ai-context/writing-capsules.md` - Capsule format
+- `docs/ai-context/mermaid-diagram-guide.md` - Diagram rules
 
 ## Critical Invariants
 
@@ -35,8 +33,8 @@ GitOps-managed Kubernetes homelab using Flux and Talos.
 
 There are two independent clusters:
 
-main: root of the main cluster is @kubernetes/main
-staging: root of the staging cluster is @kubernetes/staging
+main: root of the main cluster is `kubernetes/main`
+staging: root of the staging cluster is `kubernetes/staging`
 
 The clusters do not share code. When making changes, it is important
 to know which cluster is being worked on. Make sure to know this in advance
@@ -52,26 +50,26 @@ of any planning or changes.
 
 ## Quick Reference
 
-| Task         | Command                           |
-| ------------ | --------------------------------- |
-| Validate     | `task kubernetes:kubeconform`     |
-| Check status | `flux get helmreleases -A`        |
-| Force sync   | `task flux:reconcile`             |
-| Find apps    | `ls kubernetes/apps/<namespace>/` |
+| Task         | Command                                         |
+| ------------ | ----------------------------------------------- |
+| Validate     | `task kubernetes:kubeconform cluster=main` (or `staging`) |
+| Check status | `flux get helmreleases -A`                      |
+| Force sync   | `task flux:sync cluster=main` (or `staging`)    |
+| Find apps    | `ls kubernetes/<cluster>/apps/<namespace>/`     |
 
 ## Directory Structure
 
 ```
-bootstrap/templates/    # SOURCE - Jinja2 templates
-kubernetes/apps/        # OUTPUT - Generated manifests
-config.yaml             # SECRET - Template variables (not committed)
+kubernetes/<cluster>/apps/          # Static app manifests - edit directly
+kubernetes/<cluster>/talos/**/*.j2  # Jinja2 sources for Talos node configs
+kubernetes/<cluster>/bootstrap/     # resources.yaml.j2 + helmfile.d for bootstrap
 ```
 
 ## Non-Obvious Truths
 
-- **Makejinja delimiters**: `#{var}#` not `{{var}}` (avoids Helm conflicts)
+- **Jinja2 scope**: only the Talos and bootstrap `.j2` files are templates (minijinja, standard `{{ }}`/`{% %}`, variables from the environment); app manifests are plain YAML
 - **Gateway API routing**: Use `route` not `ingress` for main traffic
-- **Image pinning**: Always include `@sha256:` digest
+- **Image tags**: Use plain version tags; don't add `@sha256:` digests to new or changed tags
 - **SOPS files**: End in `.sops.yaml`, encrypted before commit
 
 ## Insights

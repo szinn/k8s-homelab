@@ -219,7 +219,6 @@ task format:all
 # Format specific types
 task format:markdown
 task format:yaml
-task format:terraform
 task format:just
 ```
 
@@ -230,10 +229,6 @@ task format:just
 **Purpose**: Manage non-Kubernetes infrastructure (DNS servers, certificate distribution, etc.)
 
 ```bash
-# Certificate management
-task machine:fetch-certificate              # Fetch from cluster
-task machine:update-certificates            # Deploy to all machines
-
 # AdGuard DNS updates
 task machine:update-artemis-configuration
 task machine:update-apollo-configuration
