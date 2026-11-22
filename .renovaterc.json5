@@ -57,6 +57,12 @@
       matchPackageNames: ["/cloudnative-pg/postgresql/"],
     },
     {
+      description: "CNPG preset regex has no autoReplaceStringTemplate, so it can't insert a digest",
+      matchDatasources: ["docker"],
+      matchPackageNames: ["/cloudnative-pg/postgresql/"],
+      pinDigests: false,
+    },
+    {
       matchDatasources: ["docker"],
       allowedVersions: "<18.1",
       matchPackageNames: ["/tensorchord/cloudnative-vectorchord/"],
@@ -98,6 +104,8 @@
       automerge: true,
       automergeType: "branch",
       minimumReleaseAge: "3 days",
+      // Branch digests (e.g. Homebrew/actions@main) carry no release timestamp; don't hold them forever
+      minimumReleaseAgeBehaviour: "timestamp-optional",
       ignoreTests: true,
     },
     {
