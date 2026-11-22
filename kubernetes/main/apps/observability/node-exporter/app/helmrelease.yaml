@@ -11,7 +11,8 @@ spec:
     name: node-exporter
   values:
     fullnameOverride: node-exporter
-    extraArgs:
+    # Chart v6 sets these in defaultArgs and appends extraArgs; node-exporter rejects repeated flags
+    defaultArgs:
       - --collector.filesystem.mount-points-exclude=^/(dev|proc|sys|var/lib/docker/.+|var/lib/kubelet/.+|var/lib/containerd/.+|run/credentials/.+)($|/)
       - --collector.filesystem.fs-types-exclude=^(autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs)$
     prometheus:
