@@ -1,0 +1,20 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/source.extensions.fluxcd.io/artifactgenerator_v1beta1.json
+apiVersion: source.extensions.fluxcd.io/v1beta1
+kind: ArtifactGenerator
+metadata:
+  name: apps
+spec:
+  sources:
+    - alias: repo
+      kind: GitRepository
+      name: flux-system
+  pathPattern: "@repo/kubernetes/main/apps/{namespace}/{app}"
+  artifacts:
+    - name: "{app}"
+      originRevision: "@repo"
+      copy:
+        - from: "@repo/kubernetes/main/apps/{namespace}/{app}/**"
+          to: "@artifact/kubernetes/main/apps/{namespace}/{app}/"
+        - from: "@repo/kubernetes/main/components/**"
+          to: "@artifact/kubernetes/main/components/"

@@ -25,3 +25,4 @@ spec:
           - notification-controller
           - image-automation-controller
           - image-reflector-controller
+          - source-watcher
