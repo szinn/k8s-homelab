@@ -8,8 +8,8 @@ spec:
   targetNamespace: observability
   path: ./kubernetes/main/apps/observability/kube-prometheus-stack/app
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: kube-prometheus-stack
     namespace: flux-system
   prune: true
   wait: true
@@ -25,8 +25,8 @@ spec:
   targetNamespace: observability
   path: ./kubernetes/main/apps/observability/kube-prometheus-stack/config
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: kube-prometheus-stack
     namespace: flux-system
   dependsOn:
     - name: kube-prometheus-stack

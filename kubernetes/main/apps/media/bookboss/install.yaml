@@ -8,8 +8,8 @@ spec:
   targetNamespace: dbms
   path: ./kubernetes/main/apps/media/bookboss/db
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: bookboss
     namespace: flux-system
   dependsOn:
     - name: cloudnative-pg-cluster
@@ -35,8 +35,8 @@ spec:
   targetNamespace: media
   path: ./kubernetes/main/apps/media/bookboss/app
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: bookboss
     namespace: flux-system
   dependsOn:
     - name: bookboss-db

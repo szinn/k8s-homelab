@@ -8,8 +8,8 @@ spec:
   targetNamespace: downloads
   path: ./kubernetes/main/apps/downloads/qbittorrent/app
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: qbittorrent
     namespace: flux-system
   components:
     - ../../../../components/kopiur/kopiur

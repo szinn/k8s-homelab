@@ -8,8 +8,8 @@ spec:
   targetNamespace: media
   path: ./kubernetes/main/apps/media/plex/app
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: plex
     namespace: flux-system
   components:
     - ../../../../components/kopiur/kopiur

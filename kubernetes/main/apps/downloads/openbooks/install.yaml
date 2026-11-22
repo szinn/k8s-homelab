@@ -8,8 +8,8 @@ spec:
   targetNamespace: downloads
   path: ./kubernetes/main/apps/downloads/openbooks/app
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: openbooks
     namespace: flux-system
   components:
     - ../../../../components/kopiur/kopiur

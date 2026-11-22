@@ -8,8 +8,8 @@ spec:
   targetNamespace: security
   path: ./kubernetes/main/apps/security/kanidm/app
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: kanidm
     namespace: flux-system
   components:
     - ../../../../components/kopiur/kopiur

@@ -8,8 +8,8 @@ spec:
   targetNamespace: network
   path: ./kubernetes/main/apps/network/external-dns/cloudflare
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: external-dns
     namespace: flux-system
   prune: true
   wait: true
@@ -25,8 +25,8 @@ spec:
   targetNamespace: network
   path: ./kubernetes/main/apps/network/external-dns/unifi
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: external-dns
     namespace: flux-system
   prune: true
   interval: 30m

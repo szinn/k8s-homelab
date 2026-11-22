@@ -8,8 +8,8 @@ spec:
   targetNamespace: dbms
   path: ./kubernetes/main/apps/self-hosted/wikijs/db
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: wikijs
     namespace: flux-system
   dependsOn:
     - name: cloudnative-pg-cluster
@@ -35,8 +35,8 @@ spec:
   targetNamespace: self-hosted
   path: ./kubernetes/main/apps/self-hosted/wikijs/app
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: wikijs
     namespace: flux-system
   dependsOn:
     - name: wikijs-db

@@ -8,8 +8,8 @@ spec:
   targetNamespace: self-hosted
   path: ./kubernetes/main/apps/self-hosted/cardigan/app
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: cardigan
     namespace: flux-system
   components:
     - ../../../../components/kopiur/kopiur

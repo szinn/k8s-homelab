@@ -8,8 +8,8 @@ spec:
   targetNamespace: observability
   path: ./kubernetes/main/apps/observability/prometheus-adapter/app
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: prometheus-adapter
     namespace: flux-system
   interval: 1h
   timeout: 5m

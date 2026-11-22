@@ -8,8 +8,8 @@ spec:
   targetNamespace: self-hosted
   path: "./kubernetes/main/apps/self-hosted/it-tools/app"
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: it-tools
     namespace: flux-system
   interval: 1h
   timeout: 5m

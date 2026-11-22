@@ -8,11 +8,11 @@ resources:
 configMapGenerator:
   - name: dashy-icons
     files:
-      - bookboss.png=./icons/bookboss.png
-      - connect.jpg=./icons/connect.jpg
-      - database-storage.png=./icons/database-storage.png
-      - mailkeep.png=./icons/mailkeep.png
-      - pikvm.png=./icons/pikvm.png
-      - pikvm-light.png=./icons/pikvm-light.png
+      - bookboss.png=./icons/bookboss.png.bin
+      - connect.jpg=./icons/connect.jpg.bin
+      - database-storage.png=./icons/database-storage.png.bin
+      - mailkeep.png=./icons/mailkeep.png.bin
+      - pikvm.png=./icons/pikvm.png.bin
+      - pikvm-light.png=./icons/pikvm-light.png.bin
 generatorOptions:
   disableNameSuffixHash: true

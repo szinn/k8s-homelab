@@ -8,8 +8,8 @@ spec:
   targetNamespace: system
   path: ./kubernetes/main/apps/system/kopia/app
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: kopia
     namespace: flux-system
   interval: 1h
   prune: true

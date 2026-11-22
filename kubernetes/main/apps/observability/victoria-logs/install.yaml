@@ -8,8 +8,8 @@ spec:
   targetNamespace: observability
   path: ./kubernetes/main/apps/observability/victoria-logs/app
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: victoria-logs
     namespace: flux-system
   interval: 1h
   prune: true

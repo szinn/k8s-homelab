@@ -8,8 +8,8 @@ spec:
   targetNamespace: downloads
   path: ./kubernetes/main/apps/downloads/recyclarr/app
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: recyclarr
     namespace: flux-system
   components:
     - ../../../../components/kopiur/kopiur

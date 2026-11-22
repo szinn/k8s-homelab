@@ -8,8 +8,8 @@ spec:
   targetNamespace: cert-manager
   path: ./kubernetes/main/apps/cert-manager/cert-manager/app
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: cert-manager
     namespace: flux-system
   prune: true
   wait: true
@@ -25,8 +25,8 @@ spec:
   targetNamespace: cert-manager
   path: ./kubernetes/main/apps/cert-manager/cert-manager/issuers
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: cert-manager
     namespace: flux-system
   dependsOn:
     - name: cert-manager

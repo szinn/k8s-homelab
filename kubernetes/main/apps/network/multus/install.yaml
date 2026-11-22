@@ -8,8 +8,8 @@ spec:
   targetNamespace: network
   path: ./kubernetes/main/apps/network/multus/app
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: multus
     namespace: flux-system
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2
@@ -32,8 +32,8 @@ spec:
   targetNamespace: network
   path: ./kubernetes/main/apps/network/multus/networks
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: multus
     namespace: flux-system
   dependsOn:
     - name: multus

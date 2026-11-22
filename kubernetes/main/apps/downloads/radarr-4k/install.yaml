@@ -8,8 +8,8 @@ spec:
   targetNamespace: downloads
   path: ./kubernetes/main/apps/downloads/radarr-4k/app
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: radarr-4k
     namespace: flux-system
   components:
     - ../../../../components/kopiur/kopiur

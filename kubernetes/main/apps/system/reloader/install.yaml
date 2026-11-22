@@ -8,8 +8,8 @@ spec:
   targetNamespace: system
   path: ./kubernetes/main/apps/system/reloader/app
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: reloader
     namespace: flux-system
   prune: true
   wait: false

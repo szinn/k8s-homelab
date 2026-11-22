@@ -8,8 +8,8 @@ spec:
   targetNamespace: observability
   path: ./kubernetes/main/apps/observability/unifi-poller/app
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: unifi-poller
     namespace: flux-system
   prune: true
   wait: false

@@ -8,8 +8,8 @@ spec:
   targetNamespace: self-hosted
   path: ./kubernetes/main/apps/self-hosted/homepage/app
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: homepage
     namespace: flux-system
   prune: true
   wait: false

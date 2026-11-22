@@ -8,8 +8,8 @@ spec:
   targetNamespace: external-secrets
   path: ./kubernetes/main/apps/external-secrets/onepassword-connect/app
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: onepassword-connect
     namespace: flux-system
   prune: true
   wait: false

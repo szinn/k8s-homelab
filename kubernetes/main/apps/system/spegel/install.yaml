@@ -8,8 +8,8 @@ spec:
   targetNamespace: system
   path: ./kubernetes/main/apps/system/spegel/app
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: spegel
     namespace: flux-system
   prune: true
   wait: false

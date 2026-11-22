@@ -8,8 +8,8 @@ spec:
   targetNamespace: kube-system
   path: ./kubernetes/main/apps/kube-system/metrics-server/app
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: metrics-server
     namespace: flux-system
   prune: true
   wait: false

@@ -8,8 +8,8 @@ spec:
   targetNamespace: network
   path: ./kubernetes/main/apps/network/cloudflare-tunnel/app
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: cloudflare-tunnel
     namespace: flux-system
   dependsOn:
     - name: external-dns-cloudflare

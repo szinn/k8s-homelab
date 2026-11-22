@@ -8,8 +8,8 @@ spec:
   targetNamespace: system
   path: ./kubernetes/main/apps/system/k8tz/app
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: k8tz
     namespace: flux-system
   dependsOn:
     - name: cert-manager

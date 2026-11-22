@@ -8,8 +8,8 @@ spec:
   targetNamespace: &namespace media
   path: ./kubernetes/main/apps/media/immich/db
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: immich
     namespace: flux-system
   dependsOn:
     - name: cloudnative-pg-operator
@@ -54,8 +54,8 @@ spec:
   targetNamespace: media
   path: ./kubernetes/main/apps/media/immich/app
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: immich
     namespace: flux-system
   dependsOn:
     - name: immich-database

@@ -9,8 +9,8 @@ spec:
   path: ./kubernetes/main/apps/actions-runner-system/actions-runner-controller/operator
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: actions-runner-controller
     namespace: flux-system
   wait: false
   interval: 30m
@@ -25,8 +25,8 @@ spec:
   targetNamespace: actions-runner-system
   path: ./kubernetes/main/apps/actions-runner-system/actions-runner-controller/runners
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: actions-runner-controller
     namespace: flux-system
   dependsOn:
     - name: actions-runner-controller

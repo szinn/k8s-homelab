@@ -8,8 +8,8 @@ spec:
   targetNamespace: downloads
   path: ./kubernetes/main/apps/downloads/sabnzbd/app
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: sabnzbd
     namespace: flux-system
   components:
     - ../../../../components/kopiur/kopiur

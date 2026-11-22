@@ -8,8 +8,8 @@ spec:
   targetNamespace: home
   path: ./kubernetes/main/apps/home/home-assistant/app
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: home-assistant
     namespace: flux-system
   components:
     - ../../../../components/kopiur/kopiur

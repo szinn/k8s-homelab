@@ -8,8 +8,8 @@ spec:
   targetNamespace: system-upgrade
   path: ./kubernetes/main/apps/system-upgrade/tuppr/app
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: tuppr
     namespace: flux-system
   prune: true
   wait: true
@@ -24,8 +24,8 @@ spec:
   targetNamespace: system-upgrade
   path: ./kubernetes/main/apps/system-upgrade/tuppr/upgrades
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: tuppr
     namespace: flux-system
   prune: true
   wait: false

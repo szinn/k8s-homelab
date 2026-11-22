@@ -8,8 +8,8 @@ spec:
   targetNamespace: self-hosted
   path: ./kubernetes/main/apps/self-hosted/changedetection/app
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: changedetection
     namespace: flux-system
   components:
     - ../../../../components/kopiur/kopiur

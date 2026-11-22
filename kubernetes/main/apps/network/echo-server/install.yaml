@@ -8,8 +8,8 @@ spec:
   targetNamespace: network
   path: ./kubernetes/main/apps/network/echo-server/app
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: echo-server
     namespace: flux-system
   prune: true
   wait: false
