@@ -9,3 +9,4 @@ resources:
   # Flux-Kustomizations
   - flux-operator/install.yaml
   - flux-instance/install.yaml
+  - artifactgenerator.yaml
