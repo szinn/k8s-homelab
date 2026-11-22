@@ -8,8 +8,8 @@ spec:
   targetNamespace: dbms
   path: ./kubernetes/staging/apps/dbms/cloudnative-pg/operator
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: cloudnative-pg-operator
     namespace: flux-system
   prune: true
   wait: true
@@ -25,8 +25,8 @@ spec:
   targetNamespace: dbms
   path: ./kubernetes/staging/apps/dbms/cloudnative-pg/cluster
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: cloudnative-pg-cluster
     namespace: flux-system
   dependsOn:
     - name: cloudnative-pg-operator
