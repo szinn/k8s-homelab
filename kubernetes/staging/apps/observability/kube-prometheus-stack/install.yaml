@@ -6,10 +6,10 @@ metadata:
   name: kube-prometheus-stack
 spec:
   targetNamespace: observability
-  path: ./kubernetes/main/apps/observability/kube-prometheus-stack/app
+  path: ./kubernetes/staging/apps/observability/kube-prometheus-stack/app
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: kube-prometheus-stack
     namespace: flux-system
   prune: true
   wait: true
@@ -23,10 +23,10 @@ metadata:
   name: kube-prometheus-stack-config
 spec:
   targetNamespace: observability
-  path: ./kubernetes/main/apps/observability/kube-prometheus-stack/config
+  path: ./kubernetes/staging/apps/observability/kube-prometheus-stack/config
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: kube-prometheus-stack
     namespace: flux-system
   dependsOn:
     - name: kube-prometheus-stack

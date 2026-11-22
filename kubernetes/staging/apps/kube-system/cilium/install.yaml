@@ -8,8 +8,8 @@ spec:
   targetNamespace: kube-system
   path: ./kubernetes/staging/apps/kube-system/cilium/app
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: cilium
     namespace: flux-system
   prune: true
   wait: true
@@ -25,8 +25,8 @@ spec:
   targetNamespace: kube-system
   path: ./kubernetes/staging/apps/kube-system/cilium/config
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: cilium
     namespace: flux-system
   dependsOn:
     - name: cilium

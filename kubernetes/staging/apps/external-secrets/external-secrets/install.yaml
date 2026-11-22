@@ -8,8 +8,8 @@ spec:
   targetNamespace: external-secrets
   path: ./kubernetes/staging/apps/external-secrets/external-secrets/app
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: external-secrets
     namespace: flux-system
   prune: true
   wait: false

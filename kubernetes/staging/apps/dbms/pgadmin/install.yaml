@@ -8,8 +8,8 @@ spec:
   targetNamespace: dbms
   path: ./kubernetes/staging/apps/dbms/pgadmin/app
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: pgadmin
     namespace: flux-system
   components:
     - ../../../../components/kopiur/kopiur

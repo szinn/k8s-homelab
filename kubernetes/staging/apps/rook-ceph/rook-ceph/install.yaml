@@ -8,8 +8,8 @@ spec:
   targetNamespace: rook-ceph
   path: ./kubernetes/staging/apps/rook-ceph/rook-ceph/operator
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: rook-ceph
     namespace: flux-system
   prune: true
   wait: true
@@ -25,8 +25,8 @@ spec:
   targetNamespace: rook-ceph
   path: ./kubernetes/staging/apps/rook-ceph/rook-ceph/ceph-csi-drivers
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: rook-ceph
     namespace: flux-system
   dependsOn:
     - name: rook-ceph-operator
@@ -43,8 +43,8 @@ spec:
   targetNamespace: rook-ceph
   path: ./kubernetes/staging/apps/rook-ceph/rook-ceph/cluster
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: rook-ceph
     namespace: flux-system
   dependsOn:
     - name: rook-ceph-operator
@@ -77,8 +77,8 @@ spec:
   targetNamespace: rook-ceph
   path: ./kubernetes/staging/apps/rook-ceph/rook-ceph/add-ons
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: rook-ceph
     namespace: flux-system
   dependsOn:
     - name: rook-ceph-operator

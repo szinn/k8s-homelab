@@ -8,8 +8,8 @@ spec:
   targetNamespace: dbms
   path: ./kubernetes/staging/apps/dbms/dragonfly/operator
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: dragonfly
     namespace: flux-system
   prune: true
   wait: true
@@ -25,8 +25,8 @@ spec:
   targetNamespace: dbms
   path: ./kubernetes/staging/apps/dbms/dragonfly/cluster
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: dragonfly
     namespace: flux-system
   dependsOn:
     - name: dragonfly-operator

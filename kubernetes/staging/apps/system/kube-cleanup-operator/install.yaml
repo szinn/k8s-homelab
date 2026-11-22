@@ -8,8 +8,8 @@ spec:
   targetNamespace: system
   path: ./kubernetes/staging/apps/system/kube-cleanup-operator/app
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: kube-cleanup-operator
     namespace: flux-system
   prune: true
   wait: false

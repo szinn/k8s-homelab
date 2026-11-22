@@ -8,8 +8,8 @@ spec:
   targetNamespace: miroir-system
   path: ./kubernetes/staging/apps/miroir-system/miroir/app
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: miroir
     namespace: flux-system
   prune: true
   wait: true
@@ -24,8 +24,8 @@ spec:
   targetNamespace: miroir-system
   path: ./kubernetes/staging/apps/miroir-system/miroir/config
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: miroir
     namespace: flux-system
   dependsOn:
     - name: miroir

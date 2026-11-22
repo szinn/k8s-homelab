@@ -8,8 +8,8 @@ spec:
   targetNamespace: kopiur-system
   path: ./kubernetes/staging/apps/kopiur-system/kopiur/app
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: kopiur
     namespace: flux-system
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2
@@ -29,8 +29,8 @@ spec:
   targetNamespace: kopiur-system
   path: ./kubernetes/staging/apps/kopiur-system/kopiur/repository
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: kopiur
     namespace: flux-system
   dependsOn:
     - name: kopiur

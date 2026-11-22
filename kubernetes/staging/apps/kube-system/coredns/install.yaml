@@ -8,8 +8,8 @@ spec:
   targetNamespace: kube-system
   path: ./kubernetes/staging/apps/kube-system/coredns/app
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: coredns
     namespace: flux-system
   prune: true
   wait: false

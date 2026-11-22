@@ -8,8 +8,8 @@ spec:
   targetNamespace: default
   path: ./kubernetes/staging/apps/default/whoami/app
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: whoami
     namespace: flux-system
   prune: true
   wait: false

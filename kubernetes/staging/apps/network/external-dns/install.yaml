@@ -8,8 +8,8 @@ spec:
   targetNamespace: network
   path: ./kubernetes/staging/apps/network/external-dns/unifi
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: external-dns
     namespace: flux-system
   prune: true
   wait: false
