@@ -8,8 +8,8 @@ spec:
   targetNamespace: flux-system
   path: ./kubernetes/main/apps/flux-system/konflate/main
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: konflate
     namespace: flux-system
   prune: true
   wait: true
@@ -24,8 +24,8 @@ spec:
   targetNamespace: flux-system
   path: ./kubernetes/main/apps/flux-system/konflate/staging
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: konflate
     namespace: flux-system
   dependsOn:
     - name: konflate-main
