@@ -9,7 +9,7 @@ spec:
   path: ./kubernetes/staging/apps/dbms/cloudnative-pg/operator
   sourceRef:
     kind: ExternalArtifact
-    name: cloudnative-pg-operator
+    name: cloudnative-pg
     namespace: flux-system
   prune: true
   wait: true
@@ -26,7 +26,7 @@ spec:
   path: ./kubernetes/staging/apps/dbms/cloudnative-pg/cluster
   sourceRef:
     kind: ExternalArtifact
-    name: cloudnative-pg-cluster
+    name: cloudnative-pg
     namespace: flux-system
   dependsOn:
     - name: cloudnative-pg-operator

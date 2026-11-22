@@ -17,4 +17,4 @@ spec:
         - from: "@repo/kubernetes/staging/apps/{namespace}/{app}/**"
           to: "@artifact/kubernetes/staging/apps/{namespace}/{app}/"
         - from: "@repo/kubernetes/staging/components/**"
-          to: "@artifact/kubernetes/staging/;5ucomponents/"
+          to: "@artifact/kubernetes/staging/components/"
