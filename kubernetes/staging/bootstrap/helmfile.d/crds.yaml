@@ -21,11 +21,14 @@ releases:
   - name: kopiur
     namespace: kopiur-system
 
-  - name: kube-prometheus-stack
-    namespace: observability
-    chart: oci://ghcr.io/prometheus-community/charts/kube-prometheus-stack
-    version: 93.1.0
-    values: []
+  - name: prometheus-operator-crds
+    namespace: kube-system
+    chart: oci://ghcr.io/prometheus-community/charts/prometheus-operator-crds
+    version: 33.0.1
+    inherit:
+      - template: default
+        except:
+          - values
 
   - name: snapshot-controller
     namespace: system

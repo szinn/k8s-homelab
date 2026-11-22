@@ -72,7 +72,6 @@ crds:
   if ! helmfile -f "{{ bootstrap_dir }}/helmfile.d/crds.yaml" template -q | kubectl apply --server-side -f -; then
     just log fatal "Failed to apply crds"
   fi
-  kubectl --context staging delete deployment -n observability prometheus-operator
 
 [doc('Apply Helmfile Apps')]
 apps:
