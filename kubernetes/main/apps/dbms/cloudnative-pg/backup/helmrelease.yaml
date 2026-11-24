@@ -27,17 +27,17 @@ spec:
         containers:
           postgres-backup:
             image:
-              repository: docker.io/prodrigestivill/postgres-backup-local
-              tag: 18@sha256:f70742ebe42b2277689b028d1fd15aa80f77cffa01da163cc9f85a6ff1866e7f
-            command: ["/backup.sh"]
+              repository: ghcr.io/cloudnative-pg/postgresql
+              tag: 19.0-standard-trixie
+            command: ["bash", "/scripts/backup.sh"]
             envFrom:
               - secretRef:
                   name: postgres-backups-secret
             env:
               - name: POSTGRES_HOST
-                value: postgres-18-ro.dbms.svc.cluster.local
+                value: postgres-19-ro.dbms.svc.cluster.local
               - name: POSTGRES_DB
-                value: "bookboss issueboss wikijs"
+                value: "bookboss bookboss_dev issueboss wikijs"
               - name: BACKUP_KEEP_DAYS
                 value: "7"
               - name: BACKUP_KEEP_WEEKS
@@ -55,3 +55,9 @@ spec:
         existingClaim: postgres-backups
         globalMounts:
           - path: /backups
+      scripts:
+        type: configMap
+        name: postgres-backup-scripts
+        globalMounts:
+          - path: /scripts
+            readOnly: true

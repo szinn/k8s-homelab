@@ -6,3 +6,9 @@ resources:
   - backups-pvc.yaml
   - secrets.yaml
   - helmrelease.yaml
+configMapGenerator:
+  - name: postgres-backup-scripts
+    files:
+      - backup.sh=./resources/backup.sh
+generatorOptions:
+  disableNameSuffixHash: true
