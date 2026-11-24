@@ -10,7 +10,7 @@ spec:
       rules:
         - alert: RunnerNotRunning
           expr: |
-            gha_registered_runners{repository="k8s-homelab"} < 1
+            (sum(kube_pod_status_ready{namespace="actions-runner-system",pod=~"k8s-homelab-runner-runner-.*",condition="true"}) or vector(0)) < 1
           for: 5m
           annotations:
             summary: >-
