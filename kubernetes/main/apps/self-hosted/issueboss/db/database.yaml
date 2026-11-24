@@ -26,10 +26,10 @@ spec:
 apiVersion: postgresql.cnpg.io/v1
 kind: DatabaseRole
 metadata:
-  name: issueboss
+  name: issueboss-19
 spec:
   cluster:
-    name: postgres-18
+    name: postgres-19
   name: issueboss
   login: true
   passwordSecret:
@@ -40,10 +40,10 @@ spec:
 apiVersion: postgresql.cnpg.io/v1
 kind: Database
 metadata:
-  name: issueboss
+  name: issueboss-19
 spec:
   cluster:
-    name: postgres-18
+    name: postgres-19
   name: issueboss
   owner: issueboss
   databaseReclaimPolicy: retain

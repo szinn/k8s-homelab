@@ -31,7 +31,7 @@ spec:
               TZ: America/Toronto
               LOG_LEVEL: info
               APP_URL: "https://wiki.zinn.ca"
-              DB_HOST: postgres-18-rw.dbms.svc.cluster.local
+              DB_HOST: postgres-19-rw.dbms.svc.cluster.local
               DB_PORT: "5432"
               DB_NAME: wikijs
               DB_SCHEMA: wiki

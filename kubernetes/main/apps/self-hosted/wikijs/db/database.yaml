@@ -26,10 +26,10 @@ spec:
 apiVersion: postgresql.cnpg.io/v1
 kind: DatabaseRole
 metadata:
-  name: wikijs
+  name: wikijs-19
 spec:
   cluster:
-    name: postgres-18
+    name: postgres-19
   name: wikijs
   login: true
   passwordSecret:
@@ -40,10 +40,10 @@ spec:
 apiVersion: postgresql.cnpg.io/v1
 kind: Database
 metadata:
-  name: wikijs
+  name: wikijs-19
 spec:
   cluster:
-    name: postgres-18
+    name: postgres-19
   name: wikijs
   owner: wikijs
   databaseReclaimPolicy: retain
