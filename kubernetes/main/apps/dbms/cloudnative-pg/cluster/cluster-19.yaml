@@ -11,26 +11,6 @@ spec:
   instances: 3
   primaryUpdateMethod: switchover
 
-  bootstrap:
-    initdb:
-      import:
-        type: monolith
-        databases: ["*"]
-        roles: ["app", "bookboss", "bookboss_dev", "issueboss", "wikijs"]
-        source:
-          externalCluster: postgres-18
-
-  externalClusters:
-    - name: postgres-18
-      connectionParameters:
-        host: postgres-18-rw.dbms.svc.cluster.local
-        user: postgres
-        dbname: postgres
-        sslmode: require
-      password:
-        name: postgres-superuser
-        key: password
-
   storage:
     size: 100Gi
     storageClass: ceph-block
