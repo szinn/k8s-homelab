@@ -1,0 +1,51 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/postgresql.cnpg.io/cluster_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: postgres-19
+  labels:
+    app.kubernetes.io/name: postgres-db
+spec:
+  imageName: ghcr.io/cloudnative-pg/postgresql:19.0-standard-trixie
+  instances: 3
+  primaryUpdateMethod: switchover
+
+  bootstrap:
+    initdb:
+      import:
+        type: monolith
+        databases: ["*"]
+        roles: ["app", "bookboss", "bookboss_dev", "issueboss", "wikijs"]
+        source:
+          externalCluster: postgres-18
+
+  externalClusters:
+    - name: postgres-18
+      connectionParameters:
+        host: postgres-18-rw.dbms.svc.cluster.local
+        user: postgres
+        dbname: postgres
+        sslmode: require
+      password:
+        name: postgres-superuser
+        key: password
+
+  storage:
+    size: 100Gi
+    storageClass: ceph-block
+
+  enableSuperuserAccess: true
+  superuserSecret:
+    name: postgres-superuser
+
+  postgresql:
+    parameters:
+      max_connections: "300"
+      shared_buffers: 512MB
+      wal_keep_size: 2GB
+
+  affinity:
+    enablePodAntiAffinity: true
+    topologyKey: kubernetes.io/hostname
+    podAntiAffinityType: required
