@@ -36,6 +36,10 @@ spec:
       kind: Cluster
       name: postgres-18
       namespace: dbms
+    - apiVersion: postgresql.cnpg.io/v1
+      kind: Cluster
+      name: postgres-19
+      namespace: dbms
   healthCheckExprs:
     - apiVersion: postgresql.cnpg.io/v1
       kind: Cluster
