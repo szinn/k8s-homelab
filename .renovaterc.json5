@@ -53,7 +53,7 @@
     },
     {
       matchDatasources: ["docker"],
-      allowedVersions: "<19",
+      allowedVersions: "<20",
       matchPackageNames: ["/cloudnative-pg/postgresql/"],
     },
     {
