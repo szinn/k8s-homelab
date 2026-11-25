@@ -30,7 +30,7 @@ A new app has to be added to its namespace's `kustomization.yaml` `resources:`, 
 - **Hostnames**: real domains are hardcoded. There is no `${SECRET_DOMAIN}` substitution.
 - **Secrets**: an `ExternalSecret` reads from the ClusterSecretStore `onepassword-connect` (1Password). SOPS files end in `.sops.yaml` and are encrypted before commit.
 - **Storage classes**: `ceph-block`, `ceph-filesystem`, `miroir-slow`, `openebs-hostpath`, plus per-app NFS classes.
-- **Image tags**: plain version tags. Don't add `@sha256:` digests.
+- **Image tags**: write plain version tags and don't add `@sha256:` digests yourself. Renovate pins digests on many images; leave existing ones in place.
 - **Jinja2**: only the `talos/` and `bootstrap/` `.j2` files are templates (minijinja, standard `{{ }}`, variables from the environment). Everything under `apps/` is plain YAML.
 
 ## Commands
@@ -47,10 +47,9 @@ A new app has to be added to its namespace's `kustomization.yaml` `resources:`, 
 This project uses `.insights/` for research, triage docs, specs, plans, and personal notes
 managed by the `insights` CLI.
 
-**At the start of brainstorming, spec writing, or planning work**, dispatch the
-`insights-locator` agent to check for prior context before proceeding. Use
-`insights-analyzer` to read the most relevant documents. Use the `insights-research`
-skill to orchestrate both and save a research document.
+**At the start of brainstorming, spec writing, or planning work**, use the
+`issueboss:insights-research` skill to check for prior context before proceeding. It
+finds and reads the relevant documents and returns the findings inline.
 
 Directory layout:
 
