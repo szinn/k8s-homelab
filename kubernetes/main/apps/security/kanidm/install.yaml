@@ -12,11 +12,11 @@ spec:
     name: kanidm
     namespace: flux-system
   components:
-    - ../../../../components/kopiur/deployment
+    - ../../../../components/kopiur/statefulset
   postBuild:
     substitute:
       APP: kanidm
-      KOPIUR_CLAIM: kanidm
+      KOPIUR_CLAIM: data
       KOPIUR_CAPACITY: 5Gi
   prune: true
   wait: false
