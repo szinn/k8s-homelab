@@ -6,7 +6,6 @@ namespace: security
 components:
   - ../../components/alerts
   - ../../components/app-template
-  - ../../components/kopiur/secret
 resources:
   # Pre Flux-Kustmizations
   - namespace.yaml

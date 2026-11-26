@@ -6,7 +6,6 @@ namespace: dbms
 components:
   - ../../components/alerts
   - ../../components/app-template
-  - ../../components/kopiur/secret
 resources:
   # Pre Flux-Kustomizations
   - namespace.yaml
