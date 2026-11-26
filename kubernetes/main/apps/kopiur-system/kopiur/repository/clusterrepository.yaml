@@ -16,12 +16,16 @@ spec:
         nfs:
           server: ragnar.zinn.tech
           path: /mnt/atlas/k8s/main/kopiur
+  credentialProjection:
+    # Operator copies kopiur-ragnar-secret into each mover namespace whose
+    # SnapshotPolicy/Restore opts in, so no per-namespace ExternalSecret.
+    allowed: true
   create:
     enabled: true
   encryption:
     passwordSecretRef:
       name: kopiur-ragnar-secret
-      namespace: system
+      namespace: kopiur-system
       key: KOPIA_PASSWORD
   identityDefaults:
     hostnameExpr: namespace

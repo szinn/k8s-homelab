@@ -5,6 +5,8 @@ kind: Restore
 metadata:
   name: ${APP}
 spec:
+  credentialProjection:
+    enabled: true
   mover:
     podSecurityContext:
       fsGroup: ${KOPIUR_PGID:=2000}

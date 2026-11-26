@@ -12,6 +12,11 @@ spec:
   values:
     # logging:
     #   level: debug,kopia=debug
+    features:
+      # Grants the operator secrets create/patch/delete so it can project
+      # kopiur-ragnar-secret into mover namespaces (spec.credentialProjection).
+      credentialProjection:
+        enabled: true
     extraVolumes:
       - name: repo
         nfs:

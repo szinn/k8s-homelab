@@ -6,9 +6,9 @@ namespace: kopiur-system
 components:
   - ../../components/alerts
   - ../../components/app-template
-  - ../../components/kopiur/secret
 resources:
   # Pre Flux-Kustomizations
   - namespace.yaml
+  - secrets.yaml
   # Flux-Kustomizations
   - kopiur/install.yaml
