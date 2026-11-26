@@ -5,7 +5,6 @@ kind: Kustomization
 namespace: dbms
 components:
   - ../../components/app-template
-  - ../../components/kopiur/secret
 resources:
   # Pre Flux-Kustomizations
   - namespace.yaml

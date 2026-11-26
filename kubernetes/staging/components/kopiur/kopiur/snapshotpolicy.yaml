@@ -5,6 +5,8 @@ kind: SnapshotPolicy
 metadata:
   name: ${APP}
 spec:
+  credentialProjection:
+    enabled: true
   copyMethod: Snapshot
   files:
     ignoreRules:
