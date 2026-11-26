@@ -12,8 +12,7 @@ spec:
     name: sonarr
     namespace: flux-system
   components:
-    - ../../../../components/kopiur/kopiur
-    - ../../../../components/kopiur/pvc
+    - ../../../../components/kopiur/deployment
     - ../../../../components/zeroscaler
   postBuild:
     substitute:

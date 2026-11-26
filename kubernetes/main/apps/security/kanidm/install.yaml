@@ -12,8 +12,7 @@ spec:
     name: kanidm
     namespace: flux-system
   components:
-    - ../../../../components/kopiur/kopiur
-    - ../../../../components/kopiur/pvc
+    - ../../../../components/kopiur/deployment
   postBuild:
     substitute:
       APP: kanidm

@@ -15,8 +15,7 @@ spec:
     - name: cloudnative-pg-operator
       namespace: dbms
   components:
-    - ../../../../components/kopiur/kopiur
-    - ../../../../components/kopiur/pvc
+    - ../../../../components/kopiur/deployment
   postBuild:
     substitute:
       APP: pgadmin
