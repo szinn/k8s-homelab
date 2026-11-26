@@ -23,7 +23,7 @@ spec:
         name: ${KOPIUR_CLAIM:=config}-${APP}-0
       # The Restore finds snapshots by source path, and a StatefulSet claim name
       # (<template>-<app>-0) differs from the deployment claim name.
-      sourcePathOverride: /pvc/${APP}
+      sourcePathOverride: ${KOPIUR_SOURCE_PATH:=/pvc/${APP}}
   mover:
     cache:
       capacity: ${KOPIUR_CAPACITY:=5Gi}

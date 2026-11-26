@@ -19,6 +19,7 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
     controllers:
       main:
+        type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
@@ -29,6 +30,18 @@ spec:
             env:
               TZ: America/Toronto
               DISABLE_CONFIG_BACKUPS: true
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 1Gi
+              storageClass: ceph-block
+              dataSourceRef:
+                apiGroup: kopiur.home-operations.com
+                kind: Restore
+                name: "{{ .Release.Name }}"
+              globalMounts:
+                - path: /app/user-data
     service:
       main:
         ports:
@@ -45,13 +58,6 @@ spec:
               - identifier: main
                 port: *mainPort
     persistence:
-      config:
-        enabled: true
-        existingClaim: "${KOPIUR_CLAIM}"
-        advancedMounts:
-          main:
-            main:
-              - path: /app/user-data
       icons:
         enabled: true
         type: configMap
