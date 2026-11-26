@@ -17,7 +17,7 @@ spec:
             value: "1"
     controllers:
       pgadmin:
-        strategy: Recreate
+        type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
         pod:
@@ -42,6 +42,19 @@ spec:
                 memory: 256M
               limits:
                 memory: 512M
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 1Gi
+              storageClass: ceph-block
+              dataSourceRef:
+                apiGroup: kopiur.home-operations.com
+                kind: Restore
+                name: "{{ .Release.Name }}"
+              globalMounts:
+                - path: /var/lib/pgadmin
 
     service:
       pgadmin:
@@ -57,13 +70,6 @@ spec:
             namespace: network
 
     persistence:
-      config:
-        enabled: true
-        existingClaim: pgadmin-config
-        advancedMounts:
-          pgadmin:
-            pgadmin:
-              - path: /var/lib/pgadmin
       server-json:
         enabled: true
         type: configMap
