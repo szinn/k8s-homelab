@@ -12,8 +12,25 @@ spec:
   values:
     controllers:
       home-assistant:
+        type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 8Gi
+              storageClass: ceph-block
+              dataSourceRef:
+                apiGroup: kopiur.home-operations.com
+                kind: Restore
+                name: "{{ .Release.Name }}"
+              advancedMounts:
+                home-assistant:
+                  - path: /config
+                code-server:
+                  - path: /config
         pod:
           annotations:
             k8s.v1.cni.cncf.io/networks: |-
@@ -129,15 +146,6 @@ spec:
               - identifier: home-assistant
                 port: *codePort
     persistence:
-      config:
-        enabled: true
-        existingClaim: home-assistant-config
-        advancedMounts:
-          home-assistant:
-            home-assistant:
-              - path: /config
-            code-server:
-              - path: /config
       tmpfs:
         type: emptyDir
         advancedMounts:
