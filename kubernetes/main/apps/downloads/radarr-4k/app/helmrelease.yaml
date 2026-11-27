@@ -30,8 +30,22 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
     controllers:
       radarr-4k:
+        type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 15Gi
+              storageClass: ceph-block
+              dataSourceRef:
+                apiGroup: kopiur.home-operations.com
+                kind: Restore
+                name: "{{ .Release.Name }}"
+              globalMounts:
+                - path: /config
         pod:
           affinity:
             podAntiAffinity:
@@ -95,8 +109,6 @@ spec:
           - name: envoy-internal
             namespace: network
     persistence:
-      config:
-        existingClaim: radarr-4k-config
       config-cache:
         existingClaim: radarr-4k-cache
         globalMounts:
