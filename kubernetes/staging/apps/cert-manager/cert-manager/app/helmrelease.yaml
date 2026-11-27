@@ -6,9 +6,16 @@ metadata:
   name: cert-manager
 spec:
   interval: 1h
-  chartRef:
+  chart:
     kind: OCIRepository
-    name: cert-manager
+    spec:
+      interval: 1h
+      layerSelector:
+        mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+        operation: copy
+      ref:
+        tag: v1.21.3
+      url: oci://quay.io/jetstack/charts/cert-manager
   values:
     crds:
       enabled: true

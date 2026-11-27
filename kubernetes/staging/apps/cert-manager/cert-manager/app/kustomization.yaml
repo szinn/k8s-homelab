@@ -6,5 +6,4 @@ namespace: cert-manager
 resources:
   - helmrelease.yaml
   - letsencrypt-prod.yaml
-  - ocirepository.yaml
   - secrets.yaml

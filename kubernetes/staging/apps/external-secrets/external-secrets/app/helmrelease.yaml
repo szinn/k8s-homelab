@@ -6,9 +6,16 @@ metadata:
   name: external-secrets
 spec:
   interval: 1h
-  chartRef:
+  chart:
     kind: OCIRepository
-    name: external-secrets
+    spec:
+      interval: 1h
+      layerSelector:
+        mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+        operation: copy
+      ref:
+        tag: 2.15.0
+      url: oci://ghcr.io/external-secrets/charts/external-secrets
   dependsOn:
     - name: onepassword-connect
       namespace: external-secrets

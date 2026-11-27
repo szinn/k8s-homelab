@@ -7,9 +7,16 @@ metadata:
   namespace: kube-system
 spec:
   interval: 1h
-  chartRef:
+  chart:
     kind: OCIRepository
-    name: metrics-server
+    spec:
+      interval: 1h
+      layerSelector:
+        mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+        operation: copy
+      ref:
+        tag: 3.14.0
+      url: oci://ghcr.io/home-operations/charts-mirror/metrics-server
   values:
     args:
       - --kubelet-insecure-tls

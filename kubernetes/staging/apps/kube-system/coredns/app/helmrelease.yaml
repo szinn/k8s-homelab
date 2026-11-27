@@ -6,9 +6,16 @@ metadata:
   name: coredns
 spec:
   interval: 1h
-  chartRef:
+  chart:
     kind: OCIRepository
-    name: coredns
+    spec:
+      interval: 1h
+      layerSelector:
+        mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+        operation: copy
+      url: oci://ghcr.io/coredns/charts/coredns
+      ref:
+        tag: 1.50.8
   values:
     fullnameOverride: coredns
     image:

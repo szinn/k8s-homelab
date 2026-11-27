@@ -5,9 +5,16 @@ kind: HelmRelease
 metadata:
   name: kopiur
 spec:
-  chartRef:
+  chart:
     kind: OCIRepository
-    name: kopiur
+    spec:
+      interval: 15m
+      layerSelector:
+        mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+        operation: copy
+      ref:
+        tag: 0.11.2
+      url: oci://ghcr.io/home-operations/charts/kopiur
   interval: 1h
   values:
     # logging:
