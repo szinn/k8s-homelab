@@ -30,8 +30,22 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
     controllers:
       sonarr:
+        type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 15Gi
+              storageClass: ceph-block
+              dataSourceRef:
+                apiGroup: kopiur.home-operations.com
+                kind: Restore
+                name: "{{ .Release.Name }}"
+              globalMounts:
+                - path: /config
         pod:
           affinity:
             podAntiAffinity:
@@ -108,8 +122,6 @@ spec:
           - name: envoy-internal
             namespace: network
     persistence:
-      config:
-        existingClaim: sonarr-config
       config-cache:
         existingClaim: sonarr-cache
         globalMounts:
