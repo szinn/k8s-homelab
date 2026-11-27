@@ -12,8 +12,25 @@ spec:
   values:
     controllers:
       freshrss:
+        type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+            - name: data
+              accessMode: ReadWriteOnce
+              size: 2Gi
+              storageClass: ceph-block
+              dataSourceRef:
+                apiGroup: kopiur.home-operations.com
+                kind: Restore
+                name: "{{ .Release.Name }}"
+              globalMounts:
+                - path: /var/www/FreshRSS/data
+                  subPath: data
+                - path: /var/www/FreshRSS/extensions
+                  subPath: extensions
         pod:
           hostUsers: false
         containers:
@@ -39,17 +56,6 @@ spec:
               limits:
                 memory: 512M
     persistence:
-      data:
-        existingClaim: freshrss-config
-        advancedMounts:
-          freshrss:
-            freshrss:
-              - path: /var/www/FreshRSS/data
-                subPath: data
-                readOnly: false
-              - path: /var/www/FreshRSS/extensions
-                subPath: extensions
-                readOnly: false
       tmpfs:
         type: emptyDir
         advancedMounts:
