@@ -19,8 +19,22 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
     controllers:
       dashy:
+        type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 1Gi
+              storageClass: ceph-block
+              dataSourceRef:
+                apiGroup: kopiur.home-operations.com
+                kind: Restore
+                name: "{{ .Release.Name }}"
+              globalMounts:
+                - path: /app/user-data
         containers:
           dashy:
             image:
@@ -45,13 +59,6 @@ spec:
               - identifier: dashy
                 port: *mainPort
     persistence:
-      config:
-        enabled: true
-        existingClaim: dashy-config
-        advancedMounts:
-          dashy:
-            dashy:
-              - path: /app/user-data
       icons:
         enabled: true
         type: configMap
