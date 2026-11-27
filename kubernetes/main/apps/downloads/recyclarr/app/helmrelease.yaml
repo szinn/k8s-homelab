@@ -31,8 +31,22 @@ spec:
               property: API_KEY
     controllers:
       recyclarr:
+        type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 5Gi
+              storageClass: ceph-block
+              dataSourceRef:
+                apiGroup: kopiur.home-operations.com
+                kind: Restore
+                name: "{{ .Release.Name }}"
+              globalMounts:
+                - path: /config
         pod:
           securityContext:
             runAsUser: 2000
@@ -57,8 +71,6 @@ spec:
               limits:
                 memory: 500Mi
     persistence:
-      config:
-        existingClaim: recyclarr-config
       config-file:
         type: configMap
         name: recyclarr-configmap

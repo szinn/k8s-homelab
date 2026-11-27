@@ -12,11 +12,13 @@ spec:
     name: recyclarr
     namespace: flux-system
   components:
-    - ../../../../components/kopiur/deployment
+    - ../../../../components/kopiur/statefulset
   postBuild:
     substitute:
       APP: recyclarr
-      KOPIUR_CLAIM: recyclarr-config
+      # Keep the kopia source path the deployment version used, so the
+      # restore and future snapshots continue the existing history.
+      KOPIUR_SOURCE_PATH: /pvc/recyclarr-config
   prune: true
   wait: false
   interval: 30m
