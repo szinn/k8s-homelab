@@ -18,9 +18,6 @@ spec:
     substitute:
       APP: plex
       CONTROLLER: StatefulSet
-      # Keep the kopia source path the deployment version used, so the
-      # restore and future snapshots continue the existing history.
-      KOPIUR_SOURCE_PATH: /pvc/plex-config
       KOPIUR_CAPACITY: 50Gi
   prune: true
   wait: false
