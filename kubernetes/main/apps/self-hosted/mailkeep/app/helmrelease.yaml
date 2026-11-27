@@ -23,7 +23,20 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
     controllers:
       mailkeep:
-        strategy: Recreate
+        type: statefulset
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+            - name: data
+              accessMode: ReadWriteOnce
+              size: 50Gi
+              storageClass: ceph-block
+              dataSourceRef:
+                apiGroup: kopiur.home-operations.com
+                kind: Restore
+                name: "{{ .Release.Name }}"
+              globalMounts:
+                - path: /data
         annotations:
           secret.reloader.stakater.com/reload: mailkeep-secret
         pod:
@@ -92,8 +105,6 @@ spec:
           - name: envoy-internal
             namespace: network
     persistence:
-      data:
-        existingClaim: mailkeep-config
       storage:
         type: nfs
         server: ragnar.zinn.tech
