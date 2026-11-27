@@ -16,9 +16,6 @@ spec:
   postBuild:
     substitute:
       APP: home-assistant
-      # Keep the kopia source path the deployment version used, so the
-      # restore and future snapshots continue the existing history.
-      KOPIUR_SOURCE_PATH: /pvc/home-assistant-config
       KOPIUR_CAPACITY: 8Gi
       KOPIUR_PUID: "65534"
       KOPIUR_PGID: "65533"
