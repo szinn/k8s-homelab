@@ -19,9 +19,6 @@ spec:
   postBuild:
     substitute:
       APP: pgadmin
-      # Keep the kopia source path the deployment version used, so the
-      # restore and future snapshots continue the existing history.
-      KOPIUR_SOURCE_PATH: /pvc/pgadmin-config
       KOPIUR_CAPACITY: 1Gi
       KOPIUR_PUID: "5050"
       KOPIUR_PGID: "5050"
