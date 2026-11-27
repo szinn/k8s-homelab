@@ -12,6 +12,20 @@ spec:
   values:
     controllers:
       atuin:
+        type: statefulset
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 5Gi
+              storageClass: ceph-block
+              dataSourceRef:
+                apiGroup: kopiur.home-operations.com
+                kind: Restore
+                name: "{{ .Release.Name }}"
+              globalMounts:
+                - path: /config
         containers:
           atuin:
             image:
@@ -66,8 +80,6 @@ spec:
           - name: envoy-internal
             namespace: network
     persistence:
-      config:
-        existingClaim: atuin-config
       backup:
         existingClaim: self-hosted-backups
         globalMounts:
