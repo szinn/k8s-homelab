@@ -18,9 +18,6 @@ spec:
     substitute:
       APP: qbittorrent
       CONTROLLER: StatefulSet
-      # Keep the kopia source path the deployment version used, so the
-      # restore and future snapshots continue the existing history.
-      KOPIUR_SOURCE_PATH: /pvc/qbittorrent-config
       KOPIUR_CAPACITY: 2Gi
   prune: true
   wait: false

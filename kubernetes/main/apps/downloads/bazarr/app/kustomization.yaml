@@ -12,3 +12,15 @@ generatorOptions:
   disableNameSuffixHash: true
   annotations:
     kustomize.toolkit.fluxcd.io/substitute: disabled
+# Temporary: lets the kopiur webhook accept the move to the default kopia
+# source path (/pvc/<app>). Remove once the SnapshotPolicy has reconciled.
+patches:
+  - target:
+      kind: SnapshotPolicy
+    patch: |
+      apiVersion: kopiur.home-operations.com/v1alpha1
+      kind: SnapshotPolicy
+      metadata:
+        name: not-used
+        annotations:
+          kopiur.home-operations.com/allow-identity-change: "true"

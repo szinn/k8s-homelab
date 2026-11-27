@@ -18,9 +18,6 @@ spec:
     substitute:
       APP: seerr
       CONTROLLER: StatefulSet
-      # Keep the kopia source path the deployment version used, so the
-      # restore and future snapshots continue the existing history.
-      KOPIUR_SOURCE_PATH: /pvc/seerr-config
       KOPIUR_CAPACITY: 5Gi
   prune: true
   wait: false
