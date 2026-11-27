@@ -21,7 +21,8 @@ kanidm group create 'grafana_users'
 
 kanidm system oauth2 create grafana 'grafana.zinn.ca' https://grafana.zinn.ca
 kanidm system oauth2 set-landing-url grafana 'https://grafana.zinn.ca/login/generic_oauth'
-kanidm system oauth2 update-scope-map grafana grafana_users email openid profile groups
+kanidm system oauth2 update-scope-map grafana grafana_users \
+  email openid profile groups
 kanidm system oauth2 enable-pkce grafana
 kanidm system oauth2 get grafana
 
@@ -29,9 +30,12 @@ kanidm system oauth2 get grafana
 kanidm system oauth2 show-basic-secret grafana
 
 kanidm system oauth2 update-claim-map-join 'grafana' 'grafana_role' array
-kanidm system oauth2 update-claim-map 'grafana' 'grafana_role' 'grafana_superadmins' 'GrafanaAdmin'
-kanidm system oauth2 update-claim-map 'grafana' 'grafana_role' 'grafana_admins' 'Admin'
-kanidm system oauth2 update-claim-map 'grafana' 'grafana_role' 'grafana_editors' 'Editor'
+kanidm system oauth2 update-claim-map 'grafana' 'grafana_role' \
+  'grafana_superadmins' 'GrafanaAdmin'
+kanidm system oauth2 update-claim-map 'grafana' 'grafana_role' \
+  'grafana_admins' 'Admin'
+kanidm system oauth2 update-claim-map 'grafana' 'grafana_role' \
+  'grafana_editors' 'Editor'
 
 kanidm group add-members grafana_users scotte
 kanidm group add-members grafana_admins scotte
