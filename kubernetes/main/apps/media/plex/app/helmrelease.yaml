@@ -6,14 +6,31 @@ metadata:
   name: plex
 spec:
   interval: 1h
+  # A fresh config PVC is hydrated from a ~20GB kopia snapshot before the pod
+  # can start; the 5m default would trip upgrade remediation mid-restore.
+  timeout: 30m
   chartRef:
     kind: OCIRepository
     name: app-template
   values:
     controllers:
       plex:
+        type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 50Gi
+              storageClass: ceph-block
+              dataSourceRef:
+                apiGroup: kopiur.home-operations.com
+                kind: Restore
+                name: "{{ .Release.Name }}"
+              globalMounts:
+                - path: /config
         containers:
           plex:
             image:
@@ -97,13 +114,6 @@ spec:
           - name: envoy-external
             namespace: network
     persistence:
-      config:
-        enabled: true
-        existingClaim: plex-config
-        advancedMounts:
-          plex:
-            plex:
-              - path: /config
       media:
         type: nfs
         server: ragnar.zinn.tech
