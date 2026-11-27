@@ -23,8 +23,22 @@ spec:
               property: PLEX_TOKEN
     controllers:
       bazarr:
+        type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 5Gi
+              storageClass: ceph-block
+              dataSourceRef:
+                apiGroup: kopiur.home-operations.com
+                kind: Restore
+                name: "{{ .Release.Name }}"
+              globalMounts:
+                - path: /config
         containers:
           bazarr:
             image:
@@ -101,8 +115,6 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /config/cache
-      config:
-        existingClaim: bazarr-config
       log:
         type: emptyDir
         globalMounts:
