@@ -19,6 +19,18 @@ spec:
       KOPIUR_CAPACITY: 1Gi
       KOPIUR_PUID: "5050"
       KOPIUR_PGID: "5050"
+  # Temporary: lets the kopiur webhook accept the move to the default
+  # kopia source path (/pvc/${APP}). Remove once the policy has reconciled.
+  patches:
+    - target:
+        kind: SnapshotPolicy
+      patch: |
+        apiVersion: kopiur.home-operations.com/v1alpha1
+        kind: SnapshotPolicy
+        metadata:
+          name: not-used
+          annotations:
+            kopiur.home-operations.com/allow-identity-change: "true"
   prune: true
   wait: false
   interval: 30m
