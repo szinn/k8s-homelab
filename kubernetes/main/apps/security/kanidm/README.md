@@ -1,4 +1,4 @@
-# Bootstrapping Kandidm
+# Bootstrapping Kanidm
 
 ```bash
 kubectl exec -n security -it statefulset/kanidm -- kanidmd recover-account admin
@@ -11,7 +11,7 @@ kanidm login --name idm_admin
 # Leave privilege-expiry (short read/write window for sensitive ops) alone.
 kanidm group account-policy auth-expiry idm_all_persons 2592000  # 30 days in seconds
 kanidm person create scotte 'Scotte Zinn'
-kanidm person update scotte --mail 'scotte@zinn.ca' —legalname 'Scotte Zinn'
+kanidm person update scotte --mail 'scotte@zinn.ca' --legalname 'Scotte Zinn'
 kanidm person credential create-reset-token scotte
 
 kanidm group create 'grafana_superadmins'
