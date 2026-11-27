@@ -30,8 +30,22 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
     controllers:
       lidarr:
+        type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 15Gi
+              storageClass: ceph-block
+              dataSourceRef:
+                apiGroup: kopiur.home-operations.com
+                kind: Restore
+                name: "{{ .Release.Name }}"
+              globalMounts:
+                - path: /config
         containers:
           lidarr:
             image:
@@ -80,8 +94,6 @@ spec:
           - name: envoy-internal
             namespace: network
     persistence:
-      config:
-        existingClaim: lidarr-config
       tmp:
         type: emptyDir
       logs:

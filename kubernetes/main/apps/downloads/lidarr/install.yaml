@@ -12,12 +12,15 @@ spec:
     name: lidarr
     namespace: flux-system
   components:
-    - ../../../../components/kopiur/deployment
+    - ../../../../components/kopiur/statefulset
     - ../../../../components/zeroscaler
   postBuild:
     substitute:
       APP: lidarr
-      KOPIUR_CLAIM: lidarr-config
+      CONTROLLER: StatefulSet
+      # Keep the kopia source path the deployment version used, so the
+      # restore and future snapshots continue the existing history.
+      KOPIUR_SOURCE_PATH: /pvc/lidarr-config
       KOPIUR_CAPACITY: 15Gi
   prune: true
   wait: false
