@@ -23,8 +23,22 @@ spec:
               property: API_KEY
     controllers:
       seerr:
+        type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 5Gi
+              storageClass: ceph-block
+              dataSourceRef:
+                apiGroup: kopiur.home-operations.com
+                kind: Restore
+                name: "{{ .Release.Name }}"
+              globalMounts:
+                - path: /app/config
         containers:
           seerr:
             image:
@@ -84,9 +98,5 @@ spec:
           - name: envoy-internal
             namespace: network
     persistence:
-      config:
-        existingClaim: seerr-config
-        globalMounts:
-          - path: /app/config
       tmp:
         type: emptyDir
