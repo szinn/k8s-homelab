@@ -12,12 +12,15 @@ spec:
     name: prowlarr
     namespace: flux-system
   components:
-    - ../../../../components/kopiur/deployment
+    - ../../../../components/kopiur/statefulset
     - ../../../../components/zeroscaler
   postBuild:
     substitute:
       APP: prowlarr
-      KOPIUR_CLAIM: prowlarr-config
+      CONTROLLER: StatefulSet
+      # Keep the kopia source path the deployment version used, so the
+      # restore and future snapshots continue the existing history.
+      KOPIUR_SOURCE_PATH: /pvc/prowlarr-config
       KOPIUR_CAPACITY: 1Gi
   prune: true
   wait: false

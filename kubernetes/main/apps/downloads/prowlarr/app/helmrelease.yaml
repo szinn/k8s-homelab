@@ -30,8 +30,22 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
     controllers:
       prowlarr:
+        type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 1Gi
+              storageClass: ceph-block
+              dataSourceRef:
+                apiGroup: kopiur.home-operations.com
+                kind: Restore
+                name: "{{ .Release.Name }}"
+              globalMounts:
+                - path: /config
         containers:
           prowlarr:
             image:
@@ -82,8 +96,6 @@ spec:
           - name: envoy-internal
             namespace: network
     persistence:
-      config:
-        existingClaim: prowlarr-config
       backup:
         type: nfs
         server: ragnar.zinn.tech
