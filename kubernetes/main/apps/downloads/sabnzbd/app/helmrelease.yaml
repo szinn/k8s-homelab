@@ -27,8 +27,22 @@ spec:
               property: NZB_KEY
     controllers:
       sabnzbd:
+        type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 1Gi
+              storageClass: ceph-block
+              dataSourceRef:
+                apiGroup: kopiur.home-operations.com
+                kind: Restore
+                name: "{{ .Release.Name }}"
+              globalMounts:
+                - path: /config
         pod:
           securityContext:
             runAsUser: 2000
@@ -105,8 +119,6 @@ spec:
           - name: envoy-internal
             namespace: network
     persistence:
-      config:
-        existingClaim: sabnzbd-config
       downloads:
         type: nfs
         server: ragnar.zinn.tech
