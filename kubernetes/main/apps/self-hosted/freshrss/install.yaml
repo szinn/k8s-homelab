@@ -23,6 +23,7 @@ spec:
       KOPIUR_PUID: "0"
       KOPIUR_PGID: "82"
       KOPIUR_RUNASNONROOT: "false"
+      KOPIUR_PRIVILEGED: "true"
   prune: true
   wait: false
   interval: 30m

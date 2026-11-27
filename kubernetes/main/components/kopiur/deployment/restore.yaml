@@ -14,7 +14,7 @@ spec:
       runAsUser: ${KOPIUR_PUID:=2000}
       runAsGroup: ${KOPIUR_PGID:=2000}
       runAsNonRoot: ${KOPIUR_RUNASNONROOT:=true}
-    privilegedMode: true
+    privilegedMode: ${KOPIUR_PRIVILEGED:=false}
   policy:
     onMissingSnapshot: Continue # default for fromPolicy — empty volume if none
   source:
