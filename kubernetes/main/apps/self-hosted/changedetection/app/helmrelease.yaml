@@ -12,6 +12,21 @@ spec:
   values:
     controllers:
       changedetection:
+        type: statefulset
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 1Gi
+              storageClass: ceph-block
+              dataSourceRef:
+                apiGroup: kopiur.home-operations.com
+                kind: Restore
+                name: "{{ .Release.Name }}"
+              advancedMounts:
+                changedetection:
+                  - path: /datastore
         containers:
           changedetection:
             image:
@@ -50,13 +65,6 @@ spec:
           - name: envoy-internal
             namespace: network
     persistence:
-      config:
-        enabled: true
-        existingClaim: changedetection-config
-        advancedMounts:
-          changedetection:
-            changedetection:
-              - path: /datastore
       backup:
         existingClaim: self-hosted-backups
         globalMounts:
