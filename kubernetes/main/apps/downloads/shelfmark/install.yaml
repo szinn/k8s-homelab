@@ -12,13 +12,16 @@ spec:
     name: shelfmark
     namespace: flux-system
   components:
-    - ../../../../components/kopiur/deployment
+    - ../../../../components/kopiur/statefulset
     - ../../../../components/zeroscaler
   interval: 1h
   postBuild:
     substitute:
       APP: shelfmark
-      KOPIUR_CLAIM: shelfmark-config
+      CONTROLLER: StatefulSet
+      # Keep the kopia source path the deployment version used, so the
+      # restore and future snapshots continue the existing history.
+      KOPIUR_SOURCE_PATH: /pvc/shelfmark-config
       KOPIUR_CAPACITY: 5Gi
       KOPIUR_PUID: "1000"
       KOPIUR_PGID: "1000"

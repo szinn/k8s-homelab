@@ -12,8 +12,23 @@ spec:
   values:
     controllers:
       shelfmark:
+        type: statefulset
         annotations:
           secret.reloader.stakater.com/reload: shelfmark-secret
+
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 5Gi
+              storageClass: ceph-block
+              dataSourceRef:
+                apiGroup: kopiur.home-operations.com
+                kind: Restore
+                name: "{{ .Release.Name }}"
+              globalMounts:
+                - path: /config
 
         pod:
           securityContext:
@@ -108,9 +123,6 @@ spec:
                   - NET_ADMIN
                   - NET_RAW
     persistence:
-      config:
-        existingClaim: shelfmark-config
-
       nfs-nas-media:
         type: nfs
         server: ragnar.zinn.tech
