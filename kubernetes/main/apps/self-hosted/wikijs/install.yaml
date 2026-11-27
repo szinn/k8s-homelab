@@ -41,11 +41,14 @@ spec:
   dependsOn:
     - name: wikijs-db
   components:
-    - ../../../../components/kopiur/deployment
+    - ../../../../components/kopiur/statefulset
   postBuild:
     substitute:
       APP: wikijs
-      KOPIUR_CLAIM: wikijs-data
+      KOPIUR_CLAIM: data
+      # Keep the kopia source path the deployment version used, so the
+      # restore and future snapshots continue the existing history.
+      KOPIUR_SOURCE_PATH: /pvc/wikijs-data
       KOPIUR_CAPACITY: 15Gi
       KOPIUR_PUID: "1000"
       KOPIUR_PGID: "1000"

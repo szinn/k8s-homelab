@@ -19,8 +19,22 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
     controllers:
       wikijs:
+        type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+            - name: data
+              accessMode: ReadWriteOnce
+              size: 15Gi
+              storageClass: ceph-block
+              dataSourceRef:
+                apiGroup: kopiur.home-operations.com
+                kind: Restore
+                name: "{{ .Release.Name }}"
+              globalMounts:
+                - path: /wiki/data
         containers:
           wikijs:
             image:
@@ -51,11 +65,6 @@ spec:
           - name: envoy-internal
             namespace: network
     persistence:
-      data:
-        enabled: true
-        existingClaim: wikijs-data
-        globalMounts:
-          - path: /wiki/data
       sshkey:
         enabled: true
         type: secret
