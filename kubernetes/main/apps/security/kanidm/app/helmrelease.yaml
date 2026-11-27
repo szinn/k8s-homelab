@@ -47,7 +47,6 @@ spec:
               KANIDM_DOMAIN: auth.zinn.ca
               KANIDM_ORIGIN: https://auth.zinn.ca
               KANIDM_BINDADDRESS: "[::]:8443"
-              KANIDM_LDAPBINDADDRESS: "[::]:3636"
               KANIDM_DB_PATH: /data/kanidm.db
               KANIDM_TLS_CHAIN: /certs/tls.crt
               KANIDM_TLS_KEY: /certs/tls.key
@@ -86,5 +85,3 @@ spec:
         ports:
           http:
             port: 8443
-          ldap:
-            port: 3636

@@ -1,0 +1,27 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/gateway.envoyproxy.io/securitypolicy_v1alpha1.json
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: ${APP}-oidc
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: ${APP}
+  oidc:
+    provider:
+      # Kanidm issues a per-client issuer
+      issuer: https://auth.zinn.ca/oauth2/openid/${APP}
+    clientID: ${APP}
+    clientSecret:
+      name: ${APP}-oidc-secret
+    scopes:
+      - openid
+      - email
+      - profile
+    # Redirect URL defaults to https://<route host>/oauth2/callback.
+    # Register that URL on the Kanidm client (see components/kanidm-oidc/README.md).
+    # Keep logout off the app's own /logout path.
+    logoutPath: /oauth2/logout
+    refreshToken: true
