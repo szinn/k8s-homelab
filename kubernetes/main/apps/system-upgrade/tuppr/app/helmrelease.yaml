@@ -6,9 +6,16 @@ metadata:
   name: tuppr
 spec:
   interval: 1h
-  chartRef:
+  chart:
     kind: OCIRepository
-    name: tuppr
+    spec:
+      interval: 15m
+      layerSelector:
+        mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+        operation: copy
+      ref:
+        tag: 0.5.14
+      url: oci://ghcr.io/home-operations/charts/tuppr
   values:
     replicaCount: 2
     monitoring:

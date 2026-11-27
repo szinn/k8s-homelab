@@ -6,9 +6,16 @@ metadata:
   name: loki
 spec:
   interval: 1h
-  chartRef:
+  chart:
     kind: OCIRepository
-    name: loki
+    spec:
+      interval: 1h
+      layerSelector:
+        mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+        operation: copy
+      ref:
+        tag: 7.7.0
+      url: oci://ghcr.io/grafana/helm-charts/loki
   values:
     deploymentMode: SingleBinary
 

@@ -5,9 +5,16 @@ kind: HelmRelease
 metadata:
   name: k8tz
 spec:
-  chartRef:
+  chart:
     kind: OCIRepository
-    name: k8tz
+    spec:
+      interval: 15m
+      layerSelector:
+        mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+        operation: copy
+      ref:
+        tag: 0.22.0
+      url: oci://ghcr.io/k8tz/k8tz/charts/k8tz
   interval: 30m
   values:
     namespace: null

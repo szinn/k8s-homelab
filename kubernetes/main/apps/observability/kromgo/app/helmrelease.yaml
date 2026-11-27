@@ -6,9 +6,16 @@ metadata:
   name: &app kromgo
 spec:
   interval: 1h
-  chartRef:
+  chart:
     kind: OCIRepository
-    name: kromgo
+    spec:
+      interval: 15m
+      layerSelector:
+        mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+        operation: copy
+      ref:
+        tag: 0.16.4
+      url: oci://ghcr.io/home-operations/charts/kromgo
   values:
     config:
       prometheus: http://prometheus-operated.observability.svc.cluster.local:9090

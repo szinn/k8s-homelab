@@ -6,9 +6,16 @@ metadata:
   name: dragonfly-operator
 spec:
   interval: 1h
-  chartRef:
+  chart:
     kind: OCIRepository
-    name: dragonfly-operator
+    spec:
+      interval: 1h
+      layerSelector:
+        mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+        operation: copy
+      ref:
+        tag: v1.8.0
+      url: oci://ghcr.io/dragonflydb/dragonfly-operator/helm/dragonfly-operator
   values:
     grafanaDashboard:
       enabled: true

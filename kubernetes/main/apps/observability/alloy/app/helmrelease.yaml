@@ -6,9 +6,16 @@ metadata:
   name: alloy
 spec:
   interval: 1h
-  chartRef:
+  chart:
     kind: OCIRepository
-    name: alloy
+    spec:
+      interval: 5m
+      layerSelector:
+        mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+        operation: copy
+      ref:
+        tag: 1.16.0
+      url: oci://ghcr.io/home-operations/charts-mirror/alloy
   values:
     fullnameOverride: alloy
     serviceMonitor:

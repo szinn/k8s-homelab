@@ -6,9 +6,16 @@ metadata:
   name: victoria-logs
 spec:
   interval: 1h
-  chartRef:
+  chart:
     kind: OCIRepository
-    name: victoria-logs
+    spec:
+      interval: 15m
+      layerSelector:
+        mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+        operation: copy
+      ref:
+        tag: 0.13.14
+      url: oci://ghcr.io/victoriametrics/helm-charts/victoria-logs-single
   values:
     fullnameOverride: victoria-logs
     server:

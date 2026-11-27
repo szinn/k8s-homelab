@@ -6,9 +6,16 @@ metadata:
   name: &app kube-prometheus-stack
 spec:
   interval: 1h
-  chartRef:
+  chart:
     kind: OCIRepository
-    name: kube-prometheus-stack
+    spec:
+      interval: 1h
+      layerSelector:
+        mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+        operation: copy
+      ref:
+        tag: 94.1.0
+      url: oci://ghcr.io/prometheus-community/charts/kube-prometheus-stack
   values:
     nameOverride: *app
     crds:

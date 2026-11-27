@@ -6,9 +6,16 @@ metadata:
   name: silence-operator
 spec:
   interval: 1h
-  chartRef:
+  chart:
     kind: OCIRepository
-    name: silence-operator
+    spec:
+      interval: 15m
+      layerSelector:
+        mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+        operation: copy
+      ref:
+        tag: 0.22.0
+      url: oci://gsoci.azurecr.io/charts/giantswarm/silence-operator
   values:
     alertmanagerAddress: http://alertmanager-operated.observability.svc.cluster.local:9093
     networkPolicy:

@@ -6,9 +6,16 @@ metadata:
   name: node-exporter
 spec:
   interval: 30m
-  chartRef:
+  chart:
     kind: OCIRepository
-    name: node-exporter
+    spec:
+      interval: 10m
+      layerSelector:
+        mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+        operation: copy
+      ref:
+        tag: 6.0.0
+      url: oci://ghcr.io/prometheus-community/charts/prometheus-node-exporter
   values:
     fullnameOverride: node-exporter
     # Chart v6 sets these in defaultArgs and appends extraArgs; node-exporter rejects repeated flags

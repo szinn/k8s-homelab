@@ -6,9 +6,16 @@ metadata:
   name: external-dns-cloudflare
 spec:
   interval: 1h
-  chartRef:
+  chart:
     kind: OCIRepository
-    name: cloudflare-dns
+    spec:
+      interval: 1h
+      layerSelector:
+        mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+        operation: copy
+      ref:
+        tag: 1.24.0
+      url: oci://ghcr.io/home-operations/charts-mirror/external-dns
   values:
     fullnameOverride: external-dns-cloudflare
     logLevel: debug

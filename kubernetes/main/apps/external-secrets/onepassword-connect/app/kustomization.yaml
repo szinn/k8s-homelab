@@ -6,4 +6,3 @@ resources:
   - clustersecretstore.yaml
   - helmrelease.yaml
   - httproute.yaml
-  - ocirepository.yaml

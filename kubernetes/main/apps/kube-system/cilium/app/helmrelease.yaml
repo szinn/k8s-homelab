@@ -11,9 +11,16 @@ metadata:
     app.kubernetes.io/managed-by: Helm
 spec:
   interval: 1h
-  chartRef:
+  chart:
     kind: OCIRepository
-    name: cilium
+    spec:
+      interval: 1h
+      layerSelector:
+        mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+        operation: copy
+      ref:
+        tag: 1.20.5
+      url: oci://quay.io/cilium/charts/cilium
 
   values:
     cluster:

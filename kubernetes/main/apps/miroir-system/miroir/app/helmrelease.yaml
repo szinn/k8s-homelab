@@ -5,9 +5,16 @@ kind: HelmRelease
 metadata:
   name: miroir
 spec:
-  chartRef:
+  chart:
     kind: OCIRepository
-    name: miroir
+    spec:
+      interval: 15m
+      layerSelector:
+        mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+        operation: copy
+      ref:
+        tag: 0.12.13
+      url: oci://ghcr.io/home-operations/charts/miroir
   interval: 1h
   values:
     autoEvictAfter: 1h
