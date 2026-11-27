@@ -12,9 +12,24 @@ spec:
   values:
     controllers:
       qbittorrent:
+        type: statefulset
         annotations:
           secret.reloader.stakater.com/reload: qbittorrent-secret,qbittorrent-gluetun-secret
           config.reloader.stakater.com/reload: qbittorrent-coredns
+
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 2Gi
+              storageClass: ceph-block
+              dataSourceRef:
+                apiGroup: kopiur.home-operations.com
+                kind: Restore
+                name: "{{ .Release.Name }}"
+              globalMounts:
+                - path: /config
 
         pod:
           securityContext:
@@ -130,8 +145,6 @@ spec:
             port: *port
 
     persistence:
-      config:
-        existingClaim: qbittorrent-config
       empty-config:
         type: emptyDir
         advancedMounts:

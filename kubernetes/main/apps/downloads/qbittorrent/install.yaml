@@ -12,12 +12,15 @@ spec:
     name: qbittorrent
     namespace: flux-system
   components:
-    - ../../../../components/kopiur/deployment
+    - ../../../../components/kopiur/statefulset
     - ../../../../components/zeroscaler
   postBuild:
     substitute:
       APP: qbittorrent
-      KOPIUR_CLAIM: qbittorrent-config
+      CONTROLLER: StatefulSet
+      # Keep the kopia source path the deployment version used, so the
+      # restore and future snapshots continue the existing history.
+      KOPIUR_SOURCE_PATH: /pvc/qbittorrent-config
       KOPIUR_CAPACITY: 2Gi
   prune: true
   wait: false
