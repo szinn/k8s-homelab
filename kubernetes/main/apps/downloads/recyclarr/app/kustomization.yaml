@@ -4,12 +4,10 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - helmrelease.yaml
-namespace: media
+  - secrets.yaml
 configMapGenerator:
   - name: recyclarr-configmap
     files:
       - recyclarr.yml=./config/recyclarr.yaml
 generatorOptions:
   disableNameSuffixHash: true
-  annotations:
-    kustomize.toolkit.fluxcd.io/substitute: disabled

@@ -11,11 +11,6 @@ spec:
     kind: ExternalArtifact
     name: recyclarr
     namespace: flux-system
-  components:
-    - ../../../../components/kopiur/statefulset
-  postBuild:
-    substitute:
-      APP: recyclarr
   prune: true
   wait: false
   interval: 30m
